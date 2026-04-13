@@ -113,37 +113,6 @@
     opacity: 0.8;
 }
 
-@media print {
-    .no-print { display: none !important; }
-    /* Completely remove the header bar for printing to save space */
-    .sheet-header { 
-        display: none !important; 
-    }
-
-    /* Reset margins to ensure everything fits on letter-sized paper */
-    @page { 
-        size: letter portrait; 
-        margin: 0.2in; 
-    }
-
-    body { 
-        background: var(--parchment); 
-        padding: 0; 
-        margin: 0; 
-    }
-
-    input, select, textarea {
-    font-family: var(--font-hand) !important;
-    font-size: 12.5pt;
-    color: var(--ink);
-}
-
-            /* This class will be applied automatically by the math engine */
-        .critical-state {
-            animation: blood-pulse 2s infinite ease-in-out;
-            background-color: #f7ece1 !important; /* Slightly more pale/sickly parchment color */
-        }
-}
         /* --- TOP HEADER --- */
         .page-title { text-align: center; font-size: 18pt; font-weight: 900; color: var(--iron); text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid var(--gold); margin-bottom: 8px; padding-bottom: 2px; }
 
@@ -440,19 +409,7 @@
         .magic-inputs { display: flex; gap: 1px; }
         .magic-inputs input { width: 44px; height: 30px; text-align: center; font-weight: 900; border: 1.5px solid var(--ink); font-size: 12pt; background: var(--input-bg); color: var(--ink); }
 
-        @media print {
-            @page { size: letter portrait; margin: 0in; }
-            body { background: var(--parchment); padding: 0; margin: 0; display: block; }
-            .sheet { transform: scale(1.0); transform-origin: top center; width: 1050px; border: 2px solid var(--iron); box-shadow: none; margin: 0 auto; page-break-after: always; }
-            .sheet:last-child { page-break-after: auto; }
-            .vault-controls, .btn-reset-vault, #ph, #ui { display: none !important; }
-
-            /* ADD THESE TWO LINES TO SQUISH EXCESS SPACE DURING PRINTING */
-            .h-box { margin-bottom: 2px; padding: 2px 12px; }
-            .k-item, #spells-grid .k-item { padding: 1px 3px; gap: 1px; }
-        }
-
-       /* --- FORCE DESKTOP ARROWS ONLY ON EDITABLE INPUTS --- */
+          /* --- FORCE DESKTOP ARROWS ONLY ON EDITABLE INPUTS --- */
 input[type="number"]:not([readonly])::-webkit-inner-spin-button, 
 input[type="number"]:not([readonly])::-webkit-outer-spin-button { 
     opacity: 1 !important; 
@@ -471,6 +428,50 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
     padding-right: 14px !important; 
 }
 
+        /* ==========================================
+           MASTER PRINT LAYOUT - IPAD SHRINK-TO-FIT
+           ========================================== */
+        @media print {
+            /* 1. Strip all default browser margins */
+            @page { size: letter portrait; margin: 0in; }
+            body { background: var(--parchment); padding: 0; margin: 0; display: block; }
+            
+            /* 2. THE SHRINK RAY: Scaled to 92% to force a single page */
+            .sheet { 
+                transform: scale(0.92); 
+                transform-origin: top center; 
+                width: 1050px; 
+                border: 2px solid var(--iron); 
+                box-shadow: none; 
+                margin: 0 auto; 
+                page-break-after: always; 
+            }
+            .sheet:last-child { page-break-after: auto; }
+            
+            /* 3. The Invisibility Cloak */
+            .no-print, .sheet-header, .vault-controls, .btn-reset-vault, #ph, #ui { 
+                display: none !important; 
+            }
+
+            /* 4. Aggressive Vertical Squishing */
+            .h-box { margin-bottom: 0px !important; padding: 1px 12px !important; }
+            .status-bar { margin-bottom: 2px !important; padding-bottom: 2px !important; }
+            .readiness-block { margin-bottom: 2px !important; }
+            .weapon-entry { margin-bottom: 0px !important; padding-bottom: 2px !important; }
+            .magic-cb-row { margin-bottom: 2px !important; }
+            .k-item, #spells-grid .k-item { padding: 1px 3px; gap: 1px; }
+
+            /* 5. Font & Critical State Overrides */
+            input, select, textarea {
+                font-family: var(--font-hand) !important;
+                font-size: 12.5pt;
+                color: var(--ink);
+            }
+            .critical-state {
+                animation: blood-pulse 2s infinite ease-in-out;
+                background-color: #f7ece1 !important; 
+            }
+        }
     </style>
 <script defer data-domain="fantasy-rpgpow3.tiiny.site" src="https://analytics.tiiny.site/js/plausible.js"></script></head>
 <body>
