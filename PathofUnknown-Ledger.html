@@ -428,33 +428,38 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
     padding-right: 14px !important; 
 }
 
-     /* ==========================================
-           MASTER PRINT LAYOUT - IPAD STRIKES BACK
+    /* ==========================================
+           MASTER PRINT LAYOUT - NATIVE SAFARI ZOOM
            ========================================== */
         @media print {
-            @page { size: letter portrait; margin: 0in; }
-            body { background: var(--parchment); padding: 0; margin: 0; display: block; }
+            /* Give it a tiny 0.1 inch margin so it doesn't clip the printer edges */
+            @page { size: letter portrait; margin: 0.1in; }
             
-            /* THE SHRINK RAY v2: Scaled to 88% and height-locked */
+            /* Force the iPad to print your background colors! */
+            body { 
+                background: var(--parchment); 
+                padding: 0; 
+                margin: 0; 
+                display: block; 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact; 
+            }
+            
+            /* THE NEW SHRINK RAY: 'zoom' works natively on iPads */
             .sheet { 
-                transform: scale(0.88); 
-                transform-origin: top center; 
                 width: 1050px; 
-                max-height: 10.5in; /* FORCES it to stop before the page ends */
-                overflow: hidden; /* Chops off any phantom pixels bleeding over */
+                zoom: 0.78; /* Dial this between 0.75 and 0.85 to find the perfect fit */
                 border: 2px solid var(--iron); 
                 box-shadow: none; 
                 margin: 0 auto; 
-                page-break-inside: avoid; /* Tells the printer NEVER to split this box */
             }
-            /* Note: Removed 'page-break-after' to kill the blank second page */
             
-            /* 3. The Invisibility Cloak */
+            /* The Invisibility Cloak */
             .no-print, .sheet-header, .vault-controls, .btn-reset-vault, #ph, #ui { 
                 display: none !important; 
             }
 
-            /* 4. Aggressive Vertical Squishing */
+            /* Aggressive Vertical Squishing */
             .h-box { margin-bottom: 0px !important; padding: 1px 12px !important; }
             .status-bar { margin-bottom: 2px !important; padding-bottom: 2px !important; }
             .readiness-block { margin-bottom: 2px !important; }
@@ -462,14 +467,14 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
             .magic-cb-row { margin-bottom: 2px !important; }
             .k-item, #spells-grid .k-item { padding: 1px 3px; gap: 1px; }
 
-            /* 5. Font & Critical State Overrides */
+            /* Font & Critical State Overrides */
             input, select, textarea {
                 font-family: var(--font-hand) !important;
                 font-size: 12.5pt;
                 color: var(--ink);
             }
             .critical-state {
-                animation: blood-pulse 2s infinite ease-in-out;
+                animation: none !important; /* Stop the pulsing animation for paper */
                 background-color: #f7ece1 !important; 
             }
         }
