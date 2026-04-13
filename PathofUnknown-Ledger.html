@@ -429,37 +429,48 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
 }
 
     /* ==========================================
-           MASTER PRINT LAYOUT - NATIVE SAFARI ZOOM
+           MASTER PRINT LAYOUT - THE PAGINATION FIX
            ========================================== */
         @media print {
-            /* Give it a tiny 0.1 inch margin so it doesn't clip the printer edges */
-            @page { size: letter portrait; margin: 0.1in; }
+            @page { size: letter portrait; margin: 0.2in; }
             
-            /* Force the iPad to print your background colors! */
-            body { 
-                background: var(--parchment); 
+            /* 1. KILL THE TRUNCATION BUGS: Force block and visible overflows */
+            html, body { 
+                display: block !important; 
+                height: auto !important; 
+                overflow: visible !important; 
+                background: var(--parchment) !important; 
                 padding: 0; 
                 margin: 0; 
-                display: block; 
                 -webkit-print-color-adjust: exact; 
                 print-color-adjust: exact; 
             }
             
-            /* THE NEW SHRINK RAY: 'zoom' works natively on iPads */
+            /* 2. THE SHEET: Unlock height and overflow */
             .sheet { 
-                width: 1050px; 
-                zoom: 0.78; /* Dial this between 0.75 and 0.85 to find the perfect fit */
+                display: block !important;
+                position: relative !important;
+                height: auto !important;
+                overflow: visible !important; /* This stops the cutoff! */
+                width: 1050px !important; 
+                zoom: 0.78; /* iPad scaling */
                 border: 2px solid var(--iron); 
                 box-shadow: none; 
-                margin: 0 auto; 
+                margin: 0 auto 10px auto !important; 
             }
             
-            /* The Invisibility Cloak */
+            /* 3. PROTECT THE BOXES: Don't let the printer slice these in half across pages */
+            .readiness-table, .wound-ledger, .gear-area, .spec-container, .sk-c {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            /* 4. The Invisibility Cloak */
             .no-print, .sheet-header, .vault-controls, .btn-reset-vault, #ph, #ui { 
                 display: none !important; 
             }
 
-            /* Aggressive Vertical Squishing */
+            /* 5. Aggressive Vertical Squishing */
             .h-box { margin-bottom: 0px !important; padding: 1px 12px !important; }
             .status-bar { margin-bottom: 2px !important; padding-bottom: 2px !important; }
             .readiness-block { margin-bottom: 2px !important; }
@@ -467,14 +478,14 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
             .magic-cb-row { margin-bottom: 2px !important; }
             .k-item, #spells-grid .k-item { padding: 1px 3px; gap: 1px; }
 
-            /* Font & Critical State Overrides */
+            /* 6. Font & Critical State Overrides */
             input, select, textarea {
                 font-family: var(--font-hand) !important;
                 font-size: 12.5pt;
                 color: var(--ink);
             }
             .critical-state {
-                animation: none !important; /* Stop the pulsing animation for paper */
+                animation: none !important; 
                 background-color: #f7ece1 !important; 
             }
         }
