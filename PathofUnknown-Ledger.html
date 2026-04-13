@@ -872,6 +872,66 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
     </div>
 </div>
 <script>
+// --- MOVE TO THE VERY TOP OF YOUR <script> TAG ---
+async function fetchCharacterFromCloud() {
+    // First thing: tell us you're alive!
+    alert("Function is starting..."); 
+
+    const btn = document.getElementById('btn-cloud-load');
+    const charDropdown = document.getElementById('cloud-char-select');
+    
+    if (!charDropdown) {
+        alert("Error: Cloud dropdown not found in HTML!");
+        return;
+    }
+
+    const charName = charDropdown.value;
+    const safeName = encodeURIComponent(charName);
+    const url = `https://raw.githubusercontent.com/pflastpr-rpg/Path-of-the-Unknown/main/characters/${safeName}.rpg?v=${new Date().getTime()}`;
+
+    try {
+        btn.innerText = "⏳ Loading...";
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            alert("GitHub says: Character Not Found!");
+            throw new Error("404");
+        }
+        
+        const data = await response.json();
+
+        // This list EXCLUDES the cloud dropdown to keep f_ indices aligned with Leon Firebeard.rpg
+        const inputs = Array.from(document.querySelectorAll('input, select')).filter(el => {
+            return el.id !== 'cloud-char-select' && el.type !== 'file';
+        });
+
+        inputs.forEach((el, index) => {
+            // We use the ID if it exists, otherwise we fall back to the index (f_0, f_1...)
+            const key = el.id || "f_" + index;
+            const val = data[key];
+            
+            if (val !== undefined) {
+                if (el.type === 'checkbox') {
+                    el.checked = val;
+                } else {
+                    el.value = val;
+                }
+            }
+        });
+
+        // Trigger the visual updates
+        if (typeof upd === "function") upd();
+        
+        btn.innerText = "✅ Loaded!";
+        alert("Success: " + charName + " is on the sheet!");
+
+    } catch(err) {
+        btn.innerText = "❌ Error!";
+        console.error(err);
+    } finally {
+        setTimeout(() => btn.innerText = "☁️ Load from Cloud", 2000);
+    }
+}
     // ==========================================
     // CSS FIX INJECTION FOR GRID SKEWING
     // Automatically applies text truncation so long Rune names don't break the grid!
@@ -2218,53 +2278,6 @@ function upd() {
             }
         }
     });
-async function fetchCharacterFromCloud() {
-    alert("Function is alive!");
-    const btn = document.getElementById('btn-cloud-load');
-    const charDropdown = document.getElementById('cloud-char-select');
-    const charName = charDropdown.value;
-    const safeName = encodeURIComponent(charName);
-    const url = `https://raw.githubusercontent.com/pflastpr-rpg/Path-of-the-Unknown/main/characters/${safeName}.rpg?v=${new Date().getTime()}`;
-
-    try {
-        btn.innerText = "⏳ Loading...";
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Character file not found on GitHub.");
-        const data = await response.json();
-        
-        // Exact same legacy-filter used in loadData
-        const legacyInputs = Array.from(document.querySelectorAll('input, select')).filter(el => {
-            return el.id !== 'cloud-char-select';
-        });
-
-        legacyInputs.forEach((el, index) => {
-            if (el.type === 'file') return;
-            const val = data[el.id || `f_${index}`];
-            if (val !== undefined) {
-                if (el.type === 'checkbox') el.checked = val;
-                else {
-                    el.value = val;
-                    if (el.classList.contains('spell-select')) el.dataset.savedValue = val;
-                }
-            }
-        });
-        
-        document.querySelectorAll('.magic-cb').forEach(cb => {
-            if(cb.checked) handleMagicCheck(cb);
-        });
-        
-        const loadedName = document.querySelector('.w-name input').value;
-        document.title = loadedName ? loadedName + ' - RPG Ledger' : 'RPG Ledger v11.29 - Power of Three';
-        
-        upd();
-        btn.innerText = "✅ Loaded!";
-    } catch(err) {
-        btn.innerText = "❌ Not Found!";
-        console.error(err);
-    } finally {
-        setTimeout(() => btn.innerText = "☁️ Load from Cloud", 2000);
-    }
-}
 
     window.onload = init;
     
