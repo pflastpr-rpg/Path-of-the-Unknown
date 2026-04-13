@@ -428,13 +428,13 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
     padding-right: 14px !important; 
 }
 
-   /* ==========================================
-           MASTER PRINT LAYOUT - PAGE 2 SCALING FIX
+  /* ==========================================
+           MASTER PRINT LAYOUT - THE HARD-LOCK FIX
            ========================================== */
         @media print {
             @page { size: letter portrait; margin: 0.2in; }
             
-            /* 1. MOVE ZOOM TO BODY: This fixes the Page 2 shrinkage bug! */
+            /* 1. BODY: Keep it clean, unlocked, and unscaled so pages break naturally */
             html, body { 
                 display: block !important; 
                 height: auto !important; 
@@ -444,20 +444,22 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
                 -webkit-print-color-adjust: exact; 
                 color-adjust: exact; 
                 print-color-adjust: exact; 
-                
-                /* Applying scaling to the entire document guarantees uniform pages */
-                zoom: 0.75; 
-                -moz-transform: scale(0.75); 
-                -moz-transform-origin: top left;
             }
             
-            /* 2. THE SHEET: Removed zoom from here */
+            /* 2. THE SHEET: Zoom goes here, with hard-locked widths */
             .sheet { 
                 display: block !important;
                 position: relative !important;
                 height: auto !important;
                 overflow: visible !important;
+                
+                /* Hard-locking width prevents Chrome from shrinking Page 2 */
                 width: 1050px !important; 
+                min-width: 1050px !important;
+                max-width: 1050px !important;
+                
+                zoom: 0.75; /* Dial this up or down (e.g., 0.72) to fit your paper */
+                
                 border: 2px solid var(--iron); 
                 box-shadow: none; 
                 margin: 0 auto 10px auto !important; 
@@ -473,7 +475,7 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
                 break-after: avoid !important;
             }
 
-            /* 4. AGGRESSIVE UI ASSASSINATION: Hides Vault, Buttons, and specific IDs */
+            /* 4. AGGRESSIVE UI ASSASSINATION */
             .no-print, .sheet-header, .vault-controls, .btn-reset-vault, #ph, #ui, 
             #cloud-char-select, #btn-cloud-load { 
                 display: none !important; 
