@@ -874,62 +874,68 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
 <script>
 // --- MOVE TO THE VERY TOP OF YOUR <script> TAG ---
 async function fetchCharacterFromCloud() {
-    // First thing: tell us you're alive!
-    alert("Function is starting..."); 
+    alert("Function Start!"); // This MUST trigger if the function is found
 
-    const btn = document.getElementById('btn-cloud-load');
-    const charDropdown = document.getElementById('cloud-char-select');
+    var btn = document.getElementById('btn-cloud-load');
+    var charDropdown = document.getElementById('cloud-char-select');
     
     if (!charDropdown) {
-        alert("Error: Cloud dropdown not found in HTML!");
+        alert("CRITICAL: Dropdown menu not found!");
         return;
     }
 
-    const charName = charDropdown.value;
-    const safeName = encodeURIComponent(charName);
-    const url = `https://raw.githubusercontent.com/pflastpr-rpg/Path-of-the-Unknown/main/characters/${safeName}.rpg?v=${new Date().getTime()}`;
+    var charName = charDropdown.value;
+    var safeName = encodeURIComponent(charName);
+    
+    // Using standard quotes + instead of backticks to avoid syntax errors
+    var url = "https://raw.githubusercontent.com/pflastpr-rpg/Path-of-the-Unknown/main/characters/" + safeName + ".rpg?v=" + new Date().getTime();
 
     try {
         btn.innerText = "⏳ Loading...";
-        const response = await fetch(url);
+        var response = await fetch(url);
         
         if (!response.ok) {
-            alert("GitHub says: Character Not Found!");
-            throw new Error("404");
+            alert("Error: File not found on GitHub at " + url);
+            btn.innerText = "❌ 404";
+            return;
         }
         
-        const data = await response.json();
+        var data = await response.json();
+        alert("Data received for " + charName);
 
-        // This list EXCLUDES the cloud dropdown to keep f_ indices aligned with Leon Firebeard.rpg
-        const inputs = Array.from(document.querySelectorAll('input, select')).filter(el => {
-            return el.id !== 'cloud-char-select' && el.type !== 'file';
-        });
+        // Standard Loop - No filtering, just logic
+        var allInputs = document.querySelectorAll('input, select');
+        
+        for (var i = 0; i < allInputs.length; i++) {
+            var el = allInputs[i];
+            
+            // SKIP the cloud dropdown so it doesn't mess up the count
+            if (el.id === 'cloud-char-select' || el.type === 'file') continue;
 
-        inputs.forEach((el, index) => {
-            // We use the ID if it exists, otherwise we fall back to the index (f_0, f_1...)
-            const key = el.id || "f_" + index;
-            const val = data[key];
+            // We calculate the index based on the "Legacy" order
+            // (Assuming the cloud dropdown was the only new item added)
+            var legacyIndex = i;
+            if (i > 0) legacyIndex = i - 1; 
+
+            var key = el.id || "f_" + legacyIndex;
+            var val = data[key];
             
             if (val !== undefined) {
                 if (el.type === 'checkbox') {
-                    el.checked = val;
+                    el.checked = (val === true || val === "true");
                 } else {
                     el.value = val;
                 }
             }
-        });
+        }
 
-        // Trigger the visual updates
         if (typeof upd === "function") upd();
-        
         btn.innerText = "✅ Loaded!";
-        alert("Success: " + charName + " is on the sheet!");
+        alert("Done!");
 
     } catch(err) {
-        btn.innerText = "❌ Error!";
-        console.error(err);
-    } finally {
-        setTimeout(() => btn.innerText = "☁️ Load from Cloud", 2000);
+        alert("Script Crash: " + err.message);
+        btn.innerText = "❌ Error";
     }
 }
     // ==========================================
