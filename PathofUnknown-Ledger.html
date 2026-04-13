@@ -428,25 +428,26 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
     padding-right: 14px !important; 
 }
 
-        /* ==========================================
-           MASTER PRINT LAYOUT - IPAD SHRINK-TO-FIT
+     /* ==========================================
+           MASTER PRINT LAYOUT - IPAD STRIKES BACK
            ========================================== */
         @media print {
-            /* 1. Strip all default browser margins */
             @page { size: letter portrait; margin: 0in; }
             body { background: var(--parchment); padding: 0; margin: 0; display: block; }
             
-            /* 2. THE SHRINK RAY: Scaled to 92% to force a single page */
+            /* THE SHRINK RAY v2: Scaled to 88% and height-locked */
             .sheet { 
-                transform: scale(0.92); 
+                transform: scale(0.88); 
                 transform-origin: top center; 
                 width: 1050px; 
+                max-height: 10.5in; /* FORCES it to stop before the page ends */
+                overflow: hidden; /* Chops off any phantom pixels bleeding over */
                 border: 2px solid var(--iron); 
                 box-shadow: none; 
                 margin: 0 auto; 
-                page-break-after: always; 
+                page-break-inside: avoid; /* Tells the printer NEVER to split this box */
             }
-            .sheet:last-child { page-break-after: auto; }
+            /* Note: Removed 'page-break-after' to kill the blank second page */
             
             /* 3. The Invisibility Cloak */
             .no-print, .sheet-header, .vault-controls, .btn-reset-vault, #ph, #ui { 
@@ -472,6 +473,7 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
                 background-color: #f7ece1 !important; 
             }
         }
+        
     </style>
 <script defer data-domain="fantasy-rpgpow3.tiiny.site" src="https://analytics.tiiny.site/js/plausible.js"></script></head>
 <body>
