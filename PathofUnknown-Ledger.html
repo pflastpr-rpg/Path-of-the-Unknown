@@ -878,7 +878,7 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
 <script>
 // --- MOVE TO THE VERY TOP OF YOUR <script> TAG ---
 async function fetchCharacterFromCloud() {
-    alert("Function Start!"); // This MUST trigger if the function is found
+    // alert("Function Start!"); // Turned off the annoying popups now that it works!
 
     var btn = document.getElementById('btn-cloud-load');
     var charDropdown = document.getElementById('cloud-char-select');
@@ -891,7 +891,6 @@ async function fetchCharacterFromCloud() {
     var charName = charDropdown.value;
     var safeName = encodeURIComponent(charName);
     
-    // Using standard quotes + instead of backticks to avoid syntax errors
     var url = "https://raw.githubusercontent.com/pflastpr-rpg/Path-of-the-Unknown/main/characters/" + safeName + ".rpg?v=" + new Date().getTime();
 
     try {
@@ -905,7 +904,6 @@ async function fetchCharacterFromCloud() {
         }
         
         var data = await response.json();
-        alert("Data received for " + charName);
 
         // Standard Loop - No filtering, just logic
         var allInputs = document.querySelectorAll('input, select');
@@ -916,8 +914,7 @@ async function fetchCharacterFromCloud() {
             // SKIP the cloud dropdown so it doesn't mess up the count
             if (el.id === 'cloud-char-select' || el.type === 'file') continue;
 
-            // We calculate the index based on the "Legacy" order
-            // (Assuming the cloud dropdown was the only new item added)
+            // Calculate the legacy index
             var legacyIndex = i;
             if (i > 0) legacyIndex = i - 1; 
 
@@ -929,17 +926,58 @@ async function fetchCharacterFromCloud() {
                     el.checked = (val === true || val === "true");
                 } else {
                     el.value = val;
+                    // Restore spell-select logic just in case
+                    if (el.classList && el.classList.contains('spell-select')) {
+                        el.dataset.savedValue = val;
+                    }
                 }
             }
         }
 
+        // --- NEW: LOAD THE PORTRAIT ---
+        var pv = document.getElementById('pv');
+        var ph = document.getElementById('ph');
+        if (data['character_portrait']) {
+            if (pv) {
+                pv.src = data['character_portrait'];
+                pv.style.display = 'block';
+            }
+            if (ph) ph.style.display = 'none';
+        } else {
+            // Wipe the box if the loaded character has no portrait
+            if (pv) {
+                pv.src = '';
+                pv.style.display = 'none';
+            }
+            if (ph) ph.style.display = 'block';
+        }
+        // --- END NEW ---
+
+        // Re-trigger magic checkboxes if they exist
+        var magicCbs = document.querySelectorAll('.magic-cb');
+        for (var m = 0; m < magicCbs.length; m++) {
+            if (magicCbs[m].checked && typeof handleMagicCheck === "function") {
+                handleMagicCheck(magicCbs[m]);
+            }
+        }
+
+        // Update the Browser Tab Title
+        var nameInput = document.querySelector('.w-name input');
+        if (nameInput) {
+            document.title = nameInput.value ? nameInput.value + ' - RPG Ledger' : 'RPG Ledger';
+        }
+
         if (typeof upd === "function") upd();
         btn.innerText = "✅ Loaded!";
-        alert("Done!");
 
     } catch(err) {
         alert("Script Crash: " + err.message);
         btn.innerText = "❌ Error";
+    } finally {
+        // Reset the button text back to normal after 2 seconds
+        setTimeout(function() {
+            btn.innerText = "☁️ Load from Cloud";
+        }, 2000);
     }
 }
     // ==========================================
@@ -2216,9 +2254,8 @@ function upd() {
         a.click();
     }
     
-    function saveData() {
+   function saveData() {
     const data = {};
-    // This filter hides the Cloud Dropdown so the 'f_index' count stays legacy-accurate
     const legacyInputs = Array.from(document.querySelectorAll('input, select')).filter(el => {
         return el.id !== 'cloud-char-select';
     });
@@ -2228,6 +2265,14 @@ function upd() {
             data[el.id || `f_${index}`] = el.type === 'checkbox' ? el.checked : el.value;
         }
     });
+
+    // --- NEW: GRAB THE PORTRAIT ---
+    const pv = document.getElementById('pv');
+    // Ensure we only save actual images, not empty src tags
+    if (pv && pv.src && pv.src.startsWith('data:image')) {
+        data['character_portrait'] = pv.src;
+    }
+    // --- END NEW ---
 
     const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
     const a = document.createElement('a');
@@ -2242,7 +2287,6 @@ function upd() {
         reader.onload = function(e) {
             const data = JSON.parse(e.target.result);
             
-            // Re-align the indices by ignoring the new cloud UI elements
             const legacyInputs = Array.from(document.querySelectorAll('input, select')).filter(el => {
                 return el.id !== 'cloud-char-select';
             });
@@ -2251,16 +2295,28 @@ function upd() {
                 if (el.type === 'file') return;
                 const val = data[el.id || `f_${index}`];
                 if (val !== undefined) {
-                    if (el.type === 'checkbox') {
-                        el.checked = val;
-                    } else {
+                    if (el.type === 'checkbox') el.checked = val;
+                    else {
                         el.value = val;
-                        if (el.classList.contains('spell-select')) {
-                            el.dataset.savedValue = val;
-                        }
+                        if (el.classList.contains('spell-select')) el.dataset.savedValue = val;
                     }
                 }
             });
+
+            // --- NEW: LOAD THE PORTRAIT ---
+            const pv = document.getElementById('pv');
+            const ph = document.getElementById('ph');
+            if (data['character_portrait']) {
+                pv.src = data['character_portrait'];
+                pv.style.display = 'block';
+                if(ph) ph.style.display = 'none';
+            } else {
+                // Wipe the box if the loaded character has no portrait
+                pv.src = '';
+                pv.style.display = 'none';
+                if(ph) ph.style.display = 'block';
+            }
+            // --- END NEW ---
 
             document.querySelectorAll('.magic-cb').forEach(cb => {
                 if(cb.checked) handleMagicCheck(cb);
