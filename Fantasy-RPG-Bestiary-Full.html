@@ -423,9 +423,13 @@
     }
 
     function getDynamicImagePath(monsterName) {
-        if (!monsterName) return 'images/placeholder.png'; 
+        if (!monsterName) return 'https://raw.githubusercontent.com/pflastpr-rpg/Path-of-the-Unknown/main/images/placeholder.png'; 
+        
+        // Clean up the name
         const safeName = monsterName.toLowerCase().trim().replace(/[^a-z0-9]/g, '_');
-        return `images/${safeName}.png`;
+        
+        // Force it to pull directly from your GitHub Cloud folder
+        return `https://raw.githubusercontent.com/pflastpr-rpg/Path-of-the-Unknown/main/images/${safeName}.png`;
     }
 
     function renderBestiary(cardsData) {
