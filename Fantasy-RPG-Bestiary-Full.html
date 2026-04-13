@@ -459,9 +459,16 @@
                 portraitBox.querySelector('.p-text').style.display = 'none';
                 portraitBox.style.borderStyle = 'solid';
 
+               // Safety Net & Debugger
                 imgEl.onerror = function() {
                     this.style.display = 'none';
-                    portraitBox.querySelector('.p-text').style.display = 'block';
+                    const textBox = portraitBox.querySelector('.p-text');
+                    textBox.style.display = 'block';
+                    // Temporarily shrink text to fit the URL
+                    textBox.style.fontSize = '8pt'; 
+                    textBox.style.wordWrap = 'break-word';
+                    // Print the exact broken link right on the card!
+                    textBox.innerText = "FAILED: " + this.src; 
                     portraitBox.style.borderStyle = 'dashed';
                 };
             }
