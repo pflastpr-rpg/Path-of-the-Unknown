@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path of the Unknown - Tome of Lore</title>
+    <style>
+        :root { 
+            --iron: #02070e;
+            --blood: #A81818;
+            --parchment: #f3e7c9;
+            --gold: #B8860B;
+            --ink: #111111;
+            --white: #FCF7EB;
+        }
+
+        body {
+            background: #121215; 
+            color: var(--parchment);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px;
+            margin: 0;
+        }
+
+        /* --- NAVIGATION --- */
+        .hub-controls {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            max-width: 1000px;
+            justify-content: flex-start;
+        }
+
+        .btn-vault {
+            background: var(--ink);
+            color: var(--gold);
+            border: 2px solid var(--iron);
+            border-bottom: 4px solid var(--blood);
+            padding: 10px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-vault:hover {
+            background: var(--iron);
+            border-color: var(--gold);
+            color: var(--parchment);
+            transform: translateY(-2px);
+        }
+
+        /* --- THE LEXICON SCROLL --- */
+        .tome-container {
+            background: var(--parchment);
+            color: var(--ink);
+            padding: 60px 80px;
+            border-radius: 8px;
+            border: 4px solid var(--iron);
+            border-top: 8px solid var(--blood);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 0 60px rgba(184, 134, 11, 0.15);
+            max-width: 1000px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        .lexicon-letter {
+            font-size: 48pt;
+            color: var(--iron);
+            border-bottom: 4px solid var(--gold);
+            margin-top: 60px;
+            margin-bottom: 20px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .lexicon-letter:first-child { margin-top: 0; }
+
+        h1.entry-title {
+            font-size: 24pt;
+            color: var(--blood);
+            text-transform: uppercase;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        h2.section-header {
+            font-size: 16pt;
+            color: var(--iron);
+            border-bottom: 1px dashed var(--blood);
+            padding-bottom: 5px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        h3.sub-header {
+            font-size: 13pt;
+            color: var(--blood);
+            margin-top: 15px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 12pt;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul { margin-top: 5px; margin-bottom: 20px; padding-left: 20px; }
+        li { font-size: 12pt; line-height: 1.5; margin-bottom: 8px; }
+
+        .callout {
+            background: rgba(168, 24, 24, 0.1);
+            border-left: 4px solid var(--blood);
+            padding: 15px;
+            font-style: italic;
+            margin: 20px 0;
+            color: var(--ink);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hub-controls">
+        <a href="index.html" class="btn-vault">⬅ Return to Gateway</a>
+    </div>
+
+    <div class="tome-container">
+        
+        <div class="lexicon-letter">A</div>
+
+        <h1 class="entry-title">The Aakzad (Mortek)</h1>
+        <p>The Aakzad are a biomechanical alien intelligence from the dark tapestry of the cosmos that invaded the world during the First Age. They are characterized by skeletal frames fused with obsidian-like armor and eyes that burn with a sickly green necrotic light. They do not seek conquest for land, but rather for the harvest of life-frequency to sustain their eternal, cold existence.</p>
+
+        <h2 class="section-header">The Labyrinth of Whispers</h2>
+        <p>Following their defeat by the Ancient Alliance, the surviving Aakzad were entombed in a spatial-bending prison. This labyrinth consists of pentagon-shaped chambers and twisting tunnels designed to overwhelm their logical, alien minds. Over centuries, their physical forms degraded into husks, but their psychic presence grew into a "hissing" telepathic pull that targets the weak-willed.</p>
+
+        <h3 class="sub-header">The Death Priest & The Relic</h3>
+        <p>The Aakzad were led by the Death Priest, the "Architect of Bone-Frequency," who wielded a cosmic artifact of unfathomable power. This artifact was shattered into Three Pieces during the Great Victory. The largest piece was recently stolen from a tomb in SunsReach by the groundskeeper Amako "Kazamas" Pikari, an act that has triggered the Aakzad's mass awakening.</p>
+
+        <div class="lexicon-letter">B</div>
+
+        <h1 class="entry-title">Birn Uluhm (The Iron Roots)</h1>
+        <p>Birn Uluhm is a massive subterranean industrial complex carved into the parched, blood-red earth of the Dwarven mountains. It is ruled by the Birn clan—dwarves who have abandoned the tradition of the forge for the dark corruption found at the "roots" of the world.</p>
+
+        <h2 class="section-header">The Geothermal Forge</h2>
+        <p>The heart of the operation is a colossal circular chamber powered by intense geothermal vents. Veins of flowing magma crisscross the cavern, where dozens of captives labor under the cruel watch of six Birn dwarven slavers. Workers use massive iron ladders to descend into the abyss, harvesting raw mithril directly from white-hot currents.</p>
+
+        <h3 class="sub-header">The Titan's Blood</h3>
+        <p>The "roots" of the mountain are infused with a corrupting, oily essence believed to be the blood of an ancient, forgotten titan. The Birn dwarves use this essence to forge "Soul-Binding Spikes" and perform rituals of Lithomancy to animate the living rock.</p>
+
+        <div class="lexicon-letter">C</div>
+
+        <h1 class="entry-title">The Chromatic Weald</h1>
+        <p>The Weald is a biome of violent beauty born from the "Great Prismatic Event," where celestial light, moon crystals, and primordial energy merged. The environment is defined by its atmospheric Haze, which shifts between Magenta (Peace), Electric Green (Paranoia), and Prismatic (Mana Storms).</p>
+
+        <h2 class="section-header">The Mycelian Veil</h2>
+        <p>The Veil-folk are a collective fungal consciousness that communicate through low-frequency vibrations known as "The Hum". Their primary trait is "Spore-Memory," the ability to download the thoughts and history of any traveler they touch. They act as the keepers of the forest’s history, viewing all living things as temporary expressions of the soil.</p>
+
+        <div class="lexicon-letter">K</div>
+
+        <h1 class="entry-title">Khugron (The Mountain Maw)</h1>
+        <p>The entrance to the Dwarven mountains, Khugron, has been warped into a gargantuan stone maw with jagged, tooth-like protrusions. It serves as the heavily fortified gateway to the Birn territories.</p>
+
+        <h2 class="section-header">The Corridor of Treachery</h2>
+        <p>A long, narrow hallway featuring two trap floors designed to dump intruders 30 feet into lightless jail cells known as the Oubliette. The corridor is lined with arrow slits used by hobgoblin guards to fire upon survivors of the trap. The Oubliette contains iron cages suspended by chains, reachable only by a hoist system outside the cells.</p>
+
+        <h2 class="section-header">The Great Lift</h2>
+        <p>A vertical shaft connecting the three levels of the fortress. The lift is used for heavy cargo, including ore and Mithril, and is powered by a captive Earth Elemental shackled into service.</p>
+
+        <div class="lexicon-letter">L</div>
+
+        <h1 class="entry-title">Lithomancy</h1>
+        <p>Lithomancy is the art of manipulating stone through cursed arcane frequencies. In Birn Uluhm, this is practiced in the "Great Hub," a circular nexus containing a Lithomancy Circle of glowing blue runes. This circle is used to repair and control the Earth Elementals that serve as the fortress's guardians and laborers.</p>
+
+        <h2 class="section-header">Juggernauts of Birn</h2>
+        <p>These are Earth Elementals whose consciousness has been forcibly pulled into physical form. They are "caged" within heavy armor plates bolted directly into their rocky hides, serving as living battering rams for the Birn armies.</p>
+
+        <div class="lexicon-letter">P</div>
+
+        <h1 class="entry-title">The Pyreborn</h1>
+        <p>The Pyreborn are a resilient race of humans forged by the harsh volcanic environment of the Rysahm Ashlands. Physically imposing and attuned to geothermal energy, they construct Cities of Brass that serve as conduits for the world's elemental power. Their culture is defined by "Spell-Binding," the innate ability to draw magic directly from the heat and earth of their home.</p>
+
+        <div class="lexicon-letter">S</div>
+
+        <h1 class="entry-title">SunsReach</h1>
+        <p>A subtropical port city known as the "Gilded Port of Secrets". It is currently the epicenter of a looming war between the Human Church, the Northern Witchhunters, and the Lizardman Scaled Embassy.</p>
+
+        <h2 class="section-header">Leadership & Conflict</h2>
+        <ul>
+            <li><strong>High Priest Eason Lendall:</strong> Current leader of the Sun Temple.</li>
+            <li><strong>Deacon Jamarr Wicks:</strong> Lead Deacon and right hand to Lendall.</li>
+            <li><strong>Thaddeus & Zulrich:</strong> High Clerics managing the spiritual defense of the city.</li>
+            <li><strong>Braslav Karpov:</strong> A Witchhunter from the Northern Empire (Wexcross) hunting for daemonologists.</li>
+        </ul>
+
+        <h2 class="section-header">The Scaled Embassy</h2>
+        <p>The city's coast is currently dominated by Lizardman bone-ships. These vessels are powered by 20 massive, ogre-sized reptiles rowing in rhythmic patterns. The Skink High Priest of the Embassy has issued an ultimatum: recover the stolen Mortek fragment or face the cleansing fire of the emerald bone-ships.</p>
+
+        <div class="lexicon-letter">V</div>
+
+        <h1 class="entry-title">Vulkan-Kahn</h1>
+        <p>The god-like protectors of the Pyreborn people. These giant, majestic tigers walk upright and possess immense magical power. In their "Ancestral Form," they revert to four-legged apex predators capable of devastating feral attacks.</p>
+
+    </div>
+
+</body>
+</html>

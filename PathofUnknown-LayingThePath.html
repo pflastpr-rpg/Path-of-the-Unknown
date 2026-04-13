@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1090">
+    <title>Laying the Path - Campaign Chronicle</title>
+    <style>
+        :root { 
+            /* Slate & Crimson Theme (Synced with Ledger) */
+            --iron: #02070e;      
+            --blood: #A81818;     
+            --parchment: #f3e7c9; 
+            --gold: #B8860B;      
+            --input-bg: #FCF7EB;  
+            --ink: #111111;       
+            
+            --font-heading: 'Grenze Gotisch', serif; 
+            --font-main: 'IM Fell English', serif;   
+            --font-hand: 'MedievalSharp', cursive;   
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background: #1E1E24; 
+            color: var(--ink); 
+            font-family: var(--font-main); 
+            padding: 20px; 
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+        }
+
+        .sheet { 
+            background-color: var(--parchment);
+            background-image: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.05) 100%);
+            width: 1050px;
+            border: 10px solid var(--iron); 
+            padding: 20px 30px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+        }
+
+        /* Header Styles */
+        .page-title { 
+            text-align: center; font-size: 24pt; font-weight: 900; color: var(--iron); 
+            text-transform: uppercase; letter-spacing: 3px; border-bottom: 3px solid var(--gold); 
+            margin-bottom: 20px; padding-bottom: 5px; font-family: var(--font-heading);
+        }
+
+        .nav-controls {
+            display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;
+        }
+        .btn-nav {
+            background: var(--iron); color: var(--gold); border: 2px solid var(--gold); 
+            padding: 5px 15px; font-weight: 900; cursor: pointer; font-size: 11pt; 
+            text-transform: uppercase; font-family: var(--font-main); transition: 0.2s;
+        }
+        .btn-nav:hover { background: var(--blood); color: var(--parchment); }
+
+        /* Section Headers */
+        .h-box { 
+            background: var(--iron); color: var(--gold); padding: 6px 15px; font-size: 16pt; 
+            margin-top: 20px; margin-bottom: 10px; border-left: 12px solid var(--blood); 
+            text-transform: uppercase; font-weight: 900; font-family: var(--font-heading); letter-spacing: 1px;
+        }
+
+        /* Layout Grids */
+        .content-grid {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 20px;
+        }
+
+        /* Journal Entries */
+        .journal-entry {
+            background: var(--input-bg); border: 2px solid var(--iron); padding: 15px; margin-bottom: 15px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        .journal-header {
+            display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 1.5px solid var(--blood); margin-bottom: 10px; padding-bottom: 5px;
+        }
+        .journal-title { font-size: 14pt; font-weight: 900; color: var(--iron); text-transform: uppercase; }
+        .journal-date { font-size: 11pt; font-weight: 900; color: var(--blood); }
+        .journal-body { font-size: 12.5pt; line-height: 1.6; }
+
+        /* Lore & Faction Cards */
+        .lore-card {
+            background: rgba(0,0,0,0.03); border: 1.5px solid var(--ink); padding: 10px; margin-bottom: 10px;
+        }
+        .lore-title { font-size: 12pt; font-weight: 900; color: var(--blood); text-transform: uppercase; border-bottom: 1px solid var(--gold); margin-bottom: 5px; }
+        .lore-body { font-size: 11pt; line-height: 1.4; }
+
+    </style>
+</head>
+<body>
+
+    <div class="sheet">
+        <div class="page-title">Path of the Unknown - Laying the Path</div>
+        
+        <div class="nav-controls">
+            <button class="btn-nav" style="border-color: var(--blood); color: var(--blood);" onclick="location.href='index.html'">🏠 Main Hub</button>
+            
+            <button class="btn-nav">Session Logs</button>
+            <button class="btn-nav">Bestiary & Encounters</button>
+            <button class="btn-nav">Factions & Lore</button>
+        </div>
+
+        <div class="content-grid">
+            <div class="main-log">
+                <div class="h-box">Recent Encounters</div>
+                
+                <div class="journal-entry">
+                    <div class="journal-header">
+                        <span class="journal-title">The Fall of Ogruk Bonezbreaker</span>
+                        <span class="journal-date">Archived Session</span>
+                    </div>
+                    <div class="journal-body">
+                        <strong>The Hook:</strong> Gregar enlisted the party to eliminate Ogruk Bonezbreaker after a wounded Dwarf Slayer (Ironhammer) arrived at the outpost, revealing Ogruk's goblins had wiped out the rest of his band.
+                        <br><br>
+                        <strong>The Approach:</strong> Setting out before sunrise, the party ambushed a roaming band of Beastmen. Tom acted as bait, blinding them with light magic before the rest of the party leapt from the rocks to finish the hooved beasts. Approaching the Worlds Edge Mountains, goblin lookouts struck Zell and Chris with javelins (Chris suffered a critical hand wound, but kept all his fingers!). 
+                        <br><br>
+                        <strong>The Camp Assault:</strong> The party funneled into a narrow mountain passage. Ogruk attempted to goad the Slayer into single combat, but chaos erupted as two Ogre Henchmen and a horde of goblins charged. 
+                        <ul>
+                            <li><strong>The Fire & The Bear:</strong> The Goblin Shaman dropped a Firewall, catching the Flagellant, Warrior Priest, Bounty Hunter, and Pit Fighter ablaze. The Bounty Hunter and Flagellant had to stop, drop, and roll, while the Druid (Andy) shifted into a massive Bear and scaled the mountain walls to bypass the chokepoint.</li>
+                            <li><strong>The Meat Grinder:</strong> The Pit Fighter and Warrior Priest became locked in a war of attrition, at one point casually tanking five goblins at once with near-impenetrable iron armor.</li>
+                            <li><strong>The Climax:</strong> Ogruk, wielding a mammoth-bone hammer, was healed for 10 wounds by his Shaman. Enraged, Ogruk battered the Slayer into the dirt, and then struck down the Flagellant. With the frontline collapsed, the High Elf (Chris) desperately channeled healing magic. The Bear-Druid crashed through the flames, mauling the Ogre boss, but it was the Bounty Hunter (Erik Rose) who ended the fight, sinking a perfect arrow into Ogruk's chest!</li>
+                        </ul>
+                        <br>
+                        <strong>The Aftermath:</strong> The Shaman fled into the mountains. The Elf revived the fallen, and the party returned to the outpost to claim their 50 Gold reward.
+                        <br><br>
+                        <strong>Loot, Upgrades & Altdorf Staging:</strong>
+                        <ul>
+                            <li><strong>Erik Rose:</strong> Looted magical Knuckledusters (+20 Str, +2 Dmg, -2 Armor Pen) and a Magical Flail (Degeneration quality: 1 wound/turn until healed). Seeking Sigmar followers to employ in combat (Requires Fellowship roll).</li>
+                            <li><strong>Tom & Kyle:</strong> Reached Level 3 Wizards! Visiting the Altdorf academy to acquire new magic items and light warhorses (Requires upkeep and Riding/Animal Care skills).</li>
+                            <li><strong>Side Quest:</strong> Haggling with an Altdorf merchant for a +1 AP Ring. He will drop the price from 110g to 50g in exchange for 4 Large Wolf Pelts from the Grey Mountains.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="journal-entry">
+                    <div class="journal-header">
+                        <span class="journal-title">The Mountain Dungeon: Earth's Core</span>
+                        <span class="journal-date">Session 01</span>
+                    </div>
+                    <div class="journal-body">
+                        The party descended into the depths of the mountain. They navigated the alchemy lab, finding remnants of an ancient ritual, before proceeding to the shrine. The earth elementals here are fiercely territorial...
+                        <br><br>
+                        <em>[GM Notes: Add specific puzzle solutions here. Note which players took the brunt of the elemental attacks.]</em>
+                    </div>
+                </div>
+
+                <div class="journal-entry">
+                    <div class="journal-header">
+                        <span class="journal-title">Expedition to the Sunken Archive</span>
+                        <span class="journal-date">Session 02</span>
+                    </div>
+                    <div class="journal-body">
+                        Water damage has ruined many of the outer texts, but the inner sanctum remains sealed. The party triggered the warding glyphs upon entry...
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-lore">
+                <div class="h-box">Active Threats</div>
+                
+                <div class="lore-card">
+                    <div class="lore-title">Skullsmasherz Tribe</div>
+                    <div class="lore-body">
+                        <strong>Motives:</strong> Hoarding wealth and territory. Currently holding a stolen family heirloom belonging to an outpost client.<br>
+                        <strong>Location:</strong> The Grey Mountains (South of Altdorf).<br>
+                        <strong>Key Figures:</strong> Unknown Ork Warboss.<br>
+                        <strong>Notes:</strong> The party is currently staging in Altdorf, bartering for magical gear and mounts before marching south to assault the tribe.
+                    </div>
+                </div>
+
+                <div class="h-box">Defeated Foes</div>
+
+                <div class="lore-card" style="opacity: 0.7;">
+                    <div class="lore-title" style="color: var(--iron); text-decoration: line-through;">Ogruk Bonezbreaker</div>
+                    <div class="lore-body">
+                        <strong>Status:</strong> Slain by Erik Rose (Arrow to the chest).<br>
+                        <strong>Faction:</strong> Independent Ogre/Goblin warband in the Worlds Edge Mountains.<br>
+                        <strong>Notes:</strong> Wielded a massive mammoth-bone warhammer. His Goblin Shaman escaped the battle and may still be at large.
+                    </div>
+                </div>
+
+                <div class="h-box">Active Factions</div>
+                
+                <div class="lore-card">
+                    <div class="lore-title">The Pyreborn</div>
+                    <div class="lore-body">
+                        <strong>Motives:</strong> [Insert faction goals here]<br>
+                        <strong>Key Figures:</strong> The Fire Lord (Defense: 10)<br>
+                        <strong>Notes:</strong> Highly susceptible to cold, but their melee strikes often leave a burning condition.
+                    </div>
+                </div>
+
+                <div class="lore-card">
+                    <div class="lore-title">The Aakzad</div>
+                    <div class="lore-body">
+                        <strong>Motives:</strong> [Insert faction goals here]<br>
+                        <strong>Key Figures:</strong> TBD<br>
+                        <strong>Notes:</strong> [Insert combat tactics and lore]
+                    </div>
+                </div>
+
+                <div class="h-box">Notable Locations</div>
+                <div class="lore-card">
+                    <div class="lore-title">Birn Uluhm</div>
+                    <div class="lore-body">
+                        The great dwarven stronghold. Currently experiencing political tension. High quality smithing available, but prices are steep for outsiders.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

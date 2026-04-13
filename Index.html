@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path of the Unknown - Gateway</title>
+    <style>
+        :root { 
+            --iron: #02070e;
+            --blood: #A81818;
+            --parchment: #f3e7c9;
+            --gold: #B8860B;
+            --ink: #111111;
+            --white: #FCF7EB;
+        }
+
+        body {
+            background: #121215; 
+            color: var(--parchment);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px;
+            margin: 0;
+        }
+
+        /* --- TOP CONTROL BAR --- */
+        .hub-controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-vault {
+            background: var(--ink);
+            color: var(--gold);
+            border: 2px solid var(--iron);
+            border-bottom: 4px solid var(--blood);
+            padding: 10px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-vault:hover {
+            background: var(--iron);
+            border-color: var(--gold);
+            color: var(--parchment);
+            transform: translateY(-2px);
+        }
+
+        /* --- THE GATEWAY WRAPPER --- */
+        .gateway-wrapper {
+            background: linear-gradient(145deg, #1a1a20 0%, #15151a 100%);
+            border: 4px solid var(--iron);
+            border-top: 8px solid var(--blood);
+            border-bottom: 8px solid var(--gold);
+            border-radius: 12px;
+            padding: 60px 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,0,0,0.5);
+            max-width: 1000px; /* Widened to fit 4 cards nicely */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hub-title {
+            font-size: 42pt;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 10px;
+            text-shadow: 4px 4px 10px rgba(0,0,0,0.8);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .hub-subtitle {
+            font-size: 16pt;
+            color: var(--blood);
+            font-style: italic;
+            font-weight: bold;
+            margin-bottom: 50px;
+            text-shadow: 1px 1px 2px #000;
+            text-align: center;
+        }
+
+        .tool-nav {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .tool-card {
+            background: var(--ink);
+            border: 4px solid var(--iron);
+            border-bottom: 8px solid var(--blood);
+            border-radius: 8px;
+            width: 280px; /* Slightly slimmer to fit 4-across on more screens */
+            display: flex; flex-direction: column; align-items: center;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+            cursor: pointer; text-decoration: none;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.9), 0 0 20px rgba(184, 134, 11, 0.3);
+            background: #171717;
+        }
+
+        .portrait-holder {
+            width: 100%; height: 200px;
+            position: relative; overflow: hidden;
+            border-bottom: 4px solid var(--gold);
+        }
+
+        .grimoire-art {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.4s ease;
+            filter: brightness(0.7) contrast(1.2); 
+        }
+
+        .tool-card:hover .grimoire-art {
+            transform: scale(1.1); filter: brightness(1) contrast(1.2);
+        }
+
+        .p-label {
+            position: absolute; bottom: 10px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(17, 17, 17, 0.85);
+            color: var(--gold);
+            padding: 5px 15px;
+            font-size: 12pt; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 2px;
+            border: 2px solid var(--blood);
+            white-space: nowrap;
+        }
+
+        .tool-link {
+            display: block; width: 100%; padding: 20px 0;
+            color: var(--parchment); font-size: 14pt; font-weight: 900;
+            text-transform: uppercase; text-decoration: none;
+            text-align: center; letter-spacing: 2px; transition: 0.2s;
+        }
+
+        .tool-card:hover .tool-link { color: var(--gold); }
+    </style>
+</head>
+<body>
+
+    <div class="hub-controls">
+        <button class="btn-vault" onclick="window.open('https://google.com')">External Tools</button>
+        <button class="btn-vault" onclick="alert('Settings Coming Soon')">Global Settings</button>
+    </div>
+
+    <div class="gateway-wrapper">
+        <div class="hub-title">Path of the Unknown</div>
+        <div class="hub-subtitle">"A Truly Classless Game..."</div>
+
+        <div class="tool-nav">
+            <a href="RPG-PowerofThree-Rules.html" class="tool-card">
+                <div class="portrait-holder">
+                    <img src="rules_card.png" class="grimoire-art" alt="Core Rulebook">
+                    <span class="p-label">Core Rules</span>
+                </div>
+                <div class="tool-link">Read Rules</div>
+            </a>
+
+            <a href="PathofUnknown-Ledger.html" class="tool-card">
+                <div class="portrait-holder">
+                    <img src="ledger_card.png" class="grimoire-art" alt="Character Ledger">
+                    <span class="p-label">The Ledger</span>
+                </div>
+                <div class="tool-link">Forge Hero</div>
+            </a>
+
+            <a href="Fantasy-RPG-Bestiary-Full.html" class="tool-card">
+                <div class="portrait-holder">
+                    <img src="bestiary_card.png" class="grimoire-art" alt="Bestiary">
+                    <span class="p-label">Bestiary</span>
+                </div>
+                <div class="tool-link">Summon</div>
+            </a>
+
+            <a href="lore.html" class="tool-card" style="border-bottom-color: var(--gold);">
+                <div class="portrait-holder">
+                    <img src="lore_book.png" class="grimoire-art" alt="Tome of Lore">
+                    <span class="p-label" style="border-color: var(--gold);">Tome of Lore</span>
+                </div>
+                <div class="tool-link">Explore Lore</div>
+            </a>
+
+            <a href="PathofUnknown-LayingThePath.html" class="tool-card" style="border-bottom-color: var(--gold);">
+                <div class="portrait-holder">
+                    <img src="PathLaying.png" class="grimoire-art" alt="Campaign Chronicle">
+                    <span class="p-label" style="border-color: var(--gold);">Chronicle</span>
+                </div>
+                <div class="tool-link">Laying the Path</div>
+            </a>
+        </div>
+    </div> 
+
+</body>
+</html>
