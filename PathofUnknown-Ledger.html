@@ -485,7 +485,7 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
             <button class="btn-vault" onclick="saveData()">💾 Save .RPG</button>
             <button class="btn-vault" onclick="saveAsHTML()">📄 Save HTML</button> 
             <button class="btn-vault" onclick="document.getElementById('load-input').click()">📂 Load</button>
-            <button class="btn-reset-vault" onclick="clearSheet()">Reset</button>
+            <button class="btn-vault" id="btn-cloud-load" onclick="alert('HTML sees the button!'); fetchCharacterFromCloud();">☁️ Load from Cloud</button>
 
             <div style="display: flex; gap: 5px; align-items: center; border-left: 2px solid var(--gold); padding-left: 10px; margin-left: 5px;">
                 <select id="cloud-char-select" class="btn-vault" style="background: var(--white); color: var(--ink); cursor: pointer; font-weight: bold;">
