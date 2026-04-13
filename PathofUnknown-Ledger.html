@@ -432,7 +432,7 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
            MASTER PRINT LAYOUT - THE PAGINATION FIX
            ========================================== */
         @media print {
-            @page { size: letter portrait; margin: 0.2in; }
+            @page { size: letter portrait; margin: 0.1in; }
             
             /* 1. KILL THE TRUNCATION BUGS: Force block and visible overflows */
             html, body { 
@@ -453,7 +453,7 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
                 height: auto !important;
                 overflow: visible !important; /* This stops the cutoff! */
                 width: 1050px !important; 
-                zoom: 0.78; /* iPad scaling */
+                zoom: 0.70; /* iPad scaling */
                 border: 2px solid var(--iron); 
                 box-shadow: none; 
                 margin: 0 auto 10px auto !important; 
