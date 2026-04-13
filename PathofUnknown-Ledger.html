@@ -429,37 +429,35 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
 }
 
    /* ==========================================
-           MASTER PRINT LAYOUT - UNIVERSAL PC & IPAD
+           MASTER PRINT LAYOUT - PAGE 2 SCALING FIX
            ========================================== */
         @media print {
             @page { size: letter portrait; margin: 0.2in; }
             
-            /* 1. Base Document Settings */
+            /* 1. MOVE ZOOM TO BODY: This fixes the Page 2 shrinkage bug! */
             html, body { 
                 display: block !important; 
                 height: auto !important; 
                 overflow: visible !important; 
                 background: var(--parchment) !important; 
                 padding: 0; margin: 0; 
-                -webkit-print-color-adjust: exact; /* Chrome/Edge/Safari */
-                color-adjust: exact; /* Firefox */
+                -webkit-print-color-adjust: exact; 
+                color-adjust: exact; 
                 print-color-adjust: exact; 
+                
+                /* Applying scaling to the entire document guarantees uniform pages */
+                zoom: 0.75; 
+                -moz-transform: scale(0.75); 
+                -moz-transform-origin: top left;
             }
             
-            /* 2. THE SHEET: Cross-Browser Scaling */
+            /* 2. THE SHEET: Removed zoom from here */
             .sheet { 
                 display: block !important;
                 position: relative !important;
                 height: auto !important;
                 overflow: visible !important;
                 width: 1050px !important; 
-                
-                /* Chrome, Edge, and Safari */
-                zoom: 0.75; 
-                /* Firefox Fallback */
-                -moz-transform: scale(0.75);
-                -moz-transform-origin: top left;
-                
                 border: 2px solid var(--iron); 
                 box-shadow: none; 
                 margin: 0 auto 10px auto !important; 
@@ -475,8 +473,9 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
                 break-after: avoid !important;
             }
 
-            /* 4. The Invisibility Cloak */
-            .no-print, .sheet-header, .vault-controls, .btn-reset-vault, #ph, #ui { 
+            /* 4. AGGRESSIVE UI ASSASSINATION: Hides Vault, Buttons, and specific IDs */
+            .no-print, .sheet-header, .vault-controls, .btn-reset-vault, #ph, #ui, 
+            #cloud-char-select, #btn-cloud-load { 
                 display: none !important; 
             }
 
