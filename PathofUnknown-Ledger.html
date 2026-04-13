@@ -114,6 +114,7 @@
 }
 
 @media print {
+    .no-print { display: none !important; }
     /* Completely remove the header bar for printing to save space */
     .sheet-header { 
         display: none !important; 
@@ -476,7 +477,7 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
 
     <div class="sheet">
     
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--iron); margin-bottom: 4px; padding-bottom: 4px;">
+       <div class="no-print" style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--iron); margin-bottom: 4px; padding-bottom: 4px;">
             <div class="page-title" style="border: none; margin: 0; padding: 0; white-space: nowrap; font-size: 16pt; letter-spacing: 1px;">
                 Path of the Unknown - The Ledger -
             </div>
