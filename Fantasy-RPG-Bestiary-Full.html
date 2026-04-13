@@ -13,7 +13,7 @@
         --gold: #B8860B;      
         --ink: #111111;       
         --white: #FCF7EB;     
-        --card-bg: #f3e7c9; /* <- THIS RESTORES YOUR CARD BACKGROUND! */
+        --card-bg: #f3e7c9; 
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -59,9 +59,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: var(--ink); /* Deep black instead of bright red */
-        border: 3px solid var(--blood); /* Crimson border */
-        border-bottom: 6px solid var(--gold); /* Heavy Gold base */
+        background: var(--ink); 
+        border: 3px solid var(--blood); 
+        border-bottom: 6px solid var(--gold); 
         border-radius: 6px;
         padding: 20px 10px;
         gap: 15px;
@@ -74,18 +74,17 @@
         text-align: center;
         font-size: 28pt; 
         font-weight: 900; 
-        color: var(--gold); /* Gold text on black */
+        color: var(--gold); 
         text-transform: uppercase; 
         letter-spacing: 5px; 
         text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
         margin-bottom: 0;
     }
 
-    /* --- FIXING THE BUTTON WRAP --- */
     .vault-controls { 
         display: flex; 
         gap: 6px; 
-        flex-wrap: nowrap; /* Forces a single line */
+        flex-wrap: nowrap; 
         justify-content: center; 
         width: 100%;
     }
@@ -112,31 +111,29 @@
         border-color: var(--ink); 
     }
     
-    .btn-add { 
-        background: var(--blood); 
-        color: var(--white); 
-    }
+    .btn-add { background: var(--blood); color: var(--white); }
     
     .back-to-top {
-    position: fixed; 
-    bottom: 30px; 
-    right: 30px;
-    background: var(--gold); 
-    color: var(--ink);
-    border: 3px solid var(--ink); 
-    border-radius: 50%;
-    width: 60px; 
-    height: 60px; 
-    font-size: 24pt; 
-    font-weight: 900;
-    cursor: pointer; 
-    display: none; /* JS will toggle this to 'flex' */
-    align-items: center; 
-    justify-content: center;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5); 
-    transition: all 0.2s; 
-    z-index: 9999; /* Increased to ensure it stays above all cards */
-}
+        position: fixed; 
+        bottom: 30px; 
+        right: 30px;
+        background: var(--gold); 
+        color: var(--ink);
+        border: 3px solid var(--ink); 
+        border-radius: 50%;
+        width: 60px; 
+        height: 60px; 
+        font-size: 24pt; 
+        font-weight: 900;
+        cursor: pointer; 
+        display: none; 
+        align-items: center; 
+        justify-content: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5); 
+        transition: all 0.2s; 
+        z-index: 9999; 
+    }
+
     /* --- MONSTER CARD GRID --- */
     .bestiary-container { width: 100%; display: grid; grid-template-columns: 1fr; gap: 25px; }
 
@@ -209,81 +206,36 @@
     .roll-result { min-width: 50px; height: 40px; background: var(--ink); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 18pt; font-weight: 900; border: 2px solid var(--gold); }
 
     /* --- PRINT SYSTEM RECONSTRUCTION --- */
-@media print {
-    /* 1. Hide all interactive and digital elements */
-    .top-bar, 
-    .vault-controls, 
-    .alpha-tabs, 
-    .back-to-top, 
-    .btn-remove, 
-    .encounter-stats,
-    .dice-vault,
-    .roll-log,
-    #clear-log-btn { 
-        display: none !important; 
+    @media print {
+        .top-bar, .vault-controls, .alpha-tabs, .back-to-top, .btn-remove, .encounter-stats, .dice-vault, .roll-log, #clear-log-btn { display: none !important; }
+        @page { size: letter portrait; margin: 0.4in; }
+        body { background: white !important; padding: 0 !important; margin: 0 !important; }
+        .main-wrapper { max-width: 100% !important; margin: 0 !important; }
+        .monster-card { border: 3px solid var(--ink) !important; background: var(--card-bg) !important; page-break-inside: avoid !important; margin-bottom: 30px !important; box-shadow: none !important; -webkit-print-color-adjust: exact; }
+        input, textarea, select { background: var(--white) !important; border-bottom: 2px solid var(--blood) !important; -webkit-print-color-adjust: exact; }
+        .p-text { color: rgba(0,0,0,0.2) !important; }
     }
-
-    /* 2. Reset the page layout for Letter size */
-    @page {
-        size: letter portrait;
-        margin: 0.4in;
-    }
-
-    body {
-        background: white !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    .main-wrapper {
-        max-width: 100% !important;
-        margin: 0 !important;
-    }
-
-    /* 3. Ensure cards stay together and look like parchment */
-    .monster-card {
-        border: 3px solid var(--ink) !important;
-        background: var(--card-bg) !important;
-        page-break-inside: avoid !important; /* Prevents card from splitting across pages */
-        margin-bottom: 30px !important;
-        box-shadow: none !important; /* Shadows look muddy in print */
-        -webkit-print-color-adjust: exact; /* Forces background colors to show */
-    }
-
-    /* 4. Optimize field visibility for ink */
-    input, textarea, select {
-        background: var(--white) !important;
-        border-bottom: 2px solid var(--blood) !important;
-        -webkit-print-color-adjust: exact;
-    }
-
-    /* Hide the "Portrait" text if no image is uploaded */
-    .p-text {
-        color: rgba(0,0,0,0.2) !important;
-    }
-}
-
-</style>
+    </style>
 </head>
 <body>
 
 <div class="main-wrapper">
     <div class="top-bar">
         <div class="page-title">Path of the Unknown</div>
-    <div style="color: var(--blood); font-weight: bold; font-style: italic; font-size: 14pt;">Codex of Beasts & Summons</div>
+        <div style="color: var(--blood); font-weight: bold; font-style: italic; font-size: 14pt;">Codex of Beasts & Summons</div>
         
         <div class="encounter-stats">
-        <a href="index.html" class="btn-vault" style="text-decoration: none; display: flex; align-items: center;">🏠 Home</a>
-        <span>TOTAL MONSTERS: <span id="monster-count" class="stat-num">0</span></span>
-        <span>EST. PRINT PAGES: <span id="page-count" class="stat-num">0</span></span>
-    </div>
+            <a href="index.html" class="btn-vault" style="text-decoration: none; display: flex; align-items: center;">🏠 Home</a>
+            <span>TOTAL MONSTERS: <span id="monster-count" class="stat-num">0</span></span>
+            <span>EST. PRINT PAGES: <span id="page-count" class="stat-num">0</span></span>
+        </div>
         
         <div class="vault-controls">
             <button class="btn-vault btn-add" onclick="addCreature()">+ Add Creature</button>
-            <button class="btn-vault" onclick="fetchOfficialBestiary(event, 'core_bestiary.rpgb')">📜 Load Official Codex</button>
-            <button class="btn-vault btn-sort" onclick="sortBestiary()">A-Z Sort</button>
-            <button class="btn-vault" onclick="saveBestiary()">💾 Save Encounter</button>
-            <button class="btn-vault" onclick="document.getElementById('load-input').click()">📂 Load Encounter</button>
+            <button class="btn-vault" id="btn-official" onclick="fetchOfficialBestiary('core_bestiary.rpgb')">📜 Load Official Codex</button>
+            <button class="btn-vault btn-sort" id="btn-sort" onclick="sortBestiary()">A-Z Sort</button>
+            <button class="btn-vault" id="btn-save" onclick="saveBestiary()">💾 Save Encounter</button>
+            <button class="btn-vault" id="btn-load" onclick="document.getElementById('load-input').click()">📂 Load Encounter</button>
             <button class="btn-vault" onclick="window.print()">🖨️ PDF</button>
             <input type="file" id="load-input" accept=".rpgb" style="display:none" onchange="loadBestiary(this)">
         </div>
@@ -313,26 +265,12 @@
 <button class="back-to-top" id="btn-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to Top">⬆</button>
 
 <script>
+    window.addEventListener('scroll', () => {
+        const btn = document.getElementById('btn-top');
+        if (btn) btn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+    });
 
-    // Automatically finds the right image based on the monster's name
-function getDynamicImagePath(monsterName) {
-    if (!monsterName) return 'images/placeholder.png'; // Failsafe
-    // Converts "Ork Warboss" to "ork_warboss.png"
-    const safeName = monsterName.toLowerCase().replace(/[^a-z0-9]/g, '_');
-    return `images/${safeName}.png`;
-}
-
-    // This tells the button when to appear
-window.addEventListener('scroll', () => {
-    const btn = document.getElementById('btn-top');
-    if (btn) {
-        // The button appears after you scroll down 400 pixels
-        btn.style.display = window.scrollY > 400 ? 'flex' : 'none';
-    }
-});
-
-   let rollHistory = [];
-
+    let rollHistory = [];
     function rollDice(sides) {
         const result = Math.floor(Math.random() * sides) + 1;
         document.getElementById('current-roll').innerText = result;
@@ -354,7 +292,6 @@ window.addEventListener('scroll', () => {
         if (e.target && e.target.id === 'clear-log-btn') resetLog();
     });
 
-        // --- REFINED CARD TEMPLATE (Index 3 is now PG#) ---
     const cardTemplate = `
         <div class="monster-card">
             <button class="btn-remove" onclick="this.parentElement.remove(); updateMonsterCount(); autoSaveBestiary();" title="Delete Monster">X</button>
@@ -417,7 +354,6 @@ window.addEventListener('scroll', () => {
             <div class="m-special"><label>Special Abilities & Traits</label><textarea placeholder="Rules..."></textarea></div>
         </div>`;
 
-    // === DATABASE MANAGER ===
     const dbName = "PowerOfThreeBestiary";
     const storeName = "Creatures";
 
@@ -451,23 +387,24 @@ window.addEventListener('scroll', () => {
             request.onerror = () => resolve(null);
         });
     }
-    // === Fetch Official Codex ===
-    async function fetchOfficialBestiary(event, fileName) {
-    try {
-        const btn = event.target;
-        btn.innerText = "⌛ Summoning...";
-        const response = await fetch(fileName);
-        if (!response.ok) throw new Error("Codex not found.");
-        const data = await response.json();
-        renderBestiary(data);
-        await saveToDB(data);
-        btn.innerText = "📜 Load Official Codex";
-    } catch(err) {
-        alert("Failed to fetch: " + err.message);
-        event.target.innerText = "📜 Load Official Codex";
+
+    async function fetchOfficialBestiary(fileName) {
+        const btn = document.getElementById('btn-official');
+        try {
+            btn.innerText = "⏳ Summoning...";
+            const response = await fetch(fileName);
+            if (!response.ok) throw new Error("Codex not found.");
+            const data = await response.json();
+            renderBestiary(data);
+            await saveToDB(data);
+            btn.innerText = "✅ Loaded!";
+        } catch(err) {
+            btn.innerText = "❌ Error!";
+        } finally {
+            setTimeout(() => btn.innerText = "📜 Load Official Codex", 2000);
+        }
     }
-}
-    // === RENDER & CORE LOGIC ===
+
     function updateMonsterCount() {
         const count = document.querySelectorAll('.monster-card').length;
         const countEl = document.getElementById('monster-count');
@@ -485,15 +422,12 @@ window.addEventListener('scroll', () => {
         return newCard; 
     }
 
-  // 1. Add this Helper Function right above renderBestiary
     function getDynamicImagePath(monsterName) {
         if (!monsterName) return 'images/placeholder.png'; 
-        // Converts "Ork Warboss" to "ork_warboss"
         const safeName = monsterName.toLowerCase().trim().replace(/[^a-z0-9]/g, '_');
         return `images/${safeName}.png`;
     }
 
-    // 2. Your new, lightweight render function
     function renderBestiary(cardsData) {
         const grid = document.getElementById('bestiary-grid');
         grid.innerHTML = ''; 
@@ -512,28 +446,22 @@ window.addEventListener('scroll', () => {
                 }
             });
 
-            // --- NEW DYNAMIC IMAGE LOGIC ---
-            // Grab the monster's name (which is always the first input value in your array)
             const monsterName = valsToLoad[0] || "Unknown_Monster";
-            
             const portraitBox = newCard.querySelector('.m-portrait-box');
             const imgEl = portraitBox?.querySelector('.p-img');
             
             if (imgEl && portraitBox) {
-                // Tell the image to look in the GitHub folder
                 imgEl.src = getDynamicImagePath(monsterName);
                 imgEl.style.display = 'block';
                 portraitBox.querySelector('.p-text').style.display = 'none';
                 portraitBox.style.borderStyle = 'solid';
 
-                // Safety Net: If the image file doesn't exist yet, it neatly hides the broken icon
                 imgEl.onerror = function() {
                     this.style.display = 'none';
                     portraitBox.querySelector('.p-text').style.display = 'block';
                     portraitBox.style.borderStyle = 'dashed';
                 };
             }
-            // -------------------------------
         }
         buildAlphaTabs();
         updateMonsterCount();
@@ -546,7 +474,7 @@ window.addEventListener('scroll', () => {
             const cardsData = [];
             document.querySelectorAll('.monster-card').forEach(card => {
                 let cardState = { values: [], imgSrc: "" };
-                card.querySelectorAll('input:not([type=\"file\"]), select, textarea').forEach(el => {
+                card.querySelectorAll('input:not([type="file"]), select, textarea').forEach(el => {
                     cardState.values.push(el.type === 'checkbox' ? el.checked : el.value);
                 });
                 const img = card.querySelector('.p-img');
@@ -559,24 +487,35 @@ window.addEventListener('scroll', () => {
 
     window.loadBestiary = function(input) {
         if (input.files && input.files[0]) {
+            const btn = document.getElementById('btn-load');
+            btn.innerText = "⏳ Loading...";
+
             const reader = new FileReader();
             reader.onload = async function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
                     renderBestiary(data);
                     await saveToDB(data);
-                    alert("Encounter Loaded & Synced!");
-                } catch(err) { alert("Error reading file."); }
+                    btn.innerText = "✅ Synced!";
+                } catch(err) { 
+                    btn.innerText = "❌ Error!";
+                } finally {
+                    setTimeout(() => btn.innerText = "📂 Load Encounter", 2000);
+                    input.value = ''; // Resets the input so the exact same file can be selected again
+                }
             };
             reader.readAsText(input.files[0]);
         }
     };
 
     function saveBestiary() {
+        const btn = document.getElementById('btn-save');
+        btn.innerText = "⏳ Saving...";
+
         const cardsData = [];
         document.querySelectorAll('.monster-card').forEach(card => {
             let cardState = { values: [], imgSrc: "" };
-            card.querySelectorAll('input:not([type=\"file\"]), select, textarea').forEach(el => {
+            card.querySelectorAll('input:not([type="file"]), select, textarea').forEach(el => {
                 cardState.values.push(el.type === 'checkbox' ? el.checked : el.value);
             });
             const img = card.querySelector('.p-img');
@@ -588,6 +527,9 @@ window.addEventListener('scroll', () => {
         a.href = URL.createObjectURL(blob);
         a.download = `bestiary_encounter.rpgb`;
         a.click();
+        
+        btn.innerText = "✅ Saved!";
+        setTimeout(() => btn.innerText = "💾 Save Encounter", 2000);
     }
 
     function buildAlphaTabs() {
@@ -623,47 +565,40 @@ window.addEventListener('scroll', () => {
         }
     }
 
-    // --- UPDATED MIGRATION: Fixes the 36-to-37 Data Shift ---
     function migrateData(valsToLoad) {
         if (!valsToLoad) return [];
         const knownSizes = ["Tiny", "Small", "Medium", "Large", "Giant", "Enormous", "Titanic"];
-        
-        // Fix for old Size/Type order
         if (valsToLoad.length >= 3 && knownSizes.includes(valsToLoad[2])) {
             const tempType = valsToLoad[1];
             valsToLoad[1] = valsToLoad[2];
             valsToLoad[2] = tempType;
         }
-
-        // FIX: If it's the old version (36 fields), insert a blank for PG# (at index 3)
-        // to push everything else back into its correct box.
-        if (valsToLoad.length === 36) {
-            valsToLoad.splice(3, 0, ""); 
-        }
-
+        if (valsToLoad.length === 36) valsToLoad.splice(3, 0, ""); 
         return valsToLoad;
     }
 
     function sortBestiary() {
+        const btn = document.getElementById('btn-sort');
+        
         const grid = document.getElementById('bestiary-grid');
-        // 1. Grab all current cards
         const cards = Array.from(grid.querySelectorAll('.monster-card'));
     
-        // 2. Sort them by the value in the .m-name input
         cards.sort((a, b) => {
             const nameA = a.querySelector('.m-name').value.trim().toUpperCase();
             const nameB = b.querySelector('.m-name').value.trim().toUpperCase();
             return nameA.localeCompare(nameB);
         });
 
-        // 3. Clear the grid and put them back in order
         grid.innerHTML = '';
         cards.forEach(card => grid.appendChild(card));
-    
-        // 4. Update the DB so the browser remembers the new order
         autoSaveBestiary();
-        alert("Codex Alphabetized!");
+        
+        if (btn) {
+            btn.innerText = "✅ Sorted!";
+            setTimeout(() => btn.innerText = "A-Z Sort", 2000);
+        }
     }
+    
     async function initSystem() {
         const savedData = await getFromDB();
         if (savedData && savedData.length > 0) {
