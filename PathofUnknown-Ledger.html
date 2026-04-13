@@ -429,40 +429,50 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
 }
 
    /* ==========================================
-           MASTER PRINT LAYOUT - THE PAGINATION FIX
+           MASTER PRINT LAYOUT - UNIVERSAL PC & IPAD
            ========================================== */
         @media print {
-            @page { size: letter portrait; margin: 0.1in; }
+            @page { size: letter portrait; margin: 0.2in; }
             
-            /* 1. KILL THE TRUNCATION BUGS: Force block and visible overflows */
+            /* 1. Base Document Settings */
             html, body { 
                 display: block !important; 
                 height: auto !important; 
                 overflow: visible !important; 
                 background: var(--parchment) !important; 
-                padding: 0; 
-                margin: 0; 
-                -webkit-print-color-adjust: exact; 
+                padding: 0; margin: 0; 
+                -webkit-print-color-adjust: exact; /* Chrome/Edge/Safari */
+                color-adjust: exact; /* Firefox */
                 print-color-adjust: exact; 
             }
             
-            /* 2. THE SHEET: Unlock height and overflow */
+            /* 2. THE SHEET: Cross-Browser Scaling */
             .sheet { 
                 display: block !important;
                 position: relative !important;
                 height: auto !important;
-                overflow: visible !important; /* This stops the cutoff! */
+                overflow: visible !important;
                 width: 1050px !important; 
-                zoom: 0.70; /* iPad scaling */
+                
+                /* Chrome, Edge, and Safari */
+                zoom: 0.75; 
+                /* Firefox Fallback */
+                -moz-transform: scale(0.75);
+                -moz-transform-origin: top left;
+                
                 border: 2px solid var(--iron); 
                 box-shadow: none; 
                 margin: 0 auto 10px auto !important; 
             }
             
-            /* 3. PROTECT THE BOXES: Don't let the printer slice these in half across pages */
-            .readiness-table, .wound-ledger, .gear-area, .spec-container, .sk-c {
+            /* 3. PROTECT THE BOXES: The "Super Glue" */
+            .readiness-table, .wound-ledger, .gear-area, .spec-container, .sk-c, .magic-section, .knowledge-section, .inventory-section {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
+            }
+            .page-title, .h-box {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
             }
 
             /* 4. The Invisibility Cloak */
