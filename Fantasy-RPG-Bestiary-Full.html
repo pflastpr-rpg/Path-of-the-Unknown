@@ -425,14 +425,12 @@
    function getDynamicImagePath(monsterName) {
         if (!monsterName) return 'https://raw.githubusercontent.com/pflastpr-rpg/Path-of-the-Unknown/main/images/placeholder.png'; 
         
-        // 1. Strip out illegal file characters (colons, commas, apostrophes, etc.)
-        let safeName = monsterName.replace(/[:'",!?]/g, '');
-        
-        // 2. Replace the remaining spaces with hyphens
-        safeName = safeName.trim().replace(/\s+/g, '-');
+        // Takes exactly what you type, and just changes spaces to hyphens
+        const safeName = monsterName.trim().replace(/\s+/g, '-');
         
         return `https://raw.githubusercontent.com/pflastpr-rpg/Path-of-the-Unknown/main/images/${safeName}.png?v=${new Date().getTime()}`;
     }
+    
     function renderBestiary(cardsData) {
         const grid = document.getElementById('bestiary-grid');
         grid.innerHTML = ''; 
