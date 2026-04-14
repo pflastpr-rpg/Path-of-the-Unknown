@@ -696,14 +696,7 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
                 </div>
             </div>
         </div>
-    </div> ```
-
-### Why this fixes the layout:
-* **Three Clear Columns:** It organizes everything into three distinct children (`twin-wrapper`, `cm-col`, and `wm-table-container`) directly under the `readiness-block`.
-* **Flex-Box Side-by-Side:** Your CSS for `.readiness-block` (which should be `display: flex; justify-content: space-between; align-items: flex-start;`) will now correctly place these three columns in a row.
-* **Twin Heights:** The `twin-wrapper` forces the Portrait and Characteristics to be the same height, while `align-items: flex-start` on the parent row ensures the tall third column doesn't stretch them.
-
-**Important Note:** Make sure that `</style>` tag is at the very bottom of your CSS section (after the print media rules), or the browser will ignore the code!
+    </div>
 
     <div class="h-box">Primary Skills</div>
     <div class="sk-grid" id="sg"></div>
