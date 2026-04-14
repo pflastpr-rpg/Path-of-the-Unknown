@@ -221,10 +221,13 @@
 .res-i select { font-size: 10pt; }
 
         /* --- MAIN SECTION --- */
-        .readiness-block { display: flex; gap: 4px; margin-bottom: 5px; align-items: stretch; justify-content: space-between; }
-        .port { width: 200px; border: 3px solid var(--iron); background: rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; flex-shrink: 0; align-self: stretch; }
+        /* Changed align-items to flex-start so the boxes don't artificially stretch each other */
+        .readiness-block { display: flex; gap: 4px; margin-bottom: 5px; align-items: flex-start; justify-content: space-between; }
+        
+        /* Removed align-self: stretch and hard-locked the height to 265px */
+        .port { width: 200px; height: 265px; border: 3px solid var(--iron); background: rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; flex-shrink: 0; }
+        
         .port img { width: 100%; height: 100%; object-fit: cover; }
-
         .char-master-container { display: flex; flex-direction: column; border: 2px solid var(--iron); background: rgba(0,0,0,0.05); flex-shrink: 0; }
         .char-main-head { background: var(--iron); color: var(--gold); font-size: 11pt; font-weight: 900; text-align: center; padding: 3px 0; text-transform: uppercase; border-bottom: 2px solid var(--blood); }
         .char-grid { display: grid; grid-template-columns: repeat(2, 115px); gap: 1px; padding: 1px; }
