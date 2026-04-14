@@ -235,10 +235,13 @@
         .char-master-container { display: flex; flex-direction: column; border: 2px solid var(--iron); background: rgba(0,0,0,0.05); flex-shrink: 0; }
         .char-main-head { background: var(--iron); color: var(--gold); font-size: 11pt; font-weight: 900; text-align: center; padding: 3px 0; text-transform: uppercase; border-bottom: 2px solid var(--blood); }
         .char-grid { display: grid; grid-template-columns: repeat(2, 115px); gap: 1px; padding: 1px; }
-        .char-box { background: var(--input-bg); border: 1px solid var(--ink); height: 58px; display: flex; flex-direction: column; }
-        .char-lbl { background: rgba(0,0,0,0.08); color: var(--iron); font-size: 10pt; font-weight: 900; text-align: center; padding: 1px 0; text-transform: uppercase; border-bottom: 1px solid var(--ink); }
+        /* 1. Shaved 10px off the total box height (from 58px down to 48px) */
+        .char-box { background: var(--input-bg); border: 1px solid var(--ink); height: 48px; display: flex; flex-direction: column; }
+        /* 2. Nudged the label font size down to 9pt to save a pixel of vertical space */
+        .char-lbl { background: rgba(0,0,0,0.08); color: var(--iron); font-size: 9pt; font-weight: 900; text-align: center; padding: 1px 0; text-transform: uppercase; border-bottom: 1px solid var(--ink); }
         .char-inputs { display: flex; background: var(--input-bg); padding: 1px; justify-content: space-around; flex: 1; align-items: center; }
-        .char-val { width: 50px; border: 1.5px solid var(--ink); text-align: center; font-size: 15pt; font-weight: 900; height: 32px; background: var(--input-bg); color: var(--ink); }
+        /* 3. Shaved 4px off the input height (32px to 28px) and adjusted font to 14pt */
+        .char-val { width: 50px; border: 1.5px solid var(--ink); text-align: center; font-size: 14pt; font-weight: 900; height: 28px; background: var(--input-bg); color: var(--ink); }
 
         .cm-col { flex: 0 0 325px; display: flex; flex-direction: column; gap: 4px; }
         .readiness-table { border: 2px solid var(--iron); background: var(--input-bg); }
