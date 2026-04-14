@@ -220,11 +220,17 @@
 .res-i input, .res-i select { width: 58px; height: 32px; text-align: center; font-weight: 900; font-size: 15pt; border: 1.5px solid var(--ink); font-family: inherit; color: var(--ink); background: var(--input-bg); }
 .res-i select { font-size: 10pt; }
     
-        /* --- MAIN SECTION --- */
-        /* Flex-start prevents the tall Wound tables from stretching the Portrait/Stats */
-        .readiness-block { display: flex; gap: 4px; margin-bottom: 5px; align-items: flex-start; justify-content: space-between; }
+       /* --- MAIN SECTION --- */
+        /* This keeps the 3 main columns (Stats, Combat, Wounds) in a horizontal row */
+        .readiness-block { 
+            display: flex; 
+            gap: 4px; 
+            margin-bottom: 5px; 
+            align-items: flex-start; /* This prevents the tall Wound table from stretching everything */
+            justify-content: space-between; 
+        }
         
-        /* THE TWIN-WRAPPER: This forces the Portrait and Stats to be the same height */
+        /* This "twins" the Portrait and Characteristics specifically */
         .twin-wrapper { display: flex; gap: 4px; align-items: stretch; flex-shrink: 0; }
 
         .port { 
@@ -239,7 +245,6 @@
             flex-shrink: 0; 
             position: relative; 
         }
-        /* Absolute positioning makes the image a "ghost" so it can't stretch the box */
         .port img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
 
         .char-master-container { display: flex; flex-direction: column; border: 2px solid var(--iron); background: rgba(0,0,0,0.05); flex-shrink: 0; }
@@ -610,27 +615,22 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
         </div>
     </div>
 
-<div class="readiness-block">
+<<div class="readiness-block">
+        
         <div class="twin-wrapper">
             <div class="port" onclick="document.getElementById('ui').click()">
                 <span id="ph" style="font-weight:900; color:rgba(0,0,0,0.5); font-size:12px;">PORTRAIT</span>
                 <img id="pv" style="display:none;">
                 <input type="file" id="ui" style="display:none" onchange="prev(this)">
             </div>
-
             <div class="char-master-container">
                 <div class="char-main-head">Characteristics</div>
-                <div class="char-grid" id="char-grid"></div>
+                <div id="char-grid" class="char-grid"></div>
             </div>
         </div>
-        <div class="cm-col">
-        ...
-    </div>
-
-</div>
 
         <div class="cm-col">
-            <div class="readiness-table">
+            <div class="readiness-table" style="margin-bottom:0; border-bottom:none;">
                 <div class="rt-head">Combat Mastery</div>
                 <div class="rt-grid">
                     <div style="display:grid; grid-template-columns: 75px 90px 90px 1fr; text-align:center; font-weight:900; font-size:9pt; color:var(--blood); border-bottom:1.5px solid var(--ink); text-transform:uppercase;">
@@ -638,55 +638,31 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
                     </div>
                     <div class="cm-row">
                         <span class="cm-label">+To-Hit</span>
-                        <div class="cm-inputs">
-                            <input type="number" id="cm-melee-hit-1" readonly>
-                            <input type="number" id="cm-melee-hit-2" readonly>
-                        </div>
-                        <div class="cm-inputs">
-                            <input type="number" id="cm-range-hit-1" readonly>
-                            <input type="number" id="cm-range-hit-2" readonly>
-                        </div>
+                        <div class="cm-inputs"><input type="number" id="cm-melee-hit-1" readonly><input type="number" id="cm-melee-hit-2" readonly></div>
+                        <div class="cm-inputs"><input type="number" id="cm-range-hit-1" readonly><input type="number" id="cm-range-hit-2" readonly></div>
                         <div class="cm-cast-box"><input type="number" id="cm-cast-hit" readonly style="background:rgba(0,0,0,0.08); width:44px; height:30px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); color: var(--ink);"></div>
                     </div>
                     <div class="cm-row">
                         <span class="cm-label">Wounds</span>
-                        <div class="cm-inputs">
-                            <input type="number" id="cm-wounds-melee-1" readonly>
-                            <input type="number" id="cm-wounds-melee-2" readonly>
-                        </div>
-                        <div class="cm-inputs">
-                            <input type="number" id="cm-wounds-range-1" readonly>
-                            <input type="number" id="cm-wounds-range-2" readonly>
-                        </div>
+                        <div class="cm-inputs"><input type="number" id="cm-wounds-melee-1" readonly><input type="number" id="cm-wounds-melee-2" readonly></div>
+                        <div class="cm-inputs"><input type="number" id="cm-wounds-range-1" readonly><input type="number" id="cm-wounds-range-2" readonly></div>
                         <div class="cm-cast-box"><input type="number" id="cm-wounds-cast" readonly style="background:rgba(0,0,0,0.08); width:44px; height:30px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); color: var(--ink);"></div>
                     </div>
                     <div class="cm-row">
                         <span class="cm-label">W. Evil</span>
-                        <div class="cm-inputs">
-                            <input type="number" id="cm-wevil-melee-1" readonly>
-                            <input type="number" id="cm-wevil-melee-2" readonly>
-                        </div>
-                        <div class="cm-inputs">
-                            <input type="number" id="cm-wevil-range-1" readonly>
-                            <input type="number" id="cm-wevil-range-2" readonly>
-                        </div>
+                        <div class="cm-inputs"><input type="number" id="cm-wevil-melee-1" readonly><input type="number" id="cm-wevil-melee-2" readonly></div>
+                        <div class="cm-inputs"><input type="number" id="cm-wevil-range-1" readonly><input type="number" id="cm-wevil-range-2" readonly></div>
                         <div class="cm-cast-box"><input type="number" id="cm-wevil-cast" readonly style="background:rgba(0,0,0,0.08); width:44px; height:30px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); color: var(--ink);"></div>
                     </div>
                     <div class="cm-row">
                         <span class="cm-label">Healing</span>
-                        <div class="cm-inputs">
-                            <input type="number" id="cm-healing-melee-1" readonly>
-                            <input type="number" id="cm-healing-melee-2" readonly>
-                        </div>
-                        <div class="cm-inputs">
-                            <input type="number" class="cm-pts" oninput="upd()" style="background:var(--input-bg);">
-                            <input type="number" class="cm-pts" oninput="upd()" style="background:var(--input-bg);">
-                        </div>
+                        <div class="cm-inputs"><input type="number" id="cm-healing-melee-1" readonly><input type="number" id="cm-healing-melee-2" readonly></div>
+                        <div class="cm-inputs"><input type="number" class="cm-pts" oninput="upd()" style="background:var(--input-bg);"><input type="number" class="cm-pts" oninput="upd()" style="background:var(--input-bg);"></div>
                         <div class="cm-cast-box"><input type="number" id="cm-healing-cast" readonly style="background:rgba(0,0,0,0.08); width:44px; height:30px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); color: var(--ink);"></div>
                     </div>
                 </div>
             </div>
-        <div class="def-horiz-container">
+            <div class="def-horiz-container">
                 <div class="def-sub-head">Defenses</div>
                 <div class="def-horiz">
                     <div class="def-item"><label>Block</label><input type="number" id="def-block" readonly style="background:rgba(0,0,0,0.08);"></div>
@@ -707,16 +683,10 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
                 </div>
             </div>
             <div class="wound-ledger">
-    <div class="l-group">
-        <label>Wounds</label>
-        <div style="display:flex; gap:1px;">
-            <input type="number" id="w_total" value="0" readonly style="background:rgba(0,0,0,0.08); width:55px; padding:0 2px; color:var(--ink);">
-            <input type="text" id="w_bonus" maxlength="2" oninput="upd()" style="width:28px; font-size:11pt; text-align:center; padding:0; background:var(--input-bg); border: 1.5px solid var(--ink);" placeholder="+">
-        </div>
-    </div>
-    <div class="l-group"><label>Taken</label><input type="number" id="w_taken" value="0" oninput="upd()" style="background:var(--input-bg);"></div>
-    <div class="l-group"><label>Dying</label><div class="l-val" id="w_rem">0</div></div>
-</div>
+                <div class="l-group"><label>Wounds</label><div style="display:flex; gap:1px;"><input type="number" id="w_total" value="0" readonly style="background:rgba(0,0,0,0.08); width:55px; padding:0 2px; color:var(--ink);"><input type="text" id="w_bonus" maxlength="2" oninput="upd()" style="width:28px; font-size:11pt; text-align:center; padding:0; background:var(--input-bg); border: 1.5px solid var(--ink);" placeholder="+"></div></div>
+                <div class="l-group"><label>Taken</label><input type="number" id="w_taken" value="0" oninput="upd()" style="background:var(--input-bg);"></div>
+                <div class="l-group"><label>Dying</label><div class="l-val" id="w_rem">0</div></div>
+            </div>
             <div class="conditions-table">
                 <div class="rt-head" style="font-size:8pt; padding:1px;">Conditions</div>
                 <div class="cond-grid">
@@ -726,7 +696,14 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
                 </div>
             </div>
         </div>
-    </div>
+    </div> ```
+
+### Why this fixes the layout:
+* **Three Clear Columns:** It organizes everything into three distinct children (`twin-wrapper`, `cm-col`, and `wm-table-container`) directly under the `readiness-block`.
+* **Flex-Box Side-by-Side:** Your CSS for `.readiness-block` (which should be `display: flex; justify-content: space-between; align-items: flex-start;`) will now correctly place these three columns in a row.
+* **Twin Heights:** The `twin-wrapper` forces the Portrait and Characteristics to be the same height, while `align-items: flex-start` on the parent row ensures the tall third column doesn't stretch them.
+
+**Important Note:** Make sure that `</style>` tag is at the very bottom of your CSS section (after the print media rules), or the browser will ignore the code!
 
     <div class="h-box">Primary Skills</div>
     <div class="sk-grid" id="sg"></div>
