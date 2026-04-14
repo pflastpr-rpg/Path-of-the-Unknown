@@ -450,67 +450,52 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
     padding-right: 14px !important; 
 }
 
-  /* ==========================================
-           MASTER PRINT LAYOUT - FINAL PC FIX
-           ========================================== */
-        @media print {
-            @page { 
-                size: letter portrait; 
-                margin: 0.2in; 
-            }
+  @media print {
+            @page { size: letter portrait; margin: 0.2in; }
             
-            /* 1. Base Document: Forces colors and parchment to stay */
+            /* 1. Force the page to stay Letter sized and keep the colors */
             html, body { 
                 background: var(--parchment) !important; 
-                padding: 0; 
-                margin: 0; 
-                display: block !important; 
-                height: auto !important;
                 -webkit-print-color-adjust: exact; 
                 print-color-adjust: exact; 
+                margin: 0 !important; 
+                padding: 0 !important;
             }
-            
-            /* 2. THE SHEET: Hard-locking the width stops Chrome from shrinking Page 2 */
+
+            /* 2. THE SHEET: Hard-lock the width and use the "Magic Zoom" */
             .sheet { 
                 display: block !important;
-                position: relative !important;
                 width: 1050px !important; 
                 min-width: 1050px !important;
                 max-width: 1050px !important;
-                height: auto !important;
                 margin: 0 auto !important;
                 border: 2px solid var(--iron); 
-                box-shadow: none; 
-                
-                /* Zoom: 0.72 is usually the 'magic number' for 2 pages on PC */
-                zoom: 0.72; 
+                zoom: 0.72; /* Dial to 0.75 if you want it bigger, 0.70 if it still cuts off */
             }
 
-            /* 3. THE INVISIBILITY CLOAK: Hide all buttons and UI */
+            /* 3. THE INVISIBILITY CLOAK: Aggressively kill the Cloud/Hub rows */
             .no-print, .vault-controls, .sheet-header, #ph, #ui, 
             #cloud-char-select, #btn-cloud-load, .btn-reset-vault { 
                 display: none !important; 
+                height: 0 !important;   /* Force the height to zero */
+                margin: 0 !important;   /* Remove any phantom margins */
+                padding: 0 !important;
+                overflow: hidden !important;
             }
 
-            /* 4. SUPER GLUE: Never let these boxes split between pages */
+            /* 4. THE SUPER GLUE: Fix the "Riding/Armor" cutoff */
             .readiness-table, .wound-ledger, .gear-area, .sk-c, 
             .magic-section, .knowledge-section, .inventory-section {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
-            
-            /* Protect the headers */
-            .h-box, .page-title {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
-            }
 
-            /* 5. SQUISH: Tiny vertical adjustments for a tighter fit */
+            /* 5. SQUISH: Tiny vertical saves */
             .h-box { margin-bottom: 2px !important; padding: 2px 12px !important; }
-            .status-bar { margin-bottom: 2px !important; }
+            .status-bar { margin-bottom: 2px !important; padding-bottom: 2px !important; }
             .k-item, #spells-grid .k-item { padding: 1px 3px !important; }
 
-            /* 6. FONT FIX: Ensure player handwriting looks good */
+            /* 6. INPUT FIX */
             input, textarea {
                 font-family: var(--font-hand) !important;
                 font-size: 12.5pt;
