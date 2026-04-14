@@ -446,75 +446,70 @@ input[type="number"][readonly]::-webkit-outer-spin-button {
 }
 
   /* ==========================================
-           MASTER PRINT LAYOUT - THE HARD-LOCK FIX
+           MASTER PRINT LAYOUT - FINAL PC FIX
            ========================================== */
         @media print {
-            @page { size: letter portrait; margin: 0.2in; }
+            @page { 
+                size: letter portrait; 
+                margin: 0.2in; 
+            }
             
-            /* 1. BODY: Keep it clean, unlocked, and unscaled so pages break naturally */
+            /* 1. Base Document: Forces colors and parchment to stay */
             html, body { 
-                display: block !important; 
-                height: auto !important; 
-                overflow: visible !important; 
                 background: var(--parchment) !important; 
-                padding: 0; margin: 0; 
+                padding: 0; 
+                margin: 0; 
+                display: block !important; 
+                height: auto !important;
                 -webkit-print-color-adjust: exact; 
-                color-adjust: exact; 
                 print-color-adjust: exact; 
             }
             
-            /* 2. THE SHEET: Zoom goes here, with hard-locked widths */
+            /* 2. THE SHEET: Hard-locking the width stops Chrome from shrinking Page 2 */
             .sheet { 
                 display: block !important;
                 position: relative !important;
-                height: auto !important;
-                overflow: visible !important;
-                
-                /* Hard-locking width prevents Chrome from shrinking Page 2 */
                 width: 1050px !important; 
                 min-width: 1050px !important;
                 max-width: 1050px !important;
-                
-                zoom: 0.75; /* Dial this up or down (e.g., 0.72) to fit your paper */
-                
+                height: auto !important;
+                margin: 0 auto !important;
                 border: 2px solid var(--iron); 
                 box-shadow: none; 
-                margin: 0 auto 10px auto !important; 
+                
+                /* Zoom: 0.72 is usually the 'magic number' for 2 pages on PC */
+                zoom: 0.72; 
             }
-            
-            /* 3. PROTECT THE BOXES: The "Super Glue" */
-            .readiness-table, .wound-ledger, .gear-area, .spec-container, .sk-c, .magic-section, .knowledge-section, .inventory-section {
+
+            /* 3. THE INVISIBILITY CLOAK: Hide all buttons and UI */
+            .no-print, .vault-controls, .sheet-header, #ph, #ui, 
+            #cloud-char-select, #btn-cloud-load, .btn-reset-vault { 
+                display: none !important; 
+            }
+
+            /* 4. SUPER GLUE: Never let these boxes split between pages */
+            .readiness-table, .wound-ledger, .gear-area, .sk-c, 
+            .magic-section, .knowledge-section, .inventory-section {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
-            .page-title, .h-box {
+            
+            /* Protect the headers */
+            .h-box, .page-title {
                 page-break-after: avoid !important;
                 break-after: avoid !important;
             }
 
-            /* 4. AGGRESSIVE UI ASSASSINATION */
-            .no-print, .sheet-header, .vault-controls, .btn-reset-vault, #ph, #ui, 
-            #cloud-char-select, #btn-cloud-load { 
-                display: none !important; 
-            }
+            /* 5. SQUISH: Tiny vertical adjustments for a tighter fit */
+            .h-box { margin-bottom: 2px !important; padding: 2px 12px !important; }
+            .status-bar { margin-bottom: 2px !important; }
+            .k-item, #spells-grid .k-item { padding: 1px 3px !important; }
 
-            /* 5. Aggressive Vertical Squishing */
-            .h-box { margin-bottom: 0px !important; padding: 1px 12px !important; }
-            .status-bar { margin-bottom: 2px !important; padding-bottom: 2px !important; }
-            .readiness-block { margin-bottom: 2px !important; }
-            .weapon-entry { margin-bottom: 0px !important; padding-bottom: 2px !important; }
-            .magic-cb-row { margin-bottom: 2px !important; }
-            .k-item, #spells-grid .k-item { padding: 1px 3px; gap: 1px; }
-
-            /* 6. Font & Critical State Overrides */
-            input, select, textarea {
+            /* 6. FONT FIX: Ensure player handwriting looks good */
+            input, textarea {
                 font-family: var(--font-hand) !important;
                 font-size: 12.5pt;
                 color: var(--ink);
-            }
-            .critical-state {
-                animation: none !important; 
-                background-color: #f7ece1 !important; 
             }
         }
         
