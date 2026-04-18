@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path of the Unknown - Advanced Vocations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --iron: #02070e;      
+            --blood: #A81818;     
+            --parchment: #f3e7c9; 
+            --gold: #B8860B;      
+            --input-bg: #FCF7EB;  
+            --ink: #111111;       
+            
+            --font-heading: 'Grenze Gotisch', serif;
+            --font-main: 'IM Fell English', serif;
+        }
+
+        body { 
+            background: #1E1E24; 
+            color: var(--ink); 
+            font-family: var(--font-main); 
+            font-size: 18px;
+            display: flex; 
+            justify-content: center; 
+            padding: 40px 20px; 
+            line-height: 1.6;
+        }
+
+        .compendium-wrapper {
+            max-width: 850px; 
+            width: 100%;
+            background: var(--parchment); 
+            border: 5px solid var(--iron);
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            padding: 40px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            color: var(--iron);
+            text-align: center;
+            font-size: 3em;
+            border-bottom: 3px solid var(--blood);
+            padding-bottom: 10px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h2.category-title {
+            font-family: var(--font-heading);
+            color: var(--blood);
+            font-size: 2.2em;
+            margin-top: 50px;
+            border-bottom: 2px solid var(--iron);
+            margin-bottom: 30px;
+        }
+
+        .skill-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(2, 7, 14, 0.03);
+            border-left: 4px solid var(--gold);
+        }
+
+        .skill-name {
+            font-family: var(--font-heading);
+            font-size: 1.8em;
+            color: var(--iron);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .skill-mechanic {
+            font-weight: bold;
+            color: var(--blood);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .specialization-block {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--gold);
+        }
+
+        .specialization-title {
+            font-family: var(--font-heading);
+            font-size: 1.4em;
+            color: var(--blood);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 50px;
+            font-family: var(--font-heading);
+            font-size: 1.5em;
+            color: var(--blood);
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--gold);
+        }
+
+        @media print {
+            body { background: none; padding: 0; }
+            .compendium-wrapper { box-shadow: none; border: 2px solid var(--iron); max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="compendium-wrapper">
+        <h1>Advanced Vocations Compendium</h1>
+        <p>This grimoire details the specialized combat arts, epic feats, and master-level magical weaving available to veterans of the Path. These skills permanently alter how your character interacts with the battlefield.</p>
+
+        <h2 class="category-title">Advanced Vocations (A-Z)</h2>
+
+        <div class="skill-block">
+            <span class="skill-name">Battle-Ready</span>
+            <span class="skill-mechanic">XP: 200 | Action: 1 Minor | Min. Req: Agility 6+ OR Awareness 6+</span>
+            <p><em>The veteran warrior does not see a chaotic melee, but a predictable rhythm of striking blades and shifting weight. By controlling the space around them, they turn a swarm of enemies into a series of manageable, isolated duels.</em></p>
+            <p><strong>Mechanic:</strong> While this stance is active, you automatically negate the numerical advantage (flanking, swarming, or outnumbering bonuses) of up to three opponents engaging you in melee from your front or sides.</p>
+            <p><strong>Vulnerability:</strong> The stance breaks down if you are completely surrounded. Attacks originating directly from behind, or any attacks made by a fourth simultaneous combatant, bypass this skill.</p>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Berserker</span>
+                <span class="skill-mechanic">Actions: 1 (Stance)</span>
+                <p><em>Some warriors fight to live; others live only to kill. Casting aside all pretense of self-preservation, you channel your fury into a reckless, devastating offensive.</em></p>
+                <ul>
+                    <li>You ignore any disadvantage penalties to your melee To-Hit rolls for the turn.</li>
+                    <li>Any successful melee strike inflicts your normal weapon wounds plus an additional <strong>1d10 wounds</strong>.</li>
+                    <li><strong>Brutal Strike (Crit):</strong> On an unmodified 10, the target takes normal wounds plus <strong>2d10 additional wounds</strong>.</li>
+                </ul>
+                <p><strong>Vulnerability:</strong> You suffer a flat <strong>-1 penalty to your Defense</strong> while this stance is active.</p>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Block</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 (Reactionary) | Min. Req: Shieldsman (1) or Melee Weapon</span>
+            <p><em>Armor is meant to be dented, and shields are meant to be splintered. By meeting the enemy's momentum with your own rigid structure, you shatter their kinetic energy before it can bite into flesh.</em></p>
+            <p><strong>Mechanic: The Hard Stop</strong></p>
+            <ul>
+                <li><strong>The Intercept:</strong> When successfully hit by a melee attack, you may immediately spend 1 Action to brace your weapon or shield against the blow.</li>
+                <li><strong>The Mitigation:</strong> You completely negate all wounds from the attack, provided the attacker is of your size category or smaller.</li>
+                <li><strong>Constraint:</strong> This skill cannot be used against Giants, Enormous, or Titanic creatures, as their mass simply crushes through the block.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Bulwark</span>
+                <span class="skill-mechanic">Actions: 2 (Stance)</span>
+                <p><em>You plant your feet and become an extension of the earth itself. You are no longer just protecting yourself; you are the breakwater that shields the vulnerable.</em></p>
+                <ul>
+                    <li><strong>The Iron Line:</strong> By spending 2 Actions on your turn, you anchor yourself in place. Until the start of your next turn, your Movement speed becomes 0.</li>
+                    <li><strong>Shared Aegis:</strong> You and any one ally standing immediately adjacent to you gain a massive <strong>+5 Wound Mitigation (WM)</strong> against all physical attacks for the duration of the stance.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Cleave</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Heavy/2H Weapon, Physique (3)</span>
+            <p><em>Focus is usually a warrior’s greatest strength, but against a horde, it is a death sentence. You have learned to stop treating enemies like individuals and start treating them like a harvest.</em></p>
+            <p><strong>Passive:</strong> You gain a <strong>+1 Wound Bonus</strong> when fighting 2 or more enemies.</p>
+            <p><strong>Mechanic: The Sweeping Arc</strong></p>
+            <ul>
+                <li><strong>The Strike:</strong> If you successfully hit an enemy with a melee attack, you may immediately apply the same To-Hit roll to a second enemy adjacent to the first.</li>
+                <li><strong>The Damage:</strong> Primary target takes <strong>Normal Wounds</strong>. Secondary target takes <strong>(1/2) Normal Wounds</strong>.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Whirlwind</span>
+                <span class="skill-mechanic">Actions: 3</span>
+                <p><em>You become a centrifugal force of destruction. There is no front, no back, and no flank—only a circle of steel that belongs to you.</em></p>
+                <ul>
+                    <li><strong>The Hurricane:</strong> You make a single To-Hit roll at <strong>Disadvantage</strong> applied to every enemy within your weapon’s reach.</li>
+                    <li><strong>The Damage:</strong> <strong>Wounds = Normal + (2 x Physique)</strong>.</li>
+                    <li><strong>The Eye of the Storm (Crit):</strong> On an unmodified 10, all targets are knocked <strong>Prone</strong> and suffer an additional <strong>1d10 Wounds</strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Cleric</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Faith (3), Light Soul (2)</span>
+            <p><em>You are the beacon in the encroaching dark. Where others see only the terrifying power of the unholy, you see a shadow that must be banished.</em></p>
+            <p><strong>Passive: Divine Grace</strong></p>
+            <ul>
+                <li><strong>Sanctified Essence:</strong> Gain a permanent <strong>+1 Wound Mitigation (WM)</strong> against all sources of damage.</li>
+                <li><strong>Vessel of Restoration:</strong> Recover +1 additional Wound whenever you are healed by a Blessing.</li>
+            </ul>
+            <p><strong>Mechanic: The Holy Chant</strong></p>
+            <ul>
+                <li><strong>Aura of Light:</strong> Spend 1 Action to activate a 60ft aura. Allies within gain +1 to Fear tests, and you automatically detect "Evil" entities.</li>
+                <li><strong>Aegis of Light:</strong> Against "Evil" targets, your WM is increased by your Light Soul points.</li>
+                <li><strong>Divine Riposte (Crit):</strong> If an "Evil" enemy rolls a natural 10 against you: <strong>WM = (Light Soul Points x 2)</strong> for that strike.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Crusader</span>
+                <span class="skill-mechanic">Actions: 1 (Crusader's Chant)</span>
+                <p><em>Divine justice is not found in a prayer book; it is carved into the hides of the wicked. You do not merely ward off the dark—you hunt it down.</em></p>
+                <ul>
+                    <li><strong>Righteous Terror:</strong> Force a Fear test (DV 5) to all "Evil" enemies within your aura.</li>
+                    <li><strong>Hammer of the Wicked:</strong> Deal additional Wounds against "Evil" targets equal to your Light Soul points.</li>
+                    <li><strong>Divine Execution (Crit):</strong> On an unmodified 10 To-Hit: <strong>Bonus Wounds = (Light Soul Points x 2)</strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Command</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Charisma (3), Leadership (2)</span>
+            <p><em>A battle is a machine, and you are the one pulling the levers. With a single shouted order, you can push an exhausted ally to strike one last time.</em></p>
+            <p><strong>Passive:</strong> +1 to all Fear and Morale tests for allies within 30 feet.</p>
+            <p><strong>Mechanic: The Tactician's Voice</strong></p>
+            <ul>
+                <li><strong>The Directive:</strong> Spend 1 Action to grant an ally within earshot <strong>1 Action Point (AP)</strong> to use immediately. The ally gains your Charisma Bonus to their next roll.</li>
+                <li><strong>Perfect Order (Crit):</strong> On an unmodified 10 (Leadership Test), the ally gains <strong>2 AP</strong> instead.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Blood Rally</span>
+                <span class="skill-mechanic">Actions: 2 (Focused Command)</span>
+                <p><em>Men do not die when their bodies fail; they die when they accept defeat. Your voice cuts through the fog of pain, reminding them that they do not have permission to fall yet.</em></p>
+                <ul>
+                    <li><strong>The Rally:</strong> Target instantly removes 1 Stunned or Fear condition.</li>
+                    <li><strong>The Second Wind:</strong> If the target is at 0 Wounds, they instantly wake up and recover: <strong>Healing = 1d10 + (Charisma x 2)</strong>.</li>
+                    <li><strong>Vanguard (Crit):</strong> On an unmodified 10, the ally sheds <strong>all</strong> Stunned conditions and refreshes their entire 3-AP pool.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Concentrate</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 2 (Channeling) | Min. Req: Magic Skill (6)</span>
+            <p><em>You speak with the precision of a master architect, placing every syllable and every drop of intent with surgical care. When you release the energy, it doesn't just strike; it annihilates.</em></p>
+            <p><strong>Passive Mastery:</strong> Your mental discipline grants a permanent <strong>+3 bonus</strong> to all Spell Wounds.</p>
+            <p><strong>Mechanic: Controlled Incantation</strong></p>
+            <ul>
+                <li><strong>The Perfect Flow:</strong> Gain <strong>Advantage</strong> on your To-Cast roll for this turn.</li>
+                <li><strong>Empowered Resonance:</strong> On a success, the spell deals Normal Wounds plus your Intellect Bonus.</li>
+                <li><strong>Critical Resonance (Crit):</strong> On an unmodified 10: <strong>Wounds = Normal + 1d10 + (3 x Intellect Bonus)</strong>.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Intensify</span>
+                <span class="skill-mechanic">Actions: 2 (Overchanneling)</span>
+                <p><em>Precision is for scholars. You want power—raw, surging, and uncontrollable. You push your mind to the very brink of collapse.</em></p>
+                <ul>
+                    <li><strong>Double-Pulse:</strong> On a success, calculate your total wounds (including bonuses) and multiply by 2.</li>
+                    <li><strong>Chain Reaction:</strong> Natural 10s trigger secondary surges. Roll a d10 (+3). Success adds +1d10 wounds. A subsequent natural 10 triggers another surge (+2), stacking infinitely as long as natural 10s are rolled.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Deflect</span>
+            <span class="skill-mechanic">XP: 50 | Actions: 1 (Reactionary) | Min. Req: Melee Weapon Proficiency</span>
+            <p><em>Strength is a lie; momentum is the only truth. A master of the blade doesn't meet a strike head-on—they guide it.</em></p>
+            <p><strong>Mechanic: The Redirect</strong></p>
+            <ul>
+                <li><strong>The Parry:</strong> When successfully hit by a melee attack, spend 1 Action to attempt an opposed roll (Agility/Melee) to mitigate all wounds.</li>
+                <li><strong>Constraint:</strong> This only functions against opponents of the same size or smaller.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Revert-Back</span>
+                <span class="skill-mechanic">Actions: 2 (Total)</span>
+                <p><em>You don’t just move the blade aside; you feed it back to its owner. With a twist of the wrist, you make the attacker’s own bloodlust their undoing.</em></p>
+                <ul>
+                    <li><strong>Lethal Counter:</strong> By committing 2 AP total, force the opponent to strike themselves. They suffer half the wounds they would have dealt to you (rounding down).</li>
+                    <li><strong>Perfect Redirect (Crit):</strong> If the opponent’s original To-Hit roll was a natural 10, they cannot pull the blow. They suffer <strong>full wounds</strong> from their own strike.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Deviation</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Magic Skill (6)</span>
+            <p><em>Magic is often compared to an arrow once loosed, but for you, it is more like a river. If a boulder falls in your path, you do not crash against it—you simply flow around it.</em></p>
+            <p><strong>Mechanic: Tactical Pivot</strong></p>
+            <ul>
+                <li><strong>Mid-Cast Shift:</strong> After a successful To-Cast roll but before wounds are calculated, spend 1 Action to switch the spell's target to any other valid creature in range.</li>
+                <li><strong>Critical Arc (Crit):</strong> On an unmodified 10, excess energy arcs. A secondary target within <strong>Intellect x 5 feet</strong> suffers <strong>Intellect + 1d10 wounds</strong>.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Divergence</span>
+                <span class="skill-mechanic">Actions: 2 (Channeling)</span>
+                <p><em>The caster is adept at splitting their spell casting or blessings between multiple targets, friend or foe.</em></p>
+                <ul>
+                    <li><strong>The Split Weave:</strong> Select any number of targets in range. Divide the Base Result among them, then add your full static bonuses to each target individually.</li>
+                    <li><strong>Calculation:</strong> <strong>Wounds (per target) = (Normal + 1d10) / Number of Targets</strong>.</li>
+                    <li><strong>Perfect Channel (Crit):</strong> On an unmodified 10, division is ignored. All targets receive the Full Base + Full Bonuses + 1d10 wounds/healing.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Divinity</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Faith (7)</span>
+            <p><em>The gods do not simply listen to your prayers; they answer them with a physical weight that can mend bone and seal flesh.</em></p>
+            <p><strong>Mechanic: The Divine Boon</strong></p>
+            <ul>
+                <li><strong>Empowered Healing:</strong> Applies to healing invocations with a Target Number (TN) of 7 or less. Target heals <strong>Normal + Faith Skill Points</strong>.</li>
+                <li><strong>True Blessing (Crit):</strong> On an unmodified 10, the target heals <strong>Normal + (2 x Faith Skill Points)</strong> and removes 1 Bleeding condition.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Sanctity</span>
+                <span class="skill-mechanic">Actions: 2 (Channeling) | Min. Req: Faith (9)</span>
+                <p><em>You are a fortress of the soul. In your presence, the wounded find rest and the terrified find courage.</em></p>
+                <ul>
+                    <li><strong>Sacred Restoration:</strong> On success (TN 9 or less), heal <strong>Normal + (2 x Faith Skill) + 1d10</strong>. Instantly removes 1 Bleeding condition.</li>
+                    <li><strong>Aura of Courage:</strong> Targets gain +1 to all Fear tests against evil entities for this turn and the next.</li>
+                    <li><strong>Perfection of Sanctity (Crit):</strong> On an unmodified 10, heal <strong>Normal + (3 x Faith Skill) + 2d10</strong>. Target gains +2 to Fear tests and removes 2 Bleeding conditions.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Dodge</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 1 (Reactionary) | Min. Req: Agility (2)</span>
+            <p><em>Armor is a heavy, noisy confession that you expect to be hit. You have no such expectations. To you, an incoming strike is just a suggestion that you should be elsewhere.</em></p>
+            <p><strong>Mechanic: The Ghost Reflex</strong></p>
+            <ul>
+                <li><strong>Timing:</strong> Declare a Dodge after an enemy scores a hit, but before wounds are rolled.</li>
+                <li><strong>The Result:</strong> The attack is considered a <strong>total miss</strong>. No damage is taken, and no "on-hit" effects are applied.</li>
+                <li><strong>Universal:</strong> Dodge functions against all attack types and ignores size restrictions. You can dodge an arrow, a dagger, or the stomp of a mountain giant.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Jailbreak</span>
+                <span class="skill-mechanic">Actions: 2 (Reactionary)</span>
+                <p><em>There is no such thing as being "surrounded" for a master of Jailbreak. With a blur of motion, you leave the fray behind.</em></p>
+                <ul>
+                    <li><strong>Prolific Escape:</strong> Spend 2 AP to immediately remove yourself from all current melee engagements.</li>
+                    <li><strong>Superior Avoidance:</strong> You negate all Free Action melee attempts (Attacks of Opportunity) triggered by leaving combat.</li>
+                    <li><strong>Repositioning:</strong> You may instantly move: <strong>Distance = Athletics Skill x 5 feet</strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Expose Armor</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Weapon Proficiency</span>
+            <p><em>No armor is perfect. A master smith leaves gaps for movement, and a veteran soldier knows exactly where those gaps are. You don't aim for the chest plate; you aim for the leather strap holding it up.</em></p>
+            <p><strong>Passive:</strong> Your study of anatomy grants a permanent <strong>+1 Melee Wound Bonus</strong>.</p>
+            <p><strong>Mechanic: The Weak Point</strong></p>
+            <ul>
+                <li><strong>The Exposure:</strong> On a successful hit, the target’s Wound Mitigation (WM) from armor is reduced for that specific attack by: <strong>Awareness + 1d10</strong>.</li>
+                <li><strong>Precision Critical (Crit):</strong> On an unmodified 10, the reduction is devastating: <strong>WM Reduction = (2 x Awareness) + 1d10</strong>.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Undress</span>
+                <span class="skill-mechanic">Actions: 2 (Focused Strike)</span>
+                <p><em>You don't just find a gap; you create a ruin. With a series of surgical strikes, you shear through buckles and laces, literally causing the enemy's protection to fall away.</em></p>
+                <ul>
+                    <li><strong>Worn Armor:</strong> The target gains <strong>zero benefit</strong> from worn armor WM for this strike.</li>
+                    <li><strong>Natural Armor (Hide/Scales):</strong> If the armor cannot be removed, you cause a catastrophic failure. Reduce their WM by <strong>(2 x Agility) + 2d10</strong> and inflict 1 Bleeding condition.</li>
+                    <li><strong>Perfection of the Flaw (Crit):</strong> On an unmodified 10, the target receives zero WM (worn or natural), takes <strong>Normal Wounds + 2d10</strong>, and suffers 2 Bleeding conditions.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Heavy Arbalest (Crossbows)</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Awareness (1)</span>
+            <p><em>The bow is a song; the arbalest is a statement. You have mastered the mechanical tension of the heavy crank, turning a simple bolt into a projectile that treats plate armor like wet parchment.</em></p>
+            <p><strong>Passive:</strong> Permanent <strong>+1 Ranged Wound Bonus</strong>. All bolts fired ignore up to 2 points of Armor Mitigation.</p>
+            <p><strong>Mechanic: The Heavy Impact (Crit)</strong></p>
+            <ul>
+                <li>On a Natural 10 To-Hit, deal: <strong>Wounds = Normal + 1d10 + Awareness Bonus</strong>. The target also suffers 1 Bleeding condition.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Linebreaker</span>
+                <span class="skill-mechanic">Actions: 2 | Gain Advantage To-Hit</span>
+                <p><em>You fire with such terrifying kinetic force that the bolt doesn't stop at the first man it finds.</em></p>
+                <ul>
+                    <li><strong>Success:</strong> Deals <strong>Normal + 2d10 + (Awareness x 2)</strong> wounds. This strike ignores all worn armor mitigation.</li>
+                    <li><strong>The Pass-Through (Crit):</strong> On a Natural 10, if the target is your size or smaller, the bolt punches through them. A secondary target directly behind them suffers <strong>1d10 + Awareness</strong> wounds.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Impact</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Melee & Throwing Proficiency</span>
+            <p><em>There is a difference between a cut and a crush. A cut bleeds, but a crush ends the conversation. You have learned to put your entire center of gravity behind your steel, turning a simple swing into a localized earthquake.</em></p>
+            <p><strong>Passive:</strong> Your strikes carry immense weight. Permanent <strong>+2 Melee Wound Bonus</strong>.</p>
+            <p><strong>Mechanic: The Concussive Blow</strong></p>
+            <ul>
+                <li><strong>1H Weapons / Throwing:</strong> <strong>Wounds = Normal + Physique</strong>.</li>
+                <li><strong>2H Weapons:</strong> The mass amplifies the shockwave. <strong>Wounds = Normal + (2 x Physique)</strong>. Target suffers <strong>1 Stunned</strong> condition.</li>
+                <li><strong>Bone-Breaker (Crit):</strong> On an unmodified 10, add <strong>+2d10 bonus wounds</strong>. Target must pass a Willpower Test (DV 10) or suffer 2 Stunned conditions.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Full-Weight</span>
+                <span class="skill-mechanic">Actions: 3</span>
+                <p><em>You don’t just swing the weapon; you fall with it. By committing every ounce of your strength, you deliver a strike that can cave in a breastplate or shatter a shield like glass.</em></p>
+                <ul>
+                    <li><strong>Stun Locked:</strong> The target immediately suffers 2 Stunned conditions (Giants suffer 1).</li>
+                    <li><strong>1H Weapon:</strong> <strong>Normal + (3 x Physique)</strong> wounds.</li>
+                    <li><strong>2H Weapon:</strong> <strong>Normal + (4 x Physique) + 2d10</strong> wounds.</li>
+                    <li><strong>Earth-Shaker (Crit):</strong> Add <strong>3d10 wounds</strong>. Target must pass Willpower DV 10 or suffer 3 Stunned conditions.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Impale</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Edged, Piercing, or Polearm Proficiency</span>
+            <p><em>Steel is cold, but the blood it releases is warm. You have moved past clumsy hacking; you know the architecture of the body. You don't just hit the target—you pierce through the armor and the will to fight.</em></p>
+            <p><strong>Passive:</strong> Your strikes find the softest points. Permanent <strong>+1 Melee Wound Bonus</strong>.</p>
+            <p><strong>Mechanic: The Deep Pierce</strong></p>
+            <ul>
+                <li><strong>1H Weapons:</strong> <strong>Wounds = Normal + 1d10</strong>. Causes 1 Bleeding condition.</li>
+                <li><strong>2H Weapons:</strong> Leverage creates a wider channel. <strong>Wounds = Normal + 1d10</strong>. Causes 2 Bleeding conditions.</li>
+                <li><strong>Hemorrhage (Crit):</strong> On an unmodified 10, add +1d10 wounds and +1 additional Bleeding condition.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Skewer</span>
+                <span class="skill-mechanic">Actions: 2 (Focused Commitment)</span>
+                <p><em>You don't just strike; you anchor yourself in their flesh. By committing your full weight and momentum, you drive the steel through the target's core.</em></p>
+                <ul>
+                    <li><strong>Massive Laceration:</strong> <strong>Wounds = Normal + 2d10</strong>.</li>
+                    <li><strong>Hemorrhagic Trauma:</strong> 1H Weapons cause 2 Bleeding; 2H Weapons cause 3 Bleeding.</li>
+                    <li><strong>Evisceration (Crit):</strong> Add +1d10 wounds. Target must pass a Physique DV 10 test or fall <strong>Prone</strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Infusion of Arcana</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Wizardry (7)</span>
+            <p><em>Energy is indifferent; it is the mind of the caster that gives it intent. You have learned that the same spark that sears the flesh can, if harmonized correctly, knit it back together.</em></p>
+            <p><strong>Mechanic: Arcane Conversion</strong></p>
+            <ul>
+                <li><strong>The Transmutation:</strong> Select one offensive spell with a TN of 7 or less and target a friendly ally in range.</li>
+                <li><strong>Restorative Output:</strong> The target receives healing equal to half of the total wounds the spell would have caused (<strong>Healing = 1/2 Normal</strong>).</li>
+                <li><strong>Brilliant Infusion (Crit):</strong> On an unmodified 10, the magic is perfectly harmonized; the target receives <strong>100% of the Wound Value</strong> as healing.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: True Fusion</span>
+                <span class="skill-mechanic">Actions: 2 (Complex Weaving) | Min. Req: Wizardry (10)</span>
+                <p><em>By holding two conflicting realities in your mind at once, you can force a single spell to exist as both a weapon and a blessing. The energy strikes the foe and reflects back as pure life for your ally.</em></p>
+                <ul>
+                    <li><strong>The Dual Link:</strong> Select one offensive spell with a TN of 10 or less and select both an enemy and an ally in range.</li>
+                    <li><strong>The Toll / The Boon:</strong> The enemy suffers the Full Wounds caused by the spell. The ally receives healing equal to half of the total wounds dealt.</li>
+                    <li><strong>Perfect Fusion (Crit):</strong> On an unmodified 10, the enemy suffers <strong>2x Total Wounds</strong> and the ally receives <strong>100% Healing</strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Marksman</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Ranged Weapon Proficiency</span>
+            <p><em>The wind is a variable; the distance is a suggestion; the target is a certainty. You don’t pull the trigger until the world falls silent and the heartbeat of your prey is the only sound remaining.</em></p>
+            <p><strong>Passive:</strong> Your practice with windage and elevation grants a permanent <strong>+2 Ranged Wound Bonus</strong>.</p>
+            <p><strong>Mechanic: The Lethal Shot</strong></p>
+            <ul>
+                <li><strong>The Strike:</strong> <strong>Wounds = Normal + Awareness + 1d10</strong>.</li>
+                <li><strong>The Deadeye (Crit):</strong> On an unmodified 10, the strike is catastrophic: <strong>Wounds = Normal + (2 x Awareness Bonus) + 2d10</strong>.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Sniper</span>
+                <span class="skill-mechanic">Actions: 2 (Focused Aim)</span>
+                <p><em>You are a ghost with a sting. From the shadows of the treeline, you deliver death with such precision that the target is dead before the sound of the release reaches their ears.</em></p>
+                <ul>
+                    <li><strong>Calculated Kill:</strong> <strong>Wounds = Normal + Agility + (2 x Awareness) + 1d10</strong>. Causes 1 Bleeding condition.</li>
+                    <li><strong>Cold Precision (Crit):</strong> On an unmodified 10, add <strong>3d10 additional wounds</strong> and 1 Bleeding condition.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Master Thievery</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Agility (5), Awareness (5), Thievery (10)</span>
+            <p><em>A lock is just a puzzle someone else finished first. A pocket is just a temporary storage space you haven't accessed yet. You treat the world like it’s held together by loose strings.</em></p>
+            <p><strong>Passive:</strong> You gain <strong>Advantage</strong> on all non-combat Thievery tests (Lockpicking, Pickpocketing).</p>
+            <p><strong>Mechanic: Phantom Hands</strong></p>
+            <ul>
+                <li><strong>Combat Larceny:</strong> Spend 1 Action to attempt to steal a small item (a potion, a pouch, a key) from an enemy you are engaged with.</li>
+                <li><strong>Sabotage:</strong> Spend 1 Action to "tamper" with an enemy's gear (cut a bowstring, loosen a belt). The target suffers <strong>Disadvantage</strong> on their next action using that item.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Master Saboteur</span>
+                <span class="skill-mechanic">Actions: 2 (Focused Precision)</span>
+                <p><em>Traps are only dangerous to the people who didn't build them. On the battlefield, you are the one who ensures the environment is the enemy's worst nightmare.</em></p>
+                <ul>
+                    <li><strong>Flash-Disable:</strong> Disable any non-magical trap or lock within reach as a 2-Action move, even while in combat.</li>
+                    <li><strong>Subvert:</strong> Instead of disabling a trap, spend 3 Actions (Total) to re-arm it to trigger against your enemies.</li>
+                    <li><strong>Ghost in the Machine (Crit):</strong> On an unmodified 10, no one notices the action happened. You remain Hidden or the target doesn't realize their item is missing until they try to use it.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Metaphysical</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Magic Skill (7)</span>
+            <p><em>There is no wall between the soul and the sky. The power you wield is the burning core of your own existence projected into the world. When you cast, the air hums with the resonance of your spirit.</em></p>
+            <p><strong>Passive: Transcendent Grace</strong></p>
+            <ul>
+                <li><strong>Spiritual Resonance:</strong> Your magic is naturally more potent. You gain a permanent <strong>+1 Wound Bonus</strong> to offensive spells and <strong>+1 Healing Bonus</strong> to restorative blessings.</li>
+            </ul>
+            <p><strong>Mechanic: Spiritual Infusion (TN 7 or less)</strong></p>
+            <ul>
+                <li><strong>Infused Potency:</strong> You increase the wounds caused or healed by a value equal to your <strong>Spirit Skill Points</strong>.</li>
+                <li><strong>Metaphysical Zenith (Crit):</strong> On an unmodified 10: <strong>Total Result = Normal + Intellect + (2 x Spirit) + Willpower</strong>.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Supernatural</span>
+                <span class="skill-mechanic">Actions: 2 (Exhausting) | Min. Req: Magic Skill (11)</span>
+                <p><em>You unleash every ounce of your energy in a blinding surge of power, leaving you physically drained but spiritually transcendent.</em></p>
+                <ul>
+                    <li><strong>Lifeforce Surge:</strong> <strong>Total Result = Normal + (3 x Spirit) + (2 x Willpower)</strong>.</li>
+                    <li><strong>Cosmic Echo:</strong> Friendly targets gain +1 to their next roll; enemies suffer a -1 penalty.</li>
+                    <li><strong>Supernatural Awakening (Crit):</strong> On an unmodified 10: <strong>Total Result = Normal + Charisma + (2 x Intellect) + (4 x Spirit) + (2 x Willpower)</strong>. Friendly targets gain Advantage; enemies suffer Disadvantage.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Nimble Strike</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Agility (1), Awareness (1), Stealth (2)</span>
+            <p><em>Brutes rely on the weight of their steel; you rely on the weight of your moment. You don’t swing through the opponent—you swing exactly where they aren't protected.</em></p>
+            <p><strong>Passive: Fluidity</strong></p>
+            <ul>
+                <li>Your strikes are guided by a natural rhythm. You gain a permanent <strong>+1 Melee Wound Bonus</strong>.</li>
+            </ul>
+            <p><strong>Mechanic: Precision Velocity</strong></p>
+            <ul>
+                <li><strong>The Strike:</strong> <strong>Wounds = Normal + Agility + Awareness</strong>.</li>
+                <li><strong>Flickering Blade (Crit):</strong> On an unmodified 10: <strong>Wounds = Normal + (2 x Agility) + Awareness + 1d10</strong>.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Shadow Strike</span>
+                <span class="skill-mechanic">Actions: 1 (Utility Setup)</span>
+                <p><em>A warrior who cannot see is a warrior who is already dead. You use blinding powders or smoke pellets to shatter the enemy’s focus.</em></p>
+                <ul>
+                    <li><strong>The Blindside:</strong> Force the target to make an Awareness Test against a DV of <strong>(1d10 + Stealth + Agility)</strong> rolled with Advantage.</li>
+                    <li><strong>The Opening:</strong> If the target fails, they are Disordered. Your next attack is a <strong>Backstab</strong>.</li>
+                    <li><strong>Master of Shadows (Crit):</strong> On an unmodified 10 DV generation, add your Stealth points a second time to the DV, making it nearly impossible to track you.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Opportunist</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Ranged Weapon Proficiency</span>
+            <p><em>The battlefield is a storm of steel and flesh, but you see the calm at the center. While others hesitate, fearing to strike their own kin, you see the gap between the shield and the shoulder.</em></p>
+            <p><strong>Passive:</strong> Steady hands grant a permanent <strong>+1 Ranged Wound Bonus</strong>.</p>
+            <p><strong>Mechanic: The Chaos Eye</strong></p>
+            <ul>
+                <li><strong>Ignore Modifiers:</strong> You remove all negative penalties when targeting enemies engaged in melee combat or when Line of Sight is partially obscured.</li>
+                <li><strong>Weak Point:</strong> On a hit, the target’s Wound Mitigation (WM) is reduced by your <strong>Awareness Characteristic</strong>.</li>
+                <li><strong>Opportunistic Strike (Crit):</strong> On an unmodified 10: <strong>Wounds = Normal + 1d10 + (2 x Awareness)</strong>.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Seeker</span>
+                <span class="skill-mechanic">Actions: 2 (Focused Tracking)</span>
+                <p><em>You don't just loose an arrow; you guide it with your will, effectively "locking on" to your target.</em></p>
+                <ul>
+                    <li><strong>Lethal Payload:</strong> Gain <strong>Advantage</strong> To-Hit. Deals <strong>Normal + 1d10 + (3 x Awareness) + Agility</strong> wounds.</li>
+                    <li><strong>Seeker’s Mark (Crit):</strong> On an unmodified 10, the projectile strikes with terminal force. Add an additional <strong>+1d10 wounds</strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Phantom Assassin (Stealth)</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Agility (2), Stealth (3)</span>
+            <p><em>You are the ghost in the machine of war. To you, a fortress is just a series of blind spots, and a king is just a neck waiting for a cold edge.</em></p>
+            <p><strong>Passive:</strong> You gain <strong>+2 Melee Wound Bonus</strong> (applies only when attacking from Stealth or Flanking).</p>
+            <p><strong>Mechanic: The Unseen Blade</strong></p>
+            <ul>
+                <li><strong>Unaware Advantage:</strong> Attacking an unaware target grants <strong>Advantage</strong> To-Hit.</li>
+                <li><strong>Success:</strong> Deals <strong>Normal + 1d10 + (Agility x 2)</strong> wounds and applies <strong>Silence</strong> for 1 turn (preventing spells and alarms).</li>
+                <li><strong>Perfect Cut (Crit):</strong> On an unmodified 10, add +2 Bleeding conditions.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Artery Sever</span>
+                <span class="skill-mechanic">Actions: 2 | Must be initiated from Full Stealth</span>
+                <p><em>One surgical strike to the vital channel. The fight is over before the target even realizes they have been touched.</em></p>
+                <ul>
+                    <li><strong>The Execution:</strong> Deals <strong>Normal + 3d10 + (Agility x 2)</strong> wounds. Target suffers 3 Bleeding and Silence.</li>
+                    <li><strong>Death Shock:</strong> The target must immediately pass a <strong>Willpower DV 12</strong> test. If they fail, they are instantly dropped to 0 wounds.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Primal Aspect</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 2 | Min. Req: Druidism (9), Physique or Agility (4)</span>
+            <p><em>The skin is a cage. The bone is a limit. You don't just "turn into" a wolf; you become the very concept of the Hunt.</em></p>
+            <p><strong>Mechanic: The Shifting Form</strong> (Sustained: Costs 1 Spirit point per turn)</p>
+            <p>When you shift, your gear merges into your form. You lose the ability to cast non-nature spells but gain Primal Strikes: <strong>Wounds = 1d10 + Aspect Characteristic + Druidism Rank</strong>.</p>
+            <ul>
+                <li><strong>The Predator:</strong> +2 Agility, +10ft Movement, Attacks cause Bleeding. (Striker/Infiltrator)</li>
+                <li><strong>The Guardian:</strong> +2 Physique, +3 Wound Mitigation (WM), +10 Max Wounds. (Tank/Defender)</li>
+                <li><strong>The Skybound:</strong> Fly Speed (Athletics x 10), +2 Awareness, Advantage on Dodge. (Scout/Harasser)</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Apex Mutation</span>
+                <span class="skill-mechanic">Duration: Same as Aspect</span>
+                <p><em>You choose one trait to overlay onto your chosen Aspect, pushing the evolution of your form into the unnatural.</em></p>
+                <ul>
+                    <li><strong>Toxic Adaptation:</strong> Natural weapons cause Poison (Physique DV 10). If already poisoned, deal +1d10 Wounds.</li>
+                    <li><strong>Iron-Grown Chitin:</strong> Gain +2 WM. Enemies landing melee strikes suffer Thorns Damage equal to your Physique Characteristic.</li>
+                    <li><strong>Elemental Resonance:</strong> Choose Fire, Frost, or Storm. Gain Resistance to that element and deal +1d10 elemental wounds.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Rebirth (Epic Vocation)</span>
+            <span class="skill-mechanic">XP: 400 | Actions: 5 (Sequential) | Min. Req: Willpower (3), Druidism (12)</span>
+            <p><em>Death is not an end; it is simply a change in season. When your blood returns to the soil, the Earth Mother does not see a corpse—she sees a seed.</em></p>
+            <p><strong>Passive: Nature's Grace</strong></p>
+            <ul>
+                <li>Your connection to life energy grants a permanent <strong>+3 Bonus</strong> to all Druid Healing Spells.</li>
+            </ul>
+            <p><strong>Mechanic: Earth Mother's Gift (Once per Day)</strong></p>
+            <ul>
+                <li><strong>Trigger:</strong> Activates automatically when reduced to 0 Wounds (provided you are not suffering from active DOTs like Burn/Poison).</li>
+                <li><strong>The Action Toll:</strong> Restoring the soul requires 5 Actions over sequential turns to complete.</li>
+                <li><strong>Restoration:</strong> Once the 5th Action is spent, you are restored to: <strong>Wounds Restored = 1d10 + Willpower Characteristic</strong>.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Seed of Life</span>
+                <span class="skill-mechanic">Actions: 5 (Cumulative) | Requirement: Rebirth</span>
+                <p><em>When you return from the soil, you bring the raw, unbridled vitality of the Deep Woods with you. A shockwave of growth pulses outward, mending allies and purging rot.</em></p>
+                <ul>
+                    <li><strong>Verdant Pulse:</strong> Releases a pulse in a radius of (Willpower x 10) feet. All friendly targets are instantly healed: <strong>Healing = 1d10 + Druidism Rank</strong>.</li>
+                    <li><strong>Nature's Purity:</strong> Affected allies instantly remove one condition (Bleeding, Stunned, Poisoned) and gain +2 WM from a protective Bramble Shield until your next turn.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Shield Rush</span>
+            <span class="skill-mechanic">XP: 50 | Actions: 1 | Min. Req: 1H & Shield, Shieldsman (1)</span>
+            <p><em>A shield is not just a wall; it is a weapon with a very large surface area. By leading with your shoulder, you turn your sprint into a kinetic hammer.</em></p>
+            <p><strong>Mechanic: The Brute Force Entry</strong> (Requires 25ft of momentum)</p>
+            <ul>
+                <li><strong>Accuracy & Impact:</strong> Gain a To-Hit bonus equal to your Shieldsman Skill Points. Target suffers: <strong>Wounds = 1d10 + (2 x Physique) + Unused Shieldsman Points</strong>.</li>
+                <li><strong>Concussive Slam (Crit):</strong> On an unmodified 10, target must pass a Physique DV 10 test or suffer 1 Stunned condition.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Blitz</span>
+                <span class="skill-mechanic">Actions: 2 (Heavy Sprint)</span>
+                <p><em>This isn't a charge; it’s a total eclipse. You grip your shield with both hands and become a runaway juggernaut. You erase the space they were standing in.</em></p>
+                <ul>
+                    <li><strong>Shattering Blow:</strong> Target immediately suffers 2 Stunned conditions (Giants 1) and: <strong>Wounds = 2d10 + (4 x Physique) + Unused Shieldsman Points</strong>.</li>
+                    <li><strong>Juggernaut’s Wrath (Crit):</strong> Target suffers 3 Stunned conditions and: <strong>Wounds = 2d10 + (6 x Physique) + Unused Shieldsman Points</strong>. Target must pass a Physique DV 10 test or be flung 1d10 feet backward and fall Prone.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Sovereign Mind</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 (Reactionary or Active) | Min. Req: Willpower (4)</span>
+            <p><em>The mind is the only fortress that cannot be taken by siege unless the commander surrenders. You have spent years learning to cord off your thoughts from fear, pain, and manipulation.</em></p>
+            <p><strong>Passive: The Unshakable</strong></p>
+            <ul>
+                <li>Permanent <strong>+1 bonus</strong> to all Willpower-based Defense tests and Fear checks.</li>
+            </ul>
+            <p><strong>Mechanic: Mind over Malady</strong></p>
+            <ul>
+                <li><strong>The Surge:</strong> Spend 1 Action to attempt to remove one mental condition (Fear, Confusion), gaining a bonus equal to your Willpower characteristic.</li>
+                <li><strong>Mental Shielding:</strong> Spend 1 Action to grant yourself <strong>Advantage</strong> on any forced Willpower test.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Indomitable</span>
+                <span class="skill-mechanic">Actions: 2 (Channeling)</span>
+                <p><em>Pain is merely information, and you have chosen to ignore the report. By channeling your willpower, you force your body to function long after it should have collapsed.</em></p>
+                <ul>
+                    <li><strong>Ignore the Flesh:</strong> Gain <strong>Extra WM = (2 x Willpower) + Physique</strong> until the start of your next turn.</li>
+                    <li><strong>Stalwart:</strong> While Indomitable, you are immune to the Stunned and Prone conditions.</li>
+                    <li><strong>Soul’s Defiance (Crit):</strong> On an unmodified 10 Willpower test, the mental attacker takes 2d10 Mental Wounds, and you heal wounds equal to your Willpower.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Sunder</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Heavy/2H Weapon</span>
+            <p><em>The finest steel is still subject to the laws of physics. If you cannot bypass the armor, you simply break it. A broken shield provides no cover, and a notched blade cannot kill.</em></p>
+            <p><strong>Mechanic: The Ruinous Strike</strong></p>
+            <ul>
+                <li><strong>Targeting Shields:</strong> On a successful hit, the shield is Dented. Its Defense bonus is negated for the rest of the turn, and its permanent WM is reduced by 1 until repaired.</li>
+                <li><strong>Targeting Weapons:</strong> Perform an opposed Physique test. If you win, the weapon is Damaged, suffering a permanent -2 penalty to Wounds until repaired.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Shatterpoint</span>
+                <span class="skill-mechanic">Actions: 2 (Heavy Commitment)</span>
+                <p><em>You don't just damage gear; you render it useless. With a focused surge of strength, you find the molecular breaking point of wood and iron.</em></p>
+                <ul>
+                    <li><strong>Item Ruination:</strong> Roll To-Hit with <strong>Disadvantage</strong>. If successful, Non-Magical items are Shattered (unusable). Magical Items become Fractured (lose all properties). Worn Armor becomes Ruined (WM halved, Agility penalties doubled).</li>
+                    <li><strong>Perfection of Ruin (Crit):</strong> The item is destroyed instantly. The wielder suffers <strong>Normal Wounds + 1d10</strong> from shrapnel and is knocked Prone.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Throat Slice</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 2 | Min. Req: Edged or Piercing Melee Weapon</span>
+            <p><em>Speech is a luxury of the living. For those who rely on incantations and battle cries, the neck is the most vulnerable point of failure. A single cold line turns a powerful sorcerer into a panicked animal.</em></p>
+            <p><strong>Passive:</strong> Your blades find the softest paths. Permanent <strong>+1 Melee Wound Bonus</strong>.</p>
+            <p><strong>Mechanic: The Silent Kill</strong></p>
+            <ul>
+                <li><strong>The Damage:</strong> <strong>Wounds = Normal + 1d10 + (2 x Agility)</strong>. Causes 2 Bleeding conditions.</li>
+                <li><strong>Deep Sever (Crit):</strong> On an unmodified 10, the victim is <strong>Muted</strong>. They cannot verbalize, use Inspiring abilities, or cast vocal spells until healed.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Slash</span>
+                <span class="skill-mechanic">Actions: 3</span>
+                <p><em>Precision gives way to total annihilation. You aren't just cutting the throat; you are nearly separating the head from the shoulders.</em></p>
+                <ul>
+                    <li><strong>Near-Decapitation:</strong> <strong>Wounds = Normal + 2d10 + (3 x Agility)</strong>.</li>
+                    <li><strong>Asphyxiation:</strong> Target gains 3 Bleeding conditions and is immediately Muted. Target also suffers 1 Stunned condition (smaller than Giant).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Thunderstrike (Blackpowder)</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Awareness (2), Blackpowder Proficiency</span>
+            <p><em>Magic is a whisper; blackpowder is a scream. You have embraced the volatile alchemy of the forge, wielding weapons that shatter the silence of the battlefield and the morale of the enemy.</em></p>
+            <p><strong>Passive:</strong> Permanent <strong>+2 Ranged Wound Bonus</strong>.</p>
+            <p><strong>Mechanic: The Deafening Roar</strong></p>
+            <ul>
+                <li><strong>Concussion:</strong> Every successful hit causes 1 Stunned condition.</li>
+                <li><strong>Blast Wave (Crit):</strong> On a Natural 10: <strong>Wounds = Normal + 1d10 + (Awareness x 2)</strong>. The target takes 2 Stunned conditions and is pushed back 5 feet.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Point-Blank Execution</span>
+                <span class="skill-mechanic">Actions: 2 | Range: 5 feet</span>
+                <p><em>You don't wait for the enemy to reach you; you step into their shadow and unleash hell.</em></p>
+                <ul>
+                    <li><strong>Execution:</strong> <strong>Wounds = Normal + 3d10 + (Awareness x 2)</strong> and causes 2 Bleeding.</li>
+                    <li><strong>Shockwave:</strong> Target must pass a Physique DV 10 test or be knocked Prone. This attack cannot be parried or blocked by shields.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Tune-up</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 2 | Min. Req: Melee Weapon Proficiency</span>
+            <p><em>There is a specific resonance when a weapon meets a jawbone just right. It’s not just about the pain; it’s about the sudden disconnect between the brain and the body. You turn the lights off in their head for a few precious seconds.</em></p>
+            <p><strong>Mechanic: The Glass Chin</strong></p>
+            <ul>
+                <li><strong>The Damage:</strong> <strong>Wounds = Normal + 1d10 + Physique</strong>. Target immediately suffers 2 Stunned conditions.</li>
+                <li><strong>Broken Jaw (Crit):</strong> On an unmodified 10, the target's Wound Mitigation is bypassed. Target must pass a Willpower DV 10 test or fall Prone. Deals <strong>Normal + 2d10 + (2 x Physique) + Awareness Bonus</strong>.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Lights-Out</span>
+                <span class="skill-mechanic">Actions: 3</span>
+                <p><em>You aren't just rattling them anymore; you are driving their jaw into their skull. This is a terminal strike designed to end a confrontation in one bone-shattering instant.</em></p>
+                <ul>
+                    <li><strong>Total Incapacitation:</strong> <strong>Wounds = Normal + 2d10 + (2 x Awareness)</strong>. Target suffers 3 Stunned conditions. Target must pass Willpower DV 10 or fall Prone for this turn and the next.</li>
+                    <li><strong>Blackout (Crit):</strong> Add 3d10 additional wounds and completely bypass all Wound Mitigation.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skill-block">
+            <span class="skill-name">Unwavering (Epic Vocation)</span>
+            <span class="skill-mechanic">XP: 300 | Actions: 2 | Min. Req: Hard as Nails (2), Iron Will (2), Willpower (2)</span>
+            <p><em>Pain is an opinion; death is an inconvenience. You have hardened your spirit to the point where your body no longer has permission to fail. You are the rock upon which the waves of the enemy break.</em></p>
+            <p><strong>Passive: Absolute Resilience</strong></p>
+            <ul>
+                <li>Gain permanent <strong>+3 Wound Mitigation (WM)</strong> against all sources of damage (physical, magical, or environmental).</li>
+            </ul>
+            <p><strong>Mechanic: The Iron Shell</strong></p>
+            <ul>
+                <li><strong>Mental Armor:</strong> For the remainder of the turn, mitigate all incoming wounds by your Willpower characteristic.</li>
+                <li><strong>Last Breath:</strong> If reduced to 0 Wounds, pass a Willpower DV 12 test to stay on your feet for one final action.</li>
+            </ul>
+
+            <div class="specialization-block">
+                <span class="specialization-title">Specialization: Unstoppable Force</span>
+                <span class="skill-mechanic">Actions: 3 (Full Action Pool)</span>
+                <p><em>You have crossed the threshold into legend. To kill you, the enemy must not only break your body—they must break a soul that has forgotten how to yield.</em></p>
+                <ul>
+                    <li><strong>Total Mitigation:</strong> Shrug off wounds equal to the combined value of your Hard as Nails, Iron Will, and Willpower bonuses until your next turn.</li>
+                    <li><strong>Purity of Purpose:</strong> Ignore all damage from Bleeding or Disease for the duration of this turn.</li>
+                    <li><strong>Immortal Comeback (Crit/Save):</strong> If reduced to 0 Wounds while in this state, pass a Willpower DV 14 test to regain wounds equal to your Willpower Bonus and stay standing for turns equal to your Iron Will Rank.</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="RPG-PowerofThree-Rules.html" class="back-link">Return to Core Rulebook</a>
+    </div>
+
+</body>
+</html>
