@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1090">
+    <title>RPG Ledger v11.30 - Power of Three</title>
+    <style>
+        :root { 
+            /* Slate & Crimson Theme */
+            --iron: #02070e;      
+            --blood: #A81818;     
+            --parchment: #f3e7c9; 
+            --gold: #B8860B;      
+            --input-bg: #FCF7EB;  
+            --ink: #111111;       
+            --pale-blood: #EADCDA;
+            --success: #2E7D32;
+
+            /* Visual Flavor: Typography */
+            --font-heading: 'Grenze Gotisch', serif;  /* For Headers */
+            --font-main: 'IM Fell English', serif;     /* For Labels */
+            --font-hand: 'MedievalSharp', cursive;    /* For Player Inputs */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background: #1E1E24; 
+            color: var(--ink); 
+            /* Changed from Courier to the more thematic Fell English */
+            font-family: var(--font-main); 
+            padding: 20px; 
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+        }
+       /* THE MAIN PARCHMENT CONTAINER (Cleaned for Legibility) */
+        .sheet { 
+            background-color: var(--parchment);
+            /* Removed noise: kept a very subtle light-to-dark gradient for depth */
+            background-image: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.05) 100%);
+            width: 1050px;
+            border: 10px solid var(--iron); 
+            padding: 5px 8px 8px 8px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- HIDE DEFAULT NUMBER ARROWS FOR CLEAN IPAD UX --- */
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { 
+            /* -webkit-appearance: none; */ 
+            margin: 0; 
+        }
+        input[type="number"] {
+            -moz-appearance: textfield; /* Firefox fallback */
+        }
+
+        /* The Blood Pulse Animation (Moved from print to global) */
+        @keyframes blood-pulse {
+            0% { box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 20px var(--blood); }
+            50% { box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 60px #ff0000; }
+            100% { box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 20px var(--blood); }
+        }
+
+        /* Triggered when character is Dying */
+        .critical-state {
+            animation: blood-pulse 2s infinite ease-in-out;
+            background-color: #f7ece1 !important;
+        }
+
+        /* --- CHARACTER SHEET HEADER --- */
+.sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--ink);
+    color: var(--gold);
+    padding: 10px 20px;
+    border-bottom: 4px solid var(--blood);
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.header-center h1 {
+    font-size: 18pt;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0;
+    text-shadow: 1px 1px 0px var(--blood);
+}
+
+.btn-hub {
+    background: var(--white);
+    color: var(--ink);
+    border: 2px solid var(--gold);
+    padding: 5px 15px;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 10pt;
+    border-radius: 2px;
+    transition: 0.2s;
+}
+
+.btn-hub:hover {
+    background: var(--gold);
+    color: var(--white);
+}
+
+.v-num {
+    font-size: 9pt;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+        /* --- TOP HEADER --- */
+        .page-title { text-align: center; font-size: 18pt; font-weight: 900; color: var(--iron); text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid var(--gold); margin-bottom: 8px; padding-bottom: 2px; }
+
+        /* --- HEADER --- */
+        .status-bar { border-bottom: 4px solid var(--iron); padding-bottom: 4px; margin-bottom: 5px; }
+        .header-top-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4px; }
+        .id-row { display: flex; gap: 8px; align-items: flex-end; flex: 1; }
+
+        /* --- TIGHTENED DASHBOARD LAYOUT --- */
+        .id-f { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            /* Reduced from 15px to 8px to reclaim horizontal space */
+            margin-right: 8px; 
+        }
+        
+       /* LABEL REFINEMENT */
+        .id-f label { 
+            font-family: var(--font-main); 
+            font-size: 8.5pt; /* Slightly smaller to fit tighter columns */
+            text-transform: uppercase; 
+            font-weight: 900; 
+            color: var(--blood); 
+            margin-bottom: 1px;
+            text-align: center;
+            width: 100%;
+            letter-spacing: 0.5px; 
+        }
+
+        .id-f input, .id-f select { 
+            background: transparent; 
+            border: none;
+            border-bottom: 3px solid var(--iron); 
+            font-family: var(--font-hand); 
+            font-size: 14pt; 
+            font-weight: 900; 
+            padding: 2px 0px;
+            text-align: center;
+            width: 100%;
+            color: var(--ink);
+        }
+
+        /* Focus state now glows slightly to show it's active */
+        .id-f input:focus {
+            outline: none;
+            border-bottom-color: var(--blood);
+            color: var(--blood); /* Text changes to blood red while typing */
+        }
+
+        /* --- NAME FIELD OVERRIDE --- */
+        .w-name { align-items: flex-start !important; }
+        .w-name label { text-align: left !important; }
+        .w-name input { 
+            text-align: left !important; 
+            font-size: 22pt; /* Extra large for the hero's name */
+            font-weight: 900;
+        }
+
+        /* THE NAME FIELD: Automatically expands to fill saved space */
+        .w-name { 
+            flex: 1; 
+            margin-right: 20px; /* Kept a larger gap here to separate Name from stats */
+            align-items: flex-start !important; 
+        }
+
+        /* THE HAIR FIELD: Increased width */
+        .w-hair { width: 150px; } /* Increased from 110px to 150px */
+
+        /* TIGHTENING OTHER FIELDS to free up room for Name/Hair */
+        .w-race { width: 110px; }
+        .w-age  { width: 55px; }
+        .w-sex  { width: 35px; }
+        .w-h    { width: 85px; }
+        .w-w    { width: 85px; }
+        .w-eyes { width: 85px; }
+
+        /* Ensures text is centered inside the input boxes for these specific fields */
+        .w-age input, .w-sex input, .w-h input, .w-w input, .w-eyes input {
+            text-align: center;
+        }
+
+        .vault-controls { display: flex; gap: 4px; align-self: flex-start; }
+        .btn-vault { background: var(--iron); color: var(--gold); border: 1px solid var(--gold); padding: 1px 6px; font-weight: 900; cursor: pointer; font-size: 8pt; text-transform: uppercase; font-family: inherit; }
+        .btn-reset-vault { background: var(--blood); color: var(--parchment); border: 1px solid var(--iron); padding: 1px 6px; font-weight: 900; cursor: pointer; font-size: 8pt; text-transform: uppercase; font-family: inherit; }
+
+        .dash-container { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; }
+       
+        /* --- UPDATED LEDGER (Larger Unused XP) --- */
+.ledger-box { border: 2px solid var(--iron); padding: 2px 8px; display: flex; gap: 10px; align-items: center; height: 75px; flex-shrink: 0; }
+.xp-ledger { background: var(--input-bg); border-color: var(--iron); color: var(--ink); }
+.l-group { display: flex; flex-direction: column; align-items: center; }
+.l-group label { font-size: 10.5pt; font-weight: 900; margin-bottom: 2px; text-decoration: underline; text-transform: uppercase; color: var(--blood); }
+.l-group input { width: 75px; height: 32px; text-align: center; font-weight: 900; background: var(--input-bg); border: 1.5px solid var(--ink); font-size: 14pt; color: var(--ink); }
+.l-val { font-size: 18px; font-weight: 900; min-width: 45px; text-align: center; text-shadow: 1px 1px 0px rgba(0,0,0,0.1); }
+.xp-ledger #xr.l-val { color: var(--success); font-size: 22pt; } /* Buffed Unused XP Font */
+
+/* --- DASHBOARD (Focus, Fortune, Luck - Kept Original) --- */
+.dash { display: flex; gap: 5px; background: rgba(0,0,0,0.05); padding: 4px; border: 1.5px solid var(--iron); height: 70px; flex-shrink: 0; }
+.res-box { display: flex; flex-direction: column; align-items: center; border-right: 1.5px solid var(--ink); padding: 0 6px; justify-content: center; }
+.res-t { font-size: 11pt; font-weight: 900; color: var(--blood); text-transform: uppercase; margin-bottom: 2px; text-decoration: underline; }
+.res-i { display: flex; gap: 4px; }
+.res-i div { display: flex; flex-direction: column; align-items: center; }
+.res-i label { font-size: 11pt; font-weight: 900; text-transform: uppercase; margin-bottom: 1px; color: var(--ink); }
+.res-i input, .res-i select { width: 58px; height: 32px; text-align: center; font-weight: 900; font-size: 15pt; border: 1.5px solid var(--ink); font-family: inherit; color: var(--ink); background: var(--input-bg); }
+.res-i select { font-size: 10pt; }
+    
+       /* --- MAIN SECTION --- */
+        /* This keeps the 3 main columns (Stats, Combat, Wounds) in a horizontal row */
+        .readiness-block { 
+            display: flex; 
+            gap: 4px; 
+            margin-bottom: 5px; 
+            align-items: flex-start; /* This prevents the tall Wound table from stretching everything */
+            justify-content: space-between; 
+        }
+        
+        .twin-wrapper { 
+            display: flex; 
+            gap: 4px; 
+            align-items: stretch; /* This tells the portrait and stats to perfectly match heights */
+            flex-shrink: 0; 
+        }
+        
+        .port { 
+            width: 200px; 
+            /* Notice there is no height property here anymore! */
+            border: 3px solid var(--iron); 
+            background: rgba(0,0,0,0.05); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            overflow: hidden; 
+            position: relative; 
+        }
+
+        .port img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+
+        .char-master-container { display: flex; flex-direction: column; border: 2px solid var(--iron); background: rgba(0,0,0,0.05); flex-shrink: 0; }
+        .char-main-head { background: var(--iron); color: var(--gold); font-size: 11pt; font-weight: 900; text-align: center; padding: 3px 0; text-transform: uppercase; border-bottom: 2px solid var(--blood); }
+        .char-grid { display: grid; grid-template-columns: repeat(2, 115px); gap: 1px; padding: 1px; }
+        .char-box { background: var(--input-bg); border: 1px solid var(--ink); height: 58px; display: flex; flex-direction: column; }
+        .char-lbl { background: rgba(0,0,0,0.08); color: var(--iron); font-size: 10pt; font-weight: 900; text-align: center; padding: 1px 0; text-transform: uppercase; border-bottom: 1px solid var(--ink); }
+        .char-inputs { display: flex; background: var(--input-bg); padding: 1px; justify-content: space-around; flex: 1; align-items: center; }
+        .char-val { width: 50px; border: 1.5px solid var(--ink); text-align: center; font-size: 15pt; font-weight: 900; height: 32px; background: var(--input-bg); color: var(--ink); }
+        
+        .cm-col { flex: 0 0 325px; display: flex; flex-direction: column; gap: 4px; }
+        .readiness-table { border: 2px solid var(--iron); background: var(--input-bg); }
+        .rt-head { background: var(--iron); color: var(--gold); font-size: 11pt; font-weight: 900; text-align: center; padding: 3px; text-transform: uppercase; border-bottom: 2px solid var(--blood); }
+        .rt-grid { padding: 3px; display: flex; flex-direction: column; }
+
+        /* --- COMBAT MASTERY --- */
+        .cm-row { display: grid; grid-template-columns: 75px 90px 90px 1fr; gap: 4px; border-bottom: 1px solid rgba(0,0,0,0.2); padding: 3px 0; align-items: center; }
+        .cm-label { font-size: 10pt; font-weight: 900; text-transform: uppercase; color: var(--blood); }
+        .cm-inputs { display: flex; gap: 1px; justify-content: center; }
+        .cm-inputs input { width: 44px; height: 30px; text-align: center; font-size: 12pt; font-weight: 900; border: 1.5px solid var(--ink); color: var(--ink); background: rgba(0,0,0,0.08); }
+        .cm-cast-box { display: flex; justify-content: center; padding-right: 4px; }
+
+        .def-horiz-container { border: 2px solid var(--iron); background: var(--input-bg); overflow: hidden; }
+        .def-sub-head { background: var(--iron); color: var(--gold); font-size: 9pt; font-weight: 900; text-align: center; padding: 2px 0; text-transform: uppercase; border-bottom: 2px solid var(--blood); }
+        .def-horiz { display: flex; justify-content: space-around; align-items: center; padding: 4px; }
+        .def-item { display: flex; align-items: center; gap: 5px; }
+        .def-item label { font-size: 10.5pt; font-weight: 900; text-transform: uppercase; color: var(--iron); }
+        .def-item input { width: 42px; height: 30px; text-align: center; font-weight: 900; border: 1.5px solid var(--ink); font-size: 12pt; color: var(--ink); background: var(--input-bg); }
+
+        .wm-table-container { flex: 0 0 235px; display: flex; flex-direction: column; } 
+        .wm-header-row { display: grid; grid-template-columns: 85px 1fr 1fr 1fr; text-align: center; font-weight: 900; font-size: 8.5pt; color: var(--blood); border-bottom: 1.5px solid var(--ink); text-transform: uppercase; }
+        .wm-row { display: grid; grid-template-columns: 85px 1fr 1fr 1fr; gap: 0px; border-bottom: 1px solid var(--ink); padding: 2px 0; align-items: center; text-align: center; }
+        .wm-row input { width: 38px; height: 30px; text-align: center; font-size: 12pt; font-weight: 900; border: 1.5px solid var(--ink); margin: 0 auto; color: var(--ink); background: rgba(0,0,0,0.08); }
+
+        /* WOUND LEDGER */
+        .wound-ledger { background: var(--input-bg); border: 2px solid var(--blood); color: var(--ink); gap: 1px; padding: 2px; display: flex; align-items: center; margin-top: 3px; height: 60px; justify-content: space-around; }
+        .wound-ledger .l-group label { font-size: 8.5pt; margin-bottom: 1px; color: var(--blood); }
+        .wound-ledger .l-group input { width: 50px; height: 28px; border: 1.5px solid var(--ink); font-size: 12pt; color: var(--ink); background: var(--input-bg); }
+        .wound-ledger .l-val { font-size: 18px; min-width: 30px; color: var(--blood); }
+
+        .conditions-table { margin-top: 3px; border: 2px solid var(--iron); background: var(--input-bg); }
+        .cond-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--iron); }
+        .cond-item { background: var(--input-bg); display: flex; flex-direction: column; align-items: center; padding: 2px; }
+        .cond-lbl { font-size: 8pt; font-weight: 900; text-transform: uppercase; color: var(--blood); margin-bottom: 1px; }
+        .cond-item input { width: 100%; height: 24px; text-align: center; font-weight: 900; border: 1px solid var(--ink); font-size: 10pt; color: var(--ink); background: var(--input-bg); }
+
+        /* --- SKILLS SECTION --- */
+        .h-box { background: var(--iron); color: var(--gold); padding: 4px 12px; font-size: 13pt; margin-bottom: 4px; border-left: 12px solid var(--blood); text-transform: uppercase; font-weight: 900; }
+        
+        .sk-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; margin-bottom: 0px; }
+        .sk-c { background: transparent; border: 2px solid var(--iron); padding: 2px; }
+        .sk-h { background: var(--iron); color: var(--gold); font-size: 10.5pt; text-align: center; padding: 4px 0; font-weight: 900; text-transform: uppercase; border-bottom: 2px solid var(--blood); margin-bottom: 4px; }
+        .sk-item { background: var(--input-bg); border: 1px solid var(--ink); margin-bottom: 2px; padding: 2px; display: flex; align-items: center; justify-content: space-between; }
+        .sk-name { font-size: 8.5pt; font-weight: 900; text-transform: uppercase; flex: 1; min-width: 0; padding-right: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--iron); }
+        .sk-item input { font-size: 13pt; font-weight: 900; text-align: center; height: 28px; border: 1.5px solid var(--ink); color: var(--ink); }
+        .sk-b { width: 36px !important; background: rgba(0,0,0,0.08); }
+        .sk-p { width: 42px !important; background: var(--input-bg); }
+
+        /* --- SPECIALIZATION SECTION --- */
+        .spec-container { display: flex; gap: 8px; width: 100%; margin-bottom: 0px; }
+        .spec-half { flex: 1; display: flex; flex-direction: column; }
+        .c-box { background: rgba(0,0,0,0.05); border: 2px solid var(--iron); padding: 2px; display: flex; flex-direction: column; gap: 2px; flex: 1; }
+        .c-l-spec { background: var(--iron); padding: 5px; border-radius: 2px; }
+        .spec-controls { display: flex; gap: 8px; align-items: center; padding: 2px 0; justify-content: space-around; }
+        .spec-input-group { display: flex; align-items: center; gap: 6px; }
+        .spec-label { font-size: 11.5pt; font-weight: 900; text-transform: uppercase; color: var(--gold); }
+        .spec-val-box, .spec-cost-box { width: 55px; height: 30px; font-size: 13pt; font-weight: 900; text-align: center; border: 1.5px solid var(--ink); background: var(--input-bg); color: var(--ink); }
+
+        .cb-label { font-size: 10pt; font-weight: 900; color: var(--parchment); }
+        .cb { transform: scale(1.1); vertical-align: middle; }
+/* --- REFINED COMBAT GRIDS (Wider Action Dropdowns) --- */
+.weapon-entry { border-bottom: 2px solid var(--iron); padding-bottom: 4px; margin-bottom: 4px; }
+
+/* Melee: Type(expands), Actions(90px), Hit-Bon(60px), Dmg-Bon(60px) */
+#mr .t-h, #mr .t-r { 
+    display: grid; 
+    grid-template-columns: 1fr 90px 60px 60px; 
+    gap: 8px; 
+    align-items: center; 
+}
+
+/* Range: Type(expands), Actions(50px), Hit-Bon(55px), Dmg-Bon(55px), Range(75px), AoE(55px) */
+#rr .t-h, #rr .t-r { 
+    display: grid; 
+    grid-template-columns: 1fr 50px 55px 55px 75px 55px; 
+    gap: 6px; 
+    align-items: center; 
+}
+
+.t-h span { font-size: 9.5pt; font-weight: 900; color: var(--blood); text-transform: uppercase; text-align: center; }
+
+/* Standardize 13pt Inputs */
+.t-r input, .t-r select { 
+    height: 34px !important; 
+    font-size: 13pt !important; 
+    font-weight: 900; 
+    border: 1.5px solid var(--ink); 
+    background: var(--input-bg);
+    text-align: center;
+    color: var(--ink);
+}
+.t-r select { font-size: 11pt; text-align: left; padding-left: 2px; }
+
+        .w-note-row { margin-top: 4px; height: 32px; display: flex; align-items: center; gap: 5px; }
+        .w-note-label { font-size: 10pt; font-weight: 900; text-transform: uppercase; color: var(--blood); width: 70px; }
+        .w-note { height: 32px !important; font-size: 12pt !important; flex: 1; padding: 0 8px; border: 1.5px solid var(--ink); font-weight: 900; }
+        
+        /* --- BUFFED MOUNTED SECTION --- */
+.mounted-bar { background: rgba(0,0,0,0.03); border: 2px solid var(--iron); margin-bottom: 4px; padding: 2px 10px; height: 48px; display: flex; align-items: center; gap: 10px; }
+.m-skill-box { height: 40px; padding: 0 10px; gap: 8px; border: 1.5px solid var(--ink); background: var(--input-bg); display: flex; align-items: center; }
+.m-skill-box input { height: 34px !important; font-size: 15pt !important; width: 65px !important; text-align: center; font-weight: 900; }
+
+       /* All Combat/Armor inputs set to the 13pt/34px Standard */
+.t-r input, .t-r select, .g-item select, .g-item input { 
+    height: 34px !important; 
+    font-size: 13pt !important; 
+    font-weight: 900; 
+    border: 1.5px solid var(--ink); 
+    color: var(--ink); 
+    background: var(--input-bg); 
+}
+.t-r select { font-size: 11pt; }
+
+/* --- COMPACT ARMOR AREA --- */
+.gear-area { background: transparent; border: 2px solid var(--iron); margin-bottom: 2px; padding: 6px 10px; }
+.gear-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; }
+.g-item label { font-size: 9.5pt; font-weight: 900; color: var(--blood); text-transform: uppercase; }
+
+/* Reverted Armor Boxes for 13pt alignment */
+#armor-bonus-1, #armor-bonus-2, #armor-total-1, #armor-total-2 { width: 75px !important; text-align: center; }
+/* Extra Gear */
+.extra-gear-row { display: flex; gap: 10px; margin-top: 6px; width: 100%; }
+.extra-gear-box { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.extra-gear-box label { font-size: 9.5pt; font-weight: 900; color: var(--blood); text-transform: uppercase; }
+.extra-gear-box input { height: 30px; font-size: 12.5pt; font-weight: 900; border: 1.5px solid var(--ink); padding: 0 8px; background: var(--input-bg); }
+
+        /* --- PAGE 2 STYLES & TRUNCATION FIXES --- */
+        .magic-section, .knowledge-section, .inventory-section { padding: 10px; }
+        .magic-cb-row { display: flex; gap: 15px; justify-content: center; margin-bottom: 10px; font-weight: 900; text-transform: uppercase; }
+        .magic-cb { transform: scale(1.3); margin-right: 5px; }
+        
+        .knowledge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 5px; }
+        
+        .k-item, #spells-grid .k-item { display: flex; align-items: center; gap: 5px; border: 1.5px solid var(--ink); padding: 2px 5px; background: var(--input-bg); min-width: 0 !important; }
+        .k-item input[type="text"] { border: none; flex: 1; font-weight: 900; font-size: 9pt; background: transparent; min-width: 0 !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .k-item select, .k-item select.spell-select { border: none; flex: 1; font-weight: 900; font-size: 10pt; outline: none; font-family: inherit; background: transparent; color: var(--ink); min-width: 0 !important; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+        .adv-eff-val { width: 34px !important; font-size: 11pt !important; }
+        .adv-cost { width: 36px !important; font-size: 10pt !important; }
+
+        .k-cb { transform: scale(1.2); }
+
+        #spells-grid .k-item { gap: 1px; }
+        .k-item select.spell-select { 
+            font-size: 12pt; 
+            cursor: help;
+        }
+        
+        .k-item input.spell-cost {
+            flex: 0 0 85px !important; 
+            width: 85px;
+            border-left: 1px solid rgba(0,0,0,0.2) !important;
+            padding: 0 1px;
+            font-size: 10.5pt;
+            text-align: center;
+            color: var(--blood);
+            background: transparent;
+        }
+
+        .k-item input.adv-cost {
+            flex: 0 0 48px !important; 
+            width: 48px;
+            border-left: 1px solid rgba(0,0,0,0.2) !important;
+            padding: 0 1px;
+            font-size: 10.5pt;
+            font-weight: 900;
+            text-align: center;
+            color: var(--blood);
+            background: rgba(0,0,0,0.08);
+        }
+
+        #advanced-grid { grid-template-columns: repeat(2, 1fr); display: grid; gap: 2px; }
+        #spells-grid { grid-template-columns: repeat(3, 1fr); display: grid; gap: 8px; }
+        .inventory-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin-top: 4px; }
+        #inventory-grid .k-item input[type="text"] { font-size: 13pt; padding: 2px 6px; }
+
+        .magic-stat-block { display: flex; flex-direction: column; align-items: center; }
+        .magic-inputs { display: flex; gap: 1px; }
+        .magic-inputs input { width: 44px; height: 30px; text-align: center; font-weight: 900; border: 1.5px solid var(--ink); font-size: 12pt; background: var(--input-bg); color: var(--ink); }
+
+          /* --- FORCE DESKTOP ARROWS ONLY ON EDITABLE INPUTS --- */
+input[type="number"]:not([readonly])::-webkit-inner-spin-button, 
+input[type="number"]:not([readonly])::-webkit-outer-spin-button { 
+    opacity: 1 !important; 
+    display: block !important;
+}
+
+/* Explicitly hide them on read-only boxes (like Totals and Base Stats) */
+input[type="number"][readonly]::-webkit-inner-spin-button, 
+input[type="number"][readonly]::-webkit-outer-spin-button { 
+    display: none !important;
+    -webkit-appearance: none !important;
+}
+
+/* Give the arrows room to breathe inside the tight combat boxes */
+.t-r input[type="number"]:not([readonly]), #w_bonus, .gear-area input[type="number"]:not([readonly]) {
+    padding-right: 14px !important; 
+}
+
+  @media print {
+            @page { size: letter portrait; margin: 0.2in; }
+            
+            /* 1. Force the page to stay Letter sized and keep the colors */
+            html, body { 
+                background: var(--parchment) !important; 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact; 
+                margin: 0 !important; 
+                padding: 0 !important;
+            }
+
+            /* 2. THE SHEET: Hard-lock the width and use the "Magic Zoom" */
+            .sheet { 
+                display: block !important;
+                width: 1050px !important; 
+                min-width: 1050px !important;
+                max-width: 1050px !important;
+                margin: 0 auto !important;
+                border: 2px solid var(--iron); 
+                zoom: 0.72; /* Dial to 0.75 if you want it bigger, 0.70 if it still cuts off */
+            }
+
+            /* 3. THE INVISIBILITY CLOAK: Aggressively kill the Cloud/Hub rows */
+            .no-print, .vault-controls, .sheet-header, #ph, #ui, 
+            #cloud-char-select, #btn-cloud-load, .btn-reset-vault { 
+                display: none !important; 
+                height: 0 !important;   /* Force the height to zero */
+                margin: 0 !important;   /* Remove any phantom margins */
+                padding: 0 !important;
+                overflow: hidden !important;
+            }
+
+            /* 4. THE SUPER GLUE: Fix the "Riding/Armor" cutoff */
+            .readiness-table, .wound-ledger, .gear-area, .sk-c, 
+            .magic-section, .knowledge-section, .inventory-section {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            /* 5. SQUISH: Tiny vertical saves */
+            .h-box { margin-bottom: 2px !important; padding: 2px 12px !important; }
+            .status-bar { margin-bottom: 2px !important; padding-bottom: 2px !important; }
+            
+            /* 6. INPUT FIX */
+            input, textarea {
+                font-family: var(--font-hand) !important;
+                font-size: 12.5pt;
+                color: var(--ink);
+            }
+
+            /* --- 7. THE VERTICAL PRINT SHAVE --- */
+            /* Forces the tall 34px screen inputs to shrink just for the printer */
+            .t-r input, .t-r select, .g-item select, .g-item input, .m-skill-box input { 
+                height: 26px !important; 
+                font-size: 11pt !important; 
+            }
+            .mounted-bar { height: 32px !important; margin-bottom: 2px !important; padding: 0 5px !important; }
+            .m-skill-box { height: 28px !important; }
+            .gear-area { padding: 2px 8px !important; margin-bottom: 2px !important; }
+            .extra-gear-row { margin-top: 2px !important; gap: 4px !important; }
+            .extra-gear-box input { height: 24px !important; font-size: 11pt !important; }
+            /* --- 8. PAGE 2 INFLATION (Counteracting the Zoom) --- */
+            /* Dialed back to prevent spilling onto Page 3 */
+            
+            .k-item, #spells-grid .k-item { 
+                padding: 2px 4px !important; 
+                margin-bottom: 1px !important;
+                min-height: 24px !important; /* Dialed down from 38px */
+            }
+            
+            .knowledge-grid, #advanced-grid, #spells-grid, .inventory-grid {
+                gap: 6px !important; /* Tightened from 10px */
+                margin-bottom: 6px !important;
+                margin-top: 4px !important;
+            }
+            
+            /* Text sizes reduced to standard print sizes to save vertical space */
+            .k-item input[type="text"], .k-item select, .k-item select.spell-select { 
+                font-size: 11pt !important; /* Dropped from 13pt */
+                height: 100% !important; 
+            }
+
+            .k-item input.spell-cost, .k-item input.adv-cost {
+                font-size: 10pt !important; /* Dropped from 12pt */
+            }
+            
+            .magic-inputs input { 
+                font-size: 14pt !important; 
+                height: 32px !important; 
+            }
+            
+            #inventory-grid .k-item input[type="text"] { 
+                font-size: 11pt !important; 
+            }
+            
+            .magic-cb, .k-cb {
+                transform: scale(1.3) !important;
+                margin-right: 4px !important;
+            }
+
+            /* --- 9. INK SAVER: Strip dark backgrounds from headers --- */
+            h1, h2, h3, .h-box, th,
+            /* Page 1 Specific Headers: */
+            .char-main-head, .rt-head {
+                background: transparent !important; 
+                background-color: transparent !important;
+                background-image: none !important; 
+                color: #000000 !important;
+                border-bottom: 2px solid #000000 !important; 
+                box-shadow: none !important; 
+            }
+
+            /* Force the Melee/Ranged/Cast sub-header text to print black instead of blood red */
+            .rt-grid > div:first-child {
+                 color: #000000 !important;
+            }
+
+            /* --- 10. SPEC CONTAINER FIX: Aggressive stripping for Melee/Ranged --- */
+            /* Overrides high-specificity parent containers and targets the h-box directly */
+            .spec-container, .spec-half, .c-box, .spec-container .h-box {
+                background: transparent !important;
+                background-color: transparent !important;
+                background-image: none !important;
+                color: #000000 !important;
+            }
+
+            /* Forces the inline gold border above the "Mounted" checkboxes to print black */
+            .c-l-spec div[style*="var(--gold)"] {
+                border-top: 1px solid #000000 !important;
+            }
+        }
+
+    </style>
+    
+<script defer data-domain="fantasy-rpgpow3.tiiny.site" src="https://analytics.tiiny.site/js/plausible.js"></script></head>
+<body>
+
+    <div class="sheet">
+    
+     <div class="no-print" style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--iron); margin-bottom: 4px; padding-bottom: 4px;">
+            <div class="page-title" style="border: none; margin: 0; padding: 0; white-space: nowrap; font-size: 16pt; letter-spacing: 1px;">
+                Path of the Unknown - The Ledger -
+            </div>
+            <div class="vault-controls" style="flex-shrink: 0; align-self: center;">
+                <button class="btn-vault" style="background: var(--ink); color: var(--gold); border-color: var(--ink);" onclick="location.href='index.html'">🏠 HUB</button>
+                <button class="btn-vault" onclick="saveData()">💾 Save .RPG</button>
+                <button class="btn-vault" onclick="saveAsHTML()">📄 Save HTML</button> 
+                <button class="btn-vault" onclick="document.getElementById('load-input').click()">📂 Load Local</button>
+            </div>
+        </div>
+
+        <div class="no-print" style="display: flex; justify-content: flex-end; align-items: center; border-bottom: 2px solid var(--gold); margin-bottom: 8px; padding-bottom: 6px; gap: 10px;">
+            <span style="font-size: 10.5pt; font-weight: 900; color: var(--blood); text-transform: uppercase;">Cloud Vault:</span>
+            <select id="cloud-char-select" class="btn-vault" style="background: var(--white); color: var(--ink); cursor: pointer; font-weight: bold; font-size: 10pt; padding: 2px 5px;">
+                <option value="Baanon Kervarsha">Baanon Kervarsha</option>
+                <option value="Dresin">Dresin</option>
+                <option value="Fight-n-Killin">Fight-n-Killin</option>
+                <option value="Leon Firebeard">Leon Firebeard</option>
+                <option value="Leorlian">Leorlian</option>
+                <option value="Unknown Hero">Unknown</option>
+            </select>
+            <button class="btn-vault" id="btn-cloud-load" onclick="fetchCharacterFromCloud()" style="padding: 2px 10px; font-size: 10pt;">☁️ Load from Cloud</button>
+            <input type="file" id="load-input" style="display:none" onchange="loadData(this)">
+        </div>
+        
+        <div class="status-bar">
+        <div class="header-top-row">
+            <div class="id-row">
+                <div class="id-f w-name"><label>Name</label><input type="text" id="char-name-input" maxlength="31" oninput="document.title = this.value ? this.value + ' - RPG Ledger' : 'RPG Ledger v11.29 - Power of Three'"></div>
+                <div class="id-f w-race">
+                    <label>Race</label>
+                    <select id="race-select" onchange="upd()">
+                        <option value="none">-</option>
+                        <option value="dwarf">Dwarf</option>
+                        <option value="elf">Elf</option>
+                        <option value="halfling">Halfling</option>
+                        <option value="human">Human</option>
+                    </select>
+                </div>
+                <div class="id-f w-age"><label>Age</label><input type="text" maxlength="4"></div>
+                <div class="id-f w-sex"><label>Sex</label><input type="text" maxlength="1"></div>
+                <div class="id-f w-h"><label>Height</label><input type="text" maxlength="8"></div>
+                <div class="id-f w-w"><label>Weight</label><input type="text" maxlength="5"></div>
+                <div class="id-f w-eyes"><label>Eyes</label><input type="text" maxlength="7"></div>
+                <div class="id-f w-hair"><label>Hair</label><input type="text" maxlength="15"></div>
+            </div>
+        </div> 
+
+        <div class="dash-container">
+            <div class="ledger-box xp-ledger">
+                <div class="l-group"><label>Earned</label><input type="number" id="xe" value="300" oninput="upd()"></div>
+                <div class="l-group"><label>Spent</label><input type="number" id="xs" readonly style="background:rgba(0,0,0,0.08); color:var(--ink);"></div>
+                <div class="l-group"><label>Unused</label><div class="l-val" id="xr">1000</div></div>
+            </div>
+
+            <div class="dash" style="gap: 5px; padding: 2px;">
+                <div class="res-box" style="padding: 0 4px;"><span class="res-t">+Actions</span><div class="res-i"><div><label>Cost</label><input type="number" id="ap" value="175" oninput="upd()" readonly style="background:rgba(0,0,0,0.08); width:55px;"></div><div><label>Pts</label><input type="number" id="ap_pts" oninput="upd()" style="width:45px;"></div><div><label>Total</label><input type="number" id="ap_total" style="width:45px;"></div></div></div>
+                
+                <div class="res-box" style="padding: 0 4px;"><span class="res-t">Focus</span><div class="res-i"><div><label>+Hit</label><input type="number" id="focus_hit_bonus" readonly style="background:rgba(0,0,0,0.08); width:45px;"></div><div><label>Pts</label><input type="number" id="focus_pts_mirror" readonly style="background:rgba(0,0,0,0.08); width:45px;"></div></div></div>
+                
+                <div class="res-box" style="padding: 0 4px;"><span class="res-t">Fortune</span><div class="res-i"><div><label>Cost</label><input type="number" id="fp" value="30" oninput="upd()" readonly style="background:rgba(0,0,0,0.08); width:45px;"></div><div><label>Pts</label><input type="number" id="fp_pts" oninput="upd()" style="width:45px;"></div></div></div>
+
+                <div class="res-box" style="padding: 0 4px;">
+                    <span class="res-t">Initiative</span>
+                    <div class="res-i">
+                        <div><label>ToT</label><input type="number" id="stat-initiative" readonly style="background:rgba(0,0,0,0.08); width:45px;"></div>
+                        <div><label>Bon</label><input type="number" id="bon-initiative" oninput="upd()" style="background:var(--input-bg); width:45px;"></div>
+                    </div>
+                </div>
+
+                <div class="res-box" style="padding: 0 4px;"><span class="res-t">Luck</span><div class="res-i"><div><label>ToT</label><input type="text" id="luck_tot" style="width:45px;"></div></div></div>
+                
+                <div class="res-box" style="padding: 0 4px;">
+                    <span class="res-t">Rerolls</span>
+                    <div class="res-i">
+                        <div><label>Base</label><input type="number" id="rp_base" readonly style="background:rgba(0,0,0,0.08); width:45px;"></div>
+                        <div><label>Bon</label><input type="number" id="rp_bon" oninput="upd()" style="background:var(--input-bg); width:45px;"></div>
+                    </div>
+                </div>
+
+                <div class="res-box" style="border:none; padding: 0 4px; display: flex; justify-content: center;">
+                    <span class="res-t">Size</span>
+                    <div class="res-i" style="justify-content: center;">
+                        <div><select id="char-size" style="width:85px; font-size:10pt; text-align: center;" onchange="upd()"><option>Med</option><option>Sm</option><option>Lg</option><option>Giant</option><option>Enormous</option><option>Titanic</option></select></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="readiness-block">
+        
+        <div class="twin-wrapper">
+            <div class="port" onclick="document.getElementById('ui').click()">
+                <span id="ph" style="font-weight:900; color:rgba(0,0,0,0.5); font-size:12px;">PORTRAIT</span>
+                <img id="pv" style="display:none;">
+                <input type="file" id="ui" style="display:none" onchange="prev(this)">
+            </div>
+            <div class="char-master-container">
+                <div class="char-main-head">Characteristics</div>
+                <div id="char-grid" class="char-grid"></div>
+            </div>
+        </div>
+
+        <div class="cm-col">
+            <div class="readiness-table" style="margin-bottom:0; border-bottom:none;">
+                <div class="rt-head">Combat Mastery</div>
+                <div class="rt-grid">
+                    <div style="display:grid; grid-template-columns: 75px 90px 90px 1fr; text-align:center; font-weight:900; font-size:9pt; color:var(--blood); border-bottom:1.5px solid var(--ink); text-transform:uppercase;">
+                        <span></span><span>Melee</span><span style="grid-column: span 1; text-align:center;">Ranged</span><span>Cast</span>
+                    </div>
+                    <div class="cm-row">
+                        <span class="cm-label">+To-Hit</span>
+                        <div class="cm-inputs"><input type="number" id="cm-melee-hit-1" readonly><input type="number" id="cm-melee-hit-2" readonly></div>
+                        <div class="cm-inputs"><input type="number" id="cm-range-hit-1" readonly><input type="number" id="cm-range-hit-2" readonly></div>
+                        <div class="cm-cast-box"><input type="number" id="cm-cast-hit" readonly style="background:rgba(0,0,0,0.08); width:44px; height:30px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); color: var(--ink);"></div>
+                    </div>
+                    <div class="cm-row">
+                        <span class="cm-label">Wounds</span>
+                        <div class="cm-inputs"><input type="number" id="cm-wounds-melee-1" readonly><input type="number" id="cm-wounds-melee-2" readonly></div>
+                        <div class="cm-inputs"><input type="number" id="cm-wounds-range-1" readonly><input type="number" id="cm-wounds-range-2" readonly></div>
+                        <div class="cm-cast-box"><input type="number" id="cm-wounds-cast" readonly style="background:rgba(0,0,0,0.08); width:44px; height:30px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); color: var(--ink);"></div>
+                    </div>
+                    <div class="cm-row">
+                        <span class="cm-label">W. Evil</span>
+                        <div class="cm-inputs"><input type="number" id="cm-wevil-melee-1" readonly><input type="number" id="cm-wevil-melee-2" readonly></div>
+                        <div class="cm-inputs"><input type="number" id="cm-wevil-range-1" readonly><input type="number" id="cm-wevil-range-2" readonly></div>
+                        <div class="cm-cast-box"><input type="number" id="cm-wevil-cast" readonly style="background:rgba(0,0,0,0.08); width:44px; height:30px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); color: var(--ink);"></div>
+                    </div>
+                    <div class="cm-row">
+                        <span class="cm-label">Healing</span>
+                        <div class="cm-inputs"><input type="number" id="cm-healing-melee-1" readonly><input type="number" id="cm-healing-melee-2" readonly></div>
+                        <div class="cm-inputs"><input type="number" class="cm-pts" oninput="upd()" style="background:var(--input-bg);"><input type="number" class="cm-pts" oninput="upd()" style="background:var(--input-bg);"></div>
+                        <div class="cm-cast-box"><input type="number" id="cm-healing-cast" readonly style="background:rgba(0,0,0,0.08); width:44px; height:30px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); color: var(--ink);"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="def-horiz-container">
+                <div class="def-sub-head">Defenses</div>
+                <div class="def-horiz">
+                    <div class="def-item"><label>Block</label><input type="number" id="def-block" readonly style="background:rgba(0,0,0,0.08);"></div>
+                    <div class="def-item"><label>Deflect</label><input type="number" id="def-deflect" readonly style="background:rgba(0,0,0,0.08);"></div>
+                    <div class="def-item"><label>Dodge</label><input type="number" id="def-dodge" readonly style="background:rgba(0,0,0,0.08);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wm-table-container">
+            <div class="readiness-table">
+                <div class="rt-head">Wound Mitigation</div>
+                <div class="rt-grid">
+                    <div class="wm-header-row"><span></span><span>Tot</span><span>Evil</span><span>Bon</span></div>
+                    <div class="wm-row"><span class="cm-label" style="font-size:9.5pt;">Armor</span><input type="number" id="wm-armor-tot" readonly style="background:rgba(0,0,0,0.08);"><input type="number" id="wm-armor-evil" readonly style="background:rgba(0,0,0,0.08);"><input type="number" id="wm-armor-bon" oninput="upd()" style="background:var(--input-bg);"></div>
+                    <div class="wm-row"><span class="cm-label" style="font-size:9.5pt;">Bless/Spell</span><input type="number" id="wm-bless-tot" readonly style="background:rgba(0,0,0,0.08);"><input type="number" id="wm-bless-evil" readonly style="background:rgba(0,0,0,0.08);"><input type="number" id="wm-bless-bon" oninput="upd()" style="background:var(--input-bg);"></div>
+                    <div class="wm-row"><span class="cm-label" style="font-size:9.5pt;">Dis/Poi</span><input type="number" id="wm-dispoi-tot" readonly style="background:rgba(0,0,0,0.08);"><input type="number" id="wm-dispoi-evil" readonly style="background:rgba(0,0,0,0.08);"><input type="number" id="wm-dispoi-bon" oninput="upd()" style="background:var(--input-bg);"></div>
+                </div>
+            </div>
+            <div class="wound-ledger">
+                <div class="l-group"><label>Wounds</label><div style="display:flex; gap:1px;"><input type="number" id="w_total" value="0" readonly style="background:rgba(0,0,0,0.08); width:55px; padding:0 2px; color:var(--ink);"><input type="text" id="w_bonus" maxlength="2" oninput="upd()" style="width:28px; font-size:11pt; text-align:center; padding:0; background:var(--input-bg); border: 1.5px solid var(--ink);" placeholder="+"></div></div>
+                <div class="l-group"><label>Taken</label><input type="number" id="w_taken" value="0" oninput="upd()" style="background:var(--input-bg);"></div>
+                <div class="l-group"><label>Dying</label><div class="l-val" id="w_rem">0</div></div>
+            </div>
+            <div class="conditions-table">
+                <div class="rt-head" style="font-size:8pt; padding:1px;">Conditions</div>
+                <div class="cond-grid">
+                    <div class="cond-item"><span class="cond-lbl">Bleed</span><input type="text" style="background:var(--input-bg);"></div>
+                    <div class="cond-item"><span class="cond-lbl">Curse</span><input type="text" style="background:var(--input-bg);"></div>
+                    <div class="cond-item"><span class="cond-lbl">Disease</span><input type="text" style="background:var(--input-bg);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="h-box">Primary Skills</div>
+    <div class="sk-grid" id="sg"></div>
+
+  <div class="spec-container">
+    <div class="spec-half">
+        <div class="h-box">Melee Specialization</div>
+        <div class="c-box">
+            <div class="c-l-spec">
+                <div id="mp" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; margin-top:2px;"></div>
+                <div style="border-top:1px solid var(--gold); margin-top:2px; padding-top:2px;">
+                    <label class="cb-label"><input type="checkbox" class="cb mounted-cb" onchange="upd()"> Mounted-Melee</label>
+                </div>
+            </div>
+            <div id="mr"></div>
+        </div>
+    </div>
+
+    <div class="spec-half">
+        <div class="h-box">Range Specialization</div>
+        <div class="c-box">
+            <div class="c-l-spec">
+                <div id="rp" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; margin-top:2px;"></div>
+                <div style="border-top:1px solid var(--gold); margin-top:2px; padding-top:2px;">
+                    <label class="cb-label"><input type="checkbox" class="cb mounted-cb" onchange="upd()"> Mounted-Range</label>
+                </div>
+            </div>
+            <div id="rr"></div>
+        </div>
+    </div>
+</div>
+
+    <div class="mounted-bar">
+    <div class="m-skill-box">
+        <span class="m-lbl">Riding Skill</span>
+        <input type="text" class="sk-b" data-skill="Riding" readonly value="25" style="background:rgba(0,0,0,0.08);">
+        <input type="number" id="riding_xp_pts" class="xc" oninput="upd()" placeholder="Pts">
+    </div>
+    <div class="m-type-box" style="flex: 1; display: flex; align-items: center; gap: 10px; border: 1.5px solid var(--ink); background: var(--input-bg); padding: 0 10px; height: 40px;">
+        <span class="m-lbl">Mount:</span>
+        <input type="text" placeholder="Warhorse, Dire Wolf, etc..." style="flex: 1; border: none; font-size: 14pt; font-weight: 900; background: transparent; outline: none;">
+    </div>
+</div>
+
+<div class="h-box">Armor & Gear</div>
+<div class="gear-area">
+    <div class="gear-row" style="align-items: flex-start;">
+        
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 4px; border: 1.5px solid rgba(0,0,0,0.1); padding: 4px; background: rgba(0,0,0,0.02);">
+            <div style="display: flex; gap: 8px; align-items: flex-end;">
+                <div class="g-item" style="flex: 1;">
+                    <label style="font-size: 9pt; font-weight: 900; color: var(--blood); text-transform: uppercase;">Armor Type 1</label>
+                    <select id="armor-type-1" onchange="upd()" style="width: 100%; font-size: 11pt; font-weight: 900; height: 32px; border: 1.5px solid var(--ink); background: var(--input-bg);">
+                        <option value="none">-</option>
+                        <option value="furs">Furs</option>
+                        <option value="padded">Padded</option>
+                        <option value="leather">Leather</option>
+                        <option value="studded">Studded Leather</option>
+                        <option value="chain">Mail - Chain</option>
+                        <option value="banded">Mail - Banded</option>
+                        <option value="splint">Mail - Splint</option>
+                        <option value="plate">Mail - Plate</option>
+                        <option value="field">Plate - Field</option>
+                        <option value="full">Plate - Full</option>
+                        <option value="mithril">Mithril</option>
+                        <option value="mithril_elf">Mithril - Elven</option>
+                        <option value="shield">Shield</option>
+                    </select>
+                </div>
+                <div class="g-item">
+                    <label style="font-size: 9pt; font-weight: 900; color: var(--blood); text-transform: uppercase; text-align: center;">Bonus</label>
+                    <input type="number" id="armor-bonus-1" oninput="upd()" placeholder="+B" style="width: 45px; height: 32px; text-align: center; font-size: 12pt; font-weight: 900; border: 1.5px solid var(--ink); background: var(--input-bg);">
+                </div>
+                <div class="g-item">
+                    <label style="font-size: 9pt; font-weight: 900; color: var(--blood); text-transform: uppercase; text-align: center;">Total</label>
+                    <input type="number" id="armor-total-1" readonly placeholder="Tot" style="width: 45px; height: 32px; text-align: center; font-size: 12pt; font-weight: 900; border: 1.5px solid var(--ink); background: rgba(0,0,0,0.08);">
+                </div>
+            </div>
+            <div style="display: flex; gap: 6px; align-items: center; margin-top: 2px;">
+                <span style="font-size: 9pt; font-weight: 900; color: var(--blood); text-transform: uppercase; width: 50px;">Props</span>
+                <input type="text" class="w-note" placeholder="Stealth penalties, reach..." style="flex: 1; min-width: 0; height: 28px; font-size: 11pt; font-weight: 900; padding: 0 6px; border: 1.5px solid var(--ink); background: var(--input-bg);">
+            </div>
+        </div>
+
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 4px; border: 1.5px solid rgba(0,0,0,0.1); padding: 4px; background: rgba(0,0,0,0.02);">
+            <div style="display: flex; gap: 8px; align-items: flex-end;">
+                <div class="g-item" style="flex: 1;">
+                    <label style="font-size: 9pt; font-weight: 900; color: var(--blood); text-transform: uppercase;">Armor Type 2</label>
+                    <select id="armor-type-2" onchange="upd()" style="width: 100%; font-size: 11pt; font-weight: 900; height: 32px; border: 1.5px solid var(--ink); background: var(--input-bg);">
+                        <option value="none">-</option>
+                        <option value="furs">Furs</option>
+                        <option value="padded">Padded</option>
+                        <option value="leather">Leather</option>
+                        <option value="studded">Studded Leather</option>
+                        <option value="chain">Mail - Chain</option>
+                        <option value="banded">Mail - Banded</option>
+                        <option value="splint">Mail - Splint</option>
+                        <option value="plate">Mail - Plate</option>
+                        <option value="field">Plate - Field</option>
+                        <option value="full">Plate - Full</option>
+                        <option value="mithril">Mithril</option>
+                        <option value="mithril_elf">Mithril - Elven</option>
+                        <option value="shield">Shield</option>
+                    </select>
+                </div>
+                <div class="g-item">
+                    <label style="font-size: 9pt; font-weight: 900; color: var(--blood); text-transform: uppercase; text-align: center;">Bonus</label>
+                    <input type="number" id="armor-bonus-2" oninput="upd()" placeholder="+B" style="width: 45px; height: 32px; text-align: center; font-size: 12pt; font-weight: 900; border: 1.5px solid var(--ink); background: var(--input-bg);">
+                </div>
+                <div class="g-item">
+                    <label style="font-size: 9pt; font-weight: 900; color: var(--blood); text-transform: uppercase; text-align: center;">Total</label>
+                    <input type="number" id="armor-total-2" readonly placeholder="Tot" style="width: 45px; height: 32px; text-align: center; font-size: 12pt; font-weight: 900; border: 1.5px solid var(--ink); background: rgba(0,0,0,0.08);">
+                </div>
+            </div>
+            <div style="display: flex; gap: 6px; align-items: center; margin-top: 2px;">
+                <span style="font-size: 9pt; font-weight: 900; color: var(--blood); text-transform: uppercase; width: 50px;">Props</span>
+                <input type="text" class="w-note" placeholder="..." style="flex: 1; min-width: 0; height: 28px; font-size: 11pt; font-weight: 900; padding: 0 6px; border: 1.5px solid var(--ink); background: var(--input-bg);">
+            </div>
+        </div>
+
+    </div>
+
+    <div style="margin-top: 8px; border-top: 1px solid var(--gold); padding-top: 6px;">
+        <label style="font-size: 10.5pt; font-weight: 900; color: var(--iron); text-transform: uppercase; display: block; margin-bottom: 4px;">Ammo & Consumables Tracker</label>
+        <div class="gear-row" style="gap: 8px;">
+            <div style="flex: 1.5;"><input type="text" placeholder="Ammo 1..." style="width: 100%; height: 32px; font-size: 12pt; font-weight: 900; padding: 0 6px; border: 1.5px solid var(--ink);"></div>
+            <div style="flex: 0.5;"><input type="number" placeholder="#" style="width: 100%; height: 32px; text-align: center; font-weight: 900; font-size: 13pt; border: 1.5px solid var(--ink);"></div>
+            <div style="flex: 1.5;"><input type="text" placeholder="Ammo 2..." style="width: 100%; height: 32px; font-size: 12pt; font-weight: 900; padding: 0 6px; border: 1.5px solid var(--ink);"></div>
+            <div style="flex: 0.5;"><input type="number" placeholder="#" style="width: 100%; height: 32px; text-align: center; font-weight: 900; font-size: 13pt; border: 1.5px solid var(--ink);"></div>
+            <div style="flex: 1.5;"><input type="text" placeholder="Potions/Other" style="width: 100%; height: 32px; font-size: 12pt; font-weight: 900; padding: 0 6px; border: 1.5px solid var(--ink);"></div>
+            <div style="flex: 0.5;"><input type="number" placeholder="#" style="width: 100%; height: 32px; text-align: center; font-weight: 900; font-size: 13pt; border: 1.5px solid var(--ink);"></div>
+        </div>
+    </div>
+</div>
+
+<div class="extra-gear-row">
+    <div class="extra-gear-box"><label>Artifact 1</label><input type="text" placeholder="..."></div>
+    <div class="extra-gear-box"><label>Artifact 2</label><input type="text" placeholder="..."></div>
+    <div class="extra-gear-box"><label>Artifact 3</label><input type="text" placeholder="..."></div>
+    <div class="extra-gear-box"><label>Artifact 4</label><input type="text" placeholder="..."></div>
+</div>
+
+<div style="height: 4px; background: var(--iron); margin: 25px 0 15px 0; border-radius: 2px;"></div>
+
+<div class="page-title">Magic / Mystics and Religion</div>
+    
+    <div class="magic-section">
+        <div class="magic-cb-row">
+            <label><input type="checkbox" class="magic-cb" value="Druidic" onchange="handleMagicCheck(this)"> Druidic</label>
+            <label><input type="checkbox" class="magic-cb" value="Ki" onchange="handleMagicCheck(this)"> Ki</label>
+            <label><input type="checkbox" class="magic-cb" value="Magic" onchange="handleMagicCheck(this)"> Magic</label>
+            <label><input type="checkbox" class="magic-cb" value="Religion" onchange="handleMagicCheck(this)"> Religion</label>
+            <label><input type="checkbox" class="magic-cb" value="Shaman" onchange="handleMagicCheck(this)"> Shaman</label>
+            <label><input type="checkbox" class="magic-cb" value="Runes" onchange="handleMagicCheck(this)"> Runes</label>
+        </div>
+
+        <div id="magic-stats-row" style="display:none; border: 2px solid var(--iron); padding: 5px; margin-top: 5px; background: rgba(0,0,0,0.05);">
+            <div id="standard-magic-stats" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center;">    
+                <div class="magic-stat-block"><label class="spec-label" style="color:var(--blood)">+Cast</label><div class="magic-inputs"><input type="number" id="cast_tot_val" readonly style="background:rgba(0,0,0,0.08);"><input type="number" id="cast_bonus_val" oninput="upd()" placeholder="Bon"></div></div>
+                <div class="magic-stat-block"><label class="spec-label" style="color:var(--blood)">+Damage</label><div class="magic-inputs"><input type="number" id="cast_dmg_tot" readonly style="background:rgba(0,0,0,0.08);"><input type="number" id="cast_dmg_bon" oninput="upd()" placeholder="Bon"></div></div>
+                <div class="magic-stat-block"><label class="spec-label" style="color:var(--blood)">+Healing</label><div class="magic-inputs"><input type="number" id="cast_heal_tot" readonly style="background:rgba(0,0,0,0.08);"><input type="number" id="cast_heal_bon" oninput="upd()" placeholder="Bon"></div></div>
+                <div class="magic-stat-block"><label class="spec-label" style="color:var(--blood)">+Resist</label><div class="magic-inputs"><input type="number" id="cast_res_tot" readonly style="background:rgba(0,0,0,0.08);"><input type="number" id="cast_res_bon" oninput="upd()" placeholder="Bon"></div></div>
+                <div class="magic-stat-block"><label class="spec-label" style="color:var(--blood)">+Turns</label><div class="magic-inputs"><input type="number" id="cast_turn_tot" readonly style="background:rgba(0,0,0,0.08);"><input type="number" id="cast_turn_bon" oninput="upd()" placeholder="Bon"></div></div>
+            </div>
+
+            <div id="runemaster-stats" style="display: none; justify-content: center; align-items: center; padding: 4px;">
+                <div class="m-skill-box" style="border-color: var(--ink);">
+                    <span class="m-lbl" style="font-size: 10pt; color: var(--blood);">Runemaster</span>
+                    <input type="text" id="runemaster_base" readonly value="0" style="width:34px; height:24px; text-align:center; font-weight:900; border:1.5px solid var(--ink); background:rgba(0,0,0,0.08); font-size:10pt; color: var(--ink);">
+                    <input type="number" id="runemaster_pts" oninput="upd()" placeholder="Pts" style="width:36px; height:24px; text-align:center; font-weight:900; border:1.5px solid var(--ink); font-size:10pt; background:var(--input-bg); color: var(--ink);">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="h-box" id="spells-header">Spells / Powers</div>
+    <div class="knowledge-section">
+        <div class="knowledge-grid" id="spells-grid">
+            </div>
+    </div>
+
+    <div class="h-box">Knowledge</div>
+    <div class="knowledge-section">
+        <div class="knowledge-grid" id="knowledge-grid">
+            </div>
+    </div>
+
+    <div class="h-box">Advanced Action Skills</div>
+    <div class="knowledge-section">
+        <div class="knowledge-grid" id="advanced-grid">
+            </div>
+    </div>
+
+ <div class="h-box">Inventory</div>
+    <div class="inventory-section">
+        <div class="inventory-grid" id="inventory-grid">
+             </div>
+    </div>
+</div>
+
+<script>
+// --- CLOUD LOAD ENGINE ---
+async function fetchCharacterFromCloud() {
+    var btn = document.getElementById('btn-cloud-load');
+    var charDropdown = document.getElementById('cloud-char-select');
+    if (!charDropdown) { alert("CRITICAL: Dropdown menu not found!"); return; }
+
+    var charName = charDropdown.value;
+    var safeName = encodeURIComponent(charName);
+    var url = "https://raw.githubusercontent.com/pflastpr-rpg/Path-of-the-Unknown/main/characters/" + safeName + ".rpg?v=" + new Date().getTime();
+
+    try {
+        btn.innerText = "⏳ Loading...";
+        var response = await fetch(url);
+        if (!response.ok) {
+            alert("Error: File not found on GitHub at " + url);
+            btn.innerText = "❌ 404";
+            return;
+        }
+        var data = await response.json();
+        
+        var allInputs = document.querySelectorAll('input, select');
+        var validInputs = Array.from(allInputs).filter(function(el) {
+            return el.id !== 'cloud-char-select' && 
+                   el.type !== 'file' && 
+                   !el.classList.contains('adv-eff-base') &&
+                   !el.classList.contains('adv-eff-spec') &&
+                   !el.classList.contains('spell-ap');
+        });
+        
+        for (var i = 0; i < validInputs.length; i++) {
+            var el = validInputs[i];
+            var key = el.id || "f_" + i;
+            var val = data[key];
+            
+            if (val !== undefined) {
+                if (el.type === 'checkbox') {
+                    el.checked = (val === true || val === "true");
+                } else {
+                    el.value = val;
+                    if (el.classList && el.classList.contains('spell-select')) el.dataset.savedValue = val;
+                }
+            }
+        }
+
+        var pv = document.getElementById('pv');
+        var ph = document.getElementById('ph');
+        if (data['character_portrait']) {
+            if (pv) { pv.src = data['character_portrait']; pv.style.display = 'block'; }
+            if (ph) ph.style.display = 'none';
+        } else {
+            if (pv) { pv.src = ''; pv.style.display = 'none'; }
+            if (ph) ph.style.display = 'block';
+        }
+
+        document.querySelectorAll('.magic-cb').forEach(cb => {
+            if(cb.checked && typeof handleMagicCheck === "function") handleMagicCheck(cb);
+        });
+
+        var nameInput = document.querySelector('.w-name input');
+        if (nameInput) document.title = nameInput.value ? nameInput.value + ' - RPG Ledger' : 'RPG Ledger';
+
+        if (typeof upd === "function") upd();
+        btn.innerText = "✅ Loaded!";
+
+    } catch(err) {
+        alert("Script Crash: " + err.message);
+        btn.innerText = "❌ Error";
+    } finally {
+        setTimeout(function() { btn.innerText = "☁️ Load from Cloud"; }, 2000);
+    }
+}
+
+// --- CSS GRID TRUNCATION FIX ---
+(function fixGridSkewing() {
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .k-item, #spells-grid .k-item { min-width: 0 !important; }
+        .k-item select, .k-item select.spell-select, .k-item input[type="text"] {
+            min-width: 0 !important; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
+        }
+    `;
+    document.head.appendChild(style);
+})();
+
+// --- DATA ARRAYS ---
+const sks = {
+    "Agility": ["Athletics", "Counter", "Evasion", "Quickness", "Stealth", "Thieving"],
+    "Awareness": ["Acute Senses", "Discipline", "Druidism", "Focus", "Precise Strk", "Stamina"],
+    "Charisma": ["Authority", "Charm", "Faith", "Inspire", "Light-Soul", "Mending"],
+    "Intellect": ["Evaluate", "Knowledge", "Perception", "Read/Write", "Tracker", "Wizardry"],
+    "Physique": ["Fortitude", "Hard as Nails", "Ki", "Rugged", "Shieldsman", "Strength Con."],
+    "Willpower": ["Enraged", "Iron Will", "Resolve", "Shaman", "Spirit", "Survival"]
+};
+
+const ARMOR_DATA = {
+    "none": { def: 0, mit: 0, agl: 0, awa: 0, mov: 0, tn: 0, range: 0, m_pen: 0, r_pen: 0 },
+    "furs": { def: 0, mit: 1, agl: 0, awa: 0, mov: 0, tn: 0, range: 0, m_pen: 0, r_pen: 0 },
+    "padded": { def: 1, mit: 1, agl: 0, awa: 0, mov: 0, tn: 0, range: 0, m_pen: 1, r_pen: 0 },
+    "leather": { def: 2, mit: 2, agl: -1, awa: 0, mov: 0, tn: 0, range: 0, m_pen: 1, r_pen: 1 },
+    "studded": { def: 2, mit: 3, agl: -1, awa: 0, mov: 0, tn: 1, range: 0, m_pen: 2, r_pen: 1 },
+    "chain": { def: 3, mit: 4, agl: -2, awa: 0, mov: -5, tn: 2, range: 0, m_pen: 2, r_pen: 2 },
+    "banded": { def: 3, mit: 5, agl: -2, awa: -1, mov: -10, tn: 3, range: 0, m_pen: 3, r_pen: 2 },
+    "splint": { def: 3, mit: 5, agl: -2, awa: -1, mov: -10, tn: 3, range: 0, m_pen: 3, r_pen: 2 },
+    "plate": { def: 4, mit: 6, agl: -3, awa: -2, mov: -15, tn: 4, range: 0, m_pen: 3, r_pen: 3 },
+    "field": { def: 4, mit: 6, agl: -3, awa: -2, mov: -15, tn: 4, range: 0, m_pen: 3, r_pen: 3 },
+    "full": { def: 5, mit: 8, agl: -3, awa: -3, mov: -15, tn: 5, range: -2, m_pen: 4, r_pen: 4 },
+    "mithril": { def: 4, mit: 5, agl: 0, awa: 0, mov: 0, tn: 0, range: 0, m_pen: 1, r_pen: 0 },
+    "mithril_elf": { def: 4, mit: 6, agl: 0, awa: 0, mov: 0, tn: 0, range: 0, m_pen: 1, r_pen: 0 },
+    "shield": { def: 1, mit: 1, agl: 0, awa: 0, mov: 0, tn: 0, range: 0, m_pen: 0, r_pen: 0 }
+};
+
+const RANGED_WEAPON_STATS = {
+    "Blunderbuss": { range: "60Ft", aoe: "15Ft", actions: 3 },
+    "Bow": { range: "125Ft", aoe: "None", actions: 2 },
+    "Crossbow": { range: "300Ft", aoe: "None", actions: 2 },
+    "Dart": { range: "30Ft", aoe: "None", actions: 1 },
+    "Hand Crossbow": { range: "50Ft", aoe: "None", actions: 1 },
+    "Heavy Crossbow": { range: "300Ft", aoe: "None", actions: 3 },
+    "Javelin": { range: "80Ft", aoe: "None", actions: 1 },
+    "Longbow": { range: "400Ft", aoe: "None", actions: 2 },
+    "Pistol": { range: "75Ft", aoe: "None", actions: 2 },
+    "Rifle": { range: "400Ft", aoe: "None", actions: 3 },
+    "Shortbow": { range: "80Ft", aoe: "None", actions: 1 },
+    "Sling": { range: "80Ft", aoe: "None", actions: 1 },
+    "Throwing Axe": { range: "80Ft", aoe: "None", actions: 1 },
+    "Throwing Knife": { range: "80Ft", aoe: "None", actions: 1 },
+    "Whip/Lasso": { range: "15Ft", aoe: "None", actions: 1 }
+};
+
+function handleWeaponChange(select, targetId) {
+    if (targetId === 'rr') {
+        const row = select.closest('.weapon-entry');
+        const rangeInput = row.querySelector('.w-range');
+        const aoeInput = row.querySelector('.w-aoe');
+        const actValInput = row.querySelector('.act-val');
+        const weaponType = select.value;
+
+        if (RANGED_WEAPON_STATS[weaponType]) {
+            rangeInput.value = RANGED_WEAPON_STATS[weaponType].range;
+            aoeInput.value = RANGED_WEAPON_STATS[weaponType].aoe;
+            actValInput.value = RANGED_WEAPON_STATS[weaponType].actions;
+        } else {
+            rangeInput.value = ""; aoeInput.value = ""; actValInput.value = 1; 
+        }
+    }
+}
+
+const SKILL_COSTS = {
+    "Acute Senses": { halfling: 15, dwarf: 20, elf: 20, human: 25 },
+    "Authority": { dwarf: 15, elf: 15, human: 15, halfling: 20 },
+    "Athletics": { elf: 20, human: 25, dwarf: 25, halfling: 25 }, 
+    "Charm": { halfling: 15, human: 15, elf: 25, dwarf: 25 },
+    "Mending": { halfling: 20, dwarf: 25, elf: 30, human: 30 },
+    "Light-Soul": { dwarf: 20, elf: 20, halfling: 20, human: 20 },
+    "Counter": { dwarf: 30, elf: 30, halfling: 30, human: 30 },
+    "Discipline": { dwarf: 20, elf: 20, human: 20, halfling: 25 },
+    "Enraged": { dwarf: 30, elf: 35, human: 35, halfling: 40 },
+    "Evasion": { elf: 15, halfling: 15, human: 20, dwarf: 25 },
+    "Evaluate": { dwarf: 15, elf: 15, halfling: 15, human: 15 },
+    "Fortitude": { dwarf: 45, halfling: 55, human: 50, elf: 55 },
+    "Hard as Nails": { dwarf: 25, human: 30, elf: 35, halfling: 35 },
+    "Inspire": { dwarf: 20, elf: 20, human: 20, halfling: 20 },
+    "Iron Will": { dwarf: 20, elf: 25, halfling: 25, human: 25 },
+    "Knowledge": { dwarf: 15, elf: 15, halfling: 15, human: 15 },
+    "Perception": { dwarf: 30, elf: 30, halfling: 30, human: 30 },
+    "Precise Strk": { elf: 40, dwarf: 45, human: 45, halfling: 50 },
+    "Quickness": { elf: 30, halfling: 30, dwarf: 35, human: 35 },
+    "Read/Write": { dwarf: 15, elf: 15, halfling: 15, human: 15 },
+    "Resolve": { dwarf: 15, elf: 15, halfling: 15, human: 15 },
+    "Rugged": { dwarf: 10, elf: 10, halfling: 10, human: 10 },
+    "Shieldsman": { dwarf: 30, elf: 30, human: 30, halfling: 35 },
+    "Spirit": { dwarf: 15, elf: 15, halfling: 15, human: 15 },
+    "Stamina": { dwarf: 10, human: 10, elf: 15, halfling: 15 },
+    "Stealth": { halfling: 10, elf: 15, human: 15, dwarf: 20 },
+    "Strength Con.": { dwarf: 30, human: 30, elf: 35, halfling: 35 },
+    "Survival": { dwarf: 25, elf: 25, halfling: 25, human: 25 },
+    "Thieving": { halfling: 5, elf: 15, human: 15, dwarf: 20 },
+    "Tracker": { dwarf: 15, elf: 10, halfling: 10, human: 15 },
+    "Focus": { dwarf: 35, elf: 35, halfling: 35, human: 35 },
+    "Faith": { dwarf: 25, elf: 30, halfling: 25, human: 25 },
+    "Druidism": { elf: 30, halfling: 30, dwarf: 35, human: 35 },
+    "Wizardry": { elf: 25, halfling: 35, human: 35, dwarf: 45 },
+    "Shaman": { halfling: 30, human: 30, dwarf: 35, elf: 35 },
+    "Ki": { human: 30, dwarf: 35, elf: 35, halfling: 35 }
+};
+
+const COMBAT_CHECK_COSTS = {
+    melee: { dwarf: 25, elf: 30, human: 30, halfling: 35 },
+    range: { elf: 25, dwarf: 30, halfling: 30, human: 30 }
+};
+
+const raceData = {
+    "dwarf": { wounds: 12, move: 12 },
+    "elf": { wounds: 6, move: 18 },
+    "halfling": { wounds: 3, move: 12 },
+    "human": { wounds: 9, move: 15 },
+    "none": { wounds: 0, move: 0 }
+};
+
+const RELIGION_SPELLS = [{ name: "Absolute Restoration", tn: "TN11" }, { name: "Aid", tn: "TN5" }, { name: "Ardent Burst", tn: "TN8" }, { name: "Bane", tn: "TN7" }, { name: "Blessing of the Crusader", tn: "TN9" }, { name: "Boundary", tn: "TN9" }, { name: "Cast Out", tn: "TN6" }, { name: "Consecrate Self", tn: "TN8" }, { name: "Crusader’s Aura", tn: "TN7" }, { name: "Death Ward", tn: "TN16" }, { name: "Dictate (Command)", tn: "TN6" }, { name: "Dispel Magic", tn: "TN~" }, { name: "Divine Weapon", tn: "TN6" }, { name: "Enchant Weapon", tn: "TN5" }, { name: "Exorcize", tn: "TN9" }, { name: "Fearless", tn: "TN4" }, { name: "Greater Heal", tn: "TN8" }, { name: "Guided Blessing", tn: "TN10" }, { name: "Harm", tn: "TN7" }, { name: "Heal", tn: "TN6" }, { name: "Inner Power", tn: "TN8" }, { name: "Interrogate Corpse", tn: "TN5" }, { name: "Lesser Heal", tn: "TN3" }, { name: "Lights Grace", tn: "TN8" }, { name: "Mold the Material", tn: "TN8" }, { name: "Protection from Evil/Good", tn: "TN5" }, { name: "Provide Sustenance", tn: "TN3" }, { name: "Redress", tn: "TN10" }, { name: "Remove Paralysis", tn: "TN6" }, { name: "Resurrect", tn: "TN14" }, { name: "Restore Self", tn: "TN9" }, { name: "Righteous Wrath", tn: "TN11" }, { name: "Safe Place", tn: "TN4" }, { name: "Serina Blessing", tn: "TN9" }, { name: "Shield Ally", tn: "TN4" }, { name: "Smite", tn: "TN6" }, { name: "Stupor", tn: "TN5" }, { name: "Turn Undead", tn: "TN4" }, { name: "Upheaval", tn: "TN12" }, { name: "Wrath of the Crusader", tn: "TN7" }];
+const DRUIDIC_SPELLS = [{ name: "Adrenal Jolt", tn: "TN6" }, { name: "Animalistic", tn: "TN6" }, { name: "Assemble Elemental", tn: "TN9" }, { name: "Beast Mastery", tn: "TN6" }, { name: "Blight", tn: "TN11" }, { name: "Call Lightning", tn: "TN10" }, { name: "Corrupted Spirit", tn: "TN8" }, { name: "Cure Light Wounds", tn: "TN3" }, { name: "Cure Wounds", tn: "TN6" }, { name: "Dark Vision", tn: "TN4" }, { name: "Decay", tn: "TN5" }, { name: "Earthquake", tn: "TN14" }, { name: "Earth Shield", tn: "TN6" }, { name: "Elemental Resistance", tn: "TN8" }, { name: "Elements", tn: "TN7" }, { name: "Entangling Vines", tn: "TN8" }, { name: "Expel Toxins", tn: "TN~" }, { name: "Ferocious Roar", tn: "TN6" }, { name: "Flame Blade", tn: "TN5" }, { name: "Flame Sphere", tn: "TN9" }, { name: "Hailstorm", tn: "TN10" }, { name: "Husk-Skin", tn: "TN3" }, { name: "Large Beast Mastery", tn: "TN8" }, { name: "Mud Wall", tn: "TN7" }, { name: "Rebuild", tn: "TN10" }, { name: "Rejuvenation", tn: "TN8" }, { name: "Remove Curse", tn: "TN~" }, { name: "Sacred Beast", tn: "TN9" }, { name: "Shapeshift", tn: "TN~" }, { name: "Splinter", tn: "TN4" }, { name: "Spore Meadow", tn: "TN9" }, { name: "Submerge", tn: "TN9" }, { name: "Sun Beam", tn: "TN8" }, { name: "Sunburst", tn: "TN10" }, { name: "Terra-Bind", tn: "TN9" }, { name: "Thorns", tn: "TN5" }, { name: "Transmission", tn: "TN12" }, { name: "Uproot", tn: "TN10" }, { name: "Venomous Ivy", tn: "TN5" }, { name: "Wall of Thorns", tn: "TN10" }, { name: "Warped Weapon", tn: "TN4" }];
+const MAGIC_SPELLS = [{ name: "Aethereal Strike", tn: "TN8" }, { name: "Allure", tn: "TN8" }, { name: "Bind Daemon", tn: "TN10" }, { name: "Blackout", tn: "TN6" }, { name: "Blast", tn: "TN7" }, { name: "Blink", tn: "TN5" }, { name: "Bonded in Blood", tn: "TN3" }, { name: "Bolt", tn: "TN7" }, { name: "Call the Unhallowed", tn: "TN~" }, { name: "Comprehend Language", tn: "TN4" }, { name: "Cold Blast", tn: "TN8" }, { name: "Consumed in Flame", tn: "TN10" }, { name: "Corpselike", tn: "TN4" }, { name: "Daemon Slayer", tn: "TN9" }, { name: "Dart", tn: "TN4" }, { name: "Debilitating Plasm", tn: "TN11" }, { name: "Decompose", tn: "TN10" }, { name: "Dismiss Daemon", tn: "TN9" }, { name: "Dispel Magic", tn: "TN~" }, { name: "Endless Light", tn: "TN3" }, { name: "Feared", tn: "TN4" }, { name: "Fireball", tn: "TN13" }, { name: "Firebomb", tn: "TN8" }, { name: "Fire Sling", tn: "TN7" }, { name: "Flay Malignant", tn: "TN7" }, { name: "Fly", tn: "TN6" }, { name: "Frostbite", tn: "TN10" }, { name: "Frozen Shards", tn: "TN9" }, { name: "Exoskeleton", tn: "TN6" }, { name: "Heightened Senses", tn: "TN4" }, { name: "Ice Blade", tn: "TN9" }, { name: "Ice Field", tn: "TN7" }, { name: "Ice Lance", tn: "TN9" }, { name: "Incinerate", tn: "TN10" }, { name: "Indestructible Instant", tn: "TN12" }, { name: "Invisibility", tn: "TN6" }, { name: "Iron Missile", tn: "TN9" }, { name: "Know Object", tn: "TN4" }, { name: "Lacerate", tn: "TN11" }, { name: "Lava Spray", tn: "TN11" }, { name: "Life Diverted", tn: "TN7" }, { name: "Life Leash", tn: "TN10" }, { name: "Lightning Bolt", tn: "TN8" }, { name: "Mage's Armor", tn: "TN8" }, { name: "Mage's Arrow", tn: "TN6" }, { name: "Magic Lock", tn: "TN~" }, { name: "Malefic", tn: "TN12" }, { name: "Molten Earth", tn: "TN15" }, { name: "Mote Storm", tn: "TN13" }, { name: "Pulverize", tn: "TN14" }, { name: "Restore Material", tn: "TN7" }, { name: "Reveal Magic", tn: "TN3" }, { name: "Ritual Defense", tn: "TN6" }, { name: "Scourge", tn: "TN10" }, { name: "Searing Heat", tn: "TN8" }, { name: "Silence", tn: "TN7" }, { name: "Sleep", tn: "TN5" }, { name: "Show the Way", tn: "TN15" }, { name: "Soul Burst", tn: "TN11" }, { name: "Static Bomb", tn: "TN9" }, { name: "Summon Damned", tn: "TN~" }, { name: "Firebrand Weapon", tn: "TN10" }, { name: "Tainted Ground", tn: "TN10" }, { name: "Thirsting Blade", tn: "TN6" }, { name: "Time Suspended", tn: "TN12" }, { name: "Tornado", tn: "TN12" }, { name: "Transform Object", tn: "TN11" }, { name: "Twisted Words", tn: "TN10" }, { name: "Weapon Ward", tn: "TN8" }, { name: "Whiteout", tn: "TN12" }, { name: "Wind Shear", tn: "TN8" }];
+const SHAMAN_SPELLS = [{ name: "Agony", tn: "TN13" }, { name: "Astral Recall", tn: "TN12" }, { name: "Bones", tn: "TN7" }, { name: "Blood Boil", tn: "TN12" }, { name: "Blood of the Old God", tn: "TN8" }, { name: "Chain Lightning", tn: "TN14" }, { name: "Circle", tn: "TN4" }, { name: "Cleanse", tn: "TN3" }, { name: "Corrupt", tn: "TN12" }, { name: "Cure Major Wounds", tn: "TN11" }, { name: "Cure Minor Wounds", tn: "TN4" }, { name: "Cure Moderate Wounds", tn: "TN7" }, { name: "Cursed Wound", tn: "TN11" }, { name: "Cursed Spells", tn: "TN7" }, { name: "Control Elemental", tn: "TN10" }, { name: "Daydream", tn: "TN7" }, { name: "Enduring Agony", tn: "TN11" }, { name: "Exsanguinate", tn: "TN10" }, { name: "Ghost Wolf", tn: "TN7" }, { name: "Flame Burst", tn: "TN7" }, { name: "Frost Shock", tn: "TN8" }, { name: "Grumbling", tn: "TN6" }, { name: "Haste", tn: "TN7" }, { name: "Hex", tn: "TN6" }, { name: "Lava Eruption", tn: "TN11" }, { name: "Maelstrom", tn: "TN7" }, { name: "Mental Anguish", tn: "TN8" }, { name: "Pin Doll", tn: "TN5" }, { name: "Polymorph", tn: "TN6" }, { name: "Rain Dance", tn: "TN12" }, { name: "Read Magic", tn: "TN7" }, { name: "Remove Curse", tn: "TN~" }, { name: "Scarlet Venom", tn: "TN10" }, { name: "Spirit Transference", tn: "TN10" }, { name: "Soul Reaper", tn: "TN14" }, { name: "Speak with Animals", tn: "TN5" }, { name: "Stabilize", tn: "TN14" }, { name: "Stinking Cloud", tn: "TN11" }, { name: "Tribal Tenacity", tn: "TN10" }, { name: "Unwieldy", tn: "TN5" }, { name: "Vigor", tn: "TN7" }, { name: "Wind Walker", tn: "TN6" }];
+const KI_POWERS = [{ name: "Agni-Fire", tn: "TN6" }, { name: "Astra Launch", tn: "TN8" }, { name: "Avoidance", tn: "TN6" }, { name: "Bija", tn: "TN7" }, { name: "Boost", tn: "TN8" }, { name: "Cauterize", tn: "TN5" }, { name: "Empowered Strikes", tn: "TN6" }, { name: "Expel Wounds", tn: "TN9" }, { name: "Force Kick", tn: "TN9" }, { name: "Healing Chakra", tn: "TN5" }, { name: "Ignite Weapons", tn: "TN9" }, { name: "Karma", tn: "TN11" }, { name: "Purification", tn: "TN5" }, { name: "Purity of Blood", tn: "TN7" }, { name: "Revive", tn: "TN15" }, { name: "Shadows", tn: "TN8" }, { name: "Shockwave", tn: "TN11" }, { name: "Shower of Fire", tn: "TN10" }, { name: "Silent Hand Strike", tn: "TN8" }, { name: "Step of the Wind", tn: "TN3" }, { name: "Stillnes of Mind", tn: "TN7" }, { name: "Stunning Strikes", tn: "TN6" }, { name: "Touch of Death", tn: "TN15" }, { name: "Zen", tn: "TN10" }];
+const RUNES_LIST = [{ name: "Rune of Speed", tn: "T8/P12" }, { name: "Rune of Striking", tn: "T10/P15" }, { name: "Rune of Warding", tn: "T7/P13" }, { name: "Rune of Stone", tn: "T8/P15" }, { name: "Rune of Grudges", tn: "T10/P16" }, { name: "Rune of Spell Breaking", tn: "T6/P~" }, { name: "Rune of Cleaving", tn: "T5/P10" }, { name: "Rune of Shielding", tn: "T6/P14" }, { name: "Rune of Iron", tn: "T5/P14" }, { name: "Rune of Might", tn: "T10/P20" }, { name: "Rune of Fate", tn: "T8/P20" }, { name: "Rune of Fire", tn: "T10/P18" }, { name: "Rune of Fortitude", tn: "T10/P22" }, { name: "Rune of the Furnace", tn: "T15/P25" }, { name: "Rune of Resistance", tn: "T12/P26" }, { name: "Rune of Fury", tn: "T15/P25" }, { name: "Rune of Luck", tn: "T4/P10" }, { name: "Rune of Spell-Eating", tn: "T9/P18" }, { name: "Master Rune of Weapon Flight", tn: "T8/P16" }, { name: "Master Rune of Swiftness", tn: "T12/P22" }, { name: "Master Rune of Spite", tn: "T10/P20" }, { name: "Master Rune of Adamant", tn: "T6/P12" }, { name: "Master Rune of Balance", tn: "T10/P26" }, { name: "Master Rune of Breaking", tn: "T12/P28" }, { name: "Master Rune of Spellbinding", tn: "T12/P26" }, { name: "Master Rune of Alaric the Mad", tn: "T10/P25" }, { name: "Master Rune of Dismay", tn: "T8/P20" }, { name: "Master Rune of Steel", tn: "T15/P30" }, { name: "Master Rune of Snorri", tn: "T14/P28" }, { name: "Master Rune of Gromiid", tn: "T12/P27" }, { name: "Master Rune of Skaif", tn: "T15/P30" }, { name: "Master Rune of Kingship", tn: "T~/P25" }];
+
+const advancedSkills = [
+    { name: "Battle-Ready / Berzerker", cost: 200, type: "melee", bonus: 1, desc: "Negates outnumbering; Stance adds 1d10 wounds." },
+    { name: "Block / Bulwark", cost: 100, type: "none", bonus: 0, desc: "Mitigate all wounds from same-size or smaller enemies." },
+    { name: "Cleave / Whirlwind", cost: 100, type: "melee", bonus: 1, desc: "Strike adjacent targets; 360-degree circle of steel." },
+    { name: "Cleric / Crusader", cost: 100, type: "heal", bonus: 1, desc: "Aura of protection; deal extra wounds to Evil." },
+    { name: "Command / Blood Rally", cost: 100, type: "none", bonus: 0, desc: "Grant AP to allies; rally them from 0 wounds." },
+    { name: "Concentrate / Intensify", cost: 200, type: "cast", bonus: 3, desc: "Advantage on To-Cast; potentially massive damage." },
+    { name: "Deflect / Revert-Back", cost: 50, type: "none", bonus: 0, desc: "Reactionary redirect; force enemies to hit themselves." },
+    { name: "Deviation / Divergence", cost: 200, type: "none", bonus: 0, desc: "Change spell targets mid-cast or split spells." },
+    { name: "Divinity / Sanctity", cost: 100, type: "heal", bonus: 2, desc: "Empower healing; remove bleeding conditions." },
+    { name: "Dodge / Jailbreak", cost: 200, type: "none", bonus: 0, desc: "True evasion; disengage without attacks of opportunity." },
+    { name: "Expose Armor / Undress", cost: 100, type: "melee", bonus: 1, desc: "Reduce or ignore target's Wound Mitigation." },
+    { name: "Heavy Arbalest / Linebreaker", cost: 100, type: "range", bonus: 1, desc: "Armor-piercing bolts; punch through multiple targets." },
+    { name: "Impact / Full-Weight", cost: 200, type: "melee", bonus: 2, desc: "Apply Stunned conditions; massive trauma strikes." },
+    { name: "Impale / Skewer", cost: 200, type: "melee", bonus: 1, desc: "Drive weapons through core; heavy bleeding stacks." },
+    { name: "Infusion / True Fusion", cost: 200, type: "none", bonus: 0, desc: "Transmute damage into healing or cast dual-intent spells." },
+    { name: "Marksman / Sniper", cost: 100, type: "range", bonus: 2, desc: "Lethal precision; delete threats from a distance." },
+    { name: "Master Thievery / Saboteur", cost: 200, type: "none", bonus: 0, desc: "Combat larceny; subvert traps mid-fight." },
+    { name: "Metaphysical / Supernatural", cost: 100, type: "cast", bonus: 1, desc: "Channel raw spirit into magic; fate manipulation." },
+    { name: "Nimble / Shadow Strike", cost: 100, type: "melee", bonus: 1, desc: "Precision velocity; use smoke to force Backstabs." },
+    { name: "Opportunist / Seeker", cost: 100, type: "range", bonus: 1, desc: "Target gaps in crowds; guide projectiles with will." },
+    { name: "Phantom Assassin / Sever", cost: 200, type: "melee", bonus: 2, desc: "Silence targets; instant drop to 0 wounds on failure." },
+    { name: "Primal Aspect / Mutation", cost: 200, type: "none", bonus: 0, desc: "Reshape your vessel into a Predator, Guardian, or Skybound." },
+    { name: "Rebirth / Seed of Life", cost: 400, type: "heal", bonus: 3, desc: "Cheat death; pulse life energy to allies upon return." },
+    { name: "Shield Rush / Blitz", cost: 50, type: "none", bonus: 0, desc: "Sprint into enemies; bowl over opposition." },
+    { name: "Sovereign Mind / Indomitable", cost: 100, type: "none", bonus: 0, desc: "Mental fortress; brace body against physical trauma." },
+    { name: "Sunder / Shatterpoint", cost: 100, type: "none", bonus: 0, desc: "Break enemy equipment; render weapons and armor useless." },
+    { name: "Thunderstrike / Point-Blank", cost: 200, type: "range", bonus: 2, desc: "Blackpowder roar; unmitigated blasts in melee range." },
+    { name: "Throat Slice / Slash", cost: 200, type: "melee", bonus: 1, desc: "Mute spellcasters; separate head from shoulders." },
+    { name: "Tune-Up / Lights-Out", cost: 200, type: "melee", bonus: 0, desc: "Bone-shattering jaw strikes; total incapacitation." },
+    { name: "Unwavering / Unstoppable", cost: 300, type: "none", bonus: 3, desc: "Pure momentum; ignore pain and refuse to fall." }
+];
+
+function calcCompounding(n, base) {
+    if (n <= 0 || base <= 0) return 0;
+    return (n / 2) * (2 * base + (n - 1) * base);
+}
+
+function updateSpellCost(sel) {
+    const costInput = sel.parentNode.querySelector('.spell-cost');
+    const apInput = sel.parentNode.querySelector('.spell-ap');
+    const selectedOpt = sel.options[sel.selectedIndex];
+
+    if (selectedOpt && selectedOpt.dataset.tn && selectedOpt.value !== "") {
+        const tnStr = selectedOpt.dataset.tn;
+        costInput.value = tnStr;
+        sel.title = selectedOpt.title || "";
+
+        const match = tnStr.match(/\d+/);
+        if (match) {
+            const val = parseInt(match[0]);
+            if (val >= 19) apInput.value = "6 AP";
+            else if (val >= 16) apInput.value = "5 AP";
+            else if (val >= 13) apInput.value = "4 AP";
+            else if (val >= 10) apInput.value = "3 AP";
+            else if (val >= 7) apInput.value = "2 AP";
+            else apInput.value = "1 AP";
+        } else {
+            apInput.value = "-"; 
+        }
+    } else {
+        costInput.value = "";
+        if (apInput) apInput.value = "";
+        sel.title = "";
+    }
+}
+
+function init() {
+    const charGrid = document.getElementById('char-grid');
+    if (charGrid && charGrid.children.length === 0) {
+        const chars = ["Movement", "Agility", "Awareness", "Charisma", "Intellect", "Physique", "Willpower", "Defense"];
+        chars.forEach(c => {
+            charGrid.innerHTML += `
+                <div class="char-box">
+                    <div class="char-lbl">${c}</div>
+                    <div class="char-inputs">
+                        <input type="number" class="char-val char-stat" id="stat-${c.toLowerCase()}" value="0" readonly style="background:var(--input-bg)">
+                        <input type="number" class="char-val char-bon" id="bon-${c.toLowerCase()}" value="0" oninput="upd()">
+                    </div>
+                </div>`;
+        });
+
+        const sgElem = document.getElementById('sg');
+        if (sgElem) {
+            Object.keys(sks).forEach(k => {
+                let h = `<div class="sk-c" data-group="${k}"><div class="sk-h">${k}</div>`;
+                sks[k].forEach(s => {
+                    let readOnlyAttr = "";
+                    if(s === "Knowledge") readOnlyAttr = `readonly style="background:rgba(0,0,0,0.08); text-align:center; font-weight:900;"`;
+                    h += `<div class="sk-item"><span class="sk-name" id="label-${s}">${s}</span><input type="text" class="sk-b" data-skill="${s}" readonly value="20"><input type="number" class="sk-p xc" oninput="upd()" placeholder="Pts" ${readOnlyAttr}></div>`;
+                });
+                let d = document.createElement('div'); d.innerHTML = h + `</div>`; 
+                sgElem.appendChild(d.firstChild);
+            });
+        }
+
+        const mpElem = document.getElementById('mp');
+        if (mpElem) {
+            ["Axes & Cleavers", "Flexible/Chain", "Hammers & Maces", "Polearms/Spears", "Swords/Daggers", "Unarmed Combat"].forEach(p => {
+                mpElem.innerHTML += `<label class="cb-label"><input type="checkbox" class="cb melee-spec-cb" onchange="upd()"> ${p}</label>`;
+            });
+        }
+        
+        const rpElem = document.getElementById('rp');
+        if (rpElem) {
+            ["Bow", "Crossbow", "Firearm", "Throwing"].forEach(p => {
+                rpElem.innerHTML += `<label class="cb-label"><input type="checkbox" class="cb range-spec-cb" onchange="upd()"> ${p}</label>`;
+            });
+        }
+
+        const mrElem = document.getElementById('mr');
+        if (mrElem) {
+            mrElem.innerHTML = '<div class="t-h"><span>Type</span><span>Actions</span><span>Hit-Bon</span><span>Dmg-Bon</span></div>';
+            for(let i=0; i<3; i++) buildWeaponRow('mr');
+        }
+        
+        const rrElem = document.getElementById('rr');
+        if (rrElem) {
+            rrElem.innerHTML = '<div class="t-h"><span>Type</span><span>Actions</span><span>Hit-Bon</span><span>Dmg-Bon</span><span>Range</span><span>AoE</span></div>';
+            for(let i=0; i<3; i++) buildWeaponRow('rr');
+        }
+        
+        const spellsGrid = document.getElementById('spells-grid');
+        if (spellsGrid) {
+            spellsGrid.innerHTML = ''; 
+            for(let i=0; i<21; i++) {
+                let html = `
+                <div class="k-item" style="padding-right:0; padding-left:2px; display:flex;">
+                    <select class="spell-select" onchange="updateSpellCost(this)" style="flex: 1 1 auto !important; width:100%; min-width:0; font-size:10.5pt; font-weight:900; font-family:var(--font-main); padding:0; background:transparent; border:none;">
+                        <option value="" data-tn="">-</option>
+                    </select>
+                    <input type="text" class="spell-cost" placeholder="TN" readonly style="flex: 0 0 60px !important; width:60px; font-size:11pt; padding:0; text-align:center; background:rgba(0,0,0,0.08); font-weight:900; border-left:1px solid rgba(0,0,0,0.1); border-top:none; border-right:none; border-bottom:none;">
+                    <input type="text" class="spell-ap" placeholder="AP" readonly style="flex: 0 0 38px !important; width:38px; font-size:10.5pt; padding:0; text-align:center; background:rgba(168,24,24,0.1); color:var(--blood); font-weight:900; border:none; border-left:1px solid rgba(0,0,0,0.1);">
+                </div>`;
+                spellsGrid.innerHTML += html;
+            }
+        }
+
+        const kGrid = document.getElementById('knowledge-grid');
+        if (kGrid) {
+            for(let i=0; i<12; i++) kGrid.innerHTML += `<div class="k-item"><input type="checkbox" class="k-cb" onchange="upd()"><input type="text" placeholder="Knowledge..."></div>`;
+        }
+
+        const advGrid = document.getElementById('advanced-grid');
+        if (advGrid) {
+            advancedSkills.forEach(skill => {
+                const titleAttr = skill.desc ? `title="${skill.desc}"` : "";
+                advGrid.innerHTML += `
+                    <div class="k-item" ${titleAttr} style="display:flex; padding-right:0;">
+                        <input type="checkbox" class="k-cb" onchange="upd()">
+                        
+                        <input type="text" class="adv-name" value="${skill.name}" readonly style="flex: 1 1 auto !important; min-width:0; font-size:10pt; font-weight:900; background:transparent; border:none; padding:0 4px;">
+                        
+                        <input type="text" class="adv-eff-val adv-eff-base" placeholder="Base" readonly 
+                               style="flex: 0 0 100px !important; width:100px; font-size:10pt; text-align:center; background:rgba(46,125,50,0.05); color:var(--success); font-weight:900; border:none; border-left:1px solid rgba(0,0,0,0.1); padding:0;" title="Base Action Output">
+                        
+                        <input type="text" class="adv-eff-val adv-eff-spec" placeholder="Spec" readonly 
+                               style="flex: 0 0 75px !important; width:75px; font-size:10pt; text-align:center; background:rgba(46,125,50,0.15); color:var(--success); font-weight:900; border:none; border-left:1px dotted rgba(46,125,50,0.3); padding:0;" title="Specialization Output">
+                        
+                        <input type="text" class="adv-cost" value="${skill.cost}" readonly style="flex: 0 0 35px !important; width:35px; font-size:10pt; text-align:center; border:none; border-left:1px solid rgba(0,0,0,0.1); padding:0; background:transparent; color:var(--blood); font-weight:900;">
+                    </div>`;
+            });
+        }
+
+        const invGrid = document.getElementById('inventory-grid');
+        if (invGrid) {
+            for(let i=0; i<6; i++) invGrid.innerHTML += `<div class="k-item"><input type="text" placeholder="Item/Gear..."></div>`;
+        }
+    }
+
+    if(document.getElementById('ap_total')) {
+        document.getElementById('ap_total').readOnly = true;
+        document.getElementById('ap_total').style.background = "rgba(0,0,0,0.08)";
+    }
+    upd();
+}
+
+function handleMagicCheck(cb) {
+    const checks = document.querySelectorAll('.magic-cb');
+    const kInputs = document.querySelectorAll('#knowledge-grid input[type="text"]');
+    const kChecks = document.querySelectorAll('#knowledge-grid input[type="checkbox"]');
+    const spellSelects = document.querySelectorAll('.spell-select');
+
+    if (cb.checked) {
+        checks.forEach(c => {
+            if (c !== cb) { c.disabled = true; c.parentElement.style.opacity = "0.5"; }
+        });
+        const header = document.getElementById('spells-header');
+        let optionsHTML = '<option value="" data-tn="">- Select -</option>';
+
+        if(cb.value === "Religion") { if(header) header.innerText = "Blessings"; RELIGION_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
+        else if(cb.value === "Druidic") { if(header) header.innerText = "Druidic Spells"; DRUIDIC_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
+        else if(cb.value === "Magic") { if(header) header.innerText = "Spells"; MAGIC_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
+        else if(cb.value === "Ki") { if(header) header.innerText = "Ki Powers"; KI_POWERS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
+        else if(cb.value === "Runes") { if(header) header.innerText = "Runes / Glyphs"; RUNES_LIST.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
+        else if(cb.value === "Shaman") { if(header) header.innerText = "Shamanic Rites"; SHAMAN_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
+
+        spellSelects.forEach(sel => {
+            sel.innerHTML = optionsHTML;
+            if (sel.dataset.savedValue) sel.value = sel.dataset.savedValue;
+            updateSpellCost(sel);
+        });
+
+        if(kInputs.length > 0) kInputs[0].value = cb.value; 
+        if(kChecks.length > 0) kChecks[0].checked = true;
+
+        const rwInput = document.getElementById('label-Read/Write')?.parentNode.querySelector('.sk-p');
+        if(rwInput && (!rwInput.value || rwInput.value === "0")) rwInput.value = 1;
+
+    } else {
+        checks.forEach(c => { c.disabled = false; c.parentElement.style.opacity = "1"; });
+        if(document.getElementById('spells-header')) document.getElementById('spells-header').innerText = "Spells / Powers";
+        
+        spellSelects.forEach(sel => {
+            sel.innerHTML = '<option value="" data-tn="">- Select -</option>';
+            updateSpellCost(sel);
+        });
+
+        if(kInputs.length > 0) kInputs[0].value = ""; 
+        if(kChecks.length > 0) kChecks[0].checked = false;
+        
+        const rwInput = document.getElementById('label-Read/Write')?.parentNode.querySelector('.sk-p');
+        if(rwInput && rwInput.value === "1") rwInput.value = "";
+    }
+    upd();
+}
+
+function upd() {
+    const raceVal = document.getElementById('race-select')?.value || "none";
+    const race = (raceVal === "none" || !raceVal) ? "none" : raceVal.toLowerCase();
+    const charSize = document.getElementById('char-size')?.value || "Med";
+    
+    let knowledgeCount = 0;
+    document.querySelectorAll('#knowledge-grid .k-cb').forEach(cb => { if(cb.checked) knowledgeCount++; });
+    const knowledgeLabel = document.getElementById('label-Knowledge');
+    if(knowledgeLabel) {
+        const kInput = knowledgeLabel.parentNode.querySelector('.sk-p');
+        if (kInput) kInput.value = knowledgeCount;
+    }
+
+    let spentXP = 0;
+    let quickPts = 0, athleticsPts = 0, hardAsNailsPts = 0, shieldsmanPts = 0;
+    let evasionPts = 0, spiritPts = 0, survivalPts = 0, staminaPts = 0, focusPts = 0;
+    let lightSoulPts = 0, mendingPts = 0, strengthConPts = 0, preciseStrikePts = 0;
+    let perceptionPts = 0, druidismPts = 0, kiPts = 0, wizardryPts = 0;
+    let faithPts = 0, shamanPts = 0, ironWillPts = 0, fortitudePts = 0, resolvePts = 0, disciplinePts = 0;
+    let woundSkillBonuses = 0;
+
+    const categoryTotals = {};
+    document.querySelectorAll('.sk-c').forEach(group => {
+        const groupName = group.getAttribute('data-group');
+        categoryTotals[groupName] = 0;
+        group.querySelectorAll('.sk-item').forEach(el => {
+            const skillInput = el.querySelector('.sk-b');
+            const skillName = skillInput.getAttribute('data-skill');
+            const ptsInput = el.querySelector('.sk-p');
+            const pts = ptsInput ? (parseInt(ptsInput.value) || 0) : 0;
+            
+            let base = 0;
+            if (race !== "none" && SKILL_COSTS[skillName]) base = SKILL_COSTS[skillName][race] || 0;
+            
+            if (skillName === "Quickness") quickPts = pts;
+            if (skillName === "Athletics") athleticsPts = pts; 
+            if (skillName === "Hard as Nails") { hardAsNailsPts = pts; woundSkillBonuses += pts * 2; }
+            if (skillName === "Shieldsman") shieldsmanPts = pts;
+            if (skillName === "Evasion") evasionPts = pts;
+            if (skillName === "Spirit") spiritPts = pts;
+            if (skillName === "Survival") { survivalPts = pts; woundSkillBonuses += pts * 1; }
+            if (skillName === "Stamina") { staminaPts = pts; woundSkillBonuses += pts * 1; }
+            if (skillName === "Light-Soul") lightSoulPts = pts;
+            if (skillName === "Mending") mendingPts = pts;
+            if (skillName === "Strength Con.") { strengthConPts = pts; woundSkillBonuses += pts * 2; }
+            if (skillName === "Precise Strk") preciseStrikePts = pts;
+            if (skillName === "Perception") perceptionPts = pts;
+            if (skillName === "Druidism") druidismPts = pts;
+            if (skillName === "Ki") kiPts = pts;
+            if (skillName === "Wizardry") wizardryPts = pts;
+            if (skillName === "Faith") faithPts = pts;
+            if (skillName === "Shaman") shamanPts = pts;
+            if (skillName === "Iron Will") { ironWillPts = pts; woundSkillBonuses += pts * 2; }
+            if (skillName === "Fortitude") { fortitudePts = pts; woundSkillBonuses += pts * 10; } 
+            if (skillName === "Rugged") woundSkillBonuses += pts * 2;
+            if (skillName === "Discipline") { disciplinePts = pts; woundSkillBonuses += pts * 1; }
+            if (skillName === "Resolve") { resolvePts = pts; woundSkillBonuses += pts * 1; }
+
+            if (skillName === "Focus") {
+                focusPts = pts;
+                if(document.getElementById('focus_hit_bonus')) document.getElementById('focus_hit_bonus').value = Math.floor(pts / 3);
+                if(document.getElementById('focus_pts_mirror')) document.getElementById('focus_pts_mirror').value = Math.floor(pts);
+            }
+            categoryTotals[groupName] += pts;
+            skillInput.value = base; 
+            spentXP += calcCompounding(pts, base);
+        });
+    });
+
+    let clericEvilMitigation = Math.floor(lightSoulPts / 3); 
+
+    let advMitigationBonus = 0, advSpentXP = 0;
+    let hasConcentrate = false, hasRebirth = false;
+
+    document.querySelectorAll('#advanced-grid .k-item').forEach(item => {
+        const cb = item.querySelector('.k-cb');
+        const nameInput = item.querySelector('.adv-name');
+        if (!cb || !nameInput) return;
+        
+        const txt = nameInput.value;
+        
+        if(txt.includes("Block / Bulwark")) if(document.getElementById('def-block')) document.getElementById('def-block').value = "";
+        if(txt.includes("Deflect / Revert-Back")) if(document.getElementById('def-deflect')) document.getElementById('def-deflect').value = "";
+        if(txt.includes("Dodge / Jailbreak")) if(document.getElementById('def-dodge')) document.getElementById('def-dodge').value = "";
+
+        if(cb.checked) {
+            const costInput = item.querySelector('.adv-cost');
+            if (costInput) advSpentXP += parseInt(costInput.value) || 0;
+
+            if(txt.includes("Block / Bulwark")) if(document.getElementById('def-block')) document.getElementById('def-block').value = 1;
+            if(txt.includes("Deflect / Revert-Back")) if(document.getElementById('def-deflect')) document.getElementById('def-deflect').value = 1;
+            if(txt.includes("Dodge / Jailbreak")) if(document.getElementById('def-dodge')) document.getElementById('def-dodge').value = 1;
+            
+            if(txt.includes("Concentrate / Intensify")) hasConcentrate = true;
+            if(txt.includes("Rebirth / Seed of Life")) hasRebirth = true;
+            
+            if(txt.includes("Cleric / Crusader")) { advMitigationBonus += 1; clericEvilMitigation += 1; }
+            if(txt.includes("Unwavering / Unstoppable")) advMitigationBonus += 3;
+            if(txt.includes("Sovereign Mind / Indomitable")) advMitigationBonus += 1;
+        }
+    });
+
+    let isRunesActive = false;
+    document.querySelectorAll('.magic-cb').forEach(cb => {
+        if(cb.checked && cb.value === "Runes") isRunesActive = true;
+    });
+
+    if (isRunesActive) {
+        let rmPts = parseInt(document.getElementById('runemaster_pts')?.value) || 0;
+        categoryTotals["Agility"] = (categoryTotals["Agility"] || 0) + rmPts;
+        let rmBase = 0;
+        if (race === 'dwarf') rmBase = 10;
+        else if (race === 'elf') rmBase = 20;
+        else if (race === 'halfling') rmBase = 15;
+        else if (race === 'human') rmBase = 15;
+        if(document.getElementById('runemaster_base')) document.getElementById('runemaster_base').value = rmBase;
+        spentXP += calcCompounding(rmPts, rmBase);
+    }
+
+    let armorDef = 0, armorMit = 0, armorAgl = 0, armorAwa = 0, armorMov = 0, armorTN = 0, armorRange = 0;
+    let armorMPen = 0, armorRPen = 0; 
+    [1, 2].forEach(num => {
+        const typeElem = document.getElementById(`armor-type-${num}`);
+        if(!typeElem) return;
+        const type = typeElem.value;
+        const bon = parseInt(document.getElementById(`armor-bonus-${num}`)?.value) || 0;
+        if (ARMOR_DATA[type]) {
+            const d = ARMOR_DATA[type];
+            armorDef += d.def + (type !== "none" ? bon : 0);
+            armorMit += d.mit;
+            armorAgl += d.agl;
+            armorAwa += d.awa;
+            armorMov += d.mov;
+            armorTN += d.tn;
+            armorRange += d.range;
+            armorMPen += (d.m_pen || 0); 
+            armorRPen += (d.r_pen || 0); 
+            if(document.getElementById(`armor-total-${num}`)) document.getElementById(`armor-total-${num}`).value = (type === "none" ? 0 : (d.def + bon));
+        }
+    });
+
+    const coreStats = ["agility", "awareness", "charisma", "intellect", "physique", "willpower"];
+    coreStats.forEach(s => {
+        const catLabel = s.charAt(0).toUpperCase() + s.slice(1);
+        const baseFromSkills = Math.floor((categoryTotals[catLabel] || 0) / 3);
+        const manualBonus = parseInt(document.getElementById(`bon-${s}`)?.value) || 0;
+        let total = baseFromSkills + manualBonus;
+        
+        if (s === "agility") { total += armorAgl; if (charSize === "Sm") total += 2; }
+        if (s === "awareness") total += armorAwa;
+        
+        if(document.getElementById(`stat-${s}`)) document.getElementById(`stat-${s}`).value = total;
+    });
+
+    const physiqueTotal = parseInt(document.getElementById('stat-physique')?.value) || 0;
+    const agilityTotal = parseInt(document.getElementById('stat-agility')?.value) || 0;
+    const intellectTotal = parseInt(document.getElementById('stat-intellect')?.value) || 0;
+    const charismaTotal = parseInt(document.getElementById('stat-charisma')?.value) || 0;
+    const willpowerTotal = parseInt(document.getElementById('stat-willpower')?.value) || 0;
+    const awarenessTotal = parseInt(document.getElementById('stat-awareness')?.value) || 0;
+
+    let evasionDefBonus = Math.floor(evasionPts / 3);
+    let effectiveEvasionDef = Math.max(0, evasionDefBonus + armorAgl);
+    let baseDefense = 3; 
+    if(document.getElementById('stat-defense')) document.getElementById('stat-defense').value = baseDefense + armorDef + effectiveEvasionDef + (parseInt(document.getElementById('bon-defense')?.value) || 0);
+
+    let initBon = parseInt(document.getElementById('bon-initiative')?.value) || 0;
+    let baseInit = Math.floor(agilityTotal / 5) + Math.floor(awarenessTotal / 5) + Math.floor(quickPts / 5);
+    if(document.getElementById('stat-initiative')) document.getElementById('stat-initiative').value = baseInit + initBon;
+    
+    const armorPenaltyPoints = Math.floor(armorMov / 5); 
+    const physRecovery = Math.floor(physiqueTotal / 3); 
+    const athleticsBonus = Math.floor(athleticsPts / 3); 
+    const moveBon = parseInt(document.getElementById('bon-movement')?.value) || 0;
+    let baseMove = (race !== "none" && raceData[race]) ? raceData[race].move : 0;
+    let mitigatedArmorPenalty = Math.min(0, armorPenaltyPoints + physRecovery);
+    let maxPenalty = Math.floor(baseMove / -2); 
+    if (mitigatedArmorPenalty < maxPenalty) mitigatedArmorPenalty = maxPenalty;
+    
+    let netMove = baseMove + athleticsBonus + mitigatedArmorPenalty + moveBon;
+    if (charSize === "Lg") netMove = Math.floor(netMove * 1.5);
+    else if (charSize === "Giant") netMove *= 2;
+    else if (charSize === "Enormous") netMove *= 3;
+    else if (charSize === "Titanic") netMove *= 4;
+    if(document.getElementById('stat-movement')) document.getElementById('stat-movement').value = (netMove > 0) ? Math.max(1, netMove) : 0;
+
+    const actionPtsPurchased = parseInt(document.getElementById('ap_pts')?.value) || 0;
+    const apCostPerPoint = parseInt(document.getElementById('ap')?.value) || 175;
+    const quicknessBonus = Math.floor(quickPts / 3);
+    if(document.getElementById('ap_total')) document.getElementById('ap_total').value = 1 + quicknessBonus + actionPtsPurchased;
+    spentXP += calcCompounding(actionPtsPurchased, (race === "none" ? 0 : apCostPerPoint));
+
+    const fortunePts = parseInt(document.getElementById('fp_pts')?.value) || 0;
+    const fortuneCost = parseInt(document.getElementById('fp')?.value) || 30;
+    spentXP += calcCompounding(fortunePts, (race === "none" ? 0 : fortuneCost));
+    if (document.getElementById('rp_base')) document.getElementById('rp_base').value = fortunePts;
+
+    let ridingBase = 25;
+    const ridingInput = document.querySelector('.sk-b[data-skill="Riding"]');
+    if (ridingInput) ridingInput.value = ridingBase;
+    spentXP += calcCompounding(parseInt(document.getElementById('riding_xp_pts')?.value) || 0, ridingBase);
+
+    if (race !== "none") {
+        let meleeCount = document.querySelectorAll('.melee-spec-cb:checked').length;
+        let rangeCount = document.querySelectorAll('.range-spec-cb:checked').length;
+        spentXP += calcCompounding(meleeCount, (COMBAT_CHECK_COSTS.melee[race] || 30));
+        spentXP += calcCompounding(rangeCount, (COMBAT_CHECK_COSTS.range[race] || 30));
+        document.querySelectorAll('.mounted-cb:checked').forEach(() => spentXP += 100);
+    }
+
+    const lsLabel = document.getElementById('label-Light-Soul');
+    if (lsLabel) {
+        const lsInput = lsLabel.parentNode.querySelector('.sk-p');
+        if (faithPts > 0) {
+            lsInput.readOnly = false; lsInput.style.background = "var(--input-bg)";
+        } else {
+            lsInput.readOnly = true; lsInput.style.background = "rgba(0,0,0,0.08)";
+            if (lsInput.value > 0) lsInput.value = 0; 
+        }
+    }
+    
+    let isMagicActive = false, isDruidActive = false, isKiActive = false, isReligionActive = false, isShamanActive = false, isMagActive = false; 
+    document.querySelectorAll('.magic-cb').forEach(cb => {
+        if(cb.checked) {
+            isMagicActive = true;
+            if(cb.value === "Druidic") isDruidActive = true;
+            if(cb.value === "Ki") isKiActive = true;
+            if(cb.value === "Religion") isReligionActive = true;
+            if(cb.value === "Shaman") isShamanActive = true;
+            if(cb.value === "Magic") isMagActive = true;
+        }
+    });
+
+    const magicSkills = ["Faith", "Wizardry", "Shaman", "Ki", "Druidism"];
+    magicSkills.forEach(skill => {
+        const label = document.getElementById(`label-${skill}`);
+        if(label) {
+            const input = label.parentNode.querySelector('.sk-p');
+            input.readOnly = true; input.style.background = "rgba(0,0,0,0.08)";
+        }
+    });
+
+    let activeMagicSkill = isReligionActive ? "Faith" : isMagActive ? "Wizardry" : isKiActive ? "Ki" : isShamanActive ? "Shaman" : isDruidActive ? "Druidism" : "";
+    let activeMagicSkillPts = 0;
+    if (activeMagicSkill) {
+        const input = document.getElementById(`label-${activeMagicSkill}`)?.parentNode.querySelector('.sk-p');
+        if (input) {
+            input.readOnly = false; input.style.background = "var(--input-bg)";
+            activeMagicSkillPts = parseInt(input.value) || 0;
+        }
+    }
+
+    const magicStatsRow = document.getElementById('magic-stats-row');
+    let castTotVal = 0, castDmgTot = 0, castHealTot = 0;
+    
+    if (isMagicActive && magicStatsRow) {
+        magicStatsRow.style.display = 'block';
+        if (isRunesActive) {
+            if(document.getElementById('standard-magic-stats')) document.getElementById('standard-magic-stats').style.display = 'none';
+            if(document.getElementById('runemaster-stats')) document.getElementById('runemaster-stats').style.display = 'flex';
+        } else {
+            if(document.getElementById('standard-magic-stats')) document.getElementById('standard-magic-stats').style.display = 'flex';
+            if(document.getElementById('runemaster-stats')) document.getElementById('runemaster-stats').style.display = 'none';
+
+            let focusAcc = Math.floor(focusPts / 3);
+            let primarySkillAcc = (activeMagicSkillPts >= 9) ? Math.floor((activeMagicSkillPts - 6) / 3) : 0;
+            
+            let coreCastStat = 0;
+            let castArmorPenalty = 0;
+            let halvedTN = Math.floor(armorTN / 2);
+
+            if (isKiActive) { coreCastStat = Math.floor(physiqueTotal / 5); castArmorPenalty = 0; }
+            else if (isReligionActive) { coreCastStat = Math.floor(charismaTotal / 5); castArmorPenalty = halvedTN; } 
+            else if (isDruidActive) { coreCastStat = Math.floor(awarenessTotal / 5); castArmorPenalty = armorTN; }
+            else if (isShamanActive) { coreCastStat = Math.floor(willpowerTotal / 5); castArmorPenalty = armorTN; }
+            else if (isMagActive) { coreCastStat = Math.floor(intellectTotal / 5); castArmorPenalty = armorTN; }
+
+            const castBon = parseInt(document.getElementById('cast_bonus_val')?.value) || 0;
+            castTotVal = coreCastStat + primarySkillAcc + focusAcc - castArmorPenalty + castBon;
+            if(document.getElementById('cast_tot_val')) document.getElementById('cast_tot_val').value = castTotVal;
+
+            const skillBonusTurns = Math.floor(activeMagicSkillPts / 3); 
+            const skillBonusResist = (activeMagicSkillPts >= 6) ? Math.floor((activeMagicSkillPts - 3) / 3) : 0; 
+
+            castDmgTot = (parseInt(document.getElementById('cast_dmg_bon')?.value) || 0); 
+            if(document.getElementById('cast_dmg_tot')) document.getElementById('cast_dmg_tot').value = castDmgTot;
+            castHealTot = (parseInt(document.getElementById('cast_heal_bon')?.value) || 0);
+            if(document.getElementById('cast_heal_tot')) document.getElementById('cast_heal_tot').value = castHealTot;
+            
+            if(document.getElementById('cast_res_tot')) document.getElementById('cast_res_tot').value = (parseInt(document.getElementById('cast_res_bon')?.value) || 0) + skillBonusResist;
+            if(document.getElementById('cast_turn_tot')) document.getElementById('cast_turn_tot').value = (parseInt(document.getElementById('cast_turn_bon')?.value) || 0) + skillBonusTurns;
+        }
+    } else if(magicStatsRow) {
+        magicStatsRow.style.display = 'none';
+    }
+
+    let pStrikeBonus = Math.floor(preciseStrikePts / 3) * 2;
+    let sConBonus = Math.floor(strengthConPts / 3) * 2;
+    let athBonus = Math.floor(athleticsPts / 3);
+
+    let strConAcc = Math.floor(strengthConPts / 3);
+    let athAcc = Math.floor(athleticsPts / 3);
+    let preciseAcc = Math.floor(preciseStrikePts / 3);
+    let percAcc = Math.floor(perceptionPts / 3);
+
+    let fMelee1 = 0, fMelee2 = 0;
+    document.querySelectorAll('#mr .weapon-entry').forEach((row, idx) => {
+        if (idx > 1) return; 
+        let hitBonus = parseInt(row.querySelector('.wb')?.value) || 0;
+        let dmgBonus = parseInt(row.querySelector('.wdb')?.value) || 0;
+        let selects = row.querySelectorAll('select');
+        let wepType = selects[0]?.value || "";
+        let action = selects[1]?.value || "1H";
+        let statMod = 0, strFlat = 0;
+        const isFinesse = ["Dagger", "Rapier", "Shortsword", "Whip"].includes(wepType);
+        
+        if (isFinesse) { statMod = agilityTotal + Math.floor(physiqueTotal / 3); } 
+        else { statMod = physiqueTotal; strFlat = sConBonus; }
+        
+        if (action === "2H") statMod *= 2;
+        else if (action === "Off-H") statMod = isFinesse ? Math.floor(statMod * 0.75) : Math.floor(statMod / 2);
+
+        if (wepType === "Lance") statMod = physiqueTotal * 3;
+        let flailExtra = (wepType === "Flail") ? awarenessTotal : 0;
+        
+        let total = statMod + strFlat + pStrikeBonus + athBonus + dmgBonus + flailExtra;
+        if (idx === 0) fMelee1 = total; else fMelee2 = total;
+
+        let coreStatAcc = isFinesse ? Math.floor(agilityTotal / 5) : Math.floor(physiqueTotal / 5);
+        let skillAcc = isFinesse ? (preciseAcc + athAcc) : (strConAcc + athAcc);
+        let finalHit = coreStatAcc + skillAcc - armorMPen + hitBonus;
+        
+        if(document.getElementById(`cm-melee-hit-${idx + 1}`)) document.getElementById(`cm-melee-hit-${idx + 1}`).value = finalHit;
+    });
+
+    let fRange1 = 0, fRange2 = 0, isT1 = false, isT2 = false;
+    document.querySelectorAll('#rr .weapon-entry').forEach((row, idx) => {
+        if (idx > 1) return;
+        
+        let hitBonus = parseInt(row.querySelector('.wb')?.value) || 0;
+        let dmgBonus = parseInt(row.querySelector('.wdb')?.value) || 0;
+        let rType = row.querySelectorAll('select')[0]?.value || "";
+        let rAct = parseInt(row.querySelector('.act-val')?.value) || 1;
+        let rStat = 0;
+
+        let isThrown = ["Dart", "Javelin", "Throwing Axe", "Throwing Knife", "Whip/Lasso"].includes(rType);
+        let isFirearm = ["Blunderbuss", "Pistol", "Rifle"].includes(rType);
+
+        if (isThrown) {
+            rStat = agilityTotal + Math.floor(physiqueTotal / 2) + (awarenessTotal * rAct);
+            if (idx === 0) isT1 = true; else isT2 = true;
+        } else if (isFirearm) {
+            rStat = (awarenessTotal * 2) * rAct;
+        } else {
+            rStat = agilityTotal + (awarenessTotal * rAct);
+        }
+
+        if (rType === "Bow") rStat += physiqueTotal;
+        else if (rType === "Longbow") rStat += (physiqueTotal * 3);
+
+        let total = rStat + dmgBonus + pStrikeBonus + athBonus;
+        if (idx === 0) fRange1 = total; else fRange2 = total;
+    
+        let coreStatAcc = Math.floor(awarenessTotal / 5);
+        let skillAcc = preciseAcc + percAcc;
+        let finalHit = coreStatAcc + skillAcc - armorRPen + hitBonus;
+        
+        if(document.getElementById(`cm-range-hit-${idx + 1}`)) document.getElementById(`cm-range-hit-${idx + 1}`).value = finalHit;
+    });
+
+    const wMult = (charSize === "Sm") ? 0.5 : (charSize === "Lg") ? 2 : (charSize === "Giant") ? 3 : (charSize === "Enormous") ? 6 : (charSize === "Titanic") ? 8 : 1;
+    const sMult = (charSize === "Lg") ? 1.5 : (charSize === "Giant") ? 2 : (charSize === "Enormous") ? 3 : (charSize === "Titanic") ? 4 : 1;
+
+    let finalMelee1 = Math.floor(fMelee1 * sMult);
+    let finalMelee2 = Math.floor(fMelee2 * sMult);
+    let finalRange1 = isT1 ? Math.floor(fRange1 * sMult) : fRange1;
+    let finalRange2 = isT2 ? Math.floor(fRange2 * sMult) : fRange2;
+
+    if(document.getElementById('cm-wounds-melee-1')) document.getElementById('cm-wounds-melee-1').value = finalMelee1;
+    if(document.getElementById('cm-wounds-melee-2')) document.getElementById('cm-wounds-melee-2').value = finalMelee2;
+    if(document.getElementById('cm-wounds-range-1')) document.getElementById('cm-wounds-range-1').value = finalRange1;
+    if(document.getElementById('cm-wounds-range-2')) document.getElementById('cm-wounds-range-2').value = finalRange2;
+    
+    let castWoundBase = 0, skillWoundBonus = 0;
+    if (isKiActive) { castWoundBase = physiqueTotal; skillWoundBonus = Math.floor(kiPts / 3); }
+    else if (isReligionActive) { castWoundBase = charismaTotal; skillWoundBonus = Math.floor(faithPts / 3) * 2; }
+    else if (isDruidActive) { castWoundBase = intellectTotal; skillWoundBonus = Math.floor(druidismPts / 3); }
+    else if (isShamanActive) { castWoundBase = intellectTotal; skillWoundBonus = Math.floor(shamanPts / 3) * 2; }
+    else if (isMagActive) { castWoundBase = intellectTotal; skillWoundBonus = Math.floor(wizardryPts / 3) * 3; }
+
+    let finalCastWounds = castWoundBase + castDmgTot + skillWoundBonus;
+    if(document.getElementById('cm-wounds-cast')) document.getElementById('cm-wounds-cast').value = (isMagicActive && !isRunesActive) ? finalCastWounds : 0;
+    if(document.getElementById('cm-cast-hit')) document.getElementById('cm-cast-hit').value = castTotVal;
+
+    ['melee-1', 'melee-2', 'range-1', 'range-2', 'cast'].forEach(id => {
+        if(document.getElementById(`cm-wounds-${id}`) && document.getElementById(`cm-wevil-${id}`)) {
+            const base = parseInt(document.getElementById(`cm-wounds-${id}`).value) || 0;
+            document.getElementById(`cm-wevil-${id}`).value = lightSoulPts + base;
+        }
+    });
+
+    const healingVal = mendingPts + Math.floor(mendingPts / 3);
+    if(document.getElementById('cm-healing-melee-1')) document.getElementById('cm-healing-melee-1').value = healingVal;
+    if(document.getElementById('cm-healing-melee-2')) document.getElementById('cm-healing-melee-2').value = healingVal;
+
+    let castHealingBase = 0, magicHealBonus = 0;
+    if(isReligionActive) { castHealingBase = charismaTotal; magicHealBonus = Math.floor(faithPts / 3) * 2; }
+    else if(isDruidActive) { castHealingBase = awarenessTotal; magicHealBonus = Math.floor(druidismPts / 3) * 2; }
+    else if(isShamanActive) { castHealingBase = willpowerTotal; magicHealBonus = Math.floor(shamanPts / 3) * 2; }
+    
+    let finalHealCast = castHealingBase + castHealTot + magicHealBonus;
+    if(document.getElementById('cm-healing-cast')) document.getElementById('cm-healing-cast').value = finalHealCast;
+
+    const armorBon = parseInt(document.getElementById('wm-armor-bon')?.value) || 0;
+    let armorTot = (armorMit + Math.floor(hardAsNailsPts / 2) + shieldsmanPts + Math.floor(evasionPts / 3)) + armorBon + advMitigationBonus;
+    if (charSize === "Giant" || charSize === "Enormous" || charSize === "Titanic") armorTot *= (charSize === "Giant" ? 2 : 3);
+    if(document.getElementById('wm-armor-tot')) document.getElementById('wm-armor-tot').value = armorTot;
+    if(document.getElementById('wm-armor-evil')) document.getElementById('wm-armor-evil').value = armorTot + clericEvilMitigation;
+
+    let blessTot = willpowerTotal + Math.floor(spiritPts / 3) + Math.floor(survivalPts / 2) + Math.floor(resolvePts / 2) + (parseInt(document.getElementById('wm-bless-bon')?.value) || 0) + advMitigationBonus;
+    if (charSize === "Giant") blessTot = Math.floor(blessTot * 1.5); else if (charSize === "Enormous") blessTot *= 2; else if (charSize === "Titanic") blessTot *= 3;
+    if(document.getElementById('wm-bless-tot')) document.getElementById('wm-bless-tot').value = blessTot;
+    if(document.getElementById('wm-bless-evil')) document.getElementById('wm-bless-evil').value = blessTot + clericEvilMitigation;
+
+    let dispoiTot = (physiqueTotal + Math.floor(staminaPts / 2) + Math.floor(fortitudePts / 3) + Math.floor(disciplinePts / 3)) + (parseInt(document.getElementById('wm-dispoi-bon')?.value) || 0) + advMitigationBonus;
+    if (charSize === "Giant") dispoiTot *= 2; else if (charSize === "Enormous") dispoiTot *= 3; else if (charSize === "Titanic") dispoiTot *= 4;
+    if(document.getElementById('wm-dispoi-tot')) document.getElementById('wm-dispoi-tot').value = dispoiTot;
+    if(document.getElementById('wm-dispoi-evil')) document.getElementById('wm-dispoi-evil').value = dispoiTot + clericEvilMitigation;
+
+    const woundBase = (race !== "none" && raceData[race]) ? raceData[race].wounds : 0;
+    const rawWounds = (woundBase + physiqueTotal + woundSkillBonuses + (parseInt(document.getElementById('w_bonus')?.value) || 0));
+    const finalWoundsVal = Math.floor(rawWounds * wMult);
+    if(document.getElementById('w_total')) document.getElementById('w_total').value = finalWoundsVal;
+
+    if(document.getElementById('xs')) document.getElementById('xs').value = Math.floor(spentXP + advSpentXP);
+    const currentEarned = parseInt(document.getElementById('xe')?.value) || 0;
+    if(document.getElementById('xr')) document.getElementById('xr').innerText = currentEarned - Math.floor(spentXP + advSpentXP);
+
+    const taken = parseInt(document.getElementById('w_taken')?.value) || 0;
+    const woundsRemaining = finalWoundsVal - taken;
+    if(document.getElementById('w_rem')) document.getElementById('w_rem').innerText = woundsRemaining;  
+
+    const sheetElement = document.querySelector('.sheet');
+    if(sheetElement) {
+        if (woundsRemaining > 0 && woundsRemaining <= 3) sheetElement.classList.add('critical-state');
+        else sheetElement.classList.remove('critical-state');
+    }
+
+    // FINAL BULLETPROOF MATH ENGINE WITH HOVER TOOLTIPS
+    document.querySelectorAll('#advanced-grid .k-item').forEach(item => {
+        const cb = item.querySelector('.k-cb');
+        const baseBox = item.querySelector('.adv-eff-base');
+        const specBox = item.querySelector('.adv-eff-spec');
+        const nameInput = item.querySelector('.adv-name');
+        
+        if (!baseBox || !specBox || !nameInput) return; 
+
+        const txt = nameInput.value;
+
+        if (cb.checked) {
+            let oB = "", oS = "";
+
+            if(txt.includes("Battle-Ready")) { oB = "Stance"; oS = "1d10+"+finalMelee1; }
+            else if(txt.includes("Block")) { oB = "Negate"; oS = "+5 WM"; }
+            else if(txt.includes("Cleave")) { oB = "Split"; oS = "AoE:"+(finalMelee1 + (physiqueTotal*2)); }
+            else if(txt.includes("Cleric")) { oB = "+1 WM"; oS = "+"+lightSoulPts+" Evl"; }
+            else if(txt.includes("Command")) { oB = "+1 AP"; oS = "1d10+"+(charismaTotal*2); }
+            else if(txt.includes("Concentrate")) { oB = "Adv."; oS = (finalCastWounds*2)+" W"; }
+            else if(txt.includes("Deflect")) { oB = "Parry"; oS = "Reflect"; }
+            else if(txt.includes("Deviation")) { oB = "Shift"; oS = "Split"; }
+            else if(txt.includes("Divinity")) { oB = (finalHealCast+faithPts)+" H"; oS = "1d10+"+(finalHealCast+(faithPts*2)); }
+            else if(txt.includes("Dodge")) { oB = "Evade"; oS = (athleticsPts*5)+" Ft"; }
+            else if(txt.includes("Expose Armor")) { oB = "-"+awarenessTotal+" WM"; oS = "0 WM"; }
+            else if(txt.includes("Heavy Arbalest")) { oB = "-2 WM"; oS = "2d10+"+(finalRange1+(awarenessTotal*2)); }
+            else if(txt.includes("Impact")) { oB = (finalMelee1+physiqueTotal)+" W"; oS = (finalMelee1+(physiqueTotal*3))+" W"; }
+            else if(txt.includes("Impale")) { oB = "1d10+"+finalMelee1; oS = "2d10+"+finalMelee1; }
+            else if(txt.includes("Infusion")) { oB = "1/2 Hl"; oS = "Dual"; }
+            else if(txt.includes("Marksman")) { oB = "1d10+"+(finalRange1+awarenessTotal); oS = "1d10+"+(finalRange1+agilityTotal+(awarenessTotal*2)); }
+            else if(txt.includes("Master Thievery")) { oB = "Steal"; oS = "Sabotage"; }
+            else if(txt.includes("Metaphysical")) { oB = (finalCastWounds+spiritPts)+" W"; oS = "1d10+"+(finalCastWounds+(spiritPts*3)); }
+            else if(txt.includes("Nimble")) { oB = (finalMelee1+agilityTotal+awarenessTotal)+" W"; oS = "1d10+"+(finalMelee1+agilityTotal); }
+            else if(txt.includes("Opportunist")) { oB = "-"+awarenessTotal+" WM"; oS = "2d10+"+(finalRange1+(awarenessTotal*3)); }
+            else if(txt.includes("Phantom Assassin")) { oB = "1d10+"+(finalMelee1+(agilityTotal*2)); oS = "3d10+"+(finalMelee1+(agilityTotal*2)); }
+            else if(txt.includes("Primal Aspect")) { oB = "1d10+"+druidismPts+"+A"; oS = "Mutate"; }
+            else if(txt.includes("Rebirth")) { oB = "1d10+"+willpowerTotal; oS = "1d10+"+druidismPts; }
+            else if(txt.includes("Shield Rush")) { oB = "1d10+"+((physiqueTotal*2)+shieldsmanPts); oS = "2d10+"+((physiqueTotal*4)+shieldsmanPts); }
+            else if(txt.includes("Sovereign Mind")) { oB = "Cleanse"; oS = "+"+((willpowerTotal*2)+physiqueTotal)+" WM"; }
+            else if(txt.includes("Sunder")) { oB = "Damage"; oS = "Shatter"; }
+            else if(txt.includes("Thunderstrike")) { oB = "Stun"; oS = "3d10+"+(finalRange1+(awarenessTotal*2)); }
+            else if(txt.includes("Throat Slice")) { oB = "1d10+"+(finalMelee1+(agilityTotal*2)); oS = "2d10+"+(finalMelee1+(agilityTotal*3)); }
+            else if(txt.includes("Tune-Up")) { oB = "1d10+"+(finalMelee1+physiqueTotal); oS = "2d10+"+(finalMelee1+(awarenessTotal*2)); }
+            else if(txt.includes("Unwavering")) { oB = "+"+willpowerTotal+" WM"; oS = "+"+(hardAsNailsPts+ironWillPts+willpowerTotal)+" WM"; }
+
+            baseBox.value = oB;
+            baseBox.title = "Base: " + oB; 
+            specBox.value = oS;
+            specBox.title = "Spec: " + oS; 
+        } else {
+            baseBox.value = ""; 
+            baseBox.title = "Base Action Output";
+            specBox.value = "";
+            specBox.title = "Specialization Output";
+        }
+    });
+
+}
+
+function handleActionChange(select, type) {
+    const valBox = select.parentNode.querySelector('.act-val');
+    if (type === 'melee' && select.value === "2H") valBox.value = 2;
+    else valBox.value = 1;
+}
+
+function buildWeaponRow(targetId) {
+    let options = (targetId === 'mr') ? ["-", "Axe", "Battleaxe", "Club", "Dagger", "Flail", "Glaive", "Greataxe", "Greatsword", "Halberd", "Lance", "Longsword", "Mace", "Maul", "Morningstar", "Rapier", "Shortsword", "Spear", "Staff", "Unarmed", "Warhammer", "Whip"] 
+    : ["-", "Blunderbuss", "Bow", "Crossbow", "Dart", "Hand Crossbow", "Heavy Crossbow", "Javelin", "Longbow", "Pistol", "Rifle", "Shortbow", "Sling", "Throwing Axe", "Throwing Knife", "Whip/Lasso"];
+    
+    let sel = `<select onchange="handleWeaponChange(this, '${targetId}'); upd()" style="width:100%; font-size:11.5pt; font-weight:900;">${options.map(o => `<option>${o}</option>`).join('')}</select>`;
+    
+    let actSel = '';
+    if (targetId === 'mr') {
+        actSel = `<div style="display:flex; gap:1px; width:100%;"><select onchange="handleActionChange(this, 'melee'); upd()" style="flex:1; min-width:0; font-size:9pt;"><option value="-">-</option><option value="1H">1H</option><option value="2H">2H</option><option value="Off-H">Off-H</option></select><input type="number" value="1" class="act-val" readonly style="width:28px; background:var(--input-bg); font-size:11pt; border:1.5px solid var(--ink); text-align:center; padding:0;"></div>`;
+    } else {
+        actSel = `<input type="number" value="1" class="act-val" readonly title="Actions to Fire/Reload" style="width:100%; background:rgba(0,0,0,0.08); font-size:12pt; border:1.5px solid var(--ink); text-align:center;">`;
+    }
+    
+    let html = `
+    <div class="weapon-entry">
+        <div class="t-r">
+            ${sel} ${actSel}
+            <input type="number" class="wb" oninput="upd()" placeholder="Bon">
+            <input type="number" class="wdb" oninput="upd()" placeholder="Bon">
+            ${targetId === 'rr' ? '<input type="text" class="w-range" readonly tabindex="-1" style="background:rgba(0,0,0,0.08); font-size:10.5pt; width:100%; text-align:center;"><input type="text" class="w-aoe" readonly tabindex="-1" style="background:rgba(0,0,0,0.08); font-size:10.5pt; width:100%; text-align:center;">' : ''}
+        </div>
+        <div class="w-note-row"><span class="w-note-label">Note:</span><input type="text" class="w-note" placeholder="Reach, Silver, Properties..."></div>
+    </div>`;
+    document.getElementById(targetId).insertAdjacentHTML('beforeend', html);
+}
+    
+function clearSheet() {
+    if(!confirm("Reset fields?")) return;
+    document.querySelectorAll('input, select').forEach(i => {
+        if (i.type === 'file') return;
+        if (['ap_total', 'fp', 'xe', 'bon-initiative', 'rp_base'].includes(i.id)) return;
+        if (i.id === 'mxp') { i.value = ""; return; }
+        if (i.id === 'mh') { i.value = 135; return; }
+        if (i.id === 'rxp') { i.value = ""; return; }
+        if (i.id === 'rh') { i.value = 145; return; }
+        if (i.id === 'cast_cost_stat') { i.value = 125; return; }
+        if (i.classList.contains('adv-cost') || i.classList.contains('adv-eff-base') || i.classList.contains('adv-eff-spec') || i.classList.contains('spell-ap')) { return; } 
+        if (i.type === 'checkbox') {
+            i.checked = false; i.disabled = false; i.parentElement.style.opacity = "1";
+        }
+        else if (i.type === 'number' || i.classList.contains('char-val') || i.classList.contains('sk-p')) i.value = i.classList.contains('char-bon') ? 0 : "";
+        else i.value = "";
+    });
+    const magicStatsRow = document.getElementById('magic-stats-row');
+    if (magicStatsRow) magicStatsRow.style.display = 'none';
+    document.title = 'RPG Ledger v11.30 - Power of Three'; 
+    upd();
+}
+
+function prev(i) {
+    if (i.files && i.files[0]) {
+        var reader = new FileReader();
+        reader.onload = (e) => { 
+            const pv = document.getElementById('pv');
+            const ph = document.getElementById('ph');
+            if (pv) { pv.src = e.target.result; pv.style.display = 'block'; }
+            if (ph) ph.style.display = 'none';
+        };
+        reader.readAsDataURL(i.files[0]);
+    }
+}
+
+function saveAsHTML() {
+    document.querySelectorAll('input').forEach(el => {
+        if (el.type === 'checkbox') {
+            if (el.checked) el.setAttribute('checked', 'checked');
+            else el.removeAttribute('checked');
+        } else if (el.type !== 'file') {
+            el.setAttribute('value', el.value);
+        }
+    });
+
+    document.querySelectorAll('select').forEach(el => {
+        Array.from(el.options).forEach(opt => {
+            if (opt.value === el.value) opt.setAttribute('selected', 'selected');
+            else opt.removeAttribute('selected');
+        });
+    });
+
+    const img = document.getElementById('pv');
+    if (img && img.src && img.style.display !== 'none') {
+        img.setAttribute('src', img.src);
+        const ph = document.getElementById('ph');
+        if(ph) ph.setAttribute('style', 'display:none;');
+    }
+
+    const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    const nameInput = document.querySelector('.w-name input');
+    const charName = nameInput ? nameInput.value : 'character';
+    a.download = `${charName}_sheet.html`;
+    a.click();
+}
+    
+function saveData() {
+    const data = {};
+    const legacyInputs = Array.from(document.querySelectorAll('input, select')).filter(el => {
+        return el.id !== 'cloud-char-select' && 
+               el.type !== 'file' && 
+               !el.classList.contains('adv-eff-base') &&
+               !el.classList.contains('adv-eff-spec') &&
+               !el.classList.contains('spell-ap');
+    });
+
+    legacyInputs.forEach((el, index) => {
+        data[el.id || `f_${index}`] = el.type === 'checkbox' ? el.checked : el.value;
+    });
+
+    const pv = document.getElementById('pv');
+    if (pv && pv.src && pv.src.startsWith('data:image')) {
+        data['character_portrait'] = pv.src;
+    }
+
+    const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    const nameInput = document.querySelector('.w-name input');
+    const charName = nameInput ? nameInput.value : 'character';
+    a.download = `${charName}.rpg`;
+    a.click();
+}
+
+function loadData(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const data = JSON.parse(e.target.result);
+            
+            const legacyInputs = Array.from(document.querySelectorAll('input, select')).filter(el => {
+                return el.id !== 'cloud-char-select' && 
+                       el.type !== 'file' && 
+                       !el.classList.contains('adv-eff-base') &&
+                       !el.classList.contains('adv-eff-spec') &&
+                       !el.classList.contains('spell-ap');
+            });
+
+            legacyInputs.forEach((el, index) => {
+                const val = data[el.id || `f_${index}`];
+                if (val !== undefined) {
+                    if (el.type === 'checkbox') el.checked = val;
+                    else {
+                        el.value = val;
+                        if (el.classList.contains('spell-select')) el.dataset.savedValue = val;
+                    }
+                }
+            });
+
+            const pv = document.getElementById('pv');
+            const ph = document.getElementById('ph');
+            if (data['character_portrait']) {
+                if(pv) { pv.src = data['character_portrait']; pv.style.display = 'block'; }
+                if(ph) ph.style.display = 'none';
+            } else {
+                if(pv) { pv.src = ''; pv.style.display = 'none'; }
+                if(ph) ph.style.display = 'block';
+            }
+
+            document.querySelectorAll('.magic-cb').forEach(cb => {
+                if(cb.checked && typeof handleMagicCheck === "function") handleMagicCheck(cb);
+            });
+            
+            const nameInput = document.querySelector('.w-name input');
+            const loadedName = nameInput ? nameInput.value : '';
+            document.title = loadedName ? loadedName + ' - RPG Ledger' : 'RPG Ledger v11.30 - Power of Three';
+            
+            upd();
+        };
+        reader.readAsText(input.files[0]);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const nameInput = document.querySelector('.w-name input');
+    if (nameInput) {
+        nameInput.addEventListener('input', function() {
+            document.title = this.value ? this.value + ' - RPG Ledger' : 'RPG Ledger v11.30 - Power of Three';
+        });
+        if (nameInput.value) {
+            document.title = nameInput.value + ' - RPG Ledger';
+        }
+    }
+});
+
+window.onload = init;
+
+</script>
+</body>
+</html>
