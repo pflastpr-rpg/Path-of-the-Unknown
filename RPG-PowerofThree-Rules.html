@@ -560,7 +560,7 @@
                     <th>Base AP Cost</th>
                     <th>Max d10s Rolled</th>
                 </tr>
-                <tr><td><strong>TN 1 – 3</strong></td><td>1 Action Point</td><td>D1d10*</td></tr>
+                <tr><td><strong>TN 1 – 3</strong></td><td>1 Action Point</td><td>D1d10</td></tr>
                 <tr><td><strong>TN 4 – 6</strong></td><td>1 Action Point</td><td>1d10</td></tr>
                 <tr><td><strong>TN 7 – 9</strong></td><td>2 Action Points</td><td>2d10</td></tr>
                 <tr><td><strong>TN 10 – 12</strong></td><td>3 Action Points</td><td>3d10</td></tr>
@@ -621,7 +621,7 @@
         </div>
     </div>
 
-    <div class="magic-break" style="margin-top: 60px;">
+<div class="magic-break" style="margin-top: 60px;">
         <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER VII</span>
         <h2 id="chapter-7">Status & Conditions</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The battlefield is cruel. Blood loss, terror, and broken bones will kill you just as fast as an enemy's blade."</p>
@@ -632,105 +632,75 @@
 
         <div class="full-width">
             <h3>I. Physical Trauma</h3>
-            <p>These conditions represent ongoing damage to the body. Effects trigger at the <strong>start</strong> of the afflicted creature's turn.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Bleeding (Stacking)</span>
+            <span class="trait-title">🩸 Bleeding (Stacking)</span>
             <p>Lose <strong>1d10 Wounds</strong> per stack at the start of your turn. Stacks are removed via a successful <strong>magical healing blessing, spell or potion</strong>.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Poison (Minor/Major)</span>
-            <p><strong>Minor:</strong> Lose 1 Wound per turn. Pass a <strong>Willpower Test</strong> at the end of your turn to remove the condition.<br>
-               <strong>Major:</strong> Lose <strong>1d10 Wounds</strong> per turn. This condition may be removed by a <strong>blessing, spell</strong>.</p>
+            <span class="trait-title">🧪 Poison (Minor/Major)</span>
+            <p><strong>Minor:</strong> Lose 1 Wound per turn. <br>
+               <strong>Major:</strong> Lose <strong>Dd10 Wounds</strong> per turn. Pass a <strong>Willpower Test</strong> at the end of your turn to remove.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Disease</span>
+            <span class="trait-title">🦠 Disease</span>
             <p>Lose 1d10 Wounds per turn. Additionally, suffer a <strong>-1 penalty</strong> to a random characteristic every 24 hours until cleansed by magic.</p>
         </div>
 
         <div class="full-width">
             <h3>II. Tactical Penalties</h3>
-            <p>These conditions restrict your movement and available Actions on the battlefield.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Stunned</span>
+            <span class="trait-title">💫 Stunned</span>
             <p>You immediately lose <strong>1 Action Point (AP)</strong>. If you have no actions remaining this turn, you lose 1 AP from your next turn instead.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Frenzy (X)</span>
-            <p>Gain <strong>+1 Action Point (AP)</strong> per turn. You cannot perform <strong>Reaction Actions</strong> (Dodge, Parry, Counter) and suffer <strong>Disadvantage</strong> on all Intellect or Awareness tests. Ends after <strong>(X)</strong> turns or at 0 Wounds.</p>
-        </div>
-
-        <div class="trait-box">
-            <span class="trait-title">Prone</span>
+            <span class="trait-title">🧎 Prone</span>
             <p>You have been knocked off your feet. You suffer <strong>Disadvantage</strong> on all To-Hit rolls, and enemies gain <strong>Advantage</strong> to hit you in melee. Standing up costs <strong>1 Action</strong>.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Pinned / Entangled / Frozen</span>
+            <span class="trait-title">🕸️ Pinned / Entangled / 🧊 Frozen</span>
             <p><strong>Pinned/Entangled:</strong> You cannot move. Attacks and casts are made at <strong>Disadvantage</strong>. Pass a Physique or Agility test to break free.</p>
-            <p><strong>Frozen:</strong> Encased in ice. Cannot move or take physical actions. You may only attempt Willpower-based casts or mental actions.</p>
+            <p><strong>Frozen:</strong> Cannot move or take physical actions. You may only attempt Willpower-based casts or mental actions.</p>
         </div>
 
         <div class="full-width">
             <h3>III. Mental & Sensory</h3>
-            <p>These conditions target the mind and perception.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Frightened (X)</span>
-            <p><strong>Trigger:</strong> If your <strong>Resist</strong> is lower than the creature's <strong>Fear Rating (X)</strong>, you must pass a test with $DV = X - Resist$.</p>
-            <p><strong>Penalty:</strong> You suffer <strong>Disadvantage</strong> on all actions and tests this turn. Additionally, the source of your fear gains <strong>Advantage</strong> against you (unless they are currently engaged with another target).</p>
-            <p><strong>Recovery:</strong> Re-test at the start of your next turn with a <strong>+1 bonus</strong>. This bonus is cumulative (e.g., +2 on turn three) until you pass the test or the source is removed.</p>
+            <span class="trait-title">😱 Fear (X)</span>
+            <p>Must pass a <strong>Willpower Test</strong> with a penalty equal to the Fear Rating (X). On a failure, you must spend all actions moving away from the source.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Silenced</span>
-            <p>Strictly forbidden from performing any <strong>"Cast"</strong> actions. You cannot communicate verbally, preventing the use of <strong>Command</strong> skills or leadership abilities.</p>
-        </div>
-
-        <div class="trait-box">
-            <span class="trait-title">Cursed</span>
-            <p>Your connection to fortune is severed. You cannot utilize the <strong>Reroll mechanic</strong> (the 30 XP purchased value) while afflicted. Requires <strong>Cleanse</strong> or <strong>Remove Curse</strong> to remove.</p>
-        </div>
-
-        <div class="trait-box">
-            <span class="trait-title">Blinded</span>
+            <span class="trait-title">🌑 Blinded</span>
             <p>All Melee and Ranged attacks are made at <strong>Disadvantage</strong>. Your Defense rating is reduced to your <strong>Armor value only</strong>.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Dismayed / Allure</span>
+            <span class="trait-title">🥀 Dismayed / 💖 Allure</span>
             <p><strong>Dismayed:</strong> You lose your Move action on your next turn and cannot perform Reaction actions (like Parry or Dodge).</p>
             <p><strong>Allure:</strong> Treat the source as a trusted ally. You will not attack them. Ends if attacked by the source.</p>
         </div>
 
         <div class="full-width">
-            <h3>IV. Supernatural & Chronic</h3>
-            <p>These conditions represent deep-seated maladies or spiritual corruption.</p>
-        </div>
-
-        <div class="trait-box">
-            <span class="trait-title">Corruption (Dark Mark)</span>
-            <p>Immediately lose <strong>1 Spirit Point</strong> and suffer a <strong>-2 penalty</strong> to all Willpower tests. <strong>Progression:</strong> If suffered three times without purification, the mark becomes permanent and <strong>Maximum Spirit Points</strong> are reduced by 1.</p>
-        </div>
-
-        <div class="full-width">
-            <h3>IV. The Rule of Three & Unconsciousness</h3>
+            <h3>IV. The Rule of Three</h3>
         </div>
 
         <div class="trait-box" style="border-left: 8px solid var(--blood);">
-            <span class="trait-title">Overwhelmed</span>
+            <span class="trait-title">🌀 Overwhelmed</span>
             <p>If you are ever afflicted by <strong>three or more</strong> different conditions at once, you are <strong>Overwhelmed</strong>. You cannot take any <strong>Reaction Actions</strong> (Dodge, Parry, Counter) until at least one condition is cleared.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Unconscious</span>
+            <span class="trait-title">💤 Unconscious</span>
             <p>Triggered at 0 Wounds. If healed to 1+ Wound, you move at ½ speed and require a <strong>Willpower test</strong> to perform an attack or complex action.</p>
         </div>
     </div>
