@@ -550,32 +550,36 @@
     <div class="rpg-columns"> 
         <a href="#top" class="back-to-top">↑ Return to Index</a>
 
-        <div class="full-width">
+   <div class="full-width">
             <h3>Quick Hits: Magic & Blessings</h3>
-            <p>Every spell and blessing is governed by its Target Number (TN), which dictates both its difficulty and the time (Action Points) required to manifest it.</p>
+            <p>Target Number (TN) dictates the base effort required and the maximum capacity for overcasting. Each additional 1 AP spent allows you to choose one enhancement from the Overcast Menu.</p>
             
             <table>
                 <tr>
                     <th>Spell/Blessing TN</th>
-                    <th>Action Point (AP) Cost</th>
+                    <th>Base AP Cost</th>
+                    <th>Max Empower Dice</th>
                 </tr>
-                <tr><td><strong>TN 1 – 6</strong></td><td>1 Action Point</td></tr>
-                <tr><td><strong>TN 7 – 9</strong></td><td>2 Action Points</td></tr>
-                <tr><td><strong>TN 10 – 12</strong></td><td>3 Action Points</td></tr>
-                <tr><td><strong>TN 13 – 15</strong></td><td>4 Action Points</td></tr>
-                <tr><td><strong>TN 16 – 18</strong></td><td>5 Action Points</td></tr>
-                <tr><td><strong>TN 19+</strong></td><td>6 Action Points</td></tr>
+                <tr><td><strong>TN 1 – 6</strong></td><td>1 Action Point</td><td>+1d10</td></tr>
+                <tr><td><strong>TN 7 – 9</strong></td><td>2 Action Points</td><td>+2d10</td></tr>
+                <tr><td><strong>TN 10 – 12</strong></td><td>3 Action Points</td><td>+3d10</td></tr>
+                <tr><td><strong>TN 13 – 15</strong></td><td>4 Action Points</td><td>+4d10</td></tr>
+                <tr><td><strong>TN 16 – 18</strong></td><td>5 Action Points</td><td>+5d10</td></tr>
+                <tr><td><strong>TN 19+</strong></td><td>6 Action Points</td><td>+6d10</td></tr>
             </table>
         </div>
 
         <div class="trait-box" style="border-left-color: var(--gold);">
-            <span class="trait-title">The Overcast Mechanic</span>
-            <p>When performing a <strong>Cast</strong> or <strong>Invoke</strong> action, a character may choose to spend additional <strong>Action Points</strong> beyond the base requirement. For each additional <strong>1 AP</strong> spent, the caster chooses <strong>one</strong> of the following enhancements:</p>
+            <span class="trait-title">The Overcast Menu (Universal)</span>
+            <p>For every additional <strong>1 AP</strong> spent beyond the base cost, choose <strong>one</strong> enhancement. You may select the same enhancement multiple times up to the <strong>Max Empower Dice</strong> limit.</p>
             <ul style="margin-top: 10px; padding-left: 20px;">
                 <li><strong>Empower:</strong> Add <strong>1d10 + Primary Characteristic</strong> to the wounds caused or healed.</li>
-                <li><strong>Extend:</strong> Increase the duration of the effect by <strong>1 Turn</strong>.</li>
-                <li><strong>Enlarge:</strong> Increase the <strong>Area of Effect (AoE)</strong> by <strong>10 Feet</strong>.</li>
-                <li><strong>Echo:</strong> For non-damaging buffs, apply the effect to <strong>one additional ally</strong> within line of sight.</li>
+                <li><strong>Precision:</strong> Gain a flat <strong>+2 bonus</strong> to the To-Cast/Invoke roll.</li>
+                <li><strong>Piercing:</strong> The spell ignores <strong>3 points</strong> of the target's Wound Mitigation (Armor or Natural).</li>
+                <li><strong>Enlarge:</strong> Increase <strong>AoE by 10 Ft</strong> or increase a summoned creature's <strong>Size Category by 1</strong>.</li>
+                <li><strong>Extend:</strong> Increase the effect duration by <strong>1 Turn</strong>.</li>
+                <li><strong>Vantage:</strong> Increase the spell's maximum range by <strong>50 Feet</strong>.</li>
+                <li><strong>Echo:</strong> For non-damaging buffs, apply the effect to <strong>one additional target</strong> in Line of Sight.</li>
             </ul>
             <p style="margin-top: 15px; font-size: 10pt; border-top: 1px dashed var(--gold); padding-top: 10px;">
                 <em><strong>Primary Characteristics:</strong> Intellect (Magic/Shaman), Charisma (Religion), or Awareness (Druidism).</em>
@@ -583,7 +587,7 @@
         </div>
 
         <div class="full-width">
-            <p><strong>Overcast Example:</strong> A Priest casts <em>Shield Ally</em> (TN 4, 1 AP). They choose to spend <strong>3 AP</strong> total. The first 1 AP fires the blessing normally; the 2 extra AP are used to <strong>Extend</strong> the shield by 1 turn and <strong>Echo</strong> it to a second ally.</p>
+            <p><strong>Overcast Example:</strong> A Wizard casts <em>Fireball</em> (TN 13, 4 AP). They spend <strong>6 AP</strong> total (+2 extra). They use the 1st extra AP for <strong>Precision</strong> (+2 to hit) and the 2nd for <strong>Empower</strong> (+1d10 + Intellect wounds).</p>
         </div>
         
         <div class="trait-box">
