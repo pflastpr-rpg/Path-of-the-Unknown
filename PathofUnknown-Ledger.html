@@ -1196,6 +1196,7 @@ const KI_POWERS = [{ name: "Agni-Fire", tn: "TN6" }, { name: "Astra Launch", tn:
 const RUNES_LIST = [{ name: "Rune of Speed", tn: "T8/P12" }, { name: "Rune of Striking", tn: "T10/P15" }, { name: "Rune of Warding", tn: "T7/P13" }, { name: "Rune of Stone", tn: "T8/P15" }, { name: "Rune of Grudges", tn: "T10/P16" }, { name: "Rune of Spell Breaking", tn: "T6/P~" }, { name: "Rune of Cleaving", tn: "T5/P10" }, { name: "Rune of Shielding", tn: "T6/P14" }, { name: "Rune of Iron", tn: "T5/P14" }, { name: "Rune of Might", tn: "T10/P20" }, { name: "Rune of Fate", tn: "T8/P20" }, { name: "Rune of Fire", tn: "T10/P18" }, { name: "Rune of Fortitude", tn: "T10/P22" }, { name: "Rune of the Furnace", tn: "T15/P25" }, { name: "Rune of Resistance", tn: "T12/P26" }, { name: "Rune of Fury", tn: "T15/P25" }, { name: "Rune of Luck", tn: "T4/P10" }, { name: "Rune of Spell-Eating", tn: "T9/P18" }, { name: "Master Rune of Weapon Flight", tn: "T8/P16" }, { name: "Master Rune of Swiftness", tn: "T12/P22" }, { name: "Master Rune of Spite", tn: "T10/P20" }, { name: "Master Rune of Adamant", tn: "T6/P12" }, { name: "Master Rune of Balance", tn: "T10/P26" }, { name: "Master Rune of Breaking", tn: "T12/P28" }, { name: "Master Rune of Spellbinding", tn: "T12/P26" }, { name: "Master Rune of Alaric the Mad", tn: "T10/P25" }, { name: "Master Rune of Dismay", tn: "T8/P20" }, { name: "Master Rune of Steel", tn: "T15/P30" }, { name: "Master Rune of Snorri", tn: "T14/P28" }, { name: "Master Rune of Gromiid", tn: "T12/P27" }, { name: "Master Rune of Skaif", tn: "T15/P30" }, { name: "Master Rune of Kingship", tn: "T~/P25" }];
 
 const advancedSkills = [
+    { name: "Arcane Duelist / Spell-Eater", cost: 200, type: "cast", bonus: 0, desc: "Counter-Cast without Reactive Stance; consume spells to regain Spirit." },
     { name: "Battle-Ready / Berzerker", cost: 200, type: "melee", bonus: 1, desc: "Negates outnumbering; Stance adds 1d10 wounds." },
     { name: "Block / Bulwark", cost: 100, type: "none", bonus: 0, desc: "Mitigate all wounds from same-size or smaller enemies." },
     { name: "Cleave / Whirlwind", cost: 100, type: "melee", bonus: 1, desc: "Strike adjacent targets; 360-degree circle of steel." },
@@ -1213,7 +1214,6 @@ const advancedSkills = [
     { name: "Infusion / True Fusion", cost: 200, type: "none", bonus: 0, desc: "Transmute damage into healing or cast dual-intent spells." },
     { name: "Marksman / Sniper", cost: 100, type: "range", bonus: 2, desc: "Lethal precision; delete threats from a distance." },
     { name: "Master Thievery / Saboteur", cost: 200, type: "none", bonus: 0, desc: "Combat larceny; subvert traps mid-fight." },
-    { name: "Metaphysical / Supernatural", cost: 100, type: "cast", bonus: 1, desc: "Channel raw spirit into magic; fate manipulation." },
     { name: "Nimble / Shadow Strike", cost: 100, type: "melee", bonus: 1, desc: "Precision velocity; use smoke to force Backstabs." },
     { name: "Opportunist / Seeker", cost: 100, type: "range", bonus: 1, desc: "Target gaps in crowds; guide projectiles with will." },
     { name: "Phantom Assassin / Sever", cost: 200, type: "melee", bonus: 2, desc: "Silence targets; instant drop to 0 wounds on failure." },
@@ -1222,8 +1222,8 @@ const advancedSkills = [
     { name: "Shield Rush / Blitz", cost: 50, type: "none", bonus: 0, desc: "Sprint into enemies; bowl over opposition." },
     { name: "Sovereign Mind / Indomitable", cost: 100, type: "none", bonus: 0, desc: "Mental fortress; brace body against physical trauma." },
     { name: "Sunder / Shatterpoint", cost: 100, type: "none", bonus: 0, desc: "Break enemy equipment; render weapons and armor useless." },
-    { name: "Thunderstrike / Point-Blank", cost: 200, type: "range", bonus: 2, desc: "Blackpowder roar; unmitigated blasts in melee range." },
     { name: "Throat Slice / Slash", cost: 200, type: "melee", bonus: 1, desc: "Mute spellcasters; separate head from shoulders." },
+    { name: "Thunderstrike / Point-Blank", cost: 200, type: "range", bonus: 2, desc: "Blackpowder roar; unmitigated blasts in melee range." },
     { name: "Tune-Up / Lights-Out", cost: 200, type: "melee", bonus: 0, desc: "Bone-shattering jaw strikes; total incapacitation." },
     { name: "Unwavering / Unstoppable", cost: 300, type: "none", bonus: 3, desc: "Pure momentum; ignore pain and refuse to fall." }
 ];
