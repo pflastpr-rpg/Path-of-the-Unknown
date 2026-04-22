@@ -430,7 +430,18 @@
             <p><strong>Terrain Penalties:</strong> Uneasy (-5 Ft), Rough (-10 Ft), Risky (-20 Ft).</p>
         </div>
 
-    <div class="magic-break" style="margin-top: 60px;">
+        <div class="trait-box" style="border-left-color: var(--gold);">
+            <span class="trait-title">👁️ Held Actions & Reactions</span>
+            <p>You may choose to save any number of your available <strong>Action Points (AP)</strong> to use during an enemy's turn.</p>
+            <ul>
+                <li><strong>Declaring a Stance (1 AP):</strong> To hold an action, you must spend 1 AP on your turn to enter a <strong>Reactive Stance</strong>. You must specify a trigger (e.g., "I will shoot if they cross the bridge") and the action being held.</li>
+                <li><strong>The Interruption:</strong> When the trigger occurs, you immediately resolve your action. Your held action occurs <strong>before</strong> the enemy completes the action that triggered it.</li>
+                <li><strong>The Reaction Penalty:</strong> All Held Actions suffer a <strong>-2 penalty</strong> to the To-Hit or To-Cast roll. This penalty is entirely ignored if the character has <strong>6 or more points</strong> in the <strong>Discipline</strong> skill.</li>
+                <li><strong>AP Carryover:</strong> You cannot "hoard" AP across rounds; any held AP not triggered by the start of your next turn is lost.</li>
+            </ul>
+        </div>
+
+<div class="magic-break" style="margin-top: 60px;">
         <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER III</span>
         <h2 id="chapter-3">Core Mechanics</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The dice govern the chaos of the unknown. Learn to master them, or be broken by them."</p>
@@ -441,33 +452,32 @@
 
         <div class="trait-box">
             <span class="trait-title">The Core Roll (To-Hit)</span>
-            <p>To score a hit against an enemy target, or to successfully cast a spell, you roll a <strong>1d10</strong>. You must achieve a number equal to or higher than the target's Defense value (or the spell's Target Number). You then apply any natural characteristics or skill bonuses to your result.</p>
+            <p>To score a hit against a target, or to successfully cast a spell, you roll <strong>1d10</strong>. You must achieve a number equal to or higher than the target's Defense value or the spell's Target Number (TN). Apply your natural characteristics or skill bonuses to your result.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">Advantage & Disadvantage</span>
-            <p>When the odds of combat shift drastically, the dice reflect it:</p>
+            <p>When the odds of combat shift, the dice reflect the advantage:</p>
             <ul style="margin-top: 10px;">
-                <li><strong>Advantage:</strong> Roll an additional 1d10. Evaluate both dice and select the <strong>highest</strong> score as your result.</li>
-                <li><strong>Disadvantage:</strong> Roll an additional 1d10, but you are forced to take the <strong>lesser</strong> score of the two as your result.</li>
+                <li><strong>Advantage:</strong> Roll an additional 1d10. Select the <strong>highest</strong> score as your result.</li>
+                <li><strong>Disadvantage:</strong> Roll an additional 1d10. You are forced to take the <strong>lesser</strong> score as your result.</li>
             </ul>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">Astounding Success (Exploding Dice)</span>
             <span style="color: var(--gold); font-weight: bold; font-size: 10pt;">NATURAL 10</span>
-            <p>If your To-Hit roll is an <strong>unmodified 10</strong>, you immediately roll a second 1d10. If this second roll also meets or beats the target's Defense, you are granted an <strong>additional 1d10</strong> to calculate the total wounds caused.</p>
-            <p><strong>Chaining Successes:</strong> If subsequent rolls result in another 10, you may roll as many times as possible in a row to continuously increase the wounds caused!</p>
+            <p>If your To-Hit roll is an <strong>unmodified 10</strong>, you immediately roll a second 1d10. If this second roll also meets or beats the target's Defense, you gain an <strong>additional 1d10</strong> to calculate the total wounds caused.</p>
+            <p><strong>Chaining Successes:</strong> If subsequent rolls result in another 10, you may roll as many times as possible to continuously increase the wounds!</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">The Flub (Catastrophic Failure)</span>
             <span style="color: var(--gold); font-weight: bold; font-size: 10pt;">NATURAL 1</span>
-            <p>If your To-Hit result is an <strong>unmodified 1</strong>, it is an automatic miss. You may spend a point of <strong>Luck</strong> to avoid further penalties. If you cannot (or choose not to), you must roll a second 1d10.</p>
+            <p>If your To-Hit result is an <strong>unmodified 1</strong>, it is an automatic miss. You may spend a point of <strong>Luck</strong> to avoid further penalties. If you cannot, you must roll a second 1d10.</p>
             <p>If the second roll is also a 1, you suffer a catastrophic failure. The DM will present a test to avoid dropping your weapon, striking an ally, or suffering a magical miscast.</p>
         </div>
     </div>
-
    
 <div class="magic-break" style="margin-top: 60px;">
         <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER IV</span>
@@ -483,7 +493,7 @@
             <p>If you are not currently engaged with multiple opponents, you may take a moment to find a gap in your target's guard.</p>
             <ul>
                 <li><strong>Advantage:</strong> Gain Advantage on your next melee To-Hit roll.</li>
-                <li><strong>Bonus Wounds:</strong> Add <strong>1d10 + Physique</strong> to the wounds caused on a successful strike.</li>
+                <li><strong>Bonus Wounds:</strong> Add <strong>+ Physique</strong> to the wounds caused on a successful strike.</li>
             </ul>
         </div>
         
@@ -532,7 +542,7 @@
             <p>You take a steadying breath and align your sights.</p>
             <ul>
                 <li><strong>Advantage:</strong> Gain Advantage on your next ranged To-Hit roll.</li>
-                <li><strong>Bonus Wounds:</strong> Add <strong>1d10 + Agility</strong> to the wounds caused on a successful strike.</li>
+                <li><strong>Bonus Wounds:</strong> Add <strong>+ Agility</strong> to the wounds caused on a successful strike.</li>
                 <li><strong>Vantage:</strong> Your maximum range is increased by <strong>50%</strong> for this shot.</li>
             </ul>
             <p style="margin-top: 10px; font-size: 10pt;"><em>Note: Ranged weapons with high action costs (2+) represent reload time; a pre-loaded weapon requires only 1 Action for the first shot.</em></p>
