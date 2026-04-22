@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM Grimoire - Power of Three</title>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            /* Same theme as the RPG Ledger */
+            --iron: #02070e;      
+            --blood: #A81818;     
+            --parchment: #f3e7c9; 
+            --gold: #B8860B;      
+            --input-bg: #FCF7EB;  
+            --ink: #111111;       
+            
+            --font-heading: 'Grenze Gotisch', serif;  
+            --font-main: 'IM Fell English', serif;     
+            --font-hand: 'MedievalSharp', cursive;    
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background: #1E1E24; 
+            color: var(--ink); 
+            font-family: var(--font-main); 
+            display: flex; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+            /* --- QUICK REF UI --- */
+    #quick-ref-trigger {
+        background: var(--blood);
+        color: var(--parchment);
+        border: 2px solid var(--gold);
+        padding: 10px;
+        margin: 10px;
+        font-family: var(--font-heading);
+        font-size: 14pt;
+        cursor: pointer;
+        text-transform: uppercase;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    #quick-ref-trigger:hover { background: var(--iron); color: var(--gold); }
+
+    /* The Modal Overlay */
+    #modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* The Modal Content (Parchment Style) */
+    #modal-box {
+        background: var(--parchment);
+        border: 8px solid var(--iron);
+        width: 600px;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 30px;
+        position: relative;
+        box-shadow: 0 0 50px var(--blood);
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 10px; right: 15px;
+        font-size: 24pt;
+        cursor: pointer;
+        color: var(--blood);
+        font-weight: bold;
+    }
+
+    #modal-box h2 { 
+        font-family: var(--font-heading); 
+        border-bottom: 3px solid var(--blood); 
+        margin-bottom: 15px;
+        color: var(--iron);
+    }
+
+        /* --- THE SIDEBAR (Navigation & Search) --- */
+        #sidebar {
+            width: 300px;
+            background: var(--iron);
+            border-right: 4px solid var(--blood);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+
+        #sidebar-header {
+            padding: 20px;
+            background: rgba(0,0,0,0.5);
+            border-bottom: 2px solid var(--gold);
+            text-align: center;
+        }
+
+        #sidebar-header h1 {
+            color: var(--gold);
+            font-family: var(--font-heading);
+            font-size: 24pt;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0px var(--blood);
+            margin-bottom: 10px;
+        }
+
+        #search-bar {
+            width: 100%;
+            padding: 8px;
+            font-family: var(--font-hand);
+            font-size: 14pt;
+            font-weight: bold;
+            background: var(--input-bg);
+            border: 2px solid var(--ink);
+            color: var(--ink);
+            text-align: center;
+        }
+
+        #search-bar:focus { outline: none; border-color: var(--blood); }
+
+        #nav-list {
+            list-style: none;
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 10px 0;
+        }
+
+        .nav-category {
+            color: var(--blood);
+            font-weight: 900;
+            font-size: 11pt;
+            text-transform: uppercase;
+            padding: 5px 20px;
+            margin-top: 10px;
+            border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+        }
+
+        .nav-item {
+            color: var(--parchment);
+            font-size: 14pt;
+            padding: 8px 20px;
+            cursor: pointer;
+            transition: 0.2s;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(168, 24, 24, 0.2);
+            border-left: 4px solid var(--blood);
+            color: var(--gold);
+        }
+
+        /* --- THE MAIN CONTENT PANE (The Note) --- */
+        #content-pane {
+            flex-grow: 1;
+            background-color: var(--parchment);
+            background-image: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.05) 100%);
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        #note-title {
+            font-family: var(--font-heading);
+            font-size: 36pt;
+            color: var(--iron);
+            border-bottom: 4px solid var(--blood);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        #note-body {
+            font-size: 16pt;
+            line-height: 1.6;
+            color: var(--ink);
+        }
+
+        /* Styling the Markdown Elements inside the Note */
+        #note-body h2 { color: var(--blood); font-family: var(--font-heading); margin: 20px 0 10px 0; border-bottom: 1px solid rgba(0,0,0,0.2); }
+        #note-body h3 { color: var(--iron); font-size: 18pt; margin: 15px 0 5px 0; }
+        #note-body p { margin-bottom: 15px; }
+        #note-body ul { margin-bottom: 15px; padding-left: 30px; }
+        #note-body li { margin-bottom: 5px; }
+        #note-body strong { color: var(--blood); font-weight: 900; }
+        
+        /* THE MAGIC WIKILINK */
+        .wiki-link {
+            color: var(--blood);
+            font-weight: bold;
+            text-decoration: underline;
+            text-decoration-color: var(--gold);
+            text-decoration-thickness: 2px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .wiki-link:hover {
+            color: var(--iron);
+            background: rgba(184, 134, 11, 0.2);
+        }
+
+        /* "Broken" link style if you haven't created the note yet */
+        .wiki-link.broken {
+            color: #666;
+            text-decoration-style: dotted;
+            text-decoration-color: #666;
+        }
+        
+        /* Stat Block Tables */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 2px solid var(--iron); }
+        th { background: var(--iron); color: var(--gold); padding: 8px; text-transform: uppercase; border-bottom: 2px solid var(--blood); }
+        td { padding: 8px; border: 1px solid rgba(0,0,0,0.2); background: var(--input-bg); font-weight: bold;}
+
+    </style>
+</head>
+<body>
+
+    <div id="sidebar">
+        <button id="quick-ref-trigger" onclick="toggleModal(true)">📜 Overcast Reference</button>
+        <div id="sidebar-header">
+            <h1>DM Grimoire</h1>
+            <input type="text" id="search-bar" placeholder="Search Vault..." oninput="filterNav()">
+        </div>
+        <div id="nav-list">
+            </div>
+    </div>
+
+    <div id="content-pane">
+        <h1 id="note-title">Welcome to the Vault</h1>
+        <div id="note-body">
+            <p>Select a note from the navigation menu or search for a specific entry.</p>
+        </div>
+    </div>
+
+<script>
+    // --- 1. THE DATABASE (Your DM Notes) ---
+    const vaultData = {
+        "Locations": {
+             "The Main Barracks": `
+                <ul>
+                    <li><strong>Enemies:</strong> 6 Hobgoblins (Sleeping in cots).</li>
+                    <li><strong>Mechanics:</strong> If combat breaks out in the Mess Hall, these troops wake up and join the fray on Turn 2. Combat here alerts the elite guards in [[Hobgoblin Champion’s Quarters]].</li>
+                </ul>
+            `, 
+            "Hobgoblin Champion’s Quarters": `
+                <p>The room contains fine armor and personal spoils. The center is guarded by [[Krazak the Black (Hobgoblin Champion)]] and 2 Elite Warriors.</p>
+                <ul>
+                    <li><strong>Trap:</strong> The chest is protected by a steam vent. Pass a <strong>DV 9 Intellect/Thievery test</strong> or trigger a 2d10 steam blast.</li>
+                    <li><strong>Links:</strong> To the south is the [[The Main Barracks]]. Behind the tapestry is the [[Crucible of the Maker]].</li>
+                </ul>
+            `,
+            "The Great Hub": `
+                <p>The central nervous system of Birn Uluhm. The center of the room is guarded by two [[Earth Elemental Juggernaut]]s.</p>
+                <ul>
+                    <li><strong>Goal:</strong> At the back of the room is the heavily trapped vault door known as the [[Crucible of the Maker]].</li>
+                </ul>
+            `,
+            "Crucible of the Maker": `
+                <p>A triple-locked door requiring simultaneous checks to open the portal to the [[Titan's Cyst]].</p>
+                <ul>
+                    <li><strong>The Body:</strong> Sacrifice 1 AP and take 1d10 unmitigated Wounds to trigger the blood valve.</li>
+                    <li><strong>The Mind:</strong> Pass a DV 9 Intellect/Thievery test or trigger a 2d10 steam blast.</li>
+                    <li><strong>The Spirit:</strong> Pass a DV 10 Willpower test or suffer the [[Dismayed]] condition.</li>
+                </ul>
+            `,
+            "Titan's Cyst": `
+                <p>A pocket dimension filled with red mist and a heartbeat hazard. Players must pass Willpower tests or suffer <strong>Corruption</strong>.</p>
+                <p><strong>Artifacts:</strong> [[The Blood-Iron Decapitator]], [[The Vein-Stone Grimoire]], or [[Gauntlets of the Faultline]].</p>
+            `
+        },
+        "Bestiary": {
+            "Krazak the Black (Hobgoblin Champion)": `
+                <h2>Krazak the Black</h2>
+                <table>
+                    <tr><th>Defense</th><th>Wound Mitigation</th><th>Movement</th><th>AP</th></tr>
+                    <tr><td>14</td><td>12</td><td>12 Squares</td><td>4 AP</td></tr>
+                </table>
+                <h3>Abilities</h3>
+                <ul>
+                    <li><strong>Blacktooth Greatsword:</strong> 2d10 + 8. On a 10, target gains [[🩸 Bleeding]] (3).</li>
+                    <li><strong>Blood Rally (2 AP):</strong> All allies within 10 squares gain +1 AP next turn.</li>
+                    <li><strong>Expose Armor (Passive):</strong> Melee attacks ignore 3 points of target Wound Mitigation.</li>
+                </ul>
+            `,
+            "Earth Elemental Juggernaut": `
+                <h2>Earth Elemental Juggernaut</h2>
+                <table>
+                    <tr><th>Defense</th><th>Wound Mitigation</th><th>Movement</th><th>AP</th></tr>
+                    <tr><td>16</td><td>14</td><td>2 Squares</td><td>3 AP</td></tr>
+                </table>
+                <h3>Abilities</h3>
+                <ul>
+                    <li><strong>Siege Fists:</strong> 2d10 + 12. Reduces target Armor Bonus by 1.</li>
+                    <li><strong>Unstoppable Mass:</strong> Immune to [[🧎 Prone]], [[💫 Stunned]], and Pinned.</li>
+                    <li><strong>Seismic Slam (2 AP):</strong> DV 10 Agility test or knocked [[🧎 Prone]] and take 1d10 + 6 Wounds.</li>
+                </ul>
+            `,
+            "Ssikra Brood Scavenger": `
+                <h2>Ssikra Brood Scavenger</h2>
+                <table>
+                    <tr><th>Defense</th><th>Wound Mitigation</th><th>Movement</th><th>AP</th></tr>
+                    <tr><td>14</td><td>7</td><td>15 (Wall-Crawler)</td><td>3 AP</td></tr>
+                </table>
+                <h3>Abilities</h3>
+                <ul>
+                    <li><strong>Latch On:</strong> Jumps on a player, inflicting Disadvantage on casts.</li>
+                    <li><strong>Skittering Retreat:</strong> Reaction to climb walls if hit for 10+ wounds.</li>
+                </ul>
+            `
+        },
+        "Rules & Conditions": {
+            "✨ Arcane Mastery": `
+                <p><strong>Requirement:</strong> 15 Points in a Primary Magic Skill.</p>
+                <p><strong>The Boon:</strong> Add your total <strong>[[Spirit]]</strong> skill points as a flat bonus to all wounds caused or healed by your spells or blessings.</p>
+            `,            
+            "✨ Counter-Cast": `
+                <p><strong>Requirement:</strong> Reactive Stance (1 AP) + Held AP to match spell cost.</p>
+                <ul>
+                    <li><strong>Attacker:</strong> 1d10 + To-Cast Bonus + Skill.</li>
+                    <li><strong>Defender:</strong> 1d10 + To-Cast Bonus + (Skill OR Resist).</li>
+                    <li><strong>Tie:</strong> Attacker and Defender each take half damage or healing from the spell.</li>
+                    <li><strong>Backlash:</strong> Nat 10 win forces Attacker to make a DV 10 Willpower test or <strong>💫 Stunned</strong>.</li>
+                </ul>
+            `,
+            "👁️ Held Action": `
+                <p><strong>Cost:</strong> 1 AP to prepare + Base Action Cost.</p>
+                <ul>
+                    <li>Must specify a trigger and the action being held.</li>
+                    <li>Resolves <strong>before</strong> the enemy completes their move.</li>
+                    <li>Suffer a <strong>-2 penalty</strong> (Ignored at 6+ Discipline).</li>
+                </ul>
+            `,
+            "🏃 Sprint": `<p><strong>Cost: 1 AP.</strong> Grants a flat burst of <strong>+15 ft (or +3 Squares)</strong> of distance for the current turn. This is an isolated tactical action and does not alter your character's base movement speed.</p>`,
+            "🩸 Bleeding": `<p>Lose <strong>1d10 Wounds</strong> per stack at start of turn. Remove via magic/potions.</p>`,
+            "🧎 Prone": `<p>Suffer <strong>Disadvantage</strong> on To-Hit; enemies gain <strong>Advantage</strong> in melee. Stand up costs 1 Action.</p>`,
+            "🥀 Dismayed": `<p>Lose Move action on next turn; cannot perform Reaction actions.</p>`,
+            "💫 Stunned": `<p>Immediately lose <strong>1 Action Point (AP)</strong>.</p>`,
+            "🌀 Overwhelmed": `<p>Triggered by <strong>3+ conditions</strong>. You cannot take Reaction Actions.</p>`
+        }
+    }; // <--- THIS WAS THE MISSING BRACE
+
+    // --- 2. ENGINE LOGIC ---
+    let flatNoteMap = {};
+    for (const category in vaultData) {
+        for (const noteTitle in vaultData[category]) {
+            flatNoteMap[noteTitle] = vaultData[category][noteTitle];
+        }
+    }
+
+    function buildSidebar() {
+        const navList = document.getElementById('nav-list');
+        navList.innerHTML = '';
+        for (const category in vaultData) {
+            const catHeader = document.createElement('div');
+            catHeader.className = 'nav-category';
+            catHeader.innerText = category;
+            navList.appendChild(catHeader);
+            for (const noteTitle in vaultData[category]) {
+                const item = document.createElement('li');
+                item.className = 'nav-item';
+                item.innerText = noteTitle;
+                item.dataset.title = noteTitle;
+                item.onclick = () => loadNote(noteTitle);
+                navList.appendChild(item);
+            }
+        }
+    }
+
+    window.loadNote = function(title) {
+        if (!flatNoteMap[title]) return;
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        const activeNav = Array.from(document.querySelectorAll('.nav-item')).find(el => el.innerText === title);
+        if (activeNav) activeNav.classList.add('active');
+        document.getElementById('note-title').innerText = title;
+        let rawHTML = flatNoteMap[title];
+        const parsedHTML = rawHTML.replace(/\[\[(.*?)\]\]/g, (match, p1) => {
+            const exists = flatNoteMap[p1] !== undefined;
+            const classStatus = exists ? 'wiki-link' : 'wiki-link broken';
+            const clickAction = exists ? `onclick="loadNote('${p1}')"` : `title="Note not created yet"`;
+            return `<a class="${classStatus}" ${clickAction}>${p1}</a>`;
+        });
+        document.getElementById('note-body').innerHTML = parsedHTML;
+        document.getElementById('search-bar').value = '';
+        filterNav(); 
+    }
+
+    window.filterNav = function() {
+        const query = document.getElementById('search-bar').value.toLowerCase();
+        document.querySelectorAll('.nav-item').forEach(item => {
+            const title = item.dataset.title.toLowerCase();
+            item.style.display = title.includes(query) ? 'block' : 'none';
+        });
+    }
+
+    window.toggleModal = function(show) {
+        const modal = document.getElementById('modal-overlay');
+        modal.style.display = show ? 'flex' : 'none';
+    }
+
+    buildSidebar();
+</script>
+
+<div id="modal-overlay" onclick="toggleModal(false)">
+    <div id="modal-box" onclick="event.stopPropagation()">
+        <span class="close-modal" onclick="toggleModal(false)">&times;</span>
+        <h2>Overcast Quick Reference</h2>
+        <table>
+            <tr><th>TN Value</th><th>Base AP</th><th>d10's Rolled</th></tr>
+            <tr><td>TN 1-3</td><td>1 AP</td><td>D1d10</td></tr>
+            <tr><td>TN 4-6</td><td>1 AP</td><td>1d10</td></tr>
+            <tr><td>TN 7-9</td><td>2 AP</td><td>2d10</td></tr>
+            <tr><td>TN 10-12</td><td>3 AP</td><td>3d10</td></tr>
+            <tr><td>TN 13-15</td><td>4 AP</td><td>4d10</td></tr>
+            <tr><td>TN 16-18</td><td>5 AP</td><td>5d10</td></tr>
+            <tr><td>TN 19+</td><td>6 AP</td><td>6d10</td></tr>
+        </table>
+        <h3>The Overcast Menu (+1 AP each)</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 8px;"><strong>🔥 Empower:</strong> +1d10 + Primary Stat (Wounds/Heal).</li>
+            <li style="margin-bottom: 8px;"><strong>🎯 Precision:</strong> +2 Bonus to the roll.</li>
+            <li style="margin-bottom: 8px;"><strong>🛡️ Piercing:</strong> Ignore 3 points of Mitigation.</li>
+            <li style="margin-bottom: 8px;"><strong>📏 Enlarge:</strong> +10ft AoE or +1 Size.</li>
+            <li style="margin-bottom: 8px;"><strong>⏳ Extend:</strong> Increase duration by +1 Turn.</li>
+            <li style="margin-bottom: 8px;"><strong>🏹 Vantage:</strong> Increase max range by +50 Feet.</li>
+            <li style="margin-bottom: 8px;"><strong>📣 Echo:</strong> Apply buff to +1 additional target.</li>
+        </ul>
+        <h3 style="margin-top: 20px; border-top: 1px solid var(--blood); padding-top: 10px;">Passive: Arcane Mastery</h3>
+        <p style="font-size: 11pt;">At <strong>15 Points</strong> in a magic skill, add your <strong>Spirit points</strong> to all wounds/healing.</p>
+    </div>
+</div>
+</body>
+</html>
