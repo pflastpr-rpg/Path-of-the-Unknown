@@ -22,23 +22,24 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body { 
-            background: #1E1E24; 
+            background: var(--parchment); 
             color: var(--ink); 
             font-family: var(--font-main); 
             display: flex;
-            justify-content: center;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
             height: 100vh;
             overflow: hidden;
         }
 
+        /* Restored to Full-Screen App Layout */
         .grimoire-container {
-            width: 1200px;
-            background: var(--parchment);
-            border: 8px solid var(--iron);
-            display: flex;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            width: 100%;
             height: 100%;
+            background: var(--parchment);
+            display: flex;
+            border: none;
+            box-shadow: none;
         }
 
         /* --- THE SIDEBAR --- */
@@ -183,30 +184,120 @@
         .quick-ref h3 { border-bottom: 2px solid var(--blood); margin-bottom: 15px; color: var(--iron); font-size: 18pt;}
         .quick-ref ul { list-style: none; padding: 0; }
         .quick-ref li { margin-bottom: 8px; }
+
+        /* --- QUICK REF MODAL UI --- */
+        #quick-ref-trigger {
+            background: var(--blood);
+            color: var(--parchment);
+            border: 2px solid var(--gold);
+            padding: 10px;
+            margin: 10px;
+            font-family: var(--font-heading);
+            font-size: 14pt;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: 0.2s;
+        }
+
+        #quick-ref-trigger:hover { background: var(--iron); color: var(--gold); }
+
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal-box {
+            background: var(--parchment);
+            border: 8px solid var(--iron);
+            width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 0 50px var(--blood);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 24pt;
+            cursor: pointer;
+            color: var(--blood);
+            font-weight: bold;
+        }
+
+        #modal-box h2 { 
+            font-family: var(--font-heading); 
+            border-bottom: 3px solid var(--blood); 
+            margin-bottom: 15px;
+            color: var(--iron);
+        }
     </style>
 </head>
 <body>
 
-    <div class="grimoire-container">
-        <div class="sidebar">
-            <h1>DM Grimoire</h1>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Search Vault..." oninput="filterNav()">
-            </div>
-            
-            <div class="nav-container" id="nav-list">
-                </div>
+<div class="grimoire-container">
+    <div class="sidebar">
+        <button id="quick-ref-trigger" onclick="toggleModal(true)" style="width: 90%; margin: 0 auto 15px auto;">📜 Overcast Reference</button>
+        
+        <h1>DM Grimoire</h1>
+        
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search Vault..." oninput="filterNav()">
+        </div>
 
-            <div style="margin-top: 20px; text-align: center;">
-                <button onclick="location.href='index.html'" style="padding: 8px 15px; cursor:pointer; background: var(--blood); color: white; border: 2px solid var(--gold); font-weight: bold; font-family: var(--font-heading); font-size: 16pt; width: 100%; transition: 0.2s;">🏠 Return to Hub</button>
-            </div>
+        <div style="margin-bottom: 15px; padding: 0 10px;">
+            <button onclick="loadHome()" style="width: 100%; padding: 8px; cursor: pointer; background: var(--iron); color: var(--gold); border: 2px solid var(--blood); font-family: var(--font-heading); font-size: 14pt; text-transform: uppercase; transition: 0.2s;">📖 Grimoire Home</button>
         </div>
         
-        <div class="main-content">
-            <div id="vault-content">
-                </div>
+        <div class="nav-container" id="nav-list">
+            </div>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <button onclick="location.href='index.html'" style="padding: 8px 15px; cursor:pointer; background: var(--blood); color: white; border: 2px solid var(--gold); font-weight: bold; font-family: var(--font-heading); font-size: 16pt; width: 100%; transition: 0.2s;">🏠 Return to Hub</button>
         </div>
     </div>
+
+    <div class="main-content">
+        <div id="vault-content">
+            </div>
+    </div>
+</div>
+
+<div id="modal-overlay" onclick="toggleModal(false)">
+    <div id="modal-box" onclick="event.stopPropagation()">
+        <span class="close-modal" onclick="toggleModal(false)">&times;</span>
+        <h2>Overcast Quick Reference</h2>
+        <table>
+            <tr><th>TN Value</th><th>Base AP</th><th>d10's Rolled</th></tr>
+            <tr><td>TN 1-3</td><td>1 AP</td><td>D1d10</td></tr>
+            <tr><td>TN 4-6</td><td>1 AP</td><td>1d10</td></tr>
+            <tr><td>TN 7-9</td><td>2 AP</td><td>2d10</td></tr>
+            <tr><td>TN 10-12</td><td>3 AP</td><td>3d10</td></tr>
+            <tr><td>TN 13-15</td><td>4 AP</td><td>4d10</td></tr>
+            <tr><td>TN 16-18</td><td>5 AP</td><td>5d10</td></tr>
+            <tr><td>TN 19+</td><td>6 AP</td><td>6d10</td></tr>
+        </table>
+        <h3 style="margin-top: 15px; border-bottom: 2px solid var(--blood); padding-bottom: 5px;">The Overcast Menu (+1 AP each)</h3>
+        <ul style="list-style: none; padding: 0; font-size: 13pt; line-height: 1.4;">
+            <li style="margin-bottom: 8px;"><strong>🔥 Empower:</strong> +1d10 + Primary Stat (Wounds/Heal).</li>
+            <li style="margin-bottom: 8px;"><strong>🎯 Precision:</strong> +2 Bonus to the roll.</li>
+            <li style="margin-bottom: 8px;"><strong>🛡️ Piercing:</strong> Ignore 3 points of Mitigation.</li>
+            <li style="margin-bottom: 8px;"><strong>📏 Enlarge:</strong> +10ft AoE or +1 Size.</li>
+            <li style="margin-bottom: 8px;"><strong>⏳ Extend:</strong> Increase duration by +1 Turn.</li>
+            <li style="margin-bottom: 8px;"><strong>🏹 Vantage:</strong> Increase max range by +50 Feet.</li>
+            <li style="margin-bottom: 8px;"><strong>📣 Echo:</strong> Apply buff to +1 additional target.</li>
+        </ul>
+        <h3 style="margin-top: 20px; border-bottom: 2px solid var(--blood); padding-bottom: 5px;">Passive: Arcane Mastery</h3>
+        <p style="font-size: 13pt;">At <strong>15 Points</strong> in a magic skill, add your <strong>Spirit points</strong> to all wounds/healing.</p>
+    </div>
+</div>
 
 <script>
     // --- 1. THE DATABASE (Your Exact DM Notes) ---
@@ -529,15 +620,18 @@
         });
     }
 
-    // Default Welcome Screen
-    window.onload = function() {
-        buildSidebar();
+  // --- 3. LOAD HOME SCREEN ---
+    window.loadHome = function() {
+        // Remove highlighting from sidebar items
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        
+        // Reload the welcome screen
         document.getElementById('vault-content').innerHTML = `
             <div class="welcome-msg">
                 <h2>Path of the Unknown</h2>
                 <p style="font-style: italic; font-size: 16pt; margin-top: 5px; color: var(--iron);">Quick Access DM Grimoire</p>
-                <div class="quick-ref">
-                    <h3>Quick Reference Table</h3>
+                <div class="quick-ref" style="margin-top: 40px; text-align: left; background: rgba(0,0,0,0.05); padding: 30px; border: 2px solid var(--iron); box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <h3 style="border-bottom: 2px solid var(--blood); margin-bottom: 15px; color: var(--iron); font-size: 18pt;">Quick Reference Table</h3>
                     <table>
                         <tr><th>AP Cost</th><th>TN Range</th><th>Max d10s</th></tr>
                         <tr><td>1 AP</td><td>TN 1-6</td><td>1d10</td></tr>
@@ -547,22 +641,37 @@
                         <tr><td>5 AP</td><td>TN 16-18</td><td>5d10</td></tr>
                         <tr><td>6 AP</td><td>TN 19+</td><td>6d10</td></tr>
                     </table>
-                    <h3 style="margin-top: 30px;">The Overcast Menu (+1 AP each)</h3>
-                    <ul>
-                        <li><strong>🔥 Empower:</strong> +1d10 + Primary Stat (Wounds/Heal).</li>
-                        <li><strong>🎯 Precision:</strong> +2 Bonus to the roll.</li>
-                        <li><strong>🛡️ Piercing:</strong> Ignore 3 points of Mitigation.</li>
-                        <li><strong>📏 Enlarge:</strong> +10ft AoE or +1 Size.</li>
-                        <li><strong>⏳ Extend:</strong> Increase duration by +1 Turn.</li>
-                        <li><strong>🏹 Vantage:</strong> Increase max range by +50 Feet.</li>
-                        <li><strong>📣 Echo:</strong> Apply buff to +1 additional target.</li>
+                    <h3 style="margin-top: 30px; border-bottom: 2px solid var(--blood); margin-bottom: 15px; color: var(--iron); font-size: 18pt;">The Overcast Menu (+1 AP each)</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><strong>🔥 Empower:</strong> +1d10 + Primary Stat (Wounds/Heal).</li>
+                        <li style="margin-bottom: 8px;"><strong>🎯 Precision:</strong> +2 Bonus to the roll.</li>
+                        <li style="margin-bottom: 8px;"><strong>🛡️ Piercing:</strong> Ignore 3 points of Mitigation.</li>
+                        <li style="margin-bottom: 8px;"><strong>📏 Enlarge:</strong> +10ft AoE or +1 Size.</li>
+                        <li style="margin-bottom: 8px;"><strong>⏳ Extend:</strong> Increase duration by +1 Turn.</li>
+                        <li style="margin-bottom: 8px;"><strong>🏹 Vantage:</strong> Increase max range by +50 Feet.</li>
+                        <li style="margin-bottom: 8px;"><strong>📣 Echo:</strong> Apply buff to +1 additional target.</li>
                     </ul>
-                    <h3 style="margin-top: 30px;">Passive: Arcane Mastery</h3>
+                    <h3 style="margin-top: 30px; border-bottom: 2px solid var(--blood); margin-bottom: 15px; color: var(--iron); font-size: 18pt;">Passive: Arcane Mastery</h3>
                     <p style="font-size: 13pt;">At <strong>15 Points</strong> in a magic skill, add your <strong>Spirit points</strong> to all wounds/healing.</p>
                 </div>
             </div>
         `;
+        document.getElementById('search-input').value = '';
+        filterNav();
     };
+
+    // --- RESTORED MODAL FUNCTION ---
+    window.toggleModal = function(show) {
+        const modal = document.getElementById('modal-overlay');
+        if (modal) modal.style.display = show ? 'flex' : 'none';
+    };
+
+    // Default Welcome Screen on Load
+    window.onload = function() {
+        buildSidebar();
+        loadHome();
+    };
+    
 </script>
 </body>
 </html>
