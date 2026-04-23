@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM Grimoire - Path of the Unknown</title>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --iron: #02070e;      
+            --blood: #A81818;     
+            --parchment: #f3e7c9; 
+            --gold: #B8860B;      
+            --input-bg: #FCF7EB;  
+            --ink: #111111;       
+            --font-heading: 'Grenze Gotisch', serif;  
+            --font-main: 'IM Fell English', serif;     
+            --font-hand: 'MedievalSharp', cursive;    
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background: #1E1E24; 
+            color: var(--ink); 
+            font-family: var(--font-main); 
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .grimoire-container {
+            width: 1200px;
+            background: var(--parchment);
+            border: 8px solid var(--iron);
+            display: flex;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            height: 100%;
+        }
+
+        /* --- THE SIDEBAR --- */
+        .sidebar {
+            width: 320px;
+            background: var(--iron);
+            color: var(--gold);
+            padding: 20px;
+            border-right: 4px solid var(--blood);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+
+        .sidebar h1 {
+            font-family: var(--font-heading);
+            font-size: 28pt;
+            text-align: center;
+            border-bottom: 2px solid var(--blood);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0px var(--blood);
+        }
+
+        .search-box { position: relative; margin-bottom: 20px; }
+
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            background: var(--input-bg);
+            border: 2px solid var(--gold);
+            font-family: var(--font-hand);
+            font-size: 12pt;
+            font-weight: bold;
+            color: var(--ink);
+            text-align: center;
+        }
+
+        #search-input:focus { outline: none; border-color: var(--blood); }
+
+        .nav-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .category-block { margin-bottom: 20px; }
+        .category-block h3 {
+            font-size: 13pt;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(184, 134, 11, 0.4);
+            margin-bottom: 10px;
+            color: var(--blood);
+            letter-spacing: 1px;
+        }
+
+        .sidebar ul { list-style: none; }
+        .sidebar li {
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: padding-left 0.2s ease, color 0.2s, background 0.2s;
+            font-size: 13pt;
+            color: var(--parchment);
+            border-left: 3px solid transparent;
+            margin-bottom: 2px;
+        }
+
+        /* The Slide-In Hover Effect */
+        .sidebar li:hover, .sidebar li.active { 
+            color: var(--gold); 
+            background: rgba(168, 24, 24, 0.2);
+            border-left: 3px solid var(--blood);
+            padding-left: 18px; 
+        }
+
+        /* --- THE MAIN CONTENT PANE --- */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+            background-image: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.05) 100%);
+        }
+
+        #vault-content { font-size: 14pt; line-height: 1.6; }
+        
+        #note-title {
+            font-family: var(--font-heading);
+            font-size: 34pt;
+            color: var(--iron);
+            border-bottom: 4px solid var(--blood);
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        /* Styling the Markdown Elements inside the Note */
+        #note-body h2 { color: var(--blood); font-family: var(--font-heading); margin: 20px 0 10px 0; border-bottom: 1px solid rgba(0,0,0,0.2); }
+        #note-body h3 { color: var(--iron); font-size: 18pt; margin: 15px 0 5px 0; }
+        #note-body p { margin-bottom: 15px; }
+        #note-body ul { margin-bottom: 15px; padding-left: 30px; }
+        #note-body li { margin-bottom: 5px; }
+        #note-body strong { color: var(--blood); font-weight: 900; }
+
+        /* THE MAGIC WIKILINK */
+        .wiki-link {
+            color: var(--blood);
+            text-decoration: underline;
+            text-decoration-color: var(--gold);
+            text-decoration-thickness: 2px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .wiki-link:hover { color: var(--iron); background: rgba(184, 134, 11, 0.2); }
+        
+        .wiki-link.broken {
+            color: #666;
+            text-decoration-style: dotted;
+            text-decoration-color: #666;
+        }
+
+        /* Stat Block Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            border: 2px solid var(--iron);
+        }
+
+        th { background: var(--iron); color: var(--gold); padding: 8px; text-transform: uppercase; font-size: 11pt; border-bottom: 2px solid var(--blood); }
+        td { padding: 8px; border: 1px solid rgba(0,0,0,0.2); text-align: center; font-weight: bold; background: var(--input-bg); }
+
+        /* Welcome & Quick Reference Screen */
+        .welcome-msg { text-align: center; margin-top: 20px; }
+        .welcome-msg h2 { font-family: var(--font-heading); font-size: 40pt; color: var(--blood); margin-bottom: 0;}
+        .quick-ref { margin-top: 40px; text-align: left; background: rgba(0,0,0,0.05); padding: 30px; border: 2px solid var(--iron); box-shadow: 0 5px 15px rgba(0,0,0,0.1);}
+        .quick-ref h3 { border-bottom: 2px solid var(--blood); margin-bottom: 15px; color: var(--iron); font-size: 18pt;}
+        .quick-ref ul { list-style: none; padding: 0; }
+        .quick-ref li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+    <div class="grimoire-container">
+        <div class="sidebar">
+            <h1>DM Grimoire</h1>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search Vault..." oninput="filterNav()">
+            </div>
+            
+            <div class="nav-container" id="nav-list">
+                </div>
+
+            <div style="margin-top: 20px; text-align: center;">
+                <button onclick="location.href='index.html'" style="padding: 8px 15px; cursor:pointer; background: var(--blood); color: white; border: 2px solid var(--gold); font-weight: bold; font-family: var(--font-heading); font-size: 16pt; width: 100%; transition: 0.2s;">🏠 Return to Hub</button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div id="vault-content">
+                </div>
+        </div>
+    </div>
+
+<script>
+    // --- 1. THE DATABASE (Your Exact DM Notes) ---
+    const vaultData = {
+        "Locations": {
+            "The Main Barracks": `
+            <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+            <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Hobgoblins Quarters</h2>
+            <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"There is a musty smell or odor of sweat and other foulness coming from the room."</p>
+            </div>
+
+            <table>
+                <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+                <tr>
+                    <td>low light with from possibly a lantern</td>
+                    <td>Uneasy</td>
+                    <td style="color: var(--blood);"><strong>Dangerous</strong></td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+            <ul style="line-height: 1.4;">
+                <li><strong>Sleeping Quarters:</strong>From the mess hall you can peer just inside the barracks main entrance, rows of cots and disheveled items are strewn about.</li>
+                <li><strong>Weapon Rack:</strong> Several weapon racks along the back wall equipped with shields, spears and hand weapons.</li>
+                <li><strong>:</strong> Behind the Champion is a hidden lever (DV 10 Perception) that releases steam vents from the floor.</li>
+            </ul>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+            <p>Total Enemies: <strong>3</strong></p>
+            <ul>
+                <li><strong>[[Krazak the Black (Hobgoblin Champion)]]</strong> x1 (Seated on the throne).</li>
+                <li><strong>Elite Warriors</strong> x2 (Shield-walled 10ft in front of the throne).</li>
+            </ul>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+            <div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+            <p><strong>Initial Move:</strong> The Champion begins with <strong>Blood Rally</strong> (2 AP) to grant guards extra AP.</p>
+            <p><strong>Environmental Hazard:</strong> Any character moving through the center <strong>Blood-Slick</strong> must pass a <strong>DV 10 Agility test</strong> or suffer the <strong>[[🧎 Prone]]</strong> condition.</p>
+            <p><strong>Aggressive Counter:</strong> The Champion holds 1 AP for <strong>[[✨ Counter-Cast]]</strong> if a player attempts to target him with a spell.</p>
+            </div>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Loot</h3>
+            <ul>
+                <li>250 Gold, 1x Potion of Rejuvenation.</li>
+                <li><strong>Artifact:</strong> The Warlord's Sigil (Grants +1 Authority).</li>
+            </ul>
+            `,
+            "The Warlord's Crucible": `
+            <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+            <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Warlord's Crucible</h2>
+            <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"The air here is heavy with the scent of wet iron and old soot. At the far end of the hall, seated upon a throne of rusted breastplates, the Champion awaits, his serrated cleaver resting across his knees."</p>
+            </div>
+
+            <table>
+                <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+                <tr>
+                    <td>Flickering Braziers</td>
+                    <td>Tense & Oppressive</td>
+                    <td style="color: var(--blood);"><strong>Lethal</strong></td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+            <ul style="line-height: 1.4;">
+                <li><strong>The Blood-Slick:</strong> The center of the room is a 20ft radius of smooth, polished stone covered in fresh viscera.</li>
+                <li><strong>Iron Braziers:</strong> Four heavy iron fire-pits provide light but can be toppled for AoE fire damage.</li>
+                <li><strong>The Throne:</strong> Behind the Champion is a hidden lever (DV 10 Perception) that releases steam vents from the floor.</li>
+            </ul>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+            <p>Total Enemies: <strong>3</strong></p>
+            <ul>
+                <li><strong>[[Krazak the Black (Hobgoblin Champion)]]</strong> x1 (Seated on the throne).</li>
+                <li><strong>Elite Warriors</strong> x2 (Shield-walled 10ft in front of the throne).</li>
+            </ul>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+            <div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+            <p><strong>Initial Move:</strong> The Champion begins with <strong>Blood Rally</strong> (2 AP) to grant guards extra AP.</p>
+            <p><strong>Environmental Hazard:</strong> Any character moving through the center <strong>Blood-Slick</strong> must pass a <strong>DV 10 Agility test</strong> or suffer the <strong>[[🧎 Prone]]</strong> condition.</p>
+            <p><strong>Aggressive Counter:</strong> The Champion holds 1 AP for <strong>[[✨ Counter-Cast]]</strong> if a player attempts to target him with a spell.</p>
+            </div>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Loot</h3>
+            <ul>
+                <li>250 Gold, 1x Potion of Rejuvenation.</li>
+                <li><strong>Artifact:</strong> The Warlord's Sigil (Grants +1 Authority).</li>
+            </ul>
+            `,
+            "Hobgoblin Champion’s Quarters": `
+                <p>The room contains fine armor and personal spoils. The center is guarded by [[Krazak the Black (Hobgoblin Champion)]] and 2 Elite Warriors.</p>
+                <ul>
+                    <li><strong>Trap:</strong> The chest is protected by a steam vent. Pass a <strong>DV 9 Intellect/Thievery test</strong> or trigger a 2d10 steam blast.</li>
+                    <li><strong>Links:</strong> To the south is the [[The Main Barracks]]. Behind the tapestry is the [[Crucible of the Maker]].</li>
+                </ul>
+            `,
+            "The Great Hub": `
+                <p>The central nervous system of Birn Uluhm. The center of the room is guarded by two [[Earth Elemental Juggernaut]]s.</p>
+                <ul>
+                    <li><strong>Goal:</strong> At the back of the room is the heavily trapped vault door known as the [[Crucible of the Maker]].</li>
+                </ul>
+            `,
+            "Crucible of the Maker": `
+                <p>A triple-locked door requiring simultaneous checks to open the portal to the [[Titan's Cyst]].</p>
+                <ul>
+                    <li><strong>The Body:</strong> Sacrifice 1 AP and take 1d10 unmitigated Wounds to trigger the blood valve.</li>
+                    <li><strong>The Mind:</strong> Pass a DV 9 Intellect/Thievery test or trigger a 2d10 steam blast.</li>
+                    <li><strong>The Spirit:</strong> Pass a DV 10 Willpower test or suffer the [[Dismayed]] condition.</li>
+                </ul>
+            `,
+            "Titan's Cyst": `
+                <p>A pocket dimension filled with red mist and a heartbeat hazard. Players must pass Willpower tests or suffer <strong>Corruption</strong>.</p>
+                <p><strong>Artifacts:</strong> [[The Blood-Iron Decapitator]], [[The Vein-Stone Grimoire]], or [[Gauntlets of the Faultline]].</p>
+            `
+        },
+        "Bestiary": {
+            "Krazak the Black (Hobgoblin Champion)": `
+                <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px;">
+                    <h2 style="margin: 0; color: var(--blood); font-size: 22pt;">Hobgoblin Champion</h2>
+                    <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--iron);">Towering warlords who earned their heavy armor through brutal battlefield subjugation.</p>
+                </div>
+
+                <table>
+                    <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+                    <tr>
+                        <td style="color: var(--blood); font-size: 14pt;"><strong>65</strong></td>
+                        <td>12</td>
+                        <td>10 (Field Plate +2)</td>
+                        <td>13 Squares</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+
+                <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Characteristics</h3>
+                <table>
+                    <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+                    <tr><td>3</td><td>2</td><td>4</td><td>2</td><td>6</td><td>5</td></tr>
+                </table>
+
+                <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Actions & Abilities</h3>
+                <ul style="line-height: 1.6; margin-top: 10px;">
+                    <li style="margin-bottom: 8px;"><strong>Serrated Cleaver (1 AP):</strong> 2d10 + 13 Wounds. Ignores 2 points of Wound Mitigation. On a Natural 10, the target suffers 1 <strong>[[🩸 Bleeding]]</strong> condition.</li>
+                    <li style="margin-bottom: 8px;"><strong>Blood Rally (2 AP):</strong> The Champion roars. All goblinoid allies within 10 squares immediately gain +1 AP for their next turn.</li>
+                </ul>
+
+                <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Passives</h3>
+                <ul style="line-height: 1.6; margin-top: 10px;">
+                    <li style="margin-bottom: 8px;"><strong>Battle-Ready:</strong> The Champion is a master of the melee. They completely negate the To-Hit advantage of being outnumbered by up to 3 enemies.</li>
+                    <li style="margin-bottom: 8px;"><strong>Iron Will:</strong> When reduced to 0 Wounds, the Champion may survive for 1 additional turn before falling.</li>
+                </ul>
+            `,
+                "Earth Elemental Juggernaut": `
+                <h2>Earth Elemental Juggernaut</h2>
+                <table>
+                    <tr><th>Defense</th><th>Wound Mitigation</th><th>Movement</th><th>AP</th></tr>
+                    <tr><td>16</td><td>14</td><td>2 Squares</td><td>3 AP</td></tr>
+                </table>
+                <h3>Abilities</h3>
+                <ul>
+                    <li><strong>Siege Fists:</strong> 2d10 + 12. Reduces target Armor Bonus by 1.</li>
+                    <li><strong>Unstoppable Mass:</strong> Immune to [[🧎 Prone]], [[💫 Stunned]], and Pinned.</li>
+                    <li><strong>Seismic Slam (2 AP):</strong> DV 10 Agility test or knocked [[🧎 Prone]] and take 1d10 + 6 Wounds.</li>
+                </ul>
+            `,
+                "Ssikra Brood Scavenger": `
+                <h2>Ssikra Brood Scavenger</h2>
+                <table>
+                    <tr><th>Defense</th><th>Wound Mitigation</th><th>Movement</th><th>AP</th></tr>
+                    <tr><td>14</td><td>7</td><td>15 (Wall-Crawler)</td><td>3 AP</td></tr>
+                </table>
+                <h3>Abilities</h3>
+                <ul>
+                    <li><strong>Latch On:</strong> Jumps on a player, inflicting Disadvantage on casts.</li>
+                    <li><strong>Skittering Retreat:</strong> Reaction to climb walls if hit for 10+ wounds.</li>
+                </ul>
+            `
+        },
+        "Trap Gallery": {
+            "Scorching Steam Vents": `
+            <div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px; background: rgba(184, 134, 11, 0.05);">
+                <h2 style="margin: 0; color: var(--gold); font-size: 20pt;">Scorching Steam Vents</h2>
+                <p style="font-style: italic; font-size: 11pt; color: var(--ink);">"The hiss of pressurized air precedes a wall of white-hot vapor that cooks the air in an instant."</p>
+            </div>
+
+            <table>
+                <tr><th>Detection (Perception)</th><th>Disarm (Thievery)</th><th>Danger Level</th></tr>
+                <tr>
+                    <td>DV 10</td>
+                    <td>DV 12</td>
+                    <td style="color: var(--blood);"><strong>Moderate</strong></td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Trigger</h3>
+            <p>Triggered by a <strong>pressure plate</strong> in a 10ft corridor or a <strong>hidden lever</strong> behind a throne.</p>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Effect</h3>
+            <ul style="line-height: 1.4;">
+                <li><strong>Damage:</strong> 3d10 + 5 Fire Wounds (Unmitigated by non-magical armor).</li>
+                <li><strong>Condition:</strong> Target must pass a <strong>DV 11 Physique test</strong> or suffer 1 <strong>[[💫 Stunned]]</strong> condition.</li>
+                <li><strong>Area:</strong> 15 Ft Cone starting from the vent source.</li>
+            </ul>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Countermeasures</h3>
+            <p>A character can use 1 Action and a successful <strong>DV 12 Intellect/Knowledge (Engineering)</strong> check to jam the brass valves, permanently disabling the trap.</p>
+        `,
+        "General Trap Template": `
+            <div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px;">
+                <h2 style="margin: 0; color: var(--gold); font-size: 20pt;">[Trap Name]</h2>
+                <p style="font-style: italic;">"Describe the trap's visual or sound before it hits."</p>
+            </div>
+
+            <table>
+                <tr><th>Detect</th><th>Disarm</th><th>Danger</th></tr>
+                <tr><td>DV X</td><td>DV Y</td><td>Low/Med/High</td></tr>
+            </table>
+
+            <h3 style="border-bottom: 1px solid var(--iron);">Trigger</h3>
+            <p>How is it activated?</p>
+
+            <h3 style="border-bottom: 1px solid var(--iron);">Effect</h3>
+            <p>Mechanical consequences (Wounds / Conditions).</p>
+
+            <h3 style="border-bottom: 1px solid var(--iron);">Bypass</h3>
+            <p>How can players avoid it without disarming?</p>
+        `
+        },
+        "Rules & Conditions": {
+            "✨ Arcane Mastery": `
+                <p><strong>Requirement:</strong> 15 Points in a Primary Magic Skill.</p>
+                <p><strong>The Boon:</strong> Add your total <strong>[[Spirit]]</strong> skill points as a flat bonus to all wounds caused or healed by your spells or blessings.</p>
+            `,            
+            "✨ Counter-Cast": `
+                <p><strong>Requirement:</strong> Reactive Stance (1 AP) + Held AP to match spell cost.</p>
+                <ul>
+                    <li><strong>Attacker:</strong> 1d10 + To-Cast Bonus + Skill.</li>
+                    <li><strong>Defender:</strong> 1d10 + To-Cast Bonus + (Skill OR Resist).</li>
+                    <li><strong>Tie:</strong> Attacker and Defender each take half damage or healing from the spell.</li>
+                    <li><strong>Backlash:</strong> Nat 10 win forces Attacker to make a DV 10 Willpower test or <strong>💫 Stunned</strong>.</li>
+                </ul>
+            `,
+            "👁️ Held Action": `
+                <p><strong>Cost:</strong> 1 AP to prepare + Base Action Cost.</p>
+                <ul>
+                    <li>Must specify a trigger and the action being held.</li>
+                    <li>Resolves <strong>before</strong> the enemy completes their move.</li>
+                    <li>Suffer a <strong>-2 penalty</strong> (Ignored at 6+ Discipline).</li>
+                </ul>
+            `,
+            "🏃 Sprint": `<p><strong>Cost: 1 AP.</strong> Grants a flat burst of <strong>+15 ft (or +3 Squares)</strong> of distance for the current turn. This is an isolated tactical action and does not alter your character's base movement speed.</p>`,
+            "🩸 Bleeding": `<p>Lose <strong>1d10 Wounds</strong> per stack at start of turn. Remove via magic/potions.</p>`,
+            "🧎 Prone": `<p>Suffer <strong>Disadvantage</strong> on To-Hit; enemies gain <strong>Advantage</strong> in melee. Stand up costs 1 Action.</p>`,
+            "🥀 Dismayed": `<p>Lose Move action on next turn; cannot perform Reaction actions.</p>`,
+            "💫 Stunned": `<p>Immediately lose <strong>1 Action Point (AP)</strong>.</p>`,
+            "🌀 Overwhelmed": `<p>Triggered by <strong>3+ conditions</strong>. You cannot take Reaction Actions.</p>`
+        }
+    };
+
+    // --- 2. ENGINE LOGIC ---
+    let flatNoteMap = {};
+    for (const category in vaultData) {
+        for (const noteTitle in vaultData[category]) {
+            flatNoteMap[noteTitle] = vaultData[category][noteTitle];
+        }
+    }
+
+    function buildSidebar() {
+        const navList = document.getElementById('nav-list');
+        navList.innerHTML = '';
+        for (const category in vaultData) {
+            const catHeader = document.createElement('div');
+            catHeader.className = 'category-block';
+            
+            const h3 = document.createElement('h3');
+            h3.innerText = category;
+            catHeader.appendChild(h3);
+
+            const ul = document.createElement('ul');
+            for (const noteTitle in vaultData[category]) {
+                const item = document.createElement('li');
+                item.className = 'nav-item';
+                item.innerText = noteTitle;
+                item.dataset.title = noteTitle;
+                item.onclick = () => loadNote(noteTitle);
+                ul.appendChild(item);
+            }
+            catHeader.appendChild(ul);
+            navList.appendChild(catHeader);
+        }
+    }
+
+    window.loadNote = function(title) {
+        if (!flatNoteMap[title]) return;
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        const activeNav = Array.from(document.querySelectorAll('.nav-item')).find(el => el.innerText === title);
+        if (activeNav) activeNav.classList.add('active');
+        
+        let rawHTML = flatNoteMap[title];
+        const parsedHTML = rawHTML.replace(/\[\[(.*?)\]\]/g, (match, p1) => {
+            const exists = flatNoteMap[p1] !== undefined;
+            const classStatus = exists ? 'wiki-link' : 'wiki-link broken';
+            const escaped = p1.replace(/'/g, "\\'"); // Fixes the Single Quote Bug!
+            const clickAction = exists ? `onclick="loadNote('${escaped}')"` : `title="Note not created yet"`;
+            return `<span class="${classStatus}" ${clickAction}>${p1}</span>`;
+        });
+        
+        document.getElementById('vault-content').innerHTML = `
+            <h1 id="note-title">${title}</h1>
+            <div id="note-body">${parsedHTML}</div>
+        `;
+        document.getElementById('search-input').value = '';
+        filterNav(); 
+    }
+
+    window.filterNav = function() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        document.querySelectorAll('.nav-item').forEach(item => {
+            const title = item.dataset.title.toLowerCase();
+            item.style.display = title.includes(query) ? 'block' : 'none';
+        });
+    }
+
+    // Default Welcome Screen
+    window.onload = function() {
+        buildSidebar();
+        document.getElementById('vault-content').innerHTML = `
+            <div class="welcome-msg">
+                <h2>Path of the Unknown</h2>
+                <p style="font-style: italic; font-size: 16pt; margin-top: 5px; color: var(--iron);">Quick Access DM Grimoire</p>
+                <div class="quick-ref">
+                    <h3>Quick Reference Table</h3>
+                    <table>
+                        <tr><th>AP Cost</th><th>TN Range</th><th>Max d10s</th></tr>
+                        <tr><td>1 AP</td><td>TN 1-6</td><td>1d10</td></tr>
+                        <tr><td>2 AP</td><td>TN 7-9</td><td>2d10</td></tr>
+                        <tr><td>3 AP</td><td>TN 10-12</td><td>3d10</td></tr>
+                        <tr><td>4 AP</td><td>TN 13-15</td><td>4d10</td></tr>
+                        <tr><td>5 AP</td><td>TN 16-18</td><td>5d10</td></tr>
+                        <tr><td>6 AP</td><td>TN 19+</td><td>6d10</td></tr>
+                    </table>
+                    <h3 style="margin-top: 30px;">The Overcast Menu (+1 AP each)</h3>
+                    <ul>
+                        <li><strong>🔥 Empower:</strong> +1d10 + Primary Stat (Wounds/Heal).</li>
+                        <li><strong>🎯 Precision:</strong> +2 Bonus to the roll.</li>
+                        <li><strong>🛡️ Piercing:</strong> Ignore 3 points of Mitigation.</li>
+                        <li><strong>📏 Enlarge:</strong> +10ft AoE or +1 Size.</li>
+                        <li><strong>⏳ Extend:</strong> Increase duration by +1 Turn.</li>
+                        <li><strong>🏹 Vantage:</strong> Increase max range by +50 Feet.</li>
+                        <li><strong>📣 Echo:</strong> Apply buff to +1 additional target.</li>
+                    </ul>
+                    <h3 style="margin-top: 30px;">Passive: Arcane Mastery</h3>
+                    <p style="font-size: 13pt;">At <strong>15 Points</strong> in a magic skill, add your <strong>Spirit points</strong> to all wounds/healing.</p>
+                </div>
+            </div>
+        `;
+    };
+</script>
+</body>
+</html>
