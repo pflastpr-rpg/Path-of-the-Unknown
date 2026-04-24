@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM Grimoire - Path of the Unknown</title>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --iron: #02070e;      
+            --blood: #A81818;     
+            --parchment: #f3e7c9; 
+            --gold: #B8860B;      
+            --input-bg: #FCF7EB;  
+            --ink: #111111;       
+            --font-heading: 'Grenze Gotisch', serif;  
+            --font-main: 'IM Fell English', serif;     
+            --font-hand: 'MedievalSharp', cursive;    
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background: var(--parchment); 
+            color: var(--ink); 
+            font-family: var(--font-main); 
+            display: flex;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Restored to Full-Screen App Layout */
+        .grimoire-container {
+            width: 100%;
+            height: 100%;
+            background: var(--parchment);
+            display: flex;
+            border: none;
+            box-shadow: none;
+        }
+
+        /* --- THE SIDEBAR --- */
+        .sidebar {
+            width: 320px;
+            background: var(--iron);
+            color: var(--gold);
+            padding: 20px;
+            border-right: 4px solid var(--blood);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+
+        .sidebar h1 {
+            font-family: var(--font-heading);
+            font-size: 28pt;
+            text-align: center;
+            border-bottom: 2px solid var(--blood);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0px var(--blood);
+        }
+
+        .search-box { position: relative; margin-bottom: 20px; }
+
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            background: var(--input-bg);
+            border: 2px solid var(--gold);
+            font-family: var(--font-hand);
+            font-size: 12pt;
+            font-weight: bold;
+            color: var(--ink);
+            text-align: center;
+        }
+
+        #search-input:focus { outline: none; border-color: var(--blood); }
+
+        .nav-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .category-block { margin-bottom: 20px; }
+        .category-block h3 {
+            font-size: 13pt;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(184, 134, 11, 0.4);
+            margin-bottom: 10px;
+            color: var(--blood);
+            letter-spacing: 1px;
+        }
+
+        .sidebar ul { list-style: none; }
+        .sidebar li {
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: padding-left 0.2s ease, color 0.2s, background 0.2s;
+            font-size: 13pt;
+            color: var(--parchment);
+            border-left: 3px solid transparent;
+            margin-bottom: 2px;
+        }
+
+        /* The Slide-In Hover Effect */
+        .sidebar li:hover, .sidebar li.active { 
+            color: var(--gold); 
+            background: rgba(168, 24, 24, 0.2);
+            border-left: 3px solid var(--blood);
+            padding-left: 18px; 
+        }
+
+        /* --- THE MAIN CONTENT PANE --- */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+            background-image: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.05) 100%);
+        }
+
+        #vault-content { font-size: 14pt; line-height: 1.6; }
+        
+        #note-title {
+            font-family: var(--font-heading);
+            font-size: 34pt;
+            color: var(--iron);
+            border-bottom: 4px solid var(--blood);
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        /* Styling the Markdown Elements inside the Note */
+        #note-body h2 { color: var(--blood); font-family: var(--font-heading); margin: 20px 0 10px 0; border-bottom: 1px solid rgba(0,0,0,0.2); }
+        #note-body h3 { color: var(--iron); font-size: 18pt; margin: 15px 0 5px 0; }
+        #note-body p { margin-bottom: 15px; }
+        #note-body ul { margin-bottom: 15px; padding-left: 30px; }
+        #note-body li { margin-bottom: 5px; }
+        #note-body strong { color: var(--blood); font-weight: 900; }
+
+        /* THE MAGIC WIKILINK */
+        .wiki-link {
+            color: var(--blood);
+            text-decoration: underline;
+            text-decoration-color: var(--gold);
+            text-decoration-thickness: 2px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .wiki-link:hover { color: var(--iron); background: rgba(184, 134, 11, 0.2); }
+        
+        .wiki-link.broken {
+            color: #666;
+            text-decoration-style: dotted;
+            text-decoration-color: #666;
+        }
+
+        /* Stat Block Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            border: 2px solid var(--iron);
+        }
+
+        th { background: var(--iron); color: var(--gold); padding: 8px; text-transform: uppercase; font-size: 11pt; border-bottom: 2px solid var(--blood); }
+        td { padding: 8px; border: 1px solid rgba(0,0,0,0.2); text-align: center; font-weight: bold; background: var(--input-bg); }
+
+        /* Welcome & Quick Reference Screen */
+        .welcome-msg { text-align: center; margin-top: 20px; }
+        .welcome-msg h2 { font-family: var(--font-heading); font-size: 40pt; color: var(--blood); margin-bottom: 0;}
+        .quick-ref { margin-top: 40px; text-align: left; background: rgba(0,0,0,0.05); padding: 30px; border: 2px solid var(--iron); box-shadow: 0 5px 15px rgba(0,0,0,0.1);}
+        .quick-ref h3 { border-bottom: 2px solid var(--blood); margin-bottom: 15px; color: var(--iron); font-size: 18pt;}
+        .quick-ref ul { list-style: none; padding: 0; }
+        .quick-ref li { margin-bottom: 8px; }
+
+        /* --- QUICK REF MODAL UI --- */
+        #quick-ref-trigger {
+            background: var(--blood);
+            color: var(--parchment);
+            border: 2px solid var(--gold);
+            padding: 10px;
+            margin: 10px;
+            font-family: var(--font-heading);
+            font-size: 14pt;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: 0.2s;
+        }
+
+        #quick-ref-trigger:hover { background: var(--iron); color: var(--gold); }
+
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal-box {
+            background: var(--parchment);
+            border: 8px solid var(--iron);
+            width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 0 50px var(--blood);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 24pt;
+            cursor: pointer;
+            color: var(--blood);
+            font-weight: bold;
+        }
+
+        #modal-box h2 { 
+            font-family: var(--font-heading); 
+            border-bottom: 3px solid var(--blood); 
+            margin-bottom: 15px;
+            color: var(--iron);
+        }
+    </style>
+</head>
+<body>
+
+<div class="grimoire-container">
+    <div class="sidebar">
+        <button id="quick-ref-trigger" onclick="toggleModal(true)" style="width: 90%; margin: 0 auto 15px auto;">📜 Overcast Reference</button>
+        
+        <h1>DM Grimoire</h1>
+        
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search Vault..." oninput="filterNav()">
+        </div>
+
+        <div style="margin-bottom: 15px; padding: 0 10px;">
+            <button onclick="loadHome()" style="width: 100%; padding: 8px; cursor: pointer; background: var(--iron); color: var(--gold); border: 2px solid var(--blood); font-family: var(--font-heading); font-size: 14pt; text-transform: uppercase; transition: 0.2s;">📖 Grimoire Home</button>
+        </div>
+        
+        <div class="nav-container" id="nav-list">
+            </div>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <button onclick="location.href='index.html'" style="padding: 8px 15px; cursor:pointer; background: var(--blood); color: white; border: 2px solid var(--gold); font-weight: bold; font-family: var(--font-heading); font-size: 16pt; width: 100%; transition: 0.2s;">🏠 Return to Hub</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div id="vault-content">
+            </div>
+    </div>
+</div>
+
+<div id="modal-overlay" onclick="toggleModal(false)">
+    <div id="modal-box" onclick="event.stopPropagation()">
+        <span class="close-modal" onclick="toggleModal(false)">&times;</span>
+        <h2>Overcast Quick Reference</h2>
+        <table>
+            <tr><th>TN Value</th><th>Base AP</th><th>d10's Rolled</th></tr>
+            <tr><td>TN 1-3</td><td>1 AP</td><td>D1d10</td></tr>
+            <tr><td>TN 4-6</td><td>1 AP</td><td>1d10</td></tr>
+            <tr><td>TN 7-9</td><td>2 AP</td><td>2d10</td></tr>
+            <tr><td>TN 10-12</td><td>3 AP</td><td>3d10</td></tr>
+            <tr><td>TN 13-15</td><td>4 AP</td><td>4d10</td></tr>
+            <tr><td>TN 16-18</td><td>5 AP</td><td>5d10</td></tr>
+            <tr><td>TN 19+</td><td>6 AP</td><td>6d10</td></tr>
+        </table>
+        <h3 style="margin-top: 15px; border-bottom: 2px solid var(--blood); padding-bottom: 5px;">The Overcast Menu (+1 AP each)</h3>
+        <ul style="list-style: none; padding: 0; font-size: 13pt; line-height: 1.4;">
+            <li style="margin-bottom: 8px;"><strong>🔥 Empower:</strong> +1d10 + Primary Stat (Wounds/Heal).</li>
+            <li style="margin-bottom: 8px;"><strong>🎯 Precision:</strong> +2 Bonus to the roll.</li>
+            <li style="margin-bottom: 8px;"><strong>🛡️ Piercing:</strong> Ignore 3 points of Mitigation.</li>
+            <li style="margin-bottom: 8px;"><strong>📏 Enlarge:</strong> +10ft AoE or +1 Size.</li>
+            <li style="margin-bottom: 8px;"><strong>⏳ Extend:</strong> Increase duration by +1 Turn.</li>
+            <li style="margin-bottom: 8px;"><strong>🏹 Vantage:</strong> Increase max range by +50 Feet.</li>
+            <li style="margin-bottom: 8px;"><strong>📣 Echo:</strong> Apply buff to +1 additional target.</li>
+        </ul>
+        <h3 style="margin-top: 20px; border-bottom: 2px solid var(--blood); padding-bottom: 5px;">Passive: Arcane Mastery</h3>
+        <p style="font-size: 13pt;">At <strong>15 Points</strong> in a magic skill, add your <strong>Spirit points</strong> to all wounds/healing.</p>
+    </div>
+</div>
+
+<script>
+    // --- 1. THE DATABASE (Your Exact DM Notes) ---
+    const vaultData = {
+        "Locations": {
+            "The Kitchen & Mess Hall": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">Kitchen & Mess Hall</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"The air here is thick with the stinging smoke of grease fires and the copper tang of raw meat. Long, stained wooden tables are bolted to the floor, cluttered with dented pewter and bone-handled knives."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Smoky (Center Firepit)</td>
+        <td>Noisy & Chaotic</td>
+        <td style="color: var(--blood);"><strong>Moderate</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>The Great Cauldron:</strong> A massive iron pot bubbles over a central firepit, filled with a questionable, greyish stew.</li>
+    <li><strong>Butcher Block:</strong> A heavy stone slab stained dark with old blood sits near the back wall, surrounded by meat hooks.</li>
+    <li><strong>The Service Hatch:</strong> A small window peers directly into [[The Main Barracks]].</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+<p>Total Enemies: <strong>4</strong></p>
+<ul>
+    <li><strong>[[Hobgoblin Warriors]]</strong> x4 (Currently unarmored, eating at the tables).</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>North:</strong> Double doors lead back to [[The Main Barracks]].</li>
+    <li><strong>West:</strong> A heavy iron-bound door leads to the Slave Pens and the stairs to the [[The Great Lift]].</li>
+</ul>
+`,
+            "The Main Barracks": `
+            <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+            <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Hobgoblins Quarters</h2>
+            <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"There is a musty smell or odor of sweat and other foulness coming from the room."</p>
+            </div>
+
+            <table>
+                <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+                <tr>
+                    <td>low light with from possibly a lantern</td>
+                    <td>Uneasy</td>
+                    <td style="color: var(--blood);"><strong>Dangerous</strong></td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+            <ul style="line-height: 1.4;">
+                <li><strong>Sleeping Quarters:</strong>From the mess hall you can peer just inside the barracks main entrance, rows of cots and disheveled items are strewn about.</li>
+                <li><strong>Weapon Rack:</strong> Several weapon racks along the back wall equipped with shields, spears and hand weapons.</li>
+                <li><strong>Hidden Chest:</strong> Behind the Weapon Racks is a loose stone, (DV 8 Awareness or Thieving) reveals the hidden chest and 250 Gold Pieces within.</li>
+            </ul>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+            <p>Total Enemies: <strong>6</strong></p>
+            <ul>
+                <li><strong>[[Hobgoblin Warriors]]</strong> x6 (Preparing for battle as they lock shield and arm spears).</li>
+                <li><strong>[[Elite Hobgoblin Warrior]]</strong> x2 (Shield-walled 10ft in front of the throne).</li>
+            </ul>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+            <div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+            <p><strong>Initial Move:</strong> The Champion begins with <strong>Blood Rally</strong> (2 AP) to grant guards extra AP.</p>
+            <p><strong>Environmental Hazard:</strong> Any character moving through the center <strong>Blood-Slick</strong> must pass a <strong>DV 10 Agility test</strong> or suffer the <strong>[[🧎 Prone]]</strong> condition.</p>
+            <p><strong>Aggressive Counter:</strong> The Champion holds 1 AP for <strong>[[✨ Counter-Cast]]</strong> if a player attempts to target him with a spell.</p>
+            </div>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Loot</h3>
+            <ul>
+                <li>250 Gold, 1x Potion of Rejuvenation.</li>
+                <li><strong>Artifact:</strong> The Warlord's Sigil (Grants +1 Authority).</li>
+            </ul>
+            `,
+            "The Goblins Warlord's Crucible": `
+            <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+            <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Warlord's Crucible</h2>
+            <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"The air here is heavy with the scent of wet iron and old soot. At the far end of the hall, seated upon a throne of rusted breastplates, the Champion awaits, his serrated cleaver resting across his knees."</p>
+            </div>
+
+            <table>
+                <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+                <tr>
+                    <td>Flickering Braziers</td>
+                    <td>Tense & Oppressive</td>
+                    <td style="color: var(--blood);"><strong>Lethal</strong></td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+            <ul style="line-height: 1.4;">
+                <li><strong>The Blood-Slick:</strong> The center of the room is a 20ft radius of smooth, polished stone covered in fresh viscera.</li>
+                <li><strong>Iron Braziers:</strong> Four heavy iron fire-pits provide light but can be toppled for AoE fire damage.</li>
+                <li><strong>The Throne:</strong> Behind the Champion is a hidden lever (DV 10 Perception) that releases steam vents from the floor.</li>
+            </ul>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+            <p>Total Enemies: <strong>3</strong></p>
+            <ul>
+                <li><strong>[[Krazak the Black (Hobgoblin Champion)]]</strong> x1 (Seated on the throne).</li>
+                <li><strong>[[Elite Hobgoblin Warrior]]</strong> x2 (Shield-walled 10ft in front of the throne).</li>
+            </ul>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+            <div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+            <p><strong>Initial Move:</strong> The Champion begins with <strong>Blood Rally</strong> (2 AP) to grant guards extra AP.</p>
+            <p><strong>Environmental Hazard:</strong> Any character moving through the center <strong>Blood-Slick</strong> must pass a <strong>DV 10 Agility test</strong> or suffer the <strong>[[🧎 Prone]]</strong> condition.</p>
+            <p><strong>Aggressive Counter:</strong> The Champion holds 1 AP for <strong>[[✨ Counter-Cast]]</strong> if a player attempts to target him with a spell.</p>
+            </div>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Loot</h3>
+            <ul>
+                <li>250 Gold, 1x Potion of Rejuvenation.</li>
+                <li><strong>Artifact:</strong> The Warlord's Sigil (Grants +1 Authority).</li>
+            </ul>
+            `,
+            "The Cold Storage Vault": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Cold Storage Vault</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"The smell of dry grain and rancid tallow hangs heavy here. Rows of mismatched crates and bloated barrels fill the space, many shrouded in thick, grey webbing that shivers in the draft."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Dim (Single sputtering wall bracket)</td>
+        <td>Stale & Dusty</td>
+        <td style="color: var(--gold);"><strong>Low / Ambush</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>The Rafters:</strong> Low-hanging wooden beams crisscross the ceiling, thick with dust and ancient cobwebs.</li>
+    <li><strong>The Crates:</strong> Stacks of basic supplies—salted meat, bundles of arrows, and barrels of cheap ale.</li>
+    <li><strong>The Back Wall:</strong> A stack of empty crates conceals a section of stone that appears slightly irregular.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+<p>Total Enemies: <strong>2</strong></p>
+<ul>
+    <li><strong>[[Ssikra Brood Scavenger]]</strong> x2 (Clinging to the ceiling rafters).</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>Initial Move:</strong> The scavengers use their <strong>Latch On</strong> ability as a [[👁️ Held Action]] from the rafters.</p>
+    <p><strong>Environmental Hazard:</strong> Cluttered floor. Move > 15ft requires <strong>DV 8 Agility test</strong> or suffer <strong>[[🧎 Prone]]</strong>.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Secrets & Paths</h3>
+<ul>
+    <li><strong>Hidden Door:</strong> Tucked behind the crates on the back wall. A successful <strong>DV 10 Thievery or Awareness (Find Trap)</strong> test reveals a mechanism that opens a narrow passage leading to the [[Secret Mountain Overlook]].</li>
+</ul>
+`,
+"Secret Mountain Overlook": `
+<div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px; background: rgba(184, 134, 11, 0.05);">
+    <h2 style="margin: 0; color: var(--gold); font-size: 20pt;">Secret Mountain Overlook</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"The narrow tunnel opens onto a tiny, windswept ledge high above the valley floor. The air is crisp and cold, offering a panoramic view of the winding mountain paths below."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Natural Light</td>
+        <td>Crisp & Windy</td>
+        <td style="color: var(--success);"><strong>Safe / Strategic</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>The Ledge:</strong> A jagged outcropping of stone barely wide enough for two people, shielded from the elements by a heavy stone overhang.</li>
+    <li><strong>Observation Post:</strong> A small stone bench sits near the edge, accompanied by a mounted brass spyglass trained on the dungeon's main gates.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Strategic Value</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>Superior Vantage:</strong> Characters using this overlook gain <strong>Advantage</strong> on Awareness or Perception tests to spot incoming enemies or movement in the valley below.</p>
+    <p><strong>Secret Escape:</strong> A narrow, treacherous path winds down the cliffside from this ledge, leading away from the mountain entirely.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>Back into Dungeon:</strong> Through the narrow passage back to [[The Cold Storage Vault]].</li>
+</ul>
+`,
+"The Great Lift": `
+<div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px; background: rgba(184, 134, 11, 0.05);">
+    <h2 style="margin: 0; color: var(--gold); font-size: 20pt;">The Great Lift (Central Shaft)</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"A colossal vertical shaft plunges into the depths of the mountain. Thick, tar-slicked chains groan as they support a massive stone platform, held in place by the straining muscles of a bound elemental."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Ozone Glow</td>
+        <td>Industrial & Trembling</td>
+        <td style="color: var(--blood);"><strong>Extreme</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>The Platform:</strong> A 20x20ft slab of reinforced granite capable of carrying several tons of cargo.</li>
+    <li><strong>The Bindings:</strong> Massive brass runes are etched into the walls, tethering the elemental to the winch mechanism.</li>
+    <li><strong>The Void:</strong> Looking over the edge reveals the dark shaft dropping hundreds of feet to the forge levels below.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Captive Power</h3>
+<ul>
+    <li><strong>NPC: [[Earth Elemental Juggernaut]]</strong> (Chained). It is currently indifferent but will lash out if any of the rune-chains are damaged.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>Unstable Mechanism:</strong> If the Elemental takes > 10 wounds in a single strike, the platform jolts, forcing everyone to pass a <strong>DV 10 Agility test</strong> or fall <strong>[[🧎 Prone]]</strong>.</p>
+    <p><strong>The Long Drop:</strong> Falling into the shaft results in 1d10 wounds per 10ft fallen (Maximum 10d10).</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>Upper Level:</strong> Leads back up the stairs toward the Slave Pens and [[The Kitchen & Mess Hall]].</li>
+    <li><strong>Lower Levels:</strong> The lift connects to the **Foundry (Level 2)** and the **Abyssal Pits (Level 3)**.</li>
+</ul>
+`,
+"6. The Great Hub": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">6. The Great Hub</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"A large central circular nexus where all pathways intersect. The floor is etched with a massive 'Lithomancy Circle' glowing with harsh blue runes, used for repairing the caged elementals."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Harsh Blue Rune-Glow</td>
+        <td>Humming & Electric</td>
+        <td style="color: var(--blood);"><strong>Extreme</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>Lithomancy Circle:</strong> A complex web of glowing blue geometric lines carved into the stone floor, vibrating with raw arcane energy.</li>
+    <li><strong>The Nexus:</strong> Four primary corridors branch out from this room toward the Barracks, Slave Pens, Storage, and the Dig Sites.</li>
+    <li><strong>Dormant Guardians:</strong> Four massive, stone-clad forms stand motionless in each corner of the circular hall.</li>
+    <li><strong>The Iron Root:</strong> Standing at the western entrance to the mines is a towering figure in masterwork plate, leaning on a soul-bound maul.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+<p>Total Enemies: <strong>5</strong></p>
+<ul>
+    <li><strong>[[Thrunn, The Iron Root]]</strong> (Standing guard at the western tunnel).</li>
+    <li><strong>[[Earth Elemental Juggernaut]]</strong> x4 (Dormant in the corners).</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>Lithomancy Defense:</strong> The Juggernauts activate immediately when any creature steps onto the circle. Thrunn remains stationary unless an intruder attempts to bypass him toward the [[The Dig Sites (West)]].</p>
+    <p><strong>The Warden's Synergy:</strong> While the Juggernauts use **Seismic Slam** to keep the party <strong>[[🧎 Prone]]</strong>, Thrunn will use **Shield Rush** to pin targets against the walls or into the active Lithomancy runes.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>North:</strong> Leads to [[The Main Barracks]].</li>
+    <li><strong>East:</strong> Leads to [[The Cold Storage Vault]].</li>
+    <li><strong>West:</strong> Leads toward [[The Dig Sites (West)]].</li>
+    <li><strong>Down:</strong> Access to [[The Great Lift]].</li>
+</ul>
+`,  
+"The Dig Sites (West)": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Dig Sites (West)</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"The rhythmic, metallic clinking of pickaxes echoes through these cramped corridors. Dust chokes the air, illuminated only by flickering caged lanterns bolted to the jagged rock face."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Dim (Caged Lanterns)</td>
+        <td>Stifling & Dusty</td>
+        <td style="color: var(--blood);"><strong>Moderate</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>Excavation Tunnels:</strong> Three narrow tunnels branch off from the main western hall, each showing fresh bite marks from heavy mining tools.</li>
+    <li><strong>Iron Rails:</strong> Rusted ore cart tracks run along the floor, leading back toward the Great Hub.</li>
+    <li><strong>Exhausted Laborers:</strong> Human and dwarven slaves move with mechanical lethargy, their eyes hollowed by "heavy instruction" and grueling labor.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+<p>Total Enemies (Across 3 Tunnels): <strong>9</strong></p>
+<ul>
+    <li><strong>[[Hobgoblin Warriors]]</strong> x6 (Two per tunnel, patrolling the rail lines).</li>
+    <li><strong>[[Birn Dwarven Slaver]]</strong> x3 (One per tunnel, overseeing the rock face).</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>Work Site Chaos:</strong> If combat breaks out, the Slavers will attempt to use the slaves as human shields, granting the Slaver <strong>Disadvantage</strong> to be hit by ranged attacks.</p>
+    <p><strong>Dust Cloud:</strong> If an explosion or heavy impact occurs, the area becomes <strong>Obscured</strong> for 1d10 turns, forcing all physical actions to be at <strong>Disadvantage</strong>.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>East:</strong> Returns to [[The Great Hub]].</li>
+    <li><strong>Deep:</strong> The tunnels converge further west into the Unmapped Veins.</li>
+</ul>
+`,  
+"The Overseer’s Forge": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Overseer’s Forge (Southeast)</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"The sound of hammering steel is replaced here by the scratching of charcoal on parchment. Shelves groan under the weight of heavy brass drafting tools and rolled vellum maps detailing every vein of the mountain."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Bright (Magical Lamps)</td>
+        <td>Smells of Ink & Dust</td>
+        <td style="color: var(--gold);"><strong>Moderate</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>Drafting Tables:</strong> Massive stone desks tilted at angles, covered in blueprints for complex underground structures and ventilation shafts.</li>
+    <li><strong>The Master Forge:</strong> A small, highly refined forge in the corner used for crafting delicate engineer's tools rather than weapons.</li>
+    <li><strong>Wall Maps:</strong> A large topographical map of the mountain range is pinned to the wall, with several "Unmapped Veins" marked in red ink.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+<p>Total Enemies: <strong>3</strong></p>
+<ul>
+    <li><strong>[[Birn Overseer]]</strong> x1 (Reviewing maps at the central table).</li>
+    <li><strong>[[Birn Sentry Guard]]</strong> x2 (Stationed at the entrance corridor).</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>Blueprints of Defense:</strong> The Overseer can use 1 AP to shout instructions, granting his Sentry Guards <strong>Advantage</strong> on their next Defense roll.</p>
+    <p><strong>Fragile Intel:</strong> If a fire spell is cast in this room, there is a 50% chance the blueprints are destroyed, losing the party valuable lore about the lower levels.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>West:</strong> Leads back to the central shaft and [[The Great Lift]].</li>
+    <li><strong>North:</strong> A side passage connects to [[The Cold Storage Vault]].</li>
+</ul>
+`,
+"Grand Storage Vault": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">Grand Storage Vault</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"Beyond the heavy, rune-etched doors lies the primary treasury of the upper works. The wealth of Birn Uluhm is on full display here, though it sits precariously behind a wall of alchemical death."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Dim (Shuttered Lanterns)</td>
+        <td>Still & Chemical</td>
+        <td style="color: var(--blood);"><strong>Extreme</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>The Explosive Threshold:</strong> Stacks of wooden kegs filled with volatile blasting powder and iron drums of thick crude oil are piled near the entrance.</li>
+    <li><strong>Silvery Glow:</strong> Toward the rear, the darkness is pushed back by the natural, moonlight-like radiance of raw Mithril ore.</li>
+    <li><strong>The Gem Coffers:</strong> Small, reinforced iron chests sit atop stone pedestals, their lids heavy with the weight of thousands of cut stones.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>⚠️ Volatile Chain Reaction:</strong> The blasting powder and oil drums are extremely sensitive. Any Fire damage or a failed spell cast in the entrance area triggers a massive explosion.</p>
+    <p><strong>Mechanical Consequence:</strong> The explosion deals 6d10 Fire Wounds to all targets within 30ft. Any character caught in the blast must pass a <strong>DV 12 Agility test</strong> or suffer the <strong>[[🧎 Prone]]</strong> condition.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Loot</h3>
+<ul>
+    <li><strong>Gemstone Hoard:</strong> 5,000 Gold Pieces worth of expertly cut gems.</li>
+    <li><strong>Raw Mithril:</strong> 150 lbs of unrefined Mithril ore (valued at 20,000 Gold Pieces).</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>Back to Forge:</strong> The corridor leads North back to [[The Overseer’s Forge]].</li>
+</ul>
+`,    
+"Level 3 Landing: The Abyssal Pits": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">Level 3 Landing: The Abyssal Pits</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"As the platform groans to a halt, the industrial heat of the forge is replaced by an unnatural, bone-chilling cold. A thick, waist-high red mist rolls off the platform, and the very stone beneath your feet seems to thrum with a slow, rhythmic heartbeat."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Bioluminescent Red</td>
+        <td>Suffocating & Occult</td>
+        <td style="color: var(--blood);"><strong>Lethal</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>The Red Mist:</strong> A dense, swirling vapor that obscures the floor entirely. It is cold to the touch and smells faintly of iron.</li>
+    <li><strong>The Heartbeat:</strong> Every 10 seconds, a low-frequency thud vibrates through the floor, rattling teeth and equipment.</li>
+    <li><strong>Flesh-Woven Stone:</strong> In the corners of the landing, the jagged rock begins to merge with organic, vein-like structures that pulse in time with the heartbeat.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+<p>Total Enemies: <strong>Unknown</strong></p>
+<ul>
+    <li><strong>Shadows of the Cyst:</strong> Formless shapes move just beyond the light of the lift, retreating when approached.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>⚠️ Abyssal Corruption:</strong> Any character remaining on this level must pass a <strong>DV 10 Willpower test</strong> every hour or suffer 1 point of <strong>Corruption</strong>.</p>
+    <p><strong>Visibility:</strong> The mist causes <strong>Disadvantage</strong> on all Awareness (Perception) checks involving the floor, including spotting traps or low-lying hazards.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>The Lift:</strong> Returns to Level 2 (The Foundry) and Level 1 [[The Great Lift]].</li>
+    <li><strong>The Vein-Path:</strong> A corridor of organic stone leads directly toward the entrance of the [[Titan's Cyst]].</li>
+</ul>
+`,
+
+"The Geothermal Forge": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Geothermal Forge</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"The searing heart of the operation. Powered by geothermal vents, the colossal cavern is crisscrossed by glowing veins of flowing magma. Dozens of captives labor under the crack of whips. Massive iron ladders plunge deep into the fiery abyss, where workers harvest raw mithril directly from the white-hot currents."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Blinding Magma Glow</td>
+        <td>Oppressive & Sulferous</td>
+        <td style="color: var(--blood);"><strong>Lethal</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>Magma Veins:</strong> Jagged cracks in the floor and walls pulse with liquid fire, casting dancing, orange shadows across the soot-stained ceiling.</li>
+    <li><strong>Mithril Troughs:</strong> Large stone basins where workers cool the white-hot mithril harvested from the depths.</li>
+    <li><strong>The Abyss:</strong> A central pit where the heat is so intense the air itself seems to shimmer and distort.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+<p>Total Enemies: <strong>6</strong></p>
+<ul>
+    <li><strong>[[Birn Dwarven Slaver]]</strong> x6 (Patrolling the iron walkways with jagged whips).</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>⚠️ Searing Heat:</strong> The temperature in this room is physically taxing. Any character without magical fire protection suffers a <strong>temporary -3 penalty to Wound Mitigation</strong> while within 10ft of a magma vein.</p>
+    <p><strong>Worksite Chaos:</strong> The slavers will use their whips to pull characters toward the magma veins. On a successful hit, the target must pass a <strong>DV 11 Physique test</strong> or be pulled 5ft toward the nearest heat source.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>West:</strong> Leads back toward the red mists of the [[Level 3 Landing: The Abyssal Pits]].</li>
+    <li><strong>Deep:</strong> The iron ladders lead further down into the unmapped thermal vents.</li>
+</ul>
+`,
+"The Armory": `
+<div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px; background: rgba(184, 134, 11, 0.05);">
+    <h2 style="margin: 0; color: var(--gold); font-size: 20pt;">The Armory</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"Marked by heavy iron doors embossed with crossed battle axes, this room is a silent forest of weapon racks and polished armor stands. Unlike the rest of this level, the air here feels sterile and cold."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Dim (Oil Lamps)</td>
+        <td>Still & Sharp</td>
+        <td style="color: var(--gold);"><strong>Safe / Discovery</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>The Axe Seal:</strong> Two massive greataxes are welded across the door frame, serving as both a marker and a physical lock.</li>
+    <li><strong>Racks of Steel:</strong> Rows of heavy hammers and axes are lined up with military precision, free of the soot found in the upper levels.</li>
+    <li><strong>Pristine Gear:</strong> Because the soul-binding rituals have not yet begun on this specific batch, the metal is untainted and safe for use.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Loot</h3>
+<table>
+    <tr><th>Quantity</th><th>Item Found</th><th>Bonus/Details</th></tr>
+    <tr><td>2 Sets</td><td>Dwarven Plate</td><td>+1 Defense</td></tr>
+    <tr><td>2</td><td>Great Hammers</td><td>+1 To-Hit</td></tr>
+    <tr><td>1</td><td>Great Axe</td><td>+2 Wounds</td></tr>
+    <tr><td>2</td><td>Heaters Shields</td><td>+2 Defense</td></tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>West:</strong> Corridor leads back to the central shaft and [[The Great Lift]].</li>
+    <li><strong>East:</strong> Directly opposite is the dark entrance to [[The Cursed Forge]].</li>
+</ul>
+`,
+"The Elite Garrisons": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Elite Garrisons</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"At the end of the hall, the silence is broken by the low thrumming of massive industrial pipes pulsing with steam. Two heavy, reinforced iron doors stand like silent sentinels, guarding the path forward."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Flickering (Gas Lamps)</td>
+        <td>Tense & Industrial</td>
+        <td style="color: var(--blood);"><strong>Extreme</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Twin Garrisons</h3>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div style="background: rgba(0,0,0,0.03); padding: 10px; border: 1px solid var(--iron);">
+        <h4 style="color: var(--blood); margin-top: 0;">Left Room: Command</h4>
+        <ul>
+            <li><strong>[[Birn Elite Champion]]</strong> x1</li>
+            <li><strong>[[Formidable Guard]]</strong> x2</li>
+        </ul>
+    </div>
+    <div style="background: rgba(0,0,0,0.03); padding: 10px; border: 1px solid var(--iron);">
+        <h4 style="color: var(--blood); margin-top: 0;">Right Room: Barracks</h4>
+        <ul>
+            <li><strong>[[Elite Guard]]</strong> x6</li>
+        </ul>
+    </div>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>Industrial Pipes:</strong> Massive brass and iron conduits run along the ceiling and floor, leaking scalding steam and vibrating with enough force to mask heavy footsteps.</li>
+    <li><strong>The Dual Doors:</strong> Both doors are barred from the inside, requiring a heavy impact or a specialized key to open from the hall.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Mechanics</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>Intel Gathering:</strong> A successful <strong>DV 9 Stealth test</strong> allows a character to listen at the doors and identify the number of enemies within without being detected.</p>
+    <p><strong>⚠️ Flanking Maneuver:</strong> These garrisons are on high alert. If combat erupts in either room, the occupants of the second room will immediately empty into the hallway to flank the party at the start of the next turn.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>West:</strong> Leads back past [[The Armory]] and toward [[The Great Lift]].</li>
+    <li><strong>Forward:</strong> Beyond these doors lies the entrance to the deeper High Command chambers.</li>
+</ul>
+`,
+"The Vault of Birn Uluhm": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Vault of Birn Uluhm</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"At the dead end of the thermal corridors stands a monolithic geode of black stone, bisected by three concentric brass rings that hum with a low, predatory vibration."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Pulsing Red Lithomancy</td>
+        <td>Terrifyingly Alive</td>
+        <td style="color: var(--blood);"><strong>Lethal</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>The Geode Door:</strong> A massive circular stone slab. At its center is a hollow glass cylinder with a jagged iron spike protruding from the bottom.</li>
+    <li><strong>The Brass Rings:</strong> Three moving concentric rings inscribed with shifting, ancient Lithomantic runes.</li>
+    <li><strong>The Shadow of the Titan:</strong> The air around the door is impossibly cold, and the stones seem to bleed a dark, oily residue.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Trial: The Triple-Locked Gate</h3>
+<p>To open the vault, the party must simultaneously engage all three locking mechanisms in a single turn.</p>
+
+<div style="background: rgba(0,0,0,0.03); padding: 15px; border: 1px solid var(--iron); margin-top: 10px;">
+    <p><strong>I. Lock of the Body (Blood Valve):</strong> A player must impale their hand on the central spike.<br>
+    <em>Mechanic:</em> Sacrifice 1 AP and take <strong>1d10 Wounds</strong> (Wound Mitigation is ignored).</p>
+
+    <p style="margin-top:10px;"><strong>II. Lock of the Mind (Pneumatic Tumblers):</strong> A player must balance the volatile steam-pressure valves.<br>
+    <em>Check:</em> <strong>DV 9 Intellect or Thievery</strong>.<br>
+    <em>Failure:</em> The valve blows. Everyone within 2 squares takes <strong>2d10 Fire/Steam damage</strong>; the sequence resets.</p>
+
+    <p style="margin-top:10px;"><strong>III. Lock of the Spirit (Resonance Rune):</strong> A player must hold the outer ring steady against the Titan's psychic rage.<br>
+    <em>Check:</em> <strong>DV 10 Willpower</strong>.<br>
+    <em>Failure:</em> The sequence resets and the player suffers the <strong>[[🥀 Dismayed]]</strong> condition for 10 minutes.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Final Vault Hazard</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>Corrupted Exhale:</strong> When the third lock clicks, the door releases a burst of ancient, corrupted air.</p>
+    <p><em>Effect:</em> Anyone within 2 squares must pass a <strong>DV 8 Willpower test</strong> or gain 1 stack of <strong>Corruption (Dark Mark)</strong> and lose <strong>1 Spirit Point</strong> as the oily essence coats their lungs.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Portal Twist</h3>
+<p>When passed, the rings spin into a blur and the stone liquifies into a vertical pool of glowing red light—a portal to a pocket dimension carved out of a <strong>Terra-Titan's petrified heart</strong>.</p>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>Entry:</strong> Leads back to [[The Elite Garrisons]] and [[The Armory]].</li>
+    <li><strong>The Portal:</strong> Stepping through leads directly to the [[Titan's Cyst]].</li>
+</ul>
+`,
+"The Heart-Shatter Realm": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Heart-Shatter Realm</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"You emerge from the red viscous light not into a room, but into a void. Below you, the petrified heart of a Terra-Titan floats in a sea of crimson mist, its massive valves forming obsidian archways that lead toward a distant, glowing metropolis."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Deep Blood Red</td>
+        <td>Weightless & Pulsing</td>
+        <td style="color: var(--blood);"><strong>Divine / Perilous</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>The Petrified Heart:</strong> The ground is not stone, but hardened, rhythmic tissue that vibrates with every step.</li>
+    <li><strong>Floating Veins:</strong> Jagged bridges of obsidian connect different "chambers" of the heart. One slip leads into the endless red void below.</li>
+    <li><strong>The Horizon:</strong> Far in the distance, through the mist, the spires of the **City of Birn Uluhm** are visible, built directly into the Titan's ribcage.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>⚠️ Zero-G Maneuver:</strong> Movement is strange here. Characters gain <strong>+10ft Base Move</strong>, but must pass a <strong>DV 9 Agility test</strong> when they stop or fall <strong>[[🧎 Prone]]</strong>.</p>
+    <p><strong>The Titan's Call:</strong> The heartbeat is deafening. All communication must be shouted. Magic spells require a <strong>DV 10 Willpower test</strong> to cast, or the spell is lost to the psychic noise.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Prize: The Heart-Cyst</h3>
+<ul>
+    <li>The artifacts are fused into the "valves" of the heart. Removing one (like the **Blood-Iron Decapitator**) causes the entire realm to tremble, signaling the City's guard.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>The Way Back:</strong> The Portal stays open for 1 hour, leading back to [[The Vault of Birn Uluhm]].</li>
+    <li><strong>The Way Forward:</strong> Crossing the "Rib-Bridge" leads to the high gates of the **City of Birn Uluhm**.</li>
+</ul>
+`,
+"The Bouncer's Gauntlet": `
+<div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Bouncer's Gauntlet</h2>
+    <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"The corridor narrows here, flanked by hissing brass pipes that pulse with the mountain's geothermal breath. At the end stands a single, massive figure blocking the path to the Vault."</p>
+</div>
+
+<table>
+    <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+    <tr>
+        <td>Flickering Orange Steam-Light</td>
+        <td>Claustrophobic & Tense</td>
+        <td style="color: var(--blood);"><strong>Extreme</strong></td>
+    </tr>
+</table>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+<ul style="line-height: 1.4;">
+    <li><strong>The Steam Vents:</strong> The pipes overhead are prone to bursting, obscuring vision and scalding the unwary.</li>
+    <li><strong>The Killzone:</strong> The hallway is only 2 squares wide, making it impossible to slip past the Warden without a fight.</li>
+    <li><strong>The Geode Door:</strong> Visible just behind the Warden, glowing with the faint red light of the three concentric rings.</li>
+</ul>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Environmental Hazard</h3>
+<div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+    <p><strong>⚠️ Bursting Pipes:</strong> At the start of every odd-numbered round (1, 3, 5...), a pipe bursts. Everyone in the hall must pass a <strong>DV 9 Agility test</strong> or take 1d10 Fire damage and suffer <strong>Disadvantage</strong> on their next action due to the blinding steam.</p>
+</div>
+
+<h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Path Connections</h3>
+<ul>
+    <li><strong>Behind the Warden:</strong> Leads directly to [[The Vault of Birn Uluhm]].</li>
+    <li><strong>West:</strong> Leads back toward [[The Armory]].</li>
+</ul>
+`,
+        },
+        "Bestiary": {
+            "Birn Overseer": `
+    <div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--gold); font-size: 22pt;">Birn Overseer</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--iron);">"Wielding heavy brass calipers as easily as a mace, the Overseer doesn't just fight—he calculates the most efficient way to break you."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>48</strong></td>
+            <td>13</td>
+            <td>7 (Engineer's Leathers)</td>
+            <td>10 Squares</td>
+            <td>3</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr>
+            <td>2</td>
+            <td>5</td>
+            <td>4</td>
+            <td>7</td>
+            <td>4</td>
+            <td>5</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>Heavy Brass Calipers (1 AP):</strong> 1d10 + 6 Wounds. If the Overseer rolls a Natural 9 or 10, he pins a limb, inflicting <strong>Disadvantage</strong> on the target's next physical action.</li>
+        
+        <li style="margin-bottom: 8px;"><strong>Blueprints of Defense (1 AP):</strong> The Overseer barks structural coordinates. All allied guards within 10 squares gain <strong>Advantage</strong> on their next Defense roll.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Structural Collapse (2 AP):</strong> The Overseer strikes a support beam or pressure valve. All enemies in a 3x3 square area must pass a <strong>DV 11 Agility test</strong> or take 2d10 Wounds and be knocked <strong>[[🧎 Prone]]</strong>.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Architect's Eye (Passive):</strong> The Overseer is immune to <strong>Stealth</strong>-based advantages. He automatically detects any hidden characters within 5 squares.</li>
+    </ul>
+`,
+"Birn Sentry Guard": `
+    <div style="border-left: 5px solid var(--iron); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--iron); font-size: 22pt;">Birn Sentry Guard</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--blood);">"Cold eyes peer through the slits of heavy visors. They move with mechanical precision, repositioning themselves the moment the Overseer barks a new coordinate."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>50</strong></td>
+            <td>14</td>
+            <td>9 (Heavy Lamellar)</td>
+            <td>8 Squares</td>
+            <td>2</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr>
+            <td>2</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>6</td>
+            <td>4</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>Hooked Poleaxe (1 AP):</strong> 1d10 + 18 Wounds. This weapon has <strong>Reach</strong>. On a successful hit, the Guard can choose to pull the target 5ft closer or trip them, forcing a <strong>DV 10 Agility test</strong> to avoid falling <strong>[[🧎 Prone]]</strong>.</li>
+        
+        <li style="margin-bottom: 8px;"><strong>Bodyguard (Reaction):</strong> If an enemy within 2 squares targets the Overseer with a physical attack, the Sentry Guard may immediately swap places with the Overseer and become the target of that attack instead.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Calculated Positioning (Passive):</strong> If the Overseer has used <strong>Blueprints of Defense</strong> this turn, the Sentry Guard also gains <strong>+2 Wound Mitigation</strong> against the next attack that hits them.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Hold the Line:</strong> Any enemy that attempts to move out of a square adjacent to the Sentry Guard must pass a <strong>DV 11 Physique test</strong> or their movement immediately ends.</li>
+    </ul>
+`,
+"Birn Dwarven Slaver": `
+    <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--blood); font-size: 22pt;">Birn Dwarven Slaver</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--iron);">"A heavy-set dwarf with a beard braided in iron rings, wielding a whip that crackles with geothermal heat."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>40</strong></td>
+            <td>12</td>
+            <td>6 (Hardened Hide)</td>
+            <td>10 Squares</td>
+            <td>3</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr><td>2</td><td>4</td><td>4</td><td>3</td><td>6</td><td>5</td></tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>Jagged Heat-Whip (1 AP):</strong> 1d10 + 6 Wounds. This weapon has <strong>Reach (3 Squares)</strong>. On a hit, the target must pass a <strong>DV 10 Physique test</strong> or be pulled 2 squares toward the Slaver.</li>
+        <li style="margin-bottom: 8px;"><strong>"Back to Work!" (2 AP):</strong> The Slaver cracks the whip in the air. All allied Birn Dwarves within 5 squares gain <strong>+1 AP</strong> on their next turn.</li>
+        <li style="margin-bottom: 8px;"><strong>Heavy Instruction (Passive):</strong> Any enemy within 2 squares of the Slaver suffers a -1 penalty to all Intellect and Willpower tests due to the constant, demoralizing verbal abuse.</li>
+    </ul>
+`,
+"Birn Dwarven Guard": `
+    <div style="border-left: 5px solid var(--iron); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--iron); font-size: 22pt;">Birn Dwarven Guard</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--blood);">"Broad-shouldered and stoic, these guards stand as immovable as the mountain itself."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>45</strong></td>
+            <td>14 (Shield)</td>
+            <td>8 (Iron Scale)</td>
+            <td>8 Squares</td>
+            <td>2</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr><td>1</td><td>3</td><td>1</td><td>2</td><td>7</td><td>4</td></tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>Broad-Headed Spear (1 AP):</strong> 1d10 + 8 Wounds. If the Guard has not moved this turn, this attack deals +2 damage.</li>
+        <li style="margin-bottom: 8px;"><strong>Stone-Solid (Passive):</strong> The Guard cannot be moved or knocked <strong>[[🧎 Prone]]</strong> by any effect originating from a creature with lower Physique.</li>
+        <li style="margin-bottom: 8px;"><strong>Shielded Advance (1 AP):</strong> The Guard moves half their movement speed. During this move, they gain <strong>+2 Defense</strong> against ranged attacks.</li>
+    </ul>
+`,
+"Earth Elemental Juggernaut": `
+    <div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--gold); font-size: 22pt;">Earth Elemental Juggernaut</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--iron);">"A towering mass of jagged granite and pulsing blue ley-lines. It doesn't breathe; it simply exists to crush."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>65</strong></td>
+            <td>11</td>
+            <td>10 (Living Stone)</td>
+            <td>5 Squares</td>
+            <td>2</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr><td>1</td><td>2</td><td>1</td><td>1</td><td>8</td><td>6</td></tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>Pulverizing Slam (1 AP):</strong> 2d10 + 10 Wounds. This attack deals double damage to shields or environmental cover.</li>
+        
+        <li style="margin-bottom: 8px;"><strong>Seismic Slam (2 AP):</strong> The Juggernaut strikes the floor with concentrated force. All targets within 3 squares must pass a <strong>DV 10 Agility test</strong> or be knocked <strong>[[🧎 Prone]]</strong> and take 1d10 + 6 Wounds.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Living Mountain (Passive):</strong> The Juggernaut is immune to <strong>[[🩸 Bleeding]]</strong>, <strong>[[💫 Stunned]]</strong>, and any poison-based conditions.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Unstoppable Weight (Passive):</strong> Cannot be moved, pushed, or pulled by any creature with a lower Physique score.</li>
+    </ul>
+
+    <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood); margin-top: 20px;">The Lithomancy Connection</h3>
+    <div style="background: rgba(184, 134, 11, 0.1); padding: 10px; border: 1px dashed var(--gold);">
+        <p><strong>Ley-Line Siphon:</strong> While standing inside the **Lithomancy Circle** in the Great Hub, the Juggernaut heals 5 Wounds at the start of its turn as the blue runes repair its stony form.</p>
+    </div>
+`,
+            "Krazak the Black (Hobgoblin Champion)": `
+                <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px;">
+                    <h2 style="margin: 0; color: var(--blood); font-size: 22pt;">Hobgoblin Champion</h2>
+                    <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--iron);">Towering warlords who earned their heavy armor through brutal battlefield subjugation.</p>
+                </div>
+
+                <table>
+                    <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+                    <tr>
+                        <td style="color: var(--blood); font-size: 14pt;"><strong>65</strong></td>
+                        <td>12</td>
+                        <td>10 (Field Plate +2)</td>
+                        <td>13 Squares</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+
+                <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Characteristics</h3>
+                <table>
+                    <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+                    <tr><td>3</td><td>2</td><td>4</td><td>2</td><td>6</td><td>5</td></tr>
+                </table>
+
+                <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Actions & Abilities</h3>
+                <ul style="line-height: 1.6; margin-top: 10px;">
+                    <li style="margin-bottom: 8px;"><strong>Serrated Cleaver (1 AP):</strong> 2d10 + 13 Wounds. Ignores 2 points of Wound Mitigation. On a Natural 10, the target suffers 1 <strong>[[🩸 Bleeding]]</strong> condition.</li>
+                    <li style="margin-bottom: 8px;"><strong>Blood Rally (2 AP):</strong> The Champion roars. All goblinoid allies within 10 squares immediately gain +1 AP for their next turn.</li>
+                </ul>
+
+                <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Passives</h3>
+                <ul style="line-height: 1.6; margin-top: 10px;">
+                    <li style="margin-bottom: 8px;"><strong>Battle-Ready:</strong> The Champion is a master of the melee. They completely negate the To-Hit advantage of being outnumbered by up to 3 enemies.</li>
+                    <li style="margin-bottom: 8px;"><strong>Iron Will:</strong> When reduced to 0 Wounds, the Champion may survive for 1 additional turn before falling.</li>
+                </ul>
+            `,
+            "Elite Hobgoblin Warrior": `
+    <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--blood); font-size: 22pt;">Elite Hobgoblin Warrior</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--iron);">"Clad in soot-blackened plate and carrying shields the size of barn doors, these veterans have survived a hundred tunnel skirmishes."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>48</strong></td>
+            <td>16 (Shield Equipped)</td>
+            <td>9 (Heavy Plate)</td>
+            <td>10 Squares</td>
+            <td>2</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr><td>2</td><td>3</td><td>2</td><td>2</td><td>6</td><td>4</td></tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>Black-Iron Spear (1 AP):</strong> 1d10 + 10 Wounds. This weapon has <strong>Reach</strong>. If the target is <strong>[[🧎 Prone]]</strong>, this attack deals +5 flat damage.</li>
+        
+        <li style="margin-bottom: 8px;"><strong>Shield Bash (1 AP):</strong> The Warrior slams their shield into a foe. The target must pass a <strong>DV 10 Physique test</strong> or be knocked 1 square back and become <strong>[[🧎 Prone]]</strong>.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Phalanx Standing (Passive):</strong> While this unit is adjacent to another Hobgoblin ally, they gain <strong>+1 Wound Mitigation</strong>. If they are adjacent to <strong>Krazak the Black</strong>, they also gain <strong>Advantage</strong> on all Willpower tests.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Interpose (Reaction):</strong> Once per round, if an enemy targets an adjacent ally with a melee attack, the Elite Warrior can force the attack to hit their shield instead.</li>
+    </ul>
+`,
+               "Hobgoblin Warriors": `
+                <h2>The Plalanx</h2>
+                <table>
+                    <tr><th>Defense</th><th>Wound Mitigation</th><th>Movement</th><th>AP</th></tr>
+                    <tr><td>16</td><td>14</td><td>2 Squares</td><td>3 AP</td></tr>
+                </table>
+                <h3>Abilities</h3>
+                <ul>
+                    <li><strong>Siege Fists:</strong> 2d10 + 12. Reduces target Armor Bonus by 1.</li>
+                    <li><strong>Unstoppable Mass:</strong> Immune to [[🧎 Prone]], [[💫 Stunned]], and Pinned.</li>
+                    <li><strong>Seismic Slam (2 AP):</strong> DV 10 Agility test or knocked [[🧎 Prone]] and take 1d10 + 6 Wounds.</li>
+                </ul>
+            `,
+                "Ssikra Brood Scavenger": `
+    <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--blood); font-size: 22pt;">Ssikra Brood Scavenger</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--iron);">"A multi-limbed horror that skitters along the rafters, its mouth a mass of sucking needles."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>28</strong></td>
+            <td>15</td>
+            <td>4 (Exoskeleton)</td>
+            <td>15 (Wall-Crawler)</td>
+            <td>3</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr><td>6</td><td>5</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>Needle-Bite (1 AP):</strong> 1d10 + 4 Wounds. On a Natural 8-10, the target suffers 1 <strong>[[🩸 Bleeding]]</strong> stack.</li>
+        <li style="margin-bottom: 8px;"><strong>Latch On (2 AP):</strong> The Scavenger leaps from the rafters onto a target. The target must pass a <strong>DV 12 Agility test</strong> or the Scavenger attaches to them. While latched, the target has <strong>Disadvantage</strong> on all actions and takes 5 Wounds at the start of every turn.</li>
+        <li style="margin-bottom: 8px;"><strong>Skittering Retreat (Reaction):</strong> When the Scavenger takes Wounds, it can immediately move 5 Squares without triggering reactions, provided it moves toward a wall or ceiling.</li>
+        <li style="margin-bottom: 8px;"><strong>Wall-Shadow (Passive):</strong> While on a ceiling or in dim light, the Scavenger gains <strong>Advantage</strong> on all Stealth tests.</li>
+    </ul>
+`,
+            "Birn Elite Champion": `
+    <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--blood); font-size: 22pt;">Birn Elite Champion</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--iron);">"Encased in soul-bound plate that pulses with a cold, rhythmic light, these champions are the final line of defense for the High Command."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>85</strong></td>
+            <td>15</td>
+            <td>12 (Soul-Bound Plate)</td>
+            <td>10 Squares</td>
+            <td>3</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr>
+            <td>2</td>
+            <td>4</td>
+            <td>5</td>
+            <td>3</td>
+            <td>8</td>
+            <td>6</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>Soul-Forged Greataxe (1 AP):</strong> 2d10 + 15 Wounds. This weapon ignores 3 points of Wound Mitigation. On a Natural 10, the target is <strong>[[💫 Stunned]]</strong>.</li>
+        <li style="margin-bottom: 8px;"><strong>Tactical Breach (2 AP):</strong> The Champion signals the secondary garrison. This immediately triggers the **Flanking Maneuver** from the adjacent room at the start of the next turn.</li>
+        <li style="margin-bottom: 8px;"><strong>Indomitable (Passive):</strong> Once per round, the Champion can use a Reaction to ignore one <strong>[[🧎 Prone]]</strong> or <strong>[[🥀 Dismayed]]</strong> condition applied to them.</li>
+        <li style="margin-bottom: 8px;"><strong>Vengeful Strike (Reaction):</strong> If an ally within 2 squares is reduced to 0 Wounds, the Champion may immediately make one free attack against the attacker.</li>
+    </ul>
+`,
+"Formidable Guard": `
+    <div style="border-left: 5px solid var(--iron); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--iron); font-size: 22pt;">Formidable Guard</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--blood);">"Stoic protectors bound by oath and iron. They do not speak; they only stand between the intruders and their master."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>55</strong></td>
+            <td>14</td>
+            <td>10 (Soul-Bound Plate)</td>
+            <td>8 Squares</td>
+            <td>2</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr>
+            <td>1</td>
+            <td>3</td>
+            <td>2</td>
+            <td>2</td>
+            <td>7</td>
+            <td>5</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>Soul-Bound Mace (1 AP):</strong> 1d10 + 10 Wounds. This weapon ignores 2 points of Wound Mitigation.</li>
+        <li style="margin-bottom: 8px;"><strong>Shield-Wall (Passive):</strong> While adjacent to another Formidable Guard or a Champion, this unit and the adjacent ally gain <strong>+1 Defense</strong>.</li>
+        <li style="margin-bottom: 8px;"><strong>Intervene (Reaction):</strong> Once per round, if an adjacent ally is targeted by a physical attack, the Guard can force the attacker to target them instead.</li>
+        <li style="margin-bottom: 8px;"><strong>Iron Grit:</strong> The Guard is immune to the <strong>[[🧎 Prone]]</strong> condition while their shield is equipped.</li>
+    </ul>
+`,
+"Elite Guard": `
+    <div style="border-left: 5px solid var(--iron); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--iron); font-size: 22pt;">Elite Guard</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--blood);">"The rank-and-file of the High Command. They are faster and more aggressive than the heavy Formidable Guards, trained to swarm and dismantle intruders."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>42</strong></td>
+            <td>13</td>
+            <td>8 (Soul-Bound Mail)</td>
+            <td>12 Squares</td>
+            <td>2</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>1</td>
+            <td>2</td>
+            <td>5</td>
+            <td>4</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>Soul-Bound Halberd (1 AP):</strong> 1d10 + 8 Wounds. This weapon has <strong>Reach</strong>, allowing the guard to attack from 2 squares away.</li>
+        <li style="margin-bottom: 8px;"><strong>Pack Tactics (Passive):</strong> If at least two other Elite Guards are within 3 squares of the target, this unit gains <strong>+2 to their To-Hit roll</strong>.</li>
+        <li style="margin-bottom: 8px;"><strong>Harrying Strike:</strong> On a successful hit, the target must pass a <strong>DV 9 Agility test</strong> or lose 5ft of movement on their next turn.</li>
+        <li style="margin-bottom: 8px;"><strong>Opportunist (Reaction):</strong> If an enemy within reach attempts to move away or stand up from <strong>[[🧎 Prone]]</strong>, the Guard may make a free attack.</li>
+    </ul>
+`,
+"Thrunn, The Iron Root": `
+    <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+        <h2 style="margin: 0; color: var(--blood); font-size: 24pt;">Thrunn, The Iron Root</h2>
+        <p style="font-style: italic; font-size: 12pt; color: var(--iron);">"The mountain does not flinch. Neither do I."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>95</strong></td>
+            <td>18</td>
+            <td>12 (Unwavering)</td>
+            <td>3 Squares</td>
+            <td>4</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr><td>2</td><td>5</td><td>4</td><td>3</td><td>9</td><td>7</td></tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>The Soul-Binding Maul (1 AP):</strong> $2d10 + 9$ Wounds. <strong>Shatter:</strong> On a hit, target's Defense is reduced by -2 (Stacks up to 3 times).</li>
+        
+        <li style="margin-bottom: 8px;"><strong>Shield Rush (2 AP):</strong> Thrunn charges his full movement. Target takes $1d10 + 18$ Wounds and must pass a <strong>DV 9 Physique test</strong> or be knocked <strong>[[🧎 Prone]]</strong>.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Bulwark (Passive):</strong> Thrunn cannot be knocked back or moved against his will by any creature smaller than Titanic size.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Titan’s Resurgence (Reaction):</strong> Once per day, when reduced to 0 Wounds, Thrunn heals 20 Wounds and enters <strong>Frenzy</strong> (+1 AP for 3 turns).</li>
+    </ul>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">The Spoils</h3>
+    <ul>
+        <li><strong>Vial of Raw Titan's Blood:</strong> Heal 20 Wounds. Requires <strong>DV 10 Willpower test</strong> or gain a permanent "Dark Corruption" mark.</li>
+        <li><strong>Birn Masterwork Plate:</strong> (+4 Defense).</li>
+        <li><strong>The Iron Root Sigil:</strong> Gold medallion granting <strong>+1 to all Lithomancy cast tests</strong>.</li>
+    </ul>
+`,
+"Warden Korgath (The Bouncer)": `
+    <div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--gold); font-size: 22pt;">Warden Korgath</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--iron);">"I am the lock. I am the key. You are merely the waste to be purged."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>110</strong></td>
+            <td>17</td>
+            <td>11 (Garrison Plate)</td>
+            <td>6 Squares</td>
+            <td>4</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr><td>1</td><td>5</td><td>3</td><td>2</td><td>10</td><td>7</td></tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--iron);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>The Gatekeeper's Halberd (1 AP):</strong> 2d10 + 10 Wounds. <strong>Reach (2 Squares).</strong> On a successful hit, the target is pushed 1 square back.</li>
+        
+        <li style="margin-bottom: 8px;"><strong>"None Shall Pass" (Passive):</strong> Any enemy that attempts to move through a square adjacent to Korgath must pass a <strong>DV 12 Physique test</strong> or their movement immediately ends.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Iron Shove (1 AP):</strong> Korgath slams his shield into the party. All targets in front of him are pushed 2 squares and must pass a <strong>DV 10 Agility test</strong> or fall <strong>[[🧎 Prone]]</strong>.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Call to Arms (Reaction):</strong> When Korgath is reduced to half health (55 Wounds), he bellows a command. This immediately spawns <strong>4 [[Elite Guards]]</strong> from the side rooms to flank the party.</li>
+    </ul>
+`,
+"Sentinel of the Void": `
+    <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(0, 0, 0, 0.1);">
+        <h2 style="margin: 0; color: var(--blood); font-size: 24pt;">Sentinel of the Void</h2>
+        <p style="font-style: italic; font-size: 12pt; color: var(--iron);">"As the portal liquifies, the red oil doesn't just sit there—it rises. A faceless, translucent horror formed from the mountain's ancient sorrow, reaching out to drag the living into the cold dark."</p>
+    </div>
+
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>120</strong></td>
+            <td>14</td>
+            <td>8 (Amorphous)</td>
+            <td>12 Squares</td>
+            <td>3</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr><td>4</td><td>6</td><td>1</td><td>3</td><td>10</td><td>8</td></tr>
+    </table>
+
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Actions & Abilities</h3>
+    <ul style="line-height: 1.6; margin-top: 10px;">
+        <li style="margin-bottom: 8px;"><strong>Viscous Lash (1 AP):</strong> 2d10 + 5 Wounds. <strong>Reach (4 Squares).</strong> On a hit, the target must pass a <strong>DV 11 Physique test</strong> or be pulled 3 squares toward the portal.</li>
+        
+        <li style="margin-bottom: 8px;"><strong>Oily Exhale (2 AP):</strong> The Sentinel sprays a mist of raw Titan's Blood. All players in a 5-square cone must pass a <strong>DV 10 Willpower test</strong> or gain 1 stack of <strong>[[🥀 Dark Corruption]]</strong>.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Amorphous Shift (Reaction):</strong> When hit by a physical attack, the Sentinel can spend 1 AP (from its next turn) to liquify, reducing the damage by half and moving 2 squares without triggering reactions.</li>
+
+        <li style="margin-bottom: 8px;"><strong>Drag into the Deep (3 AP):</strong> <em>Requires a target to be adjacent.</em> The Sentinel attempts to pull a character directly into the portal pool. Target must pass a <strong>DV 12 Willpower test</strong> or be sucked into the portal, immediately taking 20 Wounds and appearing in the [[Heart-Shatter Realm]] on their next turn.</li>
+    </ul>
+`,
+        },
+        "Trap Gallery": {
+            "Scorching Steam Vents": `
+            <div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px; background: rgba(184, 134, 11, 0.05);">
+                <h2 style="margin: 0; color: var(--gold); font-size: 20pt;">Scorching Steam Vents</h2>
+                <p style="font-style: italic; font-size: 11pt; color: var(--ink);">"The hiss of pressurized air precedes a wall of white-hot vapor that cooks the air in an instant."</p>
+            </div>
+
+            <table>
+                <tr><th>Detection (Perception)</th><th>Disarm (Thievery)</th><th>Danger Level</th></tr>
+                <tr>
+                    <td>DV 10</td>
+                    <td>DV 12</td>
+                    <td style="color: var(--blood);"><strong>Moderate</strong></td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Trigger</h3>
+            <p>Triggered by a <strong>pressure plate</strong> in a 10ft corridor or a <strong>hidden lever</strong> behind a throne.</p>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Effect</h3>
+            <ul style="line-height: 1.4;">
+                <li><strong>Damage:</strong> 3d10 + 5 Fire Wounds (Unmitigated by non-magical armor).</li>
+                <li><strong>Condition:</strong> Target must pass a <strong>DV 11 Physique test</strong> or suffer 1 <strong>[[💫 Stunned]]</strong> condition.</li>
+                <li><strong>Area:</strong> 15 Ft Cone starting from the vent source.</li>
+            </ul>
+
+            <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Countermeasures</h3>
+            <p>A character can use 1 Action and a successful <strong>DV 12 Intellect/Knowledge (Engineering)</strong> check to jam the brass valves, permanently disabling the trap.</p>
+        `,
+        "General Trap Template": `
+            <div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px;">
+                <h2 style="margin: 0; color: var(--gold); font-size: 20pt;">[Trap Name]</h2>
+                <p style="font-style: italic;">"Describe the trap's visual or sound before it hits."</p>
+            </div>
+
+            <table>
+                <tr><th>Detect</th><th>Disarm</th><th>Danger</th></tr>
+                <tr><td>DV X</td><td>DV Y</td><td>Low/Med/High</td></tr>
+            </table>
+
+            <h3 style="border-bottom: 1px solid var(--iron);">Trigger</h3>
+            <p>How is it activated?</p>
+
+            <h3 style="border-bottom: 1px solid var(--iron);">Effect</h3>
+            <p>Mechanical consequences (Wounds / Conditions).</p>
+
+            <h3 style="border-bottom: 1px solid var(--iron);">Bypass</h3>
+            <p>How can players avoid it without disarming?</p>
+        `
+        },
+        "Loot Tables": {
+            "Tier 1: Mundane Spoils & Trinkets": `
+                <div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px; background: rgba(184, 134, 11, 0.05);">
+                    <h2 style="margin: 0; color: var(--gold); font-size: 20pt;">Tier 1: Mundane Spoils</h2>
+                    <p style="font-style: italic; font-size: 11pt; color: var(--ink);">"Pocket change, forgotten satchels, and the spoils of lesser foes."</p>
+                </div>
+                <p><strong>How to Roll:</strong> Roll <strong>1d10</strong> when looting grunts, foot soldiers, or basic chests.</p>
+                
+                <table>
+                    <tr><th>1d10</th><th>Item Found</th><th>Value / Effect</th></tr>
+                    <tr><td>1</td><td>Dusty Pouch</td><td>2d10 Gold Pieces.</td></tr>
+                    <tr><td>2</td><td>Rough-Cut Amethyst</td><td>Gemstone worth 50 Gold.</td></tr>
+                    <tr><td>3</td><td>Thief's Tools</td><td>Grants +1 to Thievery checks to pick locks.</td></tr>
+                    <tr><td>4</td><td>Bandages & Salve</td><td>Allows one free DV 8 Mending check to stop <strong>[[🩸 Bleeding]]</strong>.</td></tr>
+                    <tr><td>5</td><td>Hunter's Trap</td><td>A bear trap that causes 1d10 Wounds and the <strong>[[🧎 Prone]]</strong> condition.</td></tr>
+                    <tr><td>6</td><td>Flask of Oil</td><td>Can be ignited to deal 2d10 Fire Wounds in a 5ft radius.</td></tr>
+                    <tr><td>7</td><td>Silver Hand-Mirror</td><td>Worth 75 Gold, useful for peering around corners.</td></tr>
+                    <tr><td>8</td><td>Tattered Spell Scroll</td><td>Contains a random TN 4 or TN 5 Wizardry or Druid spell.</td></tr>
+                    <tr><td>9</td><td>Minor Health Potion</td><td>Instantly restores 1d10 + 5 Wounds.</td></tr>
+                    <tr><td>10</td><td>Gold Ingot</td><td>A heavy, stamped bar of gold worth 150 Gold Pieces.</td></tr>
+                </table>
+            `,
+            
+            "Tier 2: The Armory": `
+                <div style="border-left: 5px solid var(--iron); padding-left: 10px; margin-bottom: 15px; background: rgba(2, 7, 14, 0.05);">
+                    <h2 style="margin: 0; color: var(--iron); font-size: 20pt;">Tier 2: The Armory</h2>
+                    <p style="font-style: italic; font-size: 11pt; color: var(--ink);">"Weapons of war, heavy plating, and gear stripped from fallen champions."</p>
+                </div>
+                <p><strong>How to Roll:</strong> Roll <strong>1d10</strong> when looting captains, armories, or hidden caches.</p>
+                
+                <table>
+                    <tr><th>1d10</th><th>Item Found</th><th>Stats / Details</th></tr>
+                    <tr><td>1</td><td>Serrated Cleaver</td><td>Edged. 1d10 Wounds. Causes 1 <strong>[[🩸 Bleeding]]</strong> on Nat 10.</td></tr>
+                    <tr><td>2</td><td>Splint Mail</td><td>Armor. +3 Defense, 5 Wound Mitigation. -2 Agl, -10ft Move.</td></tr>
+                    <tr><td>3</td><td>Heavy Crossbow</td><td>Ranged. 3d10 Wounds. Ignores 3 Wound Mitigation.</td></tr>
+                    <tr><td>4</td><td>Tower Shield</td><td>+2 Defense, +2 Wound Mitigation. Requires 4 Physique to wield.</td></tr>
+                    <tr><td>5</td><td>Glaive-Guisarme</td><td>Polearm. 1d10 Wounds. Grants Reach (strike from 2nd line).</td></tr>
+                    <tr><td>6</td><td>Masterwork Dagger</td><td>Piercing. +1 To-Hit. Advantage vs Cloth/Leather.</td></tr>
+                    <tr><td>7</td><td>Blackpowder Pistol</td><td>Ranged. 2d10 Wounds. Ignores 4 Wound Mitigation.</td></tr>
+                    <tr><td>8</td><td>Dwarven Warhammer</td><td>Blunt. 1d10 Wounds. Ignores 1 Wound Mitigation.</td></tr>
+                    <tr><td>9</td><td>Field Plate</td><td>Armor. +4 Defense, 6 Wound Mitigation. -3 Agl, -15ft Move.</td></tr>
+                    <tr><td>10</td><td>Mithril Chain Shirt</td><td>Armor. +4 Defense, 5 Wound Mitigation. <strong>Zero Penalties.</strong></td></tr>
+                </table>
+            `,
+
+            "Level 3 Encounters": `
+<div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px; background: rgba(184, 134, 11, 0.05);">
+    <h2 style="margin: 0; color: var(--gold); font-size: 20pt;">Level 3: Wandering Hazards & Scavenging</h2>
+    <p style="font-style: italic; font-size: 11pt; color: var(--ink);">"Roll 1d10 when the party takes a short rest, makes excessive noise, or lingers too long in the corridors."</p>
+</div>
+
+<table style="width: 100%; text-align: left; border-collapse: collapse;">
+    <tr style="background: var(--iron); color: var(--parchment);">
+        <th style="padding: 5px; border: 1px solid var(--ink);">d10</th>
+        <th style="padding: 5px; border: 1px solid var(--ink);">Encounter / Hazard</th>
+        <th style="padding: 5px; border: 1px solid var(--ink);">Mechanics & Potential Loot</th>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid var(--ink); font-weight: bold; text-align: center;">1-2</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);"><strong>Slaver Patrol</strong><br>1 Slaver, 2 Guards</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);">Actively hunting escaped captives. <strong>Loot:</strong> 1d100 gp in uncut mountain gems and an Iron Key.</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid var(--ink); font-weight: bold; text-align: center;">3-4</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);"><strong>Burst Geothermal Pipe</strong><br>Environmental</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);">Hallway fills with scalding steam. DV 10 Agility test or take 1d10 Fire wounds. <strong>Scavenge:</strong> None.</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid var(--ink); font-weight: bold; text-align: center;">5-6</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);"><strong>Escaped Captives</strong><br>3-4 Starving Slaves</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);">Desperate and terrified. If given rations, they provide a rough map of the next room. <strong>Loot:</strong> Information/Advantage.</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid var(--ink); font-weight: bold; text-align: center;">7-8</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);"><strong>Ceiling Ambush</strong><br>1d4 Ssikra Scavengers</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);">They drop from the dark to latch onto the weakest party member. <strong>Scavenge:</strong> 1d4 Vials of Paralyzing Venom (can be applied to weapons).</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid var(--ink); font-weight: bold; text-align: center;">9</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);"><strong>Lithomantic Feedback</strong><br>Magical Hazard</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);">The blue runes pulse violently. Magic users must pass a DV 9 Willpower test or lose 1 AP on their next turn.</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid var(--ink); color: var(--blood); font-weight: bold; text-align: center;">10</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);"><strong>The Dead Courier</strong><br>Discovery</td>
+        <td style="padding: 5px; border: 1px solid var(--ink);">A crushed dwarven runner pinned under a collapsed beam. <strong>Loot:</strong> A <em>Lithomantic Battery</em> (Crush to instantly regain 1 Spirit Point) and a pouch of 50 XP worth of rare ores.</td>
+    </tr>
+</table>
+`,
+
+            "Tier 3: Relics & Artifacts": `
+                <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+                    <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">Tier 3: Relics & Artifacts</h2>
+                    <p style="font-style: italic; font-size: 11pt; color: var(--ink);">"Ancient items pulsing with dormant magic and the whispers of old gods."</p>
+                </div>
+                <p><strong>How to Roll:</strong> Roll <strong>1d10</strong> when looting Bosses (like the Hobgoblin Champion), vault chests, or Titan cysts.</p>
+
+                <table>
+                    <tr><th>1d10</th><th>Artifact Name</th><th>Magical Properties</th></tr>
+                    <tr><td>1</td><td>The Warlord's Sigil</td><td>A heavy iron medallion. Grants a permanent <strong>+1 to the Authority</strong> skill.</td></tr>
+                    <tr><td>2</td><td>Potion of Rejuvenation</td><td>Restores 1d10 Wounds immediately, plus 1d10 every turn for 3 turns. Cures Exhaustion.</td></tr>
+                    <tr><td>3</td><td>Rune of Speed (Token)</td><td>A consumable stone. Crush it to instantly gain a <strong>+3 to Initiative</strong> for one encounter.</td></tr>
+                    <tr><td>4</td><td>Gauntlets of the Faultline</td><td>Unarmed attacks deal +2 Wounds. You may spend 2 AP to cast <em>Earthquake (TN 14)</em> once per day.</td></tr>
+                    <tr><td>5</td><td>The Vein-Stone Grimoire</td><td>A dark tome. Grants the reader one free <strong>Shamanic Magic</strong> spell without needing to spend XP.</td></tr>
+                    <tr><td>6</td><td>Amulet of Spell-Eating</td><td>Once per day, automatically <strong>[[✨ Counter-Cast]]</strong> an incoming spell of TN 10 or lower with 100% success.</td></tr>
+                    <tr><td>7</td><td>Ring of the Pyreborn</td><td>The wearer is completely immune to fire and lava damage, and cannot catch fire.</td></tr>
+                    <tr><td>8</td><td>Talisman of Iron Will</td><td>If the wearer is reduced to 0 Wounds, they heal 1 Wound and gain immunity to the <strong>[[💫 Stunned]]</strong> condition for 1 turn.</td></tr>
+                    <tr><td>9</td><td>Blade of the Umbral Aristocracy</td><td>+1 Magical Sword. If attacking from Stealth, it deals 3x Wounds instead of 2x.</td></tr>
+                    <tr><td>10</td><td>The Blood-Iron Decapitator</td><td>A massive 2H Axe. Deals 2d10 + (3x Physique) Wounds. Any enemy slain by it explodes, healing the wielder for 1d10 Wounds.</td></tr>
+                </table>
+            `
+        },
+        "Rules & Conditions": {
+            "✨ Arcane Mastery": `
+                <p><strong>Requirement:</strong> 15 Points in a Primary Magic Skill.</p>
+                <p><strong>The Boon:</strong> Add your total <strong>[[Spirit]]</strong> skill points as a flat bonus to all wounds caused or healed by your spells or blessings.</p>
+            `,            
+            "✨ Counter-Cast": `
+                <p><strong>Requirement:</strong> Reactive Stance (1 AP) + Held AP to match spell cost.</p>
+                <ul>
+                    <li><strong>Attacker:</strong> 1d10 + To-Cast Bonus + Skill.</li>
+                    <li><strong>Defender:</strong> 1d10 + To-Cast Bonus + (Skill OR Resist).</li>
+                    <li><strong>Tie:</strong> Attacker and Defender each take half damage or healing from the spell.</li>
+                    <li><strong>Backlash:</strong> Nat 10 win forces Attacker to make a DV 10 Willpower test or <strong>💫 Stunned</strong>.</li>
+                </ul>
+            `,
+            "🥀 Dark Corruption": `
+    <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+        <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">Dark Corruption (The Dark Mark)</h2>
+        <p style="font-style: italic; font-size: 11pt; color: var(--ink);">"It begins as a cold shiver in the marrow and ends with the black oil of Birn Uluhm leaking from the eyes."</p>
+    </div>
+
+    <p>Corruption is a cumulative status effect. Each time a player fails a <strong>Willpower</strong> test against Titan's Blood or Abyssal hazards, they gain one <strong>Stack of Corruption</strong>.</p>
+
+    <table>
+        <tr><th>Stacks</th><th>Stage</th><th>Mechanical Effect</th></tr>
+        <tr>
+            <td>1-2</td>
+            <td><strong>The Stain</strong></td>
+            <td>The character's skin feels cold to the touch. <strong>-1 penalty to Charisma</strong> as animals and NPCs feel instinctively uneasy.</td>
+        </tr>
+        <tr>
+            <td>3-4</td>
+            <td><strong>The Echo</strong></td>
+            <td>The Titan's heartbeat thrums in the player's mind. Suffer <strong>Disadvantage</strong> on all Willpower tests against magical effects.</td>
+        </tr>
+        <tr>
+            <td>5-6</td>
+            <td><strong>The Ossified Soul</strong></td>
+            <td>The oil begins to harden. <strong>Permanently lose 1 Spirit Point</strong>. This point cannot be regained until the corruption is cleansed.</td>
+        </tr>
+        <tr>
+            <td>7+</td>
+            <td><strong>Abyssal Vessel</strong></td>
+            <td>The player becomes a "Physical Form" for the mountain. Character is retired or transformed into an NPC <strong>[[Earth Elemental Juggernaut]]</strong>.</td>
+        </tr>
+    </table>
+
+    <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood); margin-top: 20px;">The Spirit Drain</h3>
+    <p>When a player loses a <strong>Spirit Point</strong> due to Corruption:</p>
+    <ul>
+        <li>They lose the flat bonus from <strong>[[✨ Arcane Mastery]]</strong> until the point is restored.</li>
+        <li>They suffer a <strong>-2 penalty</strong> to all "To-Cast" magic rolls.</li>
+    </ul>
+
+    <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood); margin-top: 20px;">Cleansing the Mark</h3>
+    <div style="background: rgba(184, 134, 11, 0.1); padding: 10px; border: 1px dashed var(--gold);">
+        <p>Corruption is not easily removed. It requires a <strong>Tier 3 Ritual</strong> or the consumption of a <strong>Celestial Salts</strong> relic found in the upper atmosphere levels. Each cleansing removes 1d10 / 2 stacks.</p>
+    </div>
+`,
+            "👁️ Held Action": `
+                <p><strong>Cost:</strong> 1 AP to prepare + Base Action Cost.</p>
+                <ul>
+                    <li>Must specify a trigger and the action being held.</li>
+                    <li>Resolves <strong>before</strong> the enemy completes their move.</li>
+                    <li>Suffer a <strong>-2 penalty</strong> (Ignored at 6+ Discipline).</li>
+                </ul>
+            `,
+            "🏃 Sprint": `<p><strong>Cost: 1 AP.</strong> Grants a flat burst of <strong>+15 ft (or +3 Squares)</strong> of distance for the current turn. This is an isolated tactical action and does not alter your character's base movement speed.</p>`,
+            "🩸 Bleeding": `<p>Lose <strong>1d10 Wounds</strong> per stack at start of turn. Remove via magic/potions.</p>`,
+            "🧎 Prone": `<p>Suffer <strong>Disadvantage</strong> on To-Hit; enemies gain <strong>Advantage</strong> in melee. Stand up costs 1 Action.</p>`,
+            "🥀 Dismayed": `<p>Lose Move action on next turn; cannot perform Reaction actions.</p>`,
+            "💫 Stunned": `<p>Immediately lose <strong>1 Action Point (AP)</strong>.</p>`,
+            "🌀 Overwhelmed": `<p>Triggered by <strong>3+ conditions</strong>. You cannot take Reaction Actions.</p>`
+        },
+        "DM Tools: Loot & Notes": `
+    <div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px; background: rgba(184, 134, 11, 0.05);">
+        <h2 style="margin: 0; color: var(--gold); font-size: 24pt;">DM Tools: The Scrap Pile & Scratchpad</h2>
+        <p style="font-style: italic; font-size: 11pt; color: var(--ink);">"Mountain debris, pocket lint, and the chaotic realities of running a session."</p>
+    </div>
+
+    <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood); margin-top: 20px;">1d10 Mountain Scrap (Minor Loot)</h3>
+    <p style="font-size: 10pt; margin-bottom: 8px;"><em>Roll when players search standard guards, slave bunks, or generic storage crates.</em></p>
+    <table style="width: 100%; text-align: left; border-collapse: collapse; margin-bottom: 20px;">
+        <tr style="background: var(--iron); color: var(--parchment);">
+            <th style="padding: 5px; border: 1px solid var(--ink); width: 10%;">d10</th>
+            <th style="padding: 5px; border: 1px solid var(--ink);">Scavenged Item</th>
+            <th style="padding: 5px; border: 1px solid var(--ink);">Value / Use</th>
+        </tr>
+        <tr><td style="padding: 4px; border: 1px solid var(--ink); text-align: center;">1-2</td><td style="padding: 4px; border: 1px solid var(--ink);">Handful of Raw Coal & Iron Slag</td><td style="padding: 4px; border: 1px solid var(--ink);">Worthless, but good for marking walls or throwing.</td></tr>
+        <tr><td style="padding: 4px; border: 1px solid var(--ink); text-align: center;">3-4</td><td style="padding: 4px; border: 1px solid var(--ink);">Rusted Birn Calipers</td><td style="padding: 4px; border: 1px solid var(--ink);">Tradeable to merchants for 10 XP.</td></tr>
+        <tr><td style="padding: 4px; border: 1px solid var(--ink); text-align: center;">5-6</td><td style="padding: 4px; border: 1px solid var(--ink);">Dwarven Rations (Hardtack & Jerky)</td><td style="padding: 4px; border: 1px solid var(--ink);">Restores 2 Wounds if consumed during a Short Rest.</td></tr>
+        <tr><td style="padding: 4px; border: 1px solid var(--ink); text-align: center;">7-8</td><td style="padding: 4px; border: 1px solid var(--ink);">Pouch of Geothermal Ash</td><td style="padding: 4px; border: 1px solid var(--ink);">Can be thrown to blind a target (DV 9 Agility test).</td></tr>
+        <tr><td style="padding: 4px; border: 1px solid var(--ink); text-align: center;">9</td><td style="padding: 4px; border: 1px solid var(--ink);">Uncut Sapphire (Low Grade)</td><td style="padding: 4px; border: 1px solid var(--ink);">Tradeable to merchants for 30 XP.</td></tr>
+        <tr><td style="padding: 4px; border: 1px solid var(--ink); color: var(--blood); text-align: center; font-weight: bold;">10</td><td style="padding: 4px; border: 1px solid var(--ink);">Vial of Lesser Machina-Oil</td><td style="padding: 4px; border: 1px solid var(--ink);">Instantly removes the <strong>[[🧎 Prone]]</strong> or <strong>[[💫 Stunned]]</strong> condition.</td></tr>
+    </table>
+
+    <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Session Scratchpad</h3>
+    <div style="background: var(--input-bg); border: 2px solid var(--iron); padding: 5px; margin-top: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--ink); margin-bottom: 5px; padding-bottom: 2px;">
+            <span style="font-size: 10pt; font-weight: 900; text-transform: uppercase; color: var(--iron);">Active Session Notes</span>
+            <button onclick="document.getElementById('dm-session-notes').value = ''; try { localStorage.removeItem('birn_dm_notes'); } catch(e){}" style="background: var(--blood); color: var(--parchment); border: 1px solid var(--ink); font-size: 8pt; cursor: pointer; padding: 2px 6px;">Clear Notes</button>
+        </div>
+        
+        <textarea id="dm-session-notes" 
+            placeholder="Track initiative, enemy Wounds, or sudden player decisions here..." 
+            oninput="try { localStorage.setItem('birn_dm_notes', this.value); } catch(e){}"
+            style="width: 100%; height: 400px; background: transparent; border: 1px dashed rgba(0,0,0,0.2); outline: none; padding: 10px; font-family: 'MedievalSharp', cursive; font-size: 14pt; color: var(--ink); line-height: 1.8em; resize: vertical;"></textarea>
+    </div>
+        
+        <textarea id="dm-session-notes" 
+            placeholder="Track initiative, enemy Wounds, or sudden player decisions here..." 
+            oninput="localStorage.setItem('birn_dm_notes', this.value)"
+            style="width: 100%; height: 400px; background: transparent; border: none; outline: none; font-family: 'MedievalSharp', cursive; font-size: 14pt; color: var(--ink); line-height: 2em; background-image: repeating-linear-gradient(transparent, transparent 1.9em, rgba(0,0,0,0.1) 1.9em, rgba(0,0,0,0.1) 2em); resize: vertical;"></textarea>
+        
+        <img src onerror="document.getElementById('dm-session-notes').value = localStorage.getItem('birn_dm_notes') || '';" style="display:none;">
+    </div>
+`,
+    };
+
+    // --- 2. ENGINE LOGIC ---
+    let flatNoteMap = {};
+    for (const category in vaultData) {
+        for (const noteTitle in vaultData[category]) {
+            flatNoteMap[noteTitle] = vaultData[category][noteTitle];
+        }
+    }
+
+    function buildSidebar() {
+        const navList = document.getElementById('nav-list');
+        navList.innerHTML = '';
+        for (const category in vaultData) {
+            const catHeader = document.createElement('div');
+            catHeader.className = 'category-block';
+            
+            const h3 = document.createElement('h3');
+            h3.innerText = category;
+            catHeader.appendChild(h3);
+
+            const ul = document.createElement('ul');
+            for (const noteTitle in vaultData[category]) {
+                const item = document.createElement('li');
+                item.className = 'nav-item';
+                item.innerText = noteTitle;
+                item.dataset.title = noteTitle;
+                item.onclick = () => loadNote(noteTitle);
+                ul.appendChild(item);
+            }
+            catHeader.appendChild(ul);
+            navList.appendChild(catHeader);
+        }
+    }
+
+    window.loadNote = function(title) {
+        if (!flatNoteMap[title]) return;
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        const activeNav = Array.from(document.querySelectorAll('.nav-item')).find(el => el.innerText === title);
+        if (activeNav) activeNav.classList.add('active');
+        
+        let rawHTML = flatNoteMap[title];
+        const parsedHTML = rawHTML.replace(/\[\[(.*?)\]\]/g, (match, p1) => {
+            const exists = flatNoteMap[p1] !== undefined;
+            const classStatus = exists ? 'wiki-link' : 'wiki-link broken';
+            const escaped = p1.replace(/'/g, "\\'"); 
+            const clickAction = exists ? `onclick="loadNote('${escaped}')"` : `title="Note not created yet"`;
+            return `<span class="${classStatus}" ${clickAction}>${p1}</span>`;
+        });
+        
+        document.getElementById('vault-content').innerHTML = `
+            <h1 id="note-title">${title}</h1>
+            <div id="note-body">${parsedHTML}</div>
+        `;
+        document.getElementById('search-input').value = '';
+        filterNav(); 
+
+        // --- NEW: Safely load the scratchpad notes without crashing ---
+        const scratchpad = document.getElementById('dm-session-notes');
+        if (scratchpad) {
+            try {
+                scratchpad.value = localStorage.getItem('birn_dm_notes') || '';
+            } catch(e) {
+                console.warn("Local storage is blocked by PC browser settings.");
+            }
+        }
+    }
+
+    window.filterNav = function() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        document.querySelectorAll('.nav-item').forEach(item => {
+            const title = item.dataset.title.toLowerCase();
+            item.style.display = title.includes(query) ? 'block' : 'none';
+        });
+    }
+
+  // --- 3. LOAD HOME SCREEN ---
+    window.loadHome = function() {
+        // Remove highlighting from sidebar items
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        
+        // Reload the welcome screen
+        document.getElementById('vault-content').innerHTML = `
+            <div class="welcome-msg">
+                <h2>Path of the Unknown</h2>
+                <p style="font-style: italic; font-size: 16pt; margin-top: 5px; color: var(--iron);">Quick Access DM Grimoire</p>
+                <div class="quick-ref" style="margin-top: 40px; text-align: left; background: rgba(0,0,0,0.05); padding: 30px; border: 2px solid var(--iron); box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <h3 style="border-bottom: 2px solid var(--blood); margin-bottom: 15px; color: var(--iron); font-size: 18pt;">Quick Reference Table</h3>
+                    <table>
+                        <tr><th>AP Cost</th><th>TN Range</th><th>Max d10s</th></tr>
+                        <tr><td>1 AP</td><td>TN 1-6</td><td>1d10</td></tr>
+                        <tr><td>2 AP</td><td>TN 7-9</td><td>2d10</td></tr>
+                        <tr><td>3 AP</td><td>TN 10-12</td><td>3d10</td></tr>
+                        <tr><td>4 AP</td><td>TN 13-15</td><td>4d10</td></tr>
+                        <tr><td>5 AP</td><td>TN 16-18</td><td>5d10</td></tr>
+                        <tr><td>6 AP</td><td>TN 19+</td><td>6d10</td></tr>
+                    </table>
+                    <h3 style="margin-top: 30px; border-bottom: 2px solid var(--blood); margin-bottom: 15px; color: var(--iron); font-size: 18pt;">The Overcast Menu (+1 AP each)</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><strong>🔥 Empower:</strong> +1d10 + Primary Stat (Wounds/Heal).</li>
+                        <li style="margin-bottom: 8px;"><strong>🎯 Precision:</strong> +2 Bonus to the roll.</li>
+                        <li style="margin-bottom: 8px;"><strong>🛡️ Piercing:</strong> Ignore 3 points of Mitigation.</li>
+                        <li style="margin-bottom: 8px;"><strong>📏 Enlarge:</strong> +10ft AoE or +1 Size.</li>
+                        <li style="margin-bottom: 8px;"><strong>⏳ Extend:</strong> Increase duration by +1 Turn.</li>
+                        <li style="margin-bottom: 8px;"><strong>🏹 Vantage:</strong> Increase max range by +50 Feet.</li>
+                        <li style="margin-bottom: 8px;"><strong>📣 Echo:</strong> Apply buff to +1 additional target.</li>
+                    </ul>
+                    <h3 style="margin-top: 30px; border-bottom: 2px solid var(--blood); margin-bottom: 15px; color: var(--iron); font-size: 18pt;">Passive: Arcane Mastery</h3>
+                    <p style="font-size: 13pt;">At <strong>15 Points</strong> in a magic skill, add your <strong>Spirit points</strong> to all wounds/healing.</p>
+                </div>
+            </div>
+        `;
+        document.getElementById('search-input').value = '';
+        filterNav();
+    };
+
+    // --- RESTORED MODAL FUNCTION ---
+    window.toggleModal = function(show) {
+        const modal = document.getElementById('modal-overlay');
+        if (modal) modal.style.display = show ? 'flex' : 'none';
+    };
+
+    // Default Welcome Screen on Load
+    window.onload = function() {
+        buildSidebar();
+        loadHome();
+    };
+    
+</script>
+</body>
+</html>
