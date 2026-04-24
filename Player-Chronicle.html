@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Chronicle - Power of Three</title>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --iron: #02070e;      
+            --blood: #A81818;     
+            --parchment: #f3e7c9; 
+            --gold: #B8860B;      
+            --input-bg: #FCF7EB;  
+            --ink: #111111;       
+            --font-heading: 'Grenze Gotisch', serif;  
+            --font-main: 'IM Fell English', serif;     
+            --font-hand: 'MedievalSharp', cursive;    
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background: var(--parchment); 
+            color: var(--ink); 
+            font-family: var(--font-main); 
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .journal-container {
+            width: 100%;
+            max-width: 8.5in; /* Standard letter width for predictable printing */
+            background: var(--input-bg);
+            border: 4px solid var(--iron);
+            box-shadow: 8px 8px 0px rgba(168, 24, 24, 0.8);
+            padding: 30px;
+            position: relative;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            border-bottom: 3px solid var(--blood);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 36pt;
+            color: var(--iron);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 14pt;
+            color: var(--blood);
+            font-style: italic;
+        }
+
+        /* Character Identity */
+        .character-binding {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .character-binding label {
+            font-family: var(--font-heading);
+            font-size: 16pt;
+            color: var(--iron);
+        }
+
+        .character-binding input[type="text"] {
+            font-family: var(--font-hand);
+            font-size: 14pt;
+            padding: 10px;
+            border: 2px solid var(--iron);
+            background: var(--parchment);
+            color: var(--ink);
+            font-weight: bold;
+            text-align: center;
+            width: 250px;
+        }
+
+        .character-binding input[type="text"]:focus {
+            outline: none;
+            border-color: var(--blood);
+        }
+
+        /* Button Styling (Touch-friendly) */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(0,0,0,0.05);
+            border: 1px dashed var(--iron);
+        }
+
+        .btn {
+            background: var(--blood);
+            color: var(--parchment);
+            border: 2px solid var(--iron);
+            padding: 12px 18px; /* Chunky padding for easy tapping */
+            font-family: var(--font-heading);
+            font-size: 14pt;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.2s;
+            box-shadow: 2px 2px 0px var(--iron);
+        }
+
+        .btn:hover {
+            background: var(--iron);
+            color: var(--gold);
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px var(--blood);
+        }
+        
+        .btn-alt {
+            background: var(--iron);
+            color: var(--gold);
+        }
+
+        /* Hidden file input for importing */
+        input[type="file"] {
+            display: none;
+        }
+
+        /* The Writing Area */
+        .notes-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 60vh;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: var(--font-hand);
+            font-size: 14pt;
+            color: var(--ink);
+            line-height: 2em;
+            resize: vertical;
+            /* Ruled lines effect */
+            background-image: repeating-linear-gradient(transparent, transparent 1.9em, rgba(184, 134, 11, 0.2) 1.9em, rgba(184, 134, 11, 0.2) 2em);
+        }
+
+        /* Print Layout Rules */
+        @media print {
+            @page { size: letter portrait; margin: 0.5in; }
+            body { background: white; padding: 0; display: block; }
+            .journal-container { 
+                box-shadow: none; 
+                border: none; 
+                width: 100%; 
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            .no-print { display: none !important; } 
+            textarea { height: auto; overflow: visible; background-image: none; border-bottom: 1px solid #ccc; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="journal-container">
+    <div class="header">
+        <h1>The Player's Chronicle</h1>
+        <p>Record your deeds, lest the mountain forget them.</p>
+    </div>
+
+    <div class="character-binding no-print">
+        <label for="char-name">Active Character:</label>
+        <input type="text" id="char-name" placeholder="Enter Name..." onblur="loadCharacterNotes()">
+        <button class="btn" id="save-btn" onclick="saveCharacterNotes()">💾 Save to Device</button>
+    </div>
+
+    <div class="btn-group no-print">
+        <button class="btn btn-alt" onclick="exportLedger()">📤 Export Ledger</button>
+        <button class="btn btn-alt" onclick="document.getElementById('import-file').click()">📥 Import Ledger</button>
+        <button class="btn btn-alt" onclick="window.print()">🖨️ Print Pages</button>
+        <button class="btn btn-alt" onclick="clearLedger()" style="color: var(--blood); border-color: var(--blood);">🗑️ Clear</button>
+        <input type="file" id="import-file" accept=".txt" onchange="importLedger(event)">
+    </div>
+
+    <div class="notes-section">
+        <textarea id="player-notes" placeholder="The journey begins here... Type your notes. They will automatically save to your device when you pause typing." oninput="autoSaveTrigger()"></textarea>
+    </div>
+</div>
+
+<script>
+    let autoSaveTimeout;
+
+    // 1. LOCAL STORAGE: Load notes based on character name
+    function loadCharacterNotes() {
+        const charName = document.getElementById('char-name').value.trim().toLowerCase();
+        const notesArea = document.getElementById('player-notes');
+        
+        if (charName === "") return;
+
+        const storageKey = 'po3_notes_' + charName;
+        const savedNotes = localStorage.getItem(storageKey);
+        
+        if (savedNotes) {
+            notesArea.value = savedNotes;
+        } else {
+            notesArea.value = "";
+        }
+    }
+
+    // 2. LOCAL STORAGE: Save notes explicitly
+    function saveCharacterNotes() {
+        const charName = document.getElementById('char-name').value.trim().toLowerCase();
+        const notesContent = document.getElementById('player-notes').value;
+        
+        if (charName === "") {
+            alert("Please enter an Active Character Name to save these notes.");
+            return;
+        }
+
+        const storageKey = 'po3_notes_' + charName;
+        localStorage.setItem(storageKey, notesContent);
+        
+        // Visual feedback
+        const saveBtn = document.getElementById('save-btn');
+        const originalText = saveBtn.innerText;
+        saveBtn.innerText = "✅ Saved!";
+        setTimeout(() => { saveBtn.innerText = originalText; }, 1500);
+    }
+
+    // 3. AUTO-SAVE: Triggers 2 seconds after typing stops
+    function autoSaveTrigger() {
+        clearTimeout(autoSaveTimeout);
+        autoSaveTimeout = setTimeout(() => {
+            const charName = document.getElementById('char-name').value.trim();
+            if (charName !== "") saveCharacterNotes();
+        }, 2000);
+    }
+
+    // 4. EXPORT: Download the notes as a text file
+    function exportLedger() {
+        const charName = document.getElementById('char-name').value.trim();
+        const notesContent = document.getElementById('player-notes').value;
+
+        if (charName === "" || notesContent === "") {
+            alert("You need a character name and some notes before exporting!");
+            return;
+        }
+
+        // Create a blob of the text data
+        const blob = new Blob([notesContent], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        
+        // Create a temporary link to trigger the download
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = charName + "_Chronicle.txt";
+        document.body.appendChild(a);
+        a.click();
+        
+        // Cleanup
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // 5. IMPORT: Read a text file and load it into the ledger
+    function importLedger(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const charNameField = document.getElementById('char-name');
+        
+        // Attempt to auto-fill the character name based on the file name
+        let fileName = file.name.replace('_Chronicle.txt', '').replace('.txt', '');
+        if (charNameField.value.trim() === "") {
+            charNameField.value = fileName;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('player-notes').value = e.target.result;
+            saveCharacterNotes(); // Auto-save the imported data to local storage
+            alert("Ledger successfully imported!");
+        };
+        reader.readAsText(file);
+        
+        // Reset the input so the same file can be selected again if needed
+        event.target.value = '';
+    }
+   // Initialize on startup - Now uses Local Storage Handoff
+    window.onload = function() {
+        // 1. Check if the Ledger just handed off a character name
+        const transferName = localStorage.getItem('po3_transfer_name');
+        
+        if (transferName) {
+            document.getElementById('char-name').value = transferName;
+            localStorage.setItem('po3_last_active_char', transferName); // Update active memory
+            localStorage.removeItem('po3_transfer_name'); // Wipe the temporary handoff data
+            loadCharacterNotes();
+        } else {
+            // 2. If opened directly, just load the last used character
+            const lastChar = localStorage.getItem('po3_last_active_char');
+            if (lastChar) {
+                document.getElementById('char-name').value = lastChar;
+                loadCharacterNotes();
+            }
+        }
+    };
+
+    // 6. CLEAR: Wipe the notes from the screen, the name, and local storage
+    function clearLedger() {
+        const charNameField = document.getElementById('char-name');
+        const charName = charNameField.value.trim();
+        const storageKey = 'po3_notes_' + charName.toLowerCase();
+
+        if (charName === "") {
+            alert("No Active Character selected to clear.");
+            return;
+        }
+
+        // The Safety Catch
+        const isConfirmed = confirm(`Are you sure you want to burn the ledger for ${charName}? This cannot be undone unless you have an exported backup.`);
+        
+        if (isConfirmed) {
+            // 1. Clear the text box
+            document.getElementById('player-notes').value = "";
+            
+            // 2. Erase the notes from the browser's memory
+            localStorage.removeItem(storageKey);
+            
+            // 3. NEW: Clear the character name field and the "last active" memory
+            charNameField.value = "";
+            localStorage.removeItem('po3_last_active_char');
+            
+            alert(`The ledger for ${charName} has been reduced to ash.`);
+        }
+    }
+
+</script>
+
+</body>
+</html>
