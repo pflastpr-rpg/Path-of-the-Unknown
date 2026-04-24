@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grimoire Forge - Power of Three</title>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --iron: #02070e;      
+            --blood: #A81818;     
+            --parchment: #f3e7c9; 
+            --gold: #B8860B;      
+            --input-bg: #FCF7EB;  
+            --ink: #111111;       
+            --font-heading: 'Grenze Gotisch', serif;  
+            --font-main: 'IM Fell English', serif;     
+            --font-hand: 'MedievalSharp', cursive;    
+        }
+
+        body { 
+            background: #1E1E24; 
+            color: var(--ink); 
+            font-family: var(--font-main); 
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .forge-container {
+            width: 1000px;
+            background: var(--parchment);
+            border: 8px solid var(--iron);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: var(--iron);
+            color: var(--gold);
+            text-align: center;
+            padding: 20px;
+            border-bottom: 4px solid var(--blood);
+        }
+
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 32pt;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0px var(--blood);
+        }
+
+        .content {
+            display: flex;
+            padding: 30px;
+            gap: 30px;
+        }
+
+        .form-section {
+            flex: 1;
+        }
+
+        .output-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 { color: var(--blood); font-family: var(--font-heading); font-size: 24pt; border-bottom: 2px solid var(--iron); margin-bottom: 20px;}
+
+        label {
+            font-weight: bold;
+            font-size: 14pt;
+            display: block;
+            margin-top: 15px;
+            color: var(--iron);
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            font-family: var(--font-hand);
+            font-size: 12pt;
+            background: var(--input-bg);
+            border: 2px solid var(--iron);
+            margin-top: 5px;
+        }
+
+        textarea { resize: vertical; min-height: 80px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+
+        .btn {
+            background: var(--blood);
+            color: white;
+            border: 2px solid var(--gold);
+            padding: 15px;
+            font-family: var(--font-heading);
+            font-size: 16pt;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 20px;
+            width: 100%;
+            transition: 0.2s;
+        }
+
+        .btn:hover { background: var(--iron); color: var(--gold); }
+
+        #output-code {
+            flex-grow: 1;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11pt;
+            background: #111;
+            color: #0f0;
+            padding: 15px;
+            white-space: pre-wrap;
+            border: 4px solid var(--iron);
+            margin-bottom: 10px;
+        }
+
+        .dynamic-section { display: none; }
+        .active-section { display: block; }
+
+    </style>
+</head>
+<body>
+
+<div class="forge-container">
+    <div class="header">
+        <h1>The Grimoire Forge</h1>
+        <p style="font-family: var(--font-hand); font-size: 14pt; margin-top: 5px;">Automated Data Builder for the DM Grimoire</p>
+    </div>
+
+    <div class="content">
+        <div class="form-section">
+            <h2>1. Choose Category</h2>
+            <select id="category-select" onchange="switchForm()">
+                <option value="bestiary">Bestiary (Monster Stat Block)</option>
+                <option value="location">Location (Room Layout)</option>
+                <option value="trap">Trap / Hazard</option>
+            </select>
+
+            <label>Entry Name (Title)</label>
+            <input type="text" id="entry-name" placeholder="e.g., Pyreborn Cultist">
+
+            <label>Flavor Text (Box Text)</label>
+            <textarea id="flavor-text" placeholder="Description read to the players..."></textarea>
+
+            <div id="form-bestiary" class="dynamic-section active-section">
+                <div class="grid-2">
+                    <div><label>Wounds</label><input type="text" id="b-wounds" placeholder="e.g., 35"></div>
+                    <div><label>Defense</label><input type="text" id="b-def" placeholder="e.g., 12"></div>
+                    <div><label>W. Mitigation</label><input type="text" id="b-mit" placeholder="e.g., 4 (Leather)"></div>
+                    <div><label>Move (Squares)</label><input type="text" id="b-move" placeholder="e.g., 6 Squares"></div>
+                    <div><label>Action Points</label><input type="text" id="b-ap" placeholder="e.g., 2"></div>
+                </div>
+
+                <label>Characteristics</label>
+                <div class="grid-6 text-center">
+                    <div><small>Agl</small><input type="text" id="b-agl" value="1"></div>
+                    <div><small>Awa</small><input type="text" id="b-awa" value="1"></div>
+                    <div><small>Cha</small><input type="text" id="b-cha" value="1"></div>
+                    <div><small>Int</small><input type="text" id="b-int" value="1"></div>
+                    <div><small>Phys</small><input type="text" id="b-phys" value="1"></div>
+                    <div><small>Wil</small><input type="text" id="b-wil" value="1"></div>
+                </div>
+
+                <label>Actions & Abilities (HTML formatting applied automatically)</label>
+                <textarea id="b-actions" placeholder="e.g., Rusty Sword (1 AP): 1d10+2 Wounds.&#10;Goblin Tactics (Passive): +1 To-Hit when allied."></textarea>
+                <small style="color: var(--blood);">*Put each ability on a new line.</small>
+            </div>
+
+            <div id="form-location" class="dynamic-section">
+                <div class="grid-2">
+                    <div><label>Lighting</label><input type="text" id="l-light" placeholder="e.g., Pitch Black"></div>
+                    <div><label>Atmosphere</label><input type="text" id="l-atmos" placeholder="e.g., Damp & Cold"></div>
+                </div>
+                <label>Hazard Level</label>
+                <input type="text" id="l-hazard" placeholder="e.g., Moderate">
+
+                <label>The Visuals (Bullet Points)</label>
+                <textarea id="l-visuals" placeholder="Large statues...&#10;Hidden lever on the wall..."></textarea>
+
+                <label>The Garrison (Enemies)</label>
+                <textarea id="l-enemies" placeholder="[[Goblin]] x3&#10;[[Hobgoblin Champion]] x1"></textarea>
+
+                <label>Tactics & Hazards</label>
+                <textarea id="l-tactics" placeholder="Enemies hold actions. Watch out for [[🧎 Prone]] hazards."></textarea>
+            </div>
+
+            <div id="form-trap" class="dynamic-section">
+                <div class="grid-2">
+                    <div><label>Detection (Perception)</label><input type="text" id="t-detect" placeholder="e.g., DV 10"></div>
+                    <div><label>Disarm (Thievery)</label><input type="text" id="t-disarm" placeholder="e.g., DV 12"></div>
+                </div>
+                <label>Danger Level</label>
+                <input type="text" id="t-danger" placeholder="e.g., Lethal">
+
+                <label>Trigger</label>
+                <textarea id="t-trigger" placeholder="e.g., Stepping on the raised floor tile."></textarea>
+
+                <label>Effect (Damage/Condition)</label>
+                <textarea id="t-effect" placeholder="e.g., 3d10 Fire Wounds and 1 [[💫 Stunned]] condition."></textarea>
+            </div>
+
+            <button class="btn" onclick="generateCode()">🔨 Forge Entry</button>
+        </div>
+
+        <div class="output-section">
+            <h2>2. Generated Code</h2>
+            <p style="font-size: 11pt;">Copy this code and paste it directly into your <strong>vaultData</strong> in the DM-Grimoire.html file.</p>
+            <textarea id="output-code" readonly placeholder="Your generated code will appear here..."></textarea>
+            <button class="btn" style="background: var(--iron); color: var(--parchment);" onclick="copyCode()">📋 Copy to Clipboard</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchForm() {
+        document.querySelectorAll('.dynamic-section').forEach(el => el.classList.remove('active-section'));
+        const type = document.getElementById('category-select').value;
+        document.getElementById('form-' + type).classList.add('active-section');
+    }
+
+    function formatList(text) {
+        if (!text) return "";
+        const lines = text.split('\\n').filter(line => line.trim() !== '');
+        let html = '<ul style="line-height: 1.6; margin-top: 10px;">\\n';
+        lines.forEach(line => {
+            html += `        <li style="margin-bottom: 8px;">${line}</li>\\n`;
+        });
+        html += '    </ul>';
+        return html;
+    }
+
+    function generateCode() {
+        const type = document.getElementById('category-select').value;
+        const name = document.getElementById('entry-name').value || 'Unnamed Entry';
+        const flavor = document.getElementById('flavor-text').value || '';
+        let output = '';
+
+        if (type === 'bestiary') {
+            output = `
+"${name}": \`
+    <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--blood); font-size: 22pt;">${name}</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--iron);">${flavor}</p>
+    </div>
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color: var(--blood); font-size: 14pt;"><strong>${document.getElementById('b-wounds').value}</strong></td>
+            <td>${document.getElementById('b-def').value}</td>
+            <td>${document.getElementById('b-mit').value}</td>
+            <td>${document.getElementById('b-move').value}</td>
+            <td>${document.getElementById('b-ap').value}</td>
+        </tr>
+    </table>
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Characteristics</h3>
+    <table>
+        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+        <tr>
+            <td>${document.getElementById('b-agl').value}</td>
+            <td>${document.getElementById('b-awa').value}</td>
+            <td>${document.getElementById('b-cha').value}</td>
+            <td>${document.getElementById('b-int').value}</td>
+            <td>${document.getElementById('b-phys').value}</td>
+            <td>${document.getElementById('b-wil').value}</td>
+        </tr>
+    </table>
+    <h3 style="margin-top: 15px; border-bottom: 2px solid var(--gold);">Actions & Abilities</h3>
+    ${formatList(document.getElementById('b-actions').value)}
+\`,`;
+        } else if (type === 'location') {
+            output = `
+"${name}": \`
+    <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
+        <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">${name}</h2>
+        <p style="font-style: italic; font-size: 12pt; color: var(--ink);">"${flavor}"</p>
+    </div>
+    <table>
+        <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>
+        <tr>
+            <td>${document.getElementById('l-light').value}</td>
+            <td>${document.getElementById('l-atmos').value}</td>
+            <td style="color: var(--blood);"><strong>${document.getElementById('l-hazard').value}</strong></td>
+        </tr>
+    </table>
+    <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Visuals</h3>
+    ${formatList(document.getElementById('l-visuals').value)}
+    <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">The Garrison</h3>
+    ${formatList(document.getElementById('l-enemies').value)}
+    <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Tactics & Hazards</h3>
+    <div style="background: rgba(168, 24, 24, 0.05); padding: 10px; border: 1px dashed var(--blood);">
+        <p>${document.getElementById('l-tactics').value}</p>
+    </div>
+\`,`;
+        } else if (type === 'trap') {
+            output = `
+"${name}": \`
+    <div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px; background: rgba(184, 134, 11, 0.05);">
+        <h2 style="margin: 0; color: var(--gold); font-size: 20pt;">${name}</h2>
+        <p style="font-style: italic; font-size: 11pt; color: var(--ink);">"${flavor}"</p>
+    </div>
+    <table>
+        <tr><th>Detection (Perception)</th><th>Disarm (Thievery)</th><th>Danger Level</th></tr>
+        <tr>
+            <td>${document.getElementById('t-detect').value}</td>
+            <td>${document.getElementById('t-disarm').value}</td>
+            <td style="color: var(--blood);"><strong>${document.getElementById('t-danger').value}</strong></td>
+        </tr>
+    </table>
+    <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Trigger</h3>
+    <p>${document.getElementById('t-trigger').value}</p>
+    <h3 style="border-bottom: 2px solid var(--iron); color: var(--blood);">Effect</h3>
+    <p>${document.getElementById('t-effect').value}</p>
+\`,`;
+        }
+
+        document.getElementById('output-code').value = output;
+    }
+
+    function copyCode() {
+        const copyText = document.getElementById("output-code");
+        copyText.select();
+        document.execCommand("copy");
+        alert("Code copied to clipboard! You can now paste this directly into your DM-Grimoire.html vaultData.");
+    }
+</script>
+</body>
+</html>
