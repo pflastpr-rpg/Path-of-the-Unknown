@@ -407,11 +407,7 @@
             #w_bonus { height: 22px !important; font-size: 10pt !important; width: 22px !important; }
 
             /* 5. Keep blocks from breaking across pages */
-            .readiness-block, .readiness-table, .def-horiz-container, .gear-area, .extra-gear-row, .sk-c, .magic-section, .knowledge-section { page-break-inside: avoid !important; break-inside: avoid !important; }
-            /* Glue h-box + gear-area + artifacts as one unit */
-            .h-box { page-break-after: avoid !important; break-after: avoid !important; }
-            .gear-area { page-break-before: avoid !important; break-before: avoid !important; page-break-after: avoid !important; break-after: avoid !important; }
-            .extra-gear-row { page-break-before: avoid !important; break-before: avoid !important; }
+            .readiness-block, .readiness-table, .def-horiz-container, .gear-and-artifacts, .sk-c, .magic-section, .knowledge-section { page-break-inside: avoid !important; break-inside: avoid !important; }
 
             /* Force spec-container to stay side-by-side in print */
             .spec-container { display: flex !important; flex-direction: row !important; gap: 6px !important; width: 100% !important; }
@@ -438,13 +434,7 @@
             input, textarea { font-family: var(--font-hand) !important; font-size: 12.5pt; color: var(--ink); }
             .char-val { height: 28px !important; font-size: 13pt !important; }
             .char-box { height: 52px !important; }
-            .t-r input, .t-r select { height: 22px !important; font-size: 10pt !important; }
-            .g-item select, .g-item input, .m-skill-box input { height: 24px !important; font-size: 10.5pt !important; }
-            .c-l-spec { padding: 2px !important; }
-            .c-box { padding: 1px !important; gap: 1px !important; }
-            .t-h span { font-size: 8pt !important; }
-            .w-note { height: 20px !important; font-size: 9pt !important; }
-            .w-note-label { font-size: 8pt !important; }
+            .t-r input, .t-r select, .g-item select, .g-item input, .m-skill-box input { height: 26px !important; font-size: 11pt !important; }
             .mounted-bar { height: 32px !important; margin-bottom: 2px !important; padding: 0 5px !important; }
             .m-skill-box { height: 28px !important; }
 
@@ -839,7 +829,7 @@
 
         <!-- Blessings & Spells Table -->
         <div class="readiness-table" style="flex:1; display:flex; flex-direction:column;">
-            <div class="rt-head" style="background:var(--blood);">Blessings &amp; Spells</div>
+            <div class="rt-head" style="background:#3D1A6E; border-bottom-color:#7B4FBF;">Blessings &amp; Spells</div>
             <div class="rt-grid" style="padding:3px; flex:1; justify-content:space-around;">
                 <div class="cast-grid-row">
                     <span class="cm-label" style="color:var(--gold);">+Cast</span>
@@ -993,6 +983,7 @@
 <!-- ============================================================ -->
 <!-- PAGE 2: MAGIC                                                 -->
 <!-- ============================================================ -->
+<div class="gear-and-artifacts">
 <div class="h-box">Armor &amp; Gear</div>
 <div class="gear-area">
     <div class="gear-row" style="align-items:flex-start;">
@@ -1051,7 +1042,7 @@
     <div class="extra-gear-box"><label>Artifact 2</label><input type="text" id="art_2" placeholder="..."></div>
     <div class="extra-gear-box"><label>Artifact 3</label><input type="text" id="art_3" placeholder="..."></div>
 </div>
-
+</div><!-- end gear-and-artifacts -->
 
 <div class="page-div"></div>
 <div class="page-title">Magic / Mystics and Religion</div>
