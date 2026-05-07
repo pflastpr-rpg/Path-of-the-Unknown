@@ -258,6 +258,9 @@
         .k-item.locked::after { content: "🔒"; position: absolute; right: 5px; font-size: 8pt; }
         .k-cb { transform: scale(1.2); }
         #spells-grid .k-item { gap: 1px; }
+        #spells-grid .k-item.cantrip-slot { border-color: #3D1A6E; background: rgba(61,26,110,0.06); }
+        #spells-grid .k-item.cantrip-slot .spell-select { color: #3D1A6E; }
+        #spells-grid .k-item.cantrip-slot::before { content: "✦"; font-size: 8pt; color: #3D1A6E; flex-shrink: 0; padding-right: 2px; }
         .k-item select.spell-select { font-size: 12pt; cursor: help; }
         .k-item input.spell-cost { flex: 0 0 60px !important; width: 60px; border-left: 1px solid rgba(0,0,0,0.2) !important; padding: 0 1px; font-size: 10.5pt; text-align: center; color: var(--blood); background: rgba(0,0,0,0.08); }
         .k-item input.spell-ap { flex: 0 0 38px !important; width: 38px; font-size: 10.5pt; padding: 0; text-align: center; background: rgba(168,24,24,0.1); color: var(--blood); font-weight: 900; border: none; border-left: 1px solid rgba(0,0,0,0.1); }
@@ -1760,9 +1763,15 @@ function upd() {
 // 4. SPELL UNLOCKING
 // ================================================================
 function updateSpellUnlocks() {
+    const CANTRIP_SLOTS = 5; // always available when path is active
     let activeMagicPts = 0;
+    let isMagicPathActive = false;
+    let activeTradition = null;
+
     document.querySelectorAll('.magic-cb').forEach(cb => {
         if (cb.checked) {
+            isMagicPathActive = true;
+            activeTradition = cb.value;
             if (cb.value === "Runes") {
                 activeMagicPts = parseInt(g('runemaster_pts')?.value) || 0;
             } else {
@@ -1772,16 +1781,60 @@ function updateSpellUnlocks() {
             }
         }
     });
+
     const disciplinePts = parseInt(g('label-Discipline')?.parentNode.querySelector('.sk-p')?.value) || 0;
     const totalUnlocked = activeMagicPts + Math.floor(disciplinePts / 3);
+
+    // Build cantrip-only options for the first CANTRIP_SLOTS slots
+    let cantripsHTML = '<option value="" data-tn="">- Cantrip -</option>';
+    if (isMagicPathActive && activeTradition) {
+        const spellList = activeTradition === "Religion" ? RELIGION_SPELLS :
+                          activeTradition === "Druidic"  ? DRUIDIC_SPELLS  :
+                          activeTradition === "Magic"    ? MAGIC_SPELLS    :
+                          activeTradition === "Ki"       ? KI_POWERS       :
+                          activeTradition === "Runes"    ? RUNES_LIST      :
+                          activeTradition === "Shaman"   ? SHAMAN_SPELLS   : [];
+        spellList.filter(s => s.tn === "TN0" || s.tn === "T0/P~")
+                 .forEach(s => cantripsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`);
+    }
+
     document.querySelectorAll('#spells-grid .k-item').forEach((slot, index) => {
         const sel = slot.querySelector('.spell-select');
-        if (index < totalUnlocked) {
-            slot.classList.remove('locked');
-            if (sel) sel.disabled = false;
-        } else {
+        const isCantrip = index < CANTRIP_SLOTS;
+
+        if (!isMagicPathActive) {
+            // No path active — lock everything
             slot.classList.add('locked');
+            slot.classList.remove('cantrip-slot');
             if (sel) { sel.disabled = true; sel.value = ""; updateSpellCost(sel); }
+            return;
+        }
+
+        if (isCantrip) {
+            // Cantrip slot — always unlocked, only TN0 options
+            slot.classList.remove('locked');
+            slot.classList.add('cantrip-slot');
+            if (sel) {
+                sel.disabled = false;
+                // Only repopulate if it doesn't already have cantrip options
+                if (!sel.querySelector('option[data-tn="TN0"]') && !sel.querySelector('option[data-tn="T0/P~"]')) {
+                    const saved = sel.value;
+                    sel.innerHTML = cantripsHTML;
+                    if (saved) sel.value = saved;
+                    updateSpellCost(sel);
+                }
+            }
+        } else {
+            // Regular slot — gated by skill pts (offset by cantrip slots)
+            const regularIndex = index - CANTRIP_SLOTS;
+            slot.classList.remove('cantrip-slot');
+            if (regularIndex < totalUnlocked) {
+                slot.classList.remove('locked');
+                if (sel) sel.disabled = false;
+            } else {
+                slot.classList.add('locked');
+                if (sel) { sel.disabled = true; sel.value = ""; updateSpellCost(sel); }
+            }
         }
     });
 }
@@ -1817,6 +1870,8 @@ function handleMagicCheck(cb) {
             if (sel.dataset.savedValue) sel.value = sel.dataset.savedValue;
             if(typeof updateSpellCost === "function") updateSpellCost(sel);
         });
+        // Re-run unlock so cantrip slots get filtered TN0 options immediately
+        updateSpellUnlocks();
 
         // --- THE KNOWLEDGE AUTO-CHECK ---
         if(kInputs.length > 0 && kChecks.length > 0) {
