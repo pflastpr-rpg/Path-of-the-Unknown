@@ -457,6 +457,10 @@
             .cm-row { padding: 2px 0 !important; }
             .cast-grid-row input { height: 26px !important; font-size: 11pt !important; width: 42px !important; }
             .cast-grid-row { padding: 2px 0 !important; }
+            /* Blessings table new layout print compression */
+            #cm-cast-hit, #bon-cast-hit, #cm-wounds-cast, #bon-wounds-cast,
+            #cm-wevil-cast, #cm-healing-cast, #bon-healing-cast,
+            #cm-resist-cast, #cm-turns-cast { height: 24px !important; font-size: 11pt !important; width: 38px !important; }
             .def-item label { font-size: 9.5pt !important; }
             .def-item input { height: 26px !important; font-size: 11pt !important; width: 28px !important; }
             .def-horiz { padding: 4px !important; }
@@ -843,24 +847,47 @@
         <!-- Blessings & Spells Table -->
         <div class="readiness-table" style="flex:1; display:flex; flex-direction:column;">
             <div class="rt-head" style="background:#3D1A6E; border-bottom-color:#7B4FBF;">Blessings &amp; Spells</div>
-            <div class="rt-grid" style="padding:3px; flex:1; justify-content:space-around;">
-                <div class="cast-grid-row">
-                    <span class="cm-label" style="color:var(--gold);">+Cast</span>
-                    <div class="cm-inputs"><input type="number" id="cm-cast-hit" readonly><input type="number" id="bon-cast-hit" oninput="upd()" placeholder="+" style="background:var(--input-bg);"></div>
-                    <span class="cm-label">Damage</span>
-                    <div class="cm-inputs"><input type="number" id="cm-wounds-cast" readonly style="color:var(--blood);"><input type="number" id="bon-wounds-cast" oninput="upd()" placeholder="+" style="background:var(--input-bg);"></div>
+            <div style="flex:1; display:flex; gap:0; padding:3px;">
+
+                <!-- Col 1: +Cast, Damage, Heal -->
+                <div style="flex:1; display:flex; flex-direction:column; gap:4px; border-right:1px solid rgba(0,0,0,0.15); padding-right:6px;">
+                    <div style="display:flex; align-items:center; gap:3px; padding-bottom:3px;">
+                        <span class="cm-label" style="color:var(--gold); width:64px; flex-shrink:0;">+Cast</span>
+                        <input type="number" id="cm-cast-hit" readonly style="width:46px; height:34px; text-align:center; font-size:15pt; font-weight:900; border:1.5px solid var(--ink); background:rgba(0,0,0,0.08);">
+                        <input type="number" id="bon-cast-hit" oninput="upd()" placeholder="+" style="width:38px; height:34px; text-align:center; font-size:13pt; font-weight:900; border:1.5px solid var(--ink); background:var(--input-bg);">
+                    </div>
+                    <div style="display:flex; align-items:center; gap:3px; padding-bottom:3px;">
+                        <span class="cm-label" style="color:var(--blood); width:64px; flex-shrink:0;">Damage</span>
+                        <input type="number" id="cm-wounds-cast" readonly style="width:46px; height:34px; text-align:center; font-size:15pt; font-weight:900; border:1.5px solid var(--ink); background:rgba(0,0,0,0.08); color:var(--blood);" title="Spell damage">
+                        <input type="number" id="bon-wounds-cast" oninput="upd()" placeholder="+" style="width:38px; height:34px; text-align:center; font-size:13pt; font-weight:900; border:1.5px solid var(--ink); background:var(--input-bg);">
+                    </div>
+                    <div style="display:flex; align-items:center; gap:3px; padding-bottom:3px;">
+                        <span class="cm-label" style="color:var(--gold); width:64px; flex-shrink:0; font-size:9.5pt;">☩ Evil Dmg</span>
+                        <input type="number" id="cm-wevil-cast" readonly style="width:46px; height:34px; text-align:center; font-size:15pt; font-weight:900; border:1.5px solid var(--gold); background:rgba(184,134,11,0.08); color:var(--gold);" title="Spell damage vs Evil (+Light-Soul)">
+                    </div>
+                    <div style="display:flex; align-items:center; gap:3px;">
+                        <span class="cm-label" style="color:var(--success); width:64px; flex-shrink:0;">Heal</span>
+                        <input type="number" id="cm-healing-cast" readonly style="width:46px; height:34px; text-align:center; font-size:15pt; font-weight:900; border:1.5px solid var(--ink); background:rgba(0,0,0,0.08); color:var(--success);">
+                        <input type="number" id="bon-healing-cast" oninput="upd()" placeholder="+" style="width:38px; height:34px; text-align:center; font-size:13pt; font-weight:900; border:1.5px solid var(--ink); background:var(--input-bg);">
+                    </div>
                 </div>
-                <div class="cast-grid-row">
-                    <span class="cm-label" style="color:var(--success);">Heal</span>
-                    <div class="cm-inputs"><input type="number" id="cm-healing-cast" readonly style="color:var(--success);"><input type="number" id="bon-healing-cast" oninput="upd()" placeholder="+" style="background:var(--input-bg);"></div>
-                    <span class="cm-label">Resist</span>
-                    <div class="cm-inputs"><input type="number" id="cm-resist-cast" readonly><input type="number" id="bon-resist-cast" oninput="upd()" placeholder="+" style="background:var(--input-bg);"></div>
+
+                <!-- Col 2: Resist, Turns, Arcane -->
+                <div style="flex:0 0 auto; display:flex; flex-direction:column; gap:6px; padding-left:4px; justify-content:space-between;">
+                    <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+                        <span class="cm-label" style="font-size:9pt;">Resist</span>
+                        <input type="number" id="cm-resist-cast" readonly style="width:52px; height:34px; text-align:center; font-size:15pt; font-weight:900; border:1.5px solid var(--ink); background:rgba(0,0,0,0.08);">
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+                        <span class="cm-label" style="font-size:9pt;">Turns</span>
+                        <input type="number" id="cm-turns-cast" readonly style="width:52px; height:34px; text-align:center; font-size:15pt; font-weight:900; border:1.5px solid var(--ink); background:rgba(0,0,0,0.08);">
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; gap:3px; padding-top:2px;">
+                        <span style="font-size:11pt; font-weight:900; color:var(--gold); text-transform:uppercase; letter-spacing:0.5px; text-align:center;">Arcane</span>
+                        <span id="arcane-mastery-display" style="font-size:14pt; font-weight:900; color:var(--blood); text-align:center;">Inactive</span>
+                    </div>
                 </div>
-                <div class="cast-grid-row" style="border-bottom:none;">
-                    <span class="cm-label">Turns</span>
-                    <div class="cm-inputs"><input type="number" id="cm-turns-cast" readonly><input type="number" id="bon-turns-cast" oninput="upd()" placeholder="+" style="background:var(--input-bg);"></div>
-                    <span style="grid-column:span 2; font-size:10pt; font-weight:900; color:var(--gold); text-align:right; padding-right:4px;">ARCANE: <span id="arcane-mastery-display" style="color:var(--blood);">Inactive</span></span>
-                </div>
+
             </div>
         </div>
 
@@ -1562,6 +1589,7 @@ function upd() {
         const castDmgBon = gv('bon-wounds-cast');
         const finalCastWounds = castWoundBase + skillWoundBonus + arcaneBonus + castDmgBon;
         sv('cm-wounds-cast', isMagicActive ? finalCastWounds : 0);
+        sv('cm-wevil-cast',  isMagicActive ? finalCastWounds + lightSoulPts : 0);
 
         // Cast healing
         let castHealBase = 0, magicHealBonus = 0;
@@ -1574,8 +1602,8 @@ function upd() {
         // Cast resist & turns
         const skillBonusResist = (activePrimary >= 6) ? Math.floor((activePrimary - 3) / 3) : 0;
         const skillBonusTurns  = Math.floor(activePrimary / 3);
-        sv('cm-resist-cast', (parseInt(g('bon-resist-cast')?.value) || 0) + skillBonusResist);
-        sv('cm-turns-cast',  (parseInt(g('bon-turns-cast')?.value)  || 0) + skillBonusTurns);
+        sv('cm-resist-cast', skillBonusResist);
+        sv('cm-turns-cast',  skillBonusTurns);
     }
 
     // ---- L. Melee combat calculations ----
@@ -1652,6 +1680,7 @@ function upd() {
         const base = gv(`cm-wounds-${id}`);
         sv(`cm-wevil-${id}`, lightSoulPts + base);
     });
+    // Cast vs Evil is handled directly after finalCastWounds above
 
     // ---- O. Mending: 2 wounds healed per point (pts × 2) ----
     const mendingHealVal  = mendingPts * 2;     // wounds restored per use
