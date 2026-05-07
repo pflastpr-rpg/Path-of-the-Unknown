@@ -1532,7 +1532,7 @@ function upd() {
     let coreCastStat = 0, castArmorPenalty = 0, activePrimary = activeMagicSkillPts;
     if (!isRunesActive) {
         const halvedTN = Math.floor(armorTN / 2);
-        if (isKiActive)       { coreCastStat = Math.floor(physT / 5); castArmorPenalty = 0; }
+        if (isKiActive)       { coreCastStat = Math.floor(physT / 5); castArmorPenalty = armorTN; }
         else if (isReligionActive) { coreCastStat = Math.floor(chaT / 5);  castArmorPenalty = halvedTN; }
         else if (isDruidActive)    { coreCastStat = Math.floor(awaT / 5);  castArmorPenalty = armorTN; }
         else if (isShamanActive)   { coreCastStat = Math.floor(wilT / 5);  castArmorPenalty = armorTN; }
