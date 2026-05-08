@@ -27,6 +27,7 @@
             justify-content: center; 
             padding: 40px 20px; 
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .compendium-wrapper {
@@ -81,6 +82,7 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 0.9em;
             display: block;
+            margin-top: 5px;
             margin-bottom: 15px;
         }
 
@@ -112,8 +114,30 @@
             color: var(--gold);
         }
 
+        /* --- RESPONSIVE: TABLET (≤768px) --- */
+        @media screen and (max-width: 768px) {
+            body { font-size: 16px; padding: 20px 12px; }
+            .compendium-wrapper { padding: 24px; }
+            h1 { font-size: 2.2em; margin-bottom: 28px; }
+            h2.category-title { font-size: 1.8em; margin-top: 36px; }
+            .skill-name { font-size: 1.5em; }
+            .specialization-title { font-size: 1.2em; }
+        }
+
+        /* --- RESPONSIVE: PHONE (≤500px) --- */
+        @media screen and (max-width: 500px) {
+            body { font-size: 15px; padding: 12px 8px; }
+            .compendium-wrapper { padding: 16px; border-width: 3px; }
+            h1 { font-size: 1.9em; letter-spacing: 1px; }
+            h2.category-title { font-size: 1.5em; margin-top: 28px; margin-bottom: 20px; }
+            .skill-block { padding: 14px; }
+            .skill-name { font-size: 1.3em; }
+            .skill-mechanic { font-size: 0.82em; }
+            .specialization-title { font-size: 1.1em; }
+        }
+
         @media print {
-            body { background: none; padding: 0; }
+            body { background: none; padding: 0; overflow-x: visible; }
             .compendium-wrapper { box-shadow: none; border: 2px solid var(--iron); max-width: 100%; }
         }
     </style>
