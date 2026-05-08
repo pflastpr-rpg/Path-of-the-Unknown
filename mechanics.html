@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path of the Unknown - Build Guide & Mechanics Reference</title>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --iron: #02070e;
+            --blood: #A81818;
+            --parchment: #f3e7c9;
+            --gold: #B8860B;
+            --input-bg: #FCF7EB;
+            --ink: #111111;
+            --font-heading: 'Grenze Gotisch', serif;
+            --font-main: 'IM Fell English', serif;
+            --font-mono: 'Courier New', Courier, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #1E1E24;
+            color: var(--ink);
+            font-family: var(--font-main);
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .wrapper {
+            max-width: 1000px;
+            width: 100%;
+            background: var(--parchment);
+            border: 5px solid var(--iron);
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            padding: 50px 50px 60px;
+        }
+
+        /* --- HEADER --- */
+        .page-title {
+            font-family: var(--font-heading);
+            font-size: 3em;
+            color: var(--iron);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 3px solid var(--blood);
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-style: italic;
+            color: var(--blood);
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .page-intro {
+            text-align: center;
+            font-size: 0.95em;
+            color: #444;
+            margin-bottom: 40px;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- TOC --- */
+        .toc {
+            background: rgba(2,7,14,0.04);
+            border: 2px solid var(--gold);
+            padding: 20px 28px;
+            margin-bottom: 50px;
+        }
+        .toc h3 {
+            font-family: var(--font-heading);
+            font-size: 1.4em;
+            color: var(--blood);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .toc ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 4px 20px;
+            list-style: none;
+        }
+        .toc ul li a {
+            color: var(--iron);
+            text-decoration: none;
+            font-size: 0.95em;
+            font-weight: bold;
+        }
+        .toc ul li a:hover { color: var(--blood); text-decoration: underline; }
+        .toc ul li::before { content: "⚔ "; color: var(--gold); font-size: 0.8em; }
+
+        /* --- SECTION HEADERS --- */
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2em;
+            color: var(--blood);
+            border-bottom: 2px solid var(--iron);
+            padding-bottom: 6px;
+            margin-top: 55px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .subsection-title {
+            font-family: var(--font-heading);
+            font-size: 1.4em;
+            color: var(--iron);
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-left: 5px solid var(--gold);
+            padding-left: 10px;
+        }
+
+        /* --- FORMULA BLOCK --- */
+        .formula-block {
+            background: var(--iron);
+            color: var(--gold);
+            font-family: var(--font-mono);
+            font-size: 1em;
+            font-weight: bold;
+            padding: 12px 18px;
+            margin: 12px 0;
+            border-left: 5px solid var(--blood);
+            letter-spacing: 0.5px;
+            word-break: break-word;
+        }
+
+        /* --- MECHANIC CARD --- */
+        .mech-card {
+            background: rgba(2,7,14,0.03);
+            border-left: 4px solid var(--gold);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+        .mech-card p { margin-bottom: 8px; }
+        .mech-card p:last-child { margin-bottom: 0; }
+        .mech-card ul { margin: 8px 0 8px 20px; }
+        .mech-card ul li { margin-bottom: 4px; }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.75em;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 2px;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+        .tag-melee  { background: rgba(168,24,24,0.15); color: var(--blood); border: 1px solid var(--blood); }
+        .tag-ranged { background: rgba(184,134,11,0.15); color: #7a5c00; border: 1px solid var(--gold); }
+        .tag-spell  { background: rgba(2,7,14,0.12); color: var(--iron); border: 1px solid var(--iron); }
+        .tag-heal   { background: rgba(46,125,50,0.12); color: #1b5e20; border: 1px solid #2e7d32; }
+        .tag-defense{ background: rgba(30,80,160,0.12); color: #0d3b80; border: 1px solid #1565c0; }
+        .tag-passive{ background: rgba(100,60,0,0.1); color: #5a3e00; border: 1px solid #8a6000; }
+
+        /* Example box */
+        .example-box {
+            background: rgba(184,134,11,0.08);
+            border: 1px dashed var(--gold);
+            padding: 12px 16px;
+            margin-top: 10px;
+            font-size: 0.92em;
+            font-style: italic;
+            color: #333;
+        }
+        .example-box strong { font-style: normal; color: var(--blood); }
+
+        /* Build path callout */
+        .build-path {
+            background: rgba(168,24,24,0.06);
+            border: 2px solid var(--blood);
+            padding: 16px 20px;
+            margin: 20px 0;
+        }
+        .build-path h4 {
+            font-family: var(--font-heading);
+            font-size: 1.2em;
+            color: var(--blood);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .build-path ul { margin-left: 20px; }
+        .build-path ul li { margin-bottom: 4px; font-size: 0.95em; }
+
+        /* Divider */
+        .divider {
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 50px 0;
+            border: none;
+        }
+
+        /* Back link */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 60px;
+            font-family: var(--font-heading);
+            font-size: 1.4em;
+            color: var(--blood);
+            text-decoration: none;
+        }
+        .back-link:hover { color: var(--gold); }
+
+        /* --- RESPONSIVE --- */
+        @media screen and (max-width: 768px) {
+            body { font-size: 15px; padding: 20px 12px; }
+            .wrapper { padding: 28px 20px 40px; }
+            .page-title { font-size: 2.2em; }
+            .section-title { font-size: 1.6em; }
+            .toc ul { grid-template-columns: 1fr; }
+        }
+        @media screen and (max-width: 500px) {
+            body { font-size: 14px; padding: 10px 6px; }
+            .wrapper { padding: 18px 14px 30px; border-width: 3px; }
+            .page-title { font-size: 1.8em; letter-spacing: 1px; }
+        }
+
+        @media print {
+            body { background: none; padding: 0; overflow-x: visible; }
+            .wrapper { box-shadow: none; border: 2px solid var(--iron); max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <h1 class="page-title">Build Guide & Mechanics Reference</h1>
+    <p class="page-subtitle">"Know the numbers. Master the battlefield."</p>
+    <p class="page-intro">This reference compiles every core calculation in Path of the Unknown — how To-Hit rolls are built, how wounds are calculated, how defense is structured, and what skills and characteristics feed into each. Use this as your roadmap when building or advancing a character.</p>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="#core-roll">The Core Roll</a></li>
+            <li><a href="#action-points">Action Points (AP)</a></li>
+            <li><a href="#melee-to-hit">Melee To-Hit</a></li>
+            <li><a href="#ranged-to-hit">Ranged To-Hit</a></li>
+            <li><a href="#spell-to-cast">Spell To-Cast</a></li>
+            <li><a href="#melee-wounds">Melee Wounds</a></li>
+            <li><a href="#ranged-wounds">Ranged Wounds</a></li>
+            <li><a href="#spell-wounds">Spell Wounds</a></li>
+            <li><a href="#healing">Healing & Blessings</a></li>
+            <li><a href="#wound-mitigation">Wound Mitigation (WM)</a></li>
+            <li><a href="#defense">Defense & Dodge</a></li>
+            <li><a href="#conditions">Conditions Reference</a></li>
+            <li><a href="#xp-progression">XP & Progression</a></li>
+            <li><a href="#build-archetypes">Build Archetypes</a></li>
+        </ul>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- CORE ROLL -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="core-roll">The Core Roll</h2>
+
+    <div class="mech-card">
+        <p>Almost every action in the game resolves with a single <strong>d10 roll</strong> compared against a <strong>Difficulty Value (DV)</strong>. Roll equal to or above the DV to succeed.</p>
+        <div class="formula-block">ROLL: 1d10 + Relevant Characteristic ≥ DV</div>
+        <ul>
+            <li><strong>Natural 10</strong> — Always a Critical Success regardless of DV. Triggers bonus effects on most skills.</li>
+            <li><strong>Natural 1</strong> — Always a failure. Some skills apply additional penalties.</li>
+            <li><strong>Advantage</strong> — Roll 2d10, take the higher result.</li>
+            <li><strong>Disadvantage</strong> — Roll 2d10, take the lower result.</li>
+        </ul>
+    </div>
+
+    <div class="example-box">
+        <strong>Example:</strong> You attempt a Melee strike (DV 6). Your Agility is 4. You roll a 3 on the d10. Total = 3 + 4 = 7. Success — the blow lands.
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ACTION POINTS -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="action-points">Action Points (AP)</h2>
+
+    <div class="mech-card">
+        <p>Each combatant receives <strong>3 Action Points (AP)</strong> per turn. Every action has an AP cost. When your pool is empty, your turn ends.</p>
+        <ul>
+            <li><strong>1 AP</strong> — Standard attack, move, use an item, reactionary skill (Block, Deflect, Dodge)</li>
+            <li><strong>2 AP</strong> — Most Advanced Vocation activations, power stances, Jailbreak escape</li>
+            <li><strong>3 AP</strong> — Heavy commitment strikes (Whirlwind, Full-Weight, Slash, Lights-Out)</li>
+            <li><strong>5 AP (Sequential)</strong> — Epic Vocation abilities like Rebirth (spread across consecutive turns)</li>
+        </ul>
+        <p>Reactionary skills (Block, Deflect, Dodge) are spent from your <em>next turn's</em> pool when triggered by an enemy attack during their turn.</p>
+    </div>
+
+    <div class="example-box">
+        <strong>Build Tip:</strong> Characters who want to use 2 AP skills offensively and still have a reactionary defense should plan around skills that refresh AP (Command's <em>Blood Rally</em> crit) or that eliminate the need for reactions entirely (Battle-Ready, high Dodge).
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MELEE TO-HIT -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="melee-to-hit">Melee To-Hit</h2>
+    <span class="tag tag-melee">Melee</span>
+
+    <div class="mech-card">
+        <p>Melee To-Hit is a contested or DV-based roll. Your primary offensive characteristic is <strong>Agility</strong>, though some skills also feed in <strong>Physique</strong> or <strong>Awareness</strong>.</p>
+        <div class="formula-block">BASE MELEE TO-HIT: 1d10 + Agility vs. Target DV</div>
+        <p><strong>What raises your Melee To-Hit:</strong></p>
+        <ul>
+            <li><strong>Agility Characteristic</strong> — Direct bonus to every melee roll.</li>
+            <li><strong>Melee Weapon Skill Points</strong> — Skill ranks grant additional flat bonuses as defined by the weapon proficiency.</li>
+            <li><strong>Battle-Ready (Berserker spec)</strong> — Ignores all Disadvantage penalties to To-Hit for that turn.</li>
+            <li><strong>Nimble Strike</strong> — Advantage on the To-Hit roll when using the skill.</li>
+            <li><strong>Phantom Assassin</strong> — Advantage To-Hit when attacking from Stealth or while Flanking.</li>
+            <li><strong>Shield Rush</strong> — Bonus To-Hit equal to your Shieldsman Skill Points.</li>
+            <li><strong>Expose Armor</strong> — Does not improve To-Hit, but lowers effective WM on a hit (see Wound Mitigation).</li>
+            <li><strong>Command (Blood Rally crit)</strong> — Grants an ally a refreshed AP pool, enabling an additional attack.</li>
+        </ul>
+    </div>
+
+    <div class="build-path">
+        <h4>⚔ Melee To-Hit Build Path</h4>
+        <ul>
+            <li>Core stat: <strong>Agility</strong> — maximize first</li>
+            <li>Weapon Proficiency ranks for flat To-Hit bonuses</li>
+            <li>Add <strong>Nimble Strike</strong> for Advantage on precision strikes</li>
+            <li>Add <strong>Phantom Assassin</strong> if playing a flanker/stealth build — Advantage + Wound bonus</li>
+            <li>Add <strong>Battle-Ready</strong> if fighting multiple opponents to negate their flanking penalties on your rolls</li>
+            <li>Add <strong>Shield Rush</strong> for a guaranteed To-Hit bonus on charge attacks (requires Shieldsman ranks)</li>
+        </ul>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- RANGED TO-HIT -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="ranged-to-hit">Ranged To-Hit</h2>
+    <span class="tag tag-ranged">Ranged</span>
+
+    <div class="mech-card">
+        <p>Ranged To-Hit uses <strong>Awareness</strong> as the primary characteristic. Ranged attacks suffer penalties for obscured targets or allies in the line of fire unless countered.</p>
+        <div class="formula-block">BASE RANGED TO-HIT: 1d10 + Awareness vs. Target DV</div>
+        <p><strong>What raises your Ranged To-Hit:</strong></p>
+        <ul>
+            <li><strong>Awareness Characteristic</strong> — Direct bonus to every ranged roll.</li>
+            <li><strong>Ranged Weapon Skill Points</strong> — Ranks in your weapon type (Bow, Crossbow, Blackpowder) add flat bonuses.</li>
+            <li><strong>Opportunist</strong> — Removes all negative penalties for shooting into melee or with obscured Line of Sight.</li>
+            <li><strong>Marksman (Sniper spec)</strong> — Advantage To-Hit when using the Sniper specialization.</li>
+            <li><strong>Heavy Arbalest (Linebreaker spec)</strong> — Gains Advantage To-Hit during the Linebreaker specialization.</li>
+            <li><strong>Thunderstrike (Blackpowder)</strong> — Does not modify To-Hit but every successful hit adds Stunned conditions, effectively pressuring target reactions.</li>
+        </ul>
+    </div>
+
+    <div class="build-path">
+        <h4>🏹 Ranged To-Hit Build Path</h4>
+        <ul>
+            <li>Core stat: <strong>Awareness</strong> — maximize first</li>
+            <li>Ranged Weapon Proficiency ranks for flat To-Hit bonuses</li>
+            <li>Add <strong>Opportunist</strong> to eliminate shooting-into-melee penalties entirely</li>
+            <li>Add <strong>Marksman → Sniper</strong> for Advantage on 2-AP focused shots</li>
+            <li>Add <strong>Heavy Arbalest → Linebreaker</strong> for Advantage plus pierce-through capability</li>
+            <li>Secondary stat: <strong>Agility</strong> — feeds into Sniper wound formula</li>
+        </ul>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SPELL TO-CAST -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="spell-to-cast">Spell To-Cast</h2>
+    <span class="tag tag-spell">Spell</span>
+
+    <div class="mech-card">
+        <p>Casting uses <strong>Intellect</strong> (arcane) or <strong>Faith / Willpower</strong> (divine/nature) as the primary characteristic depending on your magic school. Each spell has a <strong>Target Number (TN)</strong> you must meet or beat.</p>
+        <div class="formula-block">BASE SPELL TO-CAST: 1d10 + Magic Skill ≥ Spell TN</div>
+        <p><strong>What raises your Spell To-Cast:</strong></p>
+        <ul>
+            <li><strong>Magic Skill Ranks</strong> (Wizardry, Faith, Druidism etc.) — Direct bonus to casting rolls.</li>
+            <li><strong>Intellect / Faith / Willpower Characteristic</strong> — Depending on school, feeds into cast and wound calculations.</li>
+            <li><strong>Concentrate</strong> — Grants <strong>Advantage</strong> on the To-Cast roll and boosts resulting wounds.</li>
+            <li><strong>Deviation</strong> — Does not improve To-Cast but lets you redirect a successful cast to a different target mid-flight.</li>
+            <li><strong>Metaphysical</strong> — Increases potency on successful TN ≤ 7 casts (does not modify To-Cast directly).</li>
+            <li><strong>Infusion of Arcana</strong> — Converts an offensive spell into healing; requires Wizardry 7+.</li>
+        </ul>
+    </div>
+
+    <div class="build-path">
+        <h4>✦ Spell To-Cast Build Path</h4>
+        <ul>
+            <li>Core skill: Maximize your magic school rank (Wizardry / Faith / Druidism)</li>
+            <li>Core stat: <strong>Intellect</strong> (arcane) or <strong>Faith / Willpower</strong> (divine/nature)</li>
+            <li>Add <strong>Concentrate</strong> for Advantage on To-Cast + permanent +3 Spell Wound bonus</li>
+            <li>Add <strong>Metaphysical</strong> for stacking passive wound/healing bonuses on lower-TN spells</li>
+            <li>Add <strong>Deviation → Divergence</strong> for multi-target flexibility without needing separate rolls</li>
+            <li>Add <strong>Concentrate → Intensify</strong> for catastrophic double-damage burst turns</li>
+        </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- MELEE WOUNDS -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="melee-wounds">Melee Wounds</h2>
+    <span class="tag tag-melee">Melee</span>
+
+    <div class="mech-card">
+        <p>Melee wound output stacks from several sources: base weapon damage, characteristic bonuses, skill bonuses, and advanced vocation modifiers.</p>
+        <div class="formula-block">MELEE WOUNDS = Weapon Damage + Physique Bonus + Skill Bonuses + Vocation Modifiers</div>
+        <p><strong>Passive wound bonuses that stack:</strong></p>
+        <ul>
+            <li><strong>Impact</strong> — Permanent <strong>+2 Melee Wound Bonus</strong>. 1H adds Physique; 2H adds 2×Physique.</li>
+            <li><strong>Nimble Strike</strong> — Permanent <strong>+1 Melee Wound Bonus</strong>.</li>
+            <li><strong>Expose Armor</strong> — Permanent <strong>+1 Melee Wound Bonus</strong>.</li>
+            <li><strong>Phantom Assassin</strong> — <strong>+2 Melee Wound Bonus</strong> (Stealth/Flank only).</li>
+            <li><strong>Throat Slice</strong> — Permanent <strong>+1 Melee Wound Bonus</strong>.</li>
+            <li><strong>Impale</strong> — Permanent <strong>+1 Melee Wound Bonus</strong>.</li>
+        </ul>
+        <p><strong>Active wound formulas (selected examples):</strong></p>
+        <ul>
+            <li><strong>Nimble Strike:</strong> Normal + Agility + Awareness</li>
+            <li><strong>Impact (2H):</strong> Normal + (2 × Physique)</li>
+            <li><strong>Impale (2H):</strong> Normal + 1d10 + 2 Bleeding</li>
+            <li><strong>Throat Slice:</strong> Normal + 1d10 + (2 × Agility)</li>
+            <li><strong>Tune-up:</strong> Normal + 1d10 + Physique + 2 Stunned</li>
+            <li><strong>Cleave (Whirlwind):</strong> Normal + (2 × Physique) — hits all enemies in reach</li>
+        </ul>
+    </div>
+
+    <div class="example-box">
+        <strong>Stack Example — Agility Striker:</strong> Nimble Strike (+1 passive) + Phantom Assassin (+2 from stealth) + Throat Slice (+1 passive) = <strong>+4 Melee Wound Bonus baseline</strong> before any roll. On a Nimble Strike activation: Normal + Agility + Awareness on top of that.
+    </div>
+
+    <div class="build-path">
+        <h4>⚔ Melee Wound Build Paths</h4>
+        <ul>
+            <li><strong>Agility Finisher:</strong> Agility + Awareness high → Nimble Strike, Phantom Assassin, Throat Slice, Impale</li>
+            <li><strong>Physique Bruiser:</strong> Physique high → Impact (2H), Cleave, Sunder, Tune-up, Shield Rush</li>
+            <li><strong>Hybrid Striker:</strong> Agility + Physique balanced → Nimble Strike + Impact + Expose Armor for consistent output</li>
+        </ul>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- RANGED WOUNDS -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="ranged-wounds">Ranged Wounds</h2>
+    <span class="tag tag-ranged">Ranged</span>
+
+    <div class="mech-card">
+        <div class="formula-block">RANGED WOUNDS = Weapon Damage + Awareness Bonus + Skill Bonuses + Vocation Modifiers</div>
+        <p><strong>Passive wound bonuses that stack:</strong></p>
+        <ul>
+            <li><strong>Marksman</strong> — Permanent <strong>+2 Ranged Wound Bonus</strong>.</li>
+            <li><strong>Opportunist</strong> — Permanent <strong>+1 Ranged Wound Bonus</strong>.</li>
+            <li><strong>Heavy Arbalest</strong> — Permanent <strong>+1 Ranged Wound Bonus</strong>. All bolts ignore 2 pts Armor Mitigation.</li>
+            <li><strong>Thunderstrike (Blackpowder)</strong> — Permanent <strong>+2 Ranged Wound Bonus</strong>.</li>
+        </ul>
+        <p><strong>Active wound formulas:</strong></p>
+        <ul>
+            <li><strong>Marksman:</strong> Normal + Awareness + 1d10</li>
+            <li><strong>Marksman (Sniper):</strong> Normal + Agility + (2 × Awareness) + 1d10 + 1 Bleeding</li>
+            <li><strong>Opportunist (Seeker):</strong> Normal + 1d10 + (3 × Awareness) + Agility — Advantage To-Hit</li>
+            <li><strong>Heavy Arbalest (Linebreaker):</strong> Normal + 2d10 + (2 × Awareness) — ignores all worn armor WM</li>
+            <li><strong>Thunderstrike (Point-Blank):</strong> Normal + 3d10 + (2 × Awareness) + 2 Bleeding — cannot be parried</li>
+        </ul>
+    </div>
+
+    <div class="build-path">
+        <h4>🏹 Ranged Wound Build Paths</h4>
+        <ul>
+            <li><strong>Precision Archer:</strong> Awareness max → Marksman + Opportunist + Seeker spec (+4 passive, massive Sniper burst)</li>
+            <li><strong>Arbalest Breaker:</strong> Awareness + Physique → Heavy Arbalest (armor ignore) + Impact for melee fallback</li>
+            <li><strong>Blackpowder Brawler:</strong> Awareness high → Thunderstrike + Point-Blank Execution (unblockable, AOE stun)</li>
+        </ul>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SPELL WOUNDS -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="spell-wounds">Spell Wounds</h2>
+    <span class="tag tag-spell">Spell</span>
+
+    <div class="mech-card">
+        <div class="formula-block">SPELL WOUNDS = Spell Base + Intellect/Faith Bonus + Magic Skill Bonus + Vocation Modifiers</div>
+        <p><strong>Passive wound bonuses that stack:</strong></p>
+        <ul>
+            <li><strong>Concentrate</strong> — Permanent <strong>+3 Spell Wound Bonus</strong>.</li>
+            <li><strong>Metaphysical</strong> — Permanent <strong>+1 Wound Bonus</strong> (offensive) and <strong>+1 Healing Bonus</strong>.</li>
+            <li><strong>Divinity</strong> — Healing bonus equal to Faith Skill Points (healing spells TN ≤ 7).</li>
+        </ul>
+        <p><strong>Active wound formulas:</strong></p>
+        <ul>
+            <li><strong>Concentrate:</strong> Normal + Intellect Bonus on success</li>
+            <li><strong>Concentrate (Intensify spec):</strong> Total wounds × 2. Natural 10s chain additional d10 surges.</li>
+            <li><strong>Metaphysical:</strong> Normal + Spirit Skill Points</li>
+            <li><strong>Metaphysical (Supernatural spec):</strong> Normal + (3 × Spirit) + (2 × Willpower)</li>
+            <li><strong>Deviation (Divergence spec):</strong> (Normal + 1d10) ÷ number of targets + full static bonuses each</li>
+            <li><strong>Critical Resonance (Concentrate crit):</strong> Normal + 1d10 + (3 × Intellect Bonus)</li>
+        </ul>
+    </div>
+
+    <div class="example-box">
+        <strong>Stack Example — Arcane Blaster:</strong> Concentrate (+3 passive) + Metaphysical (+1 passive) = <strong>+4 Spell Wound Bonus baseline</strong>. On a Concentrate activation: Normal + Intellect on top. On Intensify spec: double everything. On a crit: Normal + 1d10 + (3 × Intellect).
+    </div>
+
+    <div class="build-path">
+        <h4>✦ Spell Wound Build Paths</h4>
+        <ul>
+            <li><strong>Arcane Blaster:</strong> Intellect + Wizardry max → Concentrate + Metaphysical + Intensify spec for double-damage burst</li>
+            <li><strong>Battlefield Caster:</strong> Intellect + Awareness → Deviation + Divergence spec to hit multiple targets in one action</li>
+            <li><strong>Battle Healer:</strong> Faith + Willpower → Divinity + Metaphysical + Sanctity spec for massive single-target heals</li>
+            <li><strong>Hybrid Arcane:</strong> Wizardry + Intellect → Infusion of Arcana to convert damage to healing on demand</li>
+        </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- HEALING -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="healing">Healing & Blessings</h2>
+    <span class="tag tag-heal">Heal</span>
+
+    <div class="mech-card">
+        <div class="formula-block">HEALING = Blessing Base + Faith/Willpower Bonus + Skill Bonuses + Vocation Modifiers</div>
+        <ul>
+            <li><strong>Divinity:</strong> Normal + Faith Skill Points (TN ≤ 7 healing spells). Crit: Normal + (2 × Faith).</li>
+            <li><strong>Divinity (Sanctity spec):</strong> Normal + (2 × Faith) + 1d10. Removes Bleeding. Crit: Normal + (3 × Faith) + 2d10.</li>
+            <li><strong>Metaphysical:</strong> Adds Spirit Skill Points to healing output.</li>
+            <li><strong>Cleric (Vessel of Restoration passive):</strong> +1 additional Wound recovered whenever healed by a Blessing.</li>
+            <li><strong>Rebirth (Epic):</strong> 1d10 + Willpower on automatic trigger at 0 Wounds. Seed of Life spec pulses (1d10 + Druidism Rank) AoE healing to all allies.</li>
+            <li><strong>Infusion of Arcana:</strong> Converts offensive spell to 50% healing output. Crit = 100%.</li>
+            <li><strong>Infusion (True Fusion spec):</strong> Full wounds on enemy AND 50% healing to ally in one cast.</li>
+            <li><strong>Command (Blood Rally spec):</strong> 1d10 + (Charisma × 2) healing if target is at 0 Wounds.</li>
+        </ul>
+    </div>
+
+    <div class="build-path">
+        <h4>💚 Healing Build Path</h4>
+        <ul>
+            <li>Core stats: <strong>Faith</strong> + <strong>Willpower</strong></li>
+            <li>Divinity → Sanctity for single-target burst heal + Bleed removal</li>
+            <li>Metaphysical for stacking passive healing bonus</li>
+            <li>Cleric passive for bonus heal on every blessing received</li>
+            <li>Rebirth (Epic) for guaranteed 0-wound comeback (requires Druidism 12)</li>
+            <li>Infusion of Arcana for flexible damage/heal conversion (Wizardry path)</li>
+        </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- WOUND MITIGATION -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="wound-mitigation">Wound Mitigation (WM)</h2>
+    <span class="tag tag-defense">Defense</span>
+
+    <div class="mech-card">
+        <p>Wound Mitigation reduces incoming damage after a hit lands. It stacks from armor, shields, skills, and characteristics.</p>
+        <div class="formula-block">WOUNDS TAKEN = Wounds Dealt − Total WM (minimum 0)</div>
+        <p><strong>Sources that raise WM:</strong></p>
+        <ul>
+            <li><strong>Worn Armor</strong> — Base WM from equipped gear.</li>
+            <li><strong>Shield</strong> — Additional WM from equipped shield.</li>
+            <li><strong>Block (Bulwark spec)</strong> — +5 WM to self and one adjacent ally for the stance duration.</li>
+            <li><strong>Cleric (passive)</strong> — Permanent <strong>+1 WM</strong> against all damage.</li>
+            <li><strong>Unwavering (Epic, passive)</strong> — Permanent <strong>+3 WM</strong> against all sources.</li>
+            <li><strong>Sovereign Mind</strong> — Mitigates all incoming wounds by your Willpower characteristic for the turn.</li>
+            <li><strong>Sovereign Mind (Indomitable spec)</strong> — Extra WM = (2 × Willpower) + Physique until next turn.</li>
+            <li><strong>Primal Aspect (Guardian form)</strong> — +3 WM while shapeshifted.</li>
+            <li><strong>Primal Aspect (Iron-Grown Chitin mutation)</strong> — +2 WM additional. Thorns damage on melee hits.</li>
+            <li><strong>Cleric (Aegis of Light)</strong> — WM increased by Light Soul Points against "Evil" targets.</li>
+            <li><strong>Rebirth (Seed of Life spec)</strong> — Allies gain +2 WM (Bramble Shield) after the resurrection pulse.</li>
+        </ul>
+        <p><strong>What reduces enemy WM (your offense):</strong></p>
+        <ul>
+            <li><strong>Expose Armor:</strong> Reduces target WM by Awareness + 1d10 on a hit.</li>
+            <li><strong>Expose Armor (Undress spec):</strong> Target gains zero WM from worn armor for that strike.</li>
+            <li><strong>Heavy Arbalest:</strong> All bolts ignore 2 pts of armor WM passively.</li>
+            <li><strong>Heavy Arbalest (Linebreaker spec):</strong> Ignores all worn armor WM entirely.</li>
+            <li><strong>Sunder:</strong> Permanently reduces enemy shield WM by 1 per hit until repaired.</li>
+            <li><strong>Tune-up (Lights-Out spec crit):</strong> Completely bypasses all WM.</li>
+            <li><strong>Thunderstrike (Point-Blank):</strong> Cannot be parried or blocked by shields.</li>
+        </ul>
+    </div>
+
+    <div class="build-path">
+        <h4>🛡 Tank / WM Build Path</h4>
+        <ul>
+            <li>Heavy armor base + shield for maximum passive WM</li>
+            <li>Block → Bulwark for +5 WM shared stance</li>
+            <li>Cleric passive +1 WM (requires Faith 3, Light Soul 2)</li>
+            <li>Unwavering (Epic) passive +3 WM (requires Hard as Nails 2, Iron Will 2, Willpower 2)</li>
+            <li>Sovereign Mind → Indomitable for massive single-turn WM spike</li>
+            <li>Unwavering → Unstoppable Force (Epic spec) to mitigate equal to Hard as Nails + Iron Will + Willpower combined</li>
+        </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- DEFENSE & DODGE -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="defense">Defense & Avoidance</h2>
+    <span class="tag tag-defense">Defense</span>
+
+    <div class="mech-card">
+        <p>Beyond WM, characters can avoid damage entirely through active defense skills.</p>
+        <div class="formula-block">BLOCK: Negates all wounds from one melee hit (same size or smaller). Costs 1 AP.</div>
+        <div class="formula-block">DEFLECT: Opposed roll (Agility/Melee) to negate all wounds from one melee hit. Costs 1 AP.</div>
+        <div class="formula-block">DODGE: Declare after being hit. Attack becomes a total miss. No size restriction. Costs 1 AP.</div>
+        <ul>
+            <li><strong>Block</strong> — Full negate. Fails vs. Giants/Enormous/Titanic. Bulwark spec shares +5 WM with one ally.</li>
+            <li><strong>Deflect</strong> — Opposed roll. Revert-Back spec forces attacker to take half their own wounds back.</li>
+            <li><strong>Dodge</strong> — Total miss, universal (works vs. giants, arrows, magic). Jailbreak spec also breaks all melee engagements and moves you (Athletics × 5 ft).</li>
+            <li><strong>Battle-Ready</strong> — Passive; negates flanking/outnumbering bonuses from up to 3 opponents. Not a reaction — always on while in the stance.</li>
+            <li><strong>Sovereign Mind</strong> — Active WM spike + mental condition removal. Indomitable spec also grants immunity to Stunned and Prone.</li>
+        </ul>
+    </div>
+
+    <div class="example-box">
+        <strong>Avoidance vs. Mitigation:</strong> Dodge is the safest universal option but costs AP. Block is free output negation but size-gated. WM stacking is passive but doesn't stop everything. Most tanky builds combine WM stacking with a Block reaction and a Dodge as emergency backup.
+    </div>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- CONDITIONS -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="conditions">Conditions Reference</h2>
+
+    <div class="mech-card">
+        <p>Conditions are applied by skills, crits, and environmental hazards. Many Advanced Vocations apply or interact with conditions.</p>
+        <ul>
+            <li><strong>Bleeding</strong> — Ongoing damage per turn. Stacks. Removed by healing skills (Divinity/Sanctity) or treatment.</li>
+            <li><strong>Stunned</strong> — Reduces AP available that turn. Stacks. Immune while Indomitable (Sovereign Mind spec).</li>
+            <li><strong>Prone</strong> — Penalties to defense and movement. Immune while Indomitable. Many crits inflict Prone.</li>
+            <li><strong>Silence / Muted</strong> — Cannot verbalize, use Inspiring abilities, or cast vocal spells. Applied by Throat Slice and Phantom Assassin.</li>
+            <li><strong>Fear</strong> — Forces a Fear test. Removed by Sovereign Mind, Blood Rally (Command spec), or Cleric aura.</li>
+            <li><strong>Disordered</strong> — Grants your next attack as a Backstab. Applied by Nimble Strike's Shadow Strike spec.</li>
+            <li><strong>Poisoned</strong> — Ongoing damage. Primal Aspect (Toxic Adaptation) exploits existing poison for +1d10 wounds.</li>
+            <li><strong>Burn / Disease</strong> — DoT effects. Ignored while Unwavering (Unstoppable Force spec) is active.</li>
+        </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- XP & PROGRESSION -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="xp-progression">XP & Progression</h2>
+
+    <div class="mech-card">
+        <p>Characters advance by spending XP on skills, characteristics, and advanced vocations. There are no fixed classes — every build is constructed from the same pool.</p>
+        <div class="formula-block">CHARACTERISTIC INCREASE: Cost varies by rank (see Ledger)</div>
+        <div class="formula-block">SKILL PURCHASE: 50–400 XP depending on vocation tier</div>
+        <p><strong>Advanced Vocation XP costs:</strong></p>
+        <ul>
+            <li><strong>50 XP</strong> — Shield Rush, Deflect, Heavy Arbalest</li>
+            <li><strong>100 XP</strong> — Block, Cleave, Command, Divinity, Expose Armor, Marksman, Metaphysical, Nimble Strike, Opportunist, Phantom Assassin, Sovereign Mind and others</li>
+            <li><strong>200 XP</strong> — Battle-Ready, Concentrate, Deviation, Dodge, Impact, Impale, Infusion of Arcana, Primal Aspect, Throat Slice, Thunderstrike, Tune-up, Unwavering</li>
+            <li><strong>300 XP</strong> — Unwavering (Epic)</li>
+            <li><strong>400 XP</strong> — Rebirth (Epic)</li>
+        </ul>
+        <p>Specializations within a vocation are unlocked automatically when the parent vocation is purchased — they do not cost additional XP.</p>
+    </div>
+
+    <div class="build-path">
+        <h4>📈 Efficient Early Progression Tips</h4>
+        <ul>
+            <li>Invest in your primary characteristic first — it feeds every roll you make.</li>
+            <li>100 XP skills often provide permanent passive bonuses — prioritize these before 200 XP active skills.</li>
+            <li>Specializations are free with the parent skill — always read the spec before buying to confirm the parent is worth the XP.</li>
+            <li>Epic Vocations (300–400 XP) require specific skill prerequisites — plan your path early or you'll hit a gate.</li>
+            <li>Stacking 3–4 passive wound bonuses from 100 XP skills (Nimble Strike, Expose Armor, Impale, Marksman) is often more efficient than a single 200 XP active skill early on.</li>
+        </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ============================================================ -->
+    <!-- BUILD ARCHETYPES -->
+    <!-- ============================================================ -->
+    <h2 class="section-title" id="build-archetypes">Build Archetypes</h2>
+    <p style="margin-bottom:24px;">These are suggested character frameworks — not rigid classes. Mix and match to suit your playstyle.</p>
+
+    <h3 class="subsection-title">⚔ The Blademaster (Agility Melee)</h3>
+    <div class="mech-card">
+        <p><strong>Core Stats:</strong> Agility (primary), Awareness (secondary)</p>
+        <p><strong>Key Skills:</strong> Nimble Strike, Phantom Assassin, Throat Slice, Impale, Deflect → Revert-Back, Dodge → Jailbreak</p>
+        <p><strong>Passive Wound Bonus:</strong> +5 from passives alone (Nimble +1, Phantom +2, Throat +1, Impale +1) before any roll</p>
+        <p><strong>Playstyle:</strong> Mobile flanker. Gets in fast, deals massive burst from stealth, escapes if surrounded. Dodge and Jailbreak are your escape hatches. Revert-Back turns their crits into your damage.</p>
+    </div>
+
+    <h3 class="subsection-title">🪓 The Warbringer (Physique Melee)</h3>
+    <div class="mech-card">
+        <p><strong>Core Stats:</strong> Physique (primary), Agility (secondary)</p>
+        <p><strong>Key Skills:</strong> Impact (2H), Cleave → Whirlwind, Sunder → Shatterpoint, Tune-up → Lights-Out, Block → Bulwark</p>
+        <p><strong>Passive Wound Bonus:</strong> +2 from Impact passive + weapon size multiplier (2H = Physique × 2 on active strike)</p>
+        <p><strong>Playstyle:</strong> Frontline destroyer. Cleave handles groups, Sunder strips enemy defenses, Tune-up locks down individual targets. Block/Bulwark makes you a living wall for allies.</p>
+    </div>
+
+    <h3 class="subsection-title">🏹 The Deadeye (Ranged)</h3>
+    <div class="mech-card">
+        <p><strong>Core Stats:</strong> Awareness (primary), Agility (secondary)</p>
+        <p><strong>Key Skills:</strong> Marksman → Sniper, Opportunist → Seeker, Heavy Arbalest → Linebreaker (crossbow variant)</p>
+        <p><strong>Passive Wound Bonus:</strong> +5 from passives (Marksman +2, Opportunist +1, Arbalest +1 + 2 armor ignore)</p>
+        <p><strong>Playstyle:</strong> Stands back, shoots into any melee without penalty (Opportunist). Sniper spec for 2-AP precision kills. Linebreaker for armor-stripping bolts that punch through targets. Dodge as the only self-defense.</p>
+    </div>
+
+    <h3 class="subsection-title">✦ The Arcanist (Spell Damage)</h3>
+    <div class="mech-card">
+        <p><strong>Core Stats:</strong> Intellect (primary), Spirit/Willpower (secondary)</p>
+        <p><strong>Key Skills:</strong> Concentrate → Intensify, Metaphysical → Supernatural, Deviation → Divergence</p>
+        <p><strong>Passive Spell Bonus:</strong> +4 (Concentrate +3, Metaphysical +1) before any roll or active skill</p>
+        <p><strong>Playstyle:</strong> Glass cannon. Concentrate gives Advantage to cast and passive +3. Intensify doubles total wounds on success. Divergence splits a single roll across multiple targets. Supernatural spec is effectively a once-per-engagement nuclear option.</p>
+    </div>
+
+    <h3 class="subsection-title">🛡 The Bulwark (Tank / WM)</h3>
+    <div class="mech-card">
+        <p><strong>Core Stats:</strong> Physique (primary), Willpower (secondary)</p>
+        <p><strong>Key Skills:</strong> Block → Bulwark, Cleric, Sovereign Mind → Indomitable, Unwavering (Epic) → Unstoppable Force</p>
+        <p><strong>Passive WM Bonus:</strong> Armor + Shield + Cleric (+1) + Unwavering (+3) = massive passive floor before any active skills</p>
+        <p><strong>Playstyle:</strong> Absorb everything. Bulwark stance protects an adjacent ally. Indomitable gives a WM spike on demand. Unstoppable Force is the end-game form — near-invincible for one turn. Last Breath keeps you standing at 0 wounds.</p>
+    </div>
+
+    <h3 class="subsection-title">🌿 The Druid (Nature / Hybrid)</h3>
+    <div class="mech-card">
+        <p><strong>Core Stats:</strong> Willpower (primary), Physique or Agility (secondary)</p>
+        <p><strong>Key Skills:</strong> Primal Aspect → Apex Mutation, Rebirth (Epic) → Seed of Life, Divinity → Sanctity</p>
+        <p><strong>Passive Bonus:</strong> +3 to all Druid healing spells (Rebirth passive). Guardian form: +3 WM, +10 Max Wounds. Predator form: +2 Agility, Bleeding attacks.</p>
+        <p><strong>Playstyle:</strong> Shapeshifter with a safety net. Choose your Aspect based on the encounter. Rebirth is a guaranteed comeback. Seed of Life pulses AoE healing on resurrection. Sanctity for powerful sustained healing when in caster form.</p>
+    </div>
+
+    <a href="index.html" class="back-link">⮜ Return to Main Hub</a>
+
+</div>
+</body>
+</html>
