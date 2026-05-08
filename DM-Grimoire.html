@@ -29,6 +29,7 @@
             margin: 0;
             padding: 0;
             height: 100vh;
+            height: 100dvh;
             overflow: hidden;
         }
 
@@ -238,10 +239,88 @@
             margin-bottom: 15px;
             color: var(--iron);
         }
+
+        /* --- MOBILE SIDEBAR TOGGLE --- */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 12px; left: 12px;
+            z-index: 100;
+            background: var(--blood);
+            color: var(--parchment);
+            border: 2px solid var(--gold);
+            width: 44px; height: 44px;
+            font-size: 20pt;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9;
+        }
+
+        /* --- BACK BUTTON --- */
+        .back-btn {
+            display: none;
+            background: var(--iron);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 4px 12px;
+            font-family: var(--font-heading);
+            font-size: 11pt;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: 0.2s;
+        }
+        .back-btn:hover { background: var(--blood); }
+
+        /* --- CATEGORY COLLAPSE --- */
+        .category-block h3 {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .category-block h3::after { content: "▲"; font-size: 9pt; opacity: 0.6; }
+        .category-block.collapsed h3::after { content: "▼"; }
+        .category-block.collapsed ul { display: none; }
+
+        /* --- SEARCH HINT --- */
+        .search-hint {
+            font-size: 9pt;
+            color: rgba(184,134,11,0.6);
+            text-align: center;
+            margin-top: -14px;
+            margin-bottom: 10px;
+            font-family: var(--font-hand);
+        }
+
+        @media (max-width: 900px) {
+            .sidebar-toggle { display: flex; }
+            .sidebar {
+                position: fixed;
+                left: -340px;
+                top: 0; bottom: 0;
+                z-index: 50;
+                transition: left 0.25s ease;
+            }
+            .sidebar.open { left: 0; }
+            .sidebar-overlay.open { display: block; }
+            .main-content { padding: 20px 16px; }
+        }
+    
     </style>
 </head>
 <body>
 
+<button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 <div class="grimoire-container">
     <div class="sidebar">
         <button id="quick-ref-trigger" onclick="toggleModal(true)" style="width: 90%; margin: 0 auto 15px auto;">📜 Overcast Reference</button>
@@ -251,6 +330,7 @@
         <div class="search-box">
             <input type="text" id="search-input" placeholder="Search Vault..." oninput="filterNav()">
         </div>
+        <p class="search-hint">Press / to search</p>
 
         <div style="margin-bottom: 15px; padding: 0 10px;">
             <button onclick="loadHome()" style="width: 100%; padding: 8px; cursor: pointer; background: var(--iron); color: var(--gold); border: 2px solid var(--blood); font-family: var(--font-heading); font-size: 14pt; text-transform: uppercase; transition: 0.2s;">📖 Grimoire Home</button>
@@ -265,6 +345,7 @@
     </div>
 
     <div class="main-content">
+        <button class="back-btn" id="back-btn" onclick="goBack()">← Back</button>
         <div id="vault-content">
             </div>
     </div>
@@ -276,7 +357,7 @@
         <h2>Overcast Quick Reference</h2>
         <table>
             <tr><th>TN Value</th><th>Base AP</th><th>d10's Rolled</th></tr>
-            <tr><td>TN 1-3</td><td>1 AP</td><td>D1d10</td></tr>
+            <tr><td>TN 1-3</td><td>1 AP</td><td>1d10</td></tr>
             <tr><td>TN 4-6</td><td>1 AP</td><td>1d10</td></tr>
             <tr><td>TN 7-9</td><td>2 AP</td><td>2d10</td></tr>
             <tr><td>TN 10-12</td><td>3 AP</td><td>3d10</td></tr>
@@ -381,7 +462,7 @@
                 <li><strong>Artifact:</strong> The Warlord's Sigil (Grants +1 Authority).</li>
             </ul>
             `,
-            "The Goblins Warlord's Crucible": `
+            "The Hobgoblin Warlord's Crucible": `
             <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168, 24, 24, 0.05);">
             <h2 style="margin: 0; color: var(--blood); font-size: 20pt;">The Warlord's Crucible</h2>
             <p style="font-style: italic; font-size: 13pt; color: var(--ink);">"Silence reigns here, heavy and expectant. The hall smells of wet iron and ancient soot. At the far end, seated upon a throne constructed from the rusted breastplates of fallen foes, the Champion waits.
@@ -1006,10 +1087,9 @@
 <ul>
     <li><strong>The Way Back:</strong> The Portal stays open for 1 hour, leading back to [[The Vault of Birn Uluhm]].</li>
     <li><strong>The Way Forward:</strong> Crossing the "Rib-Bridge" involves a multi-day journey through three Rib-Spires Waystations, eventually leading to the High Gates of Birn Uluhm.</li>
-    <li><strong>Mechanical Implications:</strong> for the Distance To make the "miles away" aspect feel real in your system, you might consider these additions to the Heart-Shatter Realm note in your Grimoire:
-        Awareness Check (The Distant Spires): At this distance, a character must pass a DV 12 Awareness test just to identify the city’s landmarks. Success reveals the city is actively "breathing"—masses of steam or smoke rising from the distant rib-spires.
-        Willpower & The Void: The sheer scale of the "miles of emptiness" can be a hazard. You could require a DV 9 Willpower test upon entry. Failure might inflict the [[🥀 Dismayed]] condition as the mind reels from the impossible geography.
-        The Rib-Bridge Journey: Since the city is miles away, the "Rib-Bridge" mentioned in your path connections isn't just one bridge, but a series of "Waystations" built onto each giant bone.</li>
+    <li><strong>DM Note — The Distant City:</strong> Awareness DV 12 to identify landmarks. The city actively "breathes" — steam rises from the distant rib-spires on success.</li>
+    <li><strong>DM Note — The Void:</strong> DV 9 Willpower on entry or suffer <strong>Dismayed</strong> as the mind reels from the impossible scale.</li>
+    <li><strong>DM Note — Rib-Bridge Journey:</strong> The crossing is a series of Waystations built onto each giant rib-bone — treat as a multi-session overland journey.</li>
     </ul>
 `,
     },
@@ -1274,7 +1354,82 @@
         <li style="margin-bottom: 8px;"><strong>Interpose (Reaction):</strong> Once per round, if an enemy targets an adjacent ally with a melee attack, the Elite Warrior can force the attack to hit their shield instead.</li>
     </ul>
     `,
-             "Hobgoblin Warriors": `
+             
+        "Krazak the Black (Hobgoblin Champion)": `
+    <div style="border-left: 5px solid var(--blood); padding-left: 10px; margin-bottom: 15px; background: rgba(168,24,24,0.05);">
+        <h2 style="margin: 0; color: var(--blood); font-size: 24pt;">Krazak the Black</h2>
+        <p style="font-style: italic; font-size: 12pt; color: var(--iron);">"He does not rage. He waits. Seated on a throne of rusted steel, the Champion watches through dark eyes, calculating the precise moment to end you."</p>
+    </div>
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>To-Hit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color:var(--blood);font-size:14pt;"><strong>95</strong></td>
+            <td>11</td><td>12 (Warlord's Plate)</td><td>+5</td><td>12 Squares</td><td>4</td>
+        </tr>
+    </table>
+    <h3 style="margin-top:15px;border-bottom:2px solid var(--gold);">Characteristics</h3>
+    <table><tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+    <tr><td>3</td><td>5</td><td>6</td><td>4</td><td>8</td><td>7</td></tr></table>
+    <h3 style="margin-top:15px;border-bottom:2px solid var(--gold);">Actions &amp; Abilities</h3>
+    <ul style="line-height:1.6;margin-top:10px;">
+        <li style="margin-bottom:8px;"><strong>Serrated Cleaver (2 AP):</strong> 1d10 + 22 Wounds. On a Natural 8-10, the target suffers <strong>2 Bleed stacks</strong>.</li>
+        <li style="margin-bottom:8px;"><strong>Blood Rally (2 AP):</strong> Krazak bellows a war cry. All allied Hobgoblins within 10 squares gain <strong>+1 AP</strong> on their next turn.</li>
+        <li style="margin-bottom:8px;"><strong>Warlord's Instinct (Passive):</strong> Krazak cannot be <strong>Surprised</strong>. He always acts in the first initiative slot.</li>
+        <li style="margin-bottom:8px;"><strong>Counter-Cast (Reaction):</strong> When targeted by a spell, Krazak holds 1 AP to sever the casting. The caster must pass a <strong>DV 11 Willpower test</strong> or the spell is lost.</li>
+        <li style="margin-bottom:8px;"><strong>Titan's Resurgence (Reaction — Once):</strong> When first reduced to 0 Wounds, Krazak roars and heals 15 Wounds. All Hobgoblins in the room gain <strong>Advantage</strong> on their next attack.</li>
+    </ul>
+    <h3 style="margin-top:15px;border-bottom:2px solid var(--gold);">The Spoils</h3>
+    <ul>
+        <li><strong>The Warlord's Sigil:</strong> Grants +1 Authority.</li>
+        <li><strong>250 Gold Pieces</strong> from a hidden chest behind the throne.</li>
+        <li><strong>1× Potion of Rejuvenation.</strong></li>
+    </ul>
+`,
+        "Elite Hobgoblin Warrior": `
+    <div style="border-left: 5px solid var(--iron); padding-left: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: var(--iron); font-size: 22pt;">Elite Hobgoblin Warrior</h2>
+        <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--blood);">"Veterans of a dozen sieges. They lock shields without a word, spears levelled, waiting."</p>
+    </div>
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>To-Hit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color:var(--blood);font-size:14pt;"><strong>42</strong></td>
+            <td>9 (Shielded)</td><td>8 (Splint Mail)</td><td>+2</td><td>13 Squares</td><td>3</td>
+        </tr>
+    </table>
+    <h3 style="margin-top:15px;border-bottom:2px solid var(--iron);">Characteristics</h3>
+    <table><tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+    <tr><td>2</td><td>4</td><td>2</td><td>2</td><td>6</td><td>5</td></tr></table>
+    <h3 style="margin-top:15px;border-bottom:2px solid var(--iron);">Actions &amp; Abilities</h3>
+    <ul style="line-height:1.6;margin-top:10px;">
+        <li style="margin-bottom:8px;"><strong>Veteran's Spear (1 AP):</strong> 1d10 + 12 Wounds. Reach. If the target is Prone, this attack gains Advantage.</li>
+        <li style="margin-bottom:8px;"><strong>Shield-Wall (Passive):</strong> While adjacent to another Hobgoblin, gains <strong>+2 Defense</strong> and cannot be flanked.</li>
+        <li style="margin-bottom:8px;"><strong>Interpose (Reaction):</strong> Once per round, force an adjacent ally's attacker to target this warrior instead.</li>
+    </ul>
+`,
+        "Earth Elemental Juggernaut": `
+    <div style="border-left: 5px solid var(--gold); padding-left: 10px; margin-bottom: 15px; background: rgba(184,134,11,0.05);">
+        <h2 style="margin: 0; color: var(--gold); font-size: 24pt;">Earth Elemental Juggernaut</h2>
+        <p style="font-style: italic; font-size: 12pt; color: var(--iron);">"The floor shudders. Then it rises."</p>
+    </div>
+    <table>
+        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>To-Hit</th><th>Move</th><th>AP</th></tr>
+        <tr>
+            <td style="color:var(--blood);font-size:14pt;"><strong>120</strong></td>
+            <td>10</td><td>15 (Living Stone)</td><td>+4</td><td>8 Squares</td><td>3</td>
+        </tr>
+    </table>
+    <h3 style="margin-top:15px;border-bottom:2px solid var(--gold);">Characteristics</h3>
+    <table><tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>
+    <tr><td>1</td><td>3</td><td>1</td><td>1</td><td>10</td><td>6</td></tr></table>
+    <h3 style="margin-top:15px;border-bottom:2px solid var(--gold);">Actions &amp; Abilities</h3>
+    <ul style="line-height:1.6;margin-top:10px;">
+        <li style="margin-bottom:8px;"><strong>Granite Fist (2 AP):</strong> 1d10 + 28 Wounds. Target must pass DV 12 Physique or be knocked <strong>Prone</strong>.</li>
+        <li style="margin-bottom:8px;"><strong>Seismic Slam (2 AP):</strong> All targets within 10ft must pass DV 10 Agility or fall <strong>Prone</strong>.</li>
+        <li style="margin-bottom:8px;"><strong>Stone Skin (Passive):</strong> Immune to Bleed, Poison, and Disease. Fire and Lightning damage is halved.</li>
+        <li style="margin-bottom:8px;"><strong>Rune-Bound (Passive — Lift only):</strong> While chained, acts on Indifferent. If rune-chains take any damage, activates immediately and attacks the source.</li>
+    </ul>
+`,"Hobgoblin Warriors": `
     <div style="border-left: 5px solid var(--iron); padding-left: 10px; margin-bottom: 15px;">
         <h2 style="margin: 0; color: var(--iron); font-size: 22pt;">Hobgoblin Warrior</h2>
         <p style="font-style: italic; font-size: 11pt; margin-top: 2px; color: var(--ink);">"More disciplined than their smaller kin, these soldiers move in tight formations, their spears forming a bristling wall of steel."</p>
@@ -1489,7 +1644,7 @@
     <ul style="line-height: 1.6; margin-top: 10px;">
         <li style="margin-bottom: 8px;"><strong>The Soul-Binding Maul (2 AP):</strong> 1d10 + 21 Wounds. <strong>Shatter:</strong> On a hit, target's Defense is reduced by -2 (Stacks up to 3 times).</li>
         
-        <li style="margin-bottom: 8px;"><strong>Shield Rush (2 AP):</strong> Thrunn charges his full movement. Target takes $1d10 + 18$ Wounds and must pass a <strong>DV 9 Physique test</strong> or be knocked <strong>[[🧎 Prone]]</strong>.</li>
+        <li style="margin-bottom: 8px;"><strong>Shield Rush (2 AP):</strong> Thrunn charges his full movement. Target takes 1d10 + 18 Wounds and must pass a <strong>DV 9 Physique test</strong> or be knocked <strong>[[🧎 Prone]]</strong>.</li>
 
         <li style="margin-bottom: 8px;"><strong>Bulwark (Passive):</strong> Thrunn cannot be knocked back or moved against his will by any creature smaller than Titanic size.</li>
 
@@ -1849,7 +2004,6 @@
             oninput="localStorage.setItem('birn_dm_notes', this.value)"
             style="width: 100%; height: 400px; background: transparent; border: none; outline: none; font-family: 'MedievalSharp', cursive; font-size: 14pt; color: var(--ink); line-height: 2em; background-image: repeating-linear-gradient(transparent, transparent 1.9em, rgba(0,0,0,0.1) 1.9em, rgba(0,0,0,0.1) 2em); resize: vertical;"></textarea>
         
-        <img src onerror="document.getElementById('dm-session-notes').value = localStorage.getItem('birn_dm_notes') || '';" style="display:none;">
     </div>
 `,
     };
@@ -1862,15 +2016,20 @@
         }
     }
 
+    // Navigation history stack
+    let navHistory = [];
+
     function buildSidebar() {
         const navList = document.getElementById('nav-list');
         navList.innerHTML = '';
         for (const category in vaultData) {
             const catHeader = document.createElement('div');
             catHeader.className = 'category-block';
-            
+
             const h3 = document.createElement('h3');
             h3.innerText = category;
+            // Category collapse on click
+            h3.onclick = () => catHeader.classList.toggle('collapsed');
             catHeader.appendChild(h3);
 
             const ul = document.createElement('ul');
@@ -1879,7 +2038,7 @@
                 item.className = 'nav-item';
                 item.innerText = noteTitle;
                 item.dataset.title = noteTitle;
-                item.onclick = () => loadNote(noteTitle);
+                item.onclick = () => { loadNote(noteTitle); closeSidebarOnMobile(); };
                 ul.appendChild(item);
             }
             catHeader.appendChild(ul);
@@ -1887,37 +2046,51 @@
         }
     }
 
-    window.loadNote = function(title) {
+    window.loadNote = function(title, addToHistory = true) {
         if (!flatNoteMap[title]) return;
+
+        // Track history for back button
+        const currentTitle = document.getElementById('note-title')?.innerText;
+        if (addToHistory && currentTitle && currentTitle !== title) {
+            navHistory.push(currentTitle);
+        }
+        const backBtn = document.getElementById('back-btn');
+        if (backBtn) backBtn.style.display = navHistory.length > 0 ? 'inline-block' : 'none';
+
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
         const activeNav = Array.from(document.querySelectorAll('.nav-item')).find(el => el.innerText === title);
         if (activeNav) activeNav.classList.add('active');
-        
+
         let rawHTML = flatNoteMap[title];
         const parsedHTML = rawHTML.replace(/\[\[(.*?)\]\]/g, (match, p1) => {
             const exists = flatNoteMap[p1] !== undefined;
             const classStatus = exists ? 'wiki-link' : 'wiki-link broken';
-            const escaped = p1.replace(/'/g, "\\'"); 
+            const escaped = p1.replace(/'/g, "\\'");
             const clickAction = exists ? `onclick="loadNote('${escaped}')"` : `title="Note not created yet"`;
             return `<span class="${classStatus}" ${clickAction}>${p1}</span>`;
         });
-        
+
         document.getElementById('vault-content').innerHTML = `
             <h1 id="note-title">${title}</h1>
             <div id="note-body">${parsedHTML}</div>
         `;
-        document.getElementById('search-input').value = '';
-        filterNav(); 
+        document.getElementById('vault-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.querySelector('.main-content').scrollTop = 0;
 
-        // --- NEW: Safely load the scratchpad notes without crashing ---
+        // Safely load scratchpad
         const scratchpad = document.getElementById('dm-session-notes');
         if (scratchpad) {
-            try {
-                scratchpad.value = localStorage.getItem('birn_dm_notes') || '';
-            } catch(e) {
-                console.warn("Local storage is blocked by PC browser settings.");
-            }
+            try { scratchpad.value = localStorage.getItem('birn_dm_notes') || ''; }
+            catch(e) { console.warn("localStorage blocked."); }
         }
+    }
+
+    window.goBack = function() {
+        if (navHistory.length === 0) return;
+        const prev = navHistory.pop();
+        loadNote(prev, false);
+        const backBtn = document.getElementById('back-btn');
+        if (backBtn) backBtn.style.display = navHistory.length > 0 ? 'inline-block' : 'none';
     }
 
     window.filterNav = function() {
@@ -1926,7 +2099,40 @@
             const title = item.dataset.title.toLowerCase();
             item.style.display = title.includes(query) ? 'block' : 'none';
         });
+        // Auto-expand collapsed categories when searching
+        if (query) {
+            document.querySelectorAll('.category-block').forEach(b => b.classList.remove('collapsed'));
+        }
     }
+
+    // Mobile sidebar toggle
+    window.toggleSidebar = function() {
+        document.querySelector('.sidebar').classList.toggle('open');
+        document.getElementById('sidebar-overlay').classList.toggle('open');
+    }
+    window.closeSidebarOnMobile = function() {
+        if (window.innerWidth <= 900) {
+            document.querySelector('.sidebar').classList.remove('open');
+            document.getElementById('sidebar-overlay').classList.remove('open');
+        }
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', e => {
+        // / to focus search
+        if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+            document.getElementById('search-input').focus();
+        }
+        // Escape: close modal first, then close sidebar
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('modal-overlay');
+            if (modal && modal.style.display === 'flex') { toggleModal(false); return; }
+            closeSidebarOnMobile();
+        }
+        // Alt+Left: back navigation
+        if (e.altKey && e.key === 'ArrowLeft') { goBack(); }
+    });
 
   // --- 3. LOAD HOME SCREEN ---
     window.loadHome = function() {
@@ -1942,7 +2148,7 @@
                     <h3 style="border-bottom: 2px solid var(--blood); margin-bottom: 15px; color: var(--iron); font-size: 18pt;">Quick Reference Table</h3>
                     <table>
                         <tr><th>AP Cost</th><th>TN Range</th><th>Max d10s</th></tr>
-                        <tr><td>1 AP</td><td>TN 1-3</td><td>D1d10</td></tr>
+                        <tr><td>1 AP</td><td>TN 1-3</td><td>1d10</td></tr>
                         <tr><td>1 AP</td><td>TN 4-6</td><td>1d10</td></tr>
                         <tr><td>2 AP</td><td>TN 7-9</td><td>2d10</td></tr>
                         <tr><td>3 AP</td><td>TN 10-12</td><td>3d10</td></tr>
