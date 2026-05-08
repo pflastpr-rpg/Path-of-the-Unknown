@@ -2182,7 +2182,7 @@ function prev(input) {
 }
 
 function openChronicle() {
-    const charName = g('char-name-input')?.value.trim();
+    const charName = document.querySelector('.w-name input')?.value.trim();
     if (charName) localStorage.setItem('po3_transfer_name', charName);
     window.open('Player-Chronicle.html', '_blank');
 }
