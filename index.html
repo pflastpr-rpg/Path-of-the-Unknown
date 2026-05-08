@@ -25,6 +25,7 @@
             min-height: 100vh;
             padding: 40px;
             margin: 0;
+            overflow-x: hidden; /* FIX: prevent horizontal scroll on narrow viewports */
         }
 
         /* --- TOP CONTROL BAR --- */
@@ -44,7 +45,8 @@
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            transition: 0.2s;
+            /* FIX: specify properties to prevent border-width jitter on hover */
+            transition: background 0.2s, color 0.2s, transform 0.2s, border-color 0.2s;
         }
 
         .btn-vault:hover {
@@ -63,7 +65,7 @@
             border-radius: 12px;
             padding: 60px 50px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,0,0,0.5);
-            max-width: 1000px; /* Widened to fit 4 cards nicely */
+            max-width: 1000px;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -104,7 +106,7 @@
             border: 4px solid var(--iron);
             border-bottom: 8px solid var(--blood);
             border-radius: 8px;
-            width: 280px; /* Slightly slimmer to fit 4-across on more screens */
+            width: 280px;
             display: flex; flex-direction: column; align-items: center;
             overflow: hidden;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -154,41 +156,22 @@
             text-align: center; letter-spacing: 2px; transition: 0.2s;
         }
 
-        /* --- ATLAS LINK BUTTON --- */
-.atlas-link-btn {
-    display: inline-block;
-    background: var(--iron);
-    color: var(--parchment);
-    font-family: var(--font-hand);
-    font-size: 14pt;
-    font-weight: 900;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 10px 20px;
-    border: 2px solid var(--gold);
-    border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.8);
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-    text-align: center;
-}
-
-/* Hover Effect: Button turns blood red and lifts off the page */
-.atlas-link-btn:hover {
-    background: var(--blood);
-    color: #ffffff;
-    border-color: #ffffff;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 15px rgba(138, 3, 3, 0.7);
-}
-
         .tool-card:hover .tool-link { color: var(--gold); }
+
+        /* FIX: Lore/Chronicle/World variant — gold accent via class, not inline styles */
+        .tool-card--lore {
+            border-bottom-color: var(--gold);
+        }
+        .tool-card--lore .p-label {
+            border-color: var(--gold);
+        }
     </style>
 </head>
 <body>
 
     <div class="hub-controls">
-        <button class="btn-vault" onclick="window.open('https://google.com')">External Tools</button>
+        <!-- FIX: was pointing to google.com — now links to Build Guide -->
+        <button class="btn-vault" onclick="window.location.href='mechanics.html'">⚙ Build Guide</button>
         <button class="btn-vault" onclick="alert('Settings Coming Soon')">Global Settings</button>
     </div>
 
@@ -197,6 +180,7 @@
         <div class="hub-subtitle">"A Truly Classless Game..."</div>
 
         <div class="tool-nav">
+
             <a href="RPG-PowerofThree-Rules.html" class="tool-card">
                 <div class="portrait-holder">
                     <img src="rules_card.png" class="grimoire-art" alt="Core Rulebook">
@@ -205,7 +189,8 @@
                 <div class="tool-link">Read Rules</div>
             </a>
 
-            <a href="PathofUnknown-Ledger.html" class="tool-card">
+            <!-- FIX: was PathofUnknown-Ledger.html (404) — corrected filename -->
+            <a href="PathofUnknown-Ledger14_48.html" class="tool-card">
                 <div class="portrait-holder">
                     <img src="ledger_card.png" class="grimoire-art" alt="Character Ledger">
                     <span class="p-label">The Ledger</span>
@@ -221,29 +206,48 @@
                 <div class="tool-link">Summon</div>
             </a>
 
-            <a href="lore.html" class="tool-card" style="border-bottom-color: var(--gold);">
+            <a href="Advanced_Skills.html" class="tool-card">
                 <div class="portrait-holder">
-                    <img src="lore_book.png" class="grimoire-art" alt="Tome of Lore">
-                    <span class="p-label" style="border-color: var(--gold);">Tome of Lore</span>
+                    <img src="skills_card.png" class="grimoire-art" alt="Advanced Vocations">
+                    <span class="p-label">Advanced Vocations</span>
                 </div>
-                <div class="tool-link">Lore Knowledge</div>
+                <div class="tool-link">Master Arts</div>
             </a>
 
-            <a href="world.html" class="tool-card" style="border-bottom-color: var(--gold);">
+            <!-- World card: using image & filename from new file (World-Atlas.png, world.html) -->
+            <a href="world.html" class="tool-card tool-card--lore">
                 <div class="portrait-holder">
                     <img src="World-Atlas.png" class="grimoire-art" alt="World Atlas">
-                    <span class="p-label" style="border-color: var(--gold);">Atlas of the Known World</span>
+                    <span class="p-label">Atlas of the Known World</span>
                 </div>
                 <div class="tool-link">Explore World</div>
             </a>
 
-            <a href="PathofUnknown-LayingThePath.html" class="tool-card" style="border-bottom-color: var(--gold);">
+            <!-- Lore card: label text from new file ("Lore Knowledge") -->
+            <a href="lore.html" class="tool-card tool-card--lore">
+                <div class="portrait-holder">
+                    <img src="lore_book.png" class="grimoire-art" alt="Tome of Lore">
+                    <span class="p-label">Tome of Lore</span>
+                </div>
+                <div class="tool-link">Lore Knowledge</div>
+            </a>
+
+            <a href="PathofUnknown-LayingThePath.html" class="tool-card tool-card--lore">
                 <div class="portrait-holder">
                     <img src="PathLaying.png" class="grimoire-art" alt="Campaign Chronicle">
-                    <span class="p-label" style="border-color: var(--gold);">Chronicle</span>
+                    <span class="p-label">Chronicle</span>
                 </div>
                 <div class="tool-link">Laying the Path</div>
             </a>
+
+            <a href="Player-Chronicle.html" class="tool-card tool-card--lore">
+                <div class="portrait-holder">
+                    <img src="chronicle_card.png" class="grimoire-art" alt="Player Chronicle">
+                    <span class="p-label">Player Notes</span>
+                </div>
+                <div class="tool-link">My Chronicle</div>
+            </a>
+
         </div>
     </div> 
 
