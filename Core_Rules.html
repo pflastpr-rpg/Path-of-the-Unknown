@@ -513,8 +513,8 @@
             <span class="trait-title">Weapon Stances & Choices</span>
             <ul style="margin-top: 10px;">
                 <li><strong>1H-Weapon w/ Shield:</strong> Balanced defense and offense. No penalty To-Hit or To-Wound.</li>
-                <li><strong>2H-Weapon / Polearm:</strong> Devastating but unwieldy. Suffer <strong>Disadvantage To-Hit</strong>, but gain <strong>Advantage To-Wound</strong>.</li>
-                <li><strong>Dual-Wield:</strong> Grants <strong>1 additional attack</strong> per turn. Suffer Disadvantage To-Hit and gain no Advantage To-Wound. <em>(Requires two Small/Medium weapons, or one Large and one Small/Medium).</em></li>
+                <li><strong>2H-Weapon / Polearm:</strong> Devastating commitment. Costs <strong>2 AP per strike</strong>. Gains <strong>Physique × 2</strong> on the wound bonus. No To-Hit penalty.</li>
+                <li><strong>Dual-Wield:</strong> Grants <strong>1 additional attack</strong> per turn. Suffer Disadvantage To-Hit on both attacks. <em>(Requires two Small/Medium weapons, or one Large and one Small/Medium).</em></li>
                 <li><strong>Unarmed:</strong> Desperate brawling. Grants 1 additional attack. Suffer Disadvantage To-Wound against Leather armor or better.</li>
                 <li><strong>Mounted:</strong> High ground advantage. Gain Advantage on To-Hit and To-Wound against smaller or equal-sized unmounted targets.</li>
             </ul>
@@ -1492,36 +1492,36 @@
                     <td><strong>Blunt</strong></td>
                     <td>Mace, Warhammer, Staff</td>
                     <td>Normal</td>
-                    <td>d10</td>
+                    <td>1d10 + bonuses</td>
                     <td>Ignores 1 W. Mit</td>
                 </tr>
                 <tr>
                     <td><strong>Edged</strong></td>
                     <td>Sword, Axe, Claymore</td>
                     <td>Normal</td>
-                    <td>d10</td>
+                    <td>1d10 + bonuses</td>
                     <td>~</td>
                 </tr>
                 <tr>
                     <td><strong>2-Handed</strong></td>
                     <td>Greatsword, Greataxe</td>
-                    <td>Disadvantage</td>
-                    <td>Ad10</td>
-                    <td>Ignores 2 W. Mit</td>
+                    <td>Normal</td>
+                    <td>1d10 + bonuses</td>
+                    <td>Costs 2 AP per strike. Physique × 2 on wound bonus. Ignores 2 W. Mit.</td>
                 </tr>
                 <tr>
                     <td><strong>Piercing</strong></td>
                     <td>Dagger, Rapier, Spear</td>
                     <td>Normal</td>
-                    <td>d10</td>
+                    <td>1d10 + bonuses</td>
                     <td>Advantage vs Leather/Cloth</td>
                 </tr>
                 <tr>
                     <td><strong>Polearm</strong></td>
                     <td>Halberd, Pike</td>
-                    <td>Disadvantage</td>
-                    <td>d10</td>
-                    <td>Ranks (Strike from 2nd line)</td>
+                    <td>Normal</td>
+                    <td>1d10 + bonuses</td>
+                    <td>Costs 2 AP per strike. Ranks (Strike from 2nd line).</td>
                 </tr>
             </table>
         </div>
@@ -1539,30 +1539,30 @@
                 <tr>
                     <td><strong>Black Powder</strong></td>
                     <td>Pistol, Rifle</td>
-                    <td>A2d10 / A3d10</td>
+                    <td>1d10 + bonuses</td>
                     <td>75-400 Ft</td>
-                    <td>Piercing (Ignores 4 W. Mit)</td>
+                    <td>Ignores 4 W. Mit. Rifles ignore all W. Mit at normal range.</td>
                 </tr>
                 <tr>
                     <td><strong>Bows</strong></td>
                     <td>Short, Long, Elven</td>
-                    <td>d10</td>
+                    <td>1d10 + bonuses</td>
                     <td>80-400 Ft</td>
-                    <td>Quickload (1 Action)</td>
+                    <td>Quickload (1 Action). Longbow: Physique × 3 wound bonus.</td>
                 </tr>
                 <tr>
                     <td><strong>Crossbows</strong></td>
                     <td>Light, Heavy</td>
-                    <td>2d10 / 3d10</td>
+                    <td>1d10 + bonuses</td>
                     <td>60-300 Ft</td>
-                    <td>Piercing (Ignores 3 W. Mit)</td>
+                    <td>Ignores 3 W. Mit. Heavy: ignores all W. Mit + Bleeding on nat 10.</td>
                 </tr>
                 <tr>
                     <td><strong>Throwing</strong></td>
                     <td>Knife, Javelin, Ax</td>
-                    <td>d10</td>
+                    <td>1d10 + bonuses</td>
                     <td>15-80 Ft</td>
-                    <td>Add Physique Bonus to Wounds</td>
+                    <td>Add Physique bonus to wounds.</td>
                 </tr>
             </table>
         </div>
@@ -1582,11 +1582,12 @@
             <div class="trait-box">
                 <span class="trait-title">Ballistics & Penetration</span>
                 <ul>
-                    <li><strong>Piercing Weapons:</strong> Black powder and Crossbows ignore the listed amount of Wound Mitigation. If the mitigation is lower than the piercing value, the extra damage is not added.</li>
-                    <li><strong>Minimum Damage:</strong> A successful combat strike always deals a minimum of 1 wound, even if the target's mitigation exceeds the damage roll.</li>
-                    <li><strong>Black Powder:</strong> Rifles ignore armor mitigation entirely unless the target is beyond long range. Blunderbuss sprays a 15 Ft AoE; targets must make a DV10 Physique test or suffer 1 Stunned condition.</li>
-                    <li><strong>Crossbows:</strong> Standard and Light Crossbows (2d10 wounds) negate armor mitigation at half-range. Heavy Crossbows (3d10 wounds) negate armor mitigation entirely (except magical bonuses) and cause 1 Bleeding condition on a To-Hit roll of 10.</li>
-                    <li><strong>Bows:</strong> Recurve bows reduce armor mitigation by half up to half-normal range.</li>
+                    <li><strong>All Weapons — Base Damage:</strong> Every weapon deals <strong>1d10 + skill and characteristic bonuses</strong> on a successful hit. The bonus is what differentiates weapons — not extra dice.</li>
+                    <li><strong>Piercing Weapons:</strong> Black Powder and Crossbows ignore the listed amount of Wound Mitigation. If the target's mitigation is lower than the piercing value, the remainder is not added as extra damage.</li>
+                    <li><strong>Minimum Damage:</strong> A successful combat strike always deals a minimum of 1 wound, even if the target's mitigation exceeds the roll.</li>
+                    <li><strong>Black Powder:</strong> Pistols and Rifles ignore 4 points of W. Mit. Rifles ignore all W. Mit at normal range. Blunderbuss sprays a 15 Ft AoE; targets must make a DV10 Physique test or suffer 1 Stunned condition.</li>
+                    <li><strong>Crossbows:</strong> Ignore 3 points of W. Mit. Heavy Crossbows ignore all W. Mit (except magical bonuses) and cause 1 Bleeding condition on a natural 10 To-Hit.</li>
+                    <li><strong>Bows:</strong> Longbows add Physique × 3 to wound bonus. Recurve bows halve the target's armor mitigation up to half their normal range.</li>
                     <li><strong>Entangling:</strong> Lassos and Whips can entangle a target on a failed Agility test. The attacker chooses which limb is snared.</li>
                 </ul>
             </div>
