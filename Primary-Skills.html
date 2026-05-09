@@ -27,7 +27,6 @@
             justify-content: center; 
             padding: 40px 20px; 
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
         .compendium-wrapper {
@@ -82,32 +81,8 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 0.9em;
             display: block;
-            margin-top: 5px;
             margin-bottom: 15px;
         }
-
-        .nav-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 12px;
-            border-bottom: 3px solid var(--blood);
-        }
-
-        .btn-hub {
-            background: var(--iron);
-            color: var(--gold);
-            border: 2px solid var(--gold);
-            padding: 8px 18px;
-            text-decoration: none;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900;
-            font-size: 11pt;
-            text-transform: uppercase;
-            transition: background 0.2s, color 0.2s;
-        }
-        .btn-hub:hover { background: var(--blood); color: #fff; }
 
         .back-link {
             display: block;
@@ -123,40 +98,15 @@
             color: var(--gold);
         }
 
-        /* --- RESPONSIVE: TABLET (≤768px) --- */
-        @media screen and (max-width: 768px) {
-            body { font-size: 16px; padding: 20px 12px; }
-            .compendium-wrapper { padding: 24px; }
-            h1 { font-size: 2.2em; margin-bottom: 28px; }
-            h2.category-title { font-size: 1.8em; margin-top: 36px; }
-            .skill-name { font-size: 1.5em; }
-        }
-
-        /* --- RESPONSIVE: PHONE (≤500px) --- */
-        @media screen and (max-width: 500px) {
-            body { font-size: 15px; padding: 12px 8px; }
-            .compendium-wrapper { padding: 16px; border-width: 3px; }
-            h1 { font-size: 1.9em; letter-spacing: 1px; }
-            h2.category-title { font-size: 1.5em; margin-top: 28px; margin-bottom: 20px; }
-            .skill-block { padding: 14px; }
-            .skill-name { font-size: 1.3em; }
-            .skill-mechanic { font-size: 0.82em; }
-        }
-
         @media print {
-            body { background: none; padding: 0; overflow-x: visible; }
+            body { background: none; padding: 0; }
             .compendium-wrapper { box-shadow: none; border: 2px solid var(--iron); max-width: 100%; }
-            .nav-bar { display: none; }
         }
     </style>
 </head>
 <body>
 
     <div class="compendium-wrapper">
-        <div class="nav-bar">
-            <a href="index.html" class="btn-hub">🏠 Return to Hub</a>
-            <a href="PowerOfThreee-CoreRules.html" class="btn-hub">📖 Core Rulebook</a>
-        </div>
         <h1>Primary Skills Compendium</h1>
         <p>This grimoire details the foundational skills of survival, combat, and arcane mastery. These abilities form the core of your character's capabilities before advancing into specialized vocations.</p>
 
@@ -164,14 +114,14 @@
 
         <div class="skill-block">
             <span class="skill-name">Acute Senses</span>
-            <span class="skill-mechanic">Stat Growth: +1 Awareness per 3 points. | Cost: Halfling (15), Dwarf/Elf (20), Human (25)</span>
+            <span class="skill-mechanic">Power of Three: +1 Awareness per 3 points. | Cost: Halfling (15), Dwarf/Elf (20), Human (25)</span>
             <p><em>The world speaks in whispers, shifting shadows, and the metallic tang of drawn steel. While others are blind to the subtle warnings of the environment, your instincts are honed to a razor's edge.</em></p>
             <p>Your heightened sensitivity to sight, sound, smell, and taste grants you a crucial edge in survival. When actively searching, or when the GM determines a hidden threat (such as an ambush or backstab) is imminent, you make a sensory test by rolling <strong>1d10 + your points in this skill</strong>.</p>
         </div>
 
         <div class="skill-block">
             <span class="skill-name">Athletics</span>
-            <span class="skill-mechanic">Stat Growth: +1 Max Wounds per point. | Cost: Elf/Human (15), Dwarf/Halfling (20)</span>
+            <span class="skill-mechanic">Power of Three: +1 Max Wounds per point. | Cost: Elf (20), Human (25), Dwarf/Halfling (30)</span>
             <p><em>The body is the ultimate weapon, forged not in the armory, but through exhaustion, sweat, and sheer physical exertion. You have conditioned your muscles to push past mortal limits, turning obstacles into mere stepping stones.</em></p>
             <p>Your physical conditioning grants you superior mobility and endurance.</p>
             <ul>
@@ -183,18 +133,18 @@
 
         <div class="skill-block">
             <span class="skill-name">Authority</span>
-            <span class="skill-mechanic">Stat Growth: +1 Charisma per 3 points. | Cost: Dwarf/Elf/Human (15), Halfling (20)</span>
+            <span class="skill-mechanic">Power of Three: +1 Charisma per 3 points. | Cost: Dwarf/Elf/Human (15), Halfling (20)</span>
             <p><em>Some lead by the grace of kings, but you lead by the weight of your presence. Whether through the cold promise of violence or an unshakable aura of command, you force the world to bow to your will.</em></p>
-            <p>You may attempt to force an individual or a group to act against their will, surrender, or comply with a command. <strong>The Clash of Wills:</strong> You roll <strong>1d10 + your points in this skill</strong> to set the Difficulty Value (DV). The target must immediately roll <strong>1d10 + their Willpower characteristic</strong> to resist. If they fail to meet or exceed your DV, they must comply with your demand to the best of their ability.</p>
+            <p>You may attempt to force an individual or a group to act against their will, surrender, or comply with a command. <strong>The Clash of Wills:</strong> You roll <strong>1d10 + your points in this skill</strong> to set the Difficulty Value (DV). The target must immediately roll <strong>1d10 + their Will Power characteristic</strong> to resist. If they fail to meet or exceed your DV, they must comply with your demand to the best of their ability.</p>
         </div>
 
         <div class="skill-block">
             <span class="skill-name">Charm</span>
-            <span class="skill-mechanic">Stat Growth: +1 Charisma per 3 points. | Cost: Halfling/Human (5), Elf/Dwarf (10)</span>
+            <span class="skill-mechanic">Power of Three: +1 Charisma per 3 points. | Cost: Human/Halfling (15), Elf (20), Dwarf (25)</span>
             <p><em>In a harsh world, a silver tongue and a disarming smile can open doors that lockpicks and broadswords cannot. You weave words and presence into a subtle snare, drawing others into your confidence.</em></p>
             <p>You may attempt to lure, pacify, or gain the immediate favor of a target through social grace, flattery, or sheer magnetism.</p>
             <ul>
-                <li><strong>The Allure Test:</strong> You roll <strong>1d10 + your points in this skill</strong> to set the Difficulty Value (DV). The target must roll to resist this DV using either <strong>1d10 + Awareness</strong> (to spot manipulation) or <strong>1d10 + Willpower</strong> (to resist emotional sway).</li>
+                <li><strong>The Allure Test:</strong> You roll <strong>1d10 + your points in this skill</strong> to set the Difficulty Value (DV). The target must roll to resist this DV using either <strong>1d10 + Awareness</strong> (to spot manipulation) or <strong>1d10 + Will Power</strong> (to resist emotional sway).</li>
                 <li><strong>Social Grace:</strong> Simply having this skill unlocked grants its point value as a direct bonus to any general Charisma tests called for by the GM.</li>
             </ul>
         </div>
@@ -250,7 +200,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Discipline</span>
-            <span class="skill-mechanic">Stat Growth: +1 Awareness per 3 pts. | +1 Max Wounds & +1 Resource per pt. | Cost: Dwarf/Elf/Human (5), Halfling (10)</span>
+            <span class="skill-mechanic">Power of Three: +1 Awareness per 3 pts. | +1 Max Wounds & +1 Resource per pt. | Cost: Dwarf/Elf/Human (15), Halfling (20)</span>
             <p><em>The mind commands, and the flesh obeys. Through rigorous fasting, relentless meditation, and unbreakable vows, you have forged your body and spirit into a single, hardened vessel.</em></p>
             <p>Your unwavering commitment to your training grants you both physical resilience and spiritual capacity.</p>
             <ul>
@@ -261,7 +211,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Druid (Magical Vocation)</span>
-            <span class="skill-mechanic">Stat Growth: +1 Awareness per 3 pts. | Prereqs: Knowledge Druidic (1), Read/Scribe (1)</span>
+            <span class="skill-mechanic">Power of Three: +1 Awareness per 3 pts. | Prereqs: Knowledge Druidic (1), Read/Scribe (1) | Cost: Elf/Halfling (30), Dwarf/Human (35)</span>
             <p><em>The world breathes. From the deepest bedrock to the canopy of the ancient wilds, a primal energy flows. You have learned not merely to observe this power, but to channel it, drawing upon the living earth to shape the battlefield.</em></p>
             <p>You unlock the ability to wield Druidic magic, drawing upon natural and planetary energies.</p>
             <ul>
@@ -272,7 +222,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Enraged</span>
-            <span class="skill-mechanic">Stat Growth: +1 Willpower per 3 pts. | Cooldown: 2 turns | Cost: Dwarf (30), Elf/Human (35), Halfling (40)</span>
+            <span class="skill-mechanic">Power of Three: +1 Will Power per 3 pts. | Cooldown: 2 turns | Cost: Dwarf (30), Elf/Human (35), Halfling (40)</span>
             <p><em>A red haze descends, drowning out fear, fatigue, and reason. There is only the immediate threat, the pounding of your own blood, and the relentless urge to break whatever stands before you.</em></p>
             <p>You push your body past its physical limits, unleashing pure hatred upon your enemies. For the duration of the turn:</p>
             <ul>
@@ -284,7 +234,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Evaluation (Object)</span>
-            <span class="skill-mechanic">Stat Growth: +1 Intellect per 3 pts. | Cost: 10 XP (All Races)</span>
+            <span class="skill-mechanic">Power of Three: +1 Intellect per 3 pts. | Cost: 15 XP (All Races)</span>
             <p><em>To the untrained eye, a rusted blade is merely scrap, and a dusty tome is just kindling. But to the educated mind, every scratch, rune, and maker's mark tells a story of forgotten ages, hidden wealth, and latent magical danger.</em></p>
             <p>You possess a trained eye for history, craftsmanship, and arcane signatures, allowing you to identify the nature, value, and potential magical properties of artifacts.</p>
             <ul>
@@ -295,7 +245,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Evasion</span>
-            <span class="skill-mechanic">Stat Growth: +1 Defense, +1 WM, +1 Agility per 3 pts. | Cost: Elf/Halfling (15), Human (20), Dwarf (25)</span>
+            <span class="skill-mechanic">Power of Three: +1 Defense, +1 WM, +1 Agility per 3 pts. | Cost: Halfling (10), Elf (15), Human (20), Dwarf (25)</span>
             <p><em>Armor can be pierced, and shields can be splintered, but a blade that meets empty air inflicts no harm. True survival lies in anticipating the strike—whether by dancing out of its path entirely, or shifting just enough to turn a fatal blow into a glancing deflection.</em></p>
             <p>You have developed uncanny physical intuition, allowing you to slip past lethal strikes in the chaos of melee or the hail of ranged fire.</p>
             <ul>
@@ -306,7 +256,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Faith</span>
-            <span class="skill-mechanic">Stat Growth: +1 Charisma per 3 pts. | Prereqs: Knowledge Religion (1), Read/Scribe (1) | Cost: 20 XP</span>
+            <span class="skill-mechanic">Power of Three: +1 Charisma per 3 pts. | Prereqs: Knowledge Religion (1), Read/Scribe (1) | Cost: Dwarf/Human/Halfling (25), Elf (30)</span>
             <p><em>To believe is to see what others cannot; to act is to manifest the will of the heavens upon the earth. You are not merely a worshiper, but a conduit—a living vessel through which your deity’s grace or wrath flows into the mortal realm.</em></p>
             <p>You unlock the ability to invoke divine blessings granted by your deity.</p>
             <ul>
@@ -318,7 +268,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Focus (Combat Resource)</span>
-            <span class="skill-mechanic">Stat Growth: +1 Awareness & +1 To-Hit per 3 pts. | Action Cost: 1 AP | Cost: 35 XP</span>
+            <span class="skill-mechanic">Power of Three: +1 Awareness & +1 To-Hit per 3 pts. | Action Cost: 1 AP | Cost: 35 XP</span>
             <p><em>The world narrows to a single point. The frantic rhythm of the melee slows as your pulse steadies. You do not merely strike; you choose exactly where the blade will bite and how deep the iron will go.</em></p>
             <p>Your total score in this skill acts as a pool of energy you can expend when you take the "Focus" action.</p>
             <ul>
@@ -333,13 +283,12 @@
 
         <div class="skill-block">
             <span class="skill-name">Fortitude</span>
-            <span class="skill-mechanic">Stat Growth: +1 Physique per 3 pts. | +10 Max Wounds per pt. | Cost: Dwarf (45), Human (50), Elf/Halfling (55)</span>
+            <span class="skill-mechanic">Power of Three: +1 Physique per 3 pts. | +10 Max Wounds per pt. | Cost: Dwarf (45), Human (50), Elf/Halfling (55)</span>
             <p><em>Some men are like oak; they may be scarred and battered by the storm, but they do not break. You have hardened your very marrow, turning your body into a bastion of endurance that can withstand blows that would fell a lesser being.</em></p>
             <p>Your raw physical endurance is unparalleled, allowing you to absorb massive amounts of punishment.</p>
             <ul>
                 <li><strong>Hardened Frame:</strong> For every point invested in this skill, your base maximum Wound threshold permanently increases by 10.</li>
                 <li><strong>Size Synergy:</strong> These wounds are added to your base before Size Multipliers are applied. (e.g., A Large creature gains +20 wounds per point instead of +10).</li>
-                <li><strong>Unstoppable Threshold (3+ Points):</strong> Characters who push beyond 3 points in Fortitude begin to see compounding returns on their resilience, further increasing wound bonuses as their physical form transcends mortal limits.</li>
             </ul>
         </div>
 
@@ -358,7 +307,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Hard as Nails</span>
-            <span class="skill-mechanic">Stat Growth: +1 Willpower per 3 pts. | +2 Max Wounds per pt. | +1 WM per 2 pts. | Cost: Dwarf (30), Human (35), Elf/Halfling (40)</span>
+            <span class="skill-mechanic">Power of Three: +1 Will Power per 3 pts. | +2 Max Wounds per pt. | +1 WM per 2 pts. | Cost: Dwarf (25), Human (30), Elf/Halfling (35)</span>
             <p><em>There are those who bleed at the first sign of steel, and then there are those who simply refuse to acknowledge the pain. You have pushed your body through countless trials, thickening your skin and hardening your resolve until your very flesh acts as a secondary layer of armor.</em></p>
             <p>You possess a terrifying level of physical grit, allowing you to endure punishment that would incapacitate others.</p>
             <ul>
@@ -369,7 +318,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Inspire</span>
-            <span class="skill-mechanic">Stat Growth: +1 Charisma per 3 pts. | Action Cost: 1 AP | Cost: 15 XP (All Races)</span>
+            <span class="skill-mechanic">Power of Three: +1 Charisma per 3 pts. | Action Cost: 1 AP | Cost: Dwarf/Elf/Human (20), Halfling (25)</span>
             <p><em>When the sky turns black with soot and the line begins to waver, one voice can mean the difference between a slaughter and a miracle. You do not just lead; you ignite the flickering embers of courage in the hearts of those around you.</em></p>
             <p>You attempt to embolden your allies within 25 feet. <strong>The Test:</strong> Roll <strong>1d10 + Points in this Skill + Charisma Bonus</strong>. Subtract any situational modifiers based on the environment and enemy size.</p>
             <ul>
@@ -389,15 +338,15 @@
                     <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">8-9</td><td style="padding: 6px; border: 1px solid var(--iron);">+1 to Blessing/Spell (Heal or Wounds)</td></tr>
                     <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">10-11</td><td style="padding: 6px; border: 1px solid var(--iron);">+1 to Defense / Parry</td></tr>
                     <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">12-13</td><td style="padding: 6px; border: 1px solid var(--iron);">+1 to Fear Tests & +3 to all Wound Mitigation (WM)</td></tr>
-                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">13-14</td><td style="padding: 6px; border: 1px solid var(--iron);">+1 To-Hit (All Attacks)</td></tr>
-                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">15-16</td><td style="padding: 6px; border: 1px solid var(--iron);">+3 to Melee and Ranged Wounds</td></tr>
-                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">17-18</td><td style="padding: 6px; border: 1px solid var(--iron);">+3 to Blessing/Spell (Heal or Wounds)</td></tr>
-                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">19-20</td><td style="padding: 6px; border: 1px solid var(--iron);">+1 Attack (Melee & Ranged)</td></tr>
-                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">20-21</td><td style="padding: 6px; border: 1px solid var(--iron);">+1 Attack (Blessing & Spell)</td></tr>
-                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">22-23</td><td style="padding: 6px; border: 1px solid var(--iron);">+3 to Fear Tests & +6 to all Wound Mitigation (WM)</td></tr>
-                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">24-25</td><td style="padding: 6px; border: 1px solid var(--iron);">+3 To-Hit (All Attacks)</td></tr>
-                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">26-27</td><td style="padding: 6px; border: 1px solid var(--iron);">+6 to all Wounds caused or Healed by any means</td></tr>
-                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">28-29</td><td style="padding: 6px; border: 1px solid var(--iron);">Immune to Fear & +9 to all Wound Mitigation (WM)</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">14-15</td><td style="padding: 6px; border: 1px solid var(--iron);">+1 To-Hit (All Attacks)</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">16-17</td><td style="padding: 6px; border: 1px solid var(--iron);">+3 to Melee and Ranged Wounds</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">18-19</td><td style="padding: 6px; border: 1px solid var(--iron);">+3 to Blessing/Spell (Heal or Wounds)</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">20-21</td><td style="padding: 6px; border: 1px solid var(--iron);">+1 Attack (Melee & Ranged)</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">21-22</td><td style="padding: 6px; border: 1px solid var(--iron);">+1 Attack (Blessing & Spell)</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">23-24</td><td style="padding: 6px; border: 1px solid var(--iron);">+3 to Fear Tests & +6 to all Wound Mitigation (WM)</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">25-26</td><td style="padding: 6px; border: 1px solid var(--iron);">+3 To-Hit (All Attacks)</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">27-28</td><td style="padding: 6px; border: 1px solid var(--iron);">+6 to all Wounds caused or Healed by any means</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">29-30</td><td style="padding: 6px; border: 1px solid var(--iron);">Immune to Fear & +9 to all Wound Mitigation (WM)</td></tr>
                     <tr><td style="padding: 6px; border: 1px solid var(--iron); text-align: center; font-weight: bold; color: var(--blood);">30+</td><td style="padding: 6px; border: 1px solid var(--iron);">+3 Attacks (All Types)</td></tr>
                 </tbody>
             </table>
@@ -415,21 +364,21 @@
 
         <div class="skill-block">
             <span class="skill-name">Iron Will</span>
-            <span class="skill-mechanic">Stat Growth: +1 Willpower per 3 pts. | +2 Wounds per pt. | Cost: Dwarf (25), Human/Elf/Halfling (30)</span>
+            <span class="skill-mechanic">Power of Three: +1 Will Power per 3 pts. | +2 Wounds per pt. | Cost: Dwarf (25), Human/Elf/Halfling (30)</span>
             <p><em>The flesh is weak, a tapestry of salt and water easily torn. But the will is iron, forged in the fires of conviction. You do not survive because your heart beats; you survive because you refuse to let it stop.</em></p>
             <p>Your mental fortitude translates directly into physical survivability and resistance to external influences.</p>
             <ul>
                 <li><strong>Lifeblood:</strong> For every point invested in this skill, your maximum Wound threshold permanently increases by 2.</li>
                 <li><strong>The Veteran's Surge:</strong> Upon reaching 3 points in Iron Will, your body undergoes a hardening of spirit, granting a one-time flat bonus of +5 Wounds to your profile.</li>
                 <li><strong>Death’s Door:</strong> You possess an uncanny ability to linger at the threshold of the grave. When reduced to 0 Wounds, you gain an extension of <strong>1 turn per point in this skill</strong> before succumbing to death.</li>
-                <li><strong>The Weight of Attrition:</strong> This turn extension is fragile. For every active condition affecting you (such as Bleeding, Poison, or magical ailments), the total number of extended turns is reduced by 1.</li>
-                <li><strong>Arcane Resistance:</strong> Your hardened mind naturally repels external manipulation. This skill provides a baseline defense against hostile Blessings and Spells (calculated via the Willpower characteristic).</li>
+                <li><strong>The Weight of Attrition:</strong> This turn extension is resilient against the wounds of battle, but not against the dark arts. For every active <strong>magical or supernatural condition</strong> affecting you (such as Cursed, Hexed, or Poison inflicted by a spell), the total number of extended turns is reduced by 1. Physical conditions sustained in combat — Bleeding, Stunned — do not reduce this extension. The iron-willed fight on through blood and pain.</li>
+                <li><strong>Arcane Resistance:</strong> Your hardened mind naturally repels external manipulation. This skill provides a baseline defense against hostile Blessings and Spells (calculated via the Will Power characteristic).</li>
             </ul>
         </div>
 
         <div class="skill-block">
             <span class="skill-name">Ki (Spiritual Vocation)</span>
-            <span class="skill-mechanic">Stat Growth: +1 Physique per 3 pts. | Prereqs: Knowledge Ki (1), Read/Scribe (1) | Cost: Human (10), Dwarf/Elf/Halfling (15)</span>
+            <span class="skill-mechanic">Power of Three: +1 Physique per 3 pts. | Prereqs: Knowledge Ki (1), Read/Scribe (1) | Cost: Human (30), Dwarf/Elf/Halfling (35)</span>
             <p><em>Spiritual energy is not found in the world around you, but within the silent depths of the soul. By channeling this inner fire, you can manifest your will as a physical force, transcending the limits of the mundane body.</em></p>
             <p>You have learned to tap into your inner spiritual reservoir to execute extraordinary feats.</p>
             <ul>
@@ -441,7 +390,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Knowledge</span>
-            <span class="skill-mechanic">Stat Growth: +1 Intellect per 3 pts. | Cost: 15 XP (All Races)</span>
+            <span class="skill-mechanic">Power of Three: +1 Intellect per 3 pts. | Cost: 15 XP (All Races)</span>
             <p><em>A sword can be shattered and gold can be stolen, but a secret once learned is a weapon that never dulls. You have dedicated yourself to the study of the world, cataloging the nuances of history, the patterns of magic, and the behaviors of the beasts that prowl the dark.</em></p>
             <p>This skill is not a singular expertise but a collection of specialized disciplines. Each point invested represents a deep dive into a specific subject.</p>
             <ul>
@@ -461,7 +410,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Light-Soul (Faith-Bound Skill)</span>
-            <span class="skill-mechanic">Stat Growth: +1 Charisma & +1 WM (vs Evil) per 3 pts. | +1 Wound (vs Evil) per pt. | Cost: 20 XP</span>
+            <span class="skill-mechanic">Power of Three: +1 Charisma & +1 WM (vs Evil) per 3 pts. | +1 Wound (vs Evil) per pt. | Cost: 20 XP</span>
             <p><em>The darkness does not merely fear your blade; it fears the light that guides it. You have consecrated your spirit to the destruction of the profane, turning your very presence into a ward against the shadow and a catalyst for its ruin.</em></p>
             <p>You possess a natural resonance that allows you to bypass the defenses of unholy creatures while bolstering your own.</p>
             <ul>
@@ -473,20 +422,20 @@
 
         <div class="skill-block">
             <span class="skill-name">Mending</span>
-            <span class="skill-mechanic">Stat Growth: +1 Charisma per 3 pts. | Cost: Halfling (20), Dwarf (25), Elf/Human (30)</span>
+            <span class="skill-mechanic">Power of Three: +1 Charisma per 3 pts. | Cost: Halfling (20), Dwarf/Elf/Human (25)</span>
             <p><em>The battlefield is a place of jagged iron and splintered bone. While others focus on the art of the wound, you have mastered the art of the stitch. It is the difference between a clean bandage and a funeral.</em></p>
             <p><strong>Battlefield Triage:</strong> You possess the steady hands and medical knowledge required to keep your allies from the brink of death through non-magical means.</p>
             <ul>
                 <li><strong>Stabilization:</strong> With 1 point in this skill, you can stabilize an unconscious ally at 0 Wounds, preventing them from succumbing to their injuries for one turn.</li>
                 <li><strong>Bleed Mitigation:</strong> Your expertise allows you to manage hemorrhaging. While you cannot remove the "Bleeding" condition itself, you mitigate the damage it causes: the victim suffers <strong>1 less wound per turn for every point you have in Mending</strong>.</li>
-                <li><strong>Calculated Healing:</strong> Your refined medical skill allows you to restore vitality. Your base Healing value is calculated as: <strong>Points in Mending + (Mending Points / 3)</strong>.</li>
+                <li><strong>Calculated Healing:</strong> Your refined medical skill allows you to restore vitality. Your base Healing value is calculated as: <strong>Points in Mending × 2</strong>. (e.g., 3 pts = 6 wounds healed | 6 pts = 12 | 9 pts = 18)</li>
                 <li><strong>Constraints:</strong> These actions can only be performed when neither you nor the wounded individual is currently engaged in melee combat.</li>
             </ul>
         </div>
 
         <div class="skill-block">
             <span class="skill-name">Perception</span>
-            <span class="skill-mechanic">Stat Growth: +1 Intellect & +1 Ranged To-Hit per 3 pts. | Cost: 30 XP (All Races)</span>
+            <span class="skill-mechanic">Power of Three: +1 Intellect & +1 Ranged To-Hit per 3 pts. | Cost: 30 XP (All Races)</span>
             <p><em>The world is full of ghosts, lies, and shadows. While others see a wall, you see the faint shimmer of an illusion; while others hear a tale, you hear the hitch in a liar's breath. You do not just look—you observe.</em></p>
             <p>Your heightened awareness allows you to pierce deceptions, whether they are woven from words or woven from raw magic.</p>
             <ul>
@@ -498,7 +447,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Precise Strike</span>
-            <span class="skill-mechanic">Stat Growth: +1 To-Hit & +2 Wounds per 3 pts. | +1 Awareness per 3 pts. | Cost: Elf (40), Dwarf/Human (45), Halfling (50)</span>
+            <span class="skill-mechanic">Power of Three: +1 To-Hit & +2 Wounds per 3 pts. | Cost: Elf (40), Dwarf/Human (45), Halfling (50)</span>
             <p><em>A brute swings for the chest and hopes for the best. A master waits for the heartbeat between breaths, finding the narrow gap in the plate where the metal meets the soul. You do not just hit your target; you dismantle them.</em></p>
             <p><strong>The Critical Opening:</strong> You have mastered the art of the lethal follow-through. When you roll a natural, unmodified 10 on your initial To-Hit roll, you gain the following benefits:</p>
             <ul>
@@ -510,13 +459,12 @@
             <ul style="margin-top: 10px;">
                 <li><strong>Calculated Accuracy:</strong> For every 3 points invested, you gain a passive <strong>+1 bonus to all To-Hit rolls</strong> (Melee and Ranged).</li>
                 <li><strong>Vital Point Targeting:</strong> For every 3 points invested, you gain a passive <strong>+2 bonus to total Wounds</strong> dealt with normal attacks.</li>
-                <li><strong>Passive Progression:</strong> For every 3 points invested in this skill, your core Awareness characteristic permanently increases by 1.</li>
             </ul>
         </div>
 
         <div class="skill-block">
             <span class="skill-name">Quickness</span>
-            <span class="skill-mechanic">Stat Growth: +1 AP & +1 Agility per 3 pts. | Cost: Elf/Halfling (40), Human (45), Dwarf (50)</span>
+            <span class="skill-mechanic">Power of Three: +1 AP & +1 Agility per 3 pts. | Cost: Elf/Halfling (35), Human/Dwarf (40)</span>
             <p><em>In the blur of steel and shadow, the slow are the first to fall. You have trained your muscles and mind to move with a fluid, terrifying economy of motion, allowing you to react to the shifting tides of battle without losing your momentum.</em></p>
             <p><strong>The Action Reservoir:</strong> Your mastery of movement grants you the capacity for more frequent and complex maneuvers.</p>
             <ul>
@@ -528,7 +476,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Read/Write</span>
-            <span class="skill-mechanic">Stat Growth: +1 Intellect per 3 pts. | +1 Language per pt. | Cost: 15 XP (All Races)</span>
+            <span class="skill-mechanic">Power of Three: +1 Intellect per 3 pts. | +1 Language per pt. | Cost: 15 XP (All Races)</span>
             <p><em>To speak is to ripple the air; to write is to carve your will into history. You have moved beyond the oral traditions of the hearth, mastering the intricate ciphers, ancient scripts, and diverse tongues that bind the civilizations of the world together.</em></p>
             <p><strong>The Written Word:</strong> You possess the ability to read, comprehend, and author documents in various languages. This skill is a prerequisite for most advanced academic and magical studies.</p>
             <ul>
@@ -540,14 +488,14 @@
 
         <div class="skill-block">
             <span class="skill-name">Resolve</span>
-            <span class="skill-mechanic">Stat Growth: +1 Willpower & +1 Magic WM per 3 pts. | +1 Max Wounds per pt. | Cost: 15 XP (All Races)</span>
+            <span class="skill-mechanic">Power of Three: +1 Will Power & +1 Magic WM per 3 pts. | +1 Max Wounds per pt. | Cost: Dwarf/Elf/Human (25), Halfling (30)</span>
             <p><em>When the mind screams to flee and the soul feels the cold touch of the void, it is Resolve that holds the line. You have forged your spirit into an unyielding shield, allowing you to stare down ancient terrors and withstand the searing light of the divine.</em></p>
             <p><strong>The Unbreakable Spirit:</strong> Your determination allows you to survive catastrophic events and resist the direct impact of supernatural forces.</p>
             <ul>
                 <li><strong>Fortified Essence:</strong> For every point invested in this skill, your maximum Wound threshold permanently increases by 1.</li>
                 <li><strong>Supernatural Mitigation:</strong> Your sheer willpower acts as a buffer against the arcane. For every 3 points invested in this skill, you gain <strong>+1 Wound Mitigation (WM)</strong> specifically against damage caused by Blessings and Spells.</li>
                 <li><strong>The Mental Bulwark:</strong> This skill serves as your primary defense when making tests against Fear, Terror, or magical deceptions. You roll <strong>1d10 + your points in Resolve</strong> to withstand these effects.</li>
-                <li><strong>Passive Progression:</strong> For every 3 points invested in Resolve, your core Willpower characteristic permanently increases by 1.</li>
+                <li><strong>Passive Progression:</strong> For every 3 points invested in Resolve, your core Will Power characteristic permanently increases by 1.</li>
             </ul>
         </div>
 
@@ -565,7 +513,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Rugged</span>
-            <span class="skill-mechanic">Stat Growth: +1 Physique per 3 pts. | +2 Max Wounds per pt. | Cost: 15 XP (All Races)</span>
+            <span class="skill-mechanic">Power of Three: +1 Physique per 3 pts. | +2 Max Wounds per pt. | Cost: 15 XP (All Races)</span>
             <p><em>While highborn lords feast behind stone walls and scholars wither over parchment, your life has been forged in the open air. Through hard labor, long marches, and the biting wind of the wilderness, you have developed a physical constitution that is as coarse and resilient as old leather.</em></p>
             <p><strong>Hardened Constitution:</strong> Your history of physical toil and environmental exposure has granted you a baseline of resilience that others must train years to match.</p>
             <ul>
@@ -577,7 +525,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Runes (Ancestral Vocation)</span>
-            <span class="skill-mechanic">Stat Growth: +1 Intellect per 3 pts. | Prereqs: Knowledge Runes (1), Read/Write (1) | Cost: Dwarf (10), Human/Elf/Halfling (20)</span>
+            <span class="skill-mechanic">Power of Three: +1 Intellect per 3 pts. | Prereqs: Knowledge Runes (1), Read/Write (1) | Cost: Dwarf (10), Human/Halfling (15), Elf (20)</span>
             <p><em>While the wizard dances with the chaotic weave of magic, the runekeeper binds it in cold, unyielding stone. This is the art of the Duverger—etching the very language of the earth into iron and wood to create wonders that endure long after the caster's breath has gone cold.</em></p>
             <p><strong>The Art of Inscription:</strong> You possess the ancient knowledge required to bind magical energy into physical objects through sacred geometry and runic script.</p>
             <ul>
@@ -593,13 +541,13 @@
 
         <div class="skill-block">
             <span class="skill-name">Shaman (Spiritual Vocation)</span>
-            <span class="skill-mechanic">Stat Growth: +1 Willpower per 3 pts. | Prereqs: Knowledge Shaman (1), Read/Scribe (1) | Cost: Halfling/Human (10), Dwarf (15), Elf (20)</span>
+            <span class="skill-mechanic">Power of Three: +1 Will Power per 3 pts. | Prereqs: Knowledge Shaman (1), Read/Scribe (1) | Cost: Human/Halfling (30), Dwarf/Elf (35)</span>
             <p><em>You are the bridge between the physical and the ethereal. By harmonizing with the dual natures of light and dark, you can command energies that others fear to acknowledge. To you, the rattle of bone and the whisper of the wind are not mere sounds—they are a vocabulary of power.</em></p>
             <p><strong>The Weaver of Spirits:</strong> You have unlocked the ability to channel shamanistic energies into potent spells.</p>
             <ul>
                 <li><strong>The Mystic Grimoire:</strong> For every point invested in this skill, you permanently unlock and learn one Shamanistic Spell.</li>
                 <li><strong>Dual Energies:</strong> Shamanistic spells draw from both light and dark magic, offering a versatile range of effects that can both mend and wither.</li>
-                <li><strong>Passive Progression:</strong> Your soul is tempered by the spirits you commune with. For every 3 points invested in Shaman, your core Willpower characteristic permanently increases by 1.</li>
+                <li><strong>Passive Progression:</strong> Your soul is tempered by the spirits you commune with. For every 3 points invested in Shaman, your core Will Power characteristic permanently increases by 1.</li>
             </ul>
             <p style="font-weight: bold; color: var(--iron); border-bottom: 1px dashed var(--gold); padding-bottom: 5px; margin-top: 15px;">The Vocation Restriction: Primal Attunement</p>
             <p>The flow of shamanistic energy is easily disrupted by cold iron and heavy plate.</p>
@@ -611,7 +559,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Shieldsman</span>
-            <span class="skill-mechanic">Stat Growth: +1 Physique & +1 Shield To-Hit per 3 pts. | Cost: Dwarf/Elf/Human (30), Halfling (35) | Max: Awareness</span>
+            <span class="skill-mechanic">Power of Three: +1 Physique & +1 Shield To-Hit per 3 pts. | Cost: Dwarf/Elf/Human (30), Halfling (35) | Max: Awareness</span>
             <p><em>A shield is not merely a wall of wood and iron; it is a weapon that never reloads and a sanctuary that never falters. You have learned to flow between the high-guard and the bone-shattering bash, making yourself a fortress in motion.</em></p>
             <p><strong>Tactical Stance:</strong> At the start of your turn (during the Initiative phase), you must declare your Shield Stance. This stance lasts until the start of your next turn.</p>
             <ul>
@@ -628,19 +576,19 @@
 
         <div class="skill-block">
             <span class="skill-name">Spirit</span>
-            <span class="skill-mechanic">Stat Growth: +1 Willpower & +1 Magic WM per 3 pts. | +1 Blessing Heal per pt. | Cost: 15 XP (All Races)</span>
+            <span class="skill-mechanic">Power of Three: +1 Will Power & +1 Magic WM per 3 pts. | +1 Blessing Heal per pt. | Cost: 15 XP (All Races)</span>
             <p><em>Your body is not a closed vessel, but a cathedral of the soul. By opening yourself to the unseen currents of the world, you become more than a mere mortal—you become a beacon that draws in healing light and a fortress that repels the sorcerous dark.</em></p>
             <p><strong>Spiritual Receptivity:</strong> You have refined your inner essence, allowing divine and natural energies to take root more effectively within your physical form.</p>
             <ul>
                 <li><strong>Vessel of Grace:</strong> You are naturally attuned to restorative energies. For every 1 point invested in this skill, you gain <strong>+1 additional Wound</strong> whenever you are healed by any Blessing.</li>
                 <li><strong>The Etheric Buffer:</strong> Your spiritual density provides a natural ward against hostile magic. For every 3 points invested in this skill, you gain <strong>+1 Wound Mitigation (WM)</strong> specifically against damage caused by Blessings and Spells.</li>
-                <li><strong>Passive Progression:</strong> For every 3 points invested in Spirit, your core Willpower characteristic permanently increases by 1.</li>
+                <li><strong>Passive Progression:</strong> For every 3 points invested in Spirit, your core Will Power characteristic permanently increases by 1.</li>
             </ul>
         </div>
 
         <div class="skill-block">
             <span class="skill-name">Stamina</span>
-            <span class="skill-mechanic">Stat Growth: +1 Awareness per 3 pts. | +1 Max Wounds per pt. | Cost: Dwarf/Human (10), Elf/Halfling (15)</span>
+            <span class="skill-mechanic">Power of Three: +1 Awareness per 3 pts. | +1 Max Wounds per pt. | Cost: Dwarf/Human (10), Elf/Halfling (15)</span>
             <p><em>The long road does not break the body; it reveals it. While others gasp for air and succumb to the fever of the marsh, you keep moving—your heart a steady drum, your blood a river of iron that refuses to be tainted.</em></p>
             <p><strong>The Engine of Endurance:</strong> You have conditioned your body to withstand extreme physical stress and environmental hazards.</p>
             <ul>
@@ -656,7 +604,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Stealth</span>
-            <span class="skill-mechanic">Stat Growth: +1 Agility per 3 pts. | Action Cost: 1 | Cost: Halfling (5), Elf/Human (10), Dwarf (15)</span>
+            <span class="skill-mechanic">Power of Three: +1 Agility per 3 pts. | Action Cost: 1 | Cost: Halfling/Elf (15), Human (20), Dwarf (25)</span>
             <p><em>To be seen is to be killed. To be unheard is to be legendary. You do not simply walk in the shadows; you become one with the stillness between heartbeats, moving like a ghost through the world of the loud and the blind.</em></p>
             <p><strong>The Art of Unseen Action:</strong> Stealth is a dynamic state. Your effectiveness is measured against the Awareness (Passive) or Acute Senses (Active) of your enemies.</p>
             <ul>
@@ -685,13 +633,14 @@
 
         <div class="skill-block">
             <span class="skill-name">Strength Conditioning & Grapple</span>
-            <span class="skill-mechanic">Stat Growth: +1 Physique per 3 pts. | +2 Wounds per pt. | Cost: Dwarf/Human (15), Elf/Halfling (20)</span>
+            <span class="skill-mechanic">Power of Three: +1 Physique per 3 pts. | +2 Wounds per pt. | +2 Melee Wounds per 3 pts. | Cost: Dwarf/Human (30), Elf/Halfling (35)</span>
             <p><em>The world is heavy, and the weak are crushed by its weight. You have spent your life pushing back—lifting stone, bending iron, and grappling with death itself. To you, a locked door is a suggestion, and an opponent's throat is a handle.</em></p>
             <p><strong>The Might of the Vessel:</strong></p>
             <ul>
                 <li><strong>Effortless Power:</strong> Gain Advantage on all tests for Bending Bars, Breaking Doors, or Grappling/Subdue.</li>
                 <li><strong>The Grapple Maneuver:</strong> You may attempt to Grapple a target in place of a standard weapon attack or as part of a fluid attack maneuver.</li>
                 <li><strong>Vitality:</strong> +2 Wounds per point invested.</li>
+                <li><strong>Iron Grip:</strong> For every 3 points invested, add <strong>+2 to all melee weapon wound rolls</strong>. This bonus stacks with Physique and Athletics on every melee strike.</li>
                 <li><strong>Passive Progression:</strong> Every 3 points increases your core Physique characteristic by 1.</li>
             </ul>
 
@@ -708,7 +657,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Survival</span>
-            <span class="skill-mechanic">Stat Growth: +1 Willpower & +1 Magic WM per 3 pts. | +1 Max Wounds per pt. | Cost: 15 XP (All Races)</span>
+            <span class="skill-mechanic">Power of Three: +1 Will Power & +1 Magic WM per 3 pts. | +1 Max Wounds per pt. | Cost: 15 XP (All Races)</span>
             <p><em>The wilderness does not care for your titles, and the sun does not recognize your lineage. You have lived where others perished, learning to wring water from stone and warmth from the wind. To you, the world is not a threat to be feared, but a puzzle to be solved.</em></p>
             <p><strong>The Enduring Soul:</strong> Your exposure to the harsh realities of the world has tempered your physical and spiritual resilience.</p>
             <ul>
@@ -718,13 +667,13 @@
                     <br> - <em>Hardiness:</em> You gain Advantage on all tests made to resist the effects of extreme Cold, Heat, or Hunger.
                 </li>
                 <li><strong>Supernatural Buffer:</strong> Your soul has grown calloused against external influences. For every 3 points invested in this skill, you gain <strong>+1 Wound Mitigation (WM)</strong> specifically against damage caused by Blessings and Spells.</li>
-                <li><strong>Passive Progression:</strong> For every 3 points invested in Survival, your core Willpower characteristic permanently increases by 1.</li>
+                <li><strong>Passive Progression:</strong> For every 3 points invested in Survival, your core Will Power characteristic permanently increases by 1.</li>
             </ul>
         </div>
 
         <div class="skill-block">
             <span class="skill-name">Thieving</span>
-            <span class="skill-mechanic">Stat Growth: +1 Agility per 3 pts. | Action Cost: 1 | Cost: Halfling (5), Elf/Human (15), Dwarf (20)</span>
+            <span class="skill-mechanic">Power of Three: +1 Agility per 3 pts. | Action Cost: 1 | Cost: Halfling (10), Elf/Human (15), Dwarf (20)</span>
             <p><em>Locks are merely puzzles waiting for a solution, and pockets are just temporary storage for gold that hasn't found a better home. You have mastered the art of the quick hand and the quiet mind, finding the weaknesses in both iron mechanisms and human attention.</em></p>
             <p><strong>The Quick Hand:</strong> Unlocking this skill allows you to perform specialized maneuvers that bypass traditional security and social norms.</p>
             <ul>
@@ -754,7 +703,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Tracking</span>
-            <span class="skill-mechanic">Stat Growth: +1 Awareness per 3 pts. | Cost: Dwarf/Elf/Human (10), Halfling (15)</span>
+            <span class="skill-mechanic">Power of Three: +1 Awareness per 3 pts. | Cost: Dwarf/Elf/Human (10), Halfling (15)</span>
             <p><em>Whether it’s the snap of a twig, a tuft of fur caught on a thorn, or the faint scent of woodsmoke on the wind, the world is a book that most people have forgotten how to read. You see the story of what passed through here, how long ago they left, and exactly how tired they were.</em></p>
             <p><strong>Reading the Trail:</strong> You can identify and follow the passage of creatures or persons across various terrains.</p>
             <ul>
@@ -771,7 +720,7 @@
 
         <div class="skill-block">
             <span class="skill-name">Wizardry (The High Arcane)</span>
-            <span class="skill-mechanic">Stat Growth: +1 Intellect & +2 Spell Wounds per 3 pts. | Prereqs: Knowledge Magic (1), Read/Write (1) | Cost: Elf (20), Human/Halfling (30), Dwarf (50)</span>
+            <span class="skill-mechanic">Power of Three: +1 Intellect & +2 Spell Wounds per 3 pts. | Prereqs: Knowledge Magic (1), Read/Write (1) | Cost: Elf (25), Halfling (30), Human (35), Dwarf (40)</span>
             <p><em>To the uninitiated, magic is a miracle. To you, it is a complex series of vibrations, a mathematical dance of the soul that requires absolute precision. You do not pray for power; you command it through the sheer weight of your study.</em></p>
             <p><strong>The Arcane Reservoir:</strong></p>
             <ul>
@@ -789,7 +738,7 @@
             </ul>
         </div>
 
-        <a href="PowerOfThreee-CoreRules.html" class="back-link">↑ Return to Core Rulebook</a>
+        <a href="RPG-PowerofThree-Rules.html" class="back-link">Return to Core Rulebook</a>
     </div>
 
 </body>
