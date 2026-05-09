@@ -114,6 +114,32 @@
             color: var(--gold);
         }
 
+
+        .top-nav {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--gold);
+        }
+        .btn-hub {
+            background: var(--ink);
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            padding: 8px 20px;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 12pt;
+            text-transform: uppercase;
+            transition: background 0.2s, color 0.2s;
+            font-family: var(--font-heading);
+        }
+        .btn-hub:hover {
+            background: var(--blood);
+            color: #fff;
+        }
         /* --- RESPONSIVE: TABLET (≤768px) --- */
         @media screen and (max-width: 768px) {
             body { font-size: 16px; padding: 20px 12px; }
@@ -146,6 +172,11 @@
 
     <div class="compendium-wrapper">
         <h1>Advanced Vocations Compendium</h1>
+        <div class="top-nav">
+            <a href="index.html" class="btn-hub">🏠 Return to Hub</a>
+            <a href="Core_Rules.html" class="btn-hub">📖 Core Rulebook</a>
+            <a href="Primary-Skills.html" class="btn-hub">⚔ Primary Skills</a>
+        </div>
         <p>This grimoire details the specialized combat arts, epic feats, and master-level magical weaving available to veterans of the Path. These skills permanently alter how your character interacts with the battlefield.</p>
 
         <h2 class="category-title">Advanced Vocations (A-Z)</h2>
