@@ -100,29 +100,6 @@
             margin-bottom: 5px;
         }
 
-        .nav-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 12px;
-            border-bottom: 3px solid var(--blood);
-        }
-
-        .btn-hub {
-            background: var(--iron);
-            color: var(--gold);
-            border: 2px solid var(--gold);
-            padding: 8px 18px;
-            text-decoration: none;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900;
-            font-size: 11pt;
-            text-transform: uppercase;
-            transition: background 0.2s, color 0.2s;
-        }
-        .btn-hub:hover { background: var(--blood); color: #fff; }
-
         .back-link {
             display: block;
             text-align: center;
@@ -168,10 +145,6 @@
 <body>
 
     <div class="compendium-wrapper">
-        <div class="nav-bar">
-            <a href="index.html" class="btn-hub">🏠 Return to Hub</a>
-            <a href="Core_Rules.html" class="btn-hub">📖 Core Rulebook</a>
-        </div>
         <h1>Advanced Vocations Compendium</h1>
         <p>This grimoire details the specialized combat arts, epic feats, and master-level magical weaving available to veterans of the Path. These skills permanently alter how your character interacts with the battlefield.</p>
 
@@ -255,7 +228,7 @@
             <ul>
                 <li><strong>Aura of Light:</strong> Spend 1 Action to activate a 60ft aura. Allies within gain +1 to Fear tests, and you automatically detect "Evil" entities.</li>
                 <li><strong>Aegis of Light:</strong> Against "Evil" targets, your WM is increased by your Light Soul points.</li>
-                <li><strong>Divine Riposte (Crit):</strong> If an "Evil" enemy rolls a natural 10 against you: <strong>WM = (Light Soul Points x 2)</strong> for that strike.</li>
+                <li><strong>Divine Riposte (Crit):</strong> If an "Evil" enemy rolls a natural 10 against you: gain bonus <strong>WM equal to your Light Soul points</strong> for that strike (maximum +8 WM). Faith shields the faithful — but even the divine has limits against the most catastrophic blows.</li>
             </ul>
 
             <div class="specialization-block">
@@ -265,7 +238,7 @@
                 <ul>
                     <li><strong>Righteous Terror:</strong> Force a Fear test (DV 5) to all "Evil" enemies within your aura.</li>
                     <li><strong>Hammer of the Wicked:</strong> Deal additional Wounds against "Evil" targets equal to your Light Soul points.</li>
-                    <li><strong>Divine Execution (Crit):</strong> On an unmodified 10 To-Hit: <strong>Bonus Wounds = (Light Soul Points x 2)</strong>.</li>
+                    <li><strong>Divine Execution (Crit):</strong> On an unmodified 10 To-Hit: <strong>Bonus Wounds = Light Soul Points + 1d10</strong>. Divine justice strikes with fury and variance in equal measure.</li>
                 </ul>
             </div>
         </div>
@@ -872,7 +845,7 @@
             </div>
         </div>
 
-        <a href="PowerOfThreee-CoreRules.html" class="back-link">↑ Return to Core Rulebook</a>
+        <a href="RPG-PowerofThree-Rules.html" class="back-link">Return to Core Rulebook</a>
     </div>
 
 </body>
