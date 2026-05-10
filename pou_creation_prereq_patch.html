@@ -1,0 +1,700 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.phone{width:340px;min-height:680px;background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:28px;overflow:hidden;display:flex;flex-direction:column;margin:0 auto;font-family:var(--font-sans)}
+.sbar{background:#02070e;color:#B8860B;font-size:11px;padding:8px 16px 6px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.prog-wrap{background:#02070e;padding:8px 16px 10px;flex-shrink:0}
+.prog-steps{display:flex;gap:4px;margin-bottom:5px}
+.ps{flex:1;height:3px;border-radius:2px;background:#222;transition:background 0.3s}
+.ps.done{background:#B8860B}.ps.active{background:#f3e7c9}
+.prog-label{font-size:10px;color:#666}.prog-label b{color:#B8860B;font-weight:500}
+.screen{flex:1;overflow-y:auto;display:none;flex-direction:column}.screen.active{display:flex}
+.sh{background:#02070e;padding:12px 16px;flex-shrink:0}
+.sh h2{font-size:14px;font-weight:500;color:#B8860B;text-transform:uppercase;letter-spacing:1px}
+.sh p{font-size:11px;color:#555;margin-top:2px}
+.sb{flex:1;padding:10px;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.foot{background:var(--color-background-primary);border-top:0.5px solid var(--color-border-tertiary);padding:8px 10px;display:flex;gap:7px;flex-shrink:0}
+.bb{background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:9px 12px;font-size:11px;font-weight:500;color:var(--color-text-secondary);cursor:pointer;text-transform:uppercase;letter-spacing:0.5px}
+.bn{flex:1;background:#02070e;border:none;border-radius:var(--border-radius-md);padding:9px;font-size:11px;font-weight:500;color:#B8860B;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px}
+.bn:disabled{opacity:0.3;cursor:default}
+.bfin{flex:1;background:#A81818;border:none;border-radius:var(--border-radius-md);padding:9px;font-size:11px;font-weight:500;color:#f3e7c9;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px}
+.xp-sticky{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:10px 12px}
+.xp-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.xp-lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-secondary)}
+.xp-num{font-size:13px;font-weight:500}
+.xp-track{height:5px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
+.xp-fill{height:100%;background:#B8860B;border-radius:3px;transition:width 0.2s}
+.xp-fill.over{background:#A81818}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:11px;cursor:pointer}
+.card.sel{border:2px solid #B8860B;background:var(--color-background-secondary)}
+.card-row{display:flex;align-items:center;gap:10px}
+.card-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-name{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.card-sub{font-size:11px;color:var(--color-text-secondary);margin-top:1px}
+.card-cost{font-size:10px;color:#B8860B;margin-top:2px}
+.chk{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chk.on{background:#B8860B;border-color:#B8860B}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ni-wrap{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:12px}
+.ni-wrap label{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-secondary);display:block;margin-bottom:7px}
+.ni-wrap input{width:100%;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:9px 11px;font-size:15px;color:var(--color-text-primary);font-family:var(--font-sans)}
+.ni-wrap input::placeholder{color:var(--color-text-tertiary)}
+.xp-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.xp-btn{background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:7px 10px;font-size:11px;font-weight:500;color:var(--color-text-secondary);cursor:pointer}
+.xp-btn.on{border-color:#B8860B;color:#B8860B}
+.sk-sec{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow:hidden}
+.sk-head{padding:8px 11px;background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary);font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-secondary);display:flex;justify-content:space-between;align-items:center}
+.sk-row{display:flex;align-items:center;gap:7px;padding:8px 11px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.sk-row:last-child{border-bottom:none}
+.sk-row.locked{opacity:0.35;pointer-events:none}
+.sk-row.preloaded{background:rgba(184,134,11,0.04)}
+.sk-row.prereq{background:rgba(26,58,92,0.04)}
+.sk-lbl{flex:1;min-width:0}
+.sk-nm{font-size:12px;color:var(--color-text-primary)}
+.sk-ct{font-size:10px;color:var(--color-text-secondary);margin-top:1px}
+.sk-ctrl{display:flex;align-items:center;gap:6px}
+.skb{width:26px;height:26px;border-radius:50%;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+.skb:active{background:#02070e;color:#B8860B}
+.sk-pts{min-width:20px;text-align:center;font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.sk-bon{font-size:10px;color:#B8860B;text-align:right;min-width:60px}
+.badge{font-size:9px;border-radius:3px;padding:2px 5px;margin-left:4px;display:inline-flex;align-items:center;gap:2px}
+.badge.lock{color:#888;background:var(--color-background-secondary)}
+.badge.prereq{color:#185FA5;background:rgba(26,58,92,0.1)}
+.badge.arch{color:#B8860B;background:rgba(184,134,11,0.1)}
+.ct-row{display:flex;align-items:center;gap:10px;padding:9px 11px;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer}
+.ct-row:last-child{border-bottom:none}
+.ct-row.preloaded{background:rgba(184,134,11,0.04)}
+.ct-box{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ct-box.on{background:#02070e;border-color:#02070e}
+.ct-info{flex:1}.ct-name{font-size:12px;color:var(--color-text-primary)}.ct-cost{font-size:10px;color:var(--color-text-secondary)}
+.reset-banner{background:rgba(184,134,11,0.08);border:0.5px solid rgba(184,134,11,0.3);border-radius:var(--border-radius-md);padding:10px 12px;display:flex;align-items:flex-start;gap:10px}
+.reset-banner p{font-size:11px;color:var(--color-text-secondary);flex:1;line-height:1.4}
+.reset-btn{background:#02070e;border:none;border-radius:var(--border-radius-md);padding:7px 10px;font-size:10px;font-weight:500;color:#B8860B;cursor:pointer;white-space:nowrap;text-transform:uppercase;letter-spacing:0.3px;flex-shrink:0}
+.prereq-banner{background:rgba(26,58,92,0.06);border:0.5px solid rgba(26,58,92,0.2);border-radius:var(--border-radius-md);padding:10px 12px;font-size:11px;color:var(--color-text-secondary);line-height:1.5}
+.sum-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:13px}
+.sum-hero{display:flex;align-items:center;gap:11px;margin-bottom:11px;padding-bottom:11px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.sum-av{width:44px;height:44px;border-radius:50%;background:#A8181820;color:#A81818;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;flex-shrink:0}
+.sum-name{font-size:16px;font-weight:500;color:var(--color-text-primary)}
+.sum-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.sum-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-bottom:10px}
+.sum-stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px}
+.sum-sl{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-secondary)}
+.sum-sv{font-size:17px;font-weight:500;color:var(--color-text-primary);margin-top:1px}
+.sum-sk{margin-top:8px}
+.sum-sk-head{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-secondary);margin-bottom:6px}
+.sum-sk-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:11px}
+.sum-sk-row:last-child{border-bottom:none}
+.xp-breakdown{margin-top:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px}
+.xp-br-row{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;color:var(--color-text-secondary)}
+.xp-br-row.total{font-weight:500;color:var(--color-text-primary);border-top:0.5px solid var(--color-border-tertiary);margin-top:4px;padding-top:6px}
+.wound-formula{background:rgba(2,7,14,0.04);border-radius:var(--border-radius-md);padding:9px 12px;font-size:11px;color:var(--color-text-secondary);line-height:1.6}
+.arch-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:10px;cursor:pointer}
+.arch-card.sel{border:2px solid #B8860B;background:var(--color-background-secondary)}
+.arch-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.arch-tag{font-size:9px;padding:2px 5px;border-radius:3px;background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.arch-tag.magic{background:#B8860B18;color:#854F0B}
+.arch-tag.combat{background:#A8181815;color:#791F1F}
+</style>
+
+<h2 class="sr-only">Path of the Unknown character creation — vocation prereqs auto-applied, Faith gates Light-Soul, correct wound formula</h2>
+
+<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px">
+<div class="phone">
+  <div class="sbar">
+    <span style="font-weight:500;font-size:11px;letter-spacing:1px;text-transform:uppercase">New Character</span>
+    <span style="display:flex;gap:6px"><i class="ti ti-wifi" style="font-size:12px" aria-hidden="true"></i><i class="ti ti-battery" style="font-size:12px" aria-hidden="true"></i></span>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-steps" id="prog-steps"></div>
+    <div class="prog-label">Step <b id="snum">1</b> of 8 — <b id="sname">Identity</b></div>
+  </div>
+
+  <div class="screen active" id="sc0">
+    <div class="sh"><h2>Who are you?</h2><p>Name and earned XP pool</p></div>
+    <div class="sb">
+      <div class="ni-wrap"><label>Character name</label><input id="char-name" type="text" placeholder="Enter a name..." oninput="chk0()"></div>
+      <div class="ni-wrap">
+        <label>Earned XP</label>
+        <input id="xp-earned" type="number" min="0" placeholder="e.g. 1000" oninput="S.xpEarned=parseInt(this.value)||0;chk0()">
+        <div class="xp-btns">
+          <button class="xp-btn" onclick="setEarned(0,this)">0</button>
+          <button class="xp-btn" onclick="setEarned(500,this)">500</button>
+          <button class="xp-btn" onclick="setEarned(1000,this)">1,000</button>
+          <button class="xp-btn" onclick="setEarned(2000,this)">2,000</button>
+          <button class="xp-btn" onclick="setEarned(5000,this)">5,000</button>
+        </div>
+      </div>
+      <div class="ni-wrap" style="cursor:pointer" onclick="toggleArch()">
+        <label>Archetype <span style="color:#B8860B;font-size:10px">(optional)</span></label>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:13px;color:var(--color-text-primary)" id="arch-lbl">None — build from scratch</span>
+          <i class="ti ti-chevron-down" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div id="arch-picker" style="display:none;flex-direction:column;gap:6px"></div>
+    </div>
+    <div class="foot"><button class="bn" id="n0" onclick="go(1)" disabled>Next — Race &amp; Size</button></div>
+  </div>
+
+  <div class="screen" id="sc1">
+    <div class="sh"><h2>Race &amp; Size</h2><p>Sets base wounds, movement and skill costs</p></div>
+    <div class="sb">
+      <div class="grid2" id="race-grid"></div>
+      <div id="race-detail" style="display:none;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;font-size:12px;color:var(--color-text-secondary);line-height:1.5"></div>
+      <div class="sk-sec">
+        <div class="sk-head">Size <span style="font-weight:normal;text-transform:none">wound multiplier</span></div>
+        <div id="size-btns" style="display:flex;flex-wrap:wrap;gap:6px;padding:10px"></div>
+      </div>
+    </div>
+    <div class="foot"><button class="bb" onclick="go(0)">Back</button><button class="bn" id="n1" onclick="go(2)" disabled>Next — Vocation</button></div>
+  </div>
+
+  <div class="screen" id="sc2">
+    <div class="sh"><h2>Vocation &amp; Magic</h2><p>200 XP unlock. Prereqs auto-applied. One path only.</p></div>
+    <div class="sb" id="voc-list"></div>
+    <div class="foot"><button class="bb" onclick="go(1)">Back</button><button class="bn" onclick="go(3)">Next — Weapons</button></div>
+  </div>
+
+  <div class="screen" id="sc3">
+    <div class="sh"><h2>Weapon Training</h2><p>Specializations compound by race. Commit before skills.</p></div>
+    <div class="sb" id="wpn-body"></div>
+    <div class="foot"><button class="bb" onclick="go(2)">Back</button><button class="bn" onclick="go(4)">Next — Primary Skills</button></div>
+  </div>
+
+  <div class="screen" id="sc4">
+    <div class="sh"><h2>Primary Skills</h2><p>Prereq skills shown in blue. Light-Soul requires Faith > 0.</p></div>
+    <div class="sb" id="sk-body"></div>
+    <div class="foot"><button class="bb" onclick="go(3)">Back</button><button class="bn" onclick="go(5)">Next — Resources</button></div>
+  </div>
+
+  <div class="screen" id="sc5">
+    <div class="sh"><h2>Resources</h2><p>Action Points (175 base), Fortune (30 base), Riding (25 flat)</p></div>
+    <div class="sb" id="res-body"></div>
+    <div class="foot"><button class="bb" onclick="go(4)">Back</button><button class="bn" onclick="go(6)">Next — Advanced Skills</button></div>
+  </div>
+
+  <div class="screen" id="sc6">
+    <div class="sh"><h2>Advanced Skills</h2><p>Flat XP each. Archetype selections pre-loaded.</p></div>
+    <div class="sb" id="adv-body"></div>
+    <div class="foot"><button class="bb" onclick="go(5)">Back</button><button class="bn" onclick="go(7)">Review Character</button></div>
+  </div>
+
+  <div class="screen" id="sc7">
+    <div class="sh"><h2>Character ready</h2><p>Every XP sink accounted for</p></div>
+    <div class="sb" id="sum-body"></div>
+    <div class="foot"><button class="bb" onclick="go(6)">Edit</button><button class="bfin" onclick="sendPrompt('Prereqs are wired, wounds are correct, Light-Soul is gated. What should we refine or build next for the Path of the Unknown companion app?')">Save to Roster ↗</button></div>
+  </div>
+</div>
+</div>
+
+<script>
+const STEP_NAMES=['Identity','Race & Size','Vocation','Weapons','Primary Skills','Resources','Advanced Skills','Summary'];
+const RACES={
+  human:  {label:'Human',  icon:'ti-user',   wounds:9, move:15,lore:'Adaptable. Balanced costs across all skills.'},
+  elf:    {label:'Elf',    icon:'ti-feather',wounds:6, move:18,lore:'Swift and magical. Low cast and evasion costs.'},
+  dwarf:  {label:'Dwarf',  icon:'ti-hammer', wounds:12,move:12,lore:'Resilient. Cheapest combat and faith skills.'},
+  halfling:{label:'Halfling',icon:'ti-pig',  wounds:3, move:12,lore:'Nimble. Cheapest evasion (10), stealth, thieving.'},
+};
+const SIZES=[
+  {id:'Med',label:'Med',mult:1,note:'×1'},
+  {id:'Sm', label:'Small',mult:0.5,note:'×0.5W'},
+  {id:'Lg', label:'Large',mult:2,note:'×2W'},
+  {id:'Giant',label:'Giant',mult:3,note:'×3W'},
+  {id:'Enormous',label:'Enorm.',mult:6,note:'×6W'},
+];
+const ALL_MAGIC=['Faith','Wizardry','Ki','Shaman','Druidism'];
+
+// Vocation prereqs: Knowledge type auto-granted at 1 pt, Read/Write floor set to 1
+// knowledgeType is what gets written into the Knowledge skill name for tracking
+const VOCATIONS=[
+  {id:'none',   label:'No Vocation',       icon:'ti-shield',  color:'#888',    desc:'Pure skill build. No magic.',       magic:null,     knowledgeType:null,    locks:ALL_MAGIC},
+  {id:'Religion',label:'Faith — Cleric',   icon:'ti-cross',   color:'#B8860B', desc:'Divine healing & anti-Evil.',       magic:'Faith',  knowledgeType:'Religion', locks:['Wizardry','Ki','Shaman','Druidism']},
+  {id:'Magic',  label:'Wizardry — Arcane', icon:'ti-wand',    color:'#185FA5', desc:'Intellect damage & counter-cast.',  magic:'Wizardry',knowledgeType:'Magic',  locks:['Faith','Ki','Shaman','Druidism']},
+  {id:'Ki',     label:'Ki — Monk',         icon:'ti-yin-yang',color:'#2d6a2d', desc:'Internal energy, Physique cast.',   magic:'Ki',     knowledgeType:'Ki',      locks:['Faith','Wizardry','Shaman','Druidism']},
+  {id:'Shaman', label:'Shaman — Spirit',   icon:'ti-flame',   color:'#854F0B', desc:'Willpower spirit magic.',           magic:'Shaman', knowledgeType:'Shaman',  locks:['Faith','Wizardry','Ki','Druidism']},
+  {id:'Druidic',label:'Druidism — Primal', icon:'ti-leaf',    color:'#3B6D11', desc:'Nature magic & shapeshifting.',     magic:'Druidism',knowledgeType:'Druidic', locks:['Faith','Wizardry','Ki','Shaman']},
+  {id:'Runes',  label:'Runemaster — Runes',icon:'ti-hexagon', color:'#534AB7', desc:'Runic wards & Agility utility.',    magic:'Runes',  knowledgeType:'Runes',   locks:ALL_MAGIC},
+];
+
+const PHYSIQUE_CAT=['Fortitude','Hard as Nails','Ki','Rugged','Shieldsman','Strength Con.'];
+const SKILL_COSTS={
+  human:   {'Rugged':15,'Stamina':10,'Iron Will':30,'Hard as Nails':30,'Fortitude':50,'Strength Con.':30,'Shieldsman':30,'Ki':30,'Athletics':25,'Counter':30,'Evasion':20,'Quickness':40,'Stealth':20,'Thieving':15,'Acute Senses':25,'Discipline':15,'Druidism':35,'Focus':35,'Precise Strk':45,'Authority':15,'Charm':15,'Faith':25,'Inspire':20,'Light-Soul':20,'Mending':25,'Evaluate':15,'Knowledge':15,'Perception':30,'Read/Write':15,'Tracker':15,'Wizardry':35,'Enraged':35,'Resolve':15,'Shaman':30,'Spirit':15,'Survival':25},
+  elf:     {'Rugged':15,'Stamina':15,'Iron Will':30,'Hard as Nails':35,'Fortitude':55,'Strength Con.':35,'Shieldsman':30,'Ki':35,'Athletics':20,'Counter':30,'Evasion':15,'Quickness':35,'Stealth':15,'Thieving':15,'Acute Senses':20,'Discipline':15,'Druidism':30,'Focus':35,'Precise Strk':40,'Authority':15,'Charm':20,'Faith':30,'Inspire':20,'Light-Soul':20,'Mending':25,'Evaluate':15,'Knowledge':15,'Perception':30,'Read/Write':15,'Tracker':15,'Wizardry':25,'Enraged':35,'Resolve':15,'Shaman':35,'Spirit':15,'Survival':25},
+  dwarf:   {'Rugged':15,'Stamina':10,'Iron Will':25,'Hard as Nails':25,'Fortitude':45,'Strength Con.':30,'Shieldsman':30,'Ki':35,'Athletics':30,'Counter':30,'Evasion':25,'Quickness':40,'Stealth':25,'Thieving':20,'Acute Senses':15,'Discipline':15,'Druidism':35,'Focus':35,'Precise Strk':45,'Authority':15,'Charm':25,'Faith':25,'Inspire':20,'Light-Soul':20,'Mending':25,'Evaluate':15,'Knowledge':15,'Perception':30,'Read/Write':15,'Tracker':15,'Wizardry':40,'Enraged':30,'Resolve':15,'Shaman':35,'Spirit':15,'Survival':25},
+  halfling:{'Rugged':15,'Stamina':15,'Iron Will':30,'Hard as Nails':35,'Fortitude':55,'Strength Con.':35,'Shieldsman':35,'Ki':35,'Athletics':30,'Counter':30,'Evasion':10,'Quickness':35,'Stealth':15,'Thieving':10,'Acute Senses':15,'Discipline':20,'Druidism':30,'Focus':35,'Precise Strk':50,'Authority':20,'Charm':15,'Faith':25,'Inspire':25,'Light-Soul':20,'Mending':20,'Evaluate':15,'Knowledge':15,'Perception':30,'Read/Write':15,'Tracker':10,'Wizardry':30,'Enraged':40,'Resolve':15,'Shaman':30,'Spirit':15,'Survival':30},
+};
+const COMBAT_CHECK_COSTS={melee:{dwarf:25,elf:30,human:30,halfling:35},range:{elf:25,dwarf:30,halfling:30,human:30}};
+const SKS={
+  'Physique': ['Fortitude','Hard as Nails','Ki','Rugged','Shieldsman','Strength Con.'],
+  'Agility':  ['Athletics','Counter','Evasion','Quickness','Stealth','Thieving'],
+  'Awareness':['Acute Senses','Discipline','Druidism','Focus','Precise Strk','Stamina'],
+  'Charisma': ['Authority','Charm','Faith','Inspire','Light-Soul','Mending'],
+  'Intellect':['Evaluate','Knowledge','Perception','Read/Write','Tracker','Wizardry'],
+  'Willpower':['Enraged','Iron Will','Resolve','Shaman','Spirit','Survival'],
+};
+const ADV_SKILLS=[
+  {name:'Deflect / Revert-Back',cost:50},{name:'Shield Rush / Blitz',cost:50},
+  {name:'Block / Bulwark',cost:100},{name:'Cleave / Whirlwind',cost:100},
+  {name:'Cleric / Crusader',cost:100},{name:'Command / Blood Rally',cost:100},
+  {name:'Divinity / Sanctity',cost:100},{name:'Expose Armor / Undress',cost:100},
+  {name:'Heavy Arbalest / Linebreaker',cost:100},{name:'Marksman / Sniper',cost:100},
+  {name:'Nimble / Shadow Strike',cost:100},{name:'Opportunist / Seeker',cost:100},
+  {name:'Sovereign Mind / Indomitable',cost:100},{name:'Sunder / Shatterpoint',cost:100},
+  {name:'Arcane Duelist / Spell-Eater',cost:200},{name:'Battle-Ready / Berzerker',cost:200},
+  {name:'Concentrate / Intensify',cost:200},{name:'Deviation / Divergence',cost:200},
+  {name:'Dodge / Jailbreak',cost:200},{name:'Impact / Full-Weight',cost:200},
+  {name:'Impale / Skewer',cost:200},{name:'Infusion / True Fusion',cost:200},
+  {name:'Master Thievery / Saboteur',cost:200},{name:'Phantom Assassin / Sever',cost:200},
+  {name:'Primal Aspect / Mutation',cost:200},{name:'Throat Slice / Slash',cost:200},
+  {name:'Thunderstrike / Point-Blank',cost:200},{name:'Tune-Up / Lights-Out',cost:200},
+  {name:'Unwavering / Unstoppable',cost:300},{name:'Rebirth / Seed of Life',cost:400},
+];
+const MELEE_WEAPONS=['Axe (1H)','Sword (1H)','Greatsword (2H)','Greataxe (2H)','Mace (1H)','Flail (1H)','Dagger','Spear (1H)','Lance (Mounted)'];
+const RANGE_WEAPONS=['Shortbow','Longbow','Crossbow','Heavy Arbalest','Pistol','Rifle','Throwing Axe'];
+const ARCHETYPES=[
+  {id:'warrior', label:'Iron Warrior',  icon:'ti-sword',   color:'#A81818',race:'dwarf',   voc:'none',    melee:['Greatsword (2H)','Axe (1H)'],range:[],         skills:{'Strength Con.':3,'Hard as Nails':3,'Fortitude':2,'Iron Will':2,'Rugged':2},adv:['Block / Bulwark','Cleave / Whirlwind'],tags:['melee','tank']},
+  {id:'ranger',  label:'Ranger',        icon:'ti-bow',     color:'#3B6D11',race:'elf',     voc:'none',    melee:[],                            range:['Longbow','Crossbow'],skills:{'Evasion':3,'Stealth':2,'Perception':3,'Athletics':2,'Precise Strk':2},adv:['Marksman / Sniper','Opportunist / Seeker'],tags:['ranged','mobile']},
+  {id:'rogue',   label:'Shadow Rogue',  icon:'ti-mask',    color:'#534AB7',race:'halfling', voc:'none',    melee:['Dagger'],                    range:['Crossbow'],skills:{'Stealth':3,'Thieving':3,'Evasion':3,'Charm':2,'Athletics':2},adv:['Phantom Assassin / Sever','Nimble / Shadow Strike'],tags:['stealth','social']},
+  {id:'crusader',label:'Holy Crusader', icon:'ti-cross',   color:'#B8860B',race:'human',   voc:'Religion',melee:['Sword (1H)'],                range:[],         skills:{'Faith':4,'Light-Soul':3,'Iron Will':2,'Hard as Nails':2,'Inspire':2},adv:['Cleric / Crusader','Divinity / Sanctity'],tags:['magic','heal','melee']},
+  {id:'wizard',  label:'Arcane Wizard', icon:'ti-wand',    color:'#185FA5',race:'elf',     voc:'Magic',   melee:[],                            range:[],         skills:{'Wizardry':5,'Focus':3,'Perception':2,'Knowledge':2,'Spirit':2},adv:['Arcane Duelist / Spell-Eater','Concentrate / Intensify'],tags:['magic','cast']},
+  {id:'druid',   label:'Primal Druid',  icon:'ti-leaf',    color:'#3B6D11',race:'elf',     voc:'Druidic', melee:[],                            range:[],         skills:{'Druidism':5,'Focus':3,'Survival':2,'Spirit':2,'Stamina':2},adv:['Primal Aspect / Mutation','Infusion / True Fusion'],tags:['magic','nature','heal']},
+  {id:'shaman',  label:'Spirit Shaman', icon:'ti-flame',   color:'#854F0B',race:'human',   voc:'Shaman',  melee:['Axe (1H)'],                  range:[],         skills:{'Shaman':4,'Spirit':3,'Resolve':2,'Survival':2,'Focus':2},adv:['Concentrate / Intensify','Sovereign Mind / Indomitable'],tags:['magic','spirit']},
+  {id:'monk',    label:'Ki Monk',       icon:'ti-yin-yang',color:'#2d6a2d',race:'human',   voc:'Ki',      melee:['Dagger','Axe (1H)'],         range:[],         skills:{'Ki':4,'Athletics':3,'Evasion':3,'Discipline':2,'Resolve':2},adv:['Impact / Full-Weight','Dodge / Jailbreak'],tags:['magic','melee','mobile']},
+  {id:'runes',   label:'Runemaster',    icon:'ti-hexagon', color:'#534AB7',race:'dwarf',   voc:'Runes',   melee:['Axe (1H)'],                  range:[],         skills:{'Knowledge':3,'Evaluate':2,'Read/Write':2,'Discipline':2},adv:['Sunder / Shatterpoint','Block / Bulwark'],tags:['magic','runes','utility']},
+];
+const SK_BONUS={
+  'Rugged':p=>`+${p*2}W`,'Stamina':p=>`+${p}W`,'Iron Will':p=>`+${p*2}W`,
+  'Hard as Nails':p=>`+${p*2}W`,'Fortitude':p=>`+${p*10}W`,
+  'Strength Con.':p=>`+${p*2}W +${Math.floor(p/3)*2}M`,
+  'Shieldsman':p=>`+${p} Blk`,'Ki':p=>`Ki cast`,
+  'Athletics':p=>`+${Math.floor(p/3)} Agl`,'Counter':p=>`Counter`,
+  'Evasion':p=>`+${Math.floor(p/3)} Def`,'Quickness':p=>`+${Math.floor(p/3)} AP`,
+  'Stealth':p=>`+${Math.floor(p/3)} Agl`,'Thieving':p=>`+${Math.floor(p/3)} Agl`,
+  'Acute Senses':p=>`+${Math.floor(p/3)} Awa`,'Discipline':p=>`+${p}W`,
+  'Druidism':p=>`Druid cast`,'Focus':p=>`Pool ${p}`,
+  'Precise Strk':p=>`+${Math.floor(p/3)} Hit +${Math.floor(p/3)*2}W`,
+  'Authority':p=>`+${Math.floor(p/3)} Cha`,'Charm':p=>`+${Math.floor(p/3)} Cha`,
+  'Faith':p=>`Faith cast`,'Inspire':p=>`Rally`,
+  'Light-Soul':p=>`+${p} vs Evil`,'Mending':p=>`${p*2} heal`,
+  'Evaluate':p=>`+${Math.floor(p/3)} Int`,'Knowledge':p=>`+${Math.floor(p/3)} Int`,
+  'Perception':p=>`+${Math.floor(p/3)} Hit`,'Read/Write':p=>`+${Math.floor(p/3)} Int`,
+  'Tracker':p=>`+${Math.floor(p/3)} Awa`,'Wizardry':p=>`Wiz cast`,
+  'Enraged':p=>`Rage`,'Resolve':p=>`+${Math.floor(p/3)} Wil`,
+  'Shaman':p=>`Shaman cast`,'Spirit':p=>`+${Math.floor(p/3)} Wil`,'Survival':p=>`+${p}W`,
+};
+
+function comp(n,b){if(n<=0||b<=0)return 0;return Math.round((n/2)*(2*b+(n-1)*b));}
+
+function calcWounds(skills,race,size){
+  const r=RACES[race];if(!r)return 0;
+  const sz=SIZES.find(s=>s.id===size)||SIZES[0];
+  const physCat=PHYSIQUE_CAT.reduce((s,sk)=>s+(skills[sk]||0),0);
+  const physT=Math.floor(physCat/3);
+  const wSB=(skills['Hard as Nails']||0)*2+(skills['Survival']||0)+(skills['Stamina']||0)+(skills['Strength Con.']||0)*2+(skills['Iron Will']||0)*2+(skills['Fortitude']||0)*10+(skills['Rugged']||0)*2+(skills['Discipline']||0)+(skills['Resolve']||0);
+  return Math.floor((r.wounds+physT+wSB)*sz.mult);
+}
+
+// Prereq skills auto-applied when a vocation is selected
+// These are floor-values (minimum 1) — player can always invest more
+function getVocPrereqs(vocId, race){
+  const voc=VOCATIONS.find(v=>v.id===vocId);
+  if(!voc||!voc.knowledgeType)return {};
+  const costs=SKILL_COSTS[race]||SKILL_COSTS.human;
+  return {
+    'Knowledge':  Math.max(1, 0),   // floor 1
+    'Read/Write': Math.max(1, 0),   // floor 1
+    // The knowledge subtype is tracked in S.knowledgeSubtype
+  };
+}
+
+let S={
+  step:0,name:'',xpEarned:0,archetype:null,archPickerOpen:false,
+  race:null,size:'Med',vocation:'none',
+  knowledgeSubtype:null, // tracks which knowledge type was auto-applied
+  weaponsReset:false,skillsReset:false,advReset:false,
+  meleeWeapons:[],rangeWeapons:[],mountedCount:0,
+  skills:{},runemasterPts:0,
+  apPts:0,fortunePts:0,ridingPts:0,
+  advSkills:[],
+};
+
+function getArch(){return S.archetype?ARCHETYPES.find(a=>a.id===S.archetype):null;}
+function getVoc(){return VOCATIONS.find(v=>v.id===S.vocation)||VOCATIONS[0];}
+
+// Apply vocation prereqs to skills — ensures Knowledge >= 1 and Read/Write >= 1
+function applyVocPrereqs(vocId){
+  const voc=VOCATIONS.find(v=>v.id===vocId);
+  if(!voc||!voc.knowledgeType){
+    S.knowledgeSubtype=null;
+    return;
+  }
+  S.knowledgeSubtype=voc.knowledgeType;
+  // Set floor of 1 for Knowledge and Read/Write — don't reduce if already higher
+  if((S.skills['Knowledge']||0)<1) S.skills['Knowledge']=1;
+  if((S.skills['Read/Write']||0)<1) S.skills['Read/Write']=1;
+}
+
+// When vocation changes, clear old prereqs if they were auto-set (at exactly 1)
+// then apply new ones
+function switchVocation(newVocId){
+  const oldVoc=getVoc();
+  // Clear old magic-locked skills
+  if(oldVoc&&oldVoc.locks) oldVoc.locks.forEach(sk=>{if(S.skills[sk])delete S.skills[sk];});
+  // Remove auto-prereqs only if they're still at exactly 1 (player-set gets kept)
+  if(S.vocation!=='none'&&S.knowledgeSubtype){
+    if(S.skills['Knowledge']===1) delete S.skills['Knowledge'];
+    if(S.skills['Read/Write']===1) delete S.skills['Read/Write'];
+  }
+  S.vocation=newVocId;
+  // Apply new prereqs
+  applyVocPrereqs(newVocId);
+  // Also clear Light-Soul if Faith now locked
+  if(getVoc().locks&&getVoc().locks.includes('Faith')&&S.skills['Light-Soul']){
+    delete S.skills['Light-Soul'];
+  }
+}
+
+function isVocLocked(sk){
+  const voc=getVoc();
+  if(S.vocation==='none'&&ALL_MAGIC.includes(sk))return true;
+  return voc&&voc.locks&&voc.locks.includes(sk);
+}
+function isLSLocked(){return(S.skills['Faith']||0)===0;}
+function isSkillLocked(sk){
+  if(isVocLocked(sk))return{locked:true,reason:'Requires different vocation'};
+  if(sk==='Light-Soul'&&isLSLocked())return{locked:true,reason:'Requires Faith > 0'};
+  return{locked:false,reason:''};
+}
+// Is this skill a vocation prereq (auto-applied at minimum 1)?
+function isPrereqSkill(sk){
+  if(!S.knowledgeSubtype)return false;
+  return(sk==='Knowledge'||sk==='Read/Write')&&S.vocation!=='none';
+}
+
+function calcSpent(){
+  let s=0;
+  const costs=SKILL_COSTS[S.race]||{};
+  Object.entries(S.skills).forEach(([sk,p])=>s+=comp(p,costs[sk]||0));
+  if(S.vocation&&S.vocation!=='none')s+=200;
+  if(S.vocation==='Runes'){const rb=S.race==='dwarf'?10:S.race==='elf'?20:15;s+=comp(S.runemasterPts,rb);}
+  s+=comp(S.apPts,175)+comp(S.fortunePts,30)+comp(S.ridingPts,25);
+  if(S.race){
+    s+=comp(S.meleeWeapons.length,COMBAT_CHECK_COSTS.melee[S.race]||30);
+    s+=comp(S.rangeWeapons.length,COMBAT_CHECK_COSTS.range[S.race]||30);
+    s+=S.mountedCount*100;
+  }
+  S.advSkills.forEach(nm=>{const a=ADV_SKILLS.find(x=>x.name===nm);if(a)s+=a.cost;});
+  return s;
+}
+function calcRem(){return S.xpEarned-calcSpent();}
+function canAfford(cost){return calcRem()>=cost;}
+
+function refreshXPBar(id){
+  const spent=calcSpent(),rem=S.xpEarned-spent;
+  const pct=S.xpEarned>0?Math.max(0,Math.round((rem/S.xpEarned)*100)):100;
+  const el=document.getElementById(id);if(!el)return;
+  const col=rem<0?'#A81818':rem<S.xpEarned*0.1?'#854F0B':'var(--color-text-primary)';
+  el.innerHTML=`<div class="xp-row"><span class="xp-lbl">XP Remaining</span><span class="xp-num" style="color:${col}">${rem.toLocaleString()} / ${S.xpEarned.toLocaleString()}</span></div><div class="xp-track"><div class="xp-fill${rem<0?' over':''}" style="width:${pct}%"></div></div>`;
+}
+function buildProg(){
+  const w=document.getElementById('prog-steps');w.innerHTML='';
+  for(let i=0;i<8;i++){const d=document.createElement('div');d.className='ps'+(i<S.step?' done':i===S.step?' active':'');w.appendChild(d);}
+  document.getElementById('snum').textContent=S.step+1;
+  document.getElementById('sname').textContent=STEP_NAMES[S.step];
+}
+function go(n){
+  document.getElementById('sc'+S.step).classList.remove('active');
+  S.step=n;document.getElementById('sc'+n).classList.add('active');buildProg();
+  if(n===1)buildRaceSize();
+  if(n===2)buildVocations();
+  if(n===3)buildWeapons();
+  if(n===4)buildSkills();
+  if(n===5)buildResources();
+  if(n===6)buildAdv();
+  if(n===7)buildSummary();
+}
+
+function setEarned(v,btn){S.xpEarned=v;document.getElementById('xp-earned').value=v;document.querySelectorAll('.xp-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');chk0();}
+function chk0(){S.name=document.getElementById('char-name').value.trim();S.xpEarned=parseInt(document.getElementById('xp-earned').value)||0;document.getElementById('n0').disabled=!(S.name.length>0&&document.getElementById('xp-earned').value!=='');}
+function toggleArch(){S.archPickerOpen=!S.archPickerOpen;const el=document.getElementById('arch-picker');el.style.display=S.archPickerOpen?'flex':'none';if(S.archPickerOpen)buildArchPicker();}
+function applyArchetype(a){
+  S.archetype=a.id;
+  switchVocation(a.voc); // handles prereqs
+  S.race=a.race;
+  S.meleeWeapons=[...a.melee];S.rangeWeapons=[...a.range];S.weaponsReset=false;
+  // Merge archetype skills with any auto-prereqs already set
+  const merged={...S.skills,...a.skills};
+  S.skills=merged;
+  S.skillsReset=false;
+  S.advSkills=[...a.adv];S.advReset=false;
+  document.getElementById('arch-lbl').textContent=a.label+' — pre-loaded';
+}
+function clearArchetype(){
+  S.archetype=null;
+  switchVocation('none');
+  S.race=null;
+  S.meleeWeapons=[];S.rangeWeapons=[];S.weaponsReset=false;
+  S.skills={};S.skillsReset=false;S.advSkills=[];S.advReset=false;
+  document.getElementById('arch-lbl').textContent='None — build from scratch';
+}
+function buildArchPicker(){
+  const el=document.getElementById('arch-picker');el.innerHTML='';
+  ARCHETYPES.forEach(a=>{
+    const d=document.createElement('div');d.className='arch-card'+(S.archetype===a.id?' sel':'');
+    d.innerHTML=`<div style="display:flex;align-items:center;gap:10px"><div style="width:34px;height:34px;border-radius:50%;background:${a.color}18;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ${a.icon}" style="font-size:17px;color:${a.color}" aria-hidden="true"></i></div><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">${a.label}</div><div class="arch-tags">${a.tags.map(t=>`<span class="arch-tag ${['magic','cast','heal','nature'].includes(t)?'magic':['melee','ranged','tank'].includes(t)?'combat':''}">${t}</span>`).join('')}</div></div>${S.archetype===a.id?'<i class="ti ti-check" style="color:#B8860B;font-size:16px" aria-hidden="true"></i>':''}</div>`;
+    d.onclick=()=>{S.archetype===a.id?clearArchetype():applyArchetype(a);buildArchPicker();};
+    el.appendChild(d);
+  });
+}
+
+function buildRaceSize(){
+  const g=document.getElementById('race-grid');g.innerHTML='';
+  const sugRace=getArch()?.race;
+  Object.entries(RACES).forEach(([id,r])=>{
+    const d=document.createElement('div');d.className='card'+(S.race===id?' sel':'');
+    d.innerHTML=`<div class="card-row"><div class="card-icon" style="background:${S.race===id?'#A8181820':'var(--color-background-secondary)'}"><i class="ti ${r.icon}" style="font-size:18px;color:${S.race===id?'#A81818':'var(--color-text-secondary)'}" aria-hidden="true"></i></div><div style="flex:1"><div class="card-name">${r.label}${sugRace===id?'<span style="font-size:9px;color:#B8860B;margin-left:5px">★</span>':''}</div><div class="card-sub">${r.wounds}W base · Move ${r.move}</div></div></div>`;
+    d.onclick=()=>{S.race=id;buildRaceSize();document.getElementById('n1').disabled=false;document.getElementById('race-detail').style.display='block';document.getElementById('race-detail').textContent=r.lore;};
+    g.appendChild(d);
+  });
+  if(S.race)document.getElementById('n1').disabled=false;
+  const sb=document.getElementById('size-btns');sb.innerHTML='';
+  SIZES.forEach(sz=>{
+    const b=document.createElement('button');b.className='xp-btn'+(S.size===sz.id?' on':'');
+    b.style.fontSize='11px';b.innerHTML=`${sz.label}<br><span style="font-size:9px;opacity:0.7">${sz.note}</span>`;
+    b.onclick=()=>{S.size=sz.id;buildRaceSize();};sb.appendChild(b);
+  });
+}
+
+function buildVocations(){
+  const el=document.getElementById('voc-list');el.innerHTML='';
+  const sugVoc=getArch()?.voc;
+  VOCATIONS.forEach(v=>{
+    const d=document.createElement('div');d.className='card'+(S.vocation===v.id?' sel':'');
+    const prereqNote=v.knowledgeType?`<div style="font-size:10px;color:rgba(26,58,92,0.8);margin-top:3px"><i class="ti ti-info-circle" style="font-size:11px;vertical-align:-1px;margin-right:3px" aria-hidden="true"></i>Auto-grants: Knowledge (${v.knowledgeType}) 1 + Read/Write 1</div>`:'';
+    d.innerHTML=`<div class="card-row"><div class="card-icon" style="background:${v.color}18"><i class="ti ${v.icon}" style="font-size:18px;color:${v.color}" aria-hidden="true"></i></div><div style="flex:1;min-width:0"><div class="card-name">${v.label}${sugVoc===v.id?'<span style="font-size:9px;color:#B8860B;margin-left:4px">★</span>':''}</div><div class="card-sub">${v.desc}</div>${v.id!=='none'?`<div class="card-cost">200 XP · locks other magic paths</div>${prereqNote}`:''}</div><div class="chk${S.vocation===v.id?' on':''}"><i class="ti ti-check" style="font-size:10px;color:${S.vocation===v.id?'#fff':'transparent'}" aria-hidden="true"></i></div></div>`;
+    d.onclick=()=>{switchVocation(v.id);buildVocations();};
+    el.appendChild(d);
+  });
+}
+
+function buildWeapons(){
+  const body=document.getElementById('wpn-body');
+  const mc=COMBAT_CHECK_COSTS.melee[S.race]||30;
+  const rc=COMBAT_CHECK_COSTS.range[S.race]||30;
+  const arch=getArch();
+  body.innerHTML='';
+  const xpEl=document.createElement('div');xpEl.id='xpbar3';xpEl.className='xp-sticky';body.appendChild(xpEl);refreshXPBar('xpbar3');
+  if(arch&&!S.weaponsReset&&(arch.melee.length+arch.range.length>0)){
+    const banner=document.createElement('div');banner.className='reset-banner';
+    banner.innerHTML=`<div style="font-size:16px;flex-shrink:0">★</div><p><b style="color:var(--color-text-primary)">${arch.label}</b> includes: ${[...arch.melee,...arch.range].join(', ')}. Keep them or reset.</p><button class="reset-btn" onclick="resetWeapons()">Reset</button>`;
+    body.appendChild(banner);
+  }
+  const ms=document.createElement('div');ms.className='sk-sec';
+  ms.innerHTML=`<div class="sk-head"><span>Melee</span><span>Base ${mc} XP · compounding</span></div>`;
+  MELEE_WEAPONS.forEach(w=>{
+    const on=S.meleeWeapons.includes(w);
+    const isPre=arch&&!S.weaponsReset&&arch.melee.includes(w);
+    const nth=S.meleeWeapons.length+1;
+    const addCost=comp(nth,mc)-comp(nth-1,mc);
+    const row=document.createElement('div');row.className='ct-row'+(isPre?' preloaded':'');
+    row.innerHTML=`<div class="ct-box${on?' on':''}"><i class="ti ti-check" style="font-size:11px;color:${on?'#B8860B':'transparent'}" aria-hidden="true"></i></div><div class="ct-info"><div class="ct-name">${w}${isPre?'<span style="font-size:9px;color:#B8860B;margin-left:5px">archetype</span>':''}</div><div class="ct-cost">${on?`Trained · ${comp(S.meleeWeapons.indexOf(w)+1,mc)} XP`:(canAfford(addCost)?`+${addCost} XP`:'Cannot afford')}</div></div>`;
+    row.onclick=()=>{if(on)S.meleeWeapons=S.meleeWeapons.filter(x=>x!==w);else{if(!canAfford(addCost))return;S.meleeWeapons.push(w);}S.weaponsReset=true;buildWeapons();};
+    ms.appendChild(row);
+  });
+  body.appendChild(ms);
+  const rs=document.createElement('div');rs.className='sk-sec';
+  rs.innerHTML=`<div class="sk-head"><span>Ranged</span><span>Base ${rc} XP · compounding</span></div>`;
+  RANGE_WEAPONS.forEach(w=>{
+    const on=S.rangeWeapons.includes(w);
+    const isPre=arch&&!S.weaponsReset&&arch.range.includes(w);
+    const nth=S.rangeWeapons.length+1;
+    const addCost=comp(nth,rc)-comp(nth-1,rc);
+    const row=document.createElement('div');row.className='ct-row'+(isPre?' preloaded':'');
+    row.innerHTML=`<div class="ct-box${on?' on':''}"><i class="ti ti-check" style="font-size:11px;color:${on?'#B8860B':'transparent'}" aria-hidden="true"></i></div><div class="ct-info"><div class="ct-name">${w}${isPre?'<span style="font-size:9px;color:#B8860B;margin-left:5px">archetype</span>':''}</div><div class="ct-cost">${on?'Trained':(canAfford(addCost)?`+${addCost} XP`:'Cannot afford')}</div></div>`;
+    row.onclick=()=>{if(on)S.rangeWeapons=S.rangeWeapons.filter(x=>x!==w);else{if(!canAfford(addCost))return;S.rangeWeapons.push(w);}S.weaponsReset=true;buildWeapons();};
+    rs.appendChild(row);
+  });
+  body.appendChild(rs);
+  const mt=document.createElement('div');mt.className='sk-sec';
+  mt.innerHTML=`<div class="sk-head"><span>Mounted Combat</span><span>100 XP flat each</span></div><div class="sk-row"><div class="sk-lbl"><div class="sk-nm">Mounted (req. Riding)</div><div class="sk-ct">100 XP · not compounding</div></div><div class="sk-ctrl"><button class="skb" onclick="adjMounted(-1)" aria-label="Less">−</button><div class="sk-pts" id="mct">${S.mountedCount}</div><button class="skb" onclick="adjMounted(1)" aria-label="More">+</button></div></div>`;
+  body.appendChild(mt);
+}
+function resetWeapons(){S.meleeWeapons=[];S.rangeWeapons=[];S.weaponsReset=true;buildWeapons();}
+function adjMounted(d){const n=S.mountedCount+d;if(n<0)return;if(d>0&&!canAfford(100))return;S.mountedCount=n;const el=document.getElementById('mct');if(el)el.textContent=n;refreshXPBar('xpbar3');}
+
+function buildSkills(){
+  const body=document.getElementById('sk-body');
+  const costs=SKILL_COSTS[S.race]||{};
+  const arch=getArch();
+  const voc=getVoc();
+  body.innerHTML='';
+  const xpEl=document.createElement('div');xpEl.id='xpbar4';xpEl.className='xp-sticky';body.appendChild(xpEl);refreshXPBar('xpbar4');
+
+  if(arch&&!S.skillsReset&&Object.keys(arch.skills).length>0){
+    const skNames=Object.entries(arch.skills).map(([sk,p])=>`${sk} (${p})`).join(', ');
+    const banner=document.createElement('div');banner.className='reset-banner';
+    banner.innerHTML=`<div style="font-size:16px;flex-shrink:0">★</div><p><b style="color:var(--color-text-primary)">${arch.label}</b> pre-invests: ${skNames}. Add to, remove, or reset.</p><button class="reset-btn" onclick="resetSkills()">Reset</button>`;
+    body.appendChild(banner);
+  }
+
+  // Prereq info banner
+  if(S.vocation!=='none'&&S.knowledgeSubtype){
+    const pBanner=document.createElement('div');pBanner.className='prereq-banner';
+    pBanner.innerHTML=`<i class="ti ti-info-circle" style="font-size:13px;vertical-align:-2px;margin-right:5px;color:#185FA5" aria-hidden="true"></i><b style="color:var(--color-text-primary)">Vocation prereqs applied:</b> Knowledge (${S.knowledgeSubtype}) at 1 pt minimum + Read/Write at 1 pt minimum. You can invest more points in either at any time. Light-Soul also requires Faith > 0.`;
+    body.appendChild(pBanner);
+  } else {
+    const notice=document.createElement('div');
+    notice.style.cssText='background:rgba(2,7,14,0.04);border-radius:var(--border-radius-md);padding:9px 12px;font-size:11px;color:var(--color-text-secondary)';
+    notice.innerHTML=`<i class="ti ti-lock" style="font-size:12px;vertical-align:-2px;margin-right:4px" aria-hidden="true"></i>No vocation — all magic skills locked.`;
+    body.appendChild(notice);
+  }
+
+  Object.entries(SKS).forEach(([cat,skills])=>{
+    const sec=document.createElement('div');sec.className='sk-sec';
+    sec.innerHTML=`<div class="sk-head"><span>${cat}</span><span style="font-weight:normal;text-transform:none;font-size:9px">→ ${cat} stat</span></div>`;
+    skills.forEach(sk=>{
+      const {locked,reason}=isSkillLocked(sk);
+      if(locked&&S.skills[sk])delete S.skills[sk];
+      const pts=locked?0:(S.skills[sk]||0);
+      const base=costs[sk]||0;
+      const isPre=arch&&!S.skillsReset&&sk in arch.skills&&arch.skills[sk]>0&&!locked;
+      const isReq=isPrereqSkill(sk)&&!locked;
+      const nextCost=base*(pts+1);
+      const bon=SK_BONUS[sk]&&pts>0?SK_BONUS[sk](pts):'';
+      // Prereq skills: can still invest more but minimum is locked at 1
+      const isAtPrereqMin=isReq&&pts<=1;
+
+      const row=document.createElement('div');
+      row.className='sk-row'+(locked?' locked':isPre?' preloaded':isReq?' prereq':'');
+      row.innerHTML=`<div class="sk-lbl">
+        <div class="sk-nm">${sk}
+          ${isPre?`<span class="badge arch">★ ×${arch.skills[sk]}</span>`:''}
+          ${isReq?`<span class="badge prereq"><i class="ti ti-info-circle" style="font-size:9px" aria-hidden="true"></i> vocation req.</span>`:''}
+          ${locked?`<span class="badge lock"><i class="ti ti-lock" style="font-size:9px" aria-hidden="true"></i> ${reason}</span>`:''}
+        </div>
+        <div class="sk-ct">${locked?reason:isReq&&isAtPrereqMin?`Min 1 required · next ${nextCost} XP`:`Base ${base} · next ${nextCost} XP`}</div>
+      </div>
+      <div class="sk-ctrl">
+        <button class="skb" onclick="adjSk('${sk}',-1)" aria-label="Remove">−</button>
+        <div class="sk-pts" id="p_${sk.replace(/\W/g,'_')}">${pts}</div>
+        <button class="skb" onclick="adjSk('${sk}',1)" aria-label="Add">+</button>
+      </div>
+      <div class="sk-bon" id="b_${sk.replace(/\W/g,'_')}">${bon}</div>`;
+      sec.appendChild(row);
+    });
+    body.appendChild(sec);
+  });
+}
+function resetSkills(){
+  // When resetting, re-apply prereqs so they don't get wiped
+  S.skills={};
+  applyVocPrereqs(S.vocation);
+  S.skillsReset=true;
+  buildSkills();
+}
+function adjSk(sk,d){
+  const {locked}=isSkillLocked(sk);if(locked)return;
+  const costs=SKILL_COSTS[S.race]||{};
+  const cur=S.skills[sk]||0;
+  const newVal=cur+d;
+  // Prereq skills can't go below 1
+  if(isPrereqSkill(sk)&&newVal<1)return;
+  if(newVal<0)return;
+  if(d>0&&!canAfford(costs[sk]*(cur+1)))return;
+  S.skills[sk]=newVal;
+  S.skillsReset=true;
+  // Faith changed — check Light-Soul
+  if(sk==='Faith'){
+    if(S.skills[sk]===0&&S.skills['Light-Soul']){delete S.skills['Light-Soul'];}
+    buildSkills();return;
+  }
+  const id=sk.replace(/\W/g,'_');
+  const p=document.getElementById('p_'+id);const b=document.getElementById('b_'+id);
+  if(p)p.textContent=S.skills[sk];
+  if(b)b.textContent=SK_BONUS[sk]&&S.skills[sk]>0?SK_BONUS[sk](S.skills[sk]):'';
+  refreshXPBar('xpbar4');
+}
+
+function buildResources(){
+  const body=document.getElementById('res-body');body.innerHTML='';
+  const xpEl=document.createElement('div');xpEl.id='xpbar5';xpEl.className='xp-sticky';body.appendChild(xpEl);refreshXPBar('xpbar5');
+  [{label:'Additional Action Points',sub:'175 XP base · compounding',key:'apPts',base:175,bon:p=>`+${p} AP`},
+   {label:'Fortune Points',sub:'30 XP base · compounding',key:'fortunePts',base:30,bon:p=>`${p} re-rolls`},
+   {label:'Riding Skill',sub:'25 XP flat · all races',key:'ridingPts',base:25,bon:p=>`${p} pts`},
+  ].forEach(item=>{
+    const sec=document.createElement('div');sec.className='sk-sec';
+    const pts=S[item.key]||0;
+    sec.innerHTML=`<div class="sk-head"><span>${item.label}</span><span style="font-weight:normal;text-transform:none;font-size:9px">${item.sub}</span></div><div class="sk-row"><div class="sk-lbl"><div class="sk-nm">${item.label}</div><div class="sk-ct">Next rank: ${item.base*(pts+1)} XP</div></div><div class="sk-ctrl"><button class="skb" onclick="adjRes('${item.key}',${item.base},-1)" aria-label="Less">−</button><div class="sk-pts" id="r_${item.key}">${pts}</div><button class="skb" onclick="adjRes('${item.key}',${item.base},1)" aria-label="More">+</button></div><div class="sk-bon" id="rb_${item.key}">${pts>0?item.bon(pts):'—'}</div></div>`;
+    body.appendChild(sec);
+  });
+}
+function adjRes(key,base,d){
+  const cur=S[key]||0;if(cur+d<0)return;if(d>0&&!canAfford(base*(cur+1)))return;
+  S[key]=cur+d;
+  const bons={apPts:p=>`+${p} AP`,fortunePts:p=>`${p} re-rolls`,ridingPts:p=>`${p} pts`};
+  document.getElementById('r_'+key).textContent=S[key];
+  document.getElementById('rb_'+key).textContent=S[key]>0?bons[key](S[key]):'—';
+  refreshXPBar('xpbar5');
+}
+
+function buildAdv(){
+  const body=document.getElementById('adv-body');body.innerHTML='';
+  const xpEl=document.createElement('div');xpEl.id='xpbar6';xpEl.className='xp-sticky';body.appendChild(xpEl);refreshXPBar('xpbar6');
+  const arch=getArch();const archAdv=arch?arch.adv:[];
+  if(arch&&!S.advReset&&archAdv.length>0){
+    const banner=document.createElement('div');banner.className='reset-banner';
+    banner.innerHTML=`<div style="font-size:16px;flex-shrink:0">★</div><p><b style="color:var(--color-text-primary)">${arch.label}</b> pre-selects: ${archAdv.join(', ')}. Add more, deselect, or reset.</p><button class="reset-btn" onclick="resetAdv()">Reset</button>`;
+    body.appendChild(banner);
+  }
+  const groups={'50 XP':[],'100 XP':[],'200 XP':[],'300–400 XP':[]};
+  ADV_SKILLS.forEach(a=>{
+    if(a.cost<=50)groups['50 XP'].push(a);
+    else if(a.cost<=100)groups['100 XP'].push(a);
+    else if(a.cost<=200)groups['200 XP'].push(a);
+    else groups['300–400 XP'].push(a);
+  });
+  Object.entries(groups).forEach(([lbl,skills])=>{
+    const sec=document.createElement('div');sec.className='sk-sec';
+    sec.innerHTML=`<div class="sk-head"><span>${lbl} each</span></div>`;
+    skills.forEach(a=>{
+      const on=S.advSkills.includes(a.name);
+      const isPre=arch&&!S.advReset&&archAdv.includes(a.name);
+      const afford=canAfford(a.cost)||on;
+      const row=document.createElement('div');row.className='ct-row'+(isPre?' preloaded':'');row.style.opacity=afford?'1':'0.4';
+      row.innerHTML=`<div class="ct-box${on?' on':''}"><i class="ti ti-check" style="font-size:11px;color:${on?'#B8860B':'transparent'}" aria-hidden="true"></i></div><div class="ct-info"><div class="ct-name">${a.name}${isPre?'<span style="font-size:9px;color:#B8860B;margin-left:4px">★</span>':''}</div><div class="ct-cost">${a.cost} XP${on?' · selected':!afford?' · cannot afford':''}</div></div>`;
+      row.onclick=()=>{if(on)S.advSkills=S.advSkills.filter(x=>x!==a.name);else{if(!canAfford(a.cost))return;S.advSkills.push(a.name);}S.advReset=true;buildAdv();};
+      sec.appendChild(row);
+    });
+    body.appendChild(sec);
+  });
+}
+function resetAdv(){S.advSkills=[];S.advReset=true;buildAdv();}
+
+function buildSummary(){
+  const body=document.getElementById('sum-body');body.innerHTML='';
+  const r=RACES[S.race]||{wounds:0,move:0,label:'Unknown'};
+  const nm=S.name||'Unnamed';
+  const initials=nm.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2)||'?';
+  const voc=getVoc();const arch=getArch();
+  const sz=SIZES.find(s=>s.id===S.size)||SIZES[0];
+  const costs=SKILL_COSTS[S.race]||{};
+  const totalW=calcWounds(S.skills,S.race,S.size);
+  const physCat=PHYSIQUE_CAT.reduce((s,sk)=>s+(S.skills[sk]||0),0);
+  const physT=Math.floor(physCat/3);
+  const wSB=(S.skills['Hard as Nails']||0)*2+(S.skills['Survival']||0)+(S.skills['Stamina']||0)+(S.skills['Strength Con.']||0)*2+(S.skills['Iron Will']||0)*2+(S.skills['Fortitude']||0)*10+(S.skills['Rugged']||0)*2+(S.skills['Discipline']||0)+(S.skills['Resolve']||0);
+  const rawW=r.wounds+physT+wSB;
+  const apTotal=1+Math.floor((S.skills['Quickness']||0)/3)+(S.apPts||0);
+  const spent=calcSpent();const rem=S.xpEarned-spent;
+  const primXP=Object.entries(S.skills).reduce((s,[sk,p])=>s+comp(p,costs[sk]||0),0);
+  const vocXP=S.vocation&&S.vocation!=='none'?200:0;
+  const cbXP=S.race?(comp(S.meleeWeapons.length,COMBAT_CHECK_COSTS.melee[S.race]||30)+comp(S.rangeWeapons.length,COMBAT_CHECK_COSTS.range[S.race]||30)+S.mountedCount*100):0;
+  const advXP=S.advSkills.reduce((s,n)=>{const a=ADV_SKILLS.find(x=>x.name===n);return s+(a?a.cost:0);},0);
+  const activeSk=Object.entries(S.skills).filter(([,p])=>p>0);
+  const wpnList=[...S.meleeWeapons,...S.rangeWeapons];
+  const card=document.createElement('div');card.className='sum-card';
+  card.innerHTML=`<div class="sum-hero"><div class="sum-av">${initials}</div><div><div class="sum-name">${nm}</div><div class="sum-sub">${r.label} (${S.size}) · ${voc.label}${arch?` · ${arch.label}`:''}</div></div></div><div class="sum-grid"><div class="sum-stat"><div class="sum-sl">Total Wounds</div><div class="sum-sv">${totalW}</div></div><div class="sum-stat"><div class="sum-sl">Movement</div><div class="sum-sv">${r.move}</div></div><div class="sum-stat"><div class="sum-sl">Action Points</div><div class="sum-sv">${apTotal}</div></div><div class="sum-stat"><div class="sum-sl">Fortune</div><div class="sum-sv">${S.fortunePts}</div></div></div><div class="wound-formula"><b>Wounds:</b> ${r.wounds} base + ${physT} Physique + ${wSB} skill bonuses = ${rawW}${sz.mult!==1?` × ${sz.mult} = <b>${totalW}</b>`:''}</div>${wpnList.length>0?`<div class="sum-sk"><div class="sum-sk-head">Weapon training</div>${wpnList.map(w=>`<div class="sum-sk-row"><span>${w}</span><span style="color:#B8860B">trained</span></div>`).join('')}</div>`:''} ${activeSk.length>0?`<div class="sum-sk" style="margin-top:8px"><div class="sum-sk-head">Skills</div>${activeSk.map(([sk,p])=>`<div class="sum-sk-row"><span style="color:var(--color-text-primary)">${sk}${isPrereqSkill(sk)?'<span style="font-size:9px;color:#185FA5;margin-left:4px">req.</span>':''}</span><span style="color:#B8860B">${p} pts · ${comp(p,costs[sk]||0).toLocaleString()} XP</span></div>`).join('')}</div>`:''} ${S.advSkills.length>0?`<div class="sum-sk" style="margin-top:8px"><div class="sum-sk-head">Advanced skills</div>${S.advSkills.map(n=>{const a=ADV_SKILLS.find(x=>x.name===n);return`<div class="sum-sk-row"><span>${n}</span><span style="color:#B8860B">${a?a.cost:0} XP</span></div>`;}).join('')}</div>`:''}<div class="xp-breakdown"><div class="xp-br-row" style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-secondary);margin-bottom:4px">XP breakdown</div>${primXP>0?`<div class="xp-br-row"><span>Primary skills</span><span>${primXP.toLocaleString()}</span></div>`:''}${vocXP>0?`<div class="xp-br-row"><span>Vocation unlock</span><span>${vocXP}</span></div>`:''}${cbXP>0?`<div class="xp-br-row"><span>Weapon training</span><span>${cbXP.toLocaleString()}</span></div>`:''}${comp(S.apPts,175)>0?`<div class="xp-br-row"><span>Action points</span><span>${comp(S.apPts,175).toLocaleString()}</span></div>`:''}${comp(S.fortunePts,30)>0?`<div class="xp-br-row"><span>Fortune</span><span>${comp(S.fortunePts,30)}</span></div>`:''}${comp(S.ridingPts,25)>0?`<div class="xp-br-row"><span>Riding</span><span>${comp(S.ridingPts,25)}</span></div>`:''}${advXP>0?`<div class="xp-br-row"><span>Advanced skills</span><span>${advXP.toLocaleString()}</span></div>`:''}<div class="xp-br-row total"><span>Total spent</span><span>${spent.toLocaleString()} / ${S.xpEarned.toLocaleString()}</span></div><div class="xp-br-row" style="color:${rem<0?'#A81818':'#3B6D11'};font-weight:500"><span>Remaining</span><span>${rem.toLocaleString()} XP</span></div></div>`;
+  body.appendChild(card);
+}
+
+buildProg();
+</script>
