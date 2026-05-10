@@ -278,7 +278,7 @@
 
     <h3 class="subsection-title">Standard Weapons — Physique-based</h3>
     <p style="margin: 6px 0;">Axes, Swords, Maces, Hammers, Spears, Polearms, Greatswords:</p>
-    <div class="formula-block">MELEE TO-HIT = floor(Physique ÷ 5) + floor(Str.Conditioning ÷ 3) + floor(Athletics ÷ 3) + floor(Precise Strike ÷ 3) + Weapon Bonus</div>
+    <div class="formula-block">MELEE TO-HIT = floor(Physique ÷ 5) + floor(Str.Conditioning ÷ 3) + floor(Athletics ÷ 3) + Weapon Bonus</div>
     <p style="margin: 6px 0;"><strong>2H Weapons:</strong> No To-Hit penalty — but each strike costs <strong>2 AP</strong> instead of 1. The trade is AP economy vs wound output (Physique ×2).</p>
 
     <h3 class="subsection-title">Finesse Weapons — Agility-based</h3>
@@ -290,8 +290,8 @@
         <tr><td>floor(Physique ÷ 5)</td><td>+1 per 5 pts of Physique</td><td>Standard weapons only</td></tr>
         <tr><td>floor(Agility ÷ 5)</td><td>+1 per 5 pts of Agility</td><td>Finesse weapons only — armor Agility penalty hurts this</td></tr>
         <tr><td>floor(Str.Conditioning ÷ 3)</td><td>+1 per 3 pts</td><td>Standard only. Also +2 wounds per 3 pts.</td></tr>
-        <tr><td>floor(Precise Strike ÷ 3)</td><td>+1 per 3 pts</td><td>Both standard and finesse. Also +2 wounds per 3 pts + crit armor shred.</td></tr>
-        <tr><td>floor(Athletics ÷ 3)</td><td>+1 per 3 pts</td><td>Both standard and finesse. Also shared with ranged wounds.</td></tr>
+        <tr><td>floor(Precise Strike ÷ 3)</td><td>+1 per 3 pts</td><td>Finesse only. Also +2 wounds per 3 pts + crit armor shred.</td></tr>
+        <tr><td>floor(Athletics ÷ 3)</td><td>+1 per 3 pts</td><td>Both standard and finesse. Also shared with ranged To-Hit.</td></tr>
         <tr><td>Focus action (passive)</td><td>+1 per 3 pts in Focus</td><td>Only when Focus action (1 AP) is taken before the attack</td></tr>
     </table>
     <div class="mech-card">
@@ -346,12 +346,12 @@
     <!-- ================================================================ -->
     <h2 class="section-title" id="ranged-hit">Ranged To-Hit Bonus</h2>
     <span class="tag tag-ranged">Ranged</span>
-    <div class="formula-block">RANGED TO-HIT = floor(Awareness ÷ 5) + floor(Precise Strike ÷ 3) + floor(Perception ÷ 3) + Weapon Bonus – Armor Ranged Penalty</div>
+    <div class="formula-block">RANGED TO-HIT = floor(Agility ÷ 5) + floor(Precise Strike ÷ 3) + floor(Perception ÷ 3) + Weapon Bonus – Armor Ranged Penalty</div>
     <table class="comp-table">
         <tr><th>Source</th><th>Rate</th><th>Notes</th></tr>
-        <tr><td>floor(Awareness ÷ 5)</td><td>+1 per 5 pts of Awareness</td><td>Core ranged accuracy stat. Armor Awareness penalties reduce this.</td></tr>
+        <tr><td>floor(Agility ÷ 5)</td><td>+1 per 5 pts of Agility</td><td>Core ranged accuracy stat — the speed and steadiness of the draw. Armor Agility penalties reduce this.</td></tr>
         <tr><td>floor(Precise Strike ÷ 3)</td><td>+1 per 3 pts</td><td>Applies to melee AND ranged To-Hit</td></tr>
-        <tr><td>floor(Perception ÷ 3)</td><td>+1 ranged To-Hit per 3 pts</td><td>Also counters Charm/social manipulation</td></tr>
+        <tr><td>floor(Perception ÷ 3)</td><td>+1 ranged To-Hit per 3 pts</td><td>Reading the battlefield — spotting gaps, tracking movement</td></tr>
         <tr><td>Weapon Bonus</td><td>Manual bonus field</td><td>Magic weapons, scopes, etc.</td></tr>
         <tr><td>– Armor Ranged Penalty</td><td>See table below</td><td>Most armor types impose a ranged To-Hit penalty</td></tr>
     </table>
@@ -372,7 +372,7 @@
     <div class="mech-card">
         <p><strong>Situational ranged modifiers:</strong></p>
         <ul>
-            <li><strong>Aim (1 AP):</strong> Advantage on next ranged To-Hit + add Agility to wounds + range ×1.5.</li>
+            <li><strong>Aim (1 AP):</strong> Advantage on next ranged To-Hit + add Awareness to wounds + range ×1.5.</li>
             <li><strong>Firing into melee:</strong> Disadvantage To-Hit (unless target is 2× ally's size). A miss does not hit your ally.</li>
             <li><strong>Cover:</strong> Target gains Disadvantage against your shot. Each obstructing ally = –1 additional penalty.</li>
             <li><strong>Opportunist Advanced Vocation:</strong> Removes ALL penalties for shooting into melee or obscured LoS.</li>
@@ -386,22 +386,23 @@
     <span class="tag tag-ranged">Ranged</span>
 
     <h3 class="subsection-title">Bows</h3>
-    <div class="formula-block">BOW WOUNDS = Agility + (Awareness × AP spent on shot) + Physique + Precise Strike bonus + Athletics bonus + Weapon Dmg Bonus</div>
+    <div class="formula-block">BOW WOUNDS = Awareness + (Agility × AP spent on shot) + Physique + Precise Strike bonus + Athletics bonus + Weapon Dmg Bonus</div>
     <p style="margin: 6px 0;"><em>Longbow replaces Physique with Physique × 3.</em></p>
 
     <h3 class="subsection-title">Crossbows</h3>
-    <div class="formula-block">CROSSBOW WOUNDS = Agility + (Awareness × AP spent) + Precise Strike bonus + Athletics bonus + Weapon Dmg Bonus</div>
+    <div class="formula-block">CROSSBOW WOUNDS = Awareness + (Agility × AP spent) + Precise Strike bonus + Athletics bonus + Weapon Dmg Bonus</div>
 
     <h3 class="subsection-title">Firearms (Blackpowder)</h3>
     <div class="formula-block">FIREARM WOUNDS = (Awareness × 2) × AP spent + Precise Strike bonus + Athletics bonus + Weapon Dmg Bonus</div>
+    <p style="margin: 6px 0;"><em>Firearms rely entirely on Awareness — there is no physical draw or throw involved. AP investment scales this hard.</em></p>
 
     <h3 class="subsection-title">Thrown Weapons</h3>
-    <div class="formula-block">THROWN WOUNDS = Agility + floor(Physique ÷ 2) + (Awareness × AP spent) + Precise Strike bonus + Athletics bonus + Weapon Dmg Bonus</div>
+    <div class="formula-block">THROWN WOUNDS = Awareness + floor(Physique ÷ 2) + (Agility × AP spent) + Precise Strike bonus + Athletics bonus + Weapon Dmg Bonus</div>
     <p style="margin: 6px 0;"><em>Thrown weapons also apply the Size Multiplier. All others do not.</em></p>
 
     <table class="comp-table">
         <tr><th>Passive Wound Bonus</th><th>Amount</th><th>Active Effect</th></tr>
-        <tr><td>AP spent (rAct multiplier)</td><td>Scales Awareness contribution</td><td>More AP = more wound damage. Aim also adds Agility on top.</td></tr>
+        <tr><td>AP spent (rAct multiplier)</td><td>Scales Agility contribution</td><td>More AP = more wound damage from Agility. Aim also adds Awareness on top.</td></tr>
         <tr><td>Precise Strike (÷3)×2</td><td>+2 per 3 pts</td><td>Same as melee wound contribution</td></tr>
         <tr><td>Athletics (÷3)</td><td>+1 per 3 pts</td><td>Shared with melee</td></tr>
         <tr><td>Marksman</td><td>+2 flat ranged wound bonus</td><td>Active: Normal+Awareness+1d10. Sniper spec: Normal+Agl+(Awa×2)+1d10+Bleed</td></tr>
@@ -411,7 +412,7 @@
     </table>
 
     <div class="example-box">
-        <strong>Example — Longbow Archer, Aim (1 AP) + 2 AP shot:</strong> Agility 3 + (Awareness 4 × 2 AP) + Physique 3 (×3 Longbow = 9) + Precise Strike 6 pts = +4 + Marksman passive +2 + Aim adds Agility +3 to wounds = 3 + 8 + 9 + 4 + 2 + 3 = <strong>+29 wound bonus</strong> on the d10 roll.
+        <strong>Example — Longbow Archer, Aim (1 AP) + 2 AP shot:</strong> Awareness 3 + (Agility 4 × 2 AP = 8) + Physique 3 (×3 Longbow = 9) + Precise Strike 6 pts = +4 + Marksman passive +2 + Aim adds Awareness +3 to wounds = 3 + 8 + 9 + 4 + 2 + 3 = <strong>+29 wound bonus</strong> on the d10 roll.
     </div>
 
     <hr class="divider">
@@ -426,10 +427,10 @@
     <table class="comp-table">
         <tr><th>Magic School</th><th>Core Cast Stat</th><th>Skill Accuracy Bonus</th><th>Armor Penalty</th></tr>
         <tr><td>Wizardry</td><td>floor(Intellect ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN (Chain +2 → Full Plate +5)</td></tr>
-        <tr><td>Faith</td><td>floor(Charisma ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Half armor TN (floor), Field Plate &amp; Full Plate only — all lighter armor = no penalty</td></tr>
+        <tr><td>Faith</td><td>floor(Charisma ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Half armor TN (rounded down)</td></tr>
         <tr><td>Druidism</td><td>floor(Awareness ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN</td></tr>
         <tr><td>Shaman</td><td>floor(Willpower ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN</td></tr>
-        <tr><td>Ki</td><td>floor(Physique ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN (same as Wizard/Druid/Shaman — Leather and lighter = no penalty)</td></tr>
+        <tr><td>Ki</td><td>floor(Physique ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>No armor penalty</td></tr>
     </table>
 
     <div class="mech-card">
@@ -437,7 +438,7 @@
         <p><strong>Focus action:</strong> Spend 1 AP before casting. floor(Focus pts ÷ 3) passive bonus to To-Cast applies. Also distribute Focus pts between +1 flat wound/heal per pt and –1 target WM per pt.</p>
         <p><strong>Counter-Cast:</strong> Attacker: 1d10 + To-Cast + Magic Skill pts. Defender: 1d10 + To-Cast + Skill pts OR Resist Bonus. Winner's spell prevails. Tie = both take half wounds unmitigated.</p>
         <p><strong>Resist Bonus (defender's passive):</strong> If magic skill ≥6: floor((skill–3)÷3). Kicks in at 6 pts (+1) and grows from there.</p>
-        <p><strong>Arcane Mastery (15+ pts in any magic skill):</strong> Add your Spirit skill pts as a flat bonus to ALL spell wounds and healing. Applies to Wizardry, Shaman, Faith, Druidism, and Ki. One of the most powerful late-game multipliers.</p>
+        <p><strong>Arcane Mastery (15+ pts in any magic skill):</strong> Add your Spirit skill pts as a flat bonus to ALL spell wounds and healing. One of the most powerful late-game multipliers.</p>
     </div>
 
     <!-- ================================================================ -->
@@ -445,7 +446,7 @@
     <!-- ================================================================ -->
     <h2 class="section-title" id="cast-wounds">Spell Wound Bonus</h2>
     <span class="tag tag-spell">Spell</span>
-    <div class="formula-block">SPELL WOUNDS = Core Wound Stat + Skill Wound Bonus + floor(Perception ÷ 3) + Spirit pts (if Arcane Mastery active) + Bonus field</div>
+    <div class="formula-block">SPELL WOUNDS = Core Wound Stat + Skill Wound Bonus + Spirit pts (if Arcane Mastery active) + Bonus field</div>
 
     <table class="comp-table">
         <tr><th>School</th><th>Core Wound Stat</th><th>Skill Wound Bonus</th><th>Scaling</th></tr>
@@ -454,7 +455,6 @@
         <tr><td>Druidism</td><td>Intellect characteristic</td><td>floor(Druidism ÷ 3) × 1</td><td>+1 per 3 pts — compensated by AoE utility</td></tr>
         <tr><td>Shaman</td><td>Intellect characteristic</td><td>floor(Shaman ÷ 3) × 2</td><td>+2 per 3 pts — dual offensive/healing</td></tr>
         <tr><td>Ki</td><td>Physique characteristic</td><td>floor(Ki ÷ 3) × 1</td><td>+1 per 3 pts — melee-range physical magic</td></tr>
-        <tr><td>All schools</td><td>—</td><td>+ floor(Perception ÷ 3)</td><td>+1 per 3 pts — universal spell wound bonus, also boosts ranged To-Hit</td></tr>
     </table>
 
     <div class="mech-card">
@@ -570,18 +570,18 @@ Wounds: Agility + floor(Physique÷3) + (Precise Strike÷3)×2 + Athletics bonus 
         <p><strong>Core stats:</strong> Physique → Willpower → Iron Will</p>
         <p><strong>Key skills:</strong> Str. Conditioning, Fortitude, Hard as Nails, Rugged, Shieldsman</p>
         <p><strong>Advanced Vocations:</strong> Impact, Cleave, Sunder, Block/Bulwark, Unwavering</p>
-        <div class="formula-block inline-blood">To-Hit: floor(Physique÷5) + floor(StrCon÷3) + floor(Athletics÷3) + floor(Precise Strike÷3)
+        <div class="formula-block inline-blood">To-Hit: floor(Physique÷5) + floor(StrCon÷3) + floor(Athletics÷3)
 Wounds (2H): (Physique×2) + (StrCon÷3)×2 + (Precise Strike÷3)×2 + Impact +2 passive
 Physical WM: Armor + floor(HaN÷2) + Shieldsman + Evasion÷3 + Cleric+1 + Unwavering+3</div>
     </div>
 
     <h3 class="subsection-title">🏹 Deadeye — Ranged Precision</h3>
     <div class="build-card">
-        <p><strong>Core stats:</strong> Awareness → Agility → Physique (Longbow) </p>
+        <p><strong>Core stats:</strong> Agility → Awareness → Physique (Longbow)</p>
         <p><strong>Key skills:</strong> Perception, Precise Strike, Athletics, Stamina, Discipline</p>
         <p><strong>Advanced Vocations:</strong> Marksman, Opportunist, Heavy Arbalest, Thunderstrike</p>
-        <div class="formula-block inline-blood">To-Hit: floor(Awareness÷5) + floor(Precise Strike÷3) + floor(Perception÷3)
-Wounds (Bow): Agility + (Awareness × AP) + Physique + passives (+2 Marksman +1 Opportunist)</div>
+        <div class="formula-block inline-blood">To-Hit: floor(Agility÷5) + floor(Precise Strike÷3) + floor(Perception÷3)
+Wounds (Bow): Awareness + (Agility × AP) + Physique + passives (+2 Marksman +1 Opportunist)</div>
     </div>
 
     <h3 class="subsection-title">✦ Arcanist — Offensive Caster</h3>
