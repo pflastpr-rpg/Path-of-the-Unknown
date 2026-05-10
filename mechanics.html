@@ -278,7 +278,7 @@
 
     <h3 class="subsection-title">Standard Weapons — Physique-based</h3>
     <p style="margin: 6px 0;">Axes, Swords, Maces, Hammers, Spears, Polearms, Greatswords:</p>
-    <div class="formula-block">MELEE TO-HIT = floor(Physique ÷ 5) + floor(Str.Conditioning ÷ 3) + floor(Athletics ÷ 3) + Weapon Bonus</div>
+    <div class="formula-block">MELEE TO-HIT = floor(Physique ÷ 5) + floor(Str.Conditioning ÷ 3) + floor(Athletics ÷ 3) + floor(Precise Strike ÷ 3) + Weapon Bonus</div>
     <p style="margin: 6px 0;"><strong>2H Weapons:</strong> No To-Hit penalty — but each strike costs <strong>2 AP</strong> instead of 1. The trade is AP economy vs wound output (Physique ×2).</p>
 
     <h3 class="subsection-title">Finesse Weapons — Agility-based</h3>
@@ -290,8 +290,8 @@
         <tr><td>floor(Physique ÷ 5)</td><td>+1 per 5 pts of Physique</td><td>Standard weapons only</td></tr>
         <tr><td>floor(Agility ÷ 5)</td><td>+1 per 5 pts of Agility</td><td>Finesse weapons only — armor Agility penalty hurts this</td></tr>
         <tr><td>floor(Str.Conditioning ÷ 3)</td><td>+1 per 3 pts</td><td>Standard only. Also +2 wounds per 3 pts.</td></tr>
-        <tr><td>floor(Precise Strike ÷ 3)</td><td>+1 per 3 pts</td><td>Finesse only. Also +2 wounds per 3 pts + crit armor shred.</td></tr>
-        <tr><td>floor(Athletics ÷ 3)</td><td>+1 per 3 pts</td><td>Both standard and finesse. Also shared with ranged To-Hit.</td></tr>
+        <tr><td>floor(Precise Strike ÷ 3)</td><td>+1 per 3 pts</td><td>Both standard and finesse. Also +2 wounds per 3 pts + crit armor shred.</td></tr>
+        <tr><td>floor(Athletics ÷ 3)</td><td>+1 per 3 pts</td><td>Both standard and finesse. Also shared with ranged wounds.</td></tr>
         <tr><td>Focus action (passive)</td><td>+1 per 3 pts in Focus</td><td>Only when Focus action (1 AP) is taken before the attack</td></tr>
     </table>
     <div class="mech-card">
@@ -426,10 +426,10 @@
     <table class="comp-table">
         <tr><th>Magic School</th><th>Core Cast Stat</th><th>Skill Accuracy Bonus</th><th>Armor Penalty</th></tr>
         <tr><td>Wizardry</td><td>floor(Intellect ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN (Chain +2 → Full Plate +5)</td></tr>
-        <tr><td>Faith</td><td>floor(Charisma ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Half armor TN (rounded down)</td></tr>
+        <tr><td>Faith</td><td>floor(Charisma ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Half armor TN (floor), Field Plate &amp; Full Plate only — all lighter armor = no penalty</td></tr>
         <tr><td>Druidism</td><td>floor(Awareness ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN</td></tr>
         <tr><td>Shaman</td><td>floor(Willpower ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN</td></tr>
-        <tr><td>Ki</td><td>floor(Physique ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>No armor penalty</td></tr>
+        <tr><td>Ki</td><td>floor(Physique ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN (same as Wizard/Druid/Shaman — Leather and lighter = no penalty)</td></tr>
     </table>
 
     <div class="mech-card">
@@ -437,7 +437,7 @@
         <p><strong>Focus action:</strong> Spend 1 AP before casting. floor(Focus pts ÷ 3) passive bonus to To-Cast applies. Also distribute Focus pts between +1 flat wound/heal per pt and –1 target WM per pt.</p>
         <p><strong>Counter-Cast:</strong> Attacker: 1d10 + To-Cast + Magic Skill pts. Defender: 1d10 + To-Cast + Skill pts OR Resist Bonus. Winner's spell prevails. Tie = both take half wounds unmitigated.</p>
         <p><strong>Resist Bonus (defender's passive):</strong> If magic skill ≥6: floor((skill–3)÷3). Kicks in at 6 pts (+1) and grows from there.</p>
-        <p><strong>Arcane Mastery (15+ pts in any magic skill):</strong> Add your Spirit skill pts as a flat bonus to ALL spell wounds and healing. One of the most powerful late-game multipliers.</p>
+        <p><strong>Arcane Mastery (15+ pts in any magic skill):</strong> Add your Spirit skill pts as a flat bonus to ALL spell wounds and healing. Applies to Wizardry, Shaman, Faith, Druidism, and Ki. One of the most powerful late-game multipliers.</p>
     </div>
 
     <!-- ================================================================ -->
@@ -445,7 +445,7 @@
     <!-- ================================================================ -->
     <h2 class="section-title" id="cast-wounds">Spell Wound Bonus</h2>
     <span class="tag tag-spell">Spell</span>
-    <div class="formula-block">SPELL WOUNDS = Core Wound Stat + Skill Wound Bonus + Spirit pts (if Arcane Mastery active) + Bonus field</div>
+    <div class="formula-block">SPELL WOUNDS = Core Wound Stat + Skill Wound Bonus + floor(Perception ÷ 3) + Spirit pts (if Arcane Mastery active) + Bonus field</div>
 
     <table class="comp-table">
         <tr><th>School</th><th>Core Wound Stat</th><th>Skill Wound Bonus</th><th>Scaling</th></tr>
@@ -454,6 +454,7 @@
         <tr><td>Druidism</td><td>Intellect characteristic</td><td>floor(Druidism ÷ 3) × 1</td><td>+1 per 3 pts — compensated by AoE utility</td></tr>
         <tr><td>Shaman</td><td>Intellect characteristic</td><td>floor(Shaman ÷ 3) × 2</td><td>+2 per 3 pts — dual offensive/healing</td></tr>
         <tr><td>Ki</td><td>Physique characteristic</td><td>floor(Ki ÷ 3) × 1</td><td>+1 per 3 pts — melee-range physical magic</td></tr>
+        <tr><td>All schools</td><td>—</td><td>+ floor(Perception ÷ 3)</td><td>+1 per 3 pts — universal spell wound bonus, also boosts ranged To-Hit</td></tr>
     </table>
 
     <div class="mech-card">
@@ -569,7 +570,7 @@ Wounds: Agility + floor(Physique÷3) + (Precise Strike÷3)×2 + Athletics bonus 
         <p><strong>Core stats:</strong> Physique → Willpower → Iron Will</p>
         <p><strong>Key skills:</strong> Str. Conditioning, Fortitude, Hard as Nails, Rugged, Shieldsman</p>
         <p><strong>Advanced Vocations:</strong> Impact, Cleave, Sunder, Block/Bulwark, Unwavering</p>
-        <div class="formula-block inline-blood">To-Hit: floor(Physique÷5) + floor(StrCon÷3) + floor(Athletics÷3)
+        <div class="formula-block inline-blood">To-Hit: floor(Physique÷5) + floor(StrCon÷3) + floor(Athletics÷3) + floor(Precise Strike÷3)
 Wounds (2H): (Physique×2) + (StrCon÷3)×2 + (Precise Strike÷3)×2 + Impact +2 passive
 Physical WM: Armor + floor(HaN÷2) + Shieldsman + Evasion÷3 + Cleric+1 + Unwavering+3</div>
     </div>
