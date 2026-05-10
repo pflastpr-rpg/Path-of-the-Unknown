@@ -1567,14 +1567,31 @@ function calculateCastStats(state, stats, armorData, magicState) {
 
     if (magicState.isRunesActive) return castStats;
 
-    const halvedTN = Math.floor(armorData.tn / 2);
+    // Compute per-tradition armor penalties from equipped armor types directly,
+    // so each tradition can apply its own threshold rules.
+    const KI_PENALTY_TYPES    = new Set(["studded","chain","banded","splint","plate","field","full"]);
+    const FAITH_PENALTY_TYPES = new Set(["field","full"]);
+
+    let kiArmorPenalty    = 0;
+    let faithArmorPenalty = 0;
+    [1, 2].forEach(num => {
+        const type = g(`armor-type-${num}`)?.value || "none";
+        if (ARMOR_DATA[type]) {
+            // Ki: penalizes at studded leather and above (any armor with tn > 0 beyond leather)
+            if (KI_PENALTY_TYPES.has(type))    kiArmorPenalty    += ARMOR_DATA[type].tn;
+            // Faith: penalizes only at field plate or full plate, halved rounding up
+            // field(tn:4) → ceil(4/2) = -2,  full(tn:5) → ceil(5/2) = -3
+            if (FAITH_PENALTY_TYPES.has(type)) faithArmorPenalty += Math.ceil(ARMOR_DATA[type].tn / 2);
+        }
+    });
+
     let coreCastStat = 0, castArmorPenalty = 0;
 
-    if (magicState.isKiActive) { coreCastStat = Math.floor(stats.physique / 5); castArmorPenalty = 0; }
-    else if (magicState.isReligionActive) { coreCastStat = Math.floor(stats.charisma / 5); castArmorPenalty = halvedTN; }
-    else if (magicState.isDruidActive) { coreCastStat = Math.floor(stats.awareness / 5); castArmorPenalty = armorData.tn; }
-    else if (magicState.isShamanActive) { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn; }
-    else if (magicState.isMagActive) { coreCastStat = Math.floor(stats.intellect / 5); castArmorPenalty = armorData.tn; }
+    if (magicState.isKiActive)            { coreCastStat = Math.floor(stats.physique  / 5); castArmorPenalty = kiArmorPenalty; }
+    else if (magicState.isReligionActive) { coreCastStat = Math.floor(stats.charisma  / 5); castArmorPenalty = faithArmorPenalty; }
+    else if (magicState.isDruidActive)    { coreCastStat = Math.floor(stats.awareness / 5); castArmorPenalty = armorData.tn; }
+    else if (magicState.isShamanActive)   { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn; }
+    else if (magicState.isMagActive)      { coreCastStat = Math.floor(stats.intellect / 5); castArmorPenalty = armorData.tn; }
 
     const primarySkillAcc = (magicState.activeMagicSkillPts >= 9) ? Math.floor((magicState.activeMagicSkillPts - 6) / 3) : 0;
     const focusAcc = Math.floor(state.skillPts.focus / 3);
