@@ -1567,14 +1567,25 @@ function calculateCastStats(state, stats, armorData, magicState) {
 
     if (magicState.isRunesActive) return castStats;
 
-    const halvedTN = Math.floor(armorData.tn / 2);
+    // Faith: halved (floor) penalty only at field plate or full plate.
+    // Ki: full TN penalty above leather, same as Druid/Shaman/Wizard.
+    // Leather and lighter have tn:0 so produce no penalty naturally.
+    const FAITH_PENALTY_TYPES = new Set(["field", "full"]);
+    let faithArmorPenalty = 0;
+    [1, 2].forEach(num => {
+        const type = g(`armor-type-${num}`)?.value || "none";
+        if (FAITH_PENALTY_TYPES.has(type) && ARMOR_DATA[type]) {
+            faithArmorPenalty += Math.floor(ARMOR_DATA[type].tn / 2);
+        }
+    });
+
     let coreCastStat = 0, castArmorPenalty = 0;
 
-    if (magicState.isKiActive) { coreCastStat = Math.floor(stats.physique / 5); castArmorPenalty = 0; }
-    else if (magicState.isReligionActive) { coreCastStat = Math.floor(stats.charisma / 5); castArmorPenalty = halvedTN; }
-    else if (magicState.isDruidActive) { coreCastStat = Math.floor(stats.awareness / 5); castArmorPenalty = armorData.tn; }
-    else if (magicState.isShamanActive) { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn; }
-    else if (magicState.isMagActive) { coreCastStat = Math.floor(stats.intellect / 5); castArmorPenalty = armorData.tn; }
+    if (magicState.isKiActive)            { coreCastStat = Math.floor(stats.physique  / 5); castArmorPenalty = armorData.tn; }
+    else if (magicState.isReligionActive) { coreCastStat = Math.floor(stats.charisma  / 5); castArmorPenalty = faithArmorPenalty; }
+    else if (magicState.isDruidActive)    { coreCastStat = Math.floor(stats.awareness / 5); castArmorPenalty = armorData.tn; }
+    else if (magicState.isShamanActive)   { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn; }
+    else if (magicState.isMagActive)      { coreCastStat = Math.floor(stats.intellect / 5); castArmorPenalty = armorData.tn; }
 
     const primarySkillAcc = (magicState.activeMagicSkillPts >= 9) ? Math.floor((magicState.activeMagicSkillPts - 6) / 3) : 0;
     const focusAcc = Math.floor(state.skillPts.focus / 3);
@@ -1598,7 +1609,8 @@ function calculateCastStats(state, stats, armorData, magicState) {
     else if (magicState.isMagActive) { castWoundBase = stats.intellect; skillWoundBonus = Math.floor(state.skillPts.wizardry / 3) * 3; }
     
     const castDmgBon = gv('bon-wounds-cast');
-    const finalCastWounds = castWoundBase + skillWoundBonus + arcaneBonus + castDmgBon;
+    const percBonus = Math.floor(state.skillPts.perception / 3);
+    const finalCastWounds = castWoundBase + skillWoundBonus + arcaneBonus + percBonus + castDmgBon;
     castStats.castWounds = magicState.isMagicActive ? finalCastWounds : 0;
     sv('cm-wounds-cast', castStats.castWounds);
     sv('cm-wevil-cast', magicState.isMagicActive ? castStats.castWounds + state.skillPts.lightSoul : 0);
@@ -1629,7 +1641,6 @@ function calculateMeleeCombat(state, stats, armorData) {
     const strConAcc = Math.floor(state.skillPts.strengthCon / 3);
     const athAcc = Math.floor(state.skillPts.athletics / 3);
     const preciseAcc = Math.floor(state.skillPts.preciseStrike / 3);
-    const percAcc = Math.floor(state.skillPts.perception / 3);
 
     const wMult = (state.charSize === "Sm") ? 0.5 : (state.charSize === "Lg") ? 2 :
                   (state.charSize === "Giant") ? 3 : (state.charSize === "Enormous") ? 6 :
@@ -1665,7 +1676,7 @@ function calculateMeleeCombat(state, stats, armorData) {
         sv(`cm-wounds-melee-${idx + 1}`, finalMelee);
 
         const coreAcc = isFinesse ? Math.floor(stats.agility / 5) : Math.floor(stats.physique / 5);
-        const skillAcc = isFinesse ? (preciseAcc + athAcc) : (strConAcc + athAcc);
+        const skillAcc = isFinesse ? (preciseAcc + athAcc) : (strConAcc + athAcc + preciseAcc);
         sv(`cm-melee-hit-${idx + 1}`, coreAcc + skillAcc - armorData.m_pen + hitBonus);
     });
 
