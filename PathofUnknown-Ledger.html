@@ -69,6 +69,14 @@
         .vault-menu { position: relative; display: inline-block; }
         .vault-menu-btn { background: var(--iron); color: var(--gold); border: 1px solid var(--gold); padding: 2px 8px; font-weight: 900; cursor: pointer; font-size: 8pt; text-transform: uppercase; font-family: inherit; white-space: nowrap; }
         .vault-menu-btn:hover, .vault-menu:focus-within .vault-menu-btn { background: var(--gold); color: var(--iron); }
+        .vault-dropdown { display: none; position: absolute; top: 100%; left: 0; z-index: 999; background: var(--iron); border: 1px solid var(--gold); min-width: 175px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+        .vault-menu:hover .vault-dropdown, .vault-menu:focus-within .vault-dropdown { display: block; }
+        .vault-dropdown button, .vault-dropdown label { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid rgba(184,134,11,0.2); color: var(--gold); padding: 7px 12px; font-size: 8pt; font-weight: 900; text-transform: uppercase; font-family: inherit; cursor: pointer; white-space: nowrap; box-sizing: border-box; }
+        .vault-dropdown button:hover, .vault-dropdown label:hover { background: var(--gold); color: var(--iron); }
+        .vault-dropdown .drop-divider { border-top: 1px solid rgba(184,134,11,0.4); margin: 2px 0; }
+        .vault-menu { position: relative; display: inline-block; }
+        .vault-menu-btn { background: var(--iron); color: var(--gold); border: 1px solid var(--gold); padding: 2px 8px; font-weight: 900; cursor: pointer; font-size: 8pt; text-transform: uppercase; font-family: inherit; white-space: nowrap; }
+        .vault-menu-btn:hover, .vault-menu:focus-within .vault-menu-btn { background: var(--gold); color: var(--iron); }
         .vault-dropdown { display: none; position: absolute; top: 100%; left: 0; z-index: 999; background: var(--iron); border: 1px solid var(--gold); min-width: 165px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
         .vault-menu:hover .vault-dropdown, .vault-menu:focus-within .vault-dropdown { display: block; }
         .vault-dropdown button, .vault-dropdown label { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid rgba(184,134,11,0.2); color: var(--gold); padding: 7px 12px; font-size: 8pt; font-weight: 900; text-transform: uppercase; font-family: inherit; cursor: pointer; white-space: nowrap; box-sizing: border-box; }
@@ -683,7 +691,7 @@
             <div class="vault-dropdown">
                 <button onclick="saveData()">💾 Save .JSON</button>
                 <button onclick="saveAsHTML()">📑 Save .HTML</button>
-                <button onclick="exportToTracker()">⚔ Send to Tracker</button>
+                <button onclick="exportToTracker()" style="color:#7ec87e;">⚔ Send to Tracker</button>
                 <div class="drop-divider"></div>
                 <label>📂 Load Local<input type="file" id="load-input" style="display:none" onchange="loadData(this)"></label>
                 <label style="color:#7ec87e;">📥 Import Creator<input type="file" id="import-pou-input" style="display:none" accept=".pou,.json" onchange="importFromCreator(this)"></label>
@@ -2226,7 +2234,7 @@ function saveData() {
     if (pv && pv.src && pv.src.startsWith('data:image')) data['character_portrait'] = pv.src;
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], {type:'application/json'}));
-    a.download = `${g('char-name-input')?.value || 'character'}.rpg`;
+    a.download = `${g('char-name-input')?.value || 'character'}.json`;
     a.click();
 }
 
@@ -2253,17 +2261,11 @@ function applyCharacterData(data) {
 }
 
 function exportToTracker() {
-    // Snapshot all computed stats from the live ledger into an enriched .pou
-    // that the combat tracker can load directly without re-running any math.
     const name = g('char-name-input')?.value || 'Character';
     const pkg = {
         _schema:   'pou-character-v1',
         _exported: new Date().toISOString(),
-        identity: {
-            name,
-            race: g('race-select')?.value || 'none',
-            size: g('char-size')?.value   || 'Med',
-        },
+        identity:  { name, race: g('race-select')?.value || 'none', size: g('char-size')?.value || 'Med' },
         combatStats: {
             wTotal:     gv('w_total'),
             apTotal:    gv('ap_total'),
@@ -2271,31 +2273,16 @@ function exportToTracker() {
             initiative: gv('stat-initiative'),
             defense:    gv('stat-defense'),
             movement:   gv('stat-movement'),
-            // Melee
-            meleeHit1:  gv('cm-melee-hit-1'),
-            meleeDmg1:  gv('cm-wounds-melee-1'),
-            meleeHit2:  gv('cm-melee-hit-2') || null,
-            meleeDmg2:  gv('cm-wounds-melee-2') || null,
-            // Range
-            rangeHit1:  gv('cm-range-hit-1') || null,
-            rangeDmg1:  gv('cm-wounds-range-1') || null,
-            rangeHit2:  gv('cm-range-hit-2') || null,
-            rangeDmg2:  gv('cm-wounds-range-2') || null,
-            // Casting
-            castHit:    gv('cm-cast-hit')     || null,
-            castDmg:    gv('cm-wounds-cast')  || null,
-            castHeal:   gv('cm-healing-cast') || null,
-            castResist: gv('cm-resist-cast')  || null,
-            castTurns:  gv('cm-turns-cast')   || null,
-            // Wound Mitigation
-            wmArmor:    gv('wm-armor-tot'),
-            wmBless:    gv('wm-bless-tot'),
-            wmDispoi:   gv('wm-dispoi-tot'),
+            meleeHit1:  gv('cm-melee-hit-1'),  meleeDmg1: gv('cm-wounds-melee-1'),
+            meleeHit2:  gv('cm-melee-hit-2')  || null, meleeDmg2: gv('cm-wounds-melee-2') || null,
+            rangeHit1:  gv('cm-range-hit-1')  || null, rangeDmg1: gv('cm-wounds-range-1') || null,
+            rangeHit2:  gv('cm-range-hit-2')  || null, rangeDmg2: gv('cm-wounds-range-2') || null,
+            castHit:    gv('cm-cast-hit')      || null, castDmg:   gv('cm-wounds-cast')    || null,
+            castHeal:   gv('cm-healing-cast')  || null, castResist: gv('cm-resist-cast')   || null,
+            castTurns:  gv('cm-turns-cast')    || null,
+            wmArmor:    gv('wm-armor-tot'),  wmBless:  gv('wm-bless-tot'),  wmDispoi: gv('wm-dispoi-tot'),
             mendHeal:   gv('mending-heal-val'),
-            // Defenses
-            block:      gv('def-block')   || 0,
-            deflect:    gv('def-deflect') || 0,
-            dodge:      gv('def-dodge')   || 0,
+            block:      gv('def-block') || 0,  deflect: gv('def-deflect') || 0,  dodge: gv('def-dodge') || 0,
         },
     };
     const a = document.createElement('a');
@@ -2389,59 +2376,18 @@ function applyCreatorPackage(pkg) {
     const ridEl = g('riding_xp_pts');
     if (ridEl) ridEl.value = pkg.resources.ridingPts || 0;
 
-    // 7. Weapons — map individual weapon names → ledger spec category checkboxes.
-    //    The spec checkboxes are what upd() counts to charge weapon XP.
-    //    Also populate the weapon entry row selects for combat stat display.
-    const MELEE_SPEC_MAP = {
-        'Dagger':'Swords/Daggers','Shortsword':'Swords/Daggers','Longsword':'Swords/Daggers',
-        'Rapier':'Swords/Daggers','Greatsword':'Swords/Daggers','Battleaxe':'Axes & Cleavers',
-        'Axe':'Axes & Cleavers','Greataxe':'Axes & Cleavers','Mace':'Hammers & Maces',
-        'Warhammer':'Hammers & Maces','Maul':'Hammers & Maces','Morningstar':'Hammers & Maces',
-        'Club':'Hammers & Maces','Flail':'Flexible/Chain','Whip':'Flexible/Chain',
-        'Spear':'Polearms/Spears','Halberd':'Polearms/Spears','Glaive':'Polearms/Spears',
-        'Lance':'Polearms/Spears','Staff':'Polearms/Spears','Unarmed':'Unarmed Combat',
-    };
-    const RANGE_SPEC_MAP = {
-        'Shortbow':'Bow','Bow':'Bow','Longbow':'Bow',
-        'Crossbow':'Crossbow','Heavy Crossbow':'Crossbow','Hand Crossbow':'Crossbow',
-        'Pistol':'Firearm','Rifle':'Firearm','Blunderbuss':'Firearm',
-        'Throwing Axe':'Throwing','Throwing Knife':'Throwing','Dart':'Throwing','Javelin':'Throwing',
-    };
-
-    // Clear all spec checkboxes first
+    // 7. Weapons — meleeCategories/rangeCategories match ledger spec checkbox labels exactly.
     document.querySelectorAll('.melee-spec-cb').forEach(cb => { cb.checked = false; });
     document.querySelectorAll('.range-spec-cb').forEach(cb => { cb.checked = false; });
-
-    const meleeWeapons = pkg.weapons.melee || [];
-    const rangeWeapons = pkg.weapons.range || [];
-    const checkedMelee = new Set(), checkedRange = new Set();
-
-    meleeWeapons.forEach(wName => {
-        const cat = MELEE_SPEC_MAP[wName];
-        if (!cat || checkedMelee.has(cat)) return;
+    (pkg.weapons.meleeCategories || []).forEach(cat => {
         const cb = Array.from(document.querySelectorAll('.melee-spec-cb'))
             .find(c => c.parentElement.textContent.trim() === cat);
-        if (cb) { cb.checked = true; checkedMelee.add(cat); }
+        if (cb) cb.checked = true;
     });
-
-    rangeWeapons.forEach(wName => {
-        const cat = RANGE_SPEC_MAP[wName];
-        if (!cat || checkedRange.has(cat)) return;
+    (pkg.weapons.rangeCategories || []).forEach(cat => {
         const cb = Array.from(document.querySelectorAll('.range-spec-cb'))
             .find(c => c.parentElement.textContent.trim() === cat);
-        if (cb) { cb.checked = true; checkedRange.add(cat); }
-    });
-
-    // Also populate weapon entry row selects for combat stat display
-    const meleeRows = Array.from(document.querySelectorAll('#mr .weapon-entry'));
-    const rangeRows = Array.from(document.querySelectorAll('#rr .weapon-entry'));
-    meleeWeapons.forEach((wName, idx) => {
-        const row = meleeRows[idx]; if (!row) return;
-        const sel = row.querySelectorAll('select')[0]; if (sel) sel.value = wName;
-    });
-    rangeWeapons.forEach((wName, idx) => {
-        const row = rangeRows[idx]; if (!row) return;
-        const sel = row.querySelectorAll('select')[0]; if (sel) sel.value = wName;
+        if (cb) cb.checked = true;
     });
 
     // 8. Mounted count
