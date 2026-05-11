@@ -66,6 +66,14 @@
         .vault-controls { display: flex; gap: 4px; align-items: center; }
         .btn-vault { background: var(--iron); color: var(--gold); border: 1px solid var(--gold); padding: 2px 8px; font-weight: 900; cursor: pointer; font-size: 8pt; text-transform: uppercase; font-family: inherit; white-space: nowrap; }
         .btn-vault:hover { background: var(--gold); color: var(--iron); }
+        .vault-menu { position: relative; display: inline-block; }
+        .vault-menu-btn { background: var(--iron); color: var(--gold); border: 1px solid var(--gold); padding: 2px 8px; font-weight: 900; cursor: pointer; font-size: 8pt; text-transform: uppercase; font-family: inherit; white-space: nowrap; }
+        .vault-menu-btn:hover, .vault-menu:focus-within .vault-menu-btn { background: var(--gold); color: var(--iron); }
+        .vault-dropdown { display: none; position: absolute; top: 100%; left: 0; z-index: 999; background: var(--iron); border: 1px solid var(--gold); min-width: 165px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+        .vault-menu:hover .vault-dropdown, .vault-menu:focus-within .vault-dropdown { display: block; }
+        .vault-dropdown button, .vault-dropdown label { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid rgba(184,134,11,0.2); color: var(--gold); padding: 7px 12px; font-size: 8pt; font-weight: 900; text-transform: uppercase; font-family: inherit; cursor: pointer; white-space: nowrap; box-sizing: border-box; }
+        .vault-dropdown button:hover, .vault-dropdown label:hover { background: var(--gold); color: var(--iron); }
+        .vault-dropdown .drop-divider { border-top: 1px solid rgba(184,134,11,0.4); margin: 2px 0; }
 
         /* --- STATUS BAR (Identity Fields) --- */
         .status-bar { border-bottom: 4px solid var(--iron); padding-bottom: 4px; margin-bottom: 5px; }
@@ -668,14 +676,22 @@
             <option value="Leorlian">Leorlian</option>
             <option value="Unknown Hero">Unknown</option>
         </select>
-        <button class="btn-vault" id="btn-cloud-load" onclick="fetchCharacterFromCloud()">☁️ Load Cloud</button>
+        <button class="btn-vault" id="btn-cloud-load" onclick="fetchCharacterFromCloud()">☁️ Cloud</button>
         <div style="width:1px; height:20px; background:var(--iron); margin:0 2px; opacity:0.3;"></div>
-        <button class="btn-vault" onclick="saveData()">💾 Save .RPG</button>
-        <button class="btn-vault" onclick="saveAsHTML()">📑 Save .HTML</button>
-        <button class="btn-vault" onclick="document.getElementById('load-input').click()">📂 Load Local</button>
+        <div class="vault-menu">
+            <button class="vault-menu-btn">📁 File ▾</button>
+            <div class="vault-dropdown">
+                <button onclick="saveData()">💾 Save .JSON</button>
+                <button onclick="saveAsHTML()">📑 Save .HTML</button>
+                <button onclick="exportToTracker()">⚔ Send to Tracker</button>
+                <div class="drop-divider"></div>
+                <label>📂 Load Local<input type="file" id="load-input" style="display:none" onchange="loadData(this)"></label>
+                <label style="color:#7ec87e;">📥 Import Creator<input type="file" id="import-pou-input" style="display:none" accept=".pou,.json" onchange="importFromCreator(this)"></label>
+            </div>
+        </div>
+        <div style="width:1px; height:20px; background:var(--iron); margin:0 2px; opacity:0.3;"></div>
         <button class="btn-vault" style="background:var(--blood); color:var(--parchment);" onclick="openChronicle()">📖 Chronicle</button>
         <button class="btn-vault" style="background:var(--ink); color:var(--gold);" onclick="location.href='index.html'">🏠 Hub</button>
-        <input type="file" id="load-input" style="display:none" onchange="loadData(this)">
     </div>
 </div>
 
@@ -2236,12 +2252,214 @@ function applyCharacterData(data) {
     upd();
 }
 
+function exportToTracker() {
+    // Snapshot all computed stats from the live ledger into an enriched .pou
+    // that the combat tracker can load directly without re-running any math.
+    const name = g('char-name-input')?.value || 'Character';
+    const pkg = {
+        _schema:   'pou-character-v1',
+        _exported: new Date().toISOString(),
+        identity: {
+            name,
+            race: g('race-select')?.value || 'none',
+            size: g('char-size')?.value   || 'Med',
+        },
+        combatStats: {
+            wTotal:     gv('w_total'),
+            apTotal:    gv('ap_total'),
+            fpBase:     gv('rp_base'),
+            initiative: gv('stat-initiative'),
+            defense:    gv('stat-defense'),
+            movement:   gv('stat-movement'),
+            // Melee
+            meleeHit1:  gv('cm-melee-hit-1'),
+            meleeDmg1:  gv('cm-wounds-melee-1'),
+            meleeHit2:  gv('cm-melee-hit-2') || null,
+            meleeDmg2:  gv('cm-wounds-melee-2') || null,
+            // Range
+            rangeHit1:  gv('cm-range-hit-1') || null,
+            rangeDmg1:  gv('cm-wounds-range-1') || null,
+            rangeHit2:  gv('cm-range-hit-2') || null,
+            rangeDmg2:  gv('cm-wounds-range-2') || null,
+            // Casting
+            castHit:    gv('cm-cast-hit')     || null,
+            castDmg:    gv('cm-wounds-cast')  || null,
+            castHeal:   gv('cm-healing-cast') || null,
+            castResist: gv('cm-resist-cast')  || null,
+            castTurns:  gv('cm-turns-cast')   || null,
+            // Wound Mitigation
+            wmArmor:    gv('wm-armor-tot'),
+            wmBless:    gv('wm-bless-tot'),
+            wmDispoi:   gv('wm-dispoi-tot'),
+            mendHeal:   gv('mending-heal-val'),
+            // Defenses
+            block:      gv('def-block')   || 0,
+            deflect:    gv('def-deflect') || 0,
+            dodge:      gv('def-dodge')   || 0,
+        },
+    };
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(pkg, null, 2)], {type:'application/json'}));
+    a.download = name.replace(/\s+/g, '_') + '_tracker.pou';
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
 function loadData(input) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = e => { try { applyCharacterData(JSON.parse(e.target.result)); } catch(err) { alert("Load error: " + err.message); } };
         reader.readAsText(input.files[0]);
     }
+}
+
+// ================================================================
+// IMPORT FROM CREATOR — reads a .pou file and populates the ledger
+// ================================================================
+function importFromCreator(input) {
+    if (!input.files || !input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        try {
+            const pkg = JSON.parse(e.target.result);
+            if (pkg._schema !== 'pou-character-v1') {
+                alert('This file was not exported from the Path of the Unknown Character Creator.');
+                return;
+            }
+            applyCreatorPackage(pkg);
+        } catch(err) {
+            alert('Import error: ' + err.message);
+        }
+    };
+    reader.readAsText(input.files[0]);
+    // Reset file input so the same file can be re-imported
+    input.value = '';
+}
+
+function applyCreatorPackage(pkg) {
+    // 1. Identity
+    const nameEl = g('char-name-input');
+    if (nameEl) { nameEl.value = pkg.identity.name || ''; document.title = (pkg.identity.name || 'Character') + ' - RPG Ledger'; }
+    const raceEl = g('race-select');
+    if (raceEl) raceEl.value = pkg.identity.race || 'none';
+    const sizeEl = g('char-size');
+    if (sizeEl) sizeEl.value = pkg.identity.size || 'Med';
+
+    // 2. XP
+    const xeEl = g('xe');
+    if (xeEl) xeEl.value = pkg.xp.earned || 0;
+
+    // 3. Magic vocation checkbox
+    document.querySelectorAll('.magic-cb').forEach(cb => { cb.checked = false; });
+    if (pkg.vocation.magic) {
+        const magicCb = Array.from(document.querySelectorAll('.magic-cb'))
+            .find(cb => cb.value === pkg.vocation.magic);
+        if (magicCb) { magicCb.checked = true; handleMagicCheck(magicCb); }
+    }
+
+    // 4. Runemaster pts
+    const rmEl = g('runemaster_pts');
+    if (rmEl) rmEl.value = pkg.runemasterPts || 0;
+
+    // 5. Skills — write to each .sk-p via label-{SkillName} anchor.
+    //    Knowledge is EXCLUDED here because syncKnowledgeSkill() in upd()
+    //    overwrites it by counting knowledge-grid checkboxes. We handle
+    //    Knowledge XP via the knowledge grid checkboxes below instead.
+    const skills = pkg.skills || {};
+    Object.entries(skills).forEach(([skillName, pts]) => {
+        if (skillName === 'Knowledge') return; // handled separately below
+        const lbl = g('label-' + skillName);
+        if (lbl) {
+            const ptsInput = lbl.parentNode.querySelector('.sk-p');
+            if (ptsInput) ptsInput.value = pts > 0 ? pts : 0;
+        }
+    });
+
+    // 5b. Knowledge — check that many knowledge-grid checkboxes so
+    //     syncKnowledgeSkill() produces the right count when upd() runs.
+    const knowledgePts = skills['Knowledge'] || 0;
+    const kCbs = document.querySelectorAll('#knowledge-grid .k-cb');
+    kCbs.forEach((cb, idx) => { cb.checked = idx < knowledgePts; });
+
+    // 6. Resources
+    const apEl = g('ap_pts');
+    if (apEl) apEl.value = pkg.resources.apPts || 0;
+    const fpEl = g('fp_pts');
+    if (fpEl) fpEl.value = pkg.resources.fortunePts || 0;
+    const ridEl = g('riding_xp_pts');
+    if (ridEl) ridEl.value = pkg.resources.ridingPts || 0;
+
+    // 7. Weapons — map individual weapon names → ledger spec category checkboxes.
+    //    The spec checkboxes are what upd() counts to charge weapon XP.
+    //    Also populate the weapon entry row selects for combat stat display.
+    const MELEE_SPEC_MAP = {
+        'Dagger':'Swords/Daggers','Shortsword':'Swords/Daggers','Longsword':'Swords/Daggers',
+        'Rapier':'Swords/Daggers','Greatsword':'Swords/Daggers','Battleaxe':'Axes & Cleavers',
+        'Axe':'Axes & Cleavers','Greataxe':'Axes & Cleavers','Mace':'Hammers & Maces',
+        'Warhammer':'Hammers & Maces','Maul':'Hammers & Maces','Morningstar':'Hammers & Maces',
+        'Club':'Hammers & Maces','Flail':'Flexible/Chain','Whip':'Flexible/Chain',
+        'Spear':'Polearms/Spears','Halberd':'Polearms/Spears','Glaive':'Polearms/Spears',
+        'Lance':'Polearms/Spears','Staff':'Polearms/Spears','Unarmed':'Unarmed Combat',
+    };
+    const RANGE_SPEC_MAP = {
+        'Shortbow':'Bow','Bow':'Bow','Longbow':'Bow',
+        'Crossbow':'Crossbow','Heavy Crossbow':'Crossbow','Hand Crossbow':'Crossbow',
+        'Pistol':'Firearm','Rifle':'Firearm','Blunderbuss':'Firearm',
+        'Throwing Axe':'Throwing','Throwing Knife':'Throwing','Dart':'Throwing','Javelin':'Throwing',
+    };
+
+    // Clear all spec checkboxes first
+    document.querySelectorAll('.melee-spec-cb').forEach(cb => { cb.checked = false; });
+    document.querySelectorAll('.range-spec-cb').forEach(cb => { cb.checked = false; });
+
+    const meleeWeapons = pkg.weapons.melee || [];
+    const rangeWeapons = pkg.weapons.range || [];
+    const checkedMelee = new Set(), checkedRange = new Set();
+
+    meleeWeapons.forEach(wName => {
+        const cat = MELEE_SPEC_MAP[wName];
+        if (!cat || checkedMelee.has(cat)) return;
+        const cb = Array.from(document.querySelectorAll('.melee-spec-cb'))
+            .find(c => c.parentElement.textContent.trim() === cat);
+        if (cb) { cb.checked = true; checkedMelee.add(cat); }
+    });
+
+    rangeWeapons.forEach(wName => {
+        const cat = RANGE_SPEC_MAP[wName];
+        if (!cat || checkedRange.has(cat)) return;
+        const cb = Array.from(document.querySelectorAll('.range-spec-cb'))
+            .find(c => c.parentElement.textContent.trim() === cat);
+        if (cb) { cb.checked = true; checkedRange.add(cat); }
+    });
+
+    // Also populate weapon entry row selects for combat stat display
+    const meleeRows = Array.from(document.querySelectorAll('#mr .weapon-entry'));
+    const rangeRows = Array.from(document.querySelectorAll('#rr .weapon-entry'));
+    meleeWeapons.forEach((wName, idx) => {
+        const row = meleeRows[idx]; if (!row) return;
+        const sel = row.querySelectorAll('select')[0]; if (sel) sel.value = wName;
+    });
+    rangeWeapons.forEach((wName, idx) => {
+        const row = rangeRows[idx]; if (!row) return;
+        const sel = row.querySelectorAll('select')[0]; if (sel) sel.value = wName;
+    });
+
+    // 8. Mounted count
+    const mountedCbs = Array.from(document.querySelectorAll('.mounted-cb'));
+    mountedCbs.forEach((cb, idx) => { cb.checked = idx < (pkg.weapons.mountedCount || 0); });
+
+    // 9. Advanced skills
+    const advItems = Array.from(document.querySelectorAll('#advanced-grid .k-item'));
+    advItems.forEach(item => {
+        const nameInput = item.querySelector('.adv-name');
+        const cb = item.querySelector('.k-cb');
+        if (!nameInput || !cb) return;
+        cb.checked = (pkg.advanced || []).includes(nameInput.value);
+    });
+
+    // 10. Recalculate
+    upd();
+    console.log(`[Import] ${pkg.identity.name || 'Character'} loaded from Creator.`);
 }
 
 async function fetchCharacterFromCloud() {
