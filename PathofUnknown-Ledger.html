@@ -1948,7 +1948,12 @@ function updateSpellUnlocks() {
     });
 
     const disciplinePts = parseInt(g('label-Discipline')?.parentNode.querySelector('.sk-p')?.value) || 0;
-    const totalUnlocked = activeMagicPts + Math.floor(disciplinePts / 3);
+    // Regular slots start opening once combined total exceeds 5 (the cantrip threshold).
+    // The 6th combined point opens 1 slot, 7th opens 2, etc.
+    // Example: 5 primary + 3 discipline = 6 combined → 6 - 5 = 1 regular slot.
+    // Example: 6 primary + 0 discipline = 6 combined → 6 - 5 = 1 regular slot.
+    const combinedPts = activeMagicPts + Math.floor(disciplinePts / 3);
+    const totalUnlocked = combinedPts > 5 ? combinedPts - 5 : 0;
 
     // Build cantrip-only options for the first CANTRIP_SLOTS slots
     let cantripsHTML = '<option value="" data-tn="">- Cantrip -</option>';
