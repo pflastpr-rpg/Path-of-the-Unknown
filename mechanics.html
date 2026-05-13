@@ -278,21 +278,22 @@
 
     <h3 class="subsection-title">Standard Weapons — Physique-based</h3>
     <p style="margin: 6px 0;">Axes, Swords, Maces, Hammers, Spears, Polearms, Greatswords:</p>
-    <div class="formula-block">MELEE TO-HIT = floor(Physique ÷ 5) + floor(Str.Conditioning ÷ 3) + floor(Athletics ÷ 3) + Weapon Bonus</div>
+    <div class="formula-block">MELEE TO-HIT = floor(Physique ÷ 5) + floor(Str.Conditioning ÷ 3) + floor(Athletics ÷ 3) + Weapon Bonus – Armor Melee Penalty</div>
     <p style="margin: 6px 0;"><strong>2H Weapons:</strong> No To-Hit penalty — but each strike costs <strong>2 AP</strong> instead of 1. The trade is AP economy vs wound output (Physique ×2).</p>
 
     <h3 class="subsection-title">Finesse Weapons — Agility-based</h3>
     <p style="margin: 6px 0;">Daggers, Rapiers, Shortswords, Whips:</p>
-    <div class="formula-block">FINESSE TO-HIT = floor(Agility ÷ 5) + floor(Precise Strike ÷ 3) + floor(Athletics ÷ 3) + Weapon Bonus</div>
+    <div class="formula-block">FINESSE TO-HIT = floor(Agility ÷ 5) + floor(Precise Strike ÷ 3) + floor(Athletics ÷ 3) + Weapon Bonus – Armor Melee Penalty</div>
 
     <table class="comp-table">
         <tr><th>Accuracy Source</th><th>Rate</th><th>Notes</th></tr>
         <tr><td>floor(Physique ÷ 5)</td><td>+1 per 5 pts of Physique</td><td>Standard weapons only</td></tr>
-        <tr><td>floor(Agility ÷ 5)</td><td>+1 per 5 pts of Agility</td><td>Finesse weapons only — armor Agility penalty hurts this</td></tr>
+        <tr><td>floor(Agility ÷ 5)</td><td>+1 per 5 pts of Agility</td><td>Finesse weapons only — armor Agility penalty reduces Agility before this calculation</td></tr>
         <tr><td>floor(Str.Conditioning ÷ 3)</td><td>+1 per 3 pts</td><td>Standard only. Also +2 wounds per 3 pts.</td></tr>
         <tr><td>floor(Precise Strike ÷ 3)</td><td>+1 per 3 pts</td><td>Finesse only. Also +2 wounds per 3 pts + crit armor shred.</td></tr>
         <tr><td>floor(Athletics ÷ 3)</td><td>+1 per 3 pts</td><td>Both standard and finesse. Also shared with ranged To-Hit.</td></tr>
         <tr><td>Focus action (passive)</td><td>+1 per 3 pts in Focus</td><td>Only when Focus action (1 AP) is taken before the attack</td></tr>
+        <tr><td>– Armor Melee Penalty</td><td>See Armor table</td><td>Subtracted from final To-Hit. Padded –1, Leather –1, Studded –2, Chain –2, Splint –3, Banded –3, Field Plate –3, Full Plate –4, Mithril –1. Furs and shields: no penalty.</td></tr>
     </table>
     <div class="mech-card">
         <p><strong>Situational To-Hit modifiers:</strong></p>
@@ -303,6 +304,7 @@
             <li><strong>Phantom Assassin:</strong> Advantage To-Hit when attacking from Stealth or Flanking.</li>
             <li><strong>Shield Rush:</strong> +1 To-Hit per pt of Shieldsman on the charge (requires 25 ft movement).</li>
         </ul>
+        <p style="margin-top: 10px;"><strong>Critical interaction — Finesse &amp; Heavy Armor:</strong> Finesse builds suffer a compounding armor penalty that standard melee does not. Armor reduces Agility first (e.g. Chain –2 Agl), which lowers floor(Agility÷5) directly. Then the Armor Melee Penalty (m_pen) is subtracted on top of that. A Finesse fighter in Chain Mail loses Agility accuracy from the stat reduction AND takes an additional –2 melee penalty — effectively paying the armor cost twice. Mithril is the only heavy armor that avoids this: no Agility reduction means only the flat –1 m_pen applies.</p>
     </div>
 
     <!-- ================================================================ -->
@@ -363,7 +365,8 @@
         <tr><td>Leather</td><td>–1</td><td>–1</td></tr>
         <tr><td>Studded Leather</td><td>–1</td><td>–2</td></tr>
         <tr><td>Chain Mail</td><td>–2</td><td>–2</td></tr>
-        <tr><td>Splint / Banded Mail</td><td>–2</td><td>–3</td></tr>
+        <tr><td>Splint Mail</td><td>–2</td><td>–3</td></tr>
+        <tr><td>Banded Mail</td><td>–2</td><td>–3</td></tr>
         <tr><td>Field Plate</td><td>–3</td><td>–3</td></tr>
         <tr><td>Full Plate</td><td>–4</td><td>–4</td></tr>
         <tr><td>Mithril</td><td>–0</td><td>–1</td></tr>
@@ -518,6 +521,7 @@
         <tr><td>Studded Leather</td><td>2</td><td>3</td><td class="pen">–1</td><td>—</td><td class="pen">+1</td><td>—</td><td class="pen">–2 Melee, –1 Ranged To-Hit</td></tr>
         <tr><td>Chain Mail</td><td>3</td><td>4</td><td class="pen">–2</td><td>—</td><td class="pen">+2</td><td class="pen">–5 ft</td><td class="pen">–2 Melee, –2 Ranged To-Hit</td></tr>
         <tr><td>Splint Mail</td><td>3</td><td>5</td><td class="pen">–2</td><td class="pen">–1</td><td class="pen">+3</td><td class="pen">–10 ft</td><td class="pen">–3 Melee, –2 Ranged To-Hit</td></tr>
+        <tr><td>Banded Mail</td><td>3</td><td>5</td><td class="pen">–2</td><td class="pen">–1</td><td class="pen">+3</td><td class="pen">–10 ft</td><td class="pen">–3 Melee, –2 Ranged To-Hit</td></tr>
         <tr><td>Field Plate</td><td>4</td><td>6</td><td class="pen">–3</td><td class="pen">–2</td><td class="pen">+4</td><td class="pen">–15 ft</td><td class="pen">–3 Melee, –3 Ranged To-Hit</td></tr>
         <tr><td>Full Plate</td><td>5</td><td>8</td><td class="pen">–3</td><td class="pen">–3</td><td class="pen">+5</td><td class="pen">–15 ft</td><td class="pen">–4 Melee, –4 Ranged To-Hit</td></tr>
         <tr><td>Mithril</td><td>4</td><td>5</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="pen">–1 Melee To-Hit only</td></tr>
