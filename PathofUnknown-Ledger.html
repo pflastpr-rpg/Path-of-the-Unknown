@@ -74,14 +74,6 @@
         .vault-dropdown button, .vault-dropdown label { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid rgba(184,134,11,0.2); color: var(--gold); padding: 7px 12px; font-size: 8pt; font-weight: 900; text-transform: uppercase; font-family: inherit; cursor: pointer; white-space: nowrap; box-sizing: border-box; }
         .vault-dropdown button:hover, .vault-dropdown label:hover { background: var(--gold); color: var(--iron); }
         .vault-dropdown .drop-divider { border-top: 1px solid rgba(184,134,11,0.4); margin: 2px 0; }
-        .vault-menu { position: relative; display: inline-block; }
-        .vault-menu-btn { background: var(--iron); color: var(--gold); border: 1px solid var(--gold); padding: 2px 8px; font-weight: 900; cursor: pointer; font-size: 8pt; text-transform: uppercase; font-family: inherit; white-space: nowrap; }
-        .vault-menu-btn:hover, .vault-menu:focus-within .vault-menu-btn { background: var(--gold); color: var(--iron); }
-        .vault-dropdown { display: none; position: absolute; top: 100%; left: 0; z-index: 999; background: var(--iron); border: 1px solid var(--gold); min-width: 165px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-        .vault-menu:hover .vault-dropdown, .vault-menu:focus-within .vault-dropdown { display: block; }
-        .vault-dropdown button, .vault-dropdown label { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid rgba(184,134,11,0.2); color: var(--gold); padding: 7px 12px; font-size: 8pt; font-weight: 900; text-transform: uppercase; font-family: inherit; cursor: pointer; white-space: nowrap; box-sizing: border-box; }
-        .vault-dropdown button:hover, .vault-dropdown label:hover { background: var(--gold); color: var(--iron); }
-        .vault-dropdown .drop-divider { border-top: 1px solid rgba(184,134,11,0.4); margin: 2px 0; }
 
         /* --- STATUS BAR (Identity Fields) --- */
         .status-bar { border-bottom: 4px solid var(--iron); padding-bottom: 4px; margin-bottom: 5px; }
@@ -695,6 +687,8 @@
                 <div class="drop-divider"></div>
                 <label>📂 Load Local<input type="file" id="load-input" style="display:none" onchange="loadData(this)"></label>
                 <label style="color:#7ec87e;">📥 Import Creator<input type="file" id="import-pou-input" style="display:none" accept=".pou,.json" onchange="importFromCreator(this)"></label>
+                <div class="drop-divider"></div>
+                <button onclick="recoverAutosave()" style="color:#f0c040;">♻ Recover Autosave</button>
             </div>
         </div>
         <div style="width:1px; height:20px; background:var(--iron); margin:0 2px; opacity:0.3;"></div>
@@ -1815,7 +1809,10 @@ function calculateTotalWounds(state, stats) {
 
 function calculateXPTotals(state) {
     sv('xs', Math.floor(state.spentXP + state.advSpentXP));
-    si('xr', (gv('xe')) - Math.floor(state.spentXP + state.advSpentXP));
+    const xpRemaining = (gv('xe')) - Math.floor(state.spentXP + state.advSpentXP);
+    si('xr', xpRemaining);
+    const xrEl = g('xr');
+    if (xrEl) xrEl.style.color = xpRemaining < 0 ? 'var(--blood)' : 'var(--success)';
 }
 
 function updateAdvancedSkillTooltips(state, stats, meleeDamage, rangeDamage) {
@@ -1922,6 +1919,23 @@ function upd() {
     updateAdvancedSkillTooltips(state, stats, meleeDamage, rangeDamage);
     updateTacticalConditions();
     updateSpellUnlocks();
+    // Autosave to localStorage after every update
+    try {
+        const snap = {};
+        Array.from(document.querySelectorAll('input, select')).filter(el =>
+            el.id !== 'cloud-char-select' && el.type !== 'file' &&
+            !el.classList.contains('adv-eff-base') && !el.classList.contains('adv-eff-spec') &&
+            !el.classList.contains('spell-ap') && !el.classList.contains('adv-name') && !el.classList.contains('adv-cost')
+        ).forEach((el, i) => {
+            snap[el.id || `f_${i}`] = (el.type === 'checkbox') ? el.checked : el.value;
+        });
+        const kItems = document.querySelectorAll('#knowledge-grid .k-item');
+        snap['_knowledge_grid'] = Array.from(kItems).map(item => ({
+            checked: item.querySelector('.k-cb')?.checked || false,
+            text:    item.querySelector('input[type="text"]')?.value || ''
+        }));
+        localStorage.setItem('pou_ledger_autosave', JSON.stringify(snap));
+    } catch(e) { /* storage unavailable */ }
 }
 
 // ================================================================
@@ -1986,10 +2000,12 @@ function updateSpellUnlocks() {
             slot.classList.add('cantrip-slot');
             if (sel) {
                 sel.disabled = false;
-                // Only repopulate if it doesn't already have cantrip options
-                if (!sel.querySelector('option[data-tn="TN0"]') && !sel.querySelector('option[data-tn="T0/P~"]')) {
+                // Repopulate if the tradition has changed or cantrip options are missing
+                const slotTradition = sel.dataset.tradition || '';
+                if (slotTradition !== (activeTradition || '') || !sel.querySelector('option[data-tn="TN0"]') && !sel.querySelector('option[data-tn="T0/P~"]')) {
                     const saved = sel.value;
                     sel.innerHTML = cantripsHTML;
+                    sel.dataset.tradition = activeTradition || '';
                     if (saved) sel.value = saved;
                     updateSpellCost(sel);
                 }
@@ -2235,6 +2251,12 @@ function saveData() {
         const key = el.id || `f_${i}`;
         data[key] = (el.type === 'checkbox') ? el.checked : el.value;
     });
+    // Save knowledge grid as structured array so restore is position-independent
+    const kItems = document.querySelectorAll('#knowledge-grid .k-item');
+    data['_knowledge_grid'] = Array.from(kItems).map(item => ({
+        checked: item.querySelector('.k-cb')?.checked || false,
+        text:    item.querySelector('input[type="text"]')?.value || ''
+    }));
     const pv = g('pv');
     if (pv && pv.src && pv.src.startsWith('data:image')) data['character_portrait'] = pv.src;
     const a = document.createElement('a');
@@ -2257,6 +2279,17 @@ function applyCharacterData(data) {
         }
     });
     document.querySelectorAll('.magic-cb').forEach(cb => { if (cb.checked) handleMagicCheck(cb); });
+    // Restore knowledge grid from structured array if present (new format)
+    if (data['_knowledge_grid']) {
+        const kItems = document.querySelectorAll('#knowledge-grid .k-item');
+        data['_knowledge_grid'].forEach((entry, idx) => {
+            if (idx >= kItems.length) return;
+            const cb  = kItems[idx].querySelector('.k-cb');
+            const txt = kItems[idx].querySelector('input[type="text"]');
+            if (cb)  cb.checked = entry.checked;
+            if (txt) txt.value  = entry.text;
+        });
+    }
     const pv = g('pv'), ph = g('ph');
     if (data['character_portrait'] && pv) { pv.src = data['character_portrait']; pv.style.display = 'block'; if (ph) ph.style.display = 'none'; }
     else { if (pv) { pv.src = ''; pv.style.display = 'none'; } if (ph) ph.style.display = 'block'; }
@@ -2297,8 +2330,21 @@ function exportToTracker() {
     URL.revokeObjectURL(a.href);
 }
 
+function recoverAutosave() {
+    try {
+        const saved = localStorage.getItem('pou_ledger_autosave');
+        if (!saved) { alert('No autosave found.'); return; }
+        if (!confirm('Restore last autosaved session? This will overwrite current data.')) return;
+        applyCharacterData(JSON.parse(saved));
+    } catch(e) { alert('Autosave recovery failed: ' + e.message); }
+}
+
 function loadData(input) {
     if (input.files && input.files[0]) {
+        if (!confirm('Loading a file will overwrite all current data. Continue?')) {
+            input.value = '';
+            return;
+        }
         const reader = new FileReader();
         reader.onload = e => { try { applyCharacterData(JSON.parse(e.target.result)); } catch(err) { alert("Load error: " + err.message); } };
         reader.readAsText(input.files[0]);
