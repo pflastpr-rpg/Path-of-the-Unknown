@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1100">
+<title>Path of the Unknown — Tome of Lore</title>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;700&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--iron:#02070e;--blood:#A81818;--blood-dim:rgba(168,24,24,0.10);--parchment:#f3e7c9;--parchment-deep:#e8d6a0;--gold:#B8860B;--gold-dim:rgba(184,134,11,0.13);--gold-line:rgba(184,134,11,0.35);--ink:#111111;--ink-soft:#362a18;--muted:#6b5c40;--entry-bg:#faf4e1;--font-heading:'Grenze Gotisch',serif;--font-sub:'Cinzel',serif;--font-main:'IM Fell English',serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#0e0b07;background-image:repeating-linear-gradient(0deg,transparent,transparent 44px,rgba(184,134,11,0.018) 44px,rgba(184,134,11,0.018) 45px);font-family:var(--font-main);color:var(--ink);padding:30px 20px 80px;display:flex;flex-direction:column;align-items:center;gap:18px;min-height:100vh;}
+.top-nav{width:1060px;max-width:100%;display:flex;justify-content:space-between;align-items:center;}
+.btn-nav{background:var(--iron);color:var(--gold);border:2px solid var(--iron);border-bottom:4px solid var(--blood);padding:9px 20px;font-family:var(--font-sub);font-size:0.68em;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:0.18s;display:inline-block;}
+.btn-nav:hover{background:var(--blood);color:var(--parchment);border-color:var(--blood);}
+.btn-scribe{background:var(--gold);color:var(--iron);border:2px solid var(--gold);border-bottom:4px solid var(--iron);padding:9px 20px;font-family:var(--font-sub);font-size:0.68em;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:0.18s;display:inline-block;font-weight:600;}
+.btn-scribe:hover{background:var(--parchment);}
+.jump-nav{width:1060px;max-width:100%;background:var(--iron);border:2px solid var(--gold);box-shadow:0 4px 20px rgba(0,0,0,0.8);display:flex;flex-wrap:wrap;justify-content:center;gap:2px;padding:10px 12px;}
+.jump-nav a{color:var(--gold);text-decoration:none;font-family:var(--font-sub);font-size:0.78em;font-weight:600;padding:7px 12px;border:1px solid rgba(184,134,11,0.2);background:rgba(184,134,11,0.04);transition:0.15s;min-width:34px;text-align:center;letter-spacing:0.5px;}
+.jump-nav a:hover,.jump-nav a.has-entry{background:var(--blood);color:var(--parchment);border-color:var(--blood);}
+.jump-nav a.empty{color:rgba(184,134,11,0.25);pointer-events:none;}
+.tome{width:1060px;max-width:100%;background:var(--parchment);border:8px solid var(--iron);box-shadow:0 0 0 2px var(--gold),0 25px 70px rgba(0,0,0,0.95),inset 0 0 100px rgba(184,134,11,0.05);padding:52px 72px 64px;position:relative;}
+.tome::before,.tome::after{content:'✦';position:absolute;font-size:20px;color:var(--gold);}
+.tome::before{top:12px;left:16px;}.tome::after{top:12px;right:16px;}
+.tome-masthead{text-align:center;border-bottom:3px double var(--gold);padding-bottom:20px;margin-bottom:40px;}
+.tome-eyebrow{font-family:var(--font-sub);font-size:0.65em;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.tome-title{font-family:var(--font-heading);font-size:3em;color:var(--iron);text-transform:uppercase;letter-spacing:2px;line-height:1.1;margin-bottom:6px;}
+.tome-sub{font-family:var(--font-sub);font-size:0.7em;letter-spacing:3px;color:var(--blood);text-transform:uppercase;}
+.tome-rule{display:flex;align-items:center;gap:12px;margin-top:14px;}
+.tome-rule span{flex:1;height:1px;background:var(--gold-line);}
+.letter-head{font-family:var(--font-heading);font-size:3.2em;color:var(--iron);border-bottom:4px solid var(--gold);margin-top:60px;margin-bottom:24px;line-height:1;padding-bottom:4px;scroll-margin-top:20px;}
+.entry{margin-bottom:44px;}
+.entry-title{font-family:var(--font-heading);font-size:1.9em;color:var(--blood);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;margin-top:36px;border-left:6px solid var(--blood);padding-left:14px;line-height:1.2;}
+.entry-tag{display:inline-block;font-family:var(--font-sub);font-size:0.58em;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border:1px solid var(--gold-line);padding:1px 9px;margin-left:10px;vertical-align:middle;background:var(--gold-dim);position:relative;top:-3px;}
+.section-header{font-family:var(--font-sub);font-size:0.88em;letter-spacing:1px;color:var(--iron);border-bottom:1px dashed var(--blood);padding-bottom:4px;margin-top:22px;margin-bottom:10px;text-transform:uppercase;}
+.sub-header{font-family:var(--font-sub);font-size:0.76em;letter-spacing:0.5px;color:var(--blood);margin-top:14px;margin-bottom:6px;text-transform:uppercase;}
+p{font-size:1em;line-height:1.75;margin-bottom:14px;color:var(--ink-soft);text-align:justify;}
+ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px;color:var(--ink-soft);}li strong{color:var(--iron);}
+.callout{background:var(--blood-dim);border-left:5px solid var(--blood);padding:16px 20px;font-style:italic;margin:18px 0;color:var(--ink-soft);font-size:0.97em;line-height:1.7;}
+.callout cite{display:block;margin-top:10px;font-style:normal;font-family:var(--font-sub);font-size:0.75em;letter-spacing:1px;color:var(--muted);}
+.lore-hook{background:var(--gold-dim);border-left:5px solid var(--gold);padding:13px 16px;margin:16px 0;font-size:0.9em;line-height:1.65;color:var(--ink-soft);}
+.lore-hook-label{font-family:var(--font-sub);font-size:0.65em;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px;font-style:normal;}
+.triumvirate{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0;}
+.t-card{background:var(--iron);padding:16px;border-bottom:4px solid;}
+.t-card.warden{border-color:#5F5E5A;}.t-card.engineer{border-color:#534AB7;}.t-card.warlord{border-color:var(--blood);}
+.t-role{font-family:var(--font-sub);font-size:0.55em;letter-spacing:2px;text-transform:uppercase;color:rgba(184,134,11,0.55);margin-bottom:3px;}
+.t-name{font-family:var(--font-heading);font-size:1.15em;color:var(--gold);text-transform:uppercase;}
+.t-epithet{font-size:0.78em;color:rgba(243,231,201,0.5);font-style:italic;margin-bottom:8px;font-family:var(--font-main);}
+.t-body{font-size:0.82em;color:rgba(243,231,201,0.78);line-height:1.55;font-family:var(--font-main);}
+.t-hook{font-size:0.76em;color:#e8a0a0;font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid rgba(168,24,24,0.3);line-height:1.4;font-family:var(--font-main);}
+.rune-div{text-align:center;margin:28px 0 20px;color:var(--gold-line);letter-spacing:10px;font-family:var(--font-sub);font-size:0.7em;}
+.btn-top{position:fixed;bottom:36px;right:36px;background:var(--iron);color:var(--gold);border:2px solid var(--iron);border-bottom:4px solid var(--blood);padding:11px 16px;font-family:var(--font-sub);font-size:0.65em;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:0.18s;box-shadow:0 4px 20px rgba(0,0,0,0.8);z-index:100;}
+.btn-top:hover{background:var(--blood);color:var(--parchment);}
+</style>
+</head>
+<body>
+<div class="top-nav">
+    <a href="index.html" class="btn-nav">&#8592; Return to Gateway</a>
+    <a href="lore-scribe.html" class="btn-scribe">&#10022; Open Lore Scribe</a>
+</div>
+<nav class="jump-nav"><a href="#letter-A" id="jA">A</a><a href="#letter-B" id="jB">B</a><a href="#letter-C" id="jC">C</a><a href="#letter-D" id="jD" class="empty">D</a><a href="#letter-E" id="jE" class="empty">E</a><a href="#letter-F" id="jF" class="empty">F</a><a href="#letter-G" id="jG" class="empty">G</a><a href="#letter-H" id="jH" class="empty">H</a><a href="#letter-I" id="jI" class="empty">I</a><a href="#letter-J" id="jJ" class="empty">J</a><a href="#letter-K" id="jK">K</a><a href="#letter-L" id="jL">L</a><a href="#letter-M" id="jM" class="empty">M</a><a href="#letter-N" id="jN" class="empty">N</a><a href="#letter-O" id="jO" class="empty">O</a><a href="#letter-P" id="jP">P</a><a href="#letter-Q" id="jQ" class="empty">Q</a><a href="#letter-R" id="jR">R</a><a href="#letter-S" id="jS">S</a><a href="#letter-T" id="jT">T</a><a href="#letter-U" id="jU" class="empty">U</a><a href="#letter-V" id="jV">V</a><a href="#letter-W" id="jW" class="empty">W</a><a href="#letter-X" id="jX" class="empty">X</a><a href="#letter-Y" id="jY" class="empty">Y</a><a href="#letter-Z" id="jZ" class="empty">Z</a></nav>
+<main class="tome" id="tomeMain">
+    <div class="tome-masthead">
+        <p class="tome-eyebrow">Path of the Unknown</p>
+        <h1 class="tome-title">Tome of Lore</h1>
+        <p class="tome-sub">A Lexicon of the Known &amp; Half-Known World</p>
+        <div class="tome-rule"><span></span><span style="color:var(--gold);font-size:14px;">&#10022;</span><span style="color:var(--gold);font-size:14px;">&#10022;</span><span style="color:var(--gold);font-size:14px;">&#10022;</span><span></span></div>
+    </div>
+
+    <div id="letter-A" class="letter-head">A</div>
+    <div class="entry">
+        <h2 class="entry-title">The Aakzad <span class="entry-tag">Mortek &middot; Ancient Threat</span></h2>
+        <p>The Aakzad are a biomechanical alien intelligence from the dark tapestry of the cosmos that invaded the world during the First Age. They are characterised by skeletal frames fused with obsidian-like armour and eyes that burn with a sickly green necrotic light. They do not seek conquest for land or dominion &mdash; they seek the harvest of life-frequency to sustain their eternal, cold existence. Where they walk, the living are not killed so much as emptied.</p>
+        <h3 class="section-header">The Labyrinth of Whispers</h3>
+        <p>Following their defeat by the Ancient Alliance, the surviving Aakzad were entombed in a spatial-bending prison &mdash; a labyrinth of pentagon-shaped chambers and twisting tunnels designed to overwhelm their logical, alien minds. Over centuries, their physical forms degraded into husks. Their psychic presence, however, did not diminish. It grew: a hissing telepathic pull that targets the weak-willed, drawing the susceptible toward the sealed labyrinth in dreams they cannot explain.</p>
+        <h3 class="sub-header">The Death Priest &amp; The Relic</h3>
+        <p>The Aakzad were led by the Death Priest &mdash; the Architect of Bone-Frequency &mdash; who wielded a cosmic artifact of unfathomable power. This artifact was shattered into three pieces during the Great Victory. The largest piece was recently stolen from a tomb in SunsReach by the groundskeeper Amako &ldquo;Kazamas&rdquo; Pikari. That single act has triggered the Aakzad&rsquo;s mass awakening.</p>
+        <div class="lore-hook"><span class="lore-hook-label">Open Hook</span>The Mortek fragment stolen from SunsReach is the largest of three pieces. The other two remain unaccounted for. Whether Kazamas acted alone or was drawn to the tomb by the Death Priest&rsquo;s psychic reach is a question no one has yet asked in the right room.</div>
+    </div>
+    <!-- BAKED ENTRIES: A -->
+
+    <div id="letter-B" class="letter-head">B</div>
+    <div class="entry">
+        <h2 class="entry-title">Birn Uluhm <span class="entry-tag">The Iron Roots &middot; Dwarven Faction</span></h2>
+        <p>Birn Uluhm did not begin as a city. It began as a wound. The vertical metropolis now occupies the skeletal ribcage of the Terra-Titan itself &mdash; a colossal, petrified entity of a scale that reframes what the word <em>ancient</em> means. It is carved into the parched, blood-red earth of the deep Dwarven mountains, powered by geothermal fury, and ruled by a clan that has not been fully alive for a very long time.</p>
+        <h3 class="section-header">The Fall of Kel Thurum &mdash; Overseer&rsquo;s Records</h3>
+        <p>Long before the geothermal forges roared, the Birn were the most ambitious mining caste within the grand dwarven empire of Kel Thurum &mdash; celebrated as the fearless Deep-Delvers. They pierced a seam of black slate at a depth no instrument had charted and found a heartbeat. Slow. Thick. Geological. The oily dark marrow that wept from it stained their tools and their hands and, in time, their minds.</p>
+        <div class="callout">&ldquo;They celebrated us when we bled the stone for their shiny trinkets, but recoiled when we found the mountain&rsquo;s true pulse. We pierced the black slate and found the suspended, petrified heart of the Terra-Titan. Its marrow ran hot. Its oily blood fueled our forges. Kel Thurum sealed us in the dark for our &lsquo;crimes&rsquo;, but they only locked themselves out of the future.&rdquo;<cite>&mdash; Translated from a Birn Overseer&rsquo;s Manifesto</cite></div>
+        <h3 class="sub-header">The Deep-Rot &amp; The Severing</h3>
+        <p>Prolonged exposure to Titan-Blood inflicted a creeping industrial corruption upon the clan. Their skin took on an ashen, slate-grey pallor. Their minds warped toward fanatical industry and soul-binding ritual. The High King of Kel Thurum sealed the deep gates. In their exile, the clan built downward &mdash; directly into the Titan&rsquo;s skeletal ribcage.</p>
+        <h3 class="section-header">The Geothermal Forge</h3>
+        <p>The heart of Birn Uluhm is a colossal circular chamber powered by intense geothermal vents. Veins of flowing magma crisscross the cavern floor, where dozens of captives labour under the watch of six Birn dwarven slavers. Workers descend into white-hot abyss on massive iron ladders, harvesting raw mithril from the currents below. Titan-Blood is used to forge Soul-Binding Spikes and conduct rituals of Lithomancy. The rot is spreading upward through the mountain&rsquo;s bones, deliberate and patient.</p>
+        <h3 class="section-header">The Hunt for Verath</h3>
+        <p>High Machinist Varkhas identified <em>verath</em> &mdash; the concentrated elemental residue crystallised within the bodies of Pyreborn &mdash; as structurally identical to the energy in the Titan&rsquo;s petrified nervous system. The Birn sent hunters west across half a continent into the Rysahm Ashlands to take Pyreborn Elders and crack open what they carry.</p>
+        <div class="rune-div">&mdash; &#10022; The Triumvirate of the Abyss &#10022; &mdash;</div>
+        <div class="triumvirate">
+            <div class="t-card warden"><div class="t-role">Warden of the Expansion</div><div class="t-name">Thrunn</div><div class="t-epithet">The Iron Root</div><div class="t-body">Elite Champion. Brutal supervisor of the upper extraction sites. Executes the will of the deep city.</div><div class="t-hook">First to encounter the Ashen Mouth when it arrives. He executes orders. He does not make decisions. This will be a problem.</div></div>
+            <div class="t-card engineer"><div class="t-role">The Grand Engineer</div><div class="t-name">Varkhas</div><div class="t-epithet">High Machinist</div><div class="t-body">Designed the vertical metropolis. Plugged into the Titan&rsquo;s dormant nervous system. Dreams of resurrecting the Terra-Titan as a weapon of war.</div><div class="t-hook">A living Pyreborn Elder near the petrified heart may trigger resonance no contingency exists for.</div></div>
+            <div class="t-card warlord"><div class="t-role">Supreme Commander</div><div class="t-name">Korvax</div><div class="t-epithet">The Soul-Breaker</div><div class="t-body">Absolute military authority. Building a soul-bound army to march upward and destroy the surface clans of Kel Thurum.</div><div class="t-hook">The verath harvest funds the army. If the Pyreborn close off that supply, Korvax&rsquo;s timeline collapses.</div></div>
+        </div>
+        <div class="lore-hook"><span class="lore-hook-label">Open Hook</span>The Ashen Mouth &mdash; eldest of the Pyreborn &mdash; has turned east and begun walking toward Birn Uluhm. Not in flight. In deliberate approach. No one in the deep city has planned for this.</div>
+    </div>
+    <!-- BAKED ENTRIES: B -->
+
+    <div id="letter-C" class="letter-head">C</div>
+    <div class="entry">
+        <h2 class="entry-title">The Chromatic Weald <span class="entry-tag">Location &middot; Biome</span></h2>
+        <p>The Weald is a biome of violent beauty born from the Great Prismatic Event &mdash; a convergence of celestial light, moon crystals, and primordial energy. The atmospheric Haze shifts between states: Magenta brings preternatural peace; Electric Green induces creeping paranoia; Prismatic triggers Mana Storms that rewrite probability in the immediate area.</p>
+        <h3 class="section-header">The Mycelian Veil</h3>
+        <p>The Veil-folk are a collective fungal consciousness communicating through low-frequency vibrations known as The Hum. Their capacity is Spore-Memory: absorbing the thoughts and histories of any living thing they touch. They are the keepers of the Weald&rsquo;s complete history, viewing all living things as temporary expressions of the soil.</p>
+        <div class="lore-hook"><span class="lore-hook-label">Lore Seed</span>The Mycelian Veil may hold Spore-Memories of the Great Prismatic Event itself &mdash; and anything that passed through the Weald before the current Age. The question is what it would cost to ask.</div>
+    </div>
+    <!-- BAKED ENTRIES: C -->
+
+    <div id="letter-K" class="letter-head">K</div>
+    <div class="entry">
+        <h2 class="entry-title">Kel Thurum <span class="entry-tag">Dwarven Empire &middot; Upper Mountains</span></h2>
+        <p>The grand dwarven empire of the upper mountains. Though they severed the Birn Clan and sealed the deep gates centuries ago, the High Kings have never been certain it was enough. The empire has transformed into a highly militarised coalition of specialised mountain cities &mdash; an empire built around a single fear.</p>
+        <ul><li><strong>Kol Boldohr:</strong> The economic heart &mdash; unmatched gem-cutting and precious metal mining funding the empire&rsquo;s vast military expenditure.</li><li><strong>Tharum Dorn:</strong> Seat of the RuneMasters. Runic magic woven into armour, weaponry, and architecture &mdash; the pure answer to Birn lithomancy.</li><li><strong>Kherdarum:</strong> The great surface ore mines. Iron and steel for the empire&rsquo;s legions and fortifications.</li></ul>
+        <h3 class="sub-header">Theldur &mdash; The Sentinel City</h3>
+        <p>Constructed directly over the sealed gates to Birn Uluhm. A colossal fortified siege tower 250 feet tall, 300 feet wide &mdash; the ultimate plug in the mountain&rsquo;s throat. If Korvax ever marches upward, Theldur was designed for his absolute destruction.</p>
+        <h3 class="sub-header">The Rune-Sworn Aegis</h3>
+        <p>The elite guard before the sealed deep gates. Encased in runic plate designed to nullify Birn lithomancy. They stand sworn never to yield a single inch of upper stone to the Deep-Rot. None have yet been tested. All know that will change.</p>
+        <div class="lore-hook"><span class="lore-hook-label">Open Hook</span>Kel Thurum does not know the Birn are harvesting Pyreborn across the continent, or that Varkhas believes verath can wake the Terra-Titan. The Rune-Sworn Aegis was not designed for what walks out of a fully resurrected Titan.</div>
+    </div>
+    <div class="entry">
+        <h2 class="entry-title">Khugron <span class="entry-tag">The Mountain Maw &middot; Location</span></h2>
+        <p>The entrance to Birn territories, warped by decades of lithomancy into a gargantuan stone maw with jagged, tooth-like protrusions. The heavily fortified gateway to the deep &mdash; the last point of the upper world visible to those who enter.</p>
+        <h3 class="section-header">The Corridor of Treachery</h3>
+        <p>Two trap floors dump intruders thirty feet into the Oubliette &mdash; lightless jail cells of iron cages suspended by chains over a lower void, reachable only by a hoist controlled from outside. Arrow slits lined with hobgoblin guards cover survivors of the trap.</p>
+        <h3 class="section-header">The Great Lift</h3>
+        <p>A vertical shaft connecting the fortress&rsquo;s three levels, powered by a captive Earth Elemental shackled into permanent service. The Elemental has not spoken since the shackling. Whether incapable or choosing silence is unknown.</p>
+    </div>
+    <!-- BAKED ENTRIES: K -->
+
+    <div id="letter-L" class="letter-head">L</div>
+    <div class="entry">
+        <h2 class="entry-title">Lithomancy <span class="entry-tag">Discipline &middot; Birn Arcana</span></h2>
+        <p>The art of manipulating stone through cursed arcane frequencies &mdash; sound made into will, pressed into rock until the rock remembers a shape it was never born into. Practised in Birn Uluhm&rsquo;s Great Hub: a circular nexus of glowing blue runes used to repair and control the Earth Elementals serving as guardians and labourers. Every casting leaves a residue &mdash; a faint wrongness that accumulates into something that breathes when no one is looking.</p>
+        <h3 class="section-header">Juggernauts of Birn</h3>
+        <p>Earth Elementals whose consciousness has been forcibly imprisoned within physical form &mdash; caged in heavy armour plates bolted into their rocky hides, serving as living battering rams. When the lithomancy maintaining them degrades, they do not return to stone. They simply continue, directionless, until something ends them.</p>
+    </div>
+    <!-- BAKED ENTRIES: L -->
+
+    <div id="letter-P" class="letter-head">P</div>
+    <div class="entry">
+        <h2 class="entry-title">The Pyreborn <span class="entry-tag">Elemental Faction &middot; Rysahm Ashlands</span></h2>
+        <p>They did not begin as flesh. They did not begin as thought. They began as heat &mdash; the roaring intention of flame given purchase in the world &mdash; and somewhere in that burning they became aware of themselves. The Pyreborn are ancient. Some accounts place their origin before the current Age entirely, in the long silence that preceded the first recorded catastrophe.</p>
+        <h3 class="section-header">Nature &amp; Presence</h3>
+        <p>The Pyreborn exist primarily within the volcanic wastes of the Rysahm Ashlands &mdash; far northwest, sky perpetually choked with smoke. Extreme heat halves Wound Mitigation for outsiders without magical warding. They are highly susceptible to cold, and their melee strikes leave a burning condition. At their apex, they are guarded by the Vulkan-Kahn &mdash; ancient, upright tigers of tremendous magical power whose relationship with the Pyreborn is one of kinship older than language.</p>
+        <h3 class="section-header">Verath &mdash; The Crystallised Fire</h3>
+        <p>Within every Pyreborn accumulates <em>verath</em> &mdash; elemental residue refined by centuries of heat until it crystallises outward as gemstones. The gems are exhalations: every faceted stone something the fire could not hold any longer. A single Elder&rsquo;s gem carries enough concentrated verath to kill a middling Wizard who cracks it without proper ritual &mdash; scorched from the inside out when the residue answers the wrong question.</p>
+        <h3 class="section-header">The Birn Hunting Campaign</h3>
+        <p>The Dwarves of Birn Uluhm identified verath as structurally identical to the energy in the petrified Terra-Titan&rsquo;s nervous system and sent hunters across half a continent to acquire it. The hunters are systematic and select Elders preferentially. The Pyreborn have no tradition of being hunted with this kind of patience. They know anger. They know the long burn of a grudge. But the cold, methodical hunger of Birn Uluhm is something they have not yet learned to answer.</p>
+        <h3 class="sub-header">The Ashen Mouth</h3>
+        <p>The eldest of the Pyreborn carries no name that any account dares write directly. Old enough to remember when the gods were still answering &mdash; old enough to recognise a long-term plan when it sees one moving through its kin. It watched the Birn hunters come and go over years. Not fleeing. Watching. Then it turned east and began to walk toward the smoke of the Embervast Range.</p>
+        <div class="lore-hook"><span class="lore-hook-label">Primary Open Hook</span>Thrunn will be the first Birn figure the Ashen Mouth encounters at the outer vents. He has orders for capture or kill. He has no orders for a Pyreborn Elder that walked here on its own and has not yet attacked.</div>
+        <div class="lore-hook"><span class="lore-hook-label">Secondary Open Hook</span>If Varkhas is correct that verath is a Titan-echo, a living Elder brought voluntarily near the petrified heart may trigger a resonance that no one in Birn Uluhm has contingency plans for.</div>
+    </div>
+    <!-- BAKED ENTRIES: P -->
+
+    <div id="letter-R" class="letter-head">R</div>
+    <div class="entry">
+        <h2 class="entry-title">Rysahm Ashlands <span class="entry-tag">Location &middot; Far Northwest</span></h2>
+        <p>A brutal volcanic wasteland where the sky is perpetually choked with smoke. Extreme heat halves Wound Mitigation without magical warding. Home to the Pyreborn, their Fire Elemental kin, and the Vulkan-Kahn. The Ashlands sit far northwest of the known world &mdash; the Dwarven mountains of Birn Uluhm lie at the center-east, separated by the full breadth of the continent. Birn Uluhm sent hunters across all of it.</p>
+    </div>
+    <!-- BAKED ENTRIES: R -->
+
+    <div id="letter-S" class="letter-head">S</div>
+    <div class="entry">
+        <h2 class="entry-title">SunsReach <span class="entry-tag">Location &middot; Subtropical Port</span></h2>
+        <p>A subtropical port city known as the Gilded Port of Secrets. Currently the epicentre of a looming conflict between the Human Church, the Northern Witchhunters of Wexcross, and the Lizardman Scaled Embassy, whose bone-ships now dominate the coast.</p>
+        <ul><li><strong>High Priest Eason Lendall:</strong> Leader of the Sun Temple. His authority is theological in origin and increasingly difficult to enforce.</li><li><strong>Deacon Jamarr Wicks:</strong> Right hand to Lendall. Manages what Lendall cannot be seen managing.</li><li><strong>Thaddeus &amp; Zulrich:</strong> High Clerics managing spiritual defence. Their disagreement about methods is becoming a liability.</li><li><strong>Braslav Karpov:</strong> Witchhunter from Wexcross, hunting for daemonologists.</li></ul>
+        <h3 class="section-header">The Scaled Embassy</h3>
+        <p>The city&rsquo;s coast is dominated by Lizardman bone-ships powered by twenty massive ogre-sized reptiles. The Skink High Priest has issued an ultimatum: recover the stolen Mortek fragment or face the cleansing fire of the emerald bone-ships. The deadline has not been stated. That is deliberate.</p>
+        <div class="lore-hook"><span class="lore-hook-label">Open Hook</span>Why the Lizardmen want the Mortek fragment returned rather than destroyed has not been explained. Their ultimatum assumes the city can retrieve it. They may already know that it cannot.</div>
+    </div>
+    <!-- BAKED ENTRIES: S -->
+
+    <div class="entry">
+        <h2 class="entry-title">Syl-Kares <span class="entry-tag">City · The Pale Weald</span></h2>
+
+        <p>There is a moment, when approaching Syl-Kares from below, when the toxic fog of the Pale Weald thins just enough to let you see what is above it. Most who reach that moment do not survive long enough to reflect on it. Those who do — prisoners, mostly, and the occasional scholar who bought their way into a raiding party under the mistaken impression that observation was a safe occupation — report the same thing: that the city does not look built. It looks grown. And then, a moment later, they understand that this is precisely what it is, and that the thing it grew from was not alive when the growing happened, and that this distinction is the first of many that Syl-Kares will force upon you whether you are ready for it or not.</p>
+
+        <h3 class="section-header">The Structure — A City in the Dead Canopy</h3>
+
+        <p>The dead canopy of the Pale Weald stands between sixty and ninety feet above the fog line — the toxic necrotic exhalation that pools at ground level and renders the forest floor impassable to anything that breathes in the conventional sense. The trees that support Syl-Kares are petrified to their cores, bone-grey and iron-hard, their bark the texture of ancient stone, their upper branches reaching into a sky that has not been blue above the Weald in living memory. The city is suspended within and between these branches on a lattice of compelled vine — the dead vascular systems of what was once the forest's undergrowth, coaxed by Necro-Druidic working into configurations that serve as bridge, wall, floor, and scaffold. The vines do not rot. They do not grow. They hold because they are told to hold, and the telling requires blood, and the blood is given, and this transaction has been ongoing for so long that the Blight Elves who maintain the lattice no longer think of it as a choice any more than a river thinks of flowing downhill.</p>
+
+        <p>The city occupies the canopy across an area that visitors consistently underestimate from below. What appears, through the fog, as a cluster of platforms resolves, upon ascent, into something closer to a vertical district — levels stacked within the canopy's depth, connected by the vine-lattice in ways that follow the logic of the trees rather than the logic of any conventional architecture. There are no streets in Syl-Kares in the sense that a northern city would understand the term. There are paths, and the paths go where the petrified branches allow, and the branches allow what the Necro-Druids have directed them to allow, and the directing has accumulated over generations into a city that is, in a very literal sense, an expression of its rulers' will imposed on a dead landscape that has been made to comply. The Blight Elves find nothing disturbing about this. Visitors find it difficult to explain why it disturbs them as much as it does, and the difficulty is itself a kind of answer: the city looks organic, but the organic has been overwritten, and some part of the living mind recognises this even when the conscious mind cannot articulate it.</p>
+
+        <h3 class="section-header">The Hierarchy — Three Levels, One Purpose</h3>
+
+        <p>The platforms of the upper canopy — where the light is strongest, where the petrified branches thin enough to let through the grey, diffuse illumination that passes for daylight in the Pale Weald — are the province of the Syl-Kethara, the Blood-Weavers, the practitioner caste who maintain the workings that keep Syl-Kares alive. They are not a priesthood, though outsiders make this mistake. They are engineers of a very specific and very costly kind. Their forearms are marked from wrist to elbow with the scar-record of their contributions to the lattice — each working scored into the skin in the moment of its making, the scars reading, to those who know the notation, as a precise accounting of what has been given and what the giving accomplished. The oldest among them are more scar than skin from elbow to shoulder, and some have begun the notation on their throats. They do not discuss this. It is not a matter for discussion. It is a matter of arithmetic.</p>
+
+        <p>Below the upper platforms, in the mid-canopy where the branches are thickest and the light dims to a grey-brown permanent dusk, the city proper spreads across six major platform-clusters named for the six Druids of the original pact circle. These clusters are connected by the primary vine-bridges — wide enough for eight Blight Elves to walk abreast, tensioned by workings renewed monthly, tended by the junior Syl-Kethara whose scar-records are still primarily below the elbow. The clusters house the general population of Syl-Kares: those who are not practitioners but who contribute to the city's function through the particular skills that a city suspended in a dead forest requires. Bone-wrights, who work the petrified wood into the construction materials that the vine-lattice cannot provide. Fog-readers, who interpret the movements of the necrotic exhalation below and provide the advance warning that keeps the lower platforms clear of accumulation. Binders, who manage the undead perimeter — the mummified husks maintained in their patrol patterns by the Spirit-Binding practitioners of the lower orders, serving as a defensive wall that nothing living has yet successfully crossed from the outside.</p>
+
+        <p>The lower canopy is where the air thickens. Here the fog does not reach — the Necro-Druidic workings that keep the lower vine-lattice intact also deflect the necrotic exhalation — but something of its quality persists, a heaviness that visitors attribute to humidity and Blight Elves attribute to nothing, because they have never breathed air that did not carry it. This is where the Spirit Pens are housed — the containment structures built into the largest of the lower branches, where the raiders' returns are processed and the harvest from the northern expeditions is stored and drawn upon as the workings require. The pens are not, the Blight Elves will tell you if asked, a place of cruelty. They are a place of resource management. The distinction matters to them deeply. Whether it matters to those inside the pens is a question the city does not ask.</p>
+
+        <h3 class="section-header">The Experience — What It Feels Like to Stand There</h3>
+
+        <p>To stand in Syl-Kares — if you are standing there voluntarily, which requires either extraordinary negotiation or extraordinary folly — is to experience a series of adjustments that the body makes before the mind catches up with them. The first is the silence. The Pale Weald does not carry sound the way living forests do: no wind through leaves that no longer exist, no birdsong, no rustle of undergrowth that has long since gone to bone. The sounds of the city itself travel through the petrified wood in a way they would not travel through living timber — conversations on the far side of a platform arrive with a clarity that feels like eavesdropping even when no concealment was intended. The second adjustment is the light, or rather the quality of what passes for it: the grey-brown illumination that filters through dead branches and necrotic air, casting shadows that are somehow more present than the surfaces that cast them. The third is the smell — not decay, because the Blight does not rot what it desiccates, but something drier than absence: the smell of things that have had their moisture removed at a fundamental level, a smell that the body responds to with a thirst that drinking does not fully resolve.</p>
+
+        <p>And then, if you are still standing there — if you have adjusted to the silence and the light and the smell — you begin to notice the Blight Elves themselves. They move through their city with the ease of long habitation, which is unremarkable. What is remarkable is the stillness in them. The Elves of the northern continent move with the deliberateness of a people for whom time is abundant — but it is a deliberateness that contains, if you know how to look, the potential for urgency, the sense that the slowness is chosen. The Blight Elves move with a different stillness. It is the stillness of people who have made a permanent accounting of what existence costs and found it acceptable and closed the book. They are not at peace — peace implies the resolution of something that was once in tension. They are at settlement. Every motion, every transaction, every conversation carries the quality of something that has been exactly priced and is being paid at the agreed rate. It is, visitors report, one of the most unsettling things they have ever witnessed. It is also, they admit when pressed, one of the most coherent.</p>
+
+        <h3 class="section-header">Governance — The Arch-Weaver & The First Knot</h3>
+
+        <p>Syl-Kares does not have a single ruler in the way that northern cities understand governance. It has the Syl-Kethara at the apex of its hierarchy, and within the Syl-Kethara it has the Arch-Weaver — currently a woman whose name, in the Blight Elven tongue, means something close to <em>the-one-who-holds-the-first-knot</em>, a title that refers to her position as the practitioner responsible for the founding working of the lattice, the deepest and most costly and most essential of the city's maintained spells. The Arch-Weaver does not rule by proclamation or by force. She rules by the fact that the lattice runs through her, and the lattice is the city, and without the lattice there is only the fog below and the grey sky above and the bone-hard trees going nowhere in every direction. This is understood. It has never needed to be stated.</p>
+
+        <h3 class="section-header">The Grand Design — What the City Wants</h3>
+
+        <p>What Syl-Kares wants — what it has always wanted, with the focused patience of a city that has survived by becoming part of the thing that was killing it — is the Wall. Not to breach it. Not to destroy it. To make it irrelevant. The raids are not an end. They are an interim measure, a way of maintaining the arithmetic while the real work continues: the slow, blood-fed extension of Necro-Druidic influence northward through the root systems, the patient Spirit-Binding of undead farther north than any Blight Elf has yet walked in the flesh, the gradual mapping of a path through the Blight to the Wall's foundations. When the Wall comes down — and the Syl-Kethara speak of this not as <em>if</em>, but as <em>when</em>, in the tone of people describing a sum that is simply not yet complete — Syl-Kares will not invade the north. It will extend. The Pale Weald will extend. The arithmetic will extend. And the debt, which has been accumulating interest for generations, will be settled in full.</p>
+
+        <div class="lore-hook">
+            <span class="lore-hook-label">Open Hook — The Arch-Weaver's Unrecorded Scars</span>
+            She holds the first knot — the founding working of the entire lattice. Scars mark her arms that do not follow the standard notation. What she knows about what was contacted in the last living grove, she has not shared with the full Syl-Kethara. There are things the city's founder recorded only in her own skin, in a script no one else was taught to read.
+        </div>
+        <div class="lore-hook">
+            <span class="lore-hook-label">Open Hook — The Living Root Beneath the Blight</span>
+            The root systems of the Pale Weald connect to networks that predate the Verdant Empire. Below the petrification, below the Blight's reach, something is still alive down there — something old enough that the Blight has not yet learned to name it. The Arch-Weaver knows. She has not decided yet what to do about it.
+        </div>
+    </div>
+
+
+    <div id="letter-T" class="letter-head">T</div>
+    <div class="entry">
+        <h2 class="entry-title">The Terra-Titan <span class="entry-tag">Ancient Entity &middot; Petrified</span></h2>
+        <p>Something of a scale that reframes what the word <em>ancient</em> means lies beneath the Dwarven mountains. The Birn built their city in its ribcage. Varkhas has plugged himself into its nervous system. The heart still pulses &mdash; geologically slow, thick, deep &mdash; in a rhythm that has no name in any language currently spoken. Whether this constitutes life is a question no one in Birn Uluhm asks aloud, because the answer might change what they believe they are doing.</p>
+        <div class="lore-hook"><span class="lore-hook-label">Lore Seed &mdash; Unexpanded</span>What was the Terra-Titan? How did it die? What does its petrified body mean for everything built above it? And what would it do if Varkhas succeeds in waking it?</div>
+    </div>
+    <!-- BAKED ENTRIES: T -->
+
+    <div id="letter-V" class="letter-head">V</div>
+    <div class="entry">
+        <h2 class="entry-title">Verath <span class="entry-tag">Elemental Phenomenon &middot; Pyreborn</span></h2>
+        <p>Within every Pyreborn accumulates <em>verath</em> &mdash; elemental residue refined by centuries of heat until it crystallises outward as gemstones. It is not magic as the schools understand it. It cannot be drawn through formula or petition. Varkhas of Birn Uluhm believes verath is structurally identical to the energy in the Terra-Titan&rsquo;s petrified nervous system &mdash; meaning the Pyreborn are a living echo of the Titan, carrying in each gem a fragment of what it was before it died.</p>
+    </div>
+    <div class="entry">
+        <h2 class="entry-title">Vulkan-Kahn <span class="entry-tag">Ancient Guardians &middot; Pyreborn Kin</span></h2>
+        <p>The ancient protectors of the Pyreborn &mdash; and perhaps something more than protectors, in the way that the oldest relationships defy the categories applied to them later. They walk upright and carry themselves with the deliberate weight of things that have chosen to be present. In their Ancestral Form they revert to four-legged apex predators. How old the Vulkan-Kahn are, and whether they predate the Pyreborn or arose alongside them, is not a question the Pyreborn answer readily.</p>
+    </div>
+    <!-- BAKED ENTRIES: V -->
+
+    
+
+</main>
+<a href="#" class="btn-top">&#8593; Top</a>
+</body>
+</html>
