@@ -1,357 +1,744 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Path of the Unknown - Tome of Lore</title>
-    <style>
-        :root { 
-            --iron: #02070e;
-            --blood: #A81818;
-            --parchment: #f3e7c9;
-            --gold: #B8860B;
-            --ink: #111111;
-            --white: #FCF7EB;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1100">
+<title>Path of the Unknown — Tome of Lore</title>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;700&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --iron: #02070e;
+    --blood: #A81818;
+    --blood-dim: rgba(168,24,24,0.10);
+    --parchment: #f3e7c9;
+    --parchment-deep: #e8d6a0;
+    --gold: #B8860B;
+    --gold-dim: rgba(184,134,11,0.13);
+    --gold-line: rgba(184,134,11,0.35);
+    --ink: #111111;
+    --ink-soft: #362a18;
+    --muted: #6b5c40;
+    --entry-bg: #faf4e1;
+    --font-heading: 'Grenze Gotisch', serif;
+    --font-sub: 'Cinzel', serif;
+    --font-main: 'IM Fell English', serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            background: #121215; 
-            color: var(--parchment);
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 40px;
-            margin: 0;
-        }
+body {
+    background: #0e0b07;
+    background-image: repeating-linear-gradient(0deg,transparent,transparent 44px,rgba(184,134,11,0.018) 44px,rgba(184,134,11,0.018) 45px);
+    font-family: var(--font-main);
+    color: var(--ink);
+    padding: 30px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    min-height: 100vh;
+}
 
-        /* --- NAVIGATION --- */
-        .hub-controls {
-            margin-bottom: 30px;
-            display: flex;
-            gap: 15px;
-            width: 100%;
-            max-width: 1000px;
-            justify-content: flex-start;
-        }
+/* ── NAV ── */
+.top-nav {
+    width: 1060px;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn-nav {
+    background: var(--iron);
+    color: var(--gold);
+    border: 2px solid var(--iron);
+    border-bottom: 4px solid var(--blood);
+    padding: 9px 20px;
+    font-family: var(--font-sub);
+    font-size: 0.68em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.18s;
+    display: inline-block;
+}
+.btn-nav:hover { background: var(--blood); color: var(--parchment); border-color: var(--blood); }
+.btn-scribe {
+    background: var(--gold);
+    color: var(--iron);
+    border: 2px solid var(--gold);
+    border-bottom: 4px solid var(--iron);
+    padding: 9px 20px;
+    font-family: var(--font-sub);
+    font-size: 0.68em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.18s;
+    display: inline-block;
+    font-weight: 600;
+}
+.btn-scribe:hover { background: var(--parchment); }
 
-        .btn-vault {
-            background: var(--ink);
-            color: var(--gold);
-            border: 2px solid var(--iron);
-            border-bottom: 4px solid var(--blood);
-            padding: 10px 20px;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.2s;
-            text-decoration: none;
-        }
+/* ── JUMP NAV ── */
+.jump-nav {
+    width: 1060px;
+    max-width: 100%;
+    background: var(--iron);
+    border: 2px solid var(--gold);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px;
+    padding: 10px 12px;
+}
+.jump-nav a {
+    color: var(--gold);
+    text-decoration: none;
+    font-family: var(--font-sub);
+    font-size: 0.78em;
+    font-weight: 600;
+    padding: 7px 12px;
+    border: 1px solid rgba(184,134,11,0.2);
+    background: rgba(184,134,11,0.04);
+    transition: 0.15s;
+    min-width: 34px;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+.jump-nav a:hover, .jump-nav a.has-entry { background: var(--blood); color: var(--parchment); border-color: var(--blood); }
+.jump-nav a.empty { color: rgba(184,134,11,0.25); pointer-events: none; }
 
-        .btn-vault:hover {
-            background: var(--iron);
-            border-color: var(--gold);
-            color: var(--parchment);
-            transform: translateY(-2px);
-        }
+/* ── TOME ── */
+.tome {
+    width: 1060px;
+    max-width: 100%;
+    background: var(--parchment);
+    border: 8px solid var(--iron);
+    box-shadow: 0 0 0 2px var(--gold), 0 25px 70px rgba(0,0,0,0.95), inset 0 0 100px rgba(184,134,11,0.05);
+    padding: 52px 72px 64px;
+    position: relative;
+}
+.tome::before, .tome::after {
+    content: '✦';
+    position: absolute;
+    font-size: 20px;
+    color: var(--gold);
+}
+.tome::before { top: 12px; left: 16px; }
+.tome::after  { top: 12px; right: 16px; }
 
-        /* --- THE LEXICON SCROLL --- */
-        .tome-container {
-            background: var(--parchment);
-            color: var(--ink);
-            padding: 60px 80px;
-            border-radius: 8px;
-            border: 4px solid var(--iron);
-            border-top: 8px solid var(--blood);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 0 60px rgba(184, 134, 11, 0.15);
-            max-width: 1000px;
-            width: 100%;
-            box-sizing: border-box;
-        }
+/* masthead */
+.tome-masthead {
+    text-align: center;
+    border-bottom: 3px double var(--gold);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+}
+.tome-eyebrow {
+    font-family: var(--font-sub);
+    font-size: 0.65em;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+.tome-title {
+    font-family: var(--font-heading);
+    font-size: 3em;
+    color: var(--iron);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.1;
+    margin-bottom: 6px;
+}
+.tome-sub {
+    font-family: var(--font-sub);
+    font-size: 0.7em;
+    letter-spacing: 3px;
+    color: var(--blood);
+    text-transform: uppercase;
+}
+.tome-rule {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+}
+.tome-rule span { flex: 1; height: 1px; background: var(--gold-line); }
 
-        /* --- TYPOGRAPHY --- */
-        .lexicon-letter {
-            font-size: 48pt;
-            color: var(--iron);
-            border-bottom: 4px solid var(--gold);
-            margin-top: 60px;
-            margin-bottom: 20px;
-            font-weight: 900;
-            line-height: 1;
-        }
+/* letter dividers */
+.letter-head {
+    font-family: var(--font-heading);
+    font-size: 3.2em;
+    color: var(--iron);
+    border-bottom: 4px solid var(--gold);
+    margin-top: 60px;
+    margin-bottom: 24px;
+    line-height: 1;
+    padding-bottom: 4px;
+    scroll-margin-top: 20px;
+}
+.letter-head:first-of-type { margin-top: 0; }
 
-        .lexicon-letter:first-child { margin-top: 0; }
+/* entries */
+.entry { margin-bottom: 44px; }
+.entry-title {
+    font-family: var(--font-heading);
+    font-size: 1.9em;
+    color: var(--blood);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    margin-top: 36px;
+    border-left: 6px solid var(--blood);
+    padding-left: 14px;
+    line-height: 1.2;
+}
+.entry-title:first-of-type { margin-top: 0; }
+.entry-tag {
+    display: inline-block;
+    font-family: var(--font-sub);
+    font-size: 0.58em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--gold-line);
+    padding: 1px 9px;
+    margin-left: 10px;
+    vertical-align: middle;
+    background: var(--gold-dim);
+    position: relative;
+    top: -3px;
+}
 
-        h1.entry-title {
-            font-size: 24pt;
-            color: var(--blood);
-            text-transform: uppercase;
-            margin-top: 40px;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-        }
+.section-header {
+    font-family: var(--font-sub);
+    font-size: 0.88em;
+    letter-spacing: 1px;
+    color: var(--iron);
+    border-bottom: 1px dashed var(--blood);
+    padding-bottom: 4px;
+    margin-top: 22px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.sub-header {
+    font-family: var(--font-sub);
+    font-size: 0.76em;
+    letter-spacing: 0.5px;
+    color: var(--blood);
+    margin-top: 14px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
 
-        h2.section-header {
-            font-size: 16pt;
-            color: var(--iron);
-            border-bottom: 1px dashed var(--blood);
-            padding-bottom: 5px;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
+p {
+    font-size: 1em;
+    line-height: 1.75;
+    margin-bottom: 14px;
+    color: var(--ink-soft);
+    text-align: justify;
+}
+ul { margin: 6px 0 16px 22px; }
+li { font-size: 0.97em; line-height: 1.6; margin-bottom: 8px; color: var(--ink-soft); }
+li strong { color: var(--iron); }
 
-        h3.sub-header {
-            font-size: 13pt;
-            color: var(--blood);
-            margin-top: 15px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
+/* callout / manifesto */
+.callout {
+    background: var(--blood-dim);
+    border-left: 5px solid var(--blood);
+    padding: 16px 20px;
+    font-style: italic;
+    margin: 18px 0;
+    color: var(--ink-soft);
+    font-size: 0.97em;
+    line-height: 1.7;
+}
+.callout cite {
+    display: block;
+    margin-top: 10px;
+    font-style: normal;
+    font-family: var(--font-sub);
+    font-size: 0.75em;
+    letter-spacing: 1px;
+    color: var(--muted);
+}
 
-        p {
-            font-size: 12pt;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            text-align: justify;
-        }
+/* lore hook */
+.lore-hook {
+    background: var(--gold-dim);
+    border-left: 5px solid var(--gold);
+    padding: 13px 16px;
+    margin: 16px 0;
+    font-size: 0.9em;
+    line-height: 1.65;
+    color: var(--ink-soft);
+}
+.lore-hook-label {
+    font-family: var(--font-sub);
+    font-size: 0.65em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 5px;
+    font-style: normal;
+}
 
-        ul { margin-top: 5px; margin-bottom: 20px; padding-left: 20px; }
-        li { font-size: 12pt; line-height: 1.5; margin-bottom: 8px; }
+/* triumvirate cards */
+.triumvirate {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 14px;
+    margin: 18px 0;
+}
+.t-card {
+    background: var(--iron);
+    padding: 16px;
+    border-bottom: 4px solid;
+}
+.t-card.warden   { border-color: #5F5E5A; }
+.t-card.engineer { border-color: #534AB7; }
+.t-card.warlord  { border-color: var(--blood); }
+.t-role   { font-family: var(--font-sub); font-size: 0.55em; letter-spacing: 2px; text-transform: uppercase; color: rgba(184,134,11,0.55); margin-bottom: 3px; }
+.t-name   { font-family: var(--font-heading); font-size: 1.15em; color: var(--gold); text-transform: uppercase; }
+.t-epithet{ font-size: 0.78em; color: rgba(243,231,201,0.5); font-style: italic; margin-bottom: 8px; font-family: var(--font-main); }
+.t-body   { font-size: 0.82em; color: rgba(243,231,201,0.78); line-height: 1.55; font-family: var(--font-main); }
+.t-hook   { font-size: 0.76em; color: #e8a0a0; font-style: italic; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(168,24,24,0.3); line-height: 1.4; font-family: var(--font-main); }
 
-        .callout {
-            background: rgba(168, 24, 24, 0.1);
-            border-left: 4px solid var(--blood);
-            padding: 15px;
-            font-style: italic;
-            margin: 20px 0;
-            color: var(--ink);
-        }  
+/* rune divider */
+.rune-div {
+    text-align: center;
+    margin: 28px 0 20px;
+    color: var(--gold-line);
+    letter-spacing: 10px;
+    font-family: var(--font-sub);
+    font-size: 0.7em;
+}
 
-        /* --- JUMP ALPHABET --- */
-        .jump-nav {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            background: var(--ink);
-            padding: 15px;
-            border: 2px solid var(--gold);
-            margin-bottom: 40px;
-            width: 100%;
-            max-width: 1000px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
-        }
+/* scribed entries (from localStorage) */
+.scribed-entry {
+    border-top: 2px dashed var(--gold-line);
+    margin-top: 30px;
+    padding-top: 20px;
+}
+.scribed-badge {
+    font-family: var(--font-sub);
+    font-size: 0.58em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-line);
+    padding: 1px 8px;
+    margin-left: 10px;
+    vertical-align: middle;
+    position: relative;
+    top: -3px;
+}
 
-        .jump-nav a {
-            color: var(--parchment);
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: bold;
-            padding: 10px 14px;
-            border: 1px solid var(--iron);
-            background: #1a1a1a;
-            transition: all 0.2s ease;
-            text-align: center;
-            min-width: 25px;
-        }
+/* back to top */
+.btn-top {
+    position: fixed;
+    bottom: 36px;
+    right: 36px;
+    background: var(--iron);
+    color: var(--gold);
+    border: 2px solid var(--iron);
+    border-bottom: 4px solid var(--blood);
+    padding: 11px 16px;
+    font-family: var(--font-sub);
+    font-size: 0.65em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.18s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    z-index: 100;
+}
+.btn-top:hover { background: var(--blood); color: var(--parchment); }
 
-        .jump-nav a:hover, .jump-nav a:active {
-            background: var(--blood);
-            color: var(--white);
-            border-color: var(--blood);
-        }
-
-        /* --- BACK TO TOP BUTTON --- */
-        .btn-top {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            background: var(--ink);
-            color: var(--gold);
-            border: 2px solid var(--iron);
-            border-bottom: 4px solid var(--blood);
-            padding: 12px 18px;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            font-size: 14pt;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.2s;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-        }
-
-        .btn-top:hover {
-            background: var(--iron);
-            border-color: var(--gold);
-            color: var(--parchment);
-            transform: translateY(-2px);
-        }
-
-    </style>
+/* notification toast */
+#toast {
+    position: fixed;
+    bottom: 90px;
+    right: 36px;
+    background: var(--iron);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 10px 18px;
+    font-family: var(--font-sub);
+    font-size: 0.65em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 200;
+    pointer-events: none;
+}
+#toast.show { opacity: 1; }
+</style>
 </head>
 <body>
 
-    <div class="hub-controls">
-        <a href="index.html" class="btn-vault">⬅ Return to Gateway</a>
+<div class="top-nav">
+    <a href="index.html" class="btn-nav">⬅ Return to Gateway</a>
+    <a href="lore-scribe.html" class="btn-scribe">✦ Open Lore Scribe</a>
+</div>
+
+<nav class="jump-nav" id="jumpNav">
+    <a href="#letter-A" id="jA">A</a><a href="#letter-B" id="jB">B</a>
+    <a href="#letter-C" id="jC">C</a><a href="#letter-D" id="jD" class="empty">D</a>
+    <a href="#letter-E" id="jE" class="empty">E</a><a href="#letter-F" id="jF" class="empty">F</a>
+    <a href="#letter-G" id="jG" class="empty">G</a><a href="#letter-H" id="jH" class="empty">H</a>
+    <a href="#letter-I" id="jI" class="empty">I</a><a href="#letter-J" id="jJ" class="empty">J</a>
+    <a href="#letter-K" id="jK">K</a><a href="#letter-L" id="jL">L</a>
+    <a href="#letter-M" id="jM" class="empty">M</a><a href="#letter-N" id="jN" class="empty">N</a>
+    <a href="#letter-O" id="jO" class="empty">O</a><a href="#letter-P" id="jP">P</a>
+    <a href="#letter-Q" id="jQ" class="empty">Q</a><a href="#letter-R" id="jR">R</a>
+    <a href="#letter-S" id="jS">S</a><a href="#letter-T" id="jT">T</a>
+    <a href="#letter-U" id="jU" class="empty">U</a><a href="#letter-V" id="jV">V</a>
+    <a href="#letter-W" id="jW" class="empty">W</a><a href="#letter-X" id="jX" class="empty">X</a>
+    <a href="#letter-Y" id="jY" class="empty">Y</a><a href="#letter-Z" id="jZ" class="empty">Z</a>
+</nav>
+
+<main class="tome" id="tomeMain">
+
+    <div class="tome-masthead">
+        <p class="tome-eyebrow">Path of the Unknown</p>
+        <h1 class="tome-title">Tome of Lore</h1>
+        <p class="tome-sub">A Lexicon of the Known & Half-Known World</p>
+        <div class="tome-rule"><span></span><span style="color:var(--gold);font-size:14px;">✦</span><span style="color:var(--gold);font-size:14px;">✦</span><span style="color:var(--gold);font-size:14px;">✦</span><span></span></div>
     </div>
 
-    <nav class="jump-nav">
-            <a href="#letter-A">A</a>
-            <a href="#letter-B">B</a>
-            <a href="#letter-C">C</a>
-            <a href="#letter-D">D</a>
-            <a href="#letter-E">E</a>
-            <a href="#letter-F">F</a>
-            <a href="#letter-G">G</a>
-            <a href="#letter-H">H</a>
-            <a href="#letter-I">I</a>
-            <a href="#letter-J">J</a>
-            <a href="#letter-K">K</a>
-            <a href="#letter-L">L</a>
-            <a href="#letter-M">M</a>
-            <a href="#letter-N">N</a>
-            <a href="#letter-O">O</a>
-            <a href="#letter-P">P</a>
-            <a href="#letter-Q">Q</a>
-            <a href="#letter-R">R</a>
-            <a href="#letter-S">S</a>
-            <a href="#letter-T">T</a>
-            <a href="#letter-U">U</a>
-            <a href="#letter-V">V</a>
-            <a href="#letter-W">W</a>
-            <a href="#letter-X">X</a>
-            <a href="#letter-Y">Y</a>
-            <a href="#letter-Z">Z</a>
-        </nav>
+    <!-- ═══════════════════ A ═══════════════════ -->
+    <div id="letter-A" class="letter-head">A</div>
 
-    <div class="tome-container">
-        
-        <div id="letter-A" class="lexicon-letter">A</div>
-        
-        <h1 class="entry-title">The Aakzad (Mortek)</h1>
-        <p>The Aakzad are a biomechanical alien intelligence from the dark tapestry of the cosmos that invaded the world during the First Age. They are characterized by skeletal frames fused with obsidian-like armor and eyes that burn with a sickly green necrotic light. They do not seek conquest for land, but rather for the harvest of life-frequency to sustain their eternal, cold existence.</p>
+    <div class="entry">
+        <h2 class="entry-title">The Aakzad <span class="entry-tag">Mortek · Ancient Threat</span></h2>
+        <p>The Aakzad are a biomechanical alien intelligence from the dark tapestry of the cosmos that invaded the world during the First Age. They are characterised by skeletal frames fused with obsidian-like armour and eyes that burn with a sickly green necrotic light. They do not seek conquest for land or dominion — they seek the harvest of life-frequency to sustain their eternal, cold existence. Where they walk, the living are not killed so much as emptied.</p>
 
-        <h2 class="section-header">The Labyrinth of Whispers</h2>
-        <p>Following their defeat by the Ancient Alliance, the surviving Aakzad were entombed in a spatial-bending prison. This labyrinth consists of pentagon-shaped chambers and twisting tunnels designed to overwhelm their logical, alien minds. Over centuries, their physical forms degraded into husks, but their psychic presence grew into a "hissing" telepathic pull that targets the weak-willed.</p>
+        <h3 class="section-header">The Labyrinth of Whispers</h3>
+        <p>Following their defeat by the Ancient Alliance, the surviving Aakzad were entombed in a spatial-bending prison — a labyrinth of pentagon-shaped chambers and twisting tunnels designed to overwhelm their logical, alien minds. Over centuries, their physical forms degraded into husks. Their psychic presence, however, did not diminish. It grew: a hissing telepathic pull that targets the weak-willed, drawing the susceptible toward the sealed labyrinth in dreams they cannot explain and do not remember when they wake.</p>
 
         <h3 class="sub-header">The Death Priest & The Relic</h3>
-        <p>The Aakzad were led by the Death Priest, the "Architect of Bone-Frequency," who wielded a cosmic artifact of unfathomable power. This artifact was shattered into Three Pieces during the Great Victory. The largest piece was recently stolen from a tomb in SunsReach by the groundskeeper Amako "Kazamas" Pikari, an act that has triggered the Aakzad's mass awakening.</p>
+        <p>The Aakzad were led by the Death Priest — the Architect of Bone-Frequency — who wielded a cosmic artifact of unfathomable power. This artifact was shattered into three pieces during the Great Victory. The largest piece was recently stolen from a tomb in SunsReach by the groundskeeper Amako "Kazamas" Pikari. That single act has triggered the Aakzad's mass awakening. The hissing grows louder. The husks stir.</p>
 
-        <div id="letter-B" class="lexicon-letter">B</div>
-
-        <h1 class="entry-title">Birn Uluhm (The Iron Roots)</h1>
-        <p>Birn Uluhm is a massive subterranean industrial complex carved into the parched, blood-red earth of the Dwarven mountains. It is ruled by the Birn clan—dwarves who have abandoned the tradition of the forge for the dark corruption found at the "roots" of the world.</p>
-
-        <h2 class="section-header">The Geothermal Forge</h2>
-        <p>The heart of the operation is a colossal circular chamber powered by intense geothermal vents. Veins of flowing magma crisscross the cavern, where dozens of captives labor under the cruel watch of six Birn dwarven slavers. Workers use massive iron ladders to descend into the abyss, harvesting raw mithril directly from white-hot currents.</p>
-
-        <h3 class="sub-header">The Titan's Blood</h3>
-        <p>The "roots" of the mountain are infused with a corrupting, oily essence believed to be the blood of an ancient, forgotten titan. The Birn dwarves use this essence to forge "Soul-Binding Spikes" and perform rituals of Lithomancy to animate the living rock<a href="DM-Grimoire1.html" style="color: inherit; text-decoration: none; cursor: default;">.</a></p>
-           
-        <h2 class="section-header">The Fall of Kel Thurum (Overseer's Records)</h2>
-        <p>Documents recovered from the clinical, ink-stained drafting tables of the Overseer’s Forge detail the tragic origin of the Birn Clan. Long before the geothermal forges roared, they were the most ambitious mining caste within the grand dwarven empire of Kel Thurum, celebrated as the fearless "Deep-Delvers."</p>
-
-        <div class="callout">
-            "They celebrated us when we bled the stone for their shiny trinkets, but recoiled when we found the mountain's true pulse. We pierced the black slate and found the suspended, petrified heart of the Terra-Titan. Its marrow ran hot. Its oily blood fueled our forges. Kel Thurum sealed us in the dark for our 'crimes', but they only locked themselves out of the future." 
-            <br><br>— Translated from a Birn Overseer's Manifesto
+        <div class="lore-hook">
+            <span class="lore-hook-label">Open Hook</span>
+            The Mortek fragment stolen from SunsReach is the largest of three pieces. The other two remain unaccounted for. Whether Kazamas acted alone or was pulled to the tomb by the Death Priest's psychic reach is a question no one has yet asked in the right room.
         </div>
-        
-        <h3 class="sub-header">The Deep-Rot & The Severing</h3>
-        <p>Prolonged exposure to the Titan-Blood and deep geothermal fumes inflicted a creeping, industrial corruption upon the clan. Their skin took on an ashen, slate-grey pallor, and their minds warped toward fanatical industry and soul-binding rituals. Disgusted by these atrocities, the High King of Kel Thurum sealed the deep gates, severing the Birn from their kin forever.</p>
-        
-        <p>In their exile, the clan did not perish. They constructed the massive, vertical metropolis of Birn Uluhm directly into the titan's skeletal ribcage. Now, fueled by endless captive souls and the beating of the petrified heart, the rot is spreading upward, preparing to drag the pristine upper halls of Kel Thurum down into the abyss.</p>
-
-        <h3 class="sub-header">The Triumvirate of the Abyss</h3>
-        <p>The city of Birn Uluhm operates under a rigid, terrifying hierarchy. The forces expanding upward into the mountain are managed by a regional commander, while the true power remains entrenched in the city below.</p>
-        
-        <ul>
-            <li><strong>Thrunn, The Iron Root (Warden of the Expansion):</strong> An Elite Champion and the brutal supervisor of the upper extraction sites. Thrunn executes the will of the deep city, securing the mithril and captive labor necessary for their grand design.</li>
-            <li><strong>High Machinist Varkhas (The Grand Engineer):</strong> The twisted architectural genius who designed the vertical metropolis within the Titan's ribs. Plugged directly into the petrified heart's dormant nervous system, Varkhas oversees the lithomancy networks and dreams of fully resurrecting the Terra-Titan as a weapon of war.</li>
-            <li><strong>Warlord Korvax the Soul-Breaker (Supreme Commander):</strong> The absolute military authority of the Birn Clan. Ruling from an iron citadel in the deep city, Korvax commands the Elite Garrisons and is aggressively building a soul-bound army to march upward and slaughter the surface clans of Kel Thurum.</li>
-        </ul>
-
-        <div id="letter-C" class="lexicon-letter">C</div>
-
-        <h1 class="entry-title">The Chromatic Weald</h1>
-        <p>The Weald is a biome of violent beauty born from the "Great Prismatic Event," where celestial light, moon crystals, and primordial energy merged. The environment is defined by its atmospheric Haze, which shifts between Magenta (Peace), Electric Green (Paranoia), and Prismatic (Mana Storms).</p>
-
-        <h2 class="section-header">The Mycelian Veil</h2>
-        <p>The Veil-folk are a collective fungal consciousness that communicate through low-frequency vibrations known as "The Hum". Their primary trait is "Spore-Memory," the ability to download the thoughts and history of any traveler they touch. They act as the keepers of the forest’s history, viewing all living things as temporary expressions of the soil.</p>
-
-        <div id="letter-K" class="lexicon-letter">K</div>
-
-        <h1 class="entry-title">Kel Thurum</h1>
-        <p>The grand dwarven empire of the upper mountains. Though they severed the Birn Clan and sealed the deep gates centuries ago, the High Kings of Kel Thurum have never forgotten the terror of the Deep-Rot. Far from resting on their legacy, the empire has expanded outward and upward, transforming into a highly militarized coalition of specialized mountain cities dedicated to ensuring the horrors of Birn Uluhm never reach the surface.</p>
-
-        <h2 class="section-header">The Expanded Empire</h2>
-        <p>To sustain their perpetual vigilance against the deep, Kel Thurum has decentralized its power into several highly specialized strongholds:</p>
-        <ul>
-            <li><strong>Kol Boldohr:</strong> A shining, high-altitude mountain city renowned for its unmatched gem-cutting and precious metal mining. It serves as the economic heart of the empire, funding the massive military expenditures required to maintain the watch.</li>
-            <li><strong>Tharum Dorn:</strong> The seat of the RuneMasters. This arcane stronghold is where Kel Thurum's brightest minds weave powerful runic magic into armor, weaponry, and architecture. Their runecraft is the empire's pure, disciplined answer to the twisted lithomancy and soul-binding of the Birn Clan.</li>
-            <li><strong>Kherdarum:</strong> The great surface-level ore mines. A sprawling, tireless industrial complex that provides the staggering volume of iron and steel necessary to arm the empire's legions and reinforce its massive fortifications.</li>
-        </ul>
-
-        <h3 class="sub-header">Theldur (The Sentinel City)</h3>
-        <p>Constructed directly over the primary sealed gates leading down to Birn Uluhm, Theldur is an architectural marvel of war. It is a colossal, heavily fortified siege tower functioning as an autonomous military city. Standing over 250 feet tall and spanning an imposing 300 feet in width, the structure is the ultimate plug in the mountain's throat.
-           Manned by a standing garrison of thousands of Kel Thurum's most elite warriors, Theldur's ballista-lined walls and runic barriers ensure that if Korvax the Soul-Breaker ever marches his army upward, they will face an impenetrable fortress designed for absolute slaughter.</p>
-        <h4 class="sub-header">The Rune-Sworn Aegis</h4>
-        <p>The elite guard stationed at the lowest levels of Theldur, standing a ceaseless vigil directly before the sealed deep gates. These massive dwarves are encased in interlocking layers of runic plate armor designed specifically by Tharum Dorn to ground and nullify the Birn Clan's twisted lithomancy. Wielding colossal tower shields and thermal-venting hammers, the Aegis are not just soldiers; they are the living, breathing foundation of the wall itself.
-           They stand in perpetual readiness, sworn never to yield a single inch of upper stone to the Deep-Rot.</p>
-        
-           <h1 class="entry-title">Khugron (The Mountain Maw)</h1>
-        <p>The entrance to the Dwarven mountains, Khugron, has been warped into a gargantuan stone maw with jagged, tooth-like protrusions. It serves as the heavily fortified gateway to the Birn territories.</p>
-
-        <h2 class="section-header">The Corridor of Treachery</h2>
-        <p>A long, narrow hallway featuring two trap floors designed to dump intruders 30 feet into lightless jail cells known as the Oubliette. The corridor is lined with arrow slits used by hobgoblin guards to fire upon survivors of the trap. The Oubliette contains iron cages suspended by chains, reachable only by a hoist system outside the cells.</p>
-
-        <h2 class="section-header">The Great Lift</h2>
-        <p>A vertical shaft connecting the three levels of the fortress. The lift is used for heavy cargo, including ore and Mithril, and is powered by a captive Earth Elemental shackled into service.</p>
-
-        <div id="letter-L" class="lexicon-letter">L</div>
-
-        <h1 class="entry-title">Lithomancy</h1>
-        <p>Lithomancy is the art of manipulating stone through cursed arcane frequencies. In Birn Uluhm, this is practiced in the "Great Hub," a circular nexus containing a Lithomancy Circle of glowing blue runes. This circle is used to repair and control the Earth Elementals that serve as the fortress's guardians and laborers.</p>
-
-        <h2 class="section-header">Juggernauts of Birn</h2>
-        <p>These are Earth Elementals whose consciousness has been forcibly pulled into physical form. They are "caged" within heavy armor plates bolted directly into their rocky hides, serving as living battering rams for the Birn armies.</p>
-
-        <div id="letter-L" class="lexicon-letter">P</div>
-
-        <h1 class="entry-title">The Pyreborn</h1>
-        <p>The Pyreborn are a resilient race of humans forged by the harsh volcanic environment of the Rysahm Ashlands. Physically imposing and attuned to geothermal energy, they construct Cities of Brass that serve as conduits for the world's elemental power. Their culture is defined by "Spell-Binding," the innate ability to draw magic directly from the heat and earth of their home.</p>
-
-        <div id="letter-S" class="lexicon-letter">S</div>
-
-        <h1 class="entry-title">SunsReach</h1>
-        <p>A subtropical port city known as the "Gilded Port of Secrets". It is currently the epicenter of a looming war between the Human Church, the Northern Witchhunters, and the Lizardman Scaled Embassy.</p>
-
-        <h2 class="section-header">Leadership & Conflict</h2>
-        <ul>
-            <li><strong>High Priest Eason Lendall:</strong> Current leader of the Sun Temple.</li>
-            <li><strong>Deacon Jamarr Wicks:</strong> Lead Deacon and right hand to Lendall.</li>
-            <li><strong>Thaddeus & Zulrich:</strong> High Clerics managing the spiritual defense of the city.</li>
-            <li><strong>Braslav Karpov:</strong> A Witchhunter from the Northern Empire (Wexcross) hunting for daemonologists.</li>
-        </ul>
-
-        <h2 class="section-header">The Scaled Embassy</h2>
-        <p>The city's coast is currently dominated by Lizardman bone-ships. These vessels are powered by 20 massive, ogre-sized reptiles rowing in rhythmic patterns. The Skink High Priest of the Embassy has issued an ultimatum: recover the stolen Mortek fragment or face the cleansing fire of the emerald bone-ships.</p>
-
-        <div id="letter-V" class="lexicon-letter">V</div>
-
-        <h1 class="entry-title">Vulkan-Kahn</h1>
-        <p>The god-like protectors of the Pyreborn people. These giant, majestic tigers walk upright and possess immense magical power. In their "Ancestral Form," they revert to four-legged apex predators capable of devastating feral attacks.</p>
-
-        <div id="letter-W" class="lexicon-letter">W</div>
-        <div id="letter-X" class="lexicon-letter">X</div>
-        <div id="letter-Y" class="lexicon-letter">Y</div>
-        <div id="letter-Z" class="lexicon-letter">Z</div>
     </div>
 
-    <a href="#" class="btn-top">↑ Top</a>
+    <!-- ═══════════════════ B ═══════════════════ -->
+    <div id="letter-B" class="letter-head">B</div>
 
+    <div class="entry">
+        <h2 class="entry-title">Birn Uluhm <span class="entry-tag">The Iron Roots · Dwarven Faction</span></h2>
+        <p>Birn Uluhm did not begin as a city. It began as a wound. The vertical metropolis of Birn Uluhm now occupies the skeletal ribcage of the Terra-Titan itself — a colossal, petrified entity of a scale that reframes what the word <em>ancient</em> means. It is carved into the parched, blood-red earth of the deep Dwarven mountains, powered by geothermal fury, and ruled by a clan that has not been fully alive for a very long time.</p>
+
+        <h3 class="section-header">The Fall of Kel Thurum — Overseer's Records</h3>
+        <p>Documents recovered from the clinical, ink-stained drafting tables of the Overseer's Forge detail the origin of the Birn Clan. Long before the geothermal forges roared, they were the most ambitious mining caste within the grand dwarven empire of Kel Thurum — celebrated as the fearless Deep-Delvers, the hands that reached where no other hands would go. They pierced a seam of black slate at a depth no instrument had charted and found a heartbeat. Slow. Thick. Geological. The oily dark marrow that wept from it stained their tools and their hands and, in time, their minds.</p>
+
+        <div class="callout">
+            "They celebrated us when we bled the stone for their shiny trinkets, but recoiled when we found the mountain's true pulse. We pierced the black slate and found the suspended, petrified heart of the Terra-Titan. Its marrow ran hot. Its oily blood fueled our forges. Kel Thurum sealed us in the dark for our 'crimes', but they only locked themselves out of the future."
+            <cite>— Translated from a Birn Overseer's Manifesto</cite>
+        </div>
+
+        <h3 class="sub-header">The Deep-Rot & The Severing</h3>
+        <p>Prolonged exposure to Titan-Blood and deep geothermal fumes inflicted a creeping industrial corruption upon the clan. Their skin took on an ashen, slate-grey pallor. Their minds warped toward fanatical industry and soul-binding ritual. Disgusted by these atrocities, the High King of Kel Thurum sealed the deep gates, severing the Birn from their kin forever. In their exile, the clan did not perish. They built downward — directly into the Titan's skeletal ribcage — and have been building ever since.</p>
+
+        <h3 class="section-header">The Geothermal Forge</h3>
+        <p>The heart of Birn Uluhm is a colossal circular chamber powered by intense geothermal vents. Veins of flowing magma crisscross the cavern floor, where dozens of captives labour under the cruel watch of six Birn dwarven slavers. Workers descend into white-hot abyss on massive iron ladders, harvesting raw mithril directly from the currents below. The Titan-Blood is used to forge Soul-Binding Spikes and conduct rituals of Lithomancy — the art of animating living rock through cursed arcane frequencies. The rot this produces is now spreading upward through the mountain's bones, deliberate and patient, preparing to drag Kel Thurum's pristine upper halls down into the dark.</p>
+
+        <h3 class="section-header">The Hunt for Verath</h3>
+        <p>The mithril seams in Birn Uluhm's own runs produce diminishing returns — not because the stone is spent, but because the Titan-Blood corrupts refinery as thoroughly as it corrupts flesh, and the forges have begun to demand a purer fuel. High Machinist Varkhas has identified <em>verath</em> — the concentrated elemental residue crystallised within the bodies of the Pyreborn — as structurally identical to the energy in the Titan's petrified nervous system. The Birn sent hunters west across half a continent, into the volcanic wastes of the Rysahm Ashlands, to take Pyreborn Elders and crack open what they carry. The distance between Birn Uluhm and the Ashlands is not a journey. It is a campaign. They sent hunters anyway.</p>
+
+        <div class="rune-div">— ✦ The Triumvirate of the Abyss ✦ —</div>
+        <div class="triumvirate">
+            <div class="t-card warden">
+                <div class="t-role">Warden of the Expansion</div>
+                <div class="t-name">Thrunn</div>
+                <div class="t-epithet">The Iron Root</div>
+                <div class="t-body">Elite Champion. Brutal supervisor of the upper extraction sites. Executes the will of the deep city — securing mithril and captive labour for the grand design.</div>
+                <div class="t-hook">First to encounter the Ashen Mouth when it arrives. He executes orders. He does not make decisions. This will be a problem.</div>
+            </div>
+            <div class="t-card engineer">
+                <div class="t-role">The Grand Engineer</div>
+                <div class="t-name">Varkhas</div>
+                <div class="t-epithet">High Machinist</div>
+                <div class="t-body">Designed the vertical metropolis. Plugged directly into the Titan's dormant nervous system via copper filaments and Soul-Binding Spikes. Dreams of resurrecting the Terra-Titan as a weapon of war.</div>
+                <div class="t-hook">A living Pyreborn Elder near the petrified heart may trigger resonance no contingency exists for — because no one imagined one would come willingly.</div>
+            </div>
+            <div class="t-card warlord">
+                <div class="t-role">Supreme Commander</div>
+                <div class="t-name">Korvax</div>
+                <div class="t-epithet">The Soul-Breaker</div>
+                <div class="t-body">Absolute military authority of the Birn Clan. Rules from an iron citadel in the deep city. Building a soul-bound army to march upward and destroy the surface clans of Kel Thurum.</div>
+                <div class="t-hook">The verath harvest funds the army. If the Pyreborn close off that supply, Korvax's timeline collapses and his patience may not outlast it.</div>
+            </div>
+        </div>
+
+        <div class="lore-hook">
+            <span class="lore-hook-label">Open Hook</span>
+            The Ashen Mouth — eldest of the Pyreborn — has turned east and begun walking toward the smoke of Birn Uluhm's vents. Not in flight. In deliberate approach. No one in the deep city has planned for this.
+        </div>
+    </div>
+
+    <!-- ═══════════════════ C ═══════════════════ -->
+    <div id="letter-C" class="letter-head">C</div>
+
+    <div class="entry">
+        <h2 class="entry-title">The Chromatic Weald <span class="entry-tag">Location · Biome</span></h2>
+        <p>The Weald is a biome of violent beauty born from the Great Prismatic Event — a convergence of celestial light, moon crystals, and primordial energy that merged and never fully separated again. The environment is defined by its atmospheric Haze, which shifts between states: Magenta brings a preternatural peace so complete it becomes unsettling; Electric Green induces a creeping paranoia that makes allies look like threats; Prismatic collapses the boundary between states entirely, triggering Mana Storms that rewrite probability in the immediate area.</p>
+
+        <h3 class="section-header">The Mycelian Veil</h3>
+        <p>The Veil-folk are a collective fungal consciousness that communicates through low-frequency vibrations known as The Hum — felt in the chest before it is heard by the ears. Their primary capacity is Spore-Memory: the ability to absorb the thoughts and histories of any living thing they touch. They act as the keepers of the Weald's complete history, having recorded everything that has ever passed through it. They view all living things as temporary expressions of the soil — visitors in a place that was here before them and will endure long after.</p>
+
+        <div class="lore-hook">
+            <span class="lore-hook-label">Lore Seed</span>
+            The Mycelian Veil may hold Spore-Memories of the Great Prismatic Event itself — and anything that passed through the Weald in the age before the current one. The question is what it would cost to ask.
+        </div>
+    </div>
+
+    <!-- ═══════════════════ K ═══════════════════ -->
+    <div id="letter-K" class="letter-head">K</div>
+
+    <div class="entry">
+        <h2 class="entry-title">Kel Thurum <span class="entry-tag">Dwarven Empire · Upper Mountains</span></h2>
+        <p>The grand dwarven empire of the upper mountains. Though they severed the Birn Clan and sealed the deep gates centuries ago, the High Kings of Kel Thurum have never rested on that decision — for they have never been certain it was enough. Far from retreating into legacy, the empire has expanded outward and upward, transforming into a highly militarised coalition of specialised mountain cities, each dedicated to ensuring the horrors of Birn Uluhm never reach the surface. They are, in the truest sense, an empire built around a single fear.</p>
+
+        <h3 class="section-header">The Expanded Empire</h3>
+        <ul>
+            <li><strong>Kol Boldohr:</strong> A shining, high-altitude mountain city renowned for unmatched gem-cutting and precious metal mining. The economic heart of the empire — funding the vast military expenditure required to maintain perpetual watch over the deep.</li>
+            <li><strong>Tharum Dorn:</strong> Seat of the RuneMasters. This arcane stronghold is where Kel Thurum's brightest minds weave runic magic into armour, weaponry, and architecture. Their runecraft is the empire's pure, disciplined answer to the twisted lithomancy and soul-binding of the Birn Clan.</li>
+            <li><strong>Kherdarum:</strong> The great surface-level ore mines. A sprawling, tireless industrial complex providing the staggering volume of iron and steel necessary to arm the empire's legions and reinforce its massive fortifications.</li>
+        </ul>
+
+        <h3 class="sub-header">Theldur — The Sentinel City</h3>
+        <p>Constructed directly over the primary sealed gates leading down to Birn Uluhm, Theldur is an architectural marvel of war — a colossal, heavily fortified siege tower functioning as an autonomous military city. Standing over 250 feet tall and spanning 300 feet in width, it is the ultimate plug in the mountain's throat. Manned by a standing garrison of thousands of Kel Thurum's most elite warriors, its ballista-lined walls and runic barriers ensure that if Korvax the Soul-Breaker ever marches his army upward, they will meet something designed for their absolute destruction.</p>
+
+        <h3 class="sub-header">The Rune-Sworn Aegis</h3>
+        <p>The elite guard stationed at the lowest levels of Theldur, standing ceaseless vigil directly before the sealed deep gates. Encased in interlocking layers of runic plate armour designed by Tharum Dorn to ground and nullify Birn lithomancy, wielding colossal tower shields and thermal-venting hammers, the Aegis are not merely soldiers — they are the living, breathing foundation of the wall itself. They stand sworn never to yield a single inch of upper stone to the Deep-Rot. None of them have yet been tested. All of them know that will change.</p>
+
+        <div class="lore-hook">
+            <span class="lore-hook-label">Open Hook</span>
+            Kel Thurum does not know the Birn are harvesting Pyreborn across the continent, or that Varkhas believes verath can wake the Terra-Titan. The Rune-Sworn Aegis was designed to fight soul-bound dwarves. It was not designed for what walks out of a fully resurrected Titan.
+        </div>
+    </div>
+
+    <div class="entry">
+        <h2 class="entry-title">Khugron <span class="entry-tag">The Mountain Maw · Location</span></h2>
+        <p>The entrance to the Dwarven mountain territories, Khugron has been warped over decades of Birn lithomancy into a gargantuan stone maw — jagged, tooth-like protrusions framing an opening that suggests it could close. It serves as the heavily fortified gateway to the Birn territories, and is the last point of the upper world visible to those who enter the deep.</p>
+
+        <h3 class="section-header">The Corridor of Treachery</h3>
+        <p>A long, narrow hallway featuring two trap floors designed to dump intruders thirty feet into lightless jail cells known as the Oubliette. The corridor is lined with arrow slits used by hobgoblin guards to fire upon survivors of the trap. The Oubliette contains iron cages suspended by chains over a lower void, reachable only by a hoist system controlled from outside the cells.</p>
+
+        <h3 class="section-header">The Great Lift</h3>
+        <p>A vertical shaft connecting the three levels of the fortress. Powered by a captive Earth Elemental shackled into permanent service, the lift moves heavy cargo — ore, mithril, and the living or recently-living — between levels without rest or complaint. The Elemental has not spoken since the shackling. Whether it is incapable of speech or simply choosing silence is unknown.</p>
+    </div>
+
+    <!-- ═══════════════════ L ═══════════════════ -->
+    <div id="letter-L" class="letter-head">L</div>
+
+    <div class="entry">
+        <h2 class="entry-title">Lithomancy <span class="entry-tag">Discipline · Birn Arcana</span></h2>
+        <p>Lithomancy is the art of manipulating stone through cursed arcane frequencies — sound made into will, pressed into rock until the rock remembers a shape it was never born into. In Birn Uluhm, this is practised in the Great Hub: a circular nexus containing a Lithomancy Circle of glowing blue runes used to repair and control the Earth Elementals that serve as the fortress's guardians and labourers. It is not a clean discipline. Every casting leaves a residue — a faint wrongness in the stone that accumulates over years into something that breathes when no one is looking.</p>
+
+        <h3 class="section-header">Juggernauts of Birn</h3>
+        <p>These are Earth Elementals whose consciousness has been forcibly pulled into physical form and then imprisoned within it — caged in heavy armour plates bolted directly into their rocky hides, serving as living battering rams for the Birn armies. They do not speak. They do not stop. When the lithomancy maintaining them degrades, they do not return to stone. They simply continue, directionless, until something ends them.</p>
+    </div>
+
+    <!-- ═══════════════════ P ═══════════════════ -->
+    <div id="letter-P" class="letter-head">P</div>
+
+    <div class="entry">
+        <h2 class="entry-title">The Pyreborn <span class="entry-tag">Elemental Faction · Rysahm Ashlands</span></h2>
+        <p>They did not begin as flesh. They did not begin as thought. They began as heat — the roaring intention of flame given purchase in the world — and somewhere in that burning they became aware of themselves. What they are aware of, they have never fully elected to share. The Pyreborn are ancient. Some accounts place their origin before the current Age entirely, in the long silence that preceded the first recorded catastrophe. They have burned since before most living things learned to name fire.</p>
+
+        <h3 class="section-header">Nature & Presence</h3>
+        <p>The Pyreborn exist primarily within the volcanic wastes of the Rysahm Ashlands — a brutal expanse in the far northwest where the sky is perpetually choked with volcanic smoke and extreme heat halves Wound Mitigation for any outsider who enters without magical warding. Fire Elementals move freely through the Ashlands as lesser kin. The Pyreborn themselves are something older and more deliberate — fire that has had centuries to become opinionated.</p>
+        <p>They are highly susceptible to cold, and their melee strikes leave a burning condition on those they touch. At their apex, they are guarded by the Vulkan-Kahn — ancient, upright tigers of tremendous magical power who revert to four-legged apex predators in their Ancestral Form. The relationship between Pyreborn and Vulkan-Kahn is not one of servitude. It is one of kinship older than language.</p>
+
+        <h3 class="section-header">Verath — The Crystallised Fire</h3>
+        <p>Within every Pyreborn accumulates what scholars of Wizardry have termed <em>verath</em> — elemental residue that cannot be drawn out through formula or petition or discipline. It lives in the marrow of what the Pyreborn are, refined and pressurised by centuries of heat until it can no longer be contained and crystallises outward as gemstones. The gems found in the lairs and bodies of Pyreborn are not decoration. They are exhalation — every faceted stone something the fire could not hold any longer and had to release.</p>
+        <p>A single gem from a Pyreborn Elder carries enough concentrated verath that a Wizard of middling talent might spend a lifetime trying to unlock it — and likely die in the attempt, scorched from the inside out when the residue answers the wrong question wrongly. This has not discouraged anyone. It never has. That is the nature of power: it draws the willing toward consequences they have not yet imagined.</p>
+
+        <h3 class="section-header">The Birn Hunting Campaign</h3>
+        <p>The Dwarves of Birn Uluhm identified verath as structurally identical to the energy stored in the petrified Terra-Titan's nervous system. They sent hunters across half a continent — from the center-east mountains all the way to the far-northwest Ashlands — to acquire it. The hunters are systematic, documented, and select Elders preferentially: those whose verath has had centuries to pressurize into the most potent gems. This is not how creatures hunt for food. This is how a people hunts for something it has decided it cannot live without.</p>
+        <p>The Pyreborn have no tradition of being hunted with this kind of patience. They know anger. They know the long burn of a grudge. But the cold, methodical hunger of Birn Uluhm is something they have not learned to answer. Not yet.</p>
+
+        <h3 class="sub-header">The Ashen Mouth</h3>
+        <p>The eldest of the Pyreborn carries no name that any account dares write directly. It is old enough to remember when the gods were still answering — which means it is old enough to recognise the shape of a long-term plan when it sees one moving through its kin. It watched the Birn hunters come and go over years. Not fleeing. Watching. Then it turned east and began to walk toward the smoke of the Embervast Range, where Birn Uluhm's vents breathe into the upper air. It has been walking for some time.</p>
+        <p>What it intends when it arrives, it has not told anyone. It is possible it intends to negotiate. It is possible it intends to demonstrate what a Pyreborn Elder releasing every gram of accumulated verath at once looks like. It is possible it simply wants to understand the thing taking its people apart before deciding. These three possibilities are not mutually exclusive. The Ashen Mouth is very old, and old things rarely do only one thing at a time.</p>
+
+        <div class="lore-hook">
+            <span class="lore-hook-label">Primary Open Hook</span>
+            Thrunn — Warden of the Expansion — will be the first Birn figure the Ashen Mouth encounters at the outer vents. He has orders for capture or kill. He has no orders for a Pyreborn Elder that walked here on its own and has not yet attacked. If it speaks first, Thrunn will not know what to do. Every second he hesitates is a second Varkhas does not know is coming.
+        </div>
+        <div class="lore-hook">
+            <span class="lore-hook-label">Secondary Open Hook</span>
+            Varkhas believes verath is an echo of the Terra-Titan's own essence. If he is correct, a living Elder brought voluntarily into the presence of the petrified heart may trigger a resonance that no one in Birn Uluhm has contingency plans for — because no one in Birn Uluhm imagined a Pyreborn would come to them.
+        </div>
+    </div>
+
+    <!-- ═══════════════════ R ═══════════════════ -->
+    <div id="letter-R" class="letter-head">R</div>
+
+    <div class="entry">
+        <h2 class="entry-title">Rysahm Ashlands <span class="entry-tag">Location · Far Northwest</span></h2>
+        <p>A brutal, volcanic wasteland where the sky is perpetually choked with smoke and ash. The extreme heat makes standard travel impossible without magical warding — Wound Mitigation is halved for any outsider who enters unprotected. The Ashlands are home to the Pyreborn and their Fire Elemental kin, and to the Vulkan-Kahn who guard them. It is not a place that welcomes visitors. It is a place that tests them and keeps what fails the test.</p>
+        <p>The Ashlands sit in the far northwest of the known world. The Dwarven mountains of Birn Uluhm lie at the center-east — separated by the full breadth of the continent, including human kingdoms, contested trade roads, and the failing wards of the Crumbling Wall. Birn Uluhm sent hunters across all of it. The smoke of the Ashlands was visible from a great distance. So, now, is the smoke of the Embervast Range — visible from the Ashlands, if you know what you are looking for, and if you have decided to walk toward it.</p>
+    </div>
+
+    <!-- ═══════════════════ S ═══════════════════ -->
+    <div id="letter-S" class="letter-head">S</div>
+
+    <div class="entry">
+        <h2 class="entry-title">SunsReach <span class="entry-tag">Location · Subtropical Port</span></h2>
+        <p>A subtropical port city known as the Gilded Port of Secrets — a place where wealth moves faster than trust and the question of who controls the harbour is never fully settled. It is currently the epicentre of a looming conflict between three powers who each believe the other two are the problem: the Human Church, the Northern Witchhunters of Wexcross, and the Lizardman Scaled Embassy, whose bone-ships now dominate the coast.</p>
+
+        <h3 class="section-header">Leadership & Conflict</h3>
+        <ul>
+            <li><strong>High Priest Eason Lendall:</strong> Current leader of the Sun Temple. His authority is theological in origin and increasingly difficult to enforce.</li>
+            <li><strong>Deacon Jamarr Wicks:</strong> Lead Deacon and right hand to Lendall. Manages what Lendall cannot be seen managing.</li>
+            <li><strong>Thaddeus & Zulrich:</strong> High Clerics managing the spiritual defence of the city. Their disagreement about methods is becoming a liability.</li>
+            <li><strong>Braslav Karpov:</strong> A Witchhunter from the Northern Empire of Wexcross, hunting for daemonologists. Whether he found any, or created the appearance of finding them, is contested.</li>
+        </ul>
+
+        <h3 class="section-header">The Scaled Embassy</h3>
+        <p>The city's coast is currently dominated by Lizardman bone-ships — vessels powered by twenty massive, ogre-sized reptiles rowing in rhythmic patterns that never vary and never tire. The Skink High Priest of the Embassy has issued an ultimatum: recover the stolen Mortek fragment — the Aakzad relic taken from the tomb by Kazamas Pikari — or face the cleansing fire of the emerald bone-ships. The deadline has not been stated. That is deliberate.</p>
+
+        <div class="lore-hook">
+            <span class="lore-hook-label">Open Hook</span>
+            The Mortek fragment connects SunsReach directly to the Aakzad awakening. Why the Lizardmen know what the fragment is, and why they want it returned rather than destroyed, has not been explained. Their ultimatum assumes the city can retrieve it. They may already know that it cannot.
+        </div>
+    </div>
+
+    <!-- ═══════════════════ T ═══════════════════ -->
+    <div id="letter-T" class="letter-head">T</div>
+
+    <div class="entry">
+        <h2 class="entry-title">The Terra-Titan <span class="entry-tag">Ancient Entity · Petrified</span></h2>
+        <p>Something of a scale that reframes what the word <em>ancient</em> means lies beneath the Dwarven mountains. The Birn Clan built their city in its ribcage. High Machinist Varkhas has plugged himself directly into its nervous system. The heart still pulses — geologically slow, thick, deep — in a rhythm that has no name in any language currently spoken. Whether this constitutes life is a question no one in Birn Uluhm asks aloud, because the answer might change what they believe they are doing.</p>
+        <p>The Titan-Blood that seeps from its deep seams is oily, corrupting, and extraordinarily energetic. It has warped the Birn Clan across generations. It fuels their forges hotter than any dwarven fire before it. And Varkhas believes it is structurally identical to the verath crystallised within Pyreborn Elders — which would mean the Pyreborn are, in some fashion, a living echo of the Titan. Smaller. Fragmented. But carrying, in each exhaled gem, a piece of whatever the Titan was before the world was built on top of it.</p>
+
+        <div class="lore-hook">
+            <span class="lore-hook-label">Lore Seed — Unexpanded</span>
+            What was the Terra-Titan? How did it die? What does its petrified body mean for everything built above it? And what would it do if Varkhas succeeds in waking it? This entry awaits full expansion. The Chronicler is ready.
+        </div>
+    </div>
+
+    <!-- ═══════════════════ V ═══════════════════ -->
+    <div id="letter-V" class="letter-head">V</div>
+
+    <div class="entry">
+        <h2 class="entry-title">Verath <span class="entry-tag">Elemental Phenomenon · Pyreborn</span></h2>
+        <p>Within every Pyreborn accumulates what scholars of Wizardry have coined <em>verath</em> — the elemental residue of a being shaped entirely by elemental force, pressurised over centuries until it can no longer be contained. It is not magic as the schools understand it. It cannot be drawn through formula or petition or discipline. It lives in the marrow of what the Pyreborn are, refined by heat and time, crystallising outward as gemstones when the pressure becomes too great. The gems found in Pyreborn lairs and bodies are exhalations — every faceted stone is something the fire could not hold any longer.</p>
+        <p>A single Elder's gem carries enough concentrated verath that cracking it without proper ritual kills the Wizard attempting it — scorched from the inside out when the residue answers the wrong question. Varkhas of Birn Uluhm believes verath is structurally identical to the energy stored in the Terra-Titan's petrified nervous system, and that the Pyreborn are therefore a living echo of the Titan — carrying in each gem a fragment of what the Titan was before it died and the world grew on top of it.</p>
+    </div>
+
+    <div class="entry">
+        <h2 class="entry-title">Vulkan-Kahn <span class="entry-tag">Ancient Guardians · Pyreborn Kin</span></h2>
+        <p>The Vulkan-Kahn are the ancient protectors of the Pyreborn people — and perhaps something more than protectors, in the way that the oldest relationships defy the categories applied to them later. They walk upright and possess immense magical power, carrying themselves with the deliberate weight of things that have chosen to be present, rather than things compelled to serve. In their Ancestral Form, they revert to four-legged apex predators capable of devastating feral attacks — not a diminishment, but a different expression of the same fundamental nature.</p>
+        <p>How old the Vulkan-Kahn are, and whether they predate the Pyreborn or arose alongside them, is not a question the Pyreborn answer readily. The question itself may reveal a misunderstanding about what kind of relationship this is.</p>
+    </div>
+
+    <!-- ═══════════════════ SCRIBED ENTRIES (localStorage) ═══════════════════ -->
+    <div id="scribed-entries-container"></div>
+
+</main>
+
+<a href="#" class="btn-top">↑ Top</a>
+<div id="toast">New entry added</div>
+
+<script>
+const STORAGE_KEY = 'potu_lore_entries';
+
+function getEntries() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    catch(e) { return []; }
+}
+
+function renderScribedEntries() {
+    const entries = getEntries();
+    const container = document.getElementById('scribed-entries-container');
+    if (!entries.length) { container.innerHTML = ''; return; }
+
+    // group by letter
+    const byLetter = {};
+    entries.forEach(e => {
+        const letter = (e.title || '?')[0].toUpperCase();
+        if (!byLetter[letter]) byLetter[letter] = [];
+        byLetter[letter].push(e);
+    });
+
+    // inject into correct letter sections, or append at end
+    Object.keys(byLetter).sort().forEach(letter => {
+        const existingHead = document.getElementById('letter-' + letter);
+        const group = byLetter[letter];
+        group.forEach(entry => {
+            const div = document.createElement('div');
+            div.className = 'entry scribed-entry';
+            div.dataset.scribeId = entry.id;
+            div.innerHTML = `
+                <h2 class="entry-title">${escHtml(entry.title)} <span class="scribed-badge">Scribed</span>${entry.tag ? `<span class="entry-tag">${escHtml(entry.tag)}</span>` : ''}</h2>
+                ${entry.body ? `<p>${escHtml(entry.body).replace(/\n/g,'</p><p>')}</p>` : ''}
+                ${entry.hook ? `<div class="lore-hook"><span class="lore-hook-label">Open Hook</span>${escHtml(entry.hook)}</div>` : ''}
+            `;
+            if (existingHead) {
+                // insert after the letter head and any existing entries under it
+                let insertAfter = existingHead;
+                let next = insertAfter.nextElementSibling;
+                while (next && !next.classList.contains('letter-head') && next.id !== 'scribed-entries-container') {
+                    insertAfter = next;
+                    next = next.nextElementSibling;
+                }
+                insertAfter.insertAdjacentElement('afterend', div);
+            } else {
+                // no letter section yet — create one and append
+                const letterDiv = document.createElement('div');
+                letterDiv.id = 'letter-' + letter;
+                letterDiv.className = 'letter-head';
+                letterDiv.textContent = letter;
+                container.appendChild(letterDiv);
+                container.appendChild(div);
+                // mark jump nav
+                const jLink = document.getElementById('j' + letter);
+                if (jLink) jLink.classList.remove('empty');
+            }
+        });
+        // mark jump nav as active
+        const jLink = document.getElementById('j' + letter);
+        if (jLink) jLink.classList.add('has-entry');
+    });
+}
+
+function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// listen for storage events (Scribe writing to localStorage)
+window.addEventListener('storage', e => {
+    if (e.key === STORAGE_KEY) {
+        document.querySelectorAll('.scribed-entry').forEach(el => el.remove());
+        renderScribedEntries();
+        showToast('New lore entry received from the Scribe');
+    }
+});
+
+// initial render
+renderScribedEntries();
+</script>
 </body>
 </html>
