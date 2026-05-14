@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1100">
+<title>Path of the Unknown — Skills in Play</title>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;700&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --iron: #02070e;
+    --blood: #A81818;
+    --blood-dim: rgba(168,24,24,0.09);
+    --parchment: #f3e7c9;
+    --gold: #B8860B;
+    --gold-dim: rgba(184,134,11,0.11);
+    --gold-line: rgba(184,134,11,0.32);
+    --ink: #111111;
+    --ink-soft: #362a18;
+    --muted: #6b5c40;
+    --entry-bg: #faf4e1;
+    --font-heading: 'Grenze Gotisch', serif;
+    --font-sub: 'Cinzel', serif;
+    --font-main: 'IM Fell English', serif;
+    --font-mono: 'Courier New', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: #0e0b07;
+    font-family: var(--font-main);
+    color: var(--ink);
+    padding: 30px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    min-height: 100vh;
+}
+
+/* ── NAV ── */
+.top-nav {
+    width: 1060px; max-width: 100%;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.btn-nav {
+    background: var(--iron); color: var(--gold);
+    border: 2px solid var(--iron); border-bottom: 4px solid var(--blood);
+    padding: 9px 20px; font-family: var(--font-sub); font-size: 0.68em;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+    text-decoration: none; transition: 0.18s; display: inline-block;
+}
+.btn-nav:hover { background: var(--blood); color: var(--parchment); border-color: var(--blood); }
+
+/* ── JUMP NAV ── */
+.jump-nav {
+    width: 1060px; max-width: 100%;
+    background: var(--iron); border: 2px solid var(--gold);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 2px; padding: 10px 12px;
+}
+.jump-nav a {
+    color: var(--gold); text-decoration: none;
+    font-family: var(--font-sub); font-size: 0.7em; font-weight: 600;
+    padding: 6px 10px; border: 1px solid rgba(184,134,11,0.2);
+    background: rgba(184,134,11,0.04); transition: 0.15s;
+    text-align: center; letter-spacing: 0.5px; white-space: nowrap;
+}
+.jump-nav a:hover { background: var(--blood); color: var(--parchment); border-color: var(--blood); }
+
+/* ── TOME ── */
+.tome {
+    width: 1060px; max-width: 100%;
+    background: var(--parchment);
+    border: 8px solid var(--iron);
+    box-shadow: 0 0 0 2px var(--gold), 0 25px 70px rgba(0,0,0,0.95);
+    padding: 52px 72px 64px;
+    position: relative;
+}
+.tome::before, .tome::after { content:'✦'; position:absolute; font-size:20px; color:var(--gold); }
+.tome::before { top:12px; left:16px; }
+.tome::after  { top:12px; right:16px; }
+
+.masthead { text-align:center; border-bottom:3px double var(--gold); padding-bottom:20px; margin-bottom:36px; }
+.eyebrow { font-family:var(--font-sub); font-size:0.65em; letter-spacing:5px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+.main-title { font-family:var(--font-heading); font-size:3em; color:var(--iron); text-transform:uppercase; letter-spacing:2px; line-height:1.1; margin-bottom:6px; }
+.sub { font-family:var(--font-sub); font-size:0.7em; letter-spacing:3px; color:var(--blood); text-transform:uppercase; }
+.rule { display:flex; align-items:center; gap:12px; margin-top:14px; }
+.rule span { flex:1; height:1px; background:var(--gold-line); }
+
+.intro-text { font-size:1em; line-height:1.75; color:var(--ink-soft); text-align:justify; margin-bottom:8px; }
+
+/* ── SKILL CARD ── */
+.skill-entry { margin-bottom: 44px; scroll-margin-top: 20px; }
+
+.skill-title {
+    font-family: var(--font-heading);
+    font-size: 1.85em;
+    color: var(--blood);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-left: 6px solid var(--blood);
+    padding-left: 14px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+.skill-mechanic-bar {
+    font-family: var(--font-mono);
+    font-size: 0.75em;
+    color: var(--muted);
+    background: rgba(2,7,14,0.04);
+    border-left: 6px solid var(--gold-line);
+    padding: 5px 14px;
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+}
+
+/* example block */
+.example-block {
+    background: var(--entry-bg);
+    border: 1.5px solid rgba(2,7,14,0.15);
+    border-top: 3px solid var(--gold);
+    padding: 18px 22px 20px;
+    margin-top: 4px;
+}
+.example-label {
+    font-family: var(--font-sub);
+    font-size: 0.62em;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.example-label::after { content:''; flex:1; height:1px; background:var(--gold-line); }
+
+.scenario {
+    font-size: 0.93em;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+    font-style: italic;
+    border-left: 3px solid rgba(184,134,11,0.3);
+    padding-left: 12px;
+}
+
+.rolls {
+    background: rgba(2,7,14,0.04);
+    border: 1px solid var(--gold-line);
+    padding: 12px 14px;
+    margin-bottom: 12px;
+}
+.roll-line {
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+.roll-label { color: var(--muted); flex-shrink: 0; }
+.roll-formula { color: var(--blood); font-weight: bold; }
+.roll-result { color: var(--iron); font-weight: bold; }
+.roll-outcome { color: #2a5c2a; font-weight: bold; }
+.roll-fail { color: var(--blood); font-weight: bold; }
+
+.resolution {
+    font-size: 0.93em;
+    line-height: 1.7;
+    color: var(--ink-soft);
+}
+.resolution strong { color: var(--iron); }
+
+/* letter divider */
+.letter-div {
+    font-family: var(--font-heading);
+    font-size: 3em;
+    color: var(--iron);
+    border-bottom: 4px solid var(--gold);
+    margin-top: 56px;
+    margin-bottom: 24px;
+    line-height: 1;
+    padding-bottom: 4px;
+}
+.letter-div:first-of-type { margin-top: 0; }
+
+/* back to top */
+.btn-top {
+    position: fixed; bottom: 36px; right: 36px;
+    background: var(--iron); color: var(--gold);
+    border: 2px solid var(--iron); border-bottom: 4px solid var(--blood);
+    padding: 11px 16px; font-family: var(--font-sub); font-size: 0.65em;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+    text-decoration: none; transition: 0.18s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.8); z-index: 100;
+}
+.btn-top:hover { background: var(--blood); color: var(--parchment); }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+    <a href="index.html" class="btn-nav">⬅ Main Hub</a>
+    <a href="Primary-Skills.html" class="btn-nav">📖 Primary Skills</a>
+</div>
+
+<nav class="jump-nav">
+    <a href="#s-acute">Acute Senses</a>
+    <a href="#s-athletics">Athletics</a>
+    <a href="#s-authority">Authority</a>
+    <a href="#s-charm">Charm</a>
+    <a href="#s-melee">Combat (Melee)</a>
+    <a href="#s-mounted">Combat (Mounted)</a>
+    <a href="#s-ranged">Combat (Ranged)</a>
+    <a href="#s-counter">Counter</a>
+    <a href="#s-discipline">Discipline</a>
+    <a href="#s-druid">Druid</a>
+    <a href="#s-enraged">Enraged</a>
+    <a href="#s-evaluation">Evaluation</a>
+    <a href="#s-evasion">Evasion</a>
+    <a href="#s-faith">Faith</a>
+    <a href="#s-focus">Focus</a>
+    <a href="#s-fortitude">Fortitude</a>
+    <a href="#s-fortune">Fortune</a>
+    <a href="#s-hardnails">Hard as Nails</a>
+    <a href="#s-inspire">Inspire</a>
+    <a href="#s-ironwill">Iron Will</a>
+    <a href="#s-ki">Ki</a>
+    <a href="#s-knowledge">Knowledge</a>
+    <a href="#s-lightsoul">Light-Soul</a>
+    <a href="#s-mending">Mending</a>
+    <a href="#s-perception">Perception</a>
+    <a href="#s-precise">Precise Strike</a>
+    <a href="#s-quickness">Quickness</a>
+    <a href="#s-readwrite">Read/Write</a>
+    <a href="#s-resolve">Resolve</a>
+    <a href="#s-ride">Ride</a>
+    <a href="#s-rugged">Rugged</a>
+    <a href="#s-runes">Runes</a>
+    <a href="#s-shaman">Shaman</a>
+    <a href="#s-shieldsman">Shieldsman</a>
+    <a href="#s-spirit">Spirit</a>
+    <a href="#s-stamina">Stamina</a>
+    <a href="#s-stealth">Stealth</a>
+    <a href="#s-strength">Strength & Grapple</a>
+    <a href="#s-survival">Survival</a>
+    <a href="#s-thieving">Thieving</a>
+    <a href="#s-tracking">Tracking</a>
+    <a href="#s-wizardry">Wizardry</a>
+</nav>
+
+<main class="tome">
+<div class="masthead">
+    <p class="eyebrow">Path of the Unknown</p>
+    <h1 class="main-title">Skills in Play</h1>
+    <p class="sub">A Compendium of Detailed Examples</p>
+    <div class="rule"><span></span><span style="color:var(--gold);font-size:14px;">✦</span><span style="color:var(--gold);font-size:14px;">✦</span><span style="color:var(--gold);font-size:14px;">✦</span><span></span></div>
+</div>
+
+<p class="intro-text">Every entry below presents a concrete in-play example for each Primary Skill — a scene, the exact dice rolls involved, and the outcome. Examples assume a character with 3 points in the relevant skill unless otherwise noted. Use these as reference at the table when a rule needs a quick illustration.</p>
+
+<!-- ═══════ A ═══════ -->
+<div id="s-acute" class="skill-entry">
+    <h2 class="skill-title">Acute Senses</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + Skill Points | Power of Three: +1 Awareness per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">The party moves through a darkened merchant warehouse. Four Skullsmasherz goblins are hiding in the rafters above, waiting to drop. The GM calls for a passive detection check before the ambush triggers.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Roll:</span><span class="roll-formula">1d10 (rolled 6) + 3 (Acute Senses pts) = 9</span></div>
+            <div class="roll-line"><span class="roll-label">GM's DV:</span><span class="roll-result">8</span><span class="roll-outcome">— Success by 1</span></div>
+        </div>
+        <p class="resolution">The character catches the faint creak of a rafter and the acrid smell of goblin sweat above the sawdust. The GM tells the player: <strong>"Something is wrong above you."</strong> The ambush is not entirely foiled — the goblins still act first — but the party is no longer caught completely flat-footed, and the character may spend their first action on a defensive posture rather than a stunned recovery.</p>
+    </div>
+</div>
+
+<div id="s-athletics" class="skill-entry">
+    <h2 class="skill-title">Athletics</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + Skill Points vs DV | +1 Max Wound per pt | Threshold 3+: bonus Ranged Wounds</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">A Birn Uluhm slavers' gate is closing. The party needs to clear a twelve-foot chasm and reach the iron lever before the portcullis drops. The GM sets the DV at 10 for the leap.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Roll:</span><span class="roll-formula">1d10 (rolled 8) + 3 (Athletics pts) = 11</span></div>
+            <div class="roll-line"><span class="roll-label">DV:</span><span class="roll-result">10</span><span class="roll-outcome">— Success by 1</span></div>
+        </div>
+        <p class="resolution">The character lands hard on the far ledge, fingers catching the edge, pulls through. <strong>The portcullis lever is reached with one action to spare.</strong> Had the roll failed, the character drops into the pit below — 2d10 fall wounds and the gate closes. The Threshold 3+ bonus also means this character adds bonus wounds on ranged attacks this session, representing legs powerful enough to anchor a bowman's stance.</p>
+    </div>
+</div>
+
+<div id="s-authority" class="skill-entry">
+    <h2 class="skill-title">Authority</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + Skill Points (sets DV) vs Target 1d10 + Will Power | +1 Charisma per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">A Kel Thurum gate captain is blocking the party's entry into Theldur. The character steps forward and demands passage by right of emergency — invoking the name of a High Cleric they've worked with.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Authority Roll (DV):</span><span class="roll-formula">1d10 (rolled 7) + 3 = 10</span></div>
+            <div class="roll-line"><span class="roll-label">Captain's Resistance:</span><span class="roll-formula">1d10 (rolled 4) + 2 (Will Power) = 6</span></div>
+            <div class="roll-line"><span class="roll-outcome">— Complies</span></div>
+        </div>
+        <p class="resolution">The captain's jaw tightens, but the weight of command in the character's voice overrides his hesitation. <strong>He steps aside and orders the gate opened.</strong> Note: Authority compels compliance to the best of the target's ability — the captain opens the gate, but he also immediately sends a runner to notify his superior. Compliance doesn't mean loyalty.</p>
+    </div>
+</div>
+
+<div id="s-charm" class="skill-entry">
+    <h2 class="skill-title">Charm</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + Skill Points (sets DV) vs Target 1d10 + Awareness or Will Power | +1 Charisma per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">The party needs information from a paranoid Altdorf merchant who knows who hired the Skullsmasherz. The character approaches him at the tavern, buying a round and leading into easy conversation.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Charm Roll (DV):</span><span class="roll-formula">1d10 (rolled 9) + 3 = 12</span></div>
+            <div class="roll-line"><span class="roll-label">Merchant Awareness Resist:</span><span class="roll-formula">1d10 (rolled 5) + 2 = 7</span></div>
+            <div class="roll-line"><span class="roll-outcome">— Charmed</span></div>
+        </div>
+        <p class="resolution">The merchant relaxes visibly over the second drink. He doesn't volunteer everything at once — the GM may still require follow-up questions — but <strong>his guard is down and he won't lie</strong>. If the character had also used Perception to pre-read his tells, the GM might grant Advantage on any follow-up Charm attempts this scene.</p>
+    </div>
+</div>
+
+<div id="s-melee" class="skill-entry">
+    <h2 class="skill-title">Combat (Melee)</h2>
+    <div class="skill-mechanic-bar">Proficiency: removes Disadvantage on To-Hit | One purchase per weapon category | Cost varies by race</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Proficiency vs Non-Proficiency</div>
+        <p class="scenario">A Human fighter with Swords & Daggers proficiency picks up a fallen enemy's Polearm mid-fight to finish off a charging Beastman. She is not proficient in Polearms & Spears.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Without Proficiency (Disadvantage — roll 2d10 take lower):</span><span class="roll-formula">Rolls 8 and 3 → takes 3</span></div>
+            <div class="roll-line"><span class="roll-label">Target Defense:</span><span class="roll-result">5</span><span class="roll-fail">— Miss</span></div>
+            <div class="roll-line" style="margin-top:8px;"><span class="roll-label">Same scenario with Polearm proficiency:</span><span class="roll-formula">Rolls 8 normally → 8 vs 5</span><span class="roll-outcome">— Hit</span></div>
+        </div>
+        <p class="resolution">Without proficiency the fighter fumbles the unfamiliar grip — the Beastman shrugs the clumsy swing aside. The lesson: <strong>buying Combat proficiency isn't optional for a frontline fighter</strong>. The 25–35 XP cost is the difference between landing attacks and wasting actions. Picking up proficiency in a second weapon category later opens significant tactical options at no ongoing cost.</p>
+    </div>
+</div>
+
+<div id="s-mounted" class="skill-entry">
+    <h2 class="skill-title">Combat (Mounted)</h2>
+    <div class="skill-mechanic-bar">Prereqs: Ride (1), Combat Proficiency | Cost: 100 XP | Movement dictates attack options</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — The Cavalry Charge</div>
+        <p class="scenario">Erik Rose has acquired a light warhorse in Altdorf. Approaching the Skullsmasherz encampment, he spots the Ork Warboss standing in the open. He lowers a lance and charges directly at him, 40 feet of open ground between them.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Cavalry Charge To-Hit:</span><span class="roll-formula">1d10 (rolled 8) + To-Hit bonus = 11</span></div>
+            <div class="roll-line"><span class="roll-label">Warboss Defense:</span><span class="roll-result">7</span><span class="roll-outcome">— Hit</span></div>
+            <div class="roll-line"><span class="roll-label">Lance Wounds + Mount Momentum bonus:</span><span class="roll-formula">Standard Lance wounds + GM momentum modifier</span></div>
+        </div>
+        <p class="resolution">The charge connects. <strong>The mount's momentum is added to the single devastating lance strike</strong> — this is the mounted combat payoff, a single hit that hits harder than any standard attack. The trade: only one attack for the entire turn. After the charge, Erik must use his movement to wheel the horse around. Attempting this without the Mounted Combat skill results in the GM calling for a Ride test just to stay in the saddle through the impact.</p>
+    </div>
+</div>
+
+<div id="s-ranged" class="skill-entry">
+    <h2 class="skill-title">Combat (Ranged)</h2>
+    <div class="skill-mechanic-bar">Proficiency: removes Disadvantage on To-Hit | Categories: Bows, Crossbows, Firearms, Throwing Weapons</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">Erik Rose (Bows proficient, 3 pts Athletics for Lethal Force bonus) spots the Goblin Shaman who escaped Ogruk's camp — now 60 feet away, partially obscured by a fallen log. The GM sets a DV of 8 for the ranged To-Hit.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">To-Hit Roll:</span><span class="roll-formula">1d10 (rolled 9) + Ranged To-Hit bonuses = 12</span></div>
+            <div class="roll-line"><span class="roll-label">DV:</span><span class="roll-result">8</span><span class="roll-outcome">— Hit. Lethal Force (Athletics 3+) adds bonus wounds to the result.</span></div>
+        </div>
+        <p class="resolution">The arrow finds the Shaman through the gap in the log cover. <strong>The Lethal Force bonus from Athletics adds its wounds on top of standard bow damage</strong> — this is why Erik's build invests in both skills. Without Bow proficiency, this roll would have been made with Disadvantage, almost certainly missing at range with partial cover. The Shaman's status is now a GM call based on total wounds landed.</p>
+    </div>
+</div>
+
+<div id="s-counter" class="skill-entry">
+    <h2 class="skill-title">Counter</h2>
+    <div class="skill-mechanic-bar">Trigger: Natural 1 on enemy To-Hit | Riposte: 1d10 + Skill Points wounds | Costs 1 Action</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">A Birn Juggernaut swings its massive fist at the party's Pit Fighter. The GM rolls to hit — and rolls a natural, unmodified 1. The Pit Fighter has 3 pts in Counter and still has 1 Action remaining this round.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Trigger:</span><span class="roll-formula">Enemy natural 1 on To-Hit — Counter activates</span></div>
+            <div class="roll-line"><span class="roll-label">Riposte Wounds:</span><span class="roll-formula">1d10 (rolled 7) + 3 (Counter pts) = 10 wounds</span></div>
+            <div class="roll-line"><span class="roll-outcome">— 1 Action consumed from Pit Fighter's pool</span></div>
+        </div>
+        <p class="resolution">The Juggernaut's fist crashes into the stone floor where the Pit Fighter stood half a second ago. <strong>She drives her elbow into the exposed joint where the armour plates meet, dealing 10 wounds.</strong> Against a large enemy like a Juggernaut this may not be decisive — but it's 10 free wounds delivered outside her normal attack turn. Critical note: if the Pit Fighter had already spent all her Actions this round, the Counter cannot trigger — action economy is the real constraint on this skill.</p>
+    </div>
+</div>
+
+<div id="s-discipline" class="skill-entry">
+    <h2 class="skill-title">Discipline</h2>
+    <div class="skill-mechanic-bar">+1 Max Wounds per pt | +1 Magical/Spiritual Resource per pt | +1 Awareness per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">A Faith character wants to hold three active Blessings simultaneously — a Healing Blessing, a Ward, and a Battle Blessing for an ally. Their base Faith pool allows 2. They need 1 more resource slot.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Base Faith pool:</span><span class="roll-formula">Wizardry Points + Discipline Points</span></div>
+            <div class="roll-line"><span class="roll-label">Current Discipline:</span><span class="roll-formula">1 pt = +1 Resource slot = pool now holds 3</span></div>
+            <div class="roll-line"><span class="roll-outcome">— All three Blessings can now be memorised simultaneously</span></div>
+        </div>
+        <p class="resolution"><strong>Discipline is the quiet multiplier for every caster and Ki practitioner.</strong> The Wounds bonus (1 per point) makes it viable for frontline builds too — a Warrior Priest investing here gets both survivability and expanded divine capability in one skill. At 3 points the Awareness bump also begins to improve detection and passive defences, making Discipline one of the most efficient cross-archetype skills in the compendium.</p>
+    </div>
+</div>
+
+<div id="s-druid" class="skill-entry">
+    <h2 class="skill-title">Druid (Magical Vocation)</h2>
+    <div class="skill-mechanic-bar">+1 Druidic Spell per pt | +1 Awareness per 3 pts | Prereqs: Knowledge Druidic (1), Read/Scribe (1)</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — The Firewall (from the Ogruk battle)</div>
+        <p class="scenario">Andy's Druid has 3 points in Druid. Surrounded in the narrow mountain pass with the Goblin Shaman's Firewall cutting off retreat, Andy shifts into Bear form using a Druidic transformation spell — bypassing the chokepoint entirely by scaling the cliff wall.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Spell known (1 spell per pt):</span><span class="roll-formula">3 pts = 3 spells memorised — Transformation is one of them</span></div>
+            <div class="roll-line"><span class="roll-label">Cast test (per spell rules):</span><span class="roll-formula">Rolled successfully — Bear form achieved for the encounter</span></div>
+            <div class="roll-line"><span class="roll-outcome">— Movement form bypasses the Firewall obstacle</span></div>
+        </div>
+        <p class="resolution">In Bear form the Druid's movement and physical stats shift to the creature profile. <strong>The cliff wall that would require an Athletics test for a human is trivial for a bear.</strong> Druid's power lies in versatility — each point unlocks another tool. At 3 pts you have three distinct spells covering movement, healing, or battlefield control. The Awareness scaling means a Druid character's passive detection also improves over time, reinforcing the attunement-to-the-world flavour of the discipline.</p>
+    </div>
+</div>
+
+<div id="s-enraged" class="skill-entry">
+    <h2 class="skill-title">Enraged</h2>
+    <div class="skill-mechanic-bar">+1 Extra Attack per pt (all with Disadvantage) | Immunity to Fear | Tunnel Vision | 2-turn cooldown</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">The Dwarf Slayer Ironhammer faces the two Ogre Henchmen after watching his band be wiped out. He has 3 pts in Enraged and triggers the rage. His standard AP gives him 2 attacks. He is not Exhausted.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Bonus attacks from Enraged (3 pts):</span><span class="roll-formula">+3 attacks on top of standard 2 = 5 total attacks this turn</span></div>
+            <div class="roll-line"><span class="roll-label">All 3 bonus attacks:</span><span class="roll-formula">Rolled with Disadvantage (2d10 each, take lower)</span></div>
+            <div class="roll-line"><span class="roll-label">Standard 2 attacks:</span><span class="roll-outcome">Rolled normally</span></div>
+        </div>
+        <p class="resolution">Ironhammer becomes a whirlwind — five swings against the Ogres, the bonus three wild and inaccurate but generating pressure no sane combatant wants to be inside of. <strong>The Tunnel Vision restriction means he cannot choose to target the fleeing Shaman</strong> — he must engage the closest threat. The 2-turn cooldown is punishing: after this turn and the next, the rage is spent and cannot be re-triggered. Plan the timing carefully — burning Enraged too early in a long fight is a tactical mistake.</p>
+    </div>
+</div>
+
+<div id="s-evaluation" class="skill-entry">
+    <h2 class="skill-title">Evaluation (Object)</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + Skill Points vs GM DV | Removes Disadvantage on identification | +1 Intellect per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">Erik Rose loots Ogruk's body and finds the Magical Flail with the Degeneration quality. Without Evaluation, identifying it is rolled with Disadvantage. Erik has 2 pts in Evaluation — Disadvantage is removed.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Evaluation Roll:</span><span class="roll-formula">1d10 (rolled 6) + 2 = 8</span></div>
+            <div class="roll-line"><span class="roll-label">GM DV (unusual magical quality):</span><span class="roll-result">7</span><span class="roll-outcome">— Success by 1</span></div>
+        </div>
+        <p class="resolution">Erik turns the flail over, running his thumb along the unusual black links. <strong>He correctly identifies it as enchanted and determines that the enchantment has a wounding-over-time component</strong> — the Degeneration quality. He doesn't know the exact mechanic (1 wound/turn until healed) without a higher success, but he knows enough not to be surprised by it in combat. A roll of 9+ might have revealed the full mechanical detail; a failure would have left it as an unidentified "strange flail."</p>
+    </div>
+</div>
+
+<div id="s-evasion" class="skill-entry">
+    <h2 class="skill-title">Evasion</h2>
+    <div class="skill-mechanic-bar">+1 Defense, +1 WM, +1 Agility per 3 pts | Agility Tax: armor penalty reduces Defense bonus | WM applies regardless of armor</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — The Agility Tax</div>
+        <p class="scenario">A Halfling rogue with 6 pts in Evasion (+2 Defense bonus, +2 WM, +2 Agility) equips Chain Mail for a mission into Birn Uluhm. Chain Mail has a –2 Agility penalty.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Evasion Defense bonus (base):</span><span class="roll-formula">+2 (from 6 pts)</span></div>
+            <div class="roll-line"><span class="roll-label">Chain Mail Agility penalty:</span><span class="roll-formula">–2 Agility → Defense bonus negated entirely</span></div>
+            <div class="roll-line"><span class="roll-label">Evasion WM bonus:</span><span class="roll-outcome">+2 WM still applies — armor doesn't cancel this</span></div>
+        </div>
+        <p class="resolution">In Chain Mail the rogue can't dodge — the metal prevents the sharp lateral movement Evasion requires. <strong>Her Defense bonus is wiped out, but her WM bonus survives.</strong> She still absorbs 2 wounds from every hit that lands, even if more hits land than before. The lesson: Evasion builds want Light Armor. In Heavy Armor, invest in Hard as Nails or Shieldsman for mitigation instead. Rolling with the Punch (WM path) remains viable in any armour, making Evasion still worth having even when a mission demands heavy kit.</p>
+    </div>
+</div>
+
+<div id="s-faith" class="skill-entry">
+    <h2 class="skill-title">Faith</h2>
+    <div class="skill-mechanic-bar">+1 Blessing per pt | +1 Charisma per 3 pts | Prereqs: Knowledge Religion (1), Read/Scribe (1) | Deity favour can revoke abilities</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">The Warrior Priest (3 pts Faith, 3 Blessings known) invokes a Battle Blessing on the Pit Fighter before a charge into the Skullsmasherz camp. The Blessing requires 1 Action to invoke.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Invocation Test (per Blessing rules):</span><span class="roll-formula">Rolled successfully</span></div>
+            <div class="roll-line"><span class="roll-label">Effect:</span><span class="roll-outcome">Battle Blessing applied to Pit Fighter — bonus to attacks/wounds for duration</span></div>
+        </div>
+        <p class="resolution">The Warrior Priest's prayer is brief and sharp — not the long liturgy of a temple service but the clipped invocation of a battlefield veteran. <strong>The Pit Fighter feels the blessing settle on her like warmth through armour.</strong> Key GM note: Faith is deity-dependent. A Warrior Priest of a Sigmar-equivalent who begins looting temples or consorting with Chaos Cultists risks losing these abilities entirely at GM discretion. The power is real — but it comes with an ongoing obligation that other vocations don't carry.</p>
+    </div>
+</div>
+
+<div id="s-focus" class="skill-entry">
+    <h2 class="skill-title">Focus (Combat Resource)</h2>
+    <div class="skill-mechanic-bar">Pool = total pts | Split between Potency (+wounds) and Penetration (armor pierce) | +1 To-Hit per 3 pts (free, from Precision Threshold)</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">A character with 6 pts in Focus faces Thrunn (the Iron Root) in heavy armour. Thrunn has 4 Wound Mitigation from his plate. The character spends 1 AP to Focus before attacking.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Precision Threshold (free bonus):</span><span class="roll-formula">6 pts ÷ 3 = +2 To-Hit automatically applied</span></div>
+            <div class="roll-line"><span class="roll-label">Pool allocation (6 pts to split):</span><span class="roll-formula">4 pts → Penetration (bypass 4 WM) | 2 pts → Potency (+2 wounds)</span></div>
+            <div class="roll-line"><span class="roll-label">Net result:</span><span class="roll-outcome">Thrunn's 4 WM negated. +2 To-Hit. +2 wounds on the strike.</span></div>
+        </div>
+        <p class="resolution">Against a lightly armoured target the character would shift the split — more into Potency, less into Penetration. Against Thrunn's plate, <strong>burning all 4 points into Penetration strips his mitigation entirely for this one strike</strong>, making even a modest hit deal full wounds. The Precision Threshold +2 To-Hit is always free — it doesn't cost pool points. This is Focus's highest value use: turning a heavily armoured elite into a viable target for a single decisive blow.</p>
+    </div>
+</div>
+
+<div id="s-fortitude" class="skill-entry">
+    <h2 class="skill-title">Fortitude</h2>
+    <div class="skill-mechanic-bar">+10 Max Wounds per pt (before Size multipliers) | +1 Physique per 3 pts | Most expensive wound-pool skill</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">A Dwarf frontliner invests 2 points in Fortitude (90 XP total at Dwarf cost). Their base wounds before Fortitude were 18. They are Medium sized.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Fortitude addition (2 pts):</span><span class="roll-formula">+20 wounds (before size multipliers)</span></div>
+            <div class="roll-line"><span class="roll-label">New base before size:</span><span class="roll-formula">18 + 20 = 38 wounds</span></div>
+            <div class="roll-line"><span class="roll-outcome">+6 Physique passively over time from Power of Three progression</span></div>
+        </div>
+        <p class="resolution">Fortitude is the most expensive wound-per-XP skill in the compendium but delivers the largest single pool increase. <strong>A Dwarf tank with 2 pts in Fortitude can absorb punishment that would kill two other characters.</strong> This is the skill for a character whose role is to stand in front of Korvax's soul-bound army and not die. The Physique scaling also compounds — more Physique means better melee To-Hit, more wounds on attacks, and better Strength Conditioning synergy. Everything feeds forward.</p>
+    </div>
+</div>
+
+<div id="s-fortune" class="skill-entry">
+    <h2 class="skill-title">Fortune</h2>
+    <div class="skill-mechanic-bar">+1 Reroll per pt per session | Must accept second result | Resets each session</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">Erik Rose rolls to hit Ogruk with his arrow — the decisive moment of the battle. He rolls a natural 1. He has 2 pts in Fortune (2 rerolls this session) and has not used either yet.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Original roll:</span><span class="roll-formula">1d10 = 1</span><span class="roll-fail">— Automatic miss</span></div>
+            <div class="roll-line"><span class="roll-label">Fortune expended (1 of 2):</span><span class="roll-formula">Reroll 1d10 = 9</span><span class="roll-outcome">— Hit</span></div>
+        </div>
+        <p class="resolution"><strong>Arrow to the chest. Ogruk falls.</strong> The Fortune point is spent — 1 remains for the rest of the session. The critical rule: you must accept the second result regardless. A player who rerolls a 3 hoping for better and gets a 1 is committed to the 1. Fortune is most valuable spent on pivotal rolls — a final enemy, a critical skill check, a death-saving throw — not burned early on minor tests. Two points in Fortune is a meaningful investment precisely because of moments like this one.</p>
+    </div>
+</div>
+
+<div id="s-hardnails" class="skill-entry">
+    <h2 class="skill-title">Hard as Nails</h2>
+    <div class="skill-mechanic-bar">+2 Max Wounds per pt | +1 WM per 2 pts (melee & standard ranged) | +1 Will Power per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">A Human Pit Fighter with 4 pts in Hard as Nails takes a hit from an Ogre that deals 9 wounds before mitigation. The Pit Fighter wears Studded Leather (2 WM from armour). Hard as Nails adds +2 WM (4 pts ÷ 2).</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Incoming wounds:</span><span class="roll-formula">9</span></div>
+            <div class="roll-line"><span class="roll-label">Armour WM:</span><span class="roll-formula">–2</span></div>
+            <div class="roll-line"><span class="roll-label">Hard as Nails WM:</span><span class="roll-formula">–2</span></div>
+            <div class="roll-line"><span class="roll-outcome">Final wounds taken: 5</span></div>
+        </div>
+        <p class="resolution">The Ogre's fist connects but the Pit Fighter rolls with it, distributing the impact across a frame that has absorbed ten thousand training blows. <strong>9 incoming becomes 5 actual.</strong> Over a long fight, 4 WM negated per hit is the difference between standing and dying. Hard as Nails stacks with armour, with Evasion's WM path, and with Shieldsman's Defensive Stance — a character building all three simultaneously becomes extraordinarily difficult to kill with standard attacks.</p>
+    </div>
+</div>
+
+<div id="s-inspire" class="skill-entry">
+    <h2 class="skill-title">Inspire</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + Skill Points + Charisma Bonus vs Situational DV | Affects allies within 25 ft for 1 turn | Natural 1 always fails</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">The Flagellant has just been struck down by Ogruk. The line is wavering. The Warrior Priest spends 1 AP to Inspire the remaining party (4 allies within 25 ft). The GM applies –1 for the fallen ally.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Inspire Roll:</span><span class="roll-formula">1d10 (rolled 8) + 3 (pts) + 1 (Charisma) – 1 (fallen ally) = 11</span></div>
+            <div class="roll-line"><span class="roll-label">Score 10–11 on Inspiration Table:</span><span class="roll-outcome">+1 Defense / Parry for all affected allies this turn</span></div>
+        </div>
+        <p class="resolution">The Warrior Priest's voice cuts through the chaos — not a prayer, not a sermon, just the flat command of someone who has been here before and knows it isn't over yet. <strong>Four surviving party members feel their footing solidify.</strong> +1 Defense for one turn is modest but it applies to every incoming attack that turn — in a round where two Ogres and a goblin horde are swinging, that's potentially 3–4 hits softened. Higher Inspire rolls unlock dramatically better table results. Investing in both Inspire and Charisma is the core of a support build.</p>
+    </div>
+</div>
+
+<div id="s-ironwill" class="skill-entry">
+    <h2 class="skill-title">Iron Will</h2>
+    <div class="skill-mechanic-bar">+2 Wounds per pt | +5 Wounds at 3 pts (one-time) | Death's Door: +1 turn at 0 Wounds per pt | Magical conditions reduce extension</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Death's Door</div>
+        <p class="scenario">The Flagellant hits 0 Wounds after Ogruk's hammer blow. He has 3 pts in Iron Will. He is currently Bleeding (physical condition) but not under any magical condition.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Death's Door extension:</span><span class="roll-formula">3 pts × 1 = 3 turns before death</span></div>
+            <div class="roll-line"><span class="roll-label">Bleeding condition:</span><span class="roll-formula">Physical — does NOT reduce extension</span></div>
+            <div class="roll-line"><span class="roll-label">Active magical conditions:</span><span class="roll-outcome">None — full 3 turns available</span></div>
+        </div>
+        <p class="resolution">The Flagellant crashes to the dirt but doesn't die. <strong>He has 3 turns of fighting at zero wounds</strong> — capable of acting but one hit from permanent death. The High Elf uses this window to reach him with a healing spell on turn 2. Had Ogruk's Shaman Hexed the Flagellant beforehand, one of those turns would have been forfeit. Iron Will doesn't make you invincible — it makes you briefly unkillable, which is enough if your healer acts fast.</p>
+    </div>
+</div>
+
+<div id="s-ki" class="skill-entry">
+    <h2 class="skill-title">Ki (Spiritual Vocation)</h2>
+    <div class="skill-mechanic-bar">Ki Powers = total pts invested | +1 Physique per 3 pts | Prereqs: Knowledge Ki (1), Read/Scribe (1)</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">A Human Ki Monk with 4 pts has learned 4 Ki Powers. Entering the narrow Corridor of Treachery in Khugron, she activates a Ki Power that allows her to sense the trap floor's vibration before triggering it — an enhanced perception power.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Ki Power activation (per spiritual rules):</span><span class="roll-formula">Successful invocation — enhanced sense active</span></div>
+            <div class="roll-line"><span class="roll-label">Trap floor detection:</span><span class="roll-formula">Character senses the hollow resonance underfoot — 2 ft before the trigger plate</span></div>
+            <div class="roll-line"><span class="roll-outcome">Trap avoided. Party warned.</span></div>
+        </div>
+        <p class="resolution"><strong>The Ki Monk steps back and points to the exact location of both trap plates.</strong> Ki Powers function like spells for tracking and resource management — they're drawn from the same pool as Blessings and Wizardry. The Physique scaling means the Monk also grows more dangerous in melee over time — Ki is the only vocation that directly increases a physical combat characteristic, making it uniquely suited to a fighter who also wants arcane-adjacent utility.</p>
+    </div>
+</div>
+
+<div id="s-knowledge" class="skill-entry">
+    <h2 class="skill-title">Knowledge</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + pts in specific field vs GM DV | +1 Intellect per 3 pts | Each pt = one specific subject area</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Knowledge: Bestiary</div>
+        <p class="scenario">The party encounters a Pyreborn Elder near the Rysahm Ashlands. A character with Knowledge: Bestiary (2 pts) wants to recall what they know about Pyreborn weaknesses and behaviour before engaging.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Knowledge (Bestiary) Roll:</span><span class="roll-formula">1d10 (rolled 7) + 2 = 9</span></div>
+            <div class="roll-line"><span class="roll-label">GM DV (well-known monster type):</span><span class="roll-result">7</span><span class="roll-outcome">— Success by 2</span></div>
+        </div>
+        <p class="resolution">The character recalls that <strong>Pyreborn are highly susceptible to cold, their strikes leave a burning condition, and Elders carry concentrated verath that is dangerous to mishandle.</strong> Succeeding by 2 provides actionable tactical information. A result of 9+ on a harder DV might also reveal the Ashen Mouth specifically, or the Birn hunting campaign context. Failing the roll doesn't mean the character knows nothing — it means they recall inaccurate or incomplete information, which the GM may feed them as misdirection.</p>
+    </div>
+</div>
+
+<div id="s-lightsoul" class="skill-entry">
+    <h2 class="skill-title">Light-Soul (Faith-Bound)</h2>
+    <div class="skill-mechanic-bar">+1 Wound vs Evil targets per pt | +1 WM vs Evil per 3 pts | Evil: Undead, Daemons, Dragons (B/Bl/R/W), Beastmen, Chaos</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">The Warrior Priest with 3 pts in Light-Soul attacks a Blight Elf Spirit-Bound undead husk (Undead type — qualifies as Evil). Standard melee damage before Light-Soul would be 7 wounds.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Standard melee wounds:</span><span class="roll-formula">7</span></div>
+            <div class="roll-line"><span class="roll-label">Light-Soul bonus (3 pts × +1 vs Evil):</span><span class="roll-formula">+3 wounds</span></div>
+            <div class="roll-line"><span class="roll-outcome">Total wounds dealt: 10 — by any means (this applies to spells and ranged too)</span></div>
+        </div>
+        <p class="resolution">The Warrior Priest's strike lands with a consecrated force that the undead husk's physical form can't mitigate normally. <strong>Light-Soul's bonus applies to melee, ranged, and magical attacks simultaneously</strong> — there's no need to re-spec depending on range. Against the Aakzad awakening or any Blight-touched undead, a Light-Soul investment becomes significant quickly. At 6 pts the character also gains WM specifically against Evil attacks — turning them into both an offensive and defensive specialist against the world's darkest threats.</p>
+    </div>
+</div>
+
+<div id="s-mending" class="skill-entry">
+    <h2 class="skill-title">Mending</h2>
+    <div class="skill-mechanic-bar">Healing = pts × 2 | Bleed reduction: –1 wound/turn per pt | Stabilise at 0 wounds with 1 pt | Cannot act while in melee</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">After the Ogruk battle the Flagellant is at 0 wounds and Bleeding. The party's field medic has 4 pts in Mending. Both characters are out of melee. The medic spends an action to treat the Flagellant.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Stabilise (0 wounds → safe):</span><span class="roll-formula">1 action — prevents death this turn</span></div>
+            <div class="roll-line"><span class="roll-label">Healing (next action, Pts × 2):</span><span class="roll-formula">4 × 2 = 8 wounds restored</span></div>
+            <div class="roll-line"><span class="roll-label">Bleed mitigation (4 pts):</span><span class="roll-outcome">Flagellant suffers 4 fewer bleed wounds per turn while medic treats</span></div>
+        </div>
+        <p class="resolution">The Flagellant goes from dead to breathing with 8 wounds in two actions. <strong>The Bleed mitigation means the haemorrhaging slows enough that the healing gains traction</strong> — without it, a bad Bleed can outpace even good Mending. Mending cannot remove the Bleeding condition itself; for that you need magic or a superior tool. The out-of-melee constraint is the critical limitation: Mending requires someone to keep the medic safe while they work, which shapes party positioning significantly.</p>
+    </div>
+</div>
+
+<div id="s-perception" class="skill-entry">
+    <h2 class="skill-title">Perception</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + pts | Counters Charm | Detects magic/illusions for casters | +1 Ranged To-Hit per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Countering a Charm attempt</div>
+        <p class="scenario">A Blight Elf agent in SunsReach attempts to Charm a party member into revealing where the Mortek fragment is being kept. The Charm roll sets a DV of 11. The party member has 3 pts in Perception.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Blight Elf Charm DV:</span><span class="roll-result">11</span></div>
+            <div class="roll-line"><span class="roll-label">Perception Counter Roll:</span><span class="roll-formula">1d10 (rolled 8) + 3 = 11</span><span class="roll-outcome">— Tie: Charm fails (must exceed DV)</span></div>
+        </div>
+        <p class="resolution">The party member catches something wrong in the conversation — the questions slightly too precise, the interest slightly too focused. <strong>The Charm fails.</strong> The Blight Elf agent knows the counter succeeded. The +1 Ranged To-Hit per 3 pts is a meaningful passive bonus for archers and thrown-weapon users — Perception is one of the rare skills that serves both the social and combat layers simultaneously, making it efficient for any build that engages in both.</p>
+    </div>
+</div>
+
+<div id="s-precise" class="skill-entry">
+    <h2 class="skill-title">Precise Strike</h2>
+    <div class="skill-mechanic-bar">Trigger: Natural 10 To-Hit | Secondary crit roll + Skill Points bonus | Armour Shred on success | Compounding on second natural 10</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — The Crit Chain</div>
+        <p class="scenario">An Elf finesse fighter with 3 pts in Precise Strike (Agility-based To-Hit) attacks a Birn Juggernaut with 5 Armour Mitigation. She rolls a natural, unmodified 10 on her To-Hit.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Initial roll:</span><span class="roll-formula">Natural 10 — Crit triggered</span></div>
+            <div class="roll-line"><span class="roll-label">Secondary Crit roll + Precise Strike pts:</span><span class="roll-formula">1d10 (rolled 7) + 3 = 10 — Success</span></div>
+            <div class="roll-line"><span class="roll-label">Armour Shred:</span><span class="roll-formula">Juggernaut Armour reduced by 3 (pts in Precise Strike) for this attack</span></div>
+            <div class="roll-line"><span class="roll-outcome">5 WM → 2 WM this hit. Full wound roll applies at near-full value.</span></div>
+        </div>
+        <p class="resolution">The fighter's blade finds the seam where the armour plates were bolted into the Juggernaut's hide. <strong>The Armour Shred means wounds that would have been largely absorbed now land cleanly.</strong> If the secondary roll had also been a natural 10, the chain would continue — Precise Strike points added to a third roll, though Armour cannot be reduced further. The passive +1 To-Hit and +2 wounds per 3 pts also apply every turn, making Precise Strike the premier offensive investment for a finesse or dual-weapon build.</p>
+    </div>
+</div>
+
+<div id="s-quickness" class="skill-entry">
+    <h2 class="skill-title">Quickness</h2>
+    <div class="skill-mechanic-bar">+1 AP per 3 pts | +1 Agility per 3 pts | Mastered Actions (potion, weapon swap, Inspire/Taunt) cost 1 AP</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">A character with 3 pts in Quickness has +1 AP (standard 2 AP becomes 3 AP). In a turn they want to: drink a healing potion, swap from melee sword to bow, and fire one arrow at the retreating Goblin Shaman. Pre-Quickness this was three actions on a 2-AP character — impossible in one turn.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">AP pool (3 pts Quickness):</span><span class="roll-formula">3 AP available</span></div>
+            <div class="roll-line"><span class="roll-label">Action 1 (Mastered):</span><span class="roll-formula">Drink potion — 1 AP</span></div>
+            <div class="roll-line"><span class="roll-label">Action 2 (Mastered):</span><span class="roll-formula">Weapon swap to bow — 1 AP</span></div>
+            <div class="roll-line"><span class="roll-label">Action 3:</span><span class="roll-outcome">Ranged attack — 1 AP. All three in one turn.</span></div>
+        </div>
+        <p class="resolution"><strong>Quickness is an action economy skill</strong> — the extra AP doesn't just mean one more attack, it means one more everything. The Mastered Actions rule is what makes it particularly potent: mid-combat utility actions (potions, swaps, Inspire calls) that would normally eat a full AP in a standard build become routine. At 6 pts the character has 4 AP and +2 Agility, opening attack combinations and defensive options unavailable to the rest of the party.</p>
+    </div>
+</div>
+
+<div id="s-readwrite" class="skill-entry">
+    <h2 class="skill-title">Read / Write</h2>
+    <div class="skill-mechanic-bar">+1 Language per pt | +1 Intellect per 3 pts | Prerequisite for most advanced academic and magical skills</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">The party discovers an Overseer's Manifesto in the drafting tables of Birn Uluhm. The document is written in an old Dwarven industrial dialect — archaic, technical, and partially ciphered. A character with Read/Write (3 pts) has Common, Old Imperial, and Dwarven recorded. Dwarven covers this dialect.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Language check:</span><span class="roll-formula">Dwarven known (1 pt invested) — no roll required for the language itself</span></div>
+            <div class="roll-line"><span class="roll-label">Ciphered portions (GM DV 9):</span><span class="roll-formula">1d10 (rolled 6) + 3 (pts) = 9</span><span class="roll-outcome">— Fully decoded</span></div>
+        </div>
+        <p class="resolution">The character reads aloud the Overseer's justification for what was done — the Titan-Blood, the rejection of Kel Thurum's authority, the framing of their exile as enlightenment. <strong>The party now has primary source evidence</strong> of Birn Uluhm's intentions and history. Without Read/Write: Dwarven, the document would require either a hired translator (a risk) or remaining unread. Read/Write is cheap (15 XP all races) and its prerequisite role for Wizardry, Runes, Ki, Faith, Druid, and Shaman makes it essential for any magical build from session one.</p>
+    </div>
+</div>
+
+<div id="s-resolve" class="skill-entry">
+    <h2 class="skill-title">Resolve</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + pts vs Fear/Terror/Magic DV | +1 WM vs Blessings/Spells per 3 pts | +1 Max Wounds per pt | +1 Will Power per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Fear Test</div>
+        <p class="scenario">The party enters the approach to Khugron and beholds the mountain maw for the first time — the stone warped into something that suggests teeth. The GM calls a Fear test (DV 8) for all characters without prior exposure.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Character A (3 pts Resolve):</span><span class="roll-formula">1d10 (rolled 6) + 3 = 9 vs DV 8</span><span class="roll-outcome">— Passes</span></div>
+            <div class="roll-line"><span class="roll-label">Character B (0 pts Resolve):</span><span class="roll-formula">1d10 (rolled 4) + Will Power bonus only = 6 vs DV 8</span><span class="roll-fail">— Fails: shaken for 1 turn, –1 to all rolls</span></div>
+        </div>
+        <p class="resolution">Character A presses forward; Character B freezes in the entrance. Against the Aakzad (who generate Terror at higher DVs) or the Arch-Weaver's presence, <strong>Resolve is the difference between acting and being paralysed</strong>. The magic WM component makes it doubly valuable in encounters heavy with Blight Elf Spirit-Binding or Aakzad psychic attacks — physical toughness and arcane resistance in one investment.</p>
+    </div>
+</div>
+
+<div id="s-ride" class="skill-entry">
+    <h2 class="skill-title">Ride (Mount)</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + pts vs GM DV to control beast | Pts unlock mount tiers | Prerequisite for Mounted Combat | Max: Physique</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Staying in the Saddle</div>
+        <p class="scenario">Erik Rose is mounted on his light warhorse during the Skullsmasherz assault. An Ork axe lands on him for 6 wounds. The GM calls a Ride test (DV 7) to absorb the impact and stay mounted.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Ride Test:</span><span class="roll-formula">1d10 (rolled 5) + 2 (Ride pts) = 7</span><span class="roll-outcome">— Exactly meets DV. Stays mounted.</span></div>
+            <div class="roll-line"><span class="roll-label">If failed:</span><span class="roll-formula">Dismounted — 1d6 fall wounds + prone condition + horse may panic</span></div>
+        </div>
+        <p class="resolution">Erik lurches in the saddle but digs his heels in and holds. <strong>The narrow success keeps the cavalry option open for the rest of the fight.</strong> Failing by even 1 would have ended the mounted combat entirely and potentially caused the horse to bolt. The Physique cap on Ride points reflects the physical strength needed to control a war beast — a character whose Physique hasn't kept pace with their Ride investment hits a hard ceiling on mount tier regardless of XP spent.</p>
+    </div>
+</div>
+
+<div id="s-rugged" class="skill-entry">
+    <h2 class="skill-title">Rugged</h2>
+    <div class="skill-mechanic-bar">+2 Max Wounds per pt | +1 Physique per 3 pts | Most cost-efficient wound investment at 15 XP all races</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">A Human mercenary starting character invests their first 15 XP into Rugged (1 pt). Base wounds were 12. They're heading into the mountain dungeon, Earth's Core, for Session 01.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Base wounds:</span><span class="roll-formula">12</span></div>
+            <div class="roll-line"><span class="roll-label">Rugged (1 pt):</span><span class="roll-formula">+2 wounds = 14</span></div>
+            <div class="roll-line"><span class="roll-label">At 3 pts (45 XP total):</span><span class="roll-outcome">+6 wounds + 1 Physique permanently = 18 wounds</span></div>
+        </div>
+        <p class="resolution">At 15 XP per point, Rugged delivers 2 wounds per 15 XP — the best pure wound-per-XP ratio in the compendium for early investment. <strong>It's the first thing any physical character should buy.</strong> The Physique progression at 3 pts creates compounding returns — more Physique improves melee To-Hit, Strength Conditioning scaling, and grapple effectiveness simultaneously. A Rugged/Strength Conditioning/Athletics stack is the foundation of any melee build in Path of the Unknown.</p>
+    </div>
+</div>
+
+<div id="s-runes" class="skill-entry">
+    <h2 class="skill-title">Runes (Ancestral Vocation)</h2>
+    <div class="skill-mechanic-bar">1–3 pts: Minor Temp Runes | 4–6: Greater Runes (session-long) | 7+: Permanent Enchantments | Mutually exclusive with Wizardry</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Greater Rune (5 pts)</div>
+        <p class="scenario">A Dwarven Runesmith (5 pts in Runes) spends the night before assaulting Khugron inscribing a Greater Rune of Warding onto the Pit Fighter's shield. The rune will last the full session.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Runesmith test (DV set by rune complexity):</span><span class="roll-formula">1d10 (rolled 7) + 5 = 12 vs DV 10</span><span class="roll-outcome">— Inscription successful</span></div>
+            <div class="roll-line"><span class="roll-label">Effect:</span><span class="roll-formula">Greater Rune of Warding: +2 WM vs Lithomancy/Earth attacks for the session</span></div>
+        </div>
+        <p class="resolution">The Runesmith's chisel bites into the shield's iron boss with deliberate, unhurried strokes. <strong>The completed rune glows faintly and holds.</strong> At 7+ pts the Runesmith could inscribe Permanent Enchantments directly onto weapons and armour — creating lasting magical items that grow in value as the campaign progresses. The Wizardry lockout is the hardest trade-off in the compendium: the two paths are philosophically and mechanically incompatible. Choose at character creation — Runes rewards patience and preparation; Wizardry rewards flexibility and raw power.</p>
+    </div>
+</div>
+
+<div id="s-shaman" class="skill-entry">
+    <h2 class="skill-title">Shaman (Spiritual Vocation)</h2>
+    <div class="skill-mechanic-bar">+1 Shamanistic Spell per pt | +1 Will Power per 3 pts | Light Armour only | Medium/Heavy armour grounds the magic</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">A Halfling Shaman with 3 pts attempts to Spirit-Bind a wandering undead husk outside the Pale Weald — bringing it under temporary control to use as a distraction. The Shaman is in leather armour (Light — no penalty). She invokes the Spirit-Binding spell from her 3-spell repertoire.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Cast test (per Shaman spell rules):</span><span class="roll-formula">Rolled successfully against the husk's resistance</span></div>
+            <div class="roll-line"><span class="roll-outcome">Husk bound — controlled for the encounter duration or until the Shaman breaks concentration</span></div>
+        </div>
+        <p class="resolution"><strong>The husk turns and begins walking toward the Birn patrol — away from the party.</strong> The Shaman's dual-energy spell list means she can flip between binding and withering in the same encounter, making her the most tactically flexible magical vocation at low investment. The armour restriction is real — stepping into Birn Uluhm's metal-heavy interior will suppress her casting entirely unless she plans around it. A Shaman in heavy armour is just a Halfling with a rattle.</p>
+    </div>
+</div>
+
+<div id="s-shieldsman" class="skill-entry">
+    <h2 class="skill-title">Shieldsman</h2>
+    <div class="skill-mechanic-bar">Declare stance at turn start | Defensive: +1 WM per pt | Offensive: +1 wound per pt on Shield Bash | +1 To-Hit on Bash/Unarmed per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Stance Decision</div>
+        <p class="scenario">A Dwarf frontliner with 4 pts in Shieldsman faces a Birn Juggernaut at the start of his turn. He must declare his stance before the Juggernaut acts. He expects 2–3 incoming hits.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Defensive Stance (4 pts):</span><span class="roll-formula">+4 WM vs all incoming melee and ranged this turn</span></div>
+            <div class="roll-line"><span class="roll-label">Offensive Stance (4 pts):</span><span class="roll-formula">+4 wounds on Shield Bash — but no WM bonus</span></div>
+            <div class="roll-line"><span class="roll-label">Decision — facing 2–3 incoming:</span><span class="roll-outcome">Defensive Stance chosen. 4 WM reduces each hit significantly.</span></div>
+        </div>
+        <p class="resolution">Against 3 incoming attacks of 8 wounds each, Defensive Stance absorbs 12 total wounds across the turn — potentially the difference between taking 24 wounds and 12. <strong>The stance declaration is the core tactical decision of Shieldsman</strong>: if the enemy has high attack count, go Defensive; if the character has a single decisive opening, go Offensive for the Bash bonus. The Brawler's Synergy adding Shieldsman pts to Unarmed tests makes this viable for non-sword builds who want to fight dirty in tight quarters.</p>
+    </div>
+</div>
+
+<div id="s-spirit" class="skill-entry">
+    <h2 class="skill-title">Spirit</h2>
+    <div class="skill-mechanic-bar">+1 wound received from Blessings per pt | +1 Magic WM per 3 pts | +1 Will Power per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">The party's Warrior Priest casts a Healing Blessing on a wounded ally. Base Blessing heals 8 wounds. The ally has 3 pts in Spirit.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Blessing heal (base):</span><span class="roll-formula">8 wounds</span></div>
+            <div class="roll-line"><span class="roll-label">Spirit bonus (3 pts × +1 per pt):</span><span class="roll-formula">+3 wounds received</span></div>
+            <div class="roll-line"><span class="roll-outcome">Total restored: 11 wounds</span></div>
+        </div>
+        <p class="resolution">The Spirit investment amplifies every Blessing that lands on this character — not just healing, but buffing Blessings too. <strong>At 3 pts, Spirit turns an 8-wound heal into an 11-wound heal without the Priest investing anything additional.</strong> The Magic WM at 3 pts also kicks in here, reducing incoming damage from hostile spells. Spirit is the cleaner's best friend: it rewards characters who expect to be healed regularly by making every heal more efficient, and it defends against the Blight Elf Spirit-Binding and Aakzad psychic attacks simultaneously.</p>
+    </div>
+</div>
+
+<div id="s-stamina" class="skill-entry">
+    <h2 class="skill-title">Stamina</h2>
+    <div class="skill-mechanic-bar">+1 Max Wound per pt | +1 turn before Exhaustion per pt | Toxin/Disease/Bleed/Poison WM: 1 per 2 pts + threshold bonus | +1 Awareness per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Poison Resistance</div>
+        <p class="scenario">Crossing into the Pale Weald's outer edge, a character is nicked by a Blight-tipped bolt. The poison deals 3 wounds per turn. The character has 4 pts in Stamina.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Base Toxin WM (4 pts ÷ 2):</span><span class="roll-formula">–2 wounds per turn from poison</span></div>
+            <div class="roll-line"><span class="roll-label">Threshold bonus (3 pts reached → +1 WM):</span><span class="roll-formula">–1 additional = –3 total</span></div>
+            <div class="roll-line"><span class="roll-outcome">Poison net effect: 0 wounds per turn. Neutralised.</span></div>
+        </div>
+        <p class="resolution">The Blight toxin courses through but finds nothing to grip — this body has been marching through swamps and eating field rations for years. <strong>The poison is entirely neutralised at 4 pts Stamina.</strong> Against a 5-wound-per-turn poison it would still deal 2 — but the mitigation stacks. The Exhaustion delay is equally significant in long fights or chase scenes: while other characters flag after their standard turns, the Stamina character keeps moving. Combined with Survival (similar resistance profile), a dedicated wilderness build becomes extremely difficult to attrition down.</p>
+    </div>
+</div>
+
+<div id="s-stealth" class="skill-entry">
+    <h2 class="skill-title">Stealth</h2>
+    <div class="skill-mechanic-bar">Opposed vs Awareness (passive) or Acute Senses (active) | Backstab: ×2 wounds | Ambush: Advantage on first hit | Follow/Shadow: Advantage on sustained tracking</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Backstab</div>
+        <p class="scenario">The party's Halfling rogue has successfully shadowed a Birn scout through the Khugron corridor. The scout is unaware, engaged in examining the wall runes. The rogue attempts a Backstab from behind.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Backstab Test (target Unaware/not engaged):</span><span class="roll-formula">Stealth + Advantage vs Target Awareness + Disadvantage</span></div>
+            <div class="roll-line"><span class="roll-label">Rogue: 1d10 (takes higher of 2 rolls — rolled 7,9) + 3 Stealth = 12</span></div>
+            <div class="roll-line"><span class="roll-label">Scout: 1d10 (takes lower of 2 rolls — rolled 4,2) + 2 Awareness = 4</span><span class="roll-outcome">— Backstab succeeds</span></div>
+            <div class="roll-line"><span class="roll-label">Wounds dealt:</span><span class="roll-formula">Standard dagger hit × 2 (Backstab multiplier)</span></div>
+        </div>
+        <p class="resolution">The rogue's blade finds the gap between the scout's gorget and pauldron. <strong>Standard dagger wounds doubled — the scout drops without raising an alarm.</strong> The Advantage/Disadvantage asymmetry on the test reflects how lopsided this engagement is: the scout doesn't know to look, so their detection is hampered while the rogue's execution is guided by preparation. Against a target who is Aware/Engaged, both sides roll normally — the ×2 multiplier remains but landing it becomes significantly harder.</p>
+    </div>
+</div>
+
+<div id="s-strength" class="skill-entry">
+    <h2 class="skill-title">Strength Conditioning & Grapple</h2>
+    <div class="skill-mechanic-bar">+2 Wounds per pt | +2 Melee Wounds per 3 pts | +1 Physique per 3 pts | Grapple: Advantage on Bars/Doors/Subdues | Restrained condition</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — The Grapple</div>
+        <p class="scenario">The party needs to capture Thrunn (the Iron Root) alive for interrogation rather than kill him. The Pit Fighter with 3 pts in Strength Conditioning attempts to Grapple him instead of a standard weapon attack on her turn.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Grapple test (opposed):</span><span class="roll-formula">Pit Fighter Physique + 1d10 (rolled 7) + 3 (Advantage bonus) = 13</span></div>
+            <div class="roll-line"><span class="roll-label">Thrunn resistance:</span><span class="roll-formula">Physique + 1d10 (rolled 5) = 10</span><span class="roll-outcome">— Restrained</span></div>
+        </div>
+        <p class="resolution">Thrunn is locked — <strong>Movement 0, cannot use 2H weapons, Disadvantage on all Defense/Parry rolls, and external attackers have Disadvantage (Ranged) or –2 (Melee) to hit him</strong>. The party's casters can now work on him without risk of him swinging. Breaking free costs Thrunn his next action and an opposed Physique roll — unlikely given the Pit Fighter's investment. The +2 Melee Wounds per 3 pts also means this character's regular attacks throughout the session deal more wound damage, making Strength Conditioning both a utility and offensive investment simultaneously.</p>
+    </div>
+</div>
+
+<div id="s-survival" class="skill-entry">
+    <h2 class="skill-title">Survival</h2>
+    <div class="skill-mechanic-bar">+1 Max Wound per pt | Half rations required | Advantage vs Cold/Heat/Hunger | +1 Magic WM per 3 pts | +1 Will Power per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Extreme Environment</div>
+        <p class="scenario">The party enters the Rysahm Ashlands without magical heat warding. The GM rules that the extreme heat halves Wound Mitigation for outsiders. A character with 3 pts in Survival rolls to resist heat exhaustion (DV 8).</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Survival Roll (Advantage vs extreme heat):</span><span class="roll-formula">1d10 (takes higher — rolled 6, 9) + 3 = 12</span><span class="roll-outcome">vs DV 8 — Passes</span></div>
+            <div class="roll-line"><span class="roll-label">Without Survival (no Advantage, no bonus):</span><span class="roll-formula">1d10 (rolled 3) = 3</span><span class="roll-fail">vs DV 8 — Fails: exhaustion begins</span></div>
+        </div>
+        <p class="resolution">The Survival character presses on, managing hydration and shade in ways the rest of the party doesn't instinctively understand. <strong>The Advantage on environmental resistance tests is the skill's defining feature in wilderness and hazardous terrain</strong> — the Ashlands, the deep underground cold of Birn Uluhm's lower levels, the toxic fog periphery of the Pale Weald. The half-rations rule also matters on long expeditions: a character with Survival costs half the food resources of a non-Survival character, stretching supplies in extended campaigns significantly.</p>
+    </div>
+</div>
+
+<div id="s-thieving" class="skill-entry">
+    <h2 class="skill-title">Thieving</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + pts + Agility Bonus | Maneuvers: Pick Lock, Pick Pocket, Disarm Trap, Set Trap, Dirty Card | Failure costs: DV+2 (minor) or lock-out (major)</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Trap Disarm (Corridor of Treachery)</div>
+        <p class="scenario">The party has identified the trap floor in Khugron's Corridor of Treachery (thanks to the Ki Monk). A Halfling with 3 pts in Thieving attempts to disarm the first pressure plate. The GM sets DV 9 for this mechanism.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Thieving Roll:</span><span class="roll-formula">1d10 (rolled 4) + 3 (pts) + 1 (Agility bonus) = 8</span></div>
+            <div class="roll-line"><span class="roll-label">DV:</span><span class="roll-result">9</span><span class="roll-fail">— Failed by 1 (Minor Failure)</span></div>
+            <div class="roll-line"><span class="roll-label">Minor Failure consequence:</span><span class="roll-formula">DV increases to 11 on retry. Pins jammed.</span></div>
+        </div>
+        <p class="resolution">The pick slips — the mechanism stiffens. <strong>The trap is now harder to disarm but has not triggered.</strong> The Halfling can try again at DV 11. A second minor failure would push to DV 13. A major failure (failing by 3+) would lock the attempt entirely — requiring superior tools or a different approach. Crucially: failing by 4 or more on a Disarm attempt triggers the trap immediately — dropping both characters down 30 feet into the Oubliette. The stakes are real and the margin is narrow.</p>
+    </div>
+</div>
+
+<div id="s-tracking" class="skill-entry">
+    <h2 class="skill-title">Tracking</h2>
+    <div class="skill-mechanic-bar">Roll: 1d10 + pts + Awareness Bonus vs DV | +1 detail per 2 pts over DV | +1 Awareness per 3 pts</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example</div>
+        <p class="scenario">The party follows the trail of Birn hunters who passed through the Grey Mountains two days ago in fresh snowfall. The GM sets DV 6 (recent tracks, soft terrain). A Ranger with 3 pts in Tracking and +1 Awareness bonus rolls.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Tracking Roll:</span><span class="roll-formula">1d10 (rolled 7) + 3 (pts) + 1 (Awareness) = 11</span></div>
+            <div class="roll-line"><span class="roll-label">DV:</span><span class="roll-result">6</span><span class="roll-outcome">— Succeeded by 5. Gain 2 additional details (1 per 2 pts over).</span></div>
+        </div>
+        <p class="resolution">Base success reveals the tracks exist and the general direction. <strong>The 5-over margin provides 2 bonus details:</strong> (1) the Ranger identifies approximately six individuals by gait depth and boot pattern — a small hunting party, not a war band; (2) one set of tracks is heavier than the rest, dragging slightly — something is being carried, likely a captive or a carcass. This intelligence changes the tactical approach entirely: a 6-person team with cargo is an ambush, not a frontal assault. Tracking doesn't just find trails — it reads intention.</p>
+    </div>
+</div>
+
+<div id="s-wizardry" class="skill-entry">
+    <h2 class="skill-title">Wizardry (The High Arcane)</h2>
+    <div class="skill-mechanic-bar">Spell pool = Wizardry pts + Discipline pts | +1 Spell per pt | +2 Spell Wounds per 3 pts | +1 To-Hit at 9 pts | Mutually exclusive with Runes</div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Tom reaching Level 3</div>
+        <p class="scenario">Tom (Human Wizard, 3 pts Wizardry, 2 pts Discipline) now has a spell pool of 5 (3+2). He invests his new point into Wizardry — gaining a 4th spell slot and triggering the Power of Three +2 Spell Wounds bonus at 3 pts. He selects a new offensive spell from the Wizardry list.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Spell pool after new pt:</span><span class="roll-formula">4 Wizardry + 2 Discipline = 6 memorised spells</span></div>
+            <div class="roll-line"><span class="roll-label">Spell Wounds bonus (3 pts reached):</span><span class="roll-formula">+2 wounds to all spells permanently</span></div>
+            <div class="roll-line"><span class="roll-outcome">New spell added. Cast test example: 1d10 + Wizardry pts + Intellect bonus vs target DV or Defense</span></div>
+        </div>
+        <p class="resolution">Tom's spells now strike harder by default — the +2 Wounds on every cast is passive, requiring nothing beyond having 3 pts. <strong>At 9 pts the +1 To-Hit bonus on all spells activates</strong>, making high-level Wizardry the most reliable arcane accuracy in the system. The Duverger Penalty (40 XP for Dwarves vs 35 XP for Humans) reflects the lore: Dwarves who pursue Wizardry are fighting their own nature to do it. The Runes lockout is permanent — choosing Wizardry at point 1 closes the Runesmith path forever. Choose deliberately.</p>
+    </div>
+</div>
+
+</main>
+
+<a href="#" class="btn-top">↑ Top</a>
+
+</body>
+</html>
