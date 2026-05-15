@@ -26,6 +26,7 @@
         }
 
         .hub-wrapper {
+            max-width: 100%; box-sizing: border-box;
             max-width: 900px;
             width: 100%;
             background: var(--parchment); 
@@ -153,6 +154,12 @@
             letter-spacing: 8px;
         }
 
+        
+        @media screen and (max-width: 768px) {
+            .hub-wrapper { padding: 20px 15px; }
+            h1 { font-size: 22pt; letter-spacing: 2px; }
+            .hub-wrapper p { font-size: 11pt; }
+        }
         @media print {
             @page { size: letter portrait; margin: 0.5in; }
             body { background: var(--parchment); padding: 0; }
