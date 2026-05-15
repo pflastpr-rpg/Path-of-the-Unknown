@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=1100">
 <title>Path of the Unknown — Skills in Play</title>
 <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;700&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -619,31 +619,42 @@ body {
 
 <div id="s-perception" class="skill-entry">
     <h2 class="skill-title">Perception</h2>
-    <div class="skill-mechanic-bar">Roll: 1d10 + pts | Counters Charm | Detects magic/illusions for casters | +1 Ranged To-Hit per 3 pts</div>
+    <div class="skill-mechanic-bar">XP Cost: All Races (35) | Casting Explosion Chain (all 6 disciplines) | +1 Cast Wound per 3 pts | +1 Ranged To-Hit per 3 pts | +1 Intellect per 3 pts | Counters Charm/Illusion</div>
     <div class="example-block">
-        <div class="example-label">In-Play Example — Countering a Charm attempt</div>
-        <p class="scenario">A Blight Elf agent in SunsReach attempts to Charm a party member into revealing where the Mortek fragment is being kept. The Charm roll sets a DV of 11. The party member has 3 pts in Perception.</p>
+        <div class="example-label">In-Play Example — Casting Explosion Chain</div>
+        <p class="scenario">A Human Wizard with 6 pts in Perception and a casting bonus of +3 casts Arcane Bolt at a target with TN 11. She rolls her To-Cast: 1d10 (rolled 10) + 3 casting bonus = 13. That beats TN 11 — confirmed cast. And because the die showed a natural 10, the dice explode.</p>
+        <div class="rolls">
+            <div class="roll-line"><span class="roll-label">Roll 1 (To-Cast):</span><span class="roll-formula">10 + 3 (casting bonus) = 13 — Beats TN 11. Cast confirmed. Natural 10 triggers explosion.</span></div>
+            <div class="roll-line"><span class="roll-label">Roll 2 (Explosion):</span><span class="roll-formula">1d10 (rolled 5) + 6 (Perception pts) = 11 — Meets TN 11. Explosion confirmed. +1d10 wounds.</span></div>
+            <div class="roll-line"><span class="roll-label">Roll 3 (Chain check):</span><span class="roll-formula">Roll 2 was not a natural 10 — chain ends.</span></div>
+            <div class="roll-line"><span class="roll-outcome">Full spell wounds + 1d10 bonus wounds. The passive +1 wound per 3 pts (2 bonus wounds at 6 pts) also applies to the base damage.</span></div>
+        </div>
+        <p class="resolution">The Wizard's focus sharpens the spell at the moment of release — the extra Perception points on the explosion roll are what bridge the gap between a raw 5 and the TN of 11. Without Perception, that chain dies on Roll 2. With 6 pts, it confirms. If Roll 2 had been a natural 10 (5 + 6 = 11, but the raw die showed 10), Roll 3 would trigger — same rules apply. <strong>Perception is the only bonus that applies to casting explosion rolls</strong>, making it the premier investment for any caster who wants to push deeper into the chain.</p>
+    </div>
+    <div class="example-block">
+        <div class="example-label">In-Play Example — Countering a Charm Attempt</div>
+        <p class="scenario">A Blight Elf agent in SunsReach attempts to Charm a party member into revealing where the fragment is being kept. The Charm roll sets a DV of 11. The party member has 3 pts in Perception.</p>
         <div class="rolls">
             <div class="roll-line"><span class="roll-label">Blight Elf Charm DV:</span><span class="roll-result">11</span></div>
             <div class="roll-line"><span class="roll-label">Perception Counter Roll:</span><span class="roll-formula">1d10 (rolled 8) + 3 = 11</span><span class="roll-outcome">— Tie: Charm fails (must exceed DV)</span></div>
         </div>
-        <p class="resolution">The party member catches something wrong in the conversation — the questions slightly too precise, the interest slightly too focused. <strong>The Charm fails.</strong> The Blight Elf agent knows the counter succeeded. The +1 Ranged To-Hit per 3 pts is a meaningful passive bonus for archers and thrown-weapon users — Perception is one of the rare skills that serves both the social and combat layers simultaneously, making it efficient for any build that engages in both.</p>
+        <p class="resolution">The party member catches something wrong — the questions slightly too precise, the interest slightly too focused. <strong>The Charm fails.</strong> Perception is one of the rare skills that serves combat, casting, and the social layer simultaneously, making it an efficient investment for any build.</p>
     </div>
 </div>
 
 <div id="s-precise" class="skill-entry">
     <h2 class="skill-title">Precise Strike</h2>
-    <div class="skill-mechanic-bar">Trigger: Natural 10 To-Hit | Secondary crit roll + Skill Points bonus | Armour Shred on success | Compounding on second natural 10</div>
+    <div class="skill-mechanic-bar">Applies to: Melee &amp; Ranged Explosion Rolls (2nd roll onward) | Passive: +1 To-Hit per 3 pts | Passive: +2 Wounds per 3 pts | Advanced Skill triggers still require beating Defense</div>
     <div class="example-block">
-        <div class="example-label">In-Play Example — The Crit Chain</div>
-        <p class="scenario">An Elf finesse fighter with 3 pts in Precise Strike (Agility-based To-Hit) attacks a Birn Juggernaut with 5 Armour Mitigation. She rolls a natural, unmodified 10 on her To-Hit.</p>
+        <div class="example-label">In-Play Example — The Explosion Chain</div>
+        <p class="scenario">An Elf finesse fighter with 6 pts in Precise Strike (To-Hit bonus +2) attacks a Birn Juggernaut with Defense 12. She rolls her To-Hit: 1d10 (rolled 10) + 2 = 12. Meets Defense — hit confirmed. Natural 10 triggers explosion.</p>
         <div class="rolls">
-            <div class="roll-line"><span class="roll-label">Initial roll:</span><span class="roll-formula">Natural 10 — Crit triggered</span></div>
-            <div class="roll-line"><span class="roll-label">Secondary Crit roll + Precise Strike pts:</span><span class="roll-formula">1d10 (rolled 7) + 3 = 10 — Success</span></div>
-            <div class="roll-line"><span class="roll-label">Armour Shred:</span><span class="roll-formula">Juggernaut Armour reduced by 3 (pts in Precise Strike) for this attack</span></div>
-            <div class="roll-line"><span class="roll-outcome">5 WM → 2 WM this hit. Full wound roll applies at near-full value.</span></div>
+            <div class="roll-line"><span class="roll-label">Roll 1 (To-Hit):</span><span class="roll-formula">10 + 2 (To-Hit bonus) = 12 — Meets Defense 12. Hit confirmed. Natural 10 triggers explosion.</span></div>
+            <div class="roll-line"><span class="roll-label">Roll 2 (Explosion):</span><span class="roll-formula">1d10 (rolled 6) + 6 (Precise Strike pts) = 12 — Meets Defense 12. Explosion confirmed. +1d10 wounds.</span></div>
+            <div class="roll-line"><span class="roll-label">Roll 3 (Chain check):</span><span class="roll-formula">Roll 2 was not a natural 10 — chain ends.</span></div>
+            <div class="roll-line"><span class="roll-outcome">Full hit wounds + 1d10 bonus wounds. The passive +2 wounds per 3 pts (4 bonus wounds at 6 pts) also applies to the base hit.</span></div>
         </div>
-        <p class="resolution">The fighter's blade finds the seam where the armour plates were bolted into the Juggernaut's hide. <strong>The Armour Shred means wounds that would have been largely absorbed now land cleanly.</strong> If the secondary roll had also been a natural 10, the chain would continue — Precise Strike points added to a third roll, though Armour cannot be reduced further. The passive +1 To-Hit and +2 wounds per 3 pts also apply every turn, making Precise Strike the premier offensive investment for a finesse or dual-weapon build.</p>
+        <p class="resolution">Without Precise Strike, a raw 6 on the explosion roll is a dead chain against Defense 12. With 6 pts, it confirms cleanly. If Roll 2 had been a natural 10 (6 + 6 = 12, raw die showing 10), Roll 3 would trigger on the same rules. <strong>Precise Strike is the only bonus that applies to melee and ranged explosion rolls</strong> — it is the premier offensive investment for any martial build that wants to push the chain against high-Defense targets. Note: Precise Strike has no effect on casting explosion rolls — that is Perception's domain.</p>
     </div>
 </div>
 
