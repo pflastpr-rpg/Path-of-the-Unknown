@@ -90,6 +90,11 @@
             .wrapper { padding: 18px 14px 30px; border-width: 3px; }
             .page-title { font-size: 1.8em; letter-spacing: 1px; }
         }
+
+        /* ── iPad table fix: horizontal scroll on overflow ── */
+        table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        table thead, table tbody, table tr { display: table; width: 100%; table-layout: fixed; }
+        table th, table td { word-break: break-word; }
         @media print {
             body { background: none; padding: 0; overflow-x: visible; }
             .wrapper { box-shadow: none; border: 2px solid var(--iron); max-width: 100%; }
