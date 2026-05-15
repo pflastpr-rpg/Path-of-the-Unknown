@@ -25,7 +25,6 @@
         }
 
         .hub-wrapper {
-            max-width: 100%; box-sizing: border-box;
             max-width: 900px;
             width: 100%;
             background: var(--parchment); /* Replaced the muddy brown card-bg */
@@ -248,11 +247,6 @@
         }
 
         /* --- PRINT FORMATTING (LETTER) --- */
-
-        /* ── iPad table fix: horizontal scroll on overflow ── */
-        table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        table thead, table tbody, table tr { display: table; width: 100%; table-layout: fixed; }
-        table th, table td { word-break: break-word; }
         @media print {
             @page { size: letter portrait; margin: 0.5in; }
             body { background: var(--parchment); padding: 0; }
@@ -474,16 +468,19 @@
 
         <div class="trait-box">
             <span class="trait-title">Astounding Success (Exploding Dice)</span>
-            <span style="color: var(--gold); font-weight: bold; font-size: 10pt;">NATURAL 10</span>
-            <p>If your To-Hit roll is an <strong>unmodified 10</strong>, you immediately roll a second 1d10. If this second roll also meets or beats the target's Defense, you gain an <strong>additional 1d10</strong> to calculate the total wounds caused.</p>
-            <p><strong>Chaining Successes:</strong> If subsequent rolls result in another 10, you may roll as many times as possible to continuously increase the wounds!</p>
+            <span style="color: var(--gold); font-weight: bold; font-size: 10pt;">NATURAL 10 — ON A CONFIRMED HIT</span>
+            <p>If your To-Hit roll (1d10 + To-Hit bonus) meets or beats the target's Defense <strong>and</strong> the d10 result was a natural 10, the dice explode. Roll a second 1d10. <strong>No To-Hit bonus applies to this roll</strong> — only points in <strong>Precise Strike</strong> count.</p>
+            <ul style="margin-top: 10px;">
+                <li>If the raw second roll (+ any Precise Strike points) meets or beats Defense → you deal an <strong>extra 1d10 wounds</strong> on top of your original hit.</li>
+                <li>If it falls short of Defense → the chain ends. You still deal the original hit's wounds normally.</li>
+            </ul>
+            <p style="margin-top: 10px;"><strong>Chaining:</strong> If the second roll is itself a natural 10 and meets or beats Defense, you gain another extra 1d10 wounds and roll again. The chain continues as long as each natural 10 meets Defense. Precise Strike points apply to every roll in the chain.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">The Flub (Catastrophic Failure)</span>
+            <span class="trait-title">The Miss (Natural 1)</span>
             <span style="color: var(--gold); font-weight: bold; font-size: 10pt;">NATURAL 1</span>
-            <p>If your To-Hit result is an <strong>unmodified 1</strong>, it is an automatic miss. You may spend a point of <strong>Luck</strong> to avoid further penalties. If you cannot, you must roll a second 1d10.</p>
-            <p>If the second roll is also a 1, you suffer a catastrophic failure. The DM will present a test to avoid dropping your weapon, striking an ally, or suffering a magical miscast.</p>
+            <p>If your To-Hit d10 shows a natural 1, it is an automatic miss regardless of bonuses. No further penalties apply.</p>
         </div>
     </div>
    
@@ -1050,7 +1047,12 @@
             <span class="trait-title">Precise Strike</span>
             <strong>XP Cost:</strong> Elf (40) | Dwarf/Human (45) | Halfling (50)
             <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: Melee or Ranged Proficiency</span>
-            <p>Deadly accuracy. On a natural 10 To-Hit, add your skill points to the roll to bypass enemy armor/mitigation. Every 3 points grants a passive +1 To-Hit and +2 bonus Wounds on normal attacks.</p>
+            <p>Deadly accuracy that turns near-misses on explosion rolls into confirmed hits. Your Precise Strike skill points apply to the <strong>second and all subsequent explosion rolls</strong> in an Exploding Dice chain — replacing the To-Hit bonus that does not carry over to those rolls.</p>
+            <ul style="margin-top: 10px;">
+                <li><strong>Explosion Roll Bonus:</strong> Add all your Precise Strike points to each explosion roll. This allows you to meet or beat high Defense values that a raw d10 alone could not reach.</li>
+                <li><strong>Passive Bonus:</strong> Every 3 points grants <strong>+1 To-Hit</strong> on your initial attack roll and <strong>+2 bonus Wounds</strong> on every hit.</li>
+                <li><strong>Advanced Skill Triggers:</strong> Any Advanced Skill that activates "on a natural 10" still requires the explosion roll to meet or beat the target's Defense. Precise Strike points count toward that threshold.</li>
+            </ul>
         </div>
 
         <div class="trait-box">
