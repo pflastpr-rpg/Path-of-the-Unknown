@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path of the Unknown - Magic Items</title>
+    <style>
+        :root { 
+            /* Slate & Crimson Theme */
+            --iron: #02070e;      /* Slate Grey / Gunmetal */
+            --blood: #A81818;     /* Crimson Red */
+            --parchment: #f3e7c9; /* Parchment Cream */
+            --gold: #B8860B;      /* Burnished Gold */
+            --ink: #111111;       /* Deep Ink */
+        }
+
+        body { 
+            background: #1E1E24; 
+            color: var(--ink); 
+            font-family: 'Courier New', Courier, monospace; 
+            display: flex; 
+            justify-content: center; 
+            padding: 40px 20px; 
+            overflow-x: hidden; 
+            line-height: 1.6;
+        }
+
+        .hub-wrapper {
+            max-width: 900px;
+            width: 100%;
+            background: var(--parchment); 
+            border: 5px solid var(--iron);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6); 
+            padding: 50px;
+            border-radius: 4px;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--blood);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .btn-hub {
+            background: var(--ink);
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            padding: 8px 20px;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 12pt;
+            text-transform: uppercase;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-hub:hover {
+            background: var(--blood);
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 32pt;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 3px 3px 0px var(--gold);
+            margin: 0;
+            text-align: center;
+        }
+
+        .tagline {
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            font-style: italic;
+            color: var(--blood);
+            margin-top: -10px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--blood);
+            font-size: 20pt;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 5px;
+            margin-top: 40px;
+        }
+
+        p {
+            font-size: 12pt;
+            font-weight: bold;
+        }
+
+        /* --- UPGRADED ITEM BOXES --- */
+        .rpg-columns .trait-box, .trait-box {
+            width: 100%;
+            box-sizing: border-box;
+            background: #FCF7EB; 
+            border: 2px solid var(--ink); 
+            border-left: 8px solid var(--blood); 
+            border-bottom: 6px solid var(--ink); 
+            padding: 20px;
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.15); 
+            margin-bottom: 15px; 
+        }
+
+        .trait-title {
+            font-size: 15pt;
+            font-weight: 900;
+            color: var(--blood); 
+            text-transform: uppercase;
+            border-bottom: 2px dotted var(--gold); 
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .trait-box strong {
+            color: var(--blood);
+        }
+
+        .full-width {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .rpg-columns {
+            display: grid;
+            grid-template-columns: 1fr; 
+            gap: 20px; 
+            align-items: start;
+        }
+
+        .magic-break {
+            column-span: all;
+            border-top: 8px double var(--ink);
+            border-bottom: 8px double var(--ink);
+            padding: 40px 0;
+            margin: 60px 0;
+            text-align: center;
+            background: rgba(0,0,0,0.02);
+        }
+
+        .magic-break h2 {
+            margin: 0;
+            border: none;
+            font-size: 28pt;
+            letter-spacing: 8px;
+        }
+
+        @media print {
+            @page { size: letter portrait; margin: 0.5in; }
+            body { background: var(--parchment); padding: 0; }
+            .hub-wrapper { border: 2px solid var(--ink); box-shadow: none; padding: 20px; }
+            .nav-bar { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hub-wrapper">
+    <div class="nav-bar">
+        <a href="Core_Rules.html" class="btn-hub">← Return to Core Rules</a>
+        <span style="font-weight: 900; font-size: 14pt; color: var(--ink);">THE ARMORY</span>
+    </div>
+
+    <h1>Relics & Artifacts</h1>
+    <div class="tagline">"Forged in forgotten eras, bought with blood."</div>
+
+    <div class="full-width">
+        <p style="text-align: center; font-size: 13pt;"><em>Powerful enchantments warp the very weave of reality. These magical armaments and trinkets defy the standard rules of combat, granting their wielders devastating advantages.</em></p>
+    </div>
+
+    <div class="magic-break" style="margin-top: 40px;">
+        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">INDEX OF</span>
+        <h2 id="magic-items">Magic Items</h2>
+    </div>
+
+    <div class="rpg-columns">
+        
+        <div class="trait-box">
+            <span class="trait-title">Mace of Disruption</span>
+            <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 10px;">TYPE: Blunt Weapon | BONUS: +1 Magical</span>
+            <p>When a creature of evil is struck by this mace, they must make a <strong>Willpower test</strong> based upon the wielder’s Faith skill. If failed, the target suffers <strong>2d10 x 2 + melee bonus</strong> wounds.</p>
+            <p>If the creature is Undead and fails the test, they additionally suffer the effects of the <em>Turn Undead</em> spell. This applies to each target successfully struck with the mace.</p>
+        </div>
+
+        <div class="trait-box" style="border-left-color: var(--gold);">
+            <span class="trait-title">Pearl of Power</span>
+            <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 10px;">TYPE: Trinket / Focus</span>
+            <p>This item allows the wizard to cast an additional spell that is not currently memorized. This prevents the character from having to cast a spell not already memorized with the increased TN penalty.</p>
+            <p>The caster may choose <strong>any spell available to them</strong> from the base wizard spells and any spell in an advanced path.</p>
+        </div>
+
+        <div class="trait-box" style="border-left-color: #3D1A6E;">
+            <span class="trait-title">Boccob's Blessed Book</span>
+            <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 10px;">TYPE: Wondrous Tome</span>
+            <p>A durable, waterproof, and locked tome that can hold up to 45 spells. Simply possessing the book provides a <strong>+1 bonus to any Willpower test</strong>.</p>
+            <p>If the wizard wields the book in place of a weapon and reads directly from it while casting an already known spell, the selected spell's <strong>TN is lowered by 1</strong>. For any non-memorized spell cast while reading from the book, the standard penalty to the TN is removed altogether.</p>
+        </div>
+
+        <div class="trait-box">
+            <span class="trait-title">Ardent Crusader</span>
+            <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 10px;">TYPE: Edged Weapon | BONUS: +3 Magical (Conditional)</span>
+            <p>In the hands of any character other than a Crusader, this holy sword will perform only as a standard <strong>+2 Sword</strong>.</p>
+            <p>In the hands of a <strong>Crusader</strong>, however, it creates a magic resistance aura granting <strong>+2 Wound Mitigation vs spells</strong> in a 5-foot radius. Furthermore, it grants a <strong>+1 bonus to any Willpower test</strong> in a 5-foot radius, and inflicts <em>Normal + Bonus + Light-Soul points</em> of damage upon chaotic evil opponents (Beasts of Chaos, Daemonic creatures and their followers, Undead).</p>
+        </div>
+
+        <div class="trait-box" style="border-left-color: var(--ink);">
+            <span class="trait-title">Ring of Spell Turning</span>
+            <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 10px;">TYPE: Jewelry</span>
+            <p>If a spell is cast upon the wearer (excluding AoE or Touch spells), the wearer must roll against the caster’s To-Hit result. The ring provides a <strong>+2 bonus</strong> to the wearer's roll.</p>
+            <ul>
+                <li style="margin-bottom: 8px;"><strong>Equal Result:</strong> If the result is exactly equal to the caster’s success, the spell is simply dispelled, affecting no one.</li>
+                <li><strong>Higher Result:</strong> If the wearer gains a minimum of 1 higher on their result, the spell is immediately <strong>turned back onto the casting wizard</strong>.</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
