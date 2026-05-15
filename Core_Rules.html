@@ -25,6 +25,7 @@
         }
 
         .hub-wrapper {
+            max-width: 100%; box-sizing: border-box;
             max-width: 900px;
             width: 100%;
             background: var(--parchment); /* Replaced the muddy brown card-bg */
@@ -247,6 +248,11 @@
         }
 
         /* --- PRINT FORMATTING (LETTER) --- */
+
+        /* ── iPad table fix: horizontal scroll on overflow ── */
+        table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        table thead, table tbody, table tr { display: table; width: 100%; table-layout: fixed; }
+        table th, table td { word-break: break-word; }
         @media print {
             @page { size: letter portrait; margin: 0.5in; }
             body { background: var(--parchment); padding: 0; }
