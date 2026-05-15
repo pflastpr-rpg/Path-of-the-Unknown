@@ -1182,7 +1182,7 @@ const SKILL_COSTS = {
     "Inspire":{dwarf:20,elf:20,human:20,halfling:25},
     "Iron Will":{dwarf:25,elf:30,halfling:30,human:30},
     "Knowledge":{dwarf:15,elf:15,halfling:15,human:15},
-    "Perception":{dwarf:30,elf:30,halfling:30,human:30},
+    "Perception":{dwarf:35,elf:35,halfling:35,human:35},
     "Precise Strk":{elf:40,dwarf:45,human:45,halfling:50},
     "Quickness":{elf:35,halfling:35,dwarf:40,human:40},
     "Read/Write":{dwarf:15,elf:15,halfling:15,human:15},
@@ -1616,7 +1616,8 @@ function calculateCastStats(state, stats, armorData, magicState) {
     else if (magicState.isMagActive) { castWoundBase = stats.intellect; skillWoundBonus = Math.floor(state.skillPts.wizardry / 3) * 3; }
     
     const castDmgBon = gv('bon-wounds-cast');
-    const finalCastWounds = castWoundBase + skillWoundBonus + arcaneBonus + castDmgBon;
+    const percCastBonus = Math.floor(state.skillPts.perception / 3);
+    const finalCastWounds = castWoundBase + skillWoundBonus + arcaneBonus + castDmgBon + percCastBonus;
     castStats.castWounds = magicState.isMagicActive ? finalCastWounds : 0;
     sv('cm-wounds-cast', castStats.castWounds);
     sv('cm-wevil-cast', magicState.isMagicActive ? castStats.castWounds + state.skillPts.lightSoul : 0);
