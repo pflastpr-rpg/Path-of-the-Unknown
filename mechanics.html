@@ -90,11 +90,6 @@
             .wrapper { padding: 18px 14px 30px; border-width: 3px; }
             .page-title { font-size: 1.8em; letter-spacing: 1px; }
         }
-
-        /* ── iPad table fix: horizontal scroll on overflow ── */
-        table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        table thead, table tbody, table tr { display: table; width: 100%; table-layout: fixed; }
-        table th, table td { word-break: break-word; }
         @media print {
             body { background: none; padding: 0; overflow-x: visible; }
             .wrapper { box-shadow: none; border: 2px solid var(--iron); max-width: 100%; }
@@ -144,8 +139,8 @@
         <p>Every action resolves with a <strong>1d10 roll</strong> that must meet or beat a <strong>Difficulty Value (DV)</strong>.</p>
         <div class="formula-block">RESULT = 1d10 + Relevant Characteristic (+ any skill/bonus) ≥ DV</div>
         <ul>
-            <li><strong>Natural 10 (Astounding Success):</strong> Always hits. Roll a second 1d10 — if it also meets the DV, add +1d10 wounds. Chain continues on each subsequent 10.</li>
-            <li><strong>Natural 1 (The Flub):</strong> Always fails. Spend 1 Luck to avoid penalty, or roll again — a second 1 triggers a catastrophic failure (dropped weapon, hit ally, miscast).</li>
+            <li><strong>Natural 10 — Exploding Dice (Confirmed Hit/Cast Only):</strong> If your To-Hit or To-Cast roll (1d10 + bonus) meets or beats Defense or TN <em>and</em> the die showed a 10, roll a second 1d10. No To-Hit or casting bonus on this roll. For <strong>melee/ranged</strong> attacks, only <strong>Precise Strike</strong> points apply. For <strong>casting</strong> (all six disciplines), only <strong>Perception</strong> points apply. If that roll (+ applicable skill points) meets or beats Defense/TN, add +1d10 wounds. Chain continues on each subsequent natural 10 by the same rule. Falling short on any explosion roll ends the chain — all wounds already confirmed are kept.</li>
+            <li><strong>Natural 1 (Miss):</strong> An automatic miss. No further penalties.</li>
             <li><strong>Advantage:</strong> Roll 2d10, keep the higher.</li>
             <li><strong>Disadvantage:</strong> Roll 2d10, keep the lower.</li>
             <li><strong>Held Action penalty:</strong> –2 to To-Hit or To-Cast. Removed entirely at 6+ pts in Discipline.</li>
