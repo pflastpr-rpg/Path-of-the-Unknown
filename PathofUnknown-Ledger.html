@@ -268,7 +268,7 @@
         #spells-grid .k-item { gap: 1px; }
         #spells-grid .k-item.cantrip-slot { border-color: #3D1A6E; background: rgba(61,26,110,0.06); }
         #spells-grid .k-item.cantrip-slot .spell-select { color: #3D1A6E; }
-        #spells-grid .k-item.cantrip-slot::before { content: "★"; font-size: 8pt; color: #3D1A6E; flex-shrink: 0; padding-right: 2px; }
+        #spells-grid .k-item.cantrip-slot::before { content: "✦"; font-size: 8pt; color: #3D1A6E; flex-shrink: 0; padding-right: 2px; }
         .k-item select.spell-select { font-size: 12pt; cursor: help; }
         .k-item input.spell-cost { flex: 0 0 60px !important; width: 60px; border-left: 1px solid rgba(0,0,0,0.2) !important; padding: 0 1px; font-size: 10.5pt; text-align: center; color: var(--blood); background: rgba(0,0,0,0.08); }
         .k-item input.spell-ap { flex: 0 0 38px !important; width: 38px; font-size: 10.5pt; padding: 0; text-align: center; background: rgba(168,24,24,0.1); color: var(--blood); font-weight: 900; border: none; border-left: 1px solid rgba(0,0,0,0.1); }
@@ -1173,18 +1173,18 @@ const SKILL_COSTS = {
     "Mending":{halfling:20,dwarf:25,elf:25,human:25},
     "Light-Soul":{dwarf:20,elf:20,halfling:20,human:20},
     "Counter":{dwarf:30,elf:30,halfling:30,human:30},
-    "Discipline":{dwarf:15,elf:15,human:15,halfling:20},
+    "Discipline":{dwarf:15,elf:15,human:15,halfling:15},
     "Enraged":{dwarf:30,elf:35,human:35,halfling:40},
-    "Evasion":{elf:15,halfling:10,human:20,dwarf:25},
+    "Evasion":{elf:15,halfling:10,human:20,dwarf:20},
     "Evaluate":{dwarf:15,elf:15,halfling:15,human:15},
-    "Fortitude":{dwarf:45,halfling:55,human:50,elf:55},
+    "Fortitude":{dwarf:40,halfling:45,human:50,elf:55},
     "Hard as Nails":{dwarf:25,human:30,elf:35,halfling:35},
     "Inspire":{dwarf:20,elf:20,human:20,halfling:25},
     "Iron Will":{dwarf:25,elf:30,halfling:30,human:30},
     "Knowledge":{dwarf:15,elf:15,halfling:15,human:15},
     "Perception":{dwarf:35,elf:35,halfling:35,human:35},
     "Precise Strk":{elf:40,dwarf:45,human:45,halfling:50},
-    "Quickness":{elf:35,halfling:35,dwarf:40,human:40},
+    "Quickness":{elf:40,halfling:35,dwarf:40,human:40},
     "Read/Write":{dwarf:15,elf:15,halfling:15,human:15},
     "Resolve":{dwarf:15,elf:15,halfling:15,human:15},
     "Rugged":{dwarf:15,elf:15,halfling:15,human:15},
@@ -1199,9 +1199,9 @@ const SKILL_COSTS = {
     "Focus":{dwarf:35,elf:35,halfling:35,human:35},
     "Faith":{dwarf:30,elf:35,halfling:30,human:30},
     "Druidism":{elf:30,halfling:30,dwarf:35,human:35},
-    "Wizardry":{elf:25,halfling:30,human:35,dwarf:40},
+    "Wizardry":{elf:30,halfling:30,human:35,dwarf:40},
     "Shaman":{halfling:35,human:30,dwarf:35,elf:35},
-    "Ki":{human:30,dwarf:35,elf:35,halfling:35}
+    "Ki":{human:25,dwarf:35,elf:35,halfling:35}
 };
 
 const COMBAT_CHECK_COSTS = {
@@ -1211,7 +1211,7 @@ const COMBAT_CHECK_COSTS = {
 
 const raceData = {
     "dwarf":{wounds:12,move:12},"elf":{wounds:6,move:18},
-    "halfling":{wounds:3,move:12},"human":{wounds:9,move:15},"none":{wounds:0,move:0}
+    "halfling":{wounds:6,move:12},"human":{wounds:9,move:15},"none":{wounds:0,move:0}
 };
 
 const advancedSkills = [
@@ -1970,9 +1970,8 @@ function updateSpellUnlocks() {
     const combinedPts = activeMagicPts + Math.floor(disciplinePts / 3);
     const totalUnlocked = combinedPts > 5 ? combinedPts - 5 : 0;
 
-    // Build full spell list for the first CANTRIP_SLOTS slots (any spell, not just cantrips)
-    let allSpellsHTML = '<option value="" data-tn="">- Select Spell -</option>';
-    let cantripsHTML  = '<option value="" data-tn="">- Cantrip -</option>'; // kept for reference only
+    // Build cantrip-only options for the first CANTRIP_SLOTS slots
+    let cantripsHTML = '<option value="" data-tn="">- Cantrip -</option>';
     if (isMagicPathActive && activeTradition) {
         const spellList = activeTradition === "Religion" ? RELIGION_SPELLS :
                           activeTradition === "Druidic"  ? DRUIDIC_SPELLS  :
@@ -1980,17 +1979,8 @@ function updateSpellUnlocks() {
                           activeTradition === "Ki"       ? KI_POWERS       :
                           activeTradition === "Runes"    ? RUNES_LIST      :
                           activeTradition === "Shaman"   ? SHAMAN_SPELLS   : [];
-        // Cantrips first, then the rest — keeps the list sensible
-        const cantrips = spellList.filter(s => s.tn === "TN0" || s.tn === "T0/P~");
-        const regular  = spellList.filter(s => s.tn !== "TN0" && s.tn !== "T0/P~");
-        if (cantrips.length) {
-            allSpellsHTML += '<option disabled>── Cantrips ──</option>';
-            cantrips.forEach(s => allSpellsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`);
-        }
-        if (regular.length) {
-            allSpellsHTML += '<option disabled>── Spells ──</option>';
-            regular.forEach(s => allSpellsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`);
-        }
+        spellList.filter(s => s.tn === "TN0" || s.tn === "T0/P~")
+                 .forEach(s => cantripsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`);
     }
 
     document.querySelectorAll('#spells-grid .k-item').forEach((slot, index) => {
@@ -2006,16 +1996,16 @@ function updateSpellUnlocks() {
         }
 
         if (isCantrip) {
-            // First 5 slots — always unlocked, full spell list available (vocation picks)
+            // Cantrip slot — always unlocked, only TN0 options
             slot.classList.remove('locked');
             slot.classList.add('cantrip-slot');
             if (sel) {
                 sel.disabled = false;
-                // Repopulate if tradition changed or list is stale
+                // Repopulate if the tradition has changed or cantrip options are missing
                 const slotTradition = sel.dataset.tradition || '';
-                if (slotTradition !== (activeTradition || '') || sel.querySelectorAll('option').length <= 2) {
+                if (slotTradition !== (activeTradition || '') || !sel.querySelector('option[data-tn="TN0"]') && !sel.querySelector('option[data-tn="T0/P~"]')) {
                     const saved = sel.value;
-                    sel.innerHTML = allSpellsHTML;
+                    sel.innerHTML = cantripsHTML;
                     sel.dataset.tradition = activeTradition || '';
                     if (saved) sel.value = saved;
                     updateSpellCost(sel);
