@@ -703,7 +703,7 @@
             <div class="id-f w-name"><label>Name</label><input type="text" id="char-name-input" maxlength="31" oninput="document.title = this.value ? this.value + ' - RPG Ledger' : 'RPG Ledger v14'"></div>
             <div class="id-f w-race">
                 <label>Race</label>
-                <select id="race-select" onchange="upd()">
+                <select id="race-select" onchange="enforceRaceWeaponRules(); upd()">
                     <option value="none">-</option>
                     <option value="dwarf">Dwarf</option>
                     <option value="elf">Elf</option>
@@ -957,7 +957,7 @@
 
 <div class="spec-container">
     <div class="spec-half">
-        <div class="h-box">Melee Specialization</div>
+        <div class="h-box" style="display:flex;justify-content:space-between;align-items:center;">Melee Specialization<span id="melee-spec-cost" style="font-size:11pt;font-weight:900;letter-spacing:1px;color:#f0d080;opacity:1;"></span></div>
         <div class="c-box">
             <div class="c-l-spec">
                 <div id="mp" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; margin-top:2px;"></div>
@@ -969,7 +969,7 @@
         </div>
     </div>
     <div class="spec-half">
-        <div class="h-box">Range Specialization</div>
+        <div class="h-box" style="display:flex;justify-content:space-between;align-items:center;">Range Specialization<span id="range-spec-cost" style="font-size:11pt;font-weight:900;letter-spacing:1px;color:#f0d080;opacity:1;"></span></div>
         <div class="c-box">
             <div class="c-l-spec">
                 <div id="rp" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; margin-top:2px;"></div>
@@ -1205,8 +1205,8 @@ const SKILL_COSTS = {
 };
 
 const COMBAT_CHECK_COSTS = {
-    melee:{dwarf:25,elf:30,human:30,halfling:35},
-    range:{elf:25,dwarf:30,halfling:30,human:30}
+    melee:{dwarf:25,elf:25,human:30,halfling:30},
+    range:{elf:25,dwarf:25,human:30,halfling:30}
 };
 
 const raceData = {
@@ -1260,6 +1260,19 @@ const RUNES_LIST=[{name:"Minor Ward Rune",tn:"T0/P~",desc:"Scratch an alerting w
 function calcCompounding(n, base) {
     if (n <= 0 || base <= 0) return 0;
     return (n / 2) * (2 * base + (n - 1) * base);
+}
+
+function calcWeaponCompounding(n, base) {
+    // First spec = base, each subsequent = previous × 3 (geometric)
+    if (n <= 0 || base <= 0) return 0;
+    let total = 0, cost = base;
+    for (let i = 0; i < n; i++) { total += cost; cost *= 3; }
+    return total;
+}
+
+function marginalWeaponCost(n, base) {
+    // Cost of the nth specialisation (1-indexed)
+    return base * Math.pow(3, n - 1);
 }
 
 function g(id) { return document.getElementById(id); }
@@ -1544,8 +1557,18 @@ function processActionsAndFortune(state) {
     if (state.race !== "none") {
         let meleeCount = document.querySelectorAll('.melee-spec-cb:checked').length;
         let rangeCount = document.querySelectorAll('.range-spec-cb:checked').length;
-        state.spentXP += calcCompounding(meleeCount, COMBAT_CHECK_COSTS.melee[state.race] || 30);
-        state.spentXP += calcCompounding(rangeCount, COMBAT_CHECK_COSTS.range[state.race] || 30);
+        state.spentXP += calcWeaponCompounding(meleeCount, COMBAT_CHECK_COSTS.melee[state.race] || 30);
+        state.spentXP += calcWeaponCompounding(rangeCount, COMBAT_CHECK_COSTS.range[state.race] || 30);
+
+        // Update cost badges on specialisation headers
+        const mBase = COMBAT_CHECK_COSTS.melee[state.race] || 30;
+        const rBase = COMBAT_CHECK_COSTS.range[state.race] || 30;
+        const mNext = marginalWeaponCost(meleeCount + 1, mBase);
+        const rNext = marginalWeaponCost(rangeCount + 1, rBase);
+        const mBadge = document.getElementById('melee-spec-cost');
+        const rBadge = document.getElementById('range-spec-cost');
+        if (mBadge) mBadge.textContent = `${mBase} XP/pt · Next: ${mNext} XP`;
+        if (rBadge) rBadge.textContent = `${rBase} XP/pt · Next: ${rNext} XP`;
         document.querySelectorAll('.mounted-cb:checked').forEach(() => { state.spentXP += 100; });
     }
 }
@@ -1940,6 +1963,29 @@ function upd() {
 }
 
 // ================================================================
+// 3b. RACIAL WEAPON ENFORCEMENT
+// ================================================================
+function enforceRaceWeaponRules() {
+    const currentRace = document.getElementById('race-select')?.value || 'none';
+    if (currentRace !== 'halfling') return;
+    // Clear any 2H weapons already selected
+    document.querySelectorAll('#mr .weapon-entry select').forEach(sel => {
+        const wt = sel.value;
+        if (wt && wt !== '-' && MELEE_WEAPON_STATS[wt]?.type === '2H') {
+            sel.value = '-';
+            const actVal = sel.closest('.weapon-entry')?.querySelector('.act-val');
+            if (actVal) actVal.value = 1;
+        }
+    });
+    // Also hide 2H option in the melee-type-select dropdowns
+    document.querySelectorAll('.melee-type-select').forEach(sel => {
+        const opt2H = sel.querySelector('option[value="2H"]');
+        if (opt2H) opt2H.disabled = true;
+        if (sel.value === '2H') sel.value = '1H';
+    });
+}
+
+// ================================================================
 // 4. SPELL UNLOCKING
 // ================================================================
 function updateSpellUnlocks() {
@@ -2108,6 +2154,17 @@ function handleWeaponChange(select, targetId) {
     const row = select.closest('.weapon-entry');
     const actValInput = row.querySelector('.act-val');
     const weaponType = select.value;
+    // Halfling 2H restriction
+    if (targetId === 'mr' && weaponType !== '-') {
+        const currentRace = document.getElementById('race-select')?.value || 'none';
+        if (currentRace === 'halfling' && MELEE_WEAPON_STATS[weaponType]?.type === '2H') {
+            select.value = '-';
+            if (actValInput) actValInput.value = 1;
+            alert('Halflings cannot wield 2H weapons. Choose a 1H weapon.');
+            upd();
+            return;
+        }
+    }
     if (targetId === 'rr' && RANGED_WEAPON_STATS[weaponType]) {
         row.querySelector('.w-range').value = RANGED_WEAPON_STATS[weaponType].range;
         row.querySelector('.w-aoe').value   = RANGED_WEAPON_STATS[weaponType].aoe;
@@ -2127,8 +2184,13 @@ function handleActionChange(select, type) {
 }
 
 function buildWeaponRow(targetId) {
+    const ALL_MELEE = ["-","Axe","Battleaxe","Club","Dagger","Flail","Glaive","Greataxe","Greatsword","Halberd","Lance","Longsword","Mace","Maul","Morningstar","Rapier","Shortsword","Spear","Staff","Unarmed","Warhammer","Whip"];
+    const MELEE_1H_ONLY = ["-","Axe","Club","Dagger","Flail","Longsword","Mace","Morningstar","Rapier","Shortsword","Spear","Unarmed","Warhammer","Whip"];
+    const currentRace = document.getElementById('race-select')?.value || 'none';
+    const isHalfling  = currentRace === 'halfling';
+
     const options = (targetId === 'mr')
-        ? ["-","Axe","Battleaxe","Club","Dagger","Flail","Glaive","Greataxe","Greatsword","Halberd","Lance","Longsword","Mace","Maul","Morningstar","Rapier","Shortsword","Spear","Staff","Unarmed","Warhammer","Whip"]
+        ? (isHalfling ? MELEE_1H_ONLY : ALL_MELEE)
         : ["-","Blunderbuss","Bow","Crossbow","Dart","Hand Crossbow","Heavy Crossbow","Javelin","Longbow","Pistol","Rifle","Shortbow","Sling","Throwing Axe","Throwing Knife","Whip/Lasso"];
 
     const sel = `<select onchange="handleWeaponChange(this,'${targetId}'); upd()" style="width:100%; font-size:11pt; font-weight:900;">${options.map(o => `<option>${o}</option>`).join('')}</select>`;
