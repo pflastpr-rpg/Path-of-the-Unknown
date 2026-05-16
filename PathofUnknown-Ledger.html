@@ -1967,21 +1967,34 @@ function upd() {
 // ================================================================
 function enforceRaceWeaponRules() {
     const currentRace = document.getElementById('race-select')?.value || 'none';
-    if (currentRace !== 'halfling') return;
-    // Clear any 2H weapons already selected
-    document.querySelectorAll('#mr .weapon-entry select').forEach(sel => {
-        const wt = sel.value;
-        if (wt && wt !== '-' && MELEE_WEAPON_STATS[wt]?.type === '2H') {
+    const isHalfling = currentRace === 'halfling';
+
+    const ALL_MELEE     = ["-","Axe","Battleaxe","Club","Dagger","Flail","Glaive","Greataxe","Greatsword","Halberd","Lance","Longsword","Mace","Maul","Morningstar","Rapier","Shortsword","Spear","Staff","Unarmed","Warhammer","Whip"];
+    const MELEE_1H_ONLY = ["-","Axe","Club","Dagger","Flail","Longsword","Mace","Morningstar","Rapier","Shortsword","Spear","Unarmed","Warhammer","Whip"];
+    const weaponList = isHalfling ? MELEE_1H_ONLY : ALL_MELEE;
+
+    // Rebuild every melee weapon dropdown with the correct option list
+    document.querySelectorAll('#mr .weapon-entry').forEach(entry => {
+        const sel = entry.querySelector('select:not(.melee-type-select)');
+        if (!sel) return;
+        const saved = sel.value;
+        // Rebuild options
+        sel.innerHTML = weaponList.map(o => `<option>${o}</option>`).join('');
+        // If saved value is still valid, restore it — otherwise clear
+        if (weaponList.includes(saved)) {
+            sel.value = saved;
+        } else {
             sel.value = '-';
-            const actVal = sel.closest('.weapon-entry')?.querySelector('.act-val');
+            const actVal = entry.querySelector('.act-val');
             if (actVal) actVal.value = 1;
         }
     });
-    // Also hide 2H option in the melee-type-select dropdowns
+
+    // Handle the melee-type-select (1H/2H/Off-H dropdown)
     document.querySelectorAll('.melee-type-select').forEach(sel => {
         const opt2H = sel.querySelector('option[value="2H"]');
-        if (opt2H) opt2H.disabled = true;
-        if (sel.value === '2H') sel.value = '1H';
+        if (opt2H) opt2H.disabled = isHalfling;
+        if (isHalfling && sel.value === '2H') sel.value = '1H';
     });
 }
 
