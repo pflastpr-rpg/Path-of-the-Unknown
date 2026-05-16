@@ -1549,7 +1549,8 @@ function processActionsAndFortune(state) {
     state.spentXP += calcCompounding(actionPtsPurchased, state.race === "none" ? 0 : 175);
 
     const fortunePts = gv('fp_pts');
-    state.spentXP += calcCompounding(fortunePts, state.race === "none" ? 0 : 30);
+    const FORTUNE_COST = {dwarf:30, elf:30, human:30, halfling:25};
+    state.spentXP += calcCompounding(fortunePts, state.race === "none" ? 0 : (FORTUNE_COST[state.race] || 30));
     sv('rp_base', fortunePts);
 
     state.spentXP += calcCompounding(gv('riding_xp_pts'), 25);
