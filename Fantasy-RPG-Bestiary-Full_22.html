@@ -3231,23 +3231,17 @@ function selectMonster(m, el) {
 }
 
 function attachCardListeners() {
-  // Attach listeners to data-action buttons (safe across all CSP contexts)
-  document.querySelectorAll('[data-action]').forEach(btn => {
-    btn.addEventListener('click', e => {
-      const action = e.currentTarget.dataset.action;
-      if(action === 'tracker') sendToTracker();
-      if(action === 'pin')     togglePin();
-      if(action === 'edit')    editMonster();
-      if(action === 'print')   window.print();
-    });
-  });
+  // No-op: event delegation handles all card button clicks
+  // See the delegated listener on #detail-panel at init
 }
 
 function renderDetail() {
   if(!currentMonster) return;
   const panel = document.getElementById('detail-panel');
   const cmpWith = (compareMode && pinnedMonster && pinnedMonster !== currentMonster) ? pinnedMonster : null;
-  panel.innerHTML = renderCard(currentMonster, cmpWith);
+  const cardHTML = renderCard(currentMonster, cmpWith);
+  console.log('renderDetail: setting innerHTML, has data-action:', cardHTML.includes('data-action'));
+  panel.innerHTML = cardHTML;
   attachCardListeners();
   renderArtSlot(currentMonster, 'mc-art-slot');
   if(compareMode && pinnedMonster && pinnedMonster !== currentMonster) renderCompare();
@@ -3570,6 +3564,33 @@ function importData(event) {
 }
 
 // ══════════════════════════════════════════════ INIT
+// Delegation — walk up from click target to find data-action
+function handleCardClick(e) {
+  console.log('handleCardClick fired, target:', e.target.tagName, e.target.className);
+  let el = e.target;
+  while(el && el !== document.body) {
+    if(el.dataset && el.dataset.action) {
+      const action = el.dataset.action;
+      console.log('Action found:', action);
+      try {
+        if(action === 'tracker') sendToTracker();
+        else if(action === 'pin')  togglePin();
+        else if(action === 'edit') editMonster();
+        else if(action === 'print') window.print();
+      } catch(err) {
+        console.error('Button error:', err);
+        alert('Button error: ' + err.message);
+      }
+      e.stopPropagation();
+      return;
+    }
+    el = el.parentElement;
+  }
+  console.log('No data-action found in click path');
+}
+
+document.getElementById('detail-panel').addEventListener('click', handleCardClick);
+
 applyFilters();
 </script>
 </body>
