@@ -211,6 +211,13 @@
         .sk-name { font-size: 8.5pt; font-weight: 900; text-transform: uppercase; flex: 1; min-width: 0; padding-right: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--iron); }
         .sk-item input { font-size: 13pt; font-weight: 900; text-align: center; height: 28px; border: 1.5px solid var(--ink); color: var(--ink); }
         .sk-b { width: 36px !important; background: rgba(0,0,0,0.08); }
+        .skb-panel { margin-bottom: 4px; }
+        .skb-toggle { user-select: none; }
+        .skb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 2px; }
+        .skb-row { display: flex; align-items: center; background: var(--input-bg); border: 1px solid var(--ink); padding: 2px 4px; height: 28px; gap: 4px; }
+        .skb-name { font-size: 8pt; font-weight: 900; text-transform: uppercase; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--iron); }
+        .skb-cat { font-size: 6.5pt; color: rgba(26,18,8,0.35); text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0; }
+        .skb-input { width: 42px !important; flex-shrink: 0; font-size: 12pt !important; font-weight: 900 !important; text-align: center; height: 24px !important; border: 1.5px solid var(--gold) !important; background: rgba(154,123,47,0.08) !important; color: var(--gold) !important; }
         .sk-p { width: 46px !important; background: var(--input-bg); }
 
         /* --- SPECIALIZATION --- */
@@ -404,7 +411,7 @@
             .sheet { display: block !important; width: 1050px !important; min-width: 1050px !important; max-width: 1050px !important; margin: 0 auto !important; border: 2px solid var(--iron); zoom: 0.78; }
 
             /* 3. Hide UI buttons & elements */
-            .no-print, .vault-controls, .sheet-header, #ph, #ui, #cloud-char-select, #btn-cloud-load, .btn-reset-vault { display: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; }
+            .no-print, .vault-controls, .sheet-header, #ph, #ui, #cloud-char-select, #btn-cloud-load, .btn-reset-vault, .skb-panel { display: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; }
 
             /* 4. Aggressively Shrink the New Dashboard for Print */
             .ledger-box, .wound-dash-box, .dash { height: 50px !important; padding: 2px 4px !important; }
@@ -685,7 +692,7 @@
                 <button onclick="saveAsHTML()">📑 Save .HTML</button>
                 <button onclick="exportToTracker()" style="color:#7ec87e;">⚔ Send to Tracker</button>
                 <div class="drop-divider"></div>
-                <label>📂 Load Local<input type="file" id="load-input" style="display:none" onchange="loadData(this)"></label>
+                <label>📂 Load Local<input type="file" id="load-input" accept=".json,.rpg" style="display:none" onchange="loadData(this)"></label>
                 <label style="color:#7ec87e;">📥 Import Creator<input type="file" id="import-pou-input" style="display:none" accept=".pou,.json" onchange="importFromCreator(this)"></label>
                 <div class="drop-divider"></div>
                 <button onclick="recoverAutosave()" style="color:#f0c040;">♻ Recover Autosave</button>
@@ -955,6 +962,18 @@
     </div></div><div class="h-box">Primary Skills</div>
 <div class="sk-grid" id="sg"></div>
 
+<div class="skb-panel" id="skb-panel">
+  <div class="h-box skb-toggle" onclick="toggleSkillBonuses()" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;">
+    <span>Skill Bonuses <span style="font-size:8pt;opacity:0.6;">(no XP cost)</span></span>
+    <span id="skb-arrow" style="font-size:9pt;">▼</span>
+  </div>
+  <div id="skb-body" style="display:none;">
+    <div style="font-size:8.5pt;font-style:italic;color:rgba(26,18,8,0.55);padding:5px 8px 7px;border-bottom:1px solid rgba(154,123,47,0.2);">Bonus points count toward all derived stats and characteristics but cost no XP.</div>
+    <div class="skb-grid"><div class="skb-row"><span class="skb-name">Athletics</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-athletics" value="0" min="0" oninput="upd()" title="Bonus pts for Athletics — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Counter</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-counter" value="0" min="0" oninput="upd()" title="Bonus pts for Counter — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Evasion</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-evasion" value="0" min="0" oninput="upd()" title="Bonus pts for Evasion — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Quickness</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-quickness" value="0" min="0" oninput="upd()" title="Bonus pts for Quickness — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Stealth</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-stealth" value="0" min="0" oninput="upd()" title="Bonus pts for Stealth — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Thieving</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-thieving" value="0" min="0" oninput="upd()" title="Bonus pts for Thieving — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Acute Senses</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-acute-senses" value="0" min="0" oninput="upd()" title="Bonus pts for Acute Senses — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Discipline</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-discipline" value="0" min="0" oninput="upd()" title="Bonus pts for Discipline — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Druidism</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-druidism" value="0" min="0" oninput="upd()" title="Bonus pts for Druidism — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Focus</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-focus" value="0" min="0" oninput="upd()" title="Bonus pts for Focus — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Precise Strk</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-precise-strk" value="0" min="0" oninput="upd()" title="Bonus pts for Precise Strk — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Stamina</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-stamina" value="0" min="0" oninput="upd()" title="Bonus pts for Stamina — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Authority</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-authority" value="0" min="0" oninput="upd()" title="Bonus pts for Authority — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Charm</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-charm" value="0" min="0" oninput="upd()" title="Bonus pts for Charm — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Faith</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-faith" value="0" min="0" oninput="upd()" title="Bonus pts for Faith — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Inspire</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-inspire" value="0" min="0" oninput="upd()" title="Bonus pts for Inspire — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Light-Soul</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-light-soul" value="0" min="0" oninput="upd()" title="Bonus pts for Light-Soul — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Mending</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-mending" value="0" min="0" oninput="upd()" title="Bonus pts for Mending — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Evaluate</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-evaluate" value="0" min="0" oninput="upd()" title="Bonus pts for Evaluate — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Knowledge</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-knowledge" value="0" min="0" oninput="upd()" title="Bonus pts for Knowledge — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Perception</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-perception" value="0" min="0" oninput="upd()" title="Bonus pts for Perception — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Read/Write</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-read-write" value="0" min="0" oninput="upd()" title="Bonus pts for Read/Write — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Tracker</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-tracker" value="0" min="0" oninput="upd()" title="Bonus pts for Tracker — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Wizardry</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-wizardry" value="0" min="0" oninput="upd()" title="Bonus pts for Wizardry — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Fortitude</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-fortitude" value="0" min="0" oninput="upd()" title="Bonus pts for Fortitude — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Hard as Nails</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-hard-as-nails" value="0" min="0" oninput="upd()" title="Bonus pts for Hard as Nails — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Ki</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-ki" value="0" min="0" oninput="upd()" title="Bonus pts for Ki — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Rugged</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-rugged" value="0" min="0" oninput="upd()" title="Bonus pts for Rugged — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Shieldsman</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-shieldsman" value="0" min="0" oninput="upd()" title="Bonus pts for Shieldsman — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Strength Con.</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-strength-con" value="0" min="0" oninput="upd()" title="Bonus pts for Strength Con. — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Enraged</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-enraged" value="0" min="0" oninput="upd()" title="Bonus pts for Enraged — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Iron Will</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-iron-will" value="0" min="0" oninput="upd()" title="Bonus pts for Iron Will — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Resolve</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-resolve" value="0" min="0" oninput="upd()" title="Bonus pts for Resolve — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Shaman</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-shaman" value="0" min="0" oninput="upd()" title="Bonus pts for Shaman — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Spirit</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-spirit" value="0" min="0" oninput="upd()" title="Bonus pts for Spirit — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Survival</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-survival" value="0" min="0" oninput="upd()" title="Bonus pts for Survival — free, no XP cost"></div></div>
+  </div>
+</div>
+
+
 <div class="spec-container">
     <div class="spec-half">
         <div class="h-box" style="display:flex;justify-content:space-between;align-items:center;">Melee Specialization<span id="melee-spec-cost" style="font-size:11pt;font-weight:900;letter-spacing:1px;color:#f0d080;opacity:1;"></span></div>
@@ -962,7 +981,7 @@
             <div class="c-l-spec">
                 <div id="mp" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; margin-top:2px;"></div>
                 <div style="border-top:1px solid var(--gold); margin-top:2px; padding-top:2px;">
-                    <label class="cb-label"><input type="checkbox" class="cb mounted-cb" onchange="upd()"> Mounted-Melee</label>
+                    <label class="cb-label"><input type="checkbox" class="cb mounted-cb" id="mounted-melee" onchange="upd()"> Mounted-Melee</label>
                 </div>
             </div>
             <div id="mr"></div>
@@ -974,7 +993,7 @@
             <div class="c-l-spec">
                 <div id="rp" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; margin-top:2px;"></div>
                 <div style="border-top:1px solid var(--gold); margin-top:2px; padding-top:2px;">
-                    <label class="cb-label"><input type="checkbox" class="cb mounted-cb" onchange="upd()"> Mounted-Range</label>
+                    <label class="cb-label"><input type="checkbox" class="cb mounted-cb" id="mounted-range" onchange="upd()"> Mounted-Range</label>
                 </div>
             </div>
             <div id="rr"></div>
@@ -1010,7 +1029,7 @@
             </div>
             <div style="display:flex; gap:6px; align-items:center; margin-top:2px;">
                 <span style="font-size:9pt; font-weight:900; color:var(--blood); text-transform:uppercase; width:50px;">Props</span>
-                <input type="text" class="w-note" placeholder="Stealth penalties, reach..." style="flex:1; min-width:0; height:28px; font-size:11pt; font-weight:900; padding:0 6px; border:1.5px solid var(--ink); background:var(--input-bg);">
+                <input type="text" id="armor-props-1" class="w-note" placeholder="Stealth penalties, reach..." style="flex:1; min-width:0; height:28px; font-size:11pt; font-weight:900; padding:0 6px; border:1.5px solid var(--ink); background:var(--input-bg);">
             </div>
         </div>
         <div style="flex:1; display:flex; flex-direction:column; gap:4px; border:1.5px solid rgba(0,0,0,0.1); padding:4px; background:rgba(0,0,0,0.02);">
@@ -1026,7 +1045,7 @@
             </div>
             <div style="display:flex; gap:6px; align-items:center; margin-top:2px;">
                 <span style="font-size:9pt; font-weight:900; color:var(--blood); text-transform:uppercase; width:50px;">Props</span>
-                <input type="text" class="w-note" placeholder="..." style="flex:1; min-width:0; height:28px; font-size:11pt; font-weight:900; padding:0 6px; border:1.5px solid var(--ink); background:var(--input-bg);">
+                <input type="text" id="armor-props-2" class="w-note" placeholder="..." style="flex:1; min-width:0; height:28px; font-size:11pt; font-weight:900; padding:0 6px; border:1.5px solid var(--ink); background:var(--input-bg);">
             </div>
         </div>
     </div>
@@ -1034,12 +1053,12 @@
     <div style="margin-top:8px; border-top:1px solid var(--gold); padding-top:6px;">
         <label style="font-size:10pt; font-weight:900; color:var(--iron); text-transform:uppercase; display:block; margin-bottom:4px;">Ammo &amp; Consumables Tracker</label>
         <div class="gear-row" style="gap:8px;">
-            <div style="flex:1.5;"><input type="text" placeholder="Ammo 1..." style="width:100%; height:32px; font-size:12pt; font-weight:900; padding:0 6px; border:1.5px solid var(--ink);"></div>
-            <div style="flex:0.5;"><input type="number" placeholder="#" style="width:100%; height:32px; text-align:center; font-weight:900; font-size:13pt; border:1.5px solid var(--ink);"></div>
-            <div style="flex:1.5;"><input type="text" placeholder="Ammo 2..." style="width:100%; height:32px; font-size:12pt; font-weight:900; padding:0 6px; border:1.5px solid var(--ink);"></div>
-            <div style="flex:0.5;"><input type="number" placeholder="#" style="width:100%; height:32px; text-align:center; font-weight:900; font-size:13pt; border:1.5px solid var(--ink);"></div>
+            <div style="flex:1.5;"><input id="ammo-1-name" type="text" placeholder="Ammo 1..." style="width:100%; height:32px; font-size:12pt; font-weight:900; padding:0 6px; border:1.5px solid var(--ink);"></div>
+            <div style="flex:0.5;"><input type="number" id="ammo-1-qty" placeholder="#" style="width:100%; height:32px; text-align:center; font-weight:900; font-size:13pt; border:1.5px solid var(--ink);"></div>
+            <div style="flex:1.5;"><input id="ammo-2-name" type="text" placeholder="Ammo 2..." style="width:100%; height:32px; font-size:12pt; font-weight:900; padding:0 6px; border:1.5px solid var(--ink);"></div>
+            <div style="flex:0.5;"><input type="number" id="ammo-2-qty" placeholder="#" style="width:100%; height:32px; text-align:center; font-weight:900; font-size:13pt; border:1.5px solid var(--ink);"></div>
             <div style="flex:1.5;"><input type="text" placeholder="Potions/Other" style="width:100%; height:32px; font-size:12pt; font-weight:900; padding:0 6px; border:1.5px solid var(--ink);"></div>
-            <div style="flex:0.5;"><input type="number" placeholder="#" style="width:100%; height:32px; text-align:center; font-weight:900; font-size:13pt; border:1.5px solid var(--ink);"></div>
+            <div style="flex:0.5;"><input type="number" id="ammo-3-qty" placeholder="#" style="width:100%; height:32px; text-align:center; font-weight:900; font-size:13pt; border:1.5px solid var(--ink);"></div>
         </div>
     </div>
 </div>
@@ -1342,20 +1361,41 @@ function processAllSkills(state) {
 
         group.querySelectorAll('.sk-item').forEach(el => {
             const skillInput = el.querySelector('.sk-b');
-            const skillName = skillInput.getAttribute('data-skill');
-            const ptsInput = el.querySelector('.sk-p');
-            const pts = ptsInput ? (parseInt(ptsInput.value) || 0) : 0;
+            const skillName  = skillInput.getAttribute('data-skill');
+            const ptsInput   = el.querySelector('.sk-p');
+
+            // purchased is always the raw entered value, stored in dataset.purchased
+            // once bonus has been written to .value. Fall back to .value on first run.
+            const purchased = ptsInput
+                ? (parseInt(ptsInput.dataset.purchased ?? ptsInput.value) || 0)
+                : 0;
+
+            // Read bonus from Skill Bonuses panel (stable ID, never positional)
+            const bonId = 'bon-skill-' + skillName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+$/, '');
+            const bonEl = document.getElementById(bonId);
+            const bon   = bonEl ? (parseInt(bonEl.value) || 0) : 0;
+            const total = purchased + bon;
+
+            // Write the combined total into sk-p so every direct .sk-p read
+            // (DV tests, spell gates, magic checks etc.) sees the correct value.
+            // The real purchased pts live in dataset.purchased for XP & save.
+            if (ptsInput) {
+                ptsInput.dataset.purchased = purchased;
+                ptsInput.value = total > 0 ? total : (purchased > 0 ? purchased : '');
+            }
 
             let base = 0;
             if (state.race !== "none" && SKILL_COSTS[skillName]) {
                 base = SKILL_COSTS[skillName][state.race] || 0;
             }
 
-            extractSkillPoints(skillName, pts, state);
-
-            state.categoryTotals[gName] += pts;
+            // total drives all derived stats and characteristics
+            extractSkillPoints(skillName, total, state);
+            state.categoryTotals[gName] += total;
             skillInput.value = base;
-            state.spentXP += calcCompounding(pts, base);
+
+            // Only purchased pts cost XP — bonus is free
+            state.spentXP += calcCompounding(purchased, base);
         });
     });
 }
@@ -1401,7 +1441,9 @@ function processMagicSkills(state) {
     const lsLabel = g('label-Light-Soul');
     if (lsLabel) {
         const lsInp = lsLabel.parentNode.querySelector('.sk-p');
-        if (state.skillPts.faith > 0) {
+        // Use purchased pts only (not bonus) for Light-Soul unlock
+        const faithPtsOnly = parseInt(g('label-Faith')?.parentNode.querySelector('.sk-p')?.value) || 0;
+        if (faithPtsOnly > 0) {
             lsInp.readOnly = false;
             lsInp.style.background = "var(--input-bg)";
         } else {
@@ -1950,9 +1992,10 @@ function upd() {
         Array.from(document.querySelectorAll('input, select')).filter(el =>
             el.id !== 'cloud-char-select' && el.type !== 'file' &&
             !el.classList.contains('adv-eff-base') && !el.classList.contains('adv-eff-spec') &&
-            !el.classList.contains('spell-ap') && !el.classList.contains('adv-name') && !el.classList.contains('adv-cost')
+            !el.classList.contains('spell-ap') && !el.classList.contains('adv-name') && !el.classList.contains('adv-cost') &&
+            !el.classList.contains('sk-b') && !el.classList.contains('skb-input')
         ).forEach((el, i) => {
-            snap[el.id || `f_${i}`] = (el.type === 'checkbox') ? el.checked : el.value;
+            snap[el.id || `f_${i}`] = (el.type === 'checkbox') ? el.checked : (el.classList.contains('sk-p') && el.dataset.purchased !== undefined ? el.dataset.purchased : el.value);
         });
         const kItems = document.querySelectorAll('#knowledge-grid .k-item');
         snap['_knowledge_grid'] = Array.from(kItems).map(item => ({
@@ -1966,6 +2009,15 @@ function upd() {
 // ================================================================
 // 3b. RACIAL WEAPON ENFORCEMENT
 // ================================================================
+function toggleSkillBonuses() {
+    const body = document.getElementById('skb-body');
+    const arrow = document.getElementById('skb-arrow');
+    if (!body) return;
+    const open = body.style.display !== 'none';
+    body.style.display = open ? 'none' : 'block';
+    if (arrow) arrow.textContent = open ? '▼' : '▲';
+}
+
 function enforceRaceWeaponRules() {
     const currentRace = document.getElementById('race-select')?.value || 'none';
     const isHalfling = currentRace === 'halfling';
@@ -2030,8 +2082,9 @@ function updateSpellUnlocks() {
     const combinedPts = activeMagicPts + Math.floor(disciplinePts / 3);
     const totalUnlocked = combinedPts > 5 ? combinedPts - 5 : 0;
 
-    // Build cantrip-only options for the first CANTRIP_SLOTS slots
-    let cantripsHTML = '<option value="" data-tn="">- Cantrip -</option>';
+    // Build full spell list for the first CANTRIP_SLOTS slots (vocation picks — any spell)
+    let allSpellsHTML = '<option value="" data-tn="">- Select Spell -</option>';
+    let cantripsHTML  = '<option value="" data-tn="">- Cantrip -</option>';
     if (isMagicPathActive && activeTradition) {
         const spellList = activeTradition === "Religion" ? RELIGION_SPELLS :
                           activeTradition === "Druidic"  ? DRUIDIC_SPELLS  :
@@ -2039,8 +2092,14 @@ function updateSpellUnlocks() {
                           activeTradition === "Ki"       ? KI_POWERS       :
                           activeTradition === "Runes"    ? RUNES_LIST      :
                           activeTradition === "Shaman"   ? SHAMAN_SPELLS   : [];
-        spellList.filter(s => s.tn === "TN0" || s.tn === "T0/P~")
-                 .forEach(s => cantripsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`);
+        // Cantrips first with divider, then full spell list
+        const cantrips = spellList.filter(s => s.tn === "TN0" || s.tn === "T0/P~");
+        const regular  = spellList.filter(s => s.tn !== "TN0" && s.tn !== "T0/P~");
+        cantrips.forEach(s => cantripsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`);
+        if (cantrips.length) allSpellsHTML += '<option disabled>── Cantrips ──</option>';
+        cantrips.forEach(s => allSpellsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`);
+        if (regular.length) allSpellsHTML += '<option disabled>── Spells ──</option>';
+        regular.forEach(s => allSpellsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`);
     }
 
     document.querySelectorAll('#spells-grid .k-item').forEach((slot, index) => {
@@ -2056,16 +2115,15 @@ function updateSpellUnlocks() {
         }
 
         if (isCantrip) {
-            // Cantrip slot — always unlocked, only TN0 options
+            // Vocation slots — always unlocked, full spell list available
             slot.classList.remove('locked');
             slot.classList.add('cantrip-slot');
             if (sel) {
                 sel.disabled = false;
-                // Repopulate if the tradition has changed or cantrip options are missing
                 const slotTradition = sel.dataset.tradition || '';
-                if (slotTradition !== (activeTradition || '') || !sel.querySelector('option[data-tn="TN0"]') && !sel.querySelector('option[data-tn="T0/P~"]')) {
+                if (slotTradition !== (activeTradition || '') || sel.querySelectorAll('option').length <= 2) {
                     const saved = sel.value;
-                    sel.innerHTML = cantripsHTML;
+                    sel.innerHTML = allSpellsHTML;
                     sel.dataset.tradition = activeTradition || '';
                     if (saved) sel.value = saved;
                     updateSpellCost(sel);
@@ -2198,6 +2256,8 @@ function handleActionChange(select, type) {
 }
 
 function buildWeaponRow(targetId) {
+    const rowIdx = document.getElementById(targetId)?.children.length || 0;
+    const pfx = targetId + '-' + rowIdx + '-';  // e.g. "mr-0-", "rr-1-"
     const ALL_MELEE = ["-","Axe","Battleaxe","Club","Dagger","Flail","Glaive","Greataxe","Greatsword","Halberd","Lance","Longsword","Mace","Maul","Morningstar","Rapier","Shortsword","Spear","Staff","Unarmed","Warhammer","Whip"];
     const MELEE_1H_ONLY = ["-","Axe","Club","Dagger","Flail","Longsword","Mace","Morningstar","Rapier","Shortsword","Spear","Unarmed","Warhammer","Whip"];
     const currentRace = document.getElementById('race-select')?.value || 'none';
@@ -2207,16 +2267,16 @@ function buildWeaponRow(targetId) {
         ? (isHalfling ? MELEE_1H_ONLY : ALL_MELEE)
         : ["-","Blunderbuss","Bow","Crossbow","Dart","Hand Crossbow","Heavy Crossbow","Javelin","Longbow","Pistol","Rifle","Shortbow","Sling","Throwing Axe","Throwing Knife","Whip/Lasso"];
 
-    const sel = `<select onchange="handleWeaponChange(this,'${targetId}'); upd()" style="width:100%; font-size:11pt; font-weight:900;">${options.map(o => `<option>${o}</option>`).join('')}</select>`;
+    const sel = `<select id="${pfx}type" onchange="handleWeaponChange(this,'${targetId}'); upd()" style="width:100%; font-size:11pt; font-weight:900;">${options.map(o => `<option>${o}</option>`).join('')}</select>`;
     let actSel = '';
     if (targetId === 'mr') {
-        actSel = `<div style="display:flex; gap:1px; width:100%;"><select class="melee-type-select" onchange="handleActionChange(this,'melee'); upd()" style="flex:1; min-width:0; font-size:9pt;"><option value="-">-</option><option value="1H">1H</option><option value="2H">2H</option><option value="Off-H">Off-H</option></select><input type="number" value="1" class="act-val" readonly style="width:28px; background:var(--input-bg); font-size:11pt; border:1.5px solid var(--ink); text-align:center; padding:0;"></div>`;
+        actSel = `<div style="display:flex; gap:1px; width:100%;"><select class="melee-type-select" id="${pfx}hand" onchange="handleActionChange(this,'melee'); upd()" style="flex:1; min-width:0; font-size:9pt;"><option value="-">-</option><option value="1H">1H</option><option value="2H">2H</option><option value="Off-H">Off-H</option></select><input type="number" value="1" class="act-val" id="${pfx}act" readonly style="width:28px; background:var(--input-bg); font-size:11pt; border:1.5px solid var(--ink); text-align:center; padding:0;"></div>`;
     } else {
-        actSel = `<input type="number" value="1" class="act-val" readonly title="Actions to Fire" style="width:100%; background:rgba(0,0,0,0.08); font-size:12pt; border:1.5px solid var(--ink); text-align:center;">`;
+        actSel = `<input type="number" value="1" class="act-val" id="${pfx}act" readonly title="Actions to Fire" style="width:100%; background:rgba(0,0,0,0.08); font-size:12pt; border:1.5px solid var(--ink); text-align:center;">`;
     }
-    const rangedExtra = targetId === 'rr' ? `<input type="text" class="w-range" readonly tabindex="-1" style="background:rgba(0,0,0,0.08); font-size:10pt; width:100%; text-align:center;"><input type="text" class="w-aoe" readonly tabindex="-1" style="background:rgba(0,0,0,0.08); font-size:10pt; width:100%; text-align:center;">` : '';
+    const rangedExtra = targetId === 'rr' ? `<input type="text" class="w-range" id="${pfx}range" readonly tabindex="-1" style="background:rgba(0,0,0,0.08); font-size:10pt; width:100%; text-align:center;"><input type="text" class="w-aoe" id="${pfx}aoe" readonly tabindex="-1" style="background:rgba(0,0,0,0.08); font-size:10pt; width:100%; text-align:center;">` : '';
 
-    const html = `<div class="weapon-entry"><div class="t-r">${sel}${actSel}<input type="number" class="wb" oninput="upd()" placeholder="Bon"><input type="number" class="wdb" oninput="upd()" placeholder="Bon">${rangedExtra}</div><div class="w-note-row"><span class="w-note-label">Note:</span><input type="text" class="w-note" placeholder="Reach, Silver, Properties..."></div></div>`;
+    const html = `<div class="weapon-entry"><div class="t-r">${sel}${actSel}<input type="number" class="wb" id="${pfx}wb" oninput="upd()" placeholder="Bon"><input type="number" class="wdb" id="${pfx}wdb" oninput="upd()" placeholder="Bon">${rangedExtra}</div><div class="w-note-row"><span class="w-note-label">Note:</span><input type="text" class="w-note" id="${pfx}note" placeholder="Reach, Silver, Properties..."></div></div>`;
     document.getElementById(targetId).insertAdjacentHTML('beforeend', html);
 }
 
@@ -2240,7 +2300,7 @@ function init() {
             let h = `<div class="sk-c" data-group="${k}"><div class="sk-h">${k}</div>`;
             sks[k].forEach(s => {
                 const readOnlyAttr = (s === "Knowledge") ? `readonly style="background:rgba(0,0,0,0.08); text-align:center; font-weight:900;"` : "";
-                h += `<div class="sk-item"><span class="sk-name" id="label-${s}">${s}</span><input type="text" class="sk-b" data-skill="${s}" readonly value="20"><input type="number" class="sk-p xc" oninput="upd()" placeholder="Pts" ${readOnlyAttr}></div>`;
+                h += `<div class="sk-item"><span class="sk-name" id="label-${s}">${s}</span><input type="text" class="sk-b" data-skill="${s}" readonly value="20"><input type="number" class="sk-p xc" id="pts-${s.replace(/[^a-z0-9]/gi,'-').toLowerCase()}" oninput="this.dataset.purchased=this.value||'0'; upd()" placeholder="Pts" ${readOnlyAttr}></div>`;
             });
             const div = document.createElement('div'); div.innerHTML = h + `</div>`;
             sgElem.appendChild(div.firstChild);
@@ -2251,15 +2311,17 @@ function init() {
     const mpElem = g('mp');
     if (mpElem && mpElem.children.length === 0) {
         ["Axes & Cleavers","Flexible/Chain","Hammers & Maces","Polearms/Spears","Swords/Daggers","Unarmed Combat"].forEach(p => {
-            mpElem.innerHTML += `<label class="cb-label"><input type="checkbox" class="cb melee-spec-cb" onchange="upd()"> ${p}</label>`;
+            const sid = 'melee-spec-' + p.toLowerCase().replace(/[^a-z0-9]/g,'-');
+            mpElem.innerHTML += `<label class="cb-label"><input type="checkbox" class="cb melee-spec-cb" id="${sid}" onchange="upd()"> ${p}</label>`;
         });
     }
 
     // Range specializations
     const rpElem = g('rp');
     if (rpElem && rpElem.children.length === 0) {
-        ["Bow","Crossbow","Firearm","Throwing"].forEach(p => {
-            rpElem.innerHTML += `<label class="cb-label"><input type="checkbox" class="cb range-spec-cb" onchange="upd()"> ${p}</label>`;
+        ["Bow","Crossbow","Firearm","Throwing"].forEach((p,i) => {
+            const sid = 'range-spec-' + p.toLowerCase().replace(/[^a-z0-9]/g,'-');
+            rpElem.innerHTML += `<label class="cb-label"><input type="checkbox" class="cb range-spec-cb" id="${sid}" onchange="upd()"> ${p}</label>`;
         });
     }
 
@@ -2294,7 +2356,7 @@ function init() {
     if (advGrid && advGrid.children.length === 0) {
         advancedSkills.forEach(skill => {
             const titleAttr = skill.desc ? `title="${skill.desc}"` : "";
-            const safeId = "adv-" + skill.name.replace(/[^a-z0-9]/gi, '');
+            const safeId = "adv-" + skill.name.toLowerCase().replace(/[^a-z0-9]/gi, '');
             advGrid.innerHTML += `<div class="k-item" ${titleAttr} style="display:flex; padding-right:0; align-items:center;"><input type="checkbox" class="k-cb" id="${safeId}" onchange="upd()"><input type="text" class="adv-name" value="${skill.name}" readonly style="flex:1 1 auto; min-width:0; font-size:9.5pt; font-weight:900; background:transparent; border:none; padding:0 4px;"><a href="Advanced_Skills.html#${safeId}" target="_blank" title="View ${skill.name}" style="flex:0 0 18px; text-align:center; font-size:9pt; color:var(--gold); text-decoration:none; opacity:0.5; padding:0 2px; line-height:1;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'">↗</a><input type="text" class="adv-eff-base" placeholder="Base" readonly style="flex:0 0 68px; width:68px; font-size:9pt; text-align:center; background:rgba(46,125,50,0.05); color:var(--success); font-weight:900; border:none; border-left:1px solid rgba(0,0,0,0.1); padding:0;"><input type="text" class="adv-eff-spec" placeholder="Spec" readonly style="flex:0 0 58px; width:58px; font-size:9pt; text-align:center; background:rgba(46,125,50,0.12); color:var(--success); font-weight:900; border:none; border-left:1px dotted rgba(46,125,50,0.3); padding:0;"><input type="text" class="adv-cost" value="${skill.cost}" readonly></div>`;
         });
     }
@@ -2321,12 +2383,15 @@ function saveData() {
     const data = {};
     const allInputs = Array.from(document.querySelectorAll('input, select')).filter(el =>
         el.id !== 'cloud-char-select' && el.type !== 'file' &&
-        !el.classList.contains('adv-eff-base') && !el.classList.contains('adv-eff-spec') && !el.classList.contains('spell-ap')
+        !el.classList.contains('adv-eff-base') && !el.classList.contains('adv-eff-spec') && !el.classList.contains('spell-ap') &&
+        !el.classList.contains('sk-b') && !el.classList.contains('skb-input')
     );
     allInputs.forEach((el, i) => {
         if (el.classList.contains('adv-name') || el.classList.contains('adv-cost')) return;
         const key = el.id || `f_${i}`;
-        data[key] = (el.type === 'checkbox') ? el.checked : el.value;
+        data[key] = (el.type === 'checkbox') ? el.checked
+                  : (el.classList.contains('sk-p') && el.dataset.purchased !== undefined
+                     ? el.dataset.purchased : el.value);
     });
     // Save knowledge grid as structured array so restore is position-independent
     const kItems = document.querySelectorAll('#knowledge-grid .k-item');
@@ -2338,21 +2403,142 @@ function saveData() {
     if (pv && pv.src && pv.src.startsWith('data:image')) data['character_portrait'] = pv.src;
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], {type:'application/json'}));
-    a.download = `${g('char-name-input')?.value || 'character'}.json`;
+    a.download = `${(g('char-name-input')?.value || 'character').replace(/[^a-z0-9_\-]/gi,'_')}.rpg`;
     a.click();
 }
 
+function applyLegacySkillKeys(data) {
+    // ── Layer 1: Old .rpg positional skill pts (f_84 offset) ──────────
+    const legacyMap = {
+        "f_85": "pts-athletics",
+        "f_87": "pts-counter",
+        "f_89": "pts-evasion",
+        "f_91": "pts-quickness",
+        "f_93": "pts-stealth",
+        "f_95": "pts-thieving",
+        "f_97": "pts-acute-senses",
+        "f_99": "pts-discipline",
+        "f_101": "pts-druidism",
+        "f_103": "pts-focus",
+        "f_105": "pts-precise-strk",
+        "f_107": "pts-stamina",
+        "f_109": "pts-authority",
+        "f_111": "pts-charm",
+        "f_113": "pts-faith",
+        "f_115": "pts-inspire",
+        "f_117": "pts-light-soul",
+        "f_119": "pts-mending",
+        "f_121": "pts-evaluate",
+        "f_123": "pts-knowledge",
+        "f_125": "pts-perception",
+        "f_127": "pts-read-write",
+        "f_129": "pts-tracker",
+        "f_131": "pts-wizardry",
+        "f_133": "pts-fortitude",
+        "f_135": "pts-hard-as-nails",
+        "f_137": "pts-ki",
+        "f_139": "pts-rugged",
+        "f_141": "pts-shieldsman",
+        "f_143": "pts-strength-con",
+        "f_145": "pts-enraged",
+        "f_147": "pts-iron-will",
+        "f_149": "pts-resolve",
+        "f_151": "pts-shaman",
+        "f_153": "pts-spirit",
+        "f_155": "pts-survival",
+        // Melee spec checkboxes — old .rpg (f_156 offset)
+        "f_156": "melee-spec-axes---cleavers",
+        "f_157": "melee-spec-flexible-chain",
+        "f_158": "melee-spec-hammers---maces",
+        "f_159": "melee-spec-polearms-spears",
+        "f_160": "melee-spec-swords-daggers",
+        "f_161": "melee-spec-unarmed-combat",
+        "f_162": "mounted-melee",
+        // Melee rows — old .rpg (f_163 offset)
+        "f_163": "mr-0-type", "f_164": "mr-0-hand", "f_165": "mr-0-act",
+        "f_166": "mr-0-wb",   "f_167": "mr-0-wdb",  "f_168": "mr-0-note",
+        "f_169": "mr-1-type", "f_170": "mr-1-hand", "f_171": "mr-1-act",
+        "f_172": "mr-1-wb",   "f_173": "mr-1-wdb",  "f_174": "mr-1-note",
+        "f_175": "mr-2-type", "f_176": "mr-2-hand", "f_177": "mr-2-act",
+        "f_178": "mr-2-wb",   "f_179": "mr-2-wdb",  "f_180": "mr-2-note",
+        // Range spec — old .rpg (f_181 offset)
+        "f_181": "range-spec-bow", "f_182": "range-spec-crossbow",
+        "f_183": "range-spec-firearm", "f_184": "range-spec-throwing",
+        // Range rows — old .rpg (f_186 offset)
+        "f_186": "rr-0-type", "f_187": "rr-0-act",
+        "f_188": "rr-0-wb",   "f_189": "rr-0-wdb",
+        "f_190": "rr-0-range","f_191": "rr-0-aoe", "f_192": "rr-0-note",
+        "f_193": "rr-1-type", "f_194": "rr-1-act",
+        "f_195": "rr-1-wb",   "f_196": "rr-1-wdb",
+        "f_197": "rr-1-range","f_198": "rr-1-aoe", "f_199": "rr-1-note",
+        "f_200": "rr-2-type", "f_201": "rr-2-act",
+        // ── Layer 2: JSON (f_120 offset) — melee spec ─────────────────
+        "f_120": "melee-spec-axes---cleavers",
+        "f_121": "melee-spec-flexible-chain",
+        "f_122": "melee-spec-hammers---maces",
+        "f_123": "melee-spec-polearms-spears",
+        "f_124": "melee-spec-swords-daggers",
+        "f_125": "melee-spec-unarmed-combat",
+        "f_126": "mounted-melee",
+        // Range spec — JSON (f_149 offset)
+        "f_149": "range-spec-bow",
+        "f_150": "range-spec-crossbow",
+        "f_151": "range-spec-firearm",
+        "f_152": "range-spec-throwing",
+        // Armor props — JSON positional
+        "f_176": "armor-props-1", "f_180": "armor-props-2",
+        // Ammo fields — JSON positional
+        "f_181": "ammo-1-name", "f_182": "ammo-1-qty",
+        "f_183": "ammo-2-name", "f_184": "ammo-2-qty",
+        "f_185": "ammo-3-name", "f_186": "ammo-3-qty"
+    };
+    Object.entries(legacyMap).forEach(([oldKey, newId]) => {
+        if (data[oldKey] !== undefined) {
+            if (data[newId] === undefined) data[newId] = data[oldKey];
+            delete data[oldKey];
+        }
+    });
+    // Also delete skill COST keys (f_84,86,88...) — sk-b excluded from allInputs
+    for (let i = 84; i <= 155; i += 2) delete data['f_' + i];
+
+    // ── Layer 3: 1-indexed weapon rows → 0-indexed ────────────────────
+    // Handles JSON files saved before rows were 0-indexed (mr-1 → mr-0 etc.)
+    ['mr','rr'].forEach(pfx => {
+        for (let row = 1; row <= 5; row++) {
+            ['type','hand','act','wb','wdb','note','range','aoe'].forEach(field => {
+                const oldKey = pfx + '-' + row + '-' + field;
+                const newKey = pfx + '-' + (row-1) + '-' + field;
+                if (data[oldKey] !== undefined && data[newKey] === undefined) {
+                    data[newKey] = data[oldKey];
+                    delete data[oldKey];
+                }
+            });
+        }
+    });
+
+    return data;
+}
+
 function applyCharacterData(data) {
+    data = applyLegacySkillKeys(data);
     const allInputs = Array.from(document.querySelectorAll('input, select')).filter(el =>
         el.id !== 'cloud-char-select' && el.type !== 'file' &&
-        !el.classList.contains('adv-eff-base') && !el.classList.contains('adv-eff-spec') && !el.classList.contains('spell-ap')
+        !el.classList.contains('adv-eff-base') && !el.classList.contains('adv-eff-spec') && !el.classList.contains('spell-ap') &&
+        !el.classList.contains('sk-b') && !el.classList.contains('skb-input')
     );
     allInputs.forEach((el, i) => {
         if (el.classList.contains('adv-name') || el.classList.contains('adv-cost')) return;
-        const val = (el.id && data[el.id] !== undefined) ? data[el.id] : data[`f_${i}`];
+        // Prefer stable ID; if field has ID but no value in data, skip (don't use wrong positional value)
+        const val = el.id ? data[el.id] : data[`f_${i}`];
         if (val !== undefined) {
             if (el.type === 'checkbox') el.checked = (val === true || val === "true");
-            else { el.value = val; if (el.classList.contains('spell-select')) el.dataset.savedValue = val; }
+            else {
+                el.value = val;
+                // For sk-p: mark the restored value as the purchased amount
+                // so processAllSkills won't mistake the saved total for purchased pts
+                if (el.classList.contains('sk-p')) el.dataset.purchased = val;
+                if (el.classList.contains('spell-select')) el.dataset.savedValue = val;
+            }
         }
     });
     document.querySelectorAll('.magic-cb').forEach(cb => { if (cb.checked) handleMagicCheck(cb); });
@@ -2602,6 +2788,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (nameInput.value) document.title = nameInput.value + ' - RPG Ledger';
     }
+});
+
+window.addEventListener('beforeprint', () => {
+    document.querySelectorAll('.sk-p').forEach(el => {
+        if (el.dataset.purchased !== undefined) {
+            el.dataset.printTotal = el.value;
+            el.value = el.dataset.purchased;
+        }
+    });
+});
+window.addEventListener('afterprint', () => {
+    document.querySelectorAll('.sk-p').forEach(el => {
+        if (el.dataset.printTotal !== undefined) {
+            el.value = el.dataset.printTotal;
+            delete el.dataset.printTotal;
+        }
+    });
 });
 
 window.onload = init;
