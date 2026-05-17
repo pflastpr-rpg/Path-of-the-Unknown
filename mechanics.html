@@ -134,7 +134,72 @@
     <!-- ================================================================ -->
     <!-- CORE ROLL -->
     <!-- ================================================================ -->
-    <h2 class="section-title" id="core-roll">The Core Roll</h2>
+    
+    <div class="trait-block" style="margin-top: 16px;">
+        <div class="trait-header">
+            <span class="trait-title">Holding &amp; Carrying Actions — The Power of 3</span>
+            <span style="color: var(--gold); font-weight: bold; font-size: 10pt;">AP Economy &amp; Turn Patience</span>
+        </div>
+        <div class="trait-body">
+
+            <p style="margin-bottom: 10px;"><strong>Holding an Action:</strong> A character may declare a <em>Hold</em> at any point during their turn, forgoing one or more remaining AP. The held action has a declared trigger — a specific event that must occur before the hold expires (e.g. "I hold my attack until an enemy enters my reach" or "I hold my shot until the mage begins casting"). If the trigger occurs, the character acts immediately — interrupting or responding to the triggering action before it resolves. If the trigger never occurs, the held AP is lost.</p>
+
+            <p style="margin-bottom: 10px;"><strong>Carrying AP Over — The Power of 3:</strong> For every 3 points of base AP a character possesses, they may carry <strong>1 unused AP</strong> into their next turn. This represents the physical and mental readiness built by restraint. Carried AP must be declared at the end of the character's turn and is lost if not used during the following turn — AP cannot accumulate across more than two consecutive turns.</p>
+
+            <div style="background: rgba(139,26,26,0.06); border-left: 4px solid var(--blood); border-right: 1px solid var(--blood); padding: 12px 16px; margin: 14px 0; border-radius: 2px;">
+                <div style="font-family: 'Cinzel', serif; font-size: 8.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--blood); margin-bottom: 10px;">AP Carry-Over Scale</div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 11pt;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid rgba(139,26,26,0.3);">
+                            <th style="text-align: left; padding: 4px 8px; font-family: 'Cinzel', serif; font-size: 8pt; letter-spacing: 1px; color: var(--gold);">Base AP</th>
+                            <th style="text-align: center; padding: 4px 8px; font-family: 'Cinzel', serif; font-size: 8pt; letter-spacing: 1px; color: var(--gold);">Max Carry</th>
+                            <th style="text-align: left; padding: 4px 8px; font-family: 'Cinzel', serif; font-size: 8pt; letter-spacing: 1px; color: var(--gold);">Typical Choice</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
+                            <td style="padding: 5px 8px; font-weight: bold;">3 AP</td>
+                            <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">1</td>
+                            <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 2 now, carry 1 — or use all 3</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
+                            <td style="padding: 5px 8px; font-weight: bold;">4 AP</td>
+                            <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">1</td>
+                            <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 3 now, carry 1</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
+                            <td style="padding: 5px 8px; font-weight: bold;">5 AP</td>
+                            <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">1</td>
+                            <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 4 now, carry 1</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
+                            <td style="padding: 5px 8px; font-weight: bold;">6 AP</td>
+                            <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">2</td>
+                            <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 4 now, carry 2 — or use 5, carry 1</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
+                            <td style="padding: 5px 8px; font-weight: bold;">9 AP</td>
+                            <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">3</td>
+                            <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Legendary fighter — real tactical flexibility</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="font-size: 9pt; font-style: italic; color: rgba(26,18,8,0.5); margin-top: 8px;">Formula: <strong>floor(Base AP ÷ 3)</strong> = maximum AP that may be carried into the next turn.</div>
+            </div>
+
+            <p style="margin-bottom: 8px;"><strong>Restrictions:</strong></p>
+            <ul style="margin-bottom: 8px;">
+                <li><strong>No type restriction.</strong> Carried AP may be used for any action — melee, ranged, defensive, utility. A fighter who held back last turn is simply more ready, whatever they do with it.</li>
+                <li><strong>No carry into channeling.</strong> Carried AP may not be combined with a Channeling or multi-turn casting action. Magic disciplines have their own multi-turn mechanic and cannot benefit from carry-over.</li>
+                <li><strong>Two-turn limit.</strong> AP cannot accumulate across more than one carry. Use it on the following turn or it is gone.</li>
+            </ul>
+
+            <p style="margin-bottom: 0;"><strong>Example:</strong> Baanon has 4 base AP. He uses 3 AP this turn to strike twice and reposition. He declares he is carrying 1 AP forward. On his next turn he begins with 5 effective AP — his standard 4 plus the 1 carried — and can spend them freely before the carry expires at the end of that turn.</p>
+
+        </div>
+    </div>
+
+<h2 class="section-title" id="core-roll">The Core Roll</h2>
     <div class="mech-card">
         <p>Every action resolves with a <strong>1d10 roll</strong> that must meet or beat a <strong>Difficulty Value (DV)</strong>.</p>
         <div class="formula-block">RESULT = 1d10 + Relevant Characteristic (+ any skill/bonus) ≥ DV</div>
