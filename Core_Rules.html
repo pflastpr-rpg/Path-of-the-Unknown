@@ -405,6 +405,67 @@
                 <li><strong>Utility:</strong> Activating Focus, breaking free from vines, or drinking a potion typically costs 1 Action.</li>
             </ul>
         </div>
+            <div class="trait-block" style="margin-top: 16px;">
+                <div class="trait-header">
+                    <span class="trait-title">Holding &amp; Carrying Actions — The Power of 3</span>
+                    <span style="color: var(--gold); font-weight: bold; font-size: 10pt;">AP Economy &amp; Turn Patience</span>
+                </div>
+                <div class="trait-body">
+                    <p style="margin-bottom: 10px;"><strong>Holding an Action:</strong> A character may declare a <em>Hold</em> at any point during their turn, forgoing one or more remaining AP. The held action has a declared trigger — a specific event that must occur before the hold expires (e.g. "I hold my attack until an enemy enters my reach" or "I hold my shot until the mage begins casting"). If the trigger occurs, the character acts immediately — interrupting or responding to the triggering action before it resolves. If the trigger never occurs, the held AP is lost.</p>
+
+                    <p style="margin-bottom: 10px;"><strong>Carrying AP Over — The Power of 3:</strong> For every 3 points of base AP a character possesses, they may carry <strong>1 unused AP</strong> into their next turn. This represents the physical and mental readiness built by restraint. Carried AP must be declared at the end of the character's turn and is lost if not used during the following turn — AP cannot accumulate across more than two consecutive turns.</p>
+
+                    <div style="background: rgba(139,26,26,0.06); border-left: 4px solid var(--blood); border-right: 1px solid var(--blood); padding: 12px 16px; margin: 14px 0; border-radius: 2px;">
+                        <div style="font-family: 'Cinzel', serif; font-size: 8.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--blood); margin-bottom: 10px;">AP Carry-Over Scale</div>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11pt;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid rgba(139,26,26,0.3);">
+                                    <th style="text-align: left; padding: 4px 8px; font-family: 'Cinzel', serif; font-size: 8pt; letter-spacing: 1px; color: var(--gold);">Base AP</th>
+                                    <th style="text-align: center; padding: 4px 8px; font-family: 'Cinzel', serif; font-size: 8pt; letter-spacing: 1px; color: var(--gold);">Max Carry</th>
+                                    <th style="text-align: left; padding: 4px 8px; font-family: 'Cinzel', serif; font-size: 8pt; letter-spacing: 1px; color: var(--gold);">Typical Choice</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
+                                    <td style="padding: 5px 8px; font-weight: bold;">3 AP</td>
+                                    <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">1</td>
+                                    <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 2 now, carry 1 — or use all 3</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
+                                    <td style="padding: 5px 8px; font-weight: bold;">4 AP</td>
+                                    <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">1</td>
+                                    <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 3 now, carry 1</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
+                                    <td style="padding: 5px 8px; font-weight: bold;">5 AP</td>
+                                    <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">1</td>
+                                    <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 4 now, carry 1</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
+                                    <td style="padding: 5px 8px; font-weight: bold;">6 AP</td>
+                                    <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">2</td>
+                                    <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 4 now, carry 2 — or use 5, carry 1</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
+                                    <td style="padding: 5px 8px; font-weight: bold;">9 AP</td>
+                                    <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">3</td>
+                                    <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Legendary fighter — real tactical flexibility</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="font-size: 9pt; font-style: italic; color: rgba(26,18,8,0.5); margin-top: 8px;">Formula: <strong>floor(Base AP ÷ 3)</strong> = maximum AP that may be carried into the next turn.</div>
+                    </div>
+
+                    <p style="margin-bottom: 8px;"><strong>Restrictions:</strong></p>
+                    <ul style="margin-bottom: 8px;">
+                        <li><strong>No type restriction.</strong> Carried AP may be used for any action — melee, ranged, defensive, utility.</li>
+                        <li><strong>No carry into channeling.</strong> Carried AP may not be combined with a Channeling or multi-turn casting action.</li>
+                        <li><strong>Two-turn limit.</strong> AP cannot accumulate across more than one carry. Use it on the following turn or it is gone.</li>
+                    </ul>
+
+                    <p style="margin-bottom: 0;"><strong>Example:</strong> Baanon has 4 base AP. He uses 3 AP this turn to strike twice and reposition. He declares he is carrying 1 AP forward. On his next turn he begins with 5 effective AP — his standard 4 plus the 1 carried — and can spend them freely before the carry expires at the end of that turn.</p>
+                </div>
+            </div>
     </div>
 
     <div class="magic-break" style="margin-top: 60px;">
@@ -1781,32 +1842,32 @@
             </div>
             <div class="trait-box">
                 <span class="trait-title">Cast Out (TN 7)</span>
-                <strong>Actions:</strong> 1 | <strong>Range:</strong> 40 Ft | <strong>Duration:</strong> 1 turn
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> 40 Ft | <strong>Duration:</strong> 1 turn
                 <p>Force evil creatures (Daemons and Undead) to flee. Affected targets up to your Charisma bonus must sprint their max movement away from you for 1 turn. Alternatively, attempt to expel a possessing entity — it contests your Faith roll with Willpower. On failure, expelled and takes <strong>1d10 + casting damage bonus</strong> divine damage.</p>
             </div>
             <div class="trait-box">
                 <span class="trait-title">Dictate (TN 7)</span>
-                <strong>Actions:</strong> 1 | <strong>Range:</strong> 80 Ft | <strong>Duration:</strong> 1 turn
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> 80 Ft | <strong>Duration:</strong> 1 turn
                 <p>Speak a one-word divine command (Flee, Fall, Halt, Sleep, Drop). The target must surpass Willpower TN 7 + Resist bonus to cast off the command or obey on their next turn. Does not work on Undead or Daemonic entities of Elite tier or higher.</p>
             </div>
             <div class="trait-box">
                 <span class="trait-title">Divine Weapon (TN 7)</span>
-                <strong>Actions:</strong> 1 | <strong>Range:</strong> 100 Ft | <strong>Duration:</strong> 1 + bonus turns
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> 100 Ft | <strong>Duration:</strong> 1 + bonus turns
                 <p>Imbue a target weapon with holy power. It deals <strong>1d10 + casting damage bonus</strong> divine wounds per hit. Against Undead and Daemonic targets the bonus damage is doubled.</p>
             </div>
             <div class="trait-box">
                 <span class="trait-title">Enchant Weapon (TN 7)</span>
-                <strong>Actions:</strong> 1 | <strong>Range:</strong> 40 Ft | <strong>Duration:</strong> 1 + bonus turns
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> 40 Ft | <strong>Duration:</strong> 1 + bonus turns
                 <p>Bless a target weapon, treating it as <strong>+1 magical</strong> for the duration. It may strike incorporeal or ethereal entities and bypasses non-magical Wound Mitigation. The blessing leaves a faint holy glow on the blade for the duration.</p>
             </div>
             <div class="trait-box">
                 <span class="trait-title">Smite (TN 7)</span>
-                <strong>Actions:</strong> 1 | <strong>Range:</strong> 150 Ft | <strong>Duration:</strong> Instant
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> 150 Ft | <strong>Duration:</strong> Instant
                 <p>A holy strike deals <strong>1d10 + casting damage bonus</strong> divine wounds to a target within range. If the target is Daemonic or Undead add the Priest's Charisma characteristic to the wounds caused.</p>
             </div>
             <div class="trait-box">
                 <span class="trait-title">Bane (TN 7)</span>
-                <strong>Actions:</strong> 1 | <strong>Range:</strong> 60 Ft | <strong>Duration:</strong> 1 + bonus turns
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> 60 Ft | <strong>Duration:</strong> 1 + bonus turns
                 <p>Divine weight descends on up to 3 targets within range. Affected targets suffer Disadvantage on all To-Hit rolls for the duration. Willpower TN 7 + Resist bonus to shake free each turn.</p>
             </div>
             <div class="trait-box">
@@ -1876,7 +1937,7 @@
             </div>
             <div class="trait-box">
                 <span class="trait-title">Redress (TN 10)</span>
-                <strong>Actions:</strong> 2 | <strong>Range:</strong> Touch | <strong>Duration:</strong> Instant
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> Touch | <strong>Duration:</strong> Instant
                 <p>Channel powerful divine restoration into a single target. They immediately regain <strong>3d10 + healing bonus</strong> wounds and all Disease and Poison conditions are removed.</p>
             </div>
             <div class="trait-box">
@@ -1891,7 +1952,7 @@
             </div>
             <div class="trait-box">
                 <span class="trait-title">Righteous Wrath (TN 11)</span>
-                <strong>Actions:</strong> 2 | <strong>Range:</strong> 100 Ft | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> Instant
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 100 Ft | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> Instant
                 <p>A column of divine fire roars down on a target point. All enemies in the AoE take <strong>3d10 + casting damage bonus</strong> divine wounds. Undead and Daemonic entities in the AoE take an additional <strong>casting damage bonus</strong> wounds on top.</p>
             </div>
             <div class="trait-box">
@@ -1926,7 +1987,7 @@
             </div>
             <div class="trait-box">
                 <span class="trait-title">Resurrect (TN 15)</span>
-                <strong>Actions:</strong> 3 | <strong>Range:</strong> Touch | <strong>Duration:</strong> Instant
+                <strong>Actions:</strong> 4 | <strong>Range:</strong> Touch | <strong>Duration:</strong> Instant
                 <p>Restore a creature dead no longer than 7 days to life. They return with a single wound. Cannot resurrect Undead or Daemonic entities. The caster suffers exhaustion — losing 2 AP on their next turn from the divine toll of reversing death.</p>
             </div>
             <div class="trait-box">
@@ -2621,10 +2682,10 @@
             <p>Identify the magical properties of an object. If the object is cursed or harmful, the caster may make a Willpower test to negate the ill effects.</p>
         </div>
             <div class="trait-box">
-            <span class="trait-title">Dart (TN 5)</span>
-            <strong>Actions:</strong> 1 | <strong>Range:</strong> 150 Ft | <strong>Duration:</strong> Instant
-            <p>A magical projectile deals <strong>Dd10 + casting bonus</strong> wounds. On a natural 10 To-Cast, the dart splits, allowing you to strike the same target with a second dart for additional damage.</p>
-        </div>
+                <span class="trait-title">Dart (TN 5)</span>
+                <strong>Actions:</strong> 1 | <strong>Range:</strong> 150 Ft | <strong>Duration:</strong> Instant
+                <p>A magical projectile deals <strong>1d10 + casting damage bonus</strong> wounds. On a natural 10 To-Cast the dart splits, allowing you to target an additional creature within 30 Ft for <strong>Dis.d10</strong> wounds.</p>
+            </div>
             <div class="trait-box">
             <span class="trait-title">Feared (TN 5)</span>
             <strong>Actions:</strong> 1 | <strong>Range:</strong> Self | <strong>Duration:</strong> 1 + bonus turns
@@ -2651,10 +2712,10 @@
                 <p>Shroud a target from sight entirely. The effect ends if the target attacks, casts a spell, or invokes a blessing. An enemy who possesses any casting vocation (Faith, Wizardry, Druidism, Shaman, Ki, or Runes) or the Perception skill may attempt to detect the invisible target — roll 1d10 + Perception points and surpass <strong>TN 6</strong> to sense their presence. On a success the enemy knows the target's general location but cannot directly see them. Taking any damage also ends the invisibility immediately.</p>
             </div>
             <div class="trait-box">
-            <span class="trait-title">Mage’s Arrow (TN 7)</span>
-            <strong>Actions:</strong> 2 | <strong>Range:</strong> 150 Ft | <strong>Duration:</strong> Instant
-            <p>Release an invisible projectile dealing <strong>d10 + casting bonus</strong> wounds.</p>
-        </div>
+                <span class="trait-title">Mage’s Arrow (TN 7)</span>
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> 150 Ft | <strong>Duration:</strong> Instant
+                <p>Release an invisible arcane projectile dealing <strong>2d10 + casting damage bonus</strong> wounds. Silent and invisible in flight — the target has no warning before impact.</p>
+            </div>
             <div class="trait-box">
                 <span class="trait-title">Blackout (TN 7)</span>
                 <strong>Actions:</strong> 2 | <strong>Range:</strong> 100 Ft | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
@@ -2665,11 +2726,6 @@
             <strong>Actions:</strong> 2 | <strong>Range:</strong> Touch | <strong>Duration:</strong> 1 + bonus turns
             <p>Target's skin thickens into a carapace. <strong>Wound Mitigation</strong> is increased by their Willpower characteristic against melee and normal ranged attacks, but they suffer a <strong>-1 penalty to Agility</strong>. This effect does not stack with itself.</p>
         </div>
-            <div class="trait-box">
-                <span class="trait-title">Ritual Defense (TN 7)</span>
-                <strong>Actions:</strong> 2 | <strong>Range:</strong> 60 Ft | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
-                <p>Trace a sigil of warding in the air, creating a protective zone. Friendly creatures inside gain <strong>+1 Willpower and +1 Defense</strong> for the duration. They also mitigate 1 additional wound per attack from creatures with the Demonic trait.</p>
-            </div>
             <div class="trait-box">
                 <span class="trait-title">Thirsting Blade (TN 7)</span>
                 <strong>Actions:</strong> 2 | <strong>Range:</strong> Self | <strong>Duration:</strong> 1 turn
@@ -2698,7 +2754,7 @@
             <div class="trait-box">
             <span class="trait-title">Life Diverted (TN 7)</span>
             <strong>Actions:</strong> 2 | <strong>Range:</strong> 60 Ft | <strong>Duration:</strong> 1 + bonus turns
-            <p>Place a siphon on a target (Willpower test to avoid). For the duration, any healing the target receives is split evenly between the target and the caster.</p>
+            <p>Place a siphon on a target — they must surpass Willpower TN 7 + Resist bonus to cast off the siphon or For the duration, any healing the target receives is split evenly between the target and the caster.</p>
         </div>
             <div class="trait-box">
             <span class="trait-title">Restore Material (TN 7)</span>
@@ -2709,6 +2765,11 @@
                 <span class="trait-title">Silence (TN 7)</span>
                 <strong>Actions:</strong> 2 | <strong>Range:</strong> 100 Ft | <strong>Target:</strong> 15 Ft AoE | <strong>Duration:</strong> 1 turn
                 <p>Sound is entirely negated within the AoE for 1 turn. Spellcasting and verbal communication are impossible inside. Targets may surpass Willpower TN 7 + Resist bonus to shake free of the effect. Can be negated by Dispel Magic.</p>
+            </div>
+            <div class="trait-box">
+                <span class="trait-title">Ritual Defense (TN 8)</span>
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> 60 Ft | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
+                <p>Trace a sigil of warding in the air, creating a protective zone. Friendly creatures inside gain <strong>+1 Willpower and +1 Defense</strong> for the duration. They also mitigate 1 additional wound per attack from creatures with the Demonic trait.</p>
             </div>
             <div class="trait-box">
                 <span class="trait-title">Aethereal Strike (TN 8)</span>
@@ -2731,15 +2792,10 @@
             <p>Hurl an exploding rock for <strong>2d10 + casting bonus</strong> wounds. On a natural 10 To-Cast, the explosion radius increases by an additional 10 feet.</p>
         </div>
             <div class="trait-box">
-            <span class="trait-title">Lightning Bolt (TN 8)</span>
-            <strong>Actions:</strong> 2 | <strong>Range:</strong> 200 Ft | <strong>Duration:</strong> Instant
-            <p>Call forth a storm strike dealing <strong>2d10 + casting bonus</strong> wounds. On a natural 10 To-Cast, the bolt branches, dealing an additional d10 wounds.</p>
-        </div>
-            <div class="trait-box">
-            <span class="trait-title">Mage’s Armor (TN 8)</span>
-            <strong>Actions:</strong> 2 | <strong>Range:</strong> Touch | <strong>Duration:</strong> 1 + bonus turns
-            <p>Bestow a magical shield granting <strong>+1 Defense</strong> and <strong>+1 Willpower</strong> for the duration.</p>
-        </div>
+                <span class="trait-title">Mage's Armor (TN 8)</span>
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> Touch | <strong>Duration:</strong> 1 + bonus turns
+                <p>Bestow a magical shield upon a touched target granting <strong>+2 Defense</strong> for the duration.</p>
+            </div>
             <div class="trait-box">
             <span class="trait-title">Searing Heat (TN 8)</span>
             <strong>Actions:</strong> 2 | <strong>Range:</strong> 20 Ft | <strong>Target:</strong> 10 Ft AoE
@@ -2756,40 +2812,45 @@
                 <p>Powerful winds tear through the target area. All creatures within the AoE must surpass Physique TN 8 + Resist bonus to stand firm or be Pinned until the end of the turn. On a success movement is halved. Giant-sized creatures halve the test difficulty. Creatures larger than Giant size are unaffected entirely.</p>
             </div>
             <div class="trait-box">
-            <span class="trait-title">Daemon Slayer (TN 9)</span>
-            <strong>Actions:</strong> 2 | <strong>Range:</strong> Self | <strong>Duration:</strong> 1 + bonus turns
-            <p>Embrace dark energies to combat the demonic. Gain <strong>+1 Defense</strong> and increase all wounds caused (melee, ranged, or spell) by your combined <strong>Willpower + Intellect</strong> characteristics. Also, gain a +1 bonus to all Fear-related tests.</p>
+            <span class="trait-title">Lightning Bolt (TN 9)</span>
+            <strong>Actions:</strong> 2 | <strong>Range:</strong> 200 Ft | <strong>Duration:</strong> Instant
+            <p>Call forth a storm strike dealing <strong>2d10 + casting bonus</strong> wounds. On a natural 10 To-Cast, the bolt branches, dealing an additional d10 wounds.</p>
         </div>
+            <div class="trait-box">
+                <span class="trait-title">Daemon Slayer (TN 9)</span>
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> Self | <strong>Duration:</strong> 1 + bonus turns
+                <p>Embrace dark energies to combat the demonic. Gain <strong>+1 Defense</strong> and increase all wounds caused (melee, ranged, or spell) by your <strong>casting damage bonus</strong> for the duration. Also gain a <strong>+1 bonus</strong> to all Fear-related tests.</p>
+            </div>
             <div class="trait-box">
             <span class="trait-title">Dismiss Daemon (TN 9)</span>
             <strong>Actions:</strong> 2 | <strong>Range:</strong> 80 Ft | <strong>Duration:</strong> Instant
             <p>Open a void to pull a daemonic entity back to its home realm. The target must surpass Willpower TN 9 + Resist bonus to break free or be immediately dismissed from this plane.</p>
         </div>
             <div class="trait-box">
-            <span class="trait-title">Frozen Shards (TN 9)</span>
-            <strong>Actions:</strong> 2 | <strong>Range:</strong> 80 Ft | <strong>Target:</strong> 10x40 Ft Spray
-            <p>A spray of icy darts deals <strong>2d10 + casting bonus</strong> freezing wounds to all targets in the path. Ice-susceptible foes take an extra d10.</p>
-        </div>
-            <div class="trait-box">
-            <span class="trait-title">Ice Blade (TN 9)</span>
-            <strong>Actions:</strong> 2 | <strong>Range:</strong> Self | <strong>Duration:</strong> 1 + bonus turns
-            <p>You manifest a diamond-hard blade that counts as a <strong>+2 Magical Weapon</strong>. This blade ignores 2 points of wound mitigation; on a natural 10 To-Hit, it causes 1 <strong>Bleeding</strong> condition.</p>
-        </div>
+                <span class="trait-title">Frozen Shards (TN 9)</span>
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> 80 Ft | <strong>Target:</strong> 10x40 Ft Spray | <strong>Duration:</strong> Instant
+                <p>Unleash a spray of razor-sharp icy darts in a narrow line. All targets in the path take <strong>2d10 + casting damage bonus</strong> freezing wounds. Ice-susceptible foes take an additional <strong>Dis.d10</strong> wounds on top.</p>
+            </div>
             <div class="trait-box">
             <span class="trait-title">Ice Lance (TN 9)</span>
             <strong>Actions:</strong> 2 | <strong>Range:</strong> 80 Ft | <strong>Duration:</strong> Instant
             <p>Thrust a crystallized spike at a foe for <strong>2d10 + casting bonus</strong> wounds. On a natural 10 To-Cast, the lance causes 1 <strong>Bleeding</strong> condition and an additional d10 wounds this turn and every turn until healed.</p>
         </div>
             <div class="trait-box">
-            <span class="trait-title">Iron Missile (TN 9)</span>
-            <strong>Actions:</strong> 2 | <strong>Range:</strong> 300 Ft | <strong>Duration:</strong> Instant
-            <p>A heavy magical projectile deals <strong>A2d10 + casting bonus</strong> wounds. Target must surpass Willpower TN 9 + Resist bonus to endure or suffer a <strong>Stunned</strong> condition and lose 1 action on their next turn.</p>
-        </div>
+                <span class="trait-title">Iron Missile (TN 9)</span>
+                <strong>Actions:</strong> 2 | <strong>Range:</strong> 300 Ft | <strong>Duration:</strong> Instant
+                <p>A heavy magical projectile deals <strong>2d10 + casting damage bonus</strong> wounds. The target must surpass Willpower TN 9 + Resist bonus to endure or suffer the Stunned condition and lose 1 AP on their next turn.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Static Bomb (TN 9)</span>
-            <strong>Actions:</strong> 2 | <strong>Range:</strong> 100 Ft | <strong>Target:</strong> 40 Ft AoE
-            <p>An electrified field deals <strong>2d10 + casting bonus</strong> wounds. Targets failing a Willpower test are <strong>Immobilized</strong> for 1 turn. Remaining in the AoE deals an additional 1d10 wounds per turn.</p>
-        </div>
+                <span class="trait-title">Static Bomb (TN 10)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 150 Ft | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
+                <p>Detonate an electrified field at a target point. All creatures in the AoE take <strong>3d10 + casting damage bonus</strong> wounds immediately. Targets must surpass Willpower TN 10 + Resist bonus to break free or be Immobilized for 1 turn. Any creature that remains inside the AoE takes <strong>1d10</strong> wounds at the start of each subsequent turn.</p>
+            </div>
+            <div class="trait-box">
+                <span class="trait-title">Ice Blade (TN 10)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> Self | <strong>Duration:</strong> 1 + bonus turns
+                <p>Manifest a diamond-hard blade of pure ice that counts as a <strong>+2 Magical Weapon</strong>. The blade ignores 2 points of Wound Mitigation. On a To-Hit roll of <strong>9 or higher</strong> it causes 1 Bleeding condition.</p>
+            </div>
             <div class="trait-box">
                 <span class="trait-title">Ice Field (TN 10)</span>
                 <strong>Actions:</strong> 3 | <strong>Range:</strong> 80 Ft | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
@@ -2801,126 +2862,144 @@
             <p>The Warlock attempts to enslave a daemonic force into a vessel (such as a lead case). The Daemon must surpass Willpower TN 10 + Resist bonus to endure or be trapped until released by the caster or <em>Dispel Magic</em>. If the Daemon is Large, a named entity, or a Champion, the Willpower DV is halved.</p>
         </div>
             <div class="trait-box">
-            <span class="trait-title">Consumed in Flame (TN 10)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 100 Ft | <strong>Duration:</strong> 2 Turns
-            <p>A pyre engulfs the target, dealing <strong>3d10 + casting bonus</strong> wounds immediately. The target must surpass Willpower TN 10 + Resist bonus at the end of each turn to break free to use their movement to escape the flames; failure results in an additional <strong>2d10 wounds</strong>.</p>
-        </div>
+                <span class="trait-title">Consumed in Flame (TN 10)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 100 Ft | <strong>Duration:</strong> 1 + bonus turns
+                <p>A pyre engulfs the target dealing <strong>3d10 + casting damage bonus</strong> wounds immediately. At the end of each subsequent turn the target must surpass Willpower TN 10 + Resist bonus to shake free or take an additional <strong>1d10</strong> wounds from the lingering flames. On a success the target uses their movement to escape and the effect ends.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Decompose (TN 10)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 120 Ft | <strong>Duration:</strong> 1 + bonus turns
-            <p>Unleash decay upon a soul. Target takes <strong>3d10 + casting bonus</strong> wounds immediately and 1d10 per turn thereafter. Non-magical armor made of organic material (leather/fur) is destroyed in d10 turns.</p>
-        </div>
+                <span class="trait-title">Decompose (TN 10)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 120 Ft | <strong>Duration:</strong> 1 + bonus turns
+                <p>Unleash necrotic decay upon a target. The rot seeps through armour and flesh alike — the initial <strong>2d10 + casting damage bonus</strong> wounds and the <strong>1d10</strong> wounds dealt at the start of each subsequent turn both bypass all Wound Mitigation entirely. Non-magical armour made of organic material (leather, fur) is destroyed after <strong>Dis.d10</strong> turns of exposure as the decay consumes it. The target must surpass Willpower TN 10 + Resist bonus to shake free each turn or the rot continues.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Frostbite (TN 10)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 100 Ft | <strong>Duration:</strong> 1 + bonus turns
-            <p>Immediate <strong>3d10 + casting bonus</strong> wounds. Target must surpass Willpower TN 10 + Resist bonus each turn to break free or suffer an additional d10 wounds as the affected area begins to die.</p>
-        </div>
+                <span class="trait-title">Frostbite (TN 10)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 100 Ft | <strong>Duration:</strong> 1 + bonus turns
+                <p>Drive killing cold into a target dealing <strong>3d10 + casting damage bonus</strong> wounds immediately as tissue begins to freeze. Each subsequent turn the target must surpass Physique TN 10 + Resist bonus to shake free or suffer the <strong>Stunned</strong> condition and lose 1 AP that turn as the cold seizes their muscles. The Stunned condition ends automatically if the target moves out of range or the spell expires.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Incinerate (TN 10)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> Self | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> Instant
-            <p>You expel fire in all directions from your position. Targets within 20 ft suffer <strong>3d10 + casting bonus</strong> fire wounds. Fire-susceptible targets take an additional d10 wounds.</p>
-        </div>
+                <span class="trait-title">Life Leash (TN 10)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 80 Ft | <strong>Duration:</strong> 1 + bonus turns
+                <p>A glowing green leash locks onto a target draining their life force. At the start of each turn the target takes <strong>1d10 + casting damage bonus</strong> wounds and the caster is healed for half the wounds dealt. The target must surpass Willpower TN 10 + Resist bonus each turn to break free — on a success the leash snaps and the effect ends. The leash also breaks if the caster moves beyond 80 Ft or takes damage.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Life Leash (TN 10)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 80 Ft | <strong>Duration:</strong> 1 + bonus turns
-            <p>A glowing green leash drains the target's life force for d10 wounds each turn (Willpower TN 10 + Resist bonus for half damage). The Warlock is healed for half of the damage caused. The leash breaks if the target passes a Willpower test or the caster moves beyond 80 Ft.</p>
-        </div>
+                <span class="trait-title">Malefic (TN 10)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> Self | <strong>Duration:</strong> 1 turn
+                <p>Tap into diabolic energy to force your magic past mortal limits. For the remainder of the turn all your spell TN values are lowered by 2 and any damaging spell deals an additional <strong>Dis.d10</strong> wounds.<br><br>
+                <strong>The Toll:</strong> Each time you cast a spell while Malefic is active, roll a d10. The toll threshold starts at 10 and drops by 3 with each subsequent spell cast:<br><br>
+                &nbsp;&nbsp;<strong>1st spell</strong> — toll on a 10<br>
+                &nbsp;&nbsp;<strong>2nd spell</strong> — toll on 8, 9, or 10<br>
+                &nbsp;&nbsp;<strong>3rd spell</strong> — toll on 5 or higher<br>
+                &nbsp;&nbsp;<strong>4th spell+</strong> — toll is virtually certain<br><br>
+                On a toll result a rift tears open — a hostile Daemon is summoned within 5d10 feet and is hostile to all creatures. There is no upper limit to how many times Malefic may be invoked in an encounter but each use compounds the toll risk.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Malefic (TN 10)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> Self | <strong>Duration:</strong> 1 Turn
-            <p>You tap into the diabolic to force your magic past mortal limits. For the remainder of the turn, all your spell <strong>TN values are lowered by 2</strong> and any damaging spell deals an additional <strong>d10 wounds</strong>.</p>
-            <p><strong>The Toll:</strong> If you cast more than one spell while Malefic is active, roll a d10. On a <strong>10</strong>, you tear a rift, summoning a Daemon within 5d10 feet that is hostile to all. Each subsequent use in the same encounter increases the summon range by 1 (9-10, then 8-10, etc.).</p>
-        </div>
+                <span class="trait-title">Scourge (TN 10)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 80 Ft | <strong>Duration:</strong> 1 + bonus turns
+                <p>Unleash a supernatural corruption upon a target dealing <strong>3d10 + casting damage bonus</strong> wounds immediately. Each subsequent turn the target must surpass Willpower TN 10 + Resist bonus to endure the spreading scourge or lose <strong>1 point from a random characteristic</strong> for the duration — roll a d6: 1 = Agility, 2 = Awareness, 3 = Charisma, 4 = Intellect, 5 = Physique, 6 = Willpower. Lost characteristic points return fully when the spell expires. A target reduced to 0 in any characteristic by Scourge collapses.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Scourge (TN 10)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 80 Ft | <strong>Duration:</strong> 1 + bonus turns
-            <p>Unleash hellfire dealing <strong>3d10 + casting bonus</strong> wounds. Each turn the spell persists, the target must surpass Willpower TN 10 + Resist bonus to endure or suffer an additional 1d10 wounds as a supernatural disease spreads.</p>
-        </div>
+                <span class="trait-title">Summon Firebrand Weapon (TN 10)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> Touch | <strong>Duration:</strong> 1 + bonus turns
+                <p>Call forth a weapon wreathed in hellfire and infused with the blood of the damned. It deals <strong>3d10 + casting damage bonus</strong> wounds per hit and counts as a <strong>+2 Magical Weapon</strong> capable of striking Ethereal creatures. The weapon vanishes if it leaves the caster's hand.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Summon Firebrand Weapon (TN 10)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> Touch | <strong>Duration:</strong> 1 + bonus turns
-            <p>Call forth a weapon infused with the blood of the damned. It deals <strong>d10 + casting bonus</strong> wounds and counts as a <strong>+1 Magical Weapon</strong> for striking Ethereal creatures.</p>
-        </div>
+                <span class="trait-title">Twisted Words (TN 10)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 80 Ft | <strong>Duration:</strong> 1 + bonus turns
+                <p>Cast a daemonic curse on a target forcing dark syllables from their lips. The target must surpass Willpower TN 10 + Resist bonus to cast off the curse or fall into a trance — chanting in a daemonic tongue and becoming <strong>Paralysed</strong> for the duration. The target may repeat the resist test at the end of each turn to break free.<br><br>
+                <strong>The Toll:</strong> Each turn the trance holds roll a d10. The threshold at which a daemon manifests within 10 Ft and attacks the chanter drops by 3 each turn:<br><br>
+                &nbsp;&nbsp;<strong>Turn 1</strong> — daemon on a 10<br>
+                &nbsp;&nbsp;<strong>Turn 2</strong> — daemon on 7, 8, 9, or 10<br>
+                &nbsp;&nbsp;<strong>Turn 3</strong> — daemon on 4 or higher<br>
+                &nbsp;&nbsp;<strong>Turn 4+</strong> — daemon virtually certain<br><br>
+                The trance ends immediately if the target passes their resist test, takes any damage, or a daemon manifests.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Tainted Ground (TN 10)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 100 Ft | <strong>Target:</strong> 30 Ft AoE
-            <p>A putrid green cloud covers the ground, causing vegetation to wilt and die. <strong>Undead</strong> in the area gain +1 to Hit (Melee/Ranged), +1 Defense, and +d10 Wounds for 1 + bonus turns. <strong>Holy or Blessed</strong> creatures suffer 2d10 wounds per turn while remaining in the AoE.</p>
-        </div>
+                <span class="trait-title">Tainted Ground (TN 11)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 100 Ft | <strong>Target:</strong> 30 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
+                <p>A putrid green cloud spreads across the ground — vegetation wilts and dies, the air reeks of corruption. Undead within the AoE gain <strong>+1 To-Hit</strong>, <strong>+1 Defense</strong>, and <strong>+Dis.d10 wounds</strong> for the duration. Holy or Blessed creatures suffer <strong>1d10 + casting damage bonus</strong> wounds at the start of each turn they remain inside.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Twisted Words (TN 10)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 80 Ft | <strong>Duration:</strong> 1 + bonus turns
-            <p>A curse forces the target into a trance, chanting in a daemonic tongue (Willpower test to negate). While chanting, the target cannot move or act. Each turn, there is a cumulative chance to summon a daemon that attacks the chanter: start with an unmodified 10 on d10, increasing the range by 2 each subsequent turn.</p>
-        </div>
+                <span class="trait-title">Debilitating Plasm (TN 11)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 100 Ft | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
+                <p>A purplish haze billows across the target area dealing <strong>3d10 + casting damage bonus</strong> wounds immediately. Targets must surpass Awareness TN 11 + Resist bonus to find their way through or be overcome by choking — those failing take an additional <strong>Dis.d10</strong> wounds at the start of their next turn. The haze persists for the duration or until a target passes their Awareness resist test to escape it.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Debilitating Plasm (TN 11)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 100 Ft | <strong>Target:</strong> 20 Ft AoE
-            <p>A purplish haze deals <strong>3d10 + casting bonus</strong> wounds immediately. Targets must surpass Awareness TN 11 + Resist bonus to find their way or be overcome by coughing; those failing take an additional <strong>Ad10 wounds</strong> at the start of the next turn. Lasts 1 + bonus turns or until an Awareness test is passed.</p>
-        </div>
+                <span class="trait-title">Lacerate (TN 11)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 60 Ft | <strong>Duration:</strong> 1 + bonus turns
+                <p>A wicked curse opens precise cuts on the target's wrists and neck. Deals <strong>3d10 + casting damage bonus</strong> wounds immediately. At the start of each subsequent turn the cuts deepen — dealing an additional <strong>1d10 + casting damage bonus</strong> wounds. The target may surpass Willpower TN 11 + Resist bonus each turn to break free and close the wounds.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Lacerate (TN 11)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 60 Ft | <strong>Duration:</strong> 1 + bonus turns
-            <p>A curse that opens precise cuts on the target's wrists and neck. Deals <strong>3d10 wounds</strong> immediately and an additional d10 every turn thereafter. A Willpower TN 11 + Resist bonus is allowed each turn to break free to resist.</p>
-        </div>
-            <div class="trait-box">
-            <span class="trait-title">Lava Spray (TN 11)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 30 Ft | <strong>Target:</strong> 20 Ft AoE
-            <p>Spew molten earth from your mouth for <strong>3d10 + casting bonus</strong> wounds. Targets susceptible to fire take +d10 wounds. Targets must surpass Willpower TN 11 + Resist bonus to endure or suffer a <strong>Stunned</strong> condition for one turn.</p>
-        </div>
-            <div class="trait-box">
-            <span class="trait-title">Soul Burst (TN 11)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 125 Ft | <strong>Duration:</strong> 1 + bonus turns
-            <p>A purple orb embeds in the target, dealing <strong>3d10 + casting bonus</strong> wounds, then 2d10 per turn (Willpower test for half). If the target reaches 0 wounds, the orb explodes (20 Ft AoE) for 3d10 wounds. <strong>Danger:</strong> If a <em>Dispel Magic</em> attempt fails, the orb explodes immediately.</p>
-        </div>
+                <span class="trait-title">Soul Burst (TN 11)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 125 Ft | <strong>Duration:</strong> 1 + bonus turns
+                <p>A pulsing purple orb embeds itself in the target dealing <strong>3d10 + casting damage bonus</strong> wounds immediately. At the start of each subsequent turn the orb burns from within — dealing <strong>1d10 + casting damage bonus</strong> wounds. The target must surpass Willpower TN 11 + Resist bonus each turn to endure or take full damage.<br><br>
+                <strong>Death Explosion:</strong> If the target reaches 0 wounds while the orb is active it detonates in a <strong>20 Ft AoE</strong> dealing <strong>3d10 + casting damage bonus</strong> wounds to all creatures within range.<br><br>
+                <strong>Dispel Trap:</strong> If a Dispel Magic attempt against the orb fails the orb detonates immediately — same explosion as above.</p>
+            </div>
             <div class="trait-box">
             <span class="trait-title">Transform Object (TN 11)</span>
             <strong>Actions:</strong> 3 | <strong>Range:</strong> 60 Ft | <strong>Duration:</strong> Instant
             <p>A versatile transmutation that can remove <strong>Paralysis</strong>, reverse <strong>Petrification</strong>, or mold impassable stone/boulders into manageable shapes to clear a path.</p>
         </div>
             <div class="trait-box">
-            <span class="trait-title">Indestructible Instant (TN 12)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> Touch | <strong>Duration:</strong> 1 + bonus turns
-            <p>The target becomes an impenetrable object, immune to all non-magical and up to <strong>+2 magical</strong> melee and ranged weapons for the duration.</p>
-        </div>
+                <span class="trait-title">Lava Spray (TN 12)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 30 Ft | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> Instant
+                <p>Spew a torrent of molten earth in a short-range cone. All targets take <strong>3d10 + casting damage bonus</strong> fire wounds. Fire-susceptible targets take an additional <strong>Dis.d10</strong> wounds. Targets must surpass Physique TN 12 + Resist bonus to stand firm or suffer the Stunned condition for 1 turn as the impact staggers them.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Time Suspended (TN 12)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 80 Ft | <strong>Target:</strong> 35 Ft AoE
-            <p>Briefly halts time for enemies within the area. This allows all friendly creatures in the same AoE to immediately gain <strong>1 additional action</strong> (Melee, Ranged, or Cast).</p>
-        </div>
+                <span class="trait-title">Incinerate (TN 12)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> Self | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> Instant
+                <p>Expel a catastrophic eruption of fire in all directions. All targets within the AoE suffer <strong>3d10 + casting damage bonus</strong> fire wounds. Fire-susceptible targets take an additional <strong>Dis.d10</strong> wounds on top.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Tornado (TN 12)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 150 Ft | <strong>Target:</strong> 30 Ft AoE
-            <p>Call down localized tornadic winds. Targets in the AoE must surpass Physique TN 12 + Resist bonus to stand firm or be flung <strong>Intellect x 10 Ft</strong> in a random direction, suffering d10 wounds per 10 Ft thrown. On a success, targets still suffer <strong>3d10 + casting bonus</strong> wounds from debris.</p>
-        </div>
+                <span class="trait-title">Void Carapace (TN 12)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> Touch | <strong>Duration:</strong> 1 + bonus turns
+                <p>The target's flesh hardens into an arcane shell impervious to non-magical weapons and resistant to magical arms of <strong>+2 or lower</strong>. Physical attacks cannot move, knock Prone, or apply conditions to the target for the duration. Magical weapons of +3 or higher and spell damage bypass the carapace entirely.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Whiteout (TN 12)</span>
-            <strong>Actions:</strong> 3 | <strong>Range:</strong> 120 Ft | <strong>Target:</strong> 60 Ft AoE
-            <p>A massive 3-turn blizzard blinds everything in the 60 Ft AoE. Targets must surpass Awareness TN 12 + Resist bonus to find their way to find their way out or remain lost, suffering <strong>3d10 + bonus wounds</strong> per turn.</p>
-        </div>
+                <span class="trait-title">Tornado (TN 12)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 150 Ft | <strong>Target:</strong> 30 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
+                <p>Call down localised tornadic winds. Roll To-Cast once — the TN you achieve determines the storm's fury. All targets in the AoE must surpass Physique TN equal to the tier achieved + Resist bonus to stand firm or suffer the full effect.<br><br>
+                <strong>F1 — TN 12:</strong> Targets are knocked Prone and movement is halved. On a success targets still take <strong>3d10 + casting damage bonus</strong> wounds from debris.<br><br>
+                <strong>F2 — TN 14:</strong> Targets are flung <strong>Intellect x 5 Ft</strong> in a random direction suffering <strong>1d10 wounds per 10 Ft</strong> thrown. On a success targets take <strong>4d10 + casting damage bonus</strong> wounds from debris.<br><br>
+                <strong>F3 — TN 16:</strong> Targets are flung <strong>Intellect x 10 Ft</strong> in a random direction suffering <strong>2d10 wounds per 10 Ft</strong> thrown. On a success targets take <strong>5d10 + casting damage bonus</strong> wounds from debris. Structures within the AoE take full damage.<br><br>
+                Giant-sized creatures halve the fling distance. Creatures larger than Giant are unaffected by the fling but still take debris damage.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Fireball (TN 13)</span>
-            <strong>Actions:</strong> 4 | <strong>Range:</strong> 200 Ft | <strong>Target:</strong> 20 Ft AoE
-            <p>A massive eruption dealing <strong>4d10 + casting bonus</strong> wounds. Flammable targets catch fire, suffering an additional d10 wounds on following turns.</p>
-        </div>
+                <span class="trait-title">Whiteout (TN 12)</span>
+                <strong>Actions:</strong> 3 | <strong>Range:</strong> 120 Ft | <strong>Target:</strong> 60 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
+                <p>A blinding blizzard engulfs the target area. All creatures inside are Blinded for the duration. Targets must surpass Awareness TN 12 + Resist bonus to find their way out or remain lost inside — those failing take <strong>1d10 + casting damage bonus</strong> wounds at the start of each turn from the biting cold and disorientation.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Mote Storm (TN 13)</span>
-            <strong>Actions:</strong> 4 | <strong>Range:</strong> 250 Ft | <strong>Duration:</strong> 3 Turns
-            <p>Shower an area in rock and sand. Targets in the 40 Ft AoE suffer <strong>4d10 + casting bonus</strong> wounds and halved movement. Failure to escape the area results in an automatic <strong>4d10 wounds</strong> on the following turn.</p>
-        </div>
+                <span class="trait-title">Time Suspended (TN 13)</span>
+                <strong>Actions:</strong> 4 | <strong>Range:</strong> 80 Ft | <strong>Duration:</strong> Instant
+                <p>Briefly halt time for all enemies within range. The caster and up to <strong>2 allies of their choosing</strong> within 80 Ft each gain <strong>1 free action</strong> (Melee, Ranged, or Cast) that resolves immediately before time resumes. Enemies have no awareness that time was suspended. The free actions must be declared and resolved in the same instant — no movement is granted.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Pulverize (TN 14)</span>
-            <strong>Actions:</strong> 4 | <strong>Range:</strong> 150 Ft | <strong>Duration:</strong> Instant
-            <p>An invisible, hammering force whales against a target. Deals <strong>4d10 + casting bonus</strong> wounds. If the target is reduced to 0 wounds, it and all non-magical objects it carries are destroyed, crushed into an unrecognizable mass.</p>
-        </div>
+                <span class="trait-title">Fireball (TN 13)</span>
+                <strong>Actions:</strong> 4 | <strong>Range:</strong> 250 Ft | <strong>Target:</strong> 25 Ft AoE | <strong>Duration:</strong> Instant
+                <p>Hurl a roaring sphere of arcane fire that detonates at a target point. All creatures in the AoE take <strong>4d10 + casting damage bonus</strong> fire wounds. Flammable targets catch fire and suffer an additional <strong>Dis.d10</strong> wounds at the start of each of their next turns until extinguished.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Molten Earth (TN 15)</span>
-            <strong>Actions:</strong> 4 | <strong>Range:</strong> 150 Ft | <strong>Duration:</strong> 1 + bonus turns
-            <p>Lava bursts through the ground in a 50 Ft AoE. Victims suffer <strong>4d10 + casting bonus</strong> wounds and must surpass Agility TN 15 + Resist bonus to keep their footing or have movement speed halved. Staying in the area deals an additional <strong>7d10 wounds</strong> each turn.</p>
-        </div>
+                <span class="trait-title">Mote Storm (TN 13)</span>
+                <strong>Actions:</strong> 4 | <strong>Range:</strong> 250 Ft | <strong>Target:</strong> 25 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
+                <p>Summon a howling storm of rock and sand at a target point. All creatures in the AoE take <strong>4d10 + casting damage bonus</strong> wounds immediately and their movement is halved for the duration. Each subsequent turn spent inside the storm deals <strong>1d10 + casting damage bonus</strong> wounds — targets must surpass Agility TN 13 + Resist bonus to push through the storm and escape or remain trapped inside.</p>
+            </div>
             <div class="trait-box">
-            <span class="trait-title">Show The Way (TN 15)</span>
-            <strong>Actions:</strong> 4 | <strong>Range:</strong> 60 Ft | <strong>Target:</strong> 20 Ft AoE
-            <p>Summon a portal to a land you have traveled to or possess a relic from. The gateway remains for 1 turn. If left open longer, there is a <strong>25% compounding chance per turn</strong> that a trans-dimensional creature will follow the party through.</p>
-        </div>
+                <span class="trait-title">Pulverize (TN 14)</span>
+                <strong>Actions:</strong> 4 | <strong>Range:</strong> 150 Ft | <strong>Duration:</strong> Instant
+                <p>Bring invisible hammering force down upon a target with bone-crushing weight. The target takes <strong>4d10 + casting damage bonus</strong> wounds and is knocked <strong>Prone</strong> regardless of wounds remaining. Any non-magical armour the target wears loses <strong>1 point of Wound Mitigation</strong> permanently from the impact — compressed and warped beyond repair. The target must surpass Physique TN 14 + Resist bonus to stand firm or lose 1 AP on their next turn as the impact staggers them.<br><br>
+                If the target reaches 0 wounds they and all non-magical objects they carry are destroyed outright — crushed into an unrecognisable mass. Nothing remains.</p>
+            </div>
+            <div class="trait-box">
+                <span class="trait-title">Molten Earth (TN 15)</span>
+                <strong>Actions:</strong> 4 | <strong>Range:</strong> 200 Ft | <strong>Target:</strong> 25 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
+                <p>The ground tears open and lava erupts through the earth in a catastrophic burst. All creatures in the AoE take <strong>4d10 + casting damage bonus</strong> wounds immediately and must surpass Agility TN 15 + Resist bonus to keep their footing or have movement speed halved. Any creature that remains in the AoE takes <strong>4d10 + casting damage bonus</strong> wounds at the start of each subsequent turn as the molten earth spreads and pools. Structures within the AoE take full damage each turn.</p>
+            </div>
+            <div class="trait-box">
+                <span class="trait-title">Show The Way (TN 15)</span>
+                <strong>Actions:</strong> 4 | <strong>Range:</strong> 60 Ft | <strong>Target:</strong> 25 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
+                <p>Tear open a shimmering portal to a location you have personally visited or possess a relic from. The gateway is large enough for creatures to pass through and remains stable for 1 turn at no risk. Each additional turn the portal remains open roll a d10 — on a <strong>5 or higher</strong> a trans-dimensional creature is drawn through the rift and is hostile to all. The chance compounds — turn 2 is 50%, turn 3 is 75%, turn 4+ is nearly certain. The portal may be closed as a free action on the caster's turn.</p>
+            </div>
             <div class="trait-box">
 
         <div class="full-width">
@@ -2951,10 +3030,10 @@
             </table>
         </div>
             <div class="trait-box">
-            <span class="trait-title">Dispel Magic (TN ~)</span>
-            <strong>Actions:</strong> Variable* | <strong>Range:</strong> 100 Ft | <strong>Duration:</strong> Instant
-            <p>Choose a creature, object, or effect to unravel. To succeed, your To-Cast roll must achieve a TN value at least <strong>1 level higher</strong> than the effect you are targeting.</p>
-        </div>
+                <span class="trait-title">Dispel Magic (TN ~)</span>
+                <strong>Actions:</strong> Variable | <strong>Range:</strong> 100 Ft | <strong>Duration:</strong> Instant
+                <p>Target any active magical effect, enchanted object, or arcane trap within range. Roll your standard To-Cast (1d10 + casting bonuses) and beat the TN of the effect by 1 or more to dispel it. The TN to dispel always equals the original spell or enchantment's TN. On success the effect ends immediately and permanently. On failure the effect holds and cannot be targeted again until the next turn.</p>
+            </div>
             <div class="trait-box">
             <span class="trait-title">Magic Lock (TN ~)</span>
             <strong>Actions:</strong> Variable* | <strong>Range:</strong> Touch | <strong>Duration:</strong> Permanent
