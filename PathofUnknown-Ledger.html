@@ -282,6 +282,7 @@
         .k-item input.adv-cost { flex: 0 0 36px !important; width: 36px; border-left: 1px solid rgba(0,0,0,0.2) !important; padding: 0 1px; font-size: 10.5pt; font-weight: 900; text-align: center; color: var(--blood); background: rgba(0,0,0,0.08); border-right: none; border-top: none; border-bottom: none; }
         #advanced-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); display: grid; gap: 2px; }
         #spells-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); display: grid; gap: 8px; }
+        #runes-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); display: grid; gap: 8px; }
         .inventory-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; margin-top: 4px; }
         #inventory-grid .k-item input[type="text"] { font-size: 13pt; padding: 2px 6px; }
 
@@ -663,8 +664,19 @@
             .cond-ledger-header,
             .cond-ledger-section { display: none !important; }
 
-            /* Cap inventory at 10 slots (5 rows × 2 cols) — hide slots 11–12 */
-            #inventory-grid .k-item:nth-child(n+11) { display: none !important; }
+            /* Cap inventory at 8 slots (4 rows × 2 cols) for print — hide extras */
+            #inventory-grid .k-item:nth-child(n+9) { display: none !important; }
+
+            /* Runes grid — 15 items / 3 col / 5 rows — same density as spells grid */
+            #runes-grid { gap: 4px !important; margin-bottom: 4px !important; margin-top: 3px !important; }
+            #runes-grid .k-item { min-height: 28px !important; height: 28px !important; padding: 2px 5px !important; }
+
+            /* Runes section — only show if active, keep tight */
+            #runes-header { margin-top: 4px !important; }
+
+            /* Compress spells + knowledge + advanced + inventory tighter */
+            .knowledge-section { padding: 3px 6px !important; }
+            .inventory-section { padding: 3px 6px !important; }
         }
     </style>
 <script defer data-domain="fantasy-rpgpow3.tiiny.site" src="https://analytics.tiiny.site/js/plausible.js"></script>
@@ -969,7 +981,7 @@
   </div>
   <div id="skb-body" style="display:none;">
     <div style="font-size:8.5pt;font-style:italic;color:rgba(26,18,8,0.55);padding:5px 8px 7px;border-bottom:1px solid rgba(154,123,47,0.2);">Bonus points count toward all derived stats and characteristics but cost no XP.</div>
-    <div class="skb-grid"><div class="skb-row"><span class="skb-name">Athletics</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-athletics" value="0" min="0" oninput="upd()" title="Bonus pts for Athletics — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Counter</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-counter" value="0" min="0" oninput="upd()" title="Bonus pts for Counter — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Evasion</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-evasion" value="0" min="0" oninput="upd()" title="Bonus pts for Evasion — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Quickness</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-quickness" value="0" min="0" oninput="upd()" title="Bonus pts for Quickness — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Stealth</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-stealth" value="0" min="0" oninput="upd()" title="Bonus pts for Stealth — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Thieving</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-thieving" value="0" min="0" oninput="upd()" title="Bonus pts for Thieving — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Acute Senses</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-acute-senses" value="0" min="0" oninput="upd()" title="Bonus pts for Acute Senses — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Discipline</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-discipline" value="0" min="0" oninput="upd()" title="Bonus pts for Discipline — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Druidism</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-druidism" value="0" min="0" oninput="upd()" title="Bonus pts for Druidism — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Focus</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-focus" value="0" min="0" oninput="upd()" title="Bonus pts for Focus — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Precise Strk</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-precise-strk" value="0" min="0" oninput="upd()" title="Bonus pts for Precise Strk — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Stamina</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-stamina" value="0" min="0" oninput="upd()" title="Bonus pts for Stamina — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Authority</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-authority" value="0" min="0" oninput="upd()" title="Bonus pts for Authority — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Charm</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-charm" value="0" min="0" oninput="upd()" title="Bonus pts for Charm — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Faith</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-faith" value="0" min="0" oninput="upd()" title="Bonus pts for Faith — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Inspire</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-inspire" value="0" min="0" oninput="upd()" title="Bonus pts for Inspire — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Light-Soul</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-light-soul" value="0" min="0" oninput="upd()" title="Bonus pts for Light-Soul — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Mending</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-mending" value="0" min="0" oninput="upd()" title="Bonus pts for Mending — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Evaluate</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-evaluate" value="0" min="0" oninput="upd()" title="Bonus pts for Evaluate — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Knowledge</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-knowledge" value="0" min="0" oninput="upd()" title="Bonus pts for Knowledge — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Perception</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-perception" value="0" min="0" oninput="upd()" title="Bonus pts for Perception — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Read/Write</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-read-write" value="0" min="0" oninput="upd()" title="Bonus pts for Read/Write — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Tracker</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-tracker" value="0" min="0" oninput="upd()" title="Bonus pts for Tracker — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Wizardry</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-wizardry" value="0" min="0" oninput="upd()" title="Bonus pts for Wizardry — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Fortitude</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-fortitude" value="0" min="0" oninput="upd()" title="Bonus pts for Fortitude — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Hard as Nails</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-hard-as-nails" value="0" min="0" oninput="upd()" title="Bonus pts for Hard as Nails — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Ki</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-ki" value="0" min="0" oninput="upd()" title="Bonus pts for Ki — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Rugged</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-rugged" value="0" min="0" oninput="upd()" title="Bonus pts for Rugged — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Shieldsman</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-shieldsman" value="0" min="0" oninput="upd()" title="Bonus pts for Shieldsman — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Strength Con.</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-strength-con" value="0" min="0" oninput="upd()" title="Bonus pts for Strength Con. — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Enraged</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-enraged" value="0" min="0" oninput="upd()" title="Bonus pts for Enraged — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Iron Will</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-iron-will" value="0" min="0" oninput="upd()" title="Bonus pts for Iron Will — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Resolve</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-resolve" value="0" min="0" oninput="upd()" title="Bonus pts for Resolve — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Shaman</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-shaman" value="0" min="0" oninput="upd()" title="Bonus pts for Shaman — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Spirit</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-spirit" value="0" min="0" oninput="upd()" title="Bonus pts for Spirit — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Survival</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-survival" value="0" min="0" oninput="upd()" title="Bonus pts for Survival — free, no XP cost"></div></div>
+    <div class="skb-grid"><div class="skb-row"><span class="skb-name">Athletics</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-athletics" value="0" min="0" oninput="upd()" title="Bonus pts for Athletics — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Evasion</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-evasion" value="0" min="0" oninput="upd()" title="Bonus pts for Evasion — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Quickness</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-quickness" value="0" min="0" oninput="upd()" title="Bonus pts for Quickness — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Stealth</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-stealth" value="0" min="0" oninput="upd()" title="Bonus pts for Stealth — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Thieving</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-thieving" value="0" min="0" oninput="upd()" title="Bonus pts for Thieving — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Tumble</span><span class="skb-cat">Agi</span><input type="number" class="skb-input" id="bon-skill-tumble" value="0" min="0" oninput="upd()" title="Bonus pts for Tumble — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Acute Senses</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-acute-senses" value="0" min="0" oninput="upd()" title="Bonus pts for Acute Senses — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Druidism</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-druidism" value="0" min="0" oninput="upd()" title="Bonus pts for Druidism — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Focus</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-focus" value="0" min="0" oninput="upd()" title="Bonus pts for Focus — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Precise Strk</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-precise-strk" value="0" min="0" oninput="upd()" title="Bonus pts for Precise Strk — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Riposte</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-riposte" value="0" min="0" oninput="upd()" title="Bonus pts for Riposte — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Stamina</span><span class="skb-cat">Awa</span><input type="number" class="skb-input" id="bon-skill-stamina" value="0" min="0" oninput="upd()" title="Bonus pts for Stamina — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Authority</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-authority" value="0" min="0" oninput="upd()" title="Bonus pts for Authority — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Charm</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-charm" value="0" min="0" oninput="upd()" title="Bonus pts for Charm — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Faith</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-faith" value="0" min="0" oninput="upd()" title="Bonus pts for Faith — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Inspire</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-inspire" value="0" min="0" oninput="upd()" title="Bonus pts for Inspire — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Light-Soul</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-light-soul" value="0" min="0" oninput="upd()" title="Bonus pts for Light-Soul — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Mending</span><span class="skb-cat">Cha</span><input type="number" class="skb-input" id="bon-skill-mending" value="0" min="0" oninput="upd()" title="Bonus pts for Mending — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Evaluate</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-evaluate" value="0" min="0" oninput="upd()" title="Bonus pts for Evaluate — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Knowledge</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-knowledge" value="0" min="0" oninput="upd()" title="Bonus pts for Knowledge — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Perception</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-perception" value="0" min="0" oninput="upd()" title="Bonus pts for Perception — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Read/Write</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-read-write" value="0" min="0" oninput="upd()" title="Bonus pts for Read/Write — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Tracker</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-tracker" value="0" min="0" oninput="upd()" title="Bonus pts for Tracker — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Wizardry</span><span class="skb-cat">Int</span><input type="number" class="skb-input" id="bon-skill-wizardry" value="0" min="0" oninput="upd()" title="Bonus pts for Wizardry — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Fortitude</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-fortitude" value="0" min="0" oninput="upd()" title="Bonus pts for Fortitude — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Hard as Nails</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-hard-as-nails" value="0" min="0" oninput="upd()" title="Bonus pts for Hard as Nails — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Ki</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-ki" value="0" min="0" oninput="upd()" title="Bonus pts for Ki — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Rugged</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-rugged" value="0" min="0" oninput="upd()" title="Bonus pts for Rugged — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Shieldsman</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-shieldsman" value="0" min="0" oninput="upd()" title="Bonus pts for Shieldsman — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Strength Con.</span><span class="skb-cat">Phy</span><input type="number" class="skb-input" id="bon-skill-strength-con" value="0" min="0" oninput="upd()" title="Bonus pts for Strength Con. — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Discipline</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-discipline" value="0" min="0" oninput="upd()" title="Bonus pts for Discipline — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Iron Will</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-iron-will" value="0" min="0" oninput="upd()" title="Bonus pts for Iron Will — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Resolve</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-resolve" value="0" min="0" oninput="upd()" title="Bonus pts for Resolve — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Shaman</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-shaman" value="0" min="0" oninput="upd()" title="Bonus pts for Shaman — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Spirit</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-spirit" value="0" min="0" oninput="upd()" title="Bonus pts for Spirit — free, no XP cost"></div><div class="skb-row"><span class="skb-name">Survival</span><span class="skb-cat">Wil</span><input type="number" class="skb-input" id="bon-skill-survival" value="0" min="0" oninput="upd()" title="Bonus pts for Survival — free, no XP cost"></div></div>
   </div>
 </div>
 
@@ -1078,14 +1090,14 @@
         <label><input type="checkbox" id="magic_druidic" class="magic-cb" value="Druidic" onchange="handleMagicCheck(this)"> Druidic <span style="font-size:9pt; color:var(--blood);">(200 XP)</span></label>
         <label><input type="checkbox" id="magic_ki" class="magic-cb" value="Ki" onchange="handleMagicCheck(this)"> Ki <span style="font-size:9pt; color:var(--blood);">(200 XP)</span></label>
         <label><input type="checkbox" id="magic_magic" class="magic-cb" value="Magic" onchange="handleMagicCheck(this)"> Magic <span style="font-size:9pt; color:var(--blood);">(200 XP)</span></label>
-        <label><input type="checkbox" id="magic_religion" class="magic-cb" value="Religion" onchange="handleMagicCheck(this)"> Religion <span style="font-size:9pt; color:var(--blood);">(200 XP)</span></label>
+        <label><input type="checkbox" id="magic_religion" class="magic-cb" value="Religion" onchange="handleMagicCheck(this)"> Theology <span style="font-size:9pt; color:var(--blood);">(200 XP)</span></label>
         <label><input type="checkbox" id="magic_shaman" class="magic-cb" value="Shaman" onchange="handleMagicCheck(this)"> Shaman <span style="font-size:9pt; color:var(--blood);">(200 XP)</span></label>
         <label><input type="checkbox" id="magic_runes" class="magic-cb" value="Runes" onchange="handleMagicCheck(this)"> Runes <span style="font-size:9pt; color:var(--blood);">(200 XP)</span></label>
         <div id="runemaster-stats" style="display:none; align-items:center; gap:4px;">
-            <div class="m-skill-box" style="border-color:var(--ink); height:32px; padding:0 8px;">
-                <span class="m-lbl" style="font-size:9pt; color:var(--blood);">Runemaster Pts</span>
-                <input type="text" id="runemaster_base" readonly value="0" style="width:30px; height:22px; text-align:center; font-weight:900; border:1.5px solid var(--ink); background:rgba(0,0,0,0.08); font-size:9pt; color:var(--ink);">
-                <input type="number" id="runemaster_pts" oninput="upd()" placeholder="Pts" style="width:34px; height:22px; text-align:center; font-weight:900; border:1.5px solid var(--ink); font-size:9pt; background:var(--input-bg); color:var(--ink);">
+            <div class="sk-item" style="min-width:180px; height:36px;">
+                <span class="sk-name" style="font-family:var(--font-hand); font-size:13pt; text-transform:none; letter-spacing:1px; color:var(--iron);">Runemaster</span>
+                <input type="text" id="runemaster_cost_label" class="sk-b" readonly value="—" style="width:36px; text-align:center;">
+                <input type="number" id="runemaster_pts" class="sk-p xc" oninput="upd()" placeholder="Pts" style="width:46px;">
             </div>
         </div>
     </div>
@@ -1093,6 +1105,9 @@
 
 <div class="h-box" id="spells-header">Spells / Powers</div>
 <div class="knowledge-section"><div class="knowledge-grid" id="spells-grid"></div></div>
+
+<div class="h-box" id="runes-header" style="display:none; border-color:var(--gold); color:var(--gold);">Runes &amp; Glyphs</div>
+<div class="knowledge-section" id="runes-section" style="display:none;"><div class="knowledge-grid" id="runes-grid"></div></div>
 
 <div class="h-box">Knowledge</div>
 <div class="knowledge-section"><div class="knowledge-grid" id="knowledge-grid"></div></div>
@@ -1137,12 +1152,12 @@
 // 1. DATA CONSTANTS
 // ================================================================
 const sks = {
-    "Agility":   ["Athletics","Counter","Evasion","Quickness","Stealth","Thieving"],
-    "Awareness": ["Acute Senses","Discipline","Druidism","Focus","Precise Strk","Stamina"],
+    "Agility":   ["Athletics","Evasion","Quickness","Stealth","Thieving","Tumble"],
+    "Awareness": ["Acute Senses","Druidism","Focus","Precise Strk","Riposte","Stamina"],
     "Charisma":  ["Authority","Charm","Faith","Inspire","Light-Soul","Mending"],
     "Intellect": ["Evaluate","Knowledge","Perception","Read/Write","Tracker","Wizardry"],
     "Physique":  ["Fortitude","Hard as Nails","Ki","Rugged","Shieldsman","Strength Con."],
-    "Willpower": ["Enraged","Iron Will","Resolve","Shaman","Spirit","Survival"]
+    "Willpower": ["Discipline","Iron Will","Resolve","Shaman","Spirit","Survival"]
 };
 
 const ARMOR_DATA = {
@@ -1191,9 +1206,9 @@ const SKILL_COSTS = {
     "Charm":{halfling:15,human:15,elf:20,dwarf:25},
     "Mending":{halfling:20,dwarf:25,elf:25,human:25},
     "Light-Soul":{dwarf:20,elf:20,halfling:20,human:20},
-    "Counter":{dwarf:30,elf:30,halfling:30,human:30},
+    "Riposte":{dwarf:30,elf:30,halfling:30,human:30},
     "Discipline":{dwarf:15,elf:15,human:15,halfling:15},
-    "Enraged":{dwarf:30,elf:35,human:35,halfling:40},
+    "Tumble":{halfling:15,elf:20,human:25,dwarf:30},
     "Evasion":{elf:15,halfling:10,human:20,dwarf:20},
     "Evaluate":{dwarf:15,elf:15,halfling:15,human:15},
     "Fortitude":{dwarf:40,halfling:45,human:50,elf:55},
@@ -1340,7 +1355,8 @@ function initializeUpdateVariables() {
             spirit: 0, survival: 0, stamina: 0, focus: 0, lightSoul: 0,
             mending: 0, strengthCon: 0, preciseStrike: 0, perception: 0,
             druidism: 0, ki: 0, wizardry: 0, faith: 0, shaman: 0,
-            ironWill: 0, fortitude: 0, resolve: 0, discipline: 0
+            ironWill: 0, fortitude: 0, resolve: 0, discipline: 0,
+            tumble: 0, riposte: 0
         }
     };
 }
@@ -1409,7 +1425,7 @@ function extractSkillPoints(skillName, pts, state) {
         "Perception": "perception", "Druidism": "druidism", "Ki": "ki",
         "Wizardry": "wizardry", "Faith": "faith", "Shaman": "shaman",
         "Iron Will": "ironWill", "Fortitude": "fortitude", "Resolve": "resolve",
-        "Discipline": "discipline", "Focus": "focus"
+        "Discipline": "discipline", "Focus": "focus", "Tumble": "tumble", "Riposte": "riposte"
     };
 
     if (skillMap[skillName]) state.skillPts[skillMap[skillName]] = pts;
@@ -1438,19 +1454,12 @@ function processMagicSkills(state) {
         }
     });
 
+    // Light-Soul has no prerequisite — always unlocked
     const lsLabel = g('label-Light-Soul');
     if (lsLabel) {
         const lsInp = lsLabel.parentNode.querySelector('.sk-p');
-        // Use purchased pts only (not bonus) for Light-Soul unlock
-        const faithPtsOnly = parseInt(g('label-Faith')?.parentNode.querySelector('.sk-p')?.value) || 0;
-        if (faithPtsOnly > 0) {
-            lsInp.readOnly = false;
-            lsInp.style.background = "var(--input-bg)";
-        } else {
-            lsInp.readOnly = true;
-            lsInp.style.background = "rgba(0,0,0,0.08)";
-            if (parseInt(lsInp.value) > 0) lsInp.value = 0;
-        }
+        lsInp.readOnly = false;
+        lsInp.style.background = "var(--input-bg)";
     }
 }
 
@@ -1497,8 +1506,10 @@ function handleRunes(state, magicState) {
     if (magicState.isRunesActive) {
         rmPts = gv('runemaster_pts');
         state.categoryTotals["Agility"] = (state.categoryTotals["Agility"] || 0) + rmPts;
-        let rmBase = state.race === 'dwarf' ? 10 : state.race === 'elf' ? 20 : 15;
-        sv('runemaster_base', rmBase);
+        const rmBase = state.race === 'dwarf' ? 10 : state.race === 'elf' ? 20 : state.race === 'halfling' ? 20 : 15;
+        const raceLabel = state.race === 'dwarf' ? 'Dwarf' : state.race === 'elf' ? 'Elf' : state.race === 'halfling' ? 'Halfling' : state.race === 'human' ? 'Human' : '—';
+        const costLabel = g('runemaster_cost_label');
+        if (costLabel) costLabel.value = `${rmBase}`;
         state.spentXP += calcCompounding(rmPts, rmBase);
         if (g('runemaster-stats')) g('runemaster-stats').style.display = 'flex';
     } else {
@@ -1830,8 +1841,10 @@ function calculateWoundMitigation(state, stats, armorData, advMitigationBonus, c
     sv('wm-armor-tot', armorTot);
     sv('wm-armor-evil', armorTot + clericEvilMitigation);
 
+    let hanSpellWM = (state.skillPts.hardAsNails >= 3) ? Math.floor(state.skillPts.hardAsNails / 2) : 0;
     let blessTot = stats.willpower + Math.floor(state.skillPts.spirit / 3) +
                    Math.floor(state.skillPts.survival / 2) + Math.floor(state.skillPts.resolve / 2) +
+                   hanSpellWM +
                    gv('wm-bless-bon') + advMitigationBonus;
     if (state.charSize === "Giant") blessTot = Math.floor(blessTot * 1.5);
     else if (state.charSize === "Enormous") blessTot *= 2;
@@ -1986,6 +1999,7 @@ function upd() {
     updateAdvancedSkillTooltips(state, stats, meleeDamage, rangeDamage);
     updateTacticalConditions();
     updateSpellUnlocks();
+    updateRunesSection();
     // Autosave to localStorage after every update
     try {
         const snap = {};
@@ -2063,13 +2077,16 @@ function updateSpellUnlocks() {
     document.querySelectorAll('.magic-cb').forEach(cb => {
         if (cb.checked) {
             isMagicPathActive = true;
-            activeTradition = cb.value;
-            if (cb.value === "Runes") {
-                activeMagicPts = parseInt(g('runemaster_pts')?.value) || 0;
-            } else {
+            // Runes is always secondary — only set activeTradition if it's a primary discipline
+            if (cb.value !== "Runes") {
+                activeTradition = cb.value;
                 const skillName = (cb.value === "Religion") ? "Faith" : (cb.value === "Magic") ? "Wizardry" : (cb.value === "Druidic") ? "Druidism" : cb.value;
                 const skillInput = g(`label-${skillName}`)?.parentNode.querySelector('.sk-p');
                 activeMagicPts = parseInt(skillInput?.value) || 0;
+            } else if (!activeTradition) {
+                // Only use Runes as tradition if it's the sole discipline
+                activeTradition = cb.value;
+                activeMagicPts = parseInt(g('runemaster_pts')?.value) || 0;
             }
         }
     });
@@ -2144,6 +2161,61 @@ function updateSpellUnlocks() {
     });
 }
 
+
+// ================================================================
+// RUNES SECTION — Secondary discipline display
+// ================================================================
+function updateRunesSection() {
+    const runesChecked = document.getElementById('magic_runes')?.checked;
+    const runesHeader = g('runes-header');
+    const runesSection = g('runes-section');
+    const runesGrid = g('runes-grid');
+
+    if (!runesHeader || !runesSection || !runesGrid) return;
+
+    if (runesChecked) {
+        // Show the runes section
+        runesHeader.style.display = '';
+        runesSection.style.display = '';
+
+        // Populate rune selects if not already populated
+        const selects = runesGrid.querySelectorAll('.rune-select');
+        if (selects.length > 0 && selects[0].options.length <= 1) {
+            let runesHTML = '<option value="" data-tn="">- Rune/Glyph -</option>';
+            if (typeof RUNES_LIST !== 'undefined') {
+                RUNES_LIST.forEach(r => {
+                    runesHTML += `<option value="${r.name}" data-tn="${r.tn}" title="${r.desc || ''}">${r.name} [${r.tn}]</option>`;
+                });
+            }
+            selects.forEach(sel => {
+                const saved = sel.value;
+                sel.innerHTML = runesHTML;
+                if (saved) sel.value = saved;
+            });
+        }
+    } else {
+        // Hide and clear runes section
+        runesHeader.style.display = 'none';
+        runesSection.style.display = 'none';
+    }
+}
+
+function updateRuneCost(sel) {
+    const item = sel.closest('.k-item');
+    if (!item) return;
+    const tnInput = item.querySelector('.rune-tn');
+    const apInput = item.querySelector('.rune-ap');
+    const opt = sel.options[sel.selectedIndex];
+    const tn = opt?.dataset?.tn || '';
+    if (tnInput) tnInput.value = tn || '';
+    if (apInput) {
+        // Derive AP from TN for runes
+        const tnNum = parseInt(tn) || 0;
+        const ap = tnNum <= 6 ? 1 : tnNum <= 12 ? 2 : 3;
+        apInput.value = tn ? ap : '';
+    }
+}
+
 // ================================================================
 // 5. MAGIC CHECK HANDLER
 // ================================================================
@@ -2156,18 +2228,51 @@ function handleMagicCheck(cb) {
     const header = document.getElementById('spells-header');
 
     if (cb.checked) {
+        // Runes is a secondary discipline — it can combine with Faith, Shaman, Ki
+        // It CANNOT combine with Wizardry or Druid (forbidden combinations)
+        const isRunesBox = cb.value === "Runes";
+        const forbiddenWithRunes = ["Magic", "Druidic"]; // Wizardry and Druid forbidden
+
         // Disable other magic boxes
         checks.forEach(c => {
-            if (c !== cb) { c.disabled = true; c.parentElement.style.opacity = "0.5"; }
+            if (c === cb) return; // never disable self
+
+            if (isRunesBox) {
+                // Runes is being checked — disable only forbidden disciplines
+                if (forbiddenWithRunes.includes(c.value)) {
+                    c.disabled = true; c.parentElement.style.opacity = "0.5";
+                }
+                // Leave Faith, Shaman, Ki, other checkboxes alone
+            } else {
+                // A primary discipline is being checked
+                if (c.value === "Runes") {
+                    // Only disable Runes if this is a forbidden combination
+                    if (forbiddenWithRunes.includes(cb.value)) {
+                        c.disabled = true; c.parentElement.style.opacity = "0.5";
+                    }
+                    // Otherwise leave Runes available
+                } else {
+                    // Disable all other primary disciplines normally
+                    c.disabled = true; c.parentElement.style.opacity = "0.5";
+                }
+            }
         });
 
         // Populate Spells Table
         let optionsHTML = '<option value="" data-tn="">- Select -</option>';
-        if(cb.value === "Religion") { if(header) header.innerText = "Blessings"; RELIGION_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
+        if(cb.value === "Religion") { if(header) header.innerText = "Theology"; RELIGION_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
         else if(cb.value === "Druidic") { if(header) header.innerText = "Druidic Spells"; DRUIDIC_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
         else if(cb.value === "Magic") { if(header) header.innerText = "Spells"; MAGIC_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
         else if(cb.value === "Ki") { if(header) header.innerText = "Ki Powers"; KI_POWERS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
-        else if(cb.value === "Runes") { if(header) header.innerText = "Runes / Glyphs"; RUNES_LIST.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
+        else if(cb.value === "Runes") {
+            // Runes is a secondary discipline — only populate spell table if it's the ONLY discipline checked
+            const otherChecked = Array.from(checks).some(c => c !== cb && c.checked);
+            if (!otherChecked) {
+                if(header) header.innerText = "Runes / Glyphs";
+                RUNES_LIST.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`);
+            }
+            // Runes XP (200) already counted via isRunesActive — nothing else needed here
+        }
         else if(cb.value === "Shaman") { if(header) header.innerText = "Shamanic Rites"; SHAMAN_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name}</option>`); }
 
         spellSelects.forEach(sel => {
@@ -2184,15 +2289,24 @@ function handleMagicCheck(cb) {
             kChecks[0].checked = true;
         }
 
-        // Auto Read/Write point
-        const rwInput = document.getElementById('label-Read/Write')?.parentNode.querySelector('.sk-p');
-        if(rwInput && (!rwInput.value || rwInput.value === "0")) rwInput.value = 1;
+        // Auto Read/Write point — skip if Runes is secondary (another discipline active)
+        if (cb.value !== "Runes" || !Array.from(checks).some(c => c !== cb && c.checked)) {
+            const rwInput = document.getElementById('label-Read/Write')?.parentNode.querySelector('.sk-p');
+            if(rwInput && (!rwInput.value || rwInput.value === "0")) rwInput.value = 1;
+        }
 
     } else {
-        // Re-enable boxes when unchecked
-        checks.forEach(c => { 
-            c.disabled = false; 
-            c.parentElement.style.opacity = "1"; 
+        // Re-enable boxes when unchecked — respect active Runes restrictions
+        const runesChecked = document.getElementById('magic_runes')?.checked;
+        const forbiddenWithRunes = ["Magic", "Druidic"];
+        checks.forEach(c => {
+            // If Runes is still active, keep Wizardry and Druid locked
+            if (runesChecked && forbiddenWithRunes.includes(c.value)) {
+                c.disabled = true; c.parentElement.style.opacity = "0.5";
+            } else {
+                c.disabled = false;
+                c.parentElement.style.opacity = "1";
+            }
         });
         
         if(header) header.innerText = "Spells / Powers";
@@ -2217,6 +2331,7 @@ function handleMagicCheck(cb) {
     
     // Force the engine to recalculate Knowledge XP
     if(typeof upd === "function") upd();
+    if(typeof updateRunesSection === "function") updateRunesSection();
 }
 
 // ================================================================
@@ -2345,6 +2460,14 @@ function init() {
         }
     }
 
+    // Runes grid — 15 slots for rune/glyph selections
+    const runesGrid = g('runes-grid');
+    if (runesGrid && runesGrid.children.length === 0) {
+        for (let i = 0; i < 15; i++) {
+            runesGrid.innerHTML += `<div class="k-item" style="padding-right:0; padding-left:2px; display:flex;"><select class="rune-select" onchange="updateRuneCost(this)" style="flex:1 1 auto; width:100%; min-width:0; font-size:10.5pt; font-weight:900; background:transparent; border:none; outline:none; color:var(--ink); cursor:pointer;"><option value="" data-tn="">- Rune/Glyph -</option></select><input type="text" class="rune-tn" placeholder="TN" readonly><input type="text" class="rune-ap" placeholder="AP" readonly></div>`;
+        }
+    }
+
     // Knowledge grid
     const kGrid = g('knowledge-grid');
     if (kGrid && kGrid.children.length === 0) {
@@ -2411,7 +2534,7 @@ function applyLegacySkillKeys(data) {
     // ── Layer 1: Old .rpg positional skill pts (f_84 offset) ──────────
     const legacyMap = {
         "f_85": "pts-athletics",
-        "f_87": "pts-counter",
+        "f_87": "pts-riposte",
         "f_89": "pts-evasion",
         "f_91": "pts-quickness",
         "f_93": "pts-stealth",
@@ -2440,7 +2563,7 @@ function applyLegacySkillKeys(data) {
         "f_139": "pts-rugged",
         "f_141": "pts-shieldsman",
         "f_143": "pts-strength-con",
-        "f_145": "pts-enraged",
+        "f_145": "pts-tumble",
         "f_147": "pts-iron-will",
         "f_149": "pts-resolve",
         "f_151": "pts-shaman",
