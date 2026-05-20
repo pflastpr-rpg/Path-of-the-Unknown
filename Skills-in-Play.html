@@ -266,7 +266,7 @@ body {
 <!-- ═══════ A ═══════ -->
 <div id="s-acute" class="skill-entry">
     <h2 class="skill-title">Acute Senses</h2>
-    <div class="skill-mechanic-bar">Roll: 1d10 + Skill Points | Power of Three: +1 Awareness per 3 pts</div>
+    <div class="skill-mechanic-bar">Roll: 1d10 + Skill Points | Power of Three: +1 Willpower per 3 pts</div>
     <div class="example-block">
         <div class="example-label">In-Play Example</div>
         <p class="scenario">The party moves through a darkened merchant warehouse. Four Skullsmasherz goblins are hiding in the rafters above, waiting to drop. The GM calls for a passive detection check before the ambush triggers.</p>
@@ -366,9 +366,9 @@ body {
     </div>
 </div>
 
-<div id="s-counter" class="skill-entry">
-    <h2 class="skill-title">Counter</h2>
-    <div class="skill-mechanic-bar">Trigger: Natural 1 on enemy To-Hit | Riposte: 1d10 + Skill Points wounds | Costs 1 Action</div>
+<div id="s-riposte" class="skill-entry">
+    <h2 class="skill-title">Riposte</h2>
+    <div class="skill-mechanic-bar">Trigger: Natural 1 on enemy To-Hit (any miss at 9pts) | Reaction: 1 AP | Governs: Awareness | Costs 1 Action</div>
     <div class="example-block">
         <div class="example-label">In-Play Example</div>
         <p class="scenario">A Birn Juggernaut swings its massive fist at the party's Pit Fighter. The GM rolls to hit — and rolls a natural, unmodified 1. The Pit Fighter has 3 pts in Counter and still has 1 Action remaining this round.</p>
@@ -515,17 +515,17 @@ body {
 
 <div id="s-hardnails" class="skill-entry">
     <h2 class="skill-title">Hard as Nails</h2>
-    <div class="skill-mechanic-bar">+2 Max Wounds per pt | +1 WM per 2 pts (melee & standard ranged) | +1 Will Power per 3 pts</div>
+    <div class="skill-mechanic-bar">+2 Max Wounds per pt | +1 WM (physical) per 2 pts | +1 WM (spell/bless) per 2 pts from 3 pts | Bloody Minded at 6 pts | +1 Willpower per 3 pts</div>
     <div class="example-block">
         <div class="example-label">In-Play Example</div>
-        <p class="scenario">A Human Pit Fighter with 4 pts in Hard as Nails takes a hit from an Ogre that deals 9 wounds before mitigation. The Pit Fighter wears Studded Leather (2 WM from armour). Hard as Nails adds +2 WM (4 pts ÷ 2).</p>
+        <p class="scenario">A Human Pit Fighter with 4 pts in Hard as Nails takes a hit from an Ogre that deals 9 wounds before mitigation. The Pit Fighter wears Studded Leather (2 WM from armour). Hard as Nails adds +2 WM physical (4 pts ÷ 2) — and since 4 pts exceeds the 3pt threshold, also +2 WM against spells and blessings.</p>
         <div class="rolls">
             <div class="roll-line"><span class="roll-label">Incoming wounds:</span><span class="roll-formula">9</span></div>
             <div class="roll-line"><span class="roll-label">Armour WM:</span><span class="roll-formula">–2</span></div>
             <div class="roll-line"><span class="roll-label">Hard as Nails WM:</span><span class="roll-formula">–2</span></div>
             <div class="roll-line"><span class="roll-outcome">Final wounds taken: 5</span></div>
         </div>
-        <p class="resolution">The Ogre's fist connects but the Pit Fighter rolls with it, distributing the impact across a frame that has absorbed ten thousand training blows. <strong>9 incoming becomes 5 actual.</strong> Over a long fight, 4 WM negated per hit is the difference between standing and dying. Hard as Nails stacks with armour, with Evasion's WM path, and with Shieldsman's Defensive Stance — a character building all three simultaneously becomes extraordinarily difficult to kill with standard attacks.</p>
+        <p class="resolution">The Ogre's fist connects but the Pit Fighter rolls with it, distributing the impact across a frame that has absorbed ten thousand training blows. <strong>9 incoming becomes 5 actual.</strong> Over a long fight, 4 WM negated per hit is the difference between standing and dying. Hard as Nails stacks with armour, with Evasion's WM path, and with Shieldsman's Defensive Stance — and from 3 points onward its WM extends to spell and blessing damage too — a character building all three simultaneously becomes extraordinarily difficult to kill with standard attacks.</p>
     </div>
 </div>
 
@@ -588,7 +588,7 @@ body {
 </div>
 
 <div id="s-lightsoul" class="skill-entry">
-    <h2 class="skill-title">Light-Soul (Faith-Bound)</h2>
+    <h2 class="skill-title">Light-Soul</h2>
     <div class="skill-mechanic-bar">+1 Wound vs Evil targets per pt | +1 WM vs Evil per 3 pts | Evil: Undead, Daemons, Dragons (B/Bl/R/W), Beastmen, Chaos</div>
     <div class="example-block">
         <div class="example-label">In-Play Example</div>
@@ -863,6 +863,32 @@ body {
     </div>
 </div>
 
+<div id="s-tumble" class="skill-entry">
+    <h2 class="skill-title">Tumble</h2>
+    <div class="skill-mechanic-bar">Power of Three: +1 Agility per 3 pts | Cost: Halfling (15) | Elf (20) | Human (25) | Dwarf (30) | Min. Req: None | Governs: Agility</div>
+
+    <div class="scenario">
+        <div class="scenario-title">📖 What Is It?</div>
+        <p>The art of controlled falling and dynamic evasion. Where Evasion avoids a targeted strike, Tumble handles the chaos — AoE explosions, knockbacks, grapples, and every force that tries to rob you of your position. Each point grants <strong>+1</strong> to tests made to avoid Prone, Pushed, or Grappled.</p>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-title">⚡ At 3 Points — Emergency Roll</div>
+        <p>Spend <strong>1 AP as a reaction</strong> to roll clear of any AoE effect, moving up to <strong>10 Ft</strong> in any direction before it resolves.</p>
+        <div class="example"><strong>Example:</strong> A Wizard detonates a Fireball in your square. You spend 1 AP — you roll clear, ending up 10 Ft away, outside the blast.</div>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-title">⚡ At 6 Points — Sure Footing</div>
+        <p>Falling no longer knocks you <strong>Prone</strong>. You also ignore the first <strong>Prone</strong> condition applied to you each encounter.</p>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-title">⚡ At 9 Points — Death Roll</div>
+        <p>Once per encounter, when reduced to 0 wounds by a physical impact (falling, knockback, being thrown), make a Tumble test against <strong>TN 12</strong>. On success, remain at <strong>1 wound</strong> on your feet.</p>
+        <div class="example"><strong>Example:</strong> A Giant hurls you into a wall. You roll TN 12 — success. You land in a crouch, 1 wound remaining, still standing.</div>
+    </div>
+</div>
 <div id="s-tracking" class="skill-entry">
     <h2 class="skill-title">Tracking</h2>
     <div class="skill-mechanic-bar">Roll: 1d10 + pts + Awareness Bonus vs DV | +1 detail per 2 pts over DV | +1 Awareness per 3 pts</div>
