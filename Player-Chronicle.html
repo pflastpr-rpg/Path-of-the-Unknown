@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Chronicle - Power of Three</title>
+    <title>Player Chronicle - Blood and Purpose</title>
     <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
     
     <style>
@@ -182,7 +182,7 @@
 <div class="journal-container">
     <div class="header">
         <h1>The Player's Chronicle</h1>
-        <p>Record your deeds, lest the mountain forget them.</p>
+        <p>Knowledge is power. Purpose is everything. Blood is the price of both.</p>
     </div>
 
     <div class="character-binding no-print">
@@ -214,7 +214,7 @@
         
         if (charName === "") return;
 
-        const storageKey = 'po3_notes_' + charName;
+        const storageKey = 'bap_notes_' + charName;
         const savedNotes = localStorage.getItem(storageKey);
         
         if (savedNotes) {
@@ -234,7 +234,7 @@
             return;
         }
 
-        const storageKey = 'po3_notes_' + charName;
+        const storageKey = 'bap_notes_' + charName;
         localStorage.setItem(storageKey, notesContent);
         
         // Visual feedback
@@ -306,16 +306,16 @@
    // Initialize on startup - Now uses Local Storage Handoff
     window.onload = function() {
         // 1. Check if the Ledger just handed off a character name
-        const transferName = localStorage.getItem('po3_transfer_name');
+        const transferName = localStorage.getItem('bap_transfer_name');
         
         if (transferName) {
             document.getElementById('char-name').value = transferName;
-            localStorage.setItem('po3_last_active_char', transferName); // Update active memory
-            localStorage.removeItem('po3_transfer_name'); // Wipe the temporary handoff data
+            localStorage.setItem('bap_last_active_char', transferName); // Update active memory
+            localStorage.removeItem('bap_transfer_name'); // Wipe the temporary handoff data
             loadCharacterNotes();
         } else {
             // 2. If opened directly, just load the last used character
-            const lastChar = localStorage.getItem('po3_last_active_char');
+            const lastChar = localStorage.getItem('bap_last_active_char');
             if (lastChar) {
                 document.getElementById('char-name').value = lastChar;
                 loadCharacterNotes();
@@ -327,7 +327,7 @@
     function clearLedger() {
         const charNameField = document.getElementById('char-name');
         const charName = charNameField.value.trim();
-        const storageKey = 'po3_notes_' + charName.toLowerCase();
+        const storageKey = 'bap_notes_' + charName.toLowerCase();
 
         if (charName === "") {
             alert("No Active Character selected to clear.");
@@ -346,7 +346,7 @@
             
             // 3. NEW: Clear the character name field and the "last active" memory
             charNameField.value = "";
-            localStorage.removeItem('po3_last_active_char');
+            localStorage.removeItem('bap_last_active_char');
             
             alert(`The ledger for ${charName} has been reduced to ash.`);
         }
