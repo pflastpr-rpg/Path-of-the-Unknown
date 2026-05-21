@@ -1,0 +1,264 @@
+# Blood and Purpose — Project Brief
+> *Knowledge is power. Purpose is everything. Blood is the price of both.*
+
+**Paste this document at the start of any new AI session to instantly orient the assistant.**
+
+---
+
+## The Game
+
+**Name:** Blood and Purpose  
+**Former name:** Path of the Unknown (still used in GitHub repo URL — not yet renamed)  
+**Genre:** Dark fantasy tabletop RPG  
+**System:** Classless, skill-based. No pre-defined classes or archetypes. Players invest XP into skills and characteristics to build any hero they want. You are what you do, not what you were born as.  
+**Tone:** Dark, deliberate, consequential. The world does not care about the player characters. Violence has weight. Magic has cost. Every scar has a reason.  
+**GitHub:** https://github.com/pflastpr-rpg/Path-of-the-Unknown  
+**Status:** Active development — targeting Kickstarter
+
+---
+
+## File Map
+
+| File | Purpose | Notes |
+|---|---|---|
+| `index.html` | Main hub / gateway page | Links to all other documents |
+| `Core_Rules.html` | Core rulebook | Primary document — most edited |
+| `Primary-Skills.html` | Full primary skill list A-Z | 37 skills, all with tiered benefits |
+| `Advanced_Skills.html` | Advanced mastery unlocks | Flat unlocks, not building skills |
+| `Skills-in-Play.html` | Skill examples and scenarios | Companion to Primary-Skills |
+| `mechanics.html` | Build guide / numbers reference | XP tables, wound calculations |
+| `racial-balance.html` | XP cost tables by race | Cross-reference for all 4 races |
+| `PathofUnknown-Ledger.html` | Character sheet | Heavy JS — handle carefully |
+| `Fantasy-RPG-Bestiary-Full_22.html` | Current bestiary | _22 version is the rewrite |
+| `Fantasy-RPG-Bestiary-Full.html` | Old bestiary | To be deleted — replaced by _22 |
+| `DM-Grimoire.html` | GM reference tool | NPC stat blocks, encounter tools |
+| `magic-items.html` | Relics and artifacts | |
+| `lore.html` | World lore and history | Key source for race/faction flavour |
+| `world.html` | World atlas and setting | |
+| `pou_combat_tracker.html` | Combat initiative tracker | |
+| `pou_creation_generator.html` | Character creation generator | |
+| `Player-Chronicle.html` | Player notes journal | localStorage save/load |
+| `POTU_Refinery.html` | AI-powered writing tool | Uses Anthropic API — keep in repo |
+
+---
+
+## The Six Characteristics
+
+Each characteristic governs exactly **6 primary skills** — this is a hard rule, never violated.
+
+| Characteristic | Skills |
+|---|---|
+| **Agility** | Athletics, Evasion, Quickness, Stealth, Thieving, Tumble |
+| **Awareness** | Acute Senses, Druidism, Focus, Precise Strike, Riposte, Stamina |
+| **Charisma** | Authority, Charm, Faith, Inspire, Light-Soul, Mending |
+| **Intellect** | Evaluate, Knowledge, Perception, Read/Write, Tracker, Wizardry |
+| **Physique** | Fortitude, Hard as Nails, Ki, Rugged, Shieldsman, Strength Conditioning |
+| **Willpower** | Discipline, Iron Will, Resolve, Shaman, Spirit, Survival |
+
+**Power of Three:** Every primary skill grants +1 to its governing characteristic per 3 points invested. This is universal — no exceptions.
+
+---
+
+## Primary Skills — Key Details
+
+### Tiered Skills (have milestone unlocks at 3, 6, 9 points)
+All primary skills now have tiered benefits. Key ones to know:
+
+- **Tumble** — 3pt: Emergency Roll (AoE dodge), 6pt: Sure Footing (no prone from falls), 9pt: Death Roll (survive 0 wounds once/encounter)
+- **Riposte** — 3pt: +Awareness modifier bonus wounds, 6pt: 2d10 damage, 9pt: triggers on any miss (not just nat 1)
+- **Evasion** — 3pt: Dodge reaction 1AP once/encounter, 6pt: half AoE wounds, 9pt: half spell wounds on reaction
+- **Stealth** — 3pt: Vanish mid-combat (Advantage test), 6pt: Shadow Step 10ft, 9pt: Ghost Strike (attack without breaking stealth)
+- **Hard as Nails** — passive: +2 wounds/pt, +1 physical WM per 2pts. 3pt: spell/blessing WM = floor(pts/2). 6pt: Bloody Minded (ignore Bleeding 1 turn/encounter)
+- **Fortitude** — 6pt: ignore first Stunned/encounter, 9pt: remain at 10% wounds instead of 0 once/session
+- **Discipline** — 3pt: immune to Shaken, 6pt: +2 to Fear tests, 9pt: cast TN6 or lower spell free once/encounter
+- **Resolve** — 3pt: remove Shaken as free action, 6pt: +2 vs Charm/Dominate, 9pt: share Resist bonus with adjacent ally
+
+### Key Skill Notes
+- **Counter** was renamed **Riposte** and moved from Agility to **Awareness**
+- **Enraged** was removed — fury/berserker is now in Advanced Masteries (Battle-Ready/Berserker)
+- **Tumble** is new — added to Agility. XP costs: Halfling 15, Elf 20, Human 25, Dwarf 30
+- **Light-Soul** has **no prerequisite** — removed Faith(1) requirement intentionally. Any devoted warrior can take it.
+- **Shieldsman** stays in Physique (was considered for Advanced but kept as primary)
+
+---
+
+## The Six Magic Disciplines
+
+| Discipline | Characteristic | Spells | Cantrips | Notes |
+|---|---|---|---|---|
+| **Faith (Theology)** | Charisma | 47 | 5 | Called "Theology" in UI vocation checkbox |
+| **Druid** | Awareness | 45 | 5 | Nature magic, resurrection via Regrowth (TN15) |
+| **Shaman** | Willpower | 55 | 5 | Spirit/ancestor magic |
+| **Wizardry** | Intellect | 83 | 5 | Arcane — forbidden with Runecraft |
+| **Ki** | Physique | 37 | 5 | Internal energy mastery |
+| **Runecraft** | Agility (craft) | 32 runes | 5 | Physical craft — see combination rules below |
+
+### Spell Scaling Rules (canonical — never deviate)
+| TN Range | AP Cost | Max Damage Dice |
+|---|---|---|
+| TN 1–3 | 1 AP | Dis.d10 |
+| TN 4–6 | 1 AP | 1d10 |
+| TN 7–9 | 2 AP | 2d10 |
+| TN 10–12 | 3 AP | 3d10 |
+| TN 13–15 | 4 AP | 4d10 |
+| TN 16–18 | 5 AP | 5d10 |
+| TN 19+ | 6 AP | 6d10 |
+
+### Resist Test Format (always use this exact format)
+> `surpass [Stat] TN X + Resist bonus`
+
+Never write "pass a Willpower test" — always include the TN number.
+
+### Runecraft Combination Rules
+| Discipline | With Runecraft | Reason |
+|---|---|---|
+| Faith | ✔ Allowed | Divine scripture carved into blessed steel |
+| Shaman | ✔ Allowed | Ancestral runes — needs cultural justification from player |
+| Ki | ✔ Allowed | Internal discipline + external inscription |
+| Wizardry | ✘ **Forbidden** | Opposed philosophies of what magic IS — absolute, no GM override |
+| Druid | ✘ **Forbidden** | Static binding vs living flow — absolute, no GM override |
+
+### Runecraft AP Scale (does NOT use standard spell table)
+| Type | AP Cost | When |
+|---|---|---|
+| Temporary — Simple | 1 AP | In combat |
+| Temporary — Standard | 2 AP | In combat |
+| Temporary — Powerful | 3 AP | In combat |
+| Permanent — Standard | 2–3 days | Outside combat only |
+| Permanent — Master | 4 days | Outside combat only — cannot be rushed |
+
+---
+
+## The Four Races
+
+| Race | Height | Weight | Move | Distance |
+|---|---|---|---|---|
+| Dwarf | 3.5–5 ft | 120–250 lbs | 12 | 60 ft |
+| Elf | 5–6.5 ft | 90–170 lbs | 18 | 90 ft |
+| Halfling | 3–4 ft | 60–135 lbs | 12 | 60 ft |
+| Human | 5–7 ft | 100–300 lbs | 15 | 75 ft |
+
+**Race lore anchors:**
+- **Dwarf** — Kel Thurum empire, civic militarism, Birn clan exile/corruption, grudge culture
+- **Elf** — Thalasien city-state, intellectually aloof, academic relationship with magic, 500yr lifespan
+- **Halfling** — most naturally druidic of all races, bone-deep earth connection, small communities near living places
+- **Human** — most numerous, great spreaders of culture and religion (Theology), driven by urgency of short lives, Church of the Radiant Compact
+
+---
+
+## The Ledger (Character Sheet) — Critical Notes
+
+The Ledger is a complex JS application. Handle with care:
+
+### Internal vs Display Values
+- The Theology vocation checkbox uses `value="Religion"` internally — **do not change this**
+- All JS logic (`isReligionActive`, `cb.value === "Religion"`) uses the old key
+- Only the display label says "Theology" — changing the internal value would break everything
+
+### Skill Data Flow (for any skill changes)
+Every skill needs to exist in ALL of these places or XP won't calculate:
+1. `sks` object — characteristic group assignment
+2. HTML `skb-row` — bonus panel display
+3. `SKILL_COSTS` — race-based XP per point
+4. `skillMap` — maps display name to JS camelCase key
+5. `skillPts` initialisation — default to 0
+6. Field map / save snapshot — for save/load persistence
+
+### Hard as Nails WM Calculation
+```javascript
+// Physical WM — always applies from point 1
+Math.floor(state.skillPts.hardAsNails / 2)
+
+// Spell/Blessing WM — gated at 3 points
+let hanSpellWM = (state.skillPts.hardAsNails >= 3) ? Math.floor(state.skillPts.hardAsNails / 2) : 0;
+```
+
+### Runes as Secondary Discipline
+- Runes checkbox stays enabled when Faith/Shaman/Ki are checked
+- Runes is disabled when Wizardry or Druid are checked (forbidden combinations)
+- Runes has its own dedicated grid section (15 slots) separate from the primary spell table
+- Primary discipline spell table is never overridden by Runes
+
+---
+
+## Design Decisions — Do Not Undo
+
+These are deliberate decisions made after discussion. Do not revert them:
+
+| Decision | Detail |
+|---|---|
+| Wizardry + Runecraft | Hard forbidden — no GM override ever |
+| 6 skills per characteristic | Hard rule — never add a 7th |
+| Enraged removed | Moved to Battle-Ready/Berserker Advanced Mastery |
+| Counter → Riposte | Renamed AND moved from Agility to Awareness |
+| Light-Soul no prereq | Faith(1) requirement deliberately removed |
+| Shieldsman stays in Physique | Considered Advanced, kept as primary |
+| Druid + Runecraft forbidden | Static binding vs living flow |
+| Theology not Religion | Display name only — internal JS still uses "Religion" |
+| Hard as Nails spell WM | Starts at 3pts, same floor(pts/2) formula as physical |
+| Tumble racial costs | Halfling 15, Elf 20, Human 25, Dwarf 30 |
+
+---
+
+## Writing Voice — Blood and Purpose
+
+When writing any game text, match this voice:
+
+- **Dark, deliberate, precise.** Every sentence earns its place.
+- **Matter-of-fact about violence.** Not gratuitous — honest.
+- **Specificity over adjectives.** "The rot seeps through armour" beats "a terrible magical decay."
+- **Mechanics stated clearly** after the flavour, never buried in prose.
+- **No whimsy.** No "mystical energies." No "ancient power awakens."
+- **Avoid D&D clichés.** Rename anything that sounds like a Wizards of the Coast product.
+- **The world doesn't care.** It existed before the players and will outlast them.
+
+---
+
+## Outstanding Work / Next Session
+
+*(Update this section at the end of each session)*
+
+### Completed this session (2026-05-20)
+- Full Grimoire rebuild — all 6 disciplines, sorted by TN, balance = 0
+- All 5 cantrips per discipline confirmed
+- Full skill system overhaul — 37 primary skills, all with tiered benefits
+- Counter → Riposte (Awareness), Tumble added (Agility), Enraged removed
+- Light-Soul prereq removed
+- Hard as Nails spell WM system
+- Runecraft combination rules written and enforced in Ledger
+- Ledger — Runes as secondary discipline, dedicated Runes grid (15 slots)
+- Race descriptions expanded for all 4 races (grounded in lore.html)
+- Character creation expanded to 5 steps
+- **Game renamed: Path of the Unknown → Blood and Purpose**
+- **Tagline: Knowledge is power. Purpose is everything. Blood is the price of both.**
+- Name updated across all 20+ files
+- POTU_Refinery.html — AI writing tool built
+
+### Still to do
+- [ ] GitHub repo renamed (still shows Path-of-the-Unknown in URL)
+- [ ] Index.html — Bestiary link still points to old `Fantasy-RPG-Bestiary-Full.html` — should point to `_22` version
+- [ ] Old bestiary (`Fantasy-RPG-Bestiary-Full.html`) to be deleted from repo
+- [ ] Ledger file rename — `PathofUnknown-Ledger.html` → `BloodAndPurpose-Ledger.html` (and update index link)
+- [ ] `pou_combat_tracker.html` and `pou_creation_generator.html` rename to `bap_` prefix
+- [ ] magic-items.html — needs balance audit against Core Rules spell standards
+- [ ] Faith/Theology naming debate — Faith discipline could be renamed Theology system-wide
+- [ ] Wizardry high-tier spell names — some still generic (Fireball etc) worth renaming
+- [ ] Primary-Skills.html — needs full tiered benefit descriptions added (currently only in Core Rules)
+- [ ] Ledger — Shaman spell list not fully updated to match Core Rules renames
+- [ ] DM-Grimoire — check all spell names match Core Rules renames (Riposte, Tumble, Discipline etc)
+- [ ] Advanced_Skills.html — review for any outdated skill references
+- [ ] Kickstarter prep — what does a backer need to see?
+
+---
+
+## Session Handoff Protocol
+
+At the start of a new session, paste this document and say:
+
+> *"Continuing Blood and Purpose development. Here's the brief. [describe what you want to work on today]"*
+
+The assistant will be oriented immediately and can pick up exactly where we left off.
+
+---
+
+*Last updated: 2026-05-20 — Blood and Purpose v24*
