@@ -1134,14 +1134,14 @@
 <div class="knowledge-section cond-ledger-section" style="padding:10px;">
     <div class="cond-ledger-grid">
         <div style="display:flex; flex-direction:column; gap:6px;">
-            <div class="cond-entry"><span class="cond-lbl">🩸 Bleed</span><input type="text" id="cond_bleed" placeholder="Stacks (1d10 ea)"></div>
-            <div class="cond-entry"><span class="cond-lbl">🧪 Poison</span><input type="text" id="cond_poison" placeholder="Minor (1) / Major (Dd10)"></div>
+            <div class="cond-entry"><span class="cond-lbl">🩸 Bleed</span><input type="text" id="cond_bleed" placeholder="Stacks: 1d10/stack/turn — Magic heal only"></div>
+            <div class="cond-entry"><span class="cond-lbl">🧪 Poison</span><input type="text" id="cond_poison" placeholder="Lesser: 1d10/TN7 | Greater: 2d10/TN10"></div>
             <div class="cond-entry"><span class="cond-lbl">🦠 Disease</span><input type="text" id="cond_disease" placeholder="1d10 W / -1 Stat 24h"></div>
             <div class="cond-entry danger"><span class="cond-lbl" style="color:var(--blood);">💤 Down</span><input type="text" id="cond_uncon" placeholder="Unconscious (0 W)"></div>
         </div>
         <div style="display:flex; flex-direction:column; gap:6px;">
-            <div class="cond-entry"><span class="cond-lbl">💫 Stunned</span><input type="text" id="cond_stun" placeholder="Lose 1 AP"></div>
-            <div class="cond-entry"><span class="cond-lbl">🧎 Prone</span><input type="text" id="cond_prone" placeholder="Disadv Hit / Adv vs Melee"></div>
+            <div class="cond-entry"><span class="cond-lbl">💫 Stunned</span><input type="text" id="cond_stun" placeholder="Stacks: -1 AP/stack — excess carries over"></div>
+            <div class="cond-entry"><span class="cond-lbl">🧎 Prone</span><input type="text" id="cond_prone" placeholder="Disadv all attacks, Adv vs you, -2 Def, no React"></div>
             <div class="cond-entry"><span class="cond-lbl">🕸️ Pinned</span><input type="text" id="cond_pinned" placeholder="No Move / Disadv"></div>
             <div class="cond-entry"><span class="cond-lbl">🧊 Frozen</span><input type="text" id="cond_frozen" placeholder="No Move / Mentals Only"></div>
         </div>
@@ -1154,7 +1154,7 @@
     </div>
     <div class="cond-rule-box">
         <span style="color:var(--gold); font-weight:900; font-size:10pt; text-transform:uppercase; letter-spacing:1px;">🌀 The Rule of Three: Overwhelmed</span>
-        <div style="font-size:8.5pt; font-weight:900; color:var(--ink); margin-top:2px;">If 3+ conditions are active: You cannot perform ANY Reaction Actions (Dodge, Parry, Counter).</div>
+        <div style="font-size:8.5pt; font-weight:900; color:var(--ink); margin-top:2px;">If 3+ DIFFERENT conditions are active: No Reaction actions. Stacking conditions (e.g. Bleeding ×3) count as one type.</div>
     </div>
 </div>
 
