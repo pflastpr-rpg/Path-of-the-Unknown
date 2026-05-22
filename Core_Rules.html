@@ -320,6 +320,7 @@
             <div class="toc-column">
                 <strong>III. The Grimoire</strong><br>
                 <a href="#chapter-12" class="toc-link">12. The Grimoire</a><br>
+                <a href="#chapter-13" class="toc-link">13. GM's Reference</a><br>
                 <a href="#discipline-1" class="toc-link">Faith Blessings</a><br>
                 <a href="#discipline-2" class="toc-link">Druidic Spells</a><br>
                 <a href="#discipline-3" class="toc-link">Shamanic Magic</a><br>
@@ -940,91 +941,116 @@
 
 <div class="magic-break" style="margin-top: 60px;">
         <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER VII</span>
-        <h2 id="chapter-7">Status & Conditions</h2>
+        <h2 id="chapter-7">Status &amp; Conditions
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The battlefield is cruel. Blood loss, terror, and broken bones will kill you just as fast as an enemy's blade."</p>
     </div>
 
-    <div class="rpg-columns"> 
+    <div class="rpg-columns">
         <a href="#top" class="back-to-top">↑ Return to Index</a>
 
-        <div class="full-width">
-            <h3>I. Physical Trauma</h3>
-        </div>
+        <div class="full-width"><h3>I. Physical Trauma</h3></div>
 
         <div class="trait-box">
             <span class="trait-title">🩸 Bleeding (Stacking)</span>
-            <p>Lose <strong>1d10 Wounds</strong> per stack at the start of your turn. Stacks are removed via a successful <strong>magical healing blessing, spell or potion</strong>.</p>
+            <p>Lose <strong>1d10 Wounds</strong> per stack at the start of your turn. Bleeding stacks — each additional application adds another 1d10 to the per-turn loss.</p>
+            <p><strong>Removal:</strong> Bleeding only ends through magical healing — a Mending skill application, a Faith blessing, a Druid spell, or a healing potion. Natural recovery and most skills cannot remove Bleeding. The Hard as Nails skill at 6 points grants <em>Bloody Minded</em> — once per encounter, ignore all Bleeding damage for 1 turn.</p>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">🧪 Poison (Minor/Major)</span>
-            <p><strong>Minor:</strong> Lose 1 Wound per turn. <br>
-               <strong>Major:</strong> Lose <strong>Dd10 Wounds</strong> per turn. Pass a <strong>Willpower Test</strong> at the end of your turn to remove.</p>
+            <span class="trait-title">🧪 Poison — Lesser &amp; Greater</span>
+            <p><strong>Lesser Poison:</strong> Lose <strong>1d10 Wounds</strong> per turn. At the end of each turn, surpass <strong>Physique TN 7 + Resist bonus</strong> to end the effect. Lesser Poison is applied by standard venoms, coated blades, and weak alchemical preparations.</p>
+            <p><strong>Greater Poison:</strong> Lose <strong>2d10 Wounds</strong> per turn. At the end of each turn, surpass <strong>Physique TN 10 + Resist bonus</strong> to end the effect. Greater Poison is applied only by abilities and items that explicitly state it — rare, deliberate, and dangerous.</p>
+            <p>Poison and Bleeding are separate conditions and stack independently.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">🦠 Disease</span>
-            <p>Lose 1d10 Wounds per turn. Additionally, suffer a <strong>-1 penalty</strong> to a random characteristic every 24 hours until cleansed by magic.</p>
+            <p>Lose <strong>1d10 Wounds</strong> per turn. Additionally, suffer a <strong>-1 penalty to a random characteristic</strong> every 24 hours until cleansed by magic. Disease cannot be resisted through normal means — only magical healing, a Mending application, or specific high-TN blessings remove it.</p>
         </div>
 
-        <div class="full-width">
-            <h3>II. Tactical Penalties</h3>
-        </div>
+        <div class="full-width"><h3>II. Tactical Conditions</h3></div>
 
         <div class="trait-box">
-            <span class="trait-title">💫 Stunned</span>
-            <p>You immediately lose <strong>1 Action Point (AP)</strong>. If you have no actions remaining this turn, you lose 1 AP from your next turn instead.</p>
+            <span class="trait-title">💫 Stunned (Stacking)</span>
+            <p>Each Stunned condition removes <strong>1 Action Point</strong> for the affected turn. Stunned stacks — two conditions remove 2 AP, three conditions remove 3 AP. A creature with no AP remaining cannot act or react until their next turn.</p>
+            <p>If Stunned is applied when the target has no remaining AP, the lost AP carries to their next turn. Stunned conditions expire at the start of the affected creature's next turn unless otherwise stated.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">🧎 Prone</span>
-            <p>You have been knocked off your feet. You suffer <strong>Disadvantage</strong> on all To-Hit rolls, and enemies gain <strong>Advantage</strong> to hit you in melee. Standing up costs <strong>1 Action</strong>.</p>
+            <p>You have been knocked off your feet. While Prone:</p>
+            <ul style="margin:8px 0 8px 20px; line-height:1.9;">
+                <li>You suffer <strong>Disadvantage on all To-Hit rolls</strong> — both melee and ranged attacks you make.</li>
+                <li>All attacks against you gain <strong>Advantage</strong> — both melee and ranged.</li>
+                <li>Your movement is reduced to <strong>half speed</strong>.</li>
+                <li>You <strong>cannot perform Reaction Actions</strong> — no Dodge, no Parry, no Riposte. You are open.</li>
+                <li>You <strong>cannot use special abilities</strong> that require standing, movement, or a stable fighting stance — the GM adjudicates edge cases, but the principle is clear: you are on the ground and you are vulnerable.</li>
+                <li>Your <strong>Defence is reduced by 2</strong> while Prone — the body's natural guard posture is gone.</li>
+            </ul>
+            <p><strong>Standing up</strong> costs <strong>1 AP</strong>. A character who cannot spend that AP remains Prone and exposed until their next turn.</p>
+        </div>
+
+        <div class="trait-box">
+            <span class="trait-title">⚔ Disarmed</span>
+            <p>Your weapon has been knocked from your hand. You may only make unarmed attacks until the weapon is recovered.</p>
+            <p><strong>Recovering a dropped weapon</strong> costs <strong>1 AP</strong> if it is within 5ft. If it was knocked further, movement is required first.</p>
+            <p><strong>How Disarm occurs:</strong></p>
+            <ul style="margin:8px 0 8px 20px; line-height:1.9;">
+                <li>A specific creature ability explicitly states it.</li>
+                <li>A <strong>Natural 10</strong> on a called melee attack targeting the weapon hand — declared before the roll, imposing <strong>Disadvantage</strong> on the To-Hit roll.</li>
+                <li>The <strong>Riposte skill at 9 points</strong> grants the ability to Disarm on a Riposte trigger.</li>
+            </ul>
+            <p><strong>Two-handed weapons</strong> are harder to disarm — a Disarm attempt against a two-handed weapon requires two Natural 10s on called attacks, or a specific ability that states it affects two-handed weapons.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">🕸️ Pinned / Entangled / 🧊 Frozen</span>
-            <p><strong>Pinned/Entangled:</strong> You cannot move. Attacks and casts are made at <strong>Disadvantage</strong>. Pass a Physique or Agility test to break free.</p>
-            <p><strong>Frozen:</strong> Cannot move or take physical actions. You may only attempt Willpower-based casts or mental actions.</p>
+            <p><strong>Pinned/Entangled:</strong> Cannot move. All attacks and casts are made at <strong>Disadvantage</strong>. Surpass <strong>Physique or Agility TN 8 + Resist bonus</strong> to break free (1 AP action).</p>
+            <p><strong>Frozen:</strong> Cannot move or take physical actions. Only Willpower-based casts or mental actions are permitted. Frozen ends when the source of the cold is removed or a fire-based effect is applied.</p>
         </div>
 
-        <div class="full-width">
-            <h3>III. Mental & Sensory</h3>
-        </div>
+        <div class="full-width"><h3>III. Mental &amp; Sensory</h3></div>
 
         <div class="trait-box">
             <span class="trait-title">😱 Fear (X)</span>
-            <p>Must pass a <strong>Willpower Test</strong> with a penalty equal to the Fear Rating (X). On a failure, you must spend all actions moving away from the source.</p>
+            <p>Surpass a <strong>Willpower TN equal to the Fear Rating (X) + Resist bonus</strong>. On a failure, you must spend all available actions moving directly away from the source of the Fear. You cannot attack, cast, or approach the source while this condition holds. Re-test at the start of each turn.</p>
+        </div>
+
+        <div class="trait-box">
+            <span class="trait-title">💔 Shaken</span>
+            <p><strong>-2 to all rolls.</strong> Cannot move toward the source of the condition. Shaken is the lesser fear response — the body is functional but the will is cracking. Ends at the start of your next turn unless refreshed by a new application.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">🌑 Blinded</span>
-            <p>All Melee and Ranged attacks are made at <strong>Disadvantage</strong>. Your Defense rating is reduced to your <strong>Armor value only</strong>.</p>
+            <p>All Melee and Ranged attacks are made at <strong>Disadvantage</strong>. Your Defence is reduced to your Armour WM value only — the Agility and Awareness components are lost. Blinded ends when the source is removed or a relevant ability clears it.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">🥀 Dismayed / 💖 Allure</span>
-            <p><strong>Dismayed:</strong> You lose your Move action on your next turn and cannot perform Reaction actions (like Parry or Dodge).</p>
-            <p><strong>Allure:</strong> Treat the source as a trusted ally. You will not attack them. Ends if attacked by the source.</p>
+            <p><strong>Dismayed:</strong> Lose your Move action on your next turn and cannot perform Reaction actions (Dodge, Parry, Riposte).</p>
+            <p><strong>Allure:</strong> Treat the source as a trusted ally. You will not attack them. You will act in their interest if asked. Ends immediately if the source attacks you.</p>
         </div>
 
-        <div class="full-width">
-            <h3>IV. The Threshold of Collapse</h3>
-        </div>
+        <div class="full-width"><h3>IV. The Threshold of Collapse</h3></div>
 
         <div class="trait-box" style="border-left: 8px solid var(--blood);">
-            <span class="trait-title">🌀 Overwhelmed</span>
-            <p>If you are ever afflicted by <strong>three or more</strong> different conditions at once, you are <strong>Overwhelmed</strong>. You cannot take any <strong>Reaction Actions</strong> (Dodge, Parry, Riposte) until at least one condition is cleared.</p>
+            <span class="trait-title">🌀 The Threshold of Collapse — Overwhelmed</span>
+            <p>If you are ever afflicted by <strong>three or more different conditions simultaneously</strong>, you are <strong>Overwhelmed</strong>. Your body and mind are at their limit.</p>
+            <p><strong>While Overwhelmed:</strong> You cannot take any Reaction Actions — no Dodge, no Parry, no Riposte — until at least one condition is cleared. You are still able to act on your turn.</p>
+            <p>Conditions that stack (Bleeding, Stunned) count as <strong>one condition type</strong> regardless of how many stacks are present. Three stacks of Bleeding is still only one condition toward the Threshold.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">💤 Unconscious</span>
-            <p>Triggered at 0 Wounds. If healed to 1+ Wound, you move at ½ speed and require a <strong>Willpower test</strong> to perform an attack or complex action.</p>
+            <p>Triggered at 0 Wounds. If healed to 1 or more Wounds, you move at half speed and must surpass a <strong>Willpower TN 6 + Resist bonus</strong> test to perform an attack or complex action on that turn. Full recovery requires rest.</p>
         </div>
+
     </div>
 
     <div class="magic-break" style="margin-top: 60px;">
         <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER VIII</span>
-        <h2 id="chapter-8">Growth & Advancement</h2>
+        <h2 >Growth & Advancement</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"Experience is the best teacher, though its lessons are often paid for in blood."</p>
     </div>
 
@@ -4321,6 +4347,126 @@
         </div>
     </div>
 </div>
+
+    <div class="magic-break" style="margin-top: 60px;">
+        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER XIII</span>
+        <h2 id="chapter-13">The Game Master's Reference</h2>
+        <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The world does not pause for the players. It existed before them and will outlast them. Run it accordingly."</p>
+    </div>
+
+    <div class="rpg-columns">
+        <a href="#top" class="back-to-top">↑ Return to Index</a>
+
+        <div class="full-width">
+            <h3>Creature Tiers</h3>
+            <p>Every creature in Blood and Purpose is assigned a tier reflecting its role in combat and overall threat. Tiers carry mechanical defaults the GM can apply without defining every stat individually. Where a creature entry specifies a value that differs from the tier default, the entry takes precedence.</p>
+        </div>
+
+        <div class="full-width">
+            <div class="trait-box">
+                <span class="trait-title">The Five Tiers</span>
+                <table style="width:100%; border-collapse:collapse; margin:16px 0; font-size:11pt;">
+                    <thead>
+                        <tr style="background:var(--iron); color:var(--gold);">
+                            <th style="padding:8px 12px; text-align:left;">Tier</th>
+                            <th style="padding:8px 12px; text-align:center;">Resist Bonus</th>
+                            <th style="padding:8px 12px; text-align:center;">Turn Bonus</th>
+                            <th style="padding:8px 12px; text-align:center;">AP</th>
+                            <th style="padding:8px 12px; text-align:left;">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                            <td style="padding:8px 12px;"><strong>Minion</strong></td>
+                            <td style="padding:8px 12px; text-align:center;">+0</td>
+                            <td style="padding:8px 12px; text-align:center;">+1 <span style="font-size:8pt; opacity:0.6;">*</span></td>
+                            <td style="padding:8px 12px; text-align:center;">1–2</td>
+                            <td style="padding:8px 12px;">Cannon fodder. Dangerous in numbers, fragile alone. Exist to drain resources and create pressure.</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(2,7,14,0.02);">
+                            <td style="padding:8px 12px;"><strong>Skirmisher</strong></td>
+                            <td style="padding:8px 12px; text-align:center;">+1</td>
+                            <td style="padding:8px 12px; text-align:center;">+2 <span style="font-size:8pt; opacity:0.6;">*</span></td>
+                            <td style="padding:8px 12px; text-align:center;">2</td>
+                            <td style="padding:8px 12px;">Standard combat threat. Two or three are a meaningful encounter for experienced characters.</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                            <td style="padding:8px 12px;"><strong>Elite</strong></td>
+                            <td style="padding:8px 12px; text-align:center;">+2</td>
+                            <td style="padding:8px 12px; text-align:center;">+3 <span style="font-size:8pt; opacity:0.6;">*</span></td>
+                            <td style="padding:8px 12px; text-align:center;">3</td>
+                            <td style="padding:8px 12px;">A single Elite is a serious threat to a full party. Multiple abilities, survives focused fire.</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(2,7,14,0.02);">
+                            <td style="padding:8px 12px;"><strong>Boss</strong></td>
+                            <td style="padding:8px 12px; text-align:center;">+3</td>
+                            <td style="padding:8px 12px; text-align:center;">+4 <span style="font-size:8pt; opacity:0.6;">*</span></td>
+                            <td style="padding:8px 12px; text-align:center;">3–4</td>
+                            <td style="padding:8px 12px;">Encounter centrepieces. Conditional immunities, multi-phase abilities, battlefield-changing capacity.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:8px 12px;"><strong>Legendary</strong></td>
+                            <td style="padding:8px 12px; text-align:center;">+5</td>
+                            <td style="padding:8px 12px; text-align:center;">+6 <span style="font-size:8pt; opacity:0.6;">*</span></td>
+                            <td style="padding:8px 12px; text-align:center;">4+</td>
+                            <td style="padding:8px 12px;">World-altering threats. Not fought — survived, at best. Reserved for climactic encounters and ancient evils.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size:10.5pt; font-style:italic; color:rgba(26,16,8,0.55); margin-top:4px;"><span style="color:var(--blood);">*</span> <strong>Turn Bonus applies only to creatures with an active discipline</strong> — Theology, Druidism, Shamanism, Wizardry, Ki, or Runecraft. A creature with no magical discipline has no Turn Bonus. There is nothing to turn.</p>
+                <p style="font-size:10.5pt; font-style:italic; color:rgba(26,16,8,0.55); margin-top:8px;">Resist and Turn are defaults. The tier defines the baseline — the creature entry defines the exception.</p>
+            </div>
+        </div>
+
+        <div class="full-width">
+            <div class="trait-box">
+                <span class="trait-title">Creature Resist Tests — Standard Format</span>
+                <p>All creature resist tests use this format:</p>
+                <div style="background:var(--iron); color:var(--parchment); padding:16px 20px; margin:14px 0; border-left:5px solid var(--gold); font-size:12pt;">
+                    <strong style="color:var(--gold);">Target must surpass [Characteristic] TN [number] + Resist bonus</strong>
+                </div>
+                <p>The Resist bonus defaults to the creature's tier value unless the entry specifies otherwise. The same ability scales across tiers — a Willpower TN 7 resist test requires a 7 from a Minion's target and a 10 from a Boss's target, without rewriting the ability.</p>
+            </div>
+        </div>
+
+        <div class="full-width">
+            <div class="trait-box">
+                <span class="trait-title">Creature Condition Reference</span>
+                <table style="width:100%; border-collapse:collapse; margin:14px 0; font-size:11pt;">
+                    <thead>
+                        <tr style="background:var(--iron); color:var(--gold);">
+                            <th style="padding:7px 12px; text-align:left;">Condition</th>
+                            <th style="padding:7px 12px; text-align:left;">Effect</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:7px 12px;"><strong>Shaken</strong></td><td style="padding:7px 12px;">-2 to all rolls. Cannot move toward the source.</td></tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(2,7,14,0.02);"><td style="padding:7px 12px;"><strong>Fatigued</strong></td><td style="padding:7px 12px;">Movement halved. -1 AP on next turn.</td></tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:7px 12px;"><strong>Stunned</strong></td><td style="padding:7px 12px;">Cannot take actions or reactions for 1 turn.</td></tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(2,7,14,0.02);"><td style="padding:7px 12px;"><strong>Bleeding</strong></td><td style="padding:7px 12px;">1d6 wounds per turn. Ends on surpassing Physique TN 6 + Resist bonus or receiving healing.</td></tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:7px 12px;"><strong>Poisoned</strong></td><td style="padding:7px 12px;">1d6 wounds per turn. Surpass Physique TN 7 + Resist bonus each turn to end.</td></tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(2,7,14,0.02);"><td style="padding:7px 12px;"><strong>Prone</strong></td><td style="padding:7px 12px;">Melee gains Advantage. Ranged suffers Disadvantage. 1 AP to stand.</td></tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:7px 12px;"><strong>Disarmed</strong></td><td style="padding:7px 12px;">Weapon knocked away. 1 AP to recover.</td></tr>
+                        <tr><td style="padding:7px 12px;"><strong>Overwhelmed</strong></td><td style="padding:7px 12px;">Three+ conditions active — no Reaction actions until one clears.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="full-width">
+            <div class="trait-box">
+                <span class="trait-title">Running Encounters — GM Principles</span>
+                <ul style="margin:12px 0 12px 24px; line-height:2.1; font-size:11.5pt;">
+                    <li><strong>The world does not telegraph its intentions.</strong> Creatures act according to their nature. A Daemon Lord does not wait for the party to prepare.</li>
+                    <li><strong>Conditions stack — the Threshold of Collapse is real.</strong> Apply conditions consistently. Three concurrent conditions trigger Overwhelmed.</li>
+                    <li><strong>Tier determines baseline, not ceiling.</strong> A well-played Skirmisher can be more dangerous than a poorly-run Boss. Use tier defaults as starting points.</li>
+                    <li><strong>Resist bonuses are earned, not given.</strong> When in doubt, use the tier default. Override only when the creature's nature demands it.</li>
+                    <li><strong>Named creatures remember.</strong> If the party lets a Skirmisher flee, it returns as something harder. The world has memory.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>
