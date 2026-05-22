@@ -655,6 +655,10 @@
             /* Gold inline border on c-l-spec divider line */
             .c-l-spec div[style*="var(--gold)"] { border-top: 1px solid #000000 !important; }
             
+            /* Atrophy field in id-row — hide checkbox in print, show lost only if >0 */
+            #atrophy-mode { display: none !important; }
+            #atrophy-lost-row { display: none !important; }
+            
             /* Triage / Condition compression */
             .cond-entry { padding: 1px 3px !important; }
             .cond-entry input { height: 20px !important; font-size: 9pt !important; }
@@ -713,6 +717,15 @@
         <div style="width:1px; height:20px; background:var(--iron); margin:0 2px; opacity:0.3;"></div>
         <button class="btn-vault" style="background:var(--blood); color:var(--parchment);" onclick="openChronicle()">📖 Chronicle</button>
         <button class="btn-vault" style="background:var(--ink); color:var(--gold);" onclick="location.href='index.html'">🏠 Hub</button>
+        <div style="width:1px; height:20px; background:var(--iron); margin:0 4px; opacity:0.3;"></div>
+        <div style="display:flex; align-items:center; gap:10px; padding:4px 12px; background:#ffffff; border:2px solid var(--ink); border-radius:2px;">
+            <label style="font-family:var(--font-hand); font-size:13pt; font-weight:900; color:var(--ink); white-space:nowrap; cursor:pointer;" for="atrophy-mode" title="Enable Skill Atrophy — reducing skills permanently loses 2/3 XP">⚗ Atrophy</label>
+            <input type="checkbox" id="atrophy-mode" onchange="toggleAtrophyMode()" style="width:18px; height:18px; cursor:pointer; accent-color:var(--blood);" title="Atrophy Mode">
+            <div id="atrophy-lost-row" style="display:none; align-items:center; gap:6px;">
+                <span style="font-family:var(--font-hand); font-size:13pt; font-weight:900; color:var(--blood);">⚗ Lost:</span>
+                <input type="number" id="atrophy-lost" value="0" readonly style="width:58px; height:26px; background:#fff8e8; color:var(--blood); font-weight:900; border:2px solid var(--blood); text-align:center; font-size:13pt; font-family:var(--font-hand);" title="XP permanently lost to skill atrophy">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -738,7 +751,6 @@
             <div class="id-f w-hair"><label>Hair</label><input type="text" id="char-hair" maxlength="15"></div>
         </div>
     </div>
-
     <div class="dash-container">
         <div class="ledger-box xp-ledger">
             <div class="l-group"><label>Earned</label><input type="number" id="xe" value="300" oninput="upd()"></div>
@@ -1348,6 +1360,7 @@ function initializeUpdateVariables() {
         charSize,
         spentXP: 0,
         advSpentXP: 0,
+        atrophyLostXP: 0,
         woundSkillBonuses: 0,
         categoryTotals: {},
         skillPts: {
@@ -1396,8 +1409,16 @@ function processAllSkills(state) {
             // (DV tests, spell gates, magic checks etc.) sees the correct value.
             // The real purchased pts live in dataset.purchased for XP & save.
             if (ptsInput) {
-                ptsInput.dataset.purchased = purchased;
-                ptsInput.value = total > 0 ? total : (purchased > 0 ? purchased : '');
+                // In atrophy mode, enforce minimum 1 point for non-discipline skills
+                const atrophyActive = document.getElementById('atrophy-mode')?.checked;
+                const isDisciplineSkill = ['Faith','Druidism','Wizardry','Shaman','Ki','Runes'].includes(skillName);
+                let effectivePurchased = purchased;
+                if (atrophyActive && !isDisciplineSkill && purchased < 1 && (ptsInput.dataset.purchased || 0) >= 1) {
+                    effectivePurchased = 1;
+                    ptsInput.value = 1;
+                }
+                ptsInput.dataset.purchased = effectivePurchased;
+                ptsInput.value = total > 0 ? total : (effectivePurchased > 0 ? effectivePurchased : '');
             }
 
             let base = 0;
@@ -1888,8 +1909,11 @@ function calculateTotalWounds(state, stats) {
 }
 
 function calculateXPTotals(state) {
-    sv('xs', Math.floor(state.spentXP + state.advSpentXP));
-    const xpRemaining = (gv('xe')) - Math.floor(state.spentXP + state.advSpentXP);
+    // Add atrophy lost XP to spent total — it's gone permanently
+    const atrophyLost = gv('atrophy-lost') || 0;
+    const totalSpent = Math.floor(state.spentXP + state.advSpentXP) + atrophyLost;
+    sv('xs', totalSpent);
+    const xpRemaining = (gv('xe')) - totalSpent;
     si('xr', xpRemaining);
     const xrEl = g('xr');
     if (xrEl) xrEl.style.color = xpRemaining < 0 ? 'var(--blood)' : 'var(--success)';
@@ -1967,6 +1991,134 @@ function updateTacticalConditions() {
                                    'rgba(168,24,24,0.18)' : 'rgba(2,7,14,0.06)';
         ruleBox.style.borderColor = activeCondCount >= 3 ?
                                     'var(--blood)' : 'var(--gold)';
+    }
+}
+
+
+// ================================================================
+// SKILL ATROPHY SYSTEM
+// ================================================================
+function handleSkillInput(input) {
+    const atrophyActive = document.getElementById('atrophy-mode')?.checked;
+    const skillItem = input.closest('.sk-item');
+    const skillName = skillItem?.querySelector('.sk-b')?.getAttribute('data-skill') || '';
+    const isDiscipline = ['Faith','Druidism','Wizardry','Shaman','Ki','Runes'].includes(skillName);
+
+    const newVal = parseInt(input.value) || 0;
+    const oldVal = parseInt(input.dataset.purchased) || 0;
+
+    if (atrophyActive && !isDiscipline && newVal < oldVal && oldVal > 0) {
+        // Enforce minimum 1 point
+        const enforcedVal = Math.max(1, newVal);
+        if (newVal < 1) {
+            input.value = 1;
+        }
+        const actualNew = Math.max(1, newVal);
+        const actualRemoved = oldVal - actualNew;
+
+        if (actualRemoved > 0) {
+            // Find base XP cost for this skill
+            const race = document.getElementById('race-select')?.value || 'none';
+            const base = (race !== 'none' && SKILL_COSTS[skillName]) ? (SKILL_COSTS[skillName][race] || 0) : 0;
+
+            if (base > 0) {
+                // XP spent on the removed points (compounding from actualNew+1 to oldVal)
+                const xpOnAll    = calcCompounding(oldVal, base);
+                const xpOnKept   = calcCompounding(actualNew, base);
+                const xpOnRemoved = xpOnAll - xpOnKept;
+
+                // 2/3 permanently lost, 1/3 returned
+                const xpLost = Math.floor(xpOnRemoved * 2 / 3);
+
+                // Add to permanent lost pool
+                const lostInput = document.getElementById('atrophy-lost');
+                if (lostInput) {
+                    const current = parseInt(lostInput.value) || 0;
+                    lostInput.value = current + xpLost;
+                }
+
+                // Mark skill with ⚗
+                if (skillItem && !skillItem.querySelector('.atrophy-mark')) {
+                    const mark = document.createElement('span');
+                    mark.className = 'atrophy-mark';
+                    mark.textContent = '⚗';
+                    mark.title = `Atrophied — ${xpLost} XP lost permanently`;
+                    mark.style.cssText = 'color:var(--gold); font-size:8pt; margin-left:2px; opacity:0.9;';
+                    const nameEl = skillItem.querySelector('.sk-name') || skillItem.querySelector('.sk-b');
+                    if (nameEl) nameEl.parentNode.insertBefore(mark, nameEl.nextSibling);
+                }
+            }
+        }
+        input.dataset.purchased = Math.max(1, newVal);
+    } else {
+        // Normal mode — full refund, just update
+        input.dataset.purchased = input.value || '0';
+    }
+
+    upd();
+}
+
+function toggleAtrophyMode() {
+    const active = document.getElementById('atrophy-mode')?.checked;
+    const lostRow = document.getElementById('atrophy-lost-row');
+    const lostVal = parseInt(document.getElementById('atrophy-lost')?.value) || 0;
+    // Show if active OR if there is already lost XP (permanent reminder)
+    if (lostRow) lostRow.style.display = (active || lostVal > 0) ? 'flex' : 'none';
+
+    // Visual indicator on skill grid
+    document.querySelectorAll('.sk-item').forEach(el => {
+        const pts = el.querySelector('.sk-p');
+        const name = el.querySelector('.sk-b')?.getAttribute('data-skill') || '';
+        // Disciplines cannot be atrophied
+        const isDiscipline = ['Faith','Druidism','Wizardry','Shaman','Ki','Runes'].includes(name);
+        if (pts) {
+            pts.style.borderColor = active && !isDiscipline ? 'var(--gold)' : '';
+            pts.title = active && !isDiscipline
+                ? 'ATROPHY MODE: reducing returns 1/3 XP only'
+                : '';
+        }
+    });
+
+    upd();
+}
+
+function applyAtrophy(skillName, oldPts, newPts, baseXP) {
+    // Called when a skill is reduced while atrophy mode is active
+    // oldPts → newPts: how many points removed
+    if (newPts >= oldPts) return; // only fires on reduction
+    if (newPts < 1) return; // minimum 1 pt — enforced here too
+
+    const removed = oldPts - newPts;
+    // XP that was spent on those points (compounding from newPts+1 to oldPts)
+    const xpOnRemovedPts = calcCompounding(oldPts, baseXP) - calcCompounding(newPts, baseXP);
+    // 1/3 returned, 2/3 lost
+    const xpReturned = Math.floor(xpOnRemovedPts / 3);
+    const xpLost = xpOnRemovedPts - xpReturned;
+
+    // Add to permanent lost pool
+    const lostInput = document.getElementById('atrophy-lost');
+    if (lostInput) {
+        const current = parseInt(lostInput.value) || 0;
+        lostInput.value = current + xpLost;
+    }
+
+    return xpLost;
+}
+
+function markAtrophiedSkill(skillItem, atrophied) {
+    const label = skillItem.querySelector('.sk-b');
+    const name = label?.getAttribute('data-skill') || '';
+    if (atrophied) {
+        if (!skillItem.querySelector('.atrophy-mark')) {
+            const mark = document.createElement('span');
+            mark.className = 'atrophy-mark';
+            mark.textContent = ' ⚗';
+            mark.style.cssText = 'color:var(--gold); font-size:9pt; opacity:0.8;';
+            mark.title = 'Skill Atrophied — 1/3 XP returned';
+            label.parentNode.insertBefore(mark, label.nextSibling);
+        }
+    } else {
+        skillItem.querySelector('.atrophy-mark')?.remove();
     }
 }
 
@@ -2415,7 +2567,7 @@ function init() {
             let h = `<div class="sk-c" data-group="${k}"><div class="sk-h">${k}</div>`;
             sks[k].forEach(s => {
                 const readOnlyAttr = (s === "Knowledge") ? `readonly style="background:rgba(0,0,0,0.08); text-align:center; font-weight:900;"` : "";
-                h += `<div class="sk-item"><span class="sk-name" id="label-${s}">${s}</span><input type="text" class="sk-b" data-skill="${s}" readonly value="20"><input type="number" class="sk-p xc" id="pts-${s.replace(/[^a-z0-9]/gi,'-').toLowerCase()}" oninput="this.dataset.purchased=this.value||'0'; upd()" placeholder="Pts" ${readOnlyAttr}></div>`;
+                h += `<div class="sk-item"><span class="sk-name" id="label-${s}">${s}</span><input type="text" class="sk-b" data-skill="${s}" readonly value="20"><input type="number" class="sk-p xc" id="pts-${s.replace(/[^a-z0-9]/gi,'-').toLowerCase()}" oninput="handleSkillInput(this)"  placeholder="Pts" ${readOnlyAttr}></div>`;
             });
             const div = document.createElement('div'); div.innerHTML = h + `</div>`;
             sgElem.appendChild(div.firstChild);
