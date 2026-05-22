@@ -936,7 +936,7 @@ function renderCompare() {
 }
 
 // ══════════════════════════════════════════════ ART
-function slugify(name){return name.split(':')[0].trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
+function slugify(name){return name.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
 
 function renderArtSlot(m, slotId) {
   const slot=document.getElementById(slotId);
