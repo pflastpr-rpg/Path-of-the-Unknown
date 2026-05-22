@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blood and Purpose — Combat Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@600;700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+<style>
+:root {
+  --iron:      #02070e;
+  --blood:     #A81818;
+  --blood-dim: #6B1010;
+  --gold:      #B8860B;
+  --gold-dim:  #7A5A07;
+  --parchment: #f3e7c9;
+  --ink:       #111111;
+  --success:   #2E7D32;
+  --warn:      #854F0B;
+  --panel:     #0D1117;
+  --panel2:    #161C24;
+  --border:    rgba(184,134,11,0.25);
+  --font-head: 'Grenze Gotisch', serif;
+  --font-body: 'IM Fell English', serif;
+  --font-hand: 'MedievalSharp', cursive;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--iron);
+  color: var(--parchment);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── TOP BAR ── */
+.top-bar {
+  background: var(--panel);
+  border-bottom: 2px solid var(--gold);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.top-title {
+  font-family: var(--font-head);
+  font-size: 20pt;
+  color: var(--gold);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.top-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.btn {
+  background: var(--panel2);
+  color: var(--gold);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  font-family: var(--font-body);
+  font-size: 9pt;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.btn:hover { background: var(--gold); color: var(--iron); }
+.btn.danger { border-color: var(--blood); color: var(--blood); }
+.btn.danger:hover { background: var(--blood); color: var(--parchment); }
+.btn.success { border-color: var(--success); color: #4caf50; }
+.btn.success:hover { background: var(--success); color: #fff; }
+.round-badge {
+  background: var(--blood);
+  color: var(--parchment);
+  font-family: var(--font-head);
+  font-size: 14pt;
+  padding: 2px 14px;
+  letter-spacing: 1px;
+  border: 1px solid var(--blood-dim);
+}
+.round-label { font-size: 8pt; color: var(--gold-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── INITIATIVE STRIP ── */
+.init-strip {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 16px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+.init-chip {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  font-size: 9pt;
+  font-weight: 900;
+  white-space: nowrap;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: border-color 0.15s;
+}
+.init-chip.active-turn {
+  border-color: var(--gold);
+  background: rgba(184,134,11,0.12);
+  color: var(--gold);
+}
+.init-chip.dead { opacity: 0.35; text-decoration: line-through; }
+.init-score {
+  font-family: var(--font-head);
+  font-size: 12pt;
+  color: var(--blood);
+}
+.init-strip-label { font-size: 8pt; color: var(--gold-dim); text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+
+/* ── MAIN CONTENT ── */
+.main { flex: 1; display: flex; gap: 0; overflow: hidden; }
+
+/* ── COMBATANT CARDS ── */
+.combatants-col {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.combatant-card {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  position: relative;
+  transition: border-color 0.2s;
+}
+.combatant-card.active-turn { border-color: var(--gold); box-shadow: 0 0 12px rgba(184,134,11,0.2); }
+.combatant-card.critical { border-color: var(--blood); animation: crit-pulse 2s infinite ease-in-out; }
+.combatant-card.dead { opacity: 0.4; border-color: #333; }
+
+@keyframes crit-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(168,24,24,0.4); }
+  50%       { box-shadow: 0 0 24px rgba(168,24,24,0.9); }
+}
+
+/* Card header */
+.card-head {
+  background: var(--iron);
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+}
+.card-name {
+  font-family: var(--font-hand);
+  font-size: 13pt;
+  color: var(--parchment);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+.card-type { font-size: 8pt; color: var(--gold-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+.card-turn-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--gold-dim);
+  padding: 2px 7px;
+  font-size: 8pt;
+  cursor: pointer;
+  font-family: inherit;
+  text-transform: uppercase;
+}
+.card-turn-btn:hover { background: var(--gold); color: var(--iron); border-color: var(--gold); }
+
+/* Card body */
+.card-body { padding: 8px 10px; display: flex; flex-direction: column; gap: 8px; }
+
+/* Wound bar */
+.wound-row { display: flex; align-items: center; gap: 8px; }
+.wound-bar-wrap { flex: 1; height: 18px; background: rgba(0,0,0,0.4); border: 1px solid rgba(168,24,24,0.3); position: relative; overflow: hidden; }
+.wound-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--success), #66bb6a);
+  transition: width 0.3s ease, background 0.3s;
+  position: absolute; top: 0; left: 0;
+}
+.wound-bar-fill.warn { background: linear-gradient(90deg, var(--warn), #ffa726); }
+.wound-bar-fill.crit { background: linear-gradient(90deg, var(--blood), #ef5350); }
+.wound-nums {
+  font-family: var(--font-head);
+  font-size: 13pt;
+  color: var(--parchment);
+  white-space: nowrap;
+  min-width: 70px;
+  text-align: right;
+}
+.wound-nums.crit { color: var(--blood); }
+
+/* Wound adjust buttons */
+.wound-adj { display: flex; gap: 4px; align-items: center; }
+.adj-btn {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--parchment);
+  width: 26px; height: 26px;
+  font-size: 14px; font-weight: 900;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.1s;
+}
+.adj-btn:hover { background: var(--blood); border-color: var(--blood); }
+.adj-btn.heal:hover { background: var(--success); border-color: var(--success); }
+.adj-input {
+  width: 42px; height: 26px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--parchment);
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 11pt;
+  font-weight: 900;
+}
+.adj-input:focus { outline: none; border-color: var(--gold); }
+
+/* Stats row */
+.stats-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.stat-chip {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 44px;
+}
+.stat-chip-lbl { font-size: 7pt; text-transform: uppercase; letter-spacing: 0.4px; color: var(--gold-dim); }
+.stat-chip-val { font-family: var(--font-head); font-size: 12pt; color: var(--parchment); line-height: 1.1; }
+.stat-chip.blood .stat-chip-val { color: var(--blood); }
+.stat-chip.gold  .stat-chip-val { color: var(--gold); }
+.stat-chip.green .stat-chip-val { color: #66bb6a; }
+
+/* AP tracker */
+.ap-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.ap-pips { display: flex; gap: 3px; }
+.ap-pip {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--gold-dim);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.ap-pip.used { background: var(--blood); border-color: var(--blood); }
+.ap-pip.avail { background: rgba(184,134,11,0.2); border-color: var(--gold); }
+.ap-label { font-size: 8pt; color: var(--gold-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Conditions */
+.cond-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.cond-tag {
+  padding: 2px 7px;
+  font-size: 8pt;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  user-select: none;
+  transition: all 0.1s;
+}
+.cond-tag.off { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.25); }
+.cond-tag.on  { background: rgba(168,24,24,0.25); border-color: var(--blood); color: #ef9a9a; }
+.cond-tag.on.stun  { background: rgba(156,39,176,0.2); border-color: #9c27b0; color: #ce93d8; }
+.cond-tag.on.bleed { background: rgba(168,24,24,0.3); border-color: var(--blood); color: #ef9a9a; }
+.cond-tag.on.poison { background: rgba(76,175,80,0.2); border-color: #4caf50; color: #a5d6a7; }
+.rule3-warn {
+  padding: 2px 8px;
+  background: rgba(168,24,24,0.3);
+  border: 1px solid var(--blood);
+  color: #ef9a9a;
+  font-size: 8pt;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+/* Fortune pips */
+.fp-row { display: flex; align-items: center; gap: 5px; }
+.fp-pip {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-dim);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.fp-pip.avail { background: rgba(184,134,11,0.3); border-color: var(--gold); }
+.fp-pip.spent { background: transparent; border-color: var(--gold-dim); }
+
+/* Combat reference panel */
+.ref-panel {
+  width: 220px;
+  flex-shrink: 0;
+  border-left: 1px solid var(--border);
+  overflow-y: auto;
+  background: var(--panel);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ref-section { }
+.ref-head {
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold-dim);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 3px;
+  margin-bottom: 6px;
+}
+.ref-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9pt;
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--parchment);
+}
+.ref-row span:last-child { color: var(--gold); font-weight: 900; font-family: var(--font-head); font-size: 11pt; }
+.ref-row.vs-evil span:last-child { color: #ef9a9a; }
+
+/* Log panel */
+.log-panel {
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+  padding: 6px 12px;
+  max-height: 120px;
+  overflow-y: auto;
+  flex-shrink: 0;
+  font-size: 8.5pt;
+  color: rgba(243,231,201,0.6);
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 2px;
+}
+.log-entry { padding: 1px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.log-entry .log-round { color: var(--gold-dim); margin-right: 6px; }
+.log-entry .log-dmg  { color: var(--blood); font-weight: 900; }
+.log-entry .log-heal { color: #66bb6a; font-weight: 900; }
+
+/* Dice roller */
+.dice-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; padding: 4px 12px; border-top: 1px solid var(--border); flex-shrink: 0; background: var(--panel); }
+.dice-btn {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--gold);
+  padding: 3px 9px;
+  font-size: 9pt;
+  font-weight: 900;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.dice-btn:hover { background: var(--gold); color: var(--iron); }
+.dice-result {
+  font-family: var(--font-head);
+  font-size: 16pt;
+  color: var(--blood);
+  min-width: 30px;
+  text-align: center;
+}
+.dice-label { font-size: 8pt; color: var(--gold-dim); }
+
+/* Add combatant modal */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--panel2);
+  border: 1px solid var(--gold);
+  padding: 20px;
+  width: 360px;
+  max-width: 95vw;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.modal-title { font-family: var(--font-head); font-size: 16pt; color: var(--gold); }
+.modal label { font-size: 8pt; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gold-dim); display: block; margin-bottom: 3px; }
+.modal input, .modal select {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--parchment);
+  padding: 7px 10px;
+  font-family: var(--font-body);
+  font-size: 11pt;
+}
+.modal input:focus, .modal select:focus { outline: none; border-color: var(--gold); }
+.modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.modal-btns { display: flex; gap: 8px; }
+.modal-btns .btn { flex: 1; padding: 8px; font-size: 10pt; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--panel); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+/* Responsive */
+@media (max-width: 700px) {
+  .ref-panel { display: none; }
+  .top-title { font-size: 14pt; }
+}
+
+.empty-state {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex: 1; gap: 12px; color: var(--gold-dim); text-align: center; padding: 40px;
+}
+.empty-state h2 { font-family: var(--font-head); font-size: 20pt; color: var(--gold); }
+.empty-state p { font-size: 10pt; line-height: 1.6; max-width: 320px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-title">⚔ Combat</div>
+  <div class="top-controls">
+    <div>
+      <div class="round-label">Round</div>
+      <div class="round-badge" id="round-num">1</div>
+    </div>
+    <button class="btn" onclick="nextTurn()">Next Turn ▶</button>
+    <button class="btn" onclick="nextRound()">New Round ↺</button>
+    <button class="btn success" onclick="document.getElementById('import-snap').click()">📥 Load Character</button>
+    <input type="file" id="import-snap" style="display:none" accept=".pou,.json" multiple onchange="loadCombatants(this)">
+    <button class="btn" onclick="openAddManual()">＋ Add NPC</button>
+    <button class="btn danger" onclick="clearAll()">✕ Clear All</button>
+  </div>
+</div>
+
+<!-- INITIATIVE STRIP -->
+<div class="init-strip">
+  <span class="init-strip-label">Turn Order:</span>
+  <div id="init-chips" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;"></div>
+  <button class="btn" style="margin-left:8px;font-size:8pt;padding:3px 8px;" onclick="rollAllInitiative()">🎲 Roll All Init</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- COMBATANT CARDS -->
+  <div class="combatants-col" id="combatants-col">
+    <div class="empty-state" id="empty-state">
+      <h2>No Combatants</h2>
+      <p>Load a character from a <strong>.pou</strong> file exported by the ledger, or add an NPC manually. Load multiple files at once to build a full encounter.</p>
+      <button class="btn success" onclick="document.getElementById('import-snap').click()" style="margin-top:8px;padding:8px 20px;font-size:10pt;">📥 Load Character</button>
+    </div>
+  </div>
+
+  <!-- REFERENCE PANEL -->
+  <div class="ref-panel" id="ref-panel">
+    <div class="ref-section">
+      <div class="ref-head">Quick Reference</div>
+      <div id="ref-content" style="color:var(--gold-dim);font-size:9pt;line-height:1.6">
+        Select a combatant to see their combat stats here.
+      </div>
+    </div>
+    <div class="ref-section">
+      <div class="ref-head">Conditions</div>
+      <div style="font-size:8pt;line-height:1.7;color:rgba(243,231,201,0.6);">
+        <div>🩸 <b>Bleed</b> — 1d10 W/turn</div>
+        <div>🧪 <b>Poison</b> — progressive dmg</div>
+        <div>💫 <b>Stun</b> — −1 AP per stack</div>
+        <div>😱 <b>Fear</b> — Wil test penalty</div>
+        <div>🧎 <b>Prone</b> — disadv To-Hit</div>
+        <div>🌑 <b>Blind</b> — disadv / Def=armor</div>
+        <div>🕸 <b>Bound</b> — no move/react</div>
+        <div style="margin-top:4px;padding-top:4px;border-top:1px solid var(--border);color:var(--blood);">
+          ⚠ <b>Rule of 3:</b> 3+ conditions = no reactions
+        </div>
+      </div>
+    </div>
+    <div class="ref-section">
+      <div class="ref-head">Wound Thresholds</div>
+      <div style="font-size:8pt;line-height:1.7;color:rgba(243,231,201,0.6);">
+        <div><b style="color:#66bb6a">Healthy</b> — &gt;50% wounds</div>
+        <div><b style="color:#ffa726">Bloodied</b> — 25–50% wounds</div>
+        <div><b style="color:var(--blood)">Critical</b> — 1–3 wounds left</div>
+        <div><b style="color:#555">Dead</b> — 0 wounds</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- DICE ROW -->
+<div class="dice-row">
+  <span class="dice-label">Quick Roll:</span>
+  <button class="dice-btn" onclick="roll(4)">d4</button>
+  <button class="dice-btn" onclick="roll(6)">d6</button>
+  <button class="dice-btn" onclick="roll(8)">d8</button>
+  <button class="dice-btn" onclick="roll(10)">d10</button>
+  <button class="dice-btn" onclick="roll(12)">d12</button>
+  <button class="dice-btn" onclick="roll(20)">d20</button>
+  <button class="dice-btn" onclick="roll(100)">d100</button>
+  <span class="dice-result" id="dice-result">—</span>
+  <span class="dice-label" id="dice-detail"></span>
+</div>
+
+<!-- LOG -->
+<div class="log-panel" id="combat-log"></div>
+
+<!-- ADD NPC MODAL -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal">
+    <div class="modal-title">Add NPC / Creature</div>
+    <div>
+      <label>Name</label>
+      <input type="text" id="npc-name" placeholder="Goblin Warchief...">
+    </div>
+    <div class="modal-row">
+      <div>
+        <label>Total Wounds</label>
+        <input type="number" id="npc-wounds" placeholder="e.g. 45" min="1">
+      </div>
+      <div>
+        <label>Initiative</label>
+        <input type="number" id="npc-init" placeholder="e.g. 4">
+      </div>
+    </div>
+    <div class="modal-row">
+      <div>
+        <label>Action Points</label>
+        <input type="number" id="npc-ap" value="2" min="1">
+      </div>
+      <div>
+        <label>Def / WM (armor)</label>
+        <input type="number" id="npc-wm" value="0" min="0">
+      </div>
+    </div>
+    <div>
+      <label>Notes (attacks, special, etc.)</label>
+      <input type="text" id="npc-notes" placeholder="Bite +3 / 1d10+8W...">
+    </div>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn success" onclick="addNPCFromModal()">Add to Battle</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ================================================================
+// STATE
+// ================================================================
+let combatants = [];   // [{id, name, type, totalWounds, currentWounds,
+                       //   ap, apTotal, fp, fpTotal, initiative,
+                       //   conditions:{bleed,poison,stun,fear,prone,blind,bound},
+                       //   stats:{defense,meleeHit1,meleeDmg1,...,wmArmor,...},
+                       //   notes, isNPC, isDead}]
+let round = 1;
+let activeTurnIdx = 0; // index into initiative-sorted combatants
+
+const CONDITIONS = ['bleed','poison','stun','fear','prone','blind','bound'];
+const COND_LABELS = {bleed:'🩸 Bleed',poison:'🧪 Poison',stun:'💫 Stun',
+                    fear:'😱 Fear',prone:'🧎 Prone',blind:'🌑 Blind',bound:'🕸 Bound'};
+const COND_CLASS  = {bleed:'bleed',poison:'poison',stun:'stun',
+                    fear:'',prone:'',blind:'',bound:''};
+
+let logEntries = [];
+
+// ================================================================
+// LOAD FROM .POU
+// ================================================================
+function loadCombatants(input) {
+  const files = Array.from(input.files);
+  let loaded = 0;
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const pkg = JSON.parse(e.target.result);
+        const c = buildCombatantFromPOU(pkg, file.name);
+        combatants.push(c);
+        loaded++;
+        if (loaded === files.length) {
+          sortByInitiative();
+          renderAll();
+          log(`Loaded ${files.map(f=>f.name.replace(/\.(pou|json)$/i,'')).join(', ')} into battle.`);
+        }
+      } catch(err) {
+        alert('Could not load ' + file.name + ': ' + err.message);
+      }
+    };
+    reader.readAsText(file);
+  });
+  input.value = '';
+}
+
+function buildCombatantFromPOU(pkg, filename) {
+  // .pou files from the creator carry base stats but not computed ones.
+  // We read what we can and note blanks for the GM to fill.
+  const name = pkg.identity?.name || filename.replace(/\.(pou|json)$/i,'');
+
+  // Computed stats — present if exported from ledger "Send to Tracker" button
+  const cs = pkg.combatStats || {};
+
+  return {
+    id: Date.now() + Math.random(),
+    name,
+    type: pkg.identity?.race ? (pkg.identity.race.charAt(0).toUpperCase() + pkg.identity.race.slice(1)) + (pkg.identity.size !== 'Med' ? ` (${pkg.identity.size})` : '') : 'Character',
+    totalWounds:   cs.wTotal   || 0,
+    currentWounds: cs.wTotal   || 0,
+    ap:      cs.apTotal  || 2,
+    apTotal: cs.apTotal  || 2,
+    apUsed:  0,
+    fp:      cs.fpBase   || 0,
+    fpTotal: cs.fpBase   || 0,
+    initiative: cs.initiative || 0,
+    conditions: {bleed:0,poison:0,stun:0,fear:0,prone:0,blind:0,bound:0},
+    stats: {
+      defense:     cs.defense    || 0,
+      movement:    cs.movement   || 0,
+      meleeHit1:   cs.meleeHit1  || 0,
+      meleeDmg1:   cs.meleeDmg1  || 0,
+      meleeHit2:   cs.meleeHit2  || null,
+      meleeDmg2:   cs.meleeDmg2  || null,
+      rangeHit1:   cs.rangeHit1  || null,
+      rangeDmg1:   cs.rangeDmg1  || null,
+      rangeHit2:   cs.rangeHit2  || null,
+      rangeDmg2:   cs.rangeDmg2  || null,
+      castHit:     cs.castHit    || null,
+      castDmg:     cs.castDmg    || null,
+      castHeal:    cs.castHeal   || null,
+      castResist:  cs.castResist || null,
+      wmArmor:     cs.wmArmor    || 0,
+      wmBless:     cs.wmBless    || 0,
+      wmDispoi:    cs.wmDispoi   || 0,
+      mendHeal:    cs.mendHeal   || 0,
+      block:       cs.block      || 0,
+      deflect:     cs.deflect    || 0,
+      dodge:       cs.dodge      || 0,
+    },
+    notes: pkg.notes || '',
+    isNPC: false,
+    isDead: false,
+  };
+}
+
+// ================================================================
+// ADD NPC MANUALLY
+// ================================================================
+function openAddManual() {
+  document.getElementById('add-modal').classList.add('open');
+  document.getElementById('npc-name').focus();
+}
+function closeModal() {
+  document.getElementById('add-modal').classList.remove('open');
+}
+function addNPCFromModal() {
+  const name = document.getElementById('npc-name').value.trim() || 'NPC';
+  const wounds = parseInt(document.getElementById('npc-wounds').value) || 20;
+  const init   = parseInt(document.getElementById('npc-init').value)   || 0;
+  const ap     = parseInt(document.getElementById('npc-ap').value)     || 2;
+  const wm     = parseInt(document.getElementById('npc-wm').value)     || 0;
+  const notes  = document.getElementById('npc-notes').value.trim();
+
+  combatants.push({
+    id: Date.now() + Math.random(),
+    name, type: 'NPC',
+    totalWounds: wounds, currentWounds: wounds,
+    ap, apTotal: ap, apUsed: 0,
+    fp: 0, fpTotal: 0,
+    initiative: init,
+    conditions: {bleed:0,poison:0,stun:0,fear:0,prone:0,blind:0,bound:0},
+    stats: {defense:0,movement:0,meleeHit1:0,meleeDmg1:0,
+            meleeHit2:null,meleeDmg2:null,rangeHit1:null,rangeDmg1:null,
+            rangeHit2:null,rangeDmg2:null,castHit:null,castDmg:null,
+            castHeal:null,castResist:null,wmArmor:wm,wmBless:0,wmDispoi:0,
+            mendHeal:0,block:0,deflect:0,dodge:0},
+    notes, isNPC: true, isDead: false,
+  });
+  sortByInitiative();
+  renderAll();
+  log(`${name} joined the battle.`);
+  closeModal();
+}
+
+// ================================================================
+// INITIATIVE & TURN ORDER
+// ================================================================
+function sortByInitiative() {
+  combatants.sort((a,b) => b.initiative - a.initiative);
+  activeTurnIdx = Math.min(activeTurnIdx, combatants.length - 1);
+}
+function rollAllInitiative() {
+  combatants.forEach(c => {
+    const base = c.stats ? (c.stats.initiative || 0) : 0;
+    c.initiative = base + Math.ceil(Math.random() * 10);
+  });
+  sortByInitiative();
+  renderAll();
+  log('Initiative rolled for all combatants.');
+}
+function nextTurn() {
+  if (!combatants.length) return;
+  // Reset AP for current combatant
+  const cur = combatants[activeTurnIdx];
+  if (cur) cur.apUsed = 0;
+  activeTurnIdx = (activeTurnIdx + 1) % combatants.length;
+  // Skip dead
+  let tries = 0;
+  while (combatants[activeTurnIdx]?.isDead && tries < combatants.length) {
+    activeTurnIdx = (activeTurnIdx + 1) % combatants.length;
+    tries++;
+  }
+  if (activeTurnIdx === 0 && tries < combatants.length) {
+    nextRound(); return;
+  }
+  renderAll();
+}
+function nextRound() {
+  round++;
+  activeTurnIdx = 0;
+  // Tick bleed on all combatants
+  combatants.forEach(c => {
+    if (c.conditions.bleed > 0 && !c.isDead) {
+      const bleedDmg = c.conditions.bleed; // 1 per stack (d10 resolved by GM)
+      log(`${c.name}: 🩸 ${c.conditions.bleed} Bleed stack(s) — GM rolls ${c.conditions.bleed}d10 wounds.`, 'dmg');
+    }
+    c.apUsed = 0;
+  });
+  document.getElementById('round-num').textContent = round;
+  renderAll();
+  log(`━━━ Round ${round} begins ━━━`);
+}
+
+// ================================================================
+// WOUND MANAGEMENT
+// ================================================================
+function applyWounds(id, amount) {
+  const c = combatants.find(x => x.id === id);
+  if (!c || c.isDead) return;
+  const prev = c.currentWounds;
+  c.currentWounds = Math.max(0, c.currentWounds - amount);
+  if (c.currentWounds === 0) {
+    c.isDead = true;
+    log(`${c.name} has fallen! (${prev} → 0)`, 'dmg');
+  } else {
+    log(`${c.name} took ${amount}W. (${prev} → ${c.currentWounds})`, 'dmg');
+  }
+  renderCard(id);
+  renderInitStrip();
+}
+function applyHeal(id, amount) {
+  const c = combatants.find(x => x.id === id);
+  if (!c) return;
+  const prev = c.currentWounds;
+  c.currentWounds = Math.min(c.totalWounds, c.currentWounds + amount);
+  if (c.isDead && c.currentWounds > 0) c.isDead = false;
+  log(`${c.name} healed ${amount}W. (${prev} → ${c.currentWounds})`, 'heal');
+  renderCard(id);
+  renderInitStrip();
+}
+function toggleCondition(id, cond) {
+  const c = combatants.find(x => x.id === id);
+  if (!c) return;
+  c.conditions[cond] = c.conditions[cond] ? 0 : 1;
+  renderCard(id);
+}
+function useAP(id) {
+  const c = combatants.find(x => x.id === id);
+  if (!c || c.apUsed >= c.apTotal) return;
+  c.apUsed++;
+  renderCard(id);
+}
+function resetAP(id) {
+  const c = combatants.find(x => x.id === id);
+  if (!c) return;
+  c.apUsed = 0;
+  renderCard(id);
+}
+function useFP(id) {
+  const c = combatants.find(x => x.id === id);
+  if (!c || c.fp <= 0) return;
+  c.fp--;
+  log(`${c.name} spent a Fortune re-roll. (${c.fp} remaining)`, 'heal');
+  renderCard(id);
+}
+function setActiveTurn(id) {
+  const idx = combatants.findIndex(x => x.id === id);
+  if (idx >= 0) { activeTurnIdx = idx; renderAll(); }
+}
+function removeFromBattle(id) {
+  combatants = combatants.filter(x => x.id !== id);
+  if (activeTurnIdx >= combatants.length) activeTurnIdx = 0;
+  renderAll();
+}
+
+// ================================================================
+// RENDER
+// ================================================================
+function renderAll() {
+  document.getElementById('round-num').textContent = round;
+  renderInitStrip();
+  renderCards();
+  document.getElementById('empty-state').style.display = combatants.length ? 'none' : 'flex';
+}
+
+function renderInitStrip() {
+  const el = document.getElementById('init-chips');
+  el.innerHTML = '';
+  [...combatants].sort((a,b) => b.initiative - a.initiative).forEach((c, i) => {
+    const isActive = combatants[activeTurnIdx]?.id === c.id;
+    const chip = document.createElement('div');
+    chip.className = 'init-chip' + (isActive ? ' active-turn' : '') + (c.isDead ? ' dead' : '');
+    chip.innerHTML = `<span class="init-score">${c.initiative}</span><span>${c.name}</span>`;
+    chip.onclick = () => setActiveTurn(c.id);
+    el.appendChild(chip);
+  });
+}
+
+function renderCards() {
+  const col = document.getElementById('combatants-col');
+  // Remove existing cards (keep empty-state)
+  Array.from(col.querySelectorAll('.combatant-card')).forEach(el => el.remove());
+  combatants.forEach(c => {
+    const el = buildCardEl(c);
+    col.appendChild(el);
+  });
+}
+
+function renderCard(id) {
+  const col = document.getElementById('combatants-col');
+  const existing = col.querySelector(`[data-cid="${id}"]`);
+  const c = combatants.find(x => x.id === id);
+  if (!c) { if (existing) existing.remove(); return; }
+  const newEl = buildCardEl(c);
+  if (existing) col.replaceChild(newEl, existing);
+  else col.appendChild(newEl);
+  // Also update ref panel if this is the active combatant
+  if (combatants[activeTurnIdx]?.id === id) renderRefPanel(c);
+}
+
+function buildCardEl(c) {
+  const isActive = combatants[activeTurnIdx]?.id === c.id;
+  const pct = c.totalWounds > 0 ? (c.currentWounds / c.totalWounds) : 0;
+  const barClass = pct <= 0.15 ? 'crit' : pct <= 0.4 ? 'warn' : '';
+  const isCrit = c.currentWounds > 0 && c.currentWounds <= 3;
+  const activeConds = CONDITIONS.filter(cd => c.conditions[cd] > 0);
+  const rule3 = activeConds.length >= 3;
+
+  const card = document.createElement('div');
+  card.className = 'combatant-card' + (isActive ? ' active-turn' : '') + (isCrit ? ' critical' : '') + (c.isDead ? ' dead' : '');
+  card.setAttribute('data-cid', c.id);
+
+  // AP pips
+  let apPips = '';
+  for (let i = 0; i < c.apTotal; i++) {
+    const used = i < c.apUsed;
+    apPips += `<div class="ap-pip ${used ? 'used' : 'avail'}" onclick="event.stopPropagation();${used ? '' : 'useAP(' + c.id + ')'}"></div>`;
+  }
+  // FP pips
+  let fpPips = '';
+  for (let i = 0; i < c.fpTotal; i++) {
+    fpPips += `<div class="fp-pip ${i < c.fp ? 'avail' : 'spent'}" onclick="event.stopPropagation();useFP(${c.id})"></div>`;
+  }
+
+  // Wound adj amount input id
+  const adjId = `adj-${c.id}`;
+
+  card.innerHTML = `
+    <div class="card-head" onclick="renderRefPanel(combatants.find(x=>x.id===${c.id}))">
+      <div>
+        <div class="card-name">${c.name}</div>
+        <div class="card-type">${c.type}${c.notes ? ' · ' + c.notes : ''}</div>
+      </div>
+      <div style="display:flex;gap:5px;align-items:center">
+        <button class="card-turn-btn" onclick="event.stopPropagation();setActiveTurn(${c.id})">Active Turn</button>
+        <button class="card-turn-btn" style="border-color:var(--blood-dim);color:var(--blood);" onclick="event.stopPropagation();removeFromBattle(${c.id})">✕</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- Wound bar -->
+      <div class="wound-row">
+        <div class="wound-bar-wrap" style="flex:1">
+          <div class="wound-bar-fill ${barClass}" style="width:${Math.max(0,pct*100)}%"></div>
+        </div>
+        <div class="wound-nums ${isCrit ? 'crit' : ''}">${c.isDead ? '☠ Dead' : c.currentWounds + ' / ' + c.totalWounds}</div>
+      </div>
+      <!-- Wound adjust -->
+      <div class="wound-adj">
+        <span style="font-size:8pt;color:var(--gold-dim);text-transform:uppercase;letter-spacing:.5px;margin-right:2px;">Wounds:</span>
+        <button class="adj-btn" onclick="applyWounds(${c.id}, parseInt(document.getElementById('${adjId}').value)||1)">− Dmg</button>
+        <input class="adj-input" id="${adjId}" type="number" value="1" min="1" onclick="event.stopPropagation()">
+        <button class="adj-btn heal" onclick="applyHeal(${c.id}, parseInt(document.getElementById('${adjId}').value)||1)">+ Heal</button>
+        <button class="adj-btn" style="margin-left:4px;font-size:9px;width:auto;padding:0 6px;" onclick="c_setTotal(${c.id})">Set Max</button>
+      </div>
+      <!-- AP / FP -->
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <div class="ap-row">
+          <span class="ap-label">AP:</span>
+          <div class="ap-pips">${apPips}</div>
+          <button class="adj-btn" style="width:auto;padding:0 5px;font-size:8px;" onclick="resetAP(${c.id})">↺</button>
+        </div>
+        ${c.fpTotal > 0 ? `<div class="fp-row"><span class="ap-label" style="margin-right:3px">Fortune:</span>${fpPips}</div>` : ''}
+      </div>
+      <!-- Conditions -->
+      <div class="cond-row">
+        ${CONDITIONS.map(cd => `<div class="cond-tag ${c.conditions[cd] ? 'on ' + COND_CLASS[cd] : 'off'}" onclick="toggleCondition(${c.id},'${cd}')">${COND_LABELS[cd]}</div>`).join('')}
+        ${rule3 ? '<div class="rule3-warn">⚠ No Reactions</div>' : ''}
+      </div>
+    </div>`;
+
+  return card;
+}
+
+function c_setTotal(id) {
+  const c = combatants.find(x => x.id === id);
+  if (!c) return;
+  const val = parseInt(prompt(`Set total wounds for ${c.name}:`, c.totalWounds));
+  if (!isNaN(val) && val > 0) {
+    c.totalWounds = val;
+    c.currentWounds = Math.min(c.currentWounds, val);
+    renderCard(id);
+  }
+}
+
+function renderRefPanel(c) {
+  if (!c) return;
+  const el = document.getElementById('ref-content');
+  const s = c.stats;
+  const hasCast = s.castHit !== null;
+  const hasMelee2 = s.meleeHit2 !== null;
+  const hasRange = s.rangeHit1 !== null;
+
+  el.innerHTML = `
+    <div class="ref-head" style="margin-bottom:8px">${c.name}</div>
+    <div class="ref-row"><span>Defense</span><span>${s.defense || '—'}</span></div>
+    <div class="ref-row"><span>Movement</span><span>${s.movement || '—'} ft</span></div>
+    <div class="ref-row"><span>Block / Defl / Dodge</span><span>${s.block||0} / ${s.deflect||0} / ${s.dodge||0}</span></div>
+    <div style="margin:6px 0 3px;font-size:7pt;text-transform:uppercase;letter-spacing:1px;color:var(--gold-dim);">Melee</div>
+    <div class="ref-row"><span>Hit / Wounds (W1)</span><span>+${s.meleeHit1} / +${s.meleeDmg1}</span></div>
+    ${hasMelee2 ? `<div class="ref-row"><span>Hit / Wounds (W2)</span><span>+${s.meleeHit2} / +${s.meleeDmg2}</span></div>` : ''}
+    ${hasRange ? `
+    <div style="margin:6px 0 3px;font-size:7pt;text-transform:uppercase;letter-spacing:1px;color:var(--gold-dim);">Ranged</div>
+    <div class="ref-row"><span>Hit / Wounds (R1)</span><span>+${s.rangeHit1} / +${s.rangeDmg1}</span></div>
+    ${s.rangeHit2 !== null ? `<div class="ref-row"><span>Hit / Wounds (R2)</span><span>+${s.rangeHit2} / +${s.rangeDmg2}</span></div>` : ''}` : ''}
+    ${hasCast ? `
+    <div style="margin:6px 0 3px;font-size:7pt;text-transform:uppercase;letter-spacing:1px;color:var(--gold-dim);">Casting</div>
+    <div class="ref-row"><span>Cast Hit</span><span>+${s.castHit}</span></div>
+    <div class="ref-row"><span>Spell Wounds</span><span>+${s.castDmg}</span></div>
+    ${s.castHeal ? `<div class="ref-row"><span>Healing</span><span>+${s.castHeal}</span></div>` : ''}
+    <div class="ref-row"><span>Resist / Turns</span><span>${s.castResist} / ${s.castResist}</span></div>` : ''}
+    <div style="margin:6px 0 3px;font-size:7pt;text-transform:uppercase;letter-spacing:1px;color:var(--gold-dim);">Wound Mitigation</div>
+    <div class="ref-row"><span>Armor</span><span>${s.wmArmor}</span></div>
+    <div class="ref-row"><span>Bless/Spell</span><span>${s.wmBless}</span></div>
+    <div class="ref-row"><span>Disposition/Poi</span><span>${s.wmDispoi}</span></div>
+    ${s.mendHeal > 0 ? `<div class="ref-row"><span>Mending (heal/use)</span><span style="color:#66bb6a">${s.mendHeal}W</span></div>` : ''}
+  `;
+}
+
+// ================================================================
+// DICE
+// ================================================================
+function roll(sides) {
+  const result = Math.ceil(Math.random() * sides);
+  document.getElementById('dice-result').textContent = result;
+  document.getElementById('dice-detail').textContent = `(d${sides})`;
+  log(`🎲 d${sides} → ${result}`);
+}
+
+// ================================================================
+// LOG
+// ================================================================
+function log(msg, type) {
+  const entry = {round, msg, type};
+  logEntries.unshift(entry);
+  const el = document.getElementById('combat-log');
+  const div = document.createElement('div');
+  div.className = 'log-entry';
+  const typeClass = type === 'dmg' ? 'log-dmg' : type === 'heal' ? 'log-heal' : '';
+  div.innerHTML = `<span class="log-round">R${round}</span><span class="${typeClass}">${msg}</span>`;
+  el.prepend(div);
+  while (el.children.length > 60) el.removeChild(el.lastChild);
+}
+
+// ================================================================
+// UTILS
+// ================================================================
+function clearAll() {
+  if (!confirm('Clear all combatants and reset the battle?')) return;
+  combatants = [];
+  round = 1;
+  activeTurnIdx = 0;
+  logEntries = [];
+  document.getElementById('combat-log').innerHTML = '';
+  document.getElementById('round-num').textContent = '1';
+  renderAll();
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'n' || e.key === 'N') nextTurn();
+  if (e.key === 'r' || e.key === 'R') nextRound();
+  if (e.key === 'Escape') closeModal();
+});
+
+// Init
+renderAll();
+log('Combat tracker ready. Load characters or add NPCs to begin.');
+</script>
+</body>
+</html>

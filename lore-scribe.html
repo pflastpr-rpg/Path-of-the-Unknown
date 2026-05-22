@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1000">
+<title>Blood and Purpose — Lore Scribe</title>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;700&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --iron: #02070e;
+    --blood: #A81818;
+    --blood-dim: rgba(168,24,24,0.10);
+    --parchment: #f3e7c9;
+    --gold: #B8860B;
+    --gold-dim: rgba(184,134,11,0.12);
+    --gold-line: rgba(184,134,11,0.3);
+    --ink: #111111;
+    --ink-soft: #362a18;
+    --muted: #6b5c40;
+    --entry-bg: #faf4e1;
+    --font-heading: 'Grenze Gotisch', serif;
+    --font-sub: 'Cinzel', serif;
+    --font-main: 'IM Fell English', serif;
+    --font-mono: 'Courier New', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: #0e0b07;
+    background-image: repeating-linear-gradient(0deg,transparent,transparent 44px,rgba(184,134,11,0.018) 44px,rgba(184,134,11,0.018) 45px);
+    font-family: var(--font-main);
+    color: var(--ink);
+    padding: 30px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    min-height: 100vh;
+}
+
+.top-nav {
+    width: 960px;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn-nav {
+    background: var(--iron);
+    color: var(--gold);
+    border: 2px solid var(--iron);
+    border-bottom: 4px solid var(--blood);
+    padding: 9px 20px;
+    font-family: var(--font-sub);
+    font-size: 0.68em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.18s;
+    display: inline-block;
+}
+.btn-nav:hover { background: var(--blood); color: var(--parchment); border-color: var(--blood); }
+
+/* ── MAIN PANEL ── */
+.scribe-wrap {
+    width: 960px;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 18px;
+    align-items: start;
+}
+
+/* ── WRITING PANEL ── */
+.write-panel {
+    background: var(--parchment);
+    border: 8px solid var(--iron);
+    box-shadow: 0 0 0 2px var(--gold), 0 20px 60px rgba(0,0,0,0.9);
+    padding: 36px 40px 44px;
+    position: relative;
+}
+.write-panel::before, .write-panel::after {
+    content: '✦';
+    position: absolute;
+    font-size: 16px;
+    color: var(--gold);
+}
+.write-panel::before { top: 10px; left: 12px; }
+.write-panel::after  { top: 10px; right: 12px; }
+
+.panel-eyebrow {
+    font-family: var(--font-sub);
+    font-size: 0.62em;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 4px;
+}
+.panel-title {
+    font-family: var(--font-heading);
+    font-size: 2.2em;
+    color: var(--iron);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 3px double var(--gold);
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+}
+
+/* form fields */
+.field { margin-bottom: 18px; }
+.field label {
+    display: block;
+    font-family: var(--font-sub);
+    font-size: 0.65em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+.field input[type="text"],
+.field select,
+.field textarea {
+    width: 100%;
+    background: var(--entry-bg);
+    border: 1.5px solid rgba(2,7,14,0.25);
+    border-bottom: 3px solid var(--iron);
+    padding: 10px 12px;
+    font-family: var(--font-main);
+    font-size: 1em;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+    resize: vertical;
+}
+.field input[type="text"]:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: var(--gold);
+    border-bottom-color: var(--blood);
+}
+.field select { cursor: pointer; }
+.field textarea { min-height: 130px; line-height: 1.7; }
+.field textarea.tall { min-height: 80px; }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* character counter */
+.char-note {
+    font-family: var(--font-mono);
+    font-size: 0.72em;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 3px;
+}
+
+/* action buttons */
+.btn-row { display: flex; gap: 10px; margin-top: 6px; }
+.btn-commit {
+    flex: 1;
+    background: var(--blood);
+    color: var(--parchment);
+    border: 2px solid var(--blood);
+    border-bottom: 4px solid var(--iron);
+    padding: 12px 20px;
+    font-family: var(--font-sub);
+    font-size: 0.7em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.18s;
+}
+.btn-commit:hover { background: #8a0f0f; }
+.btn-clear {
+    background: transparent;
+    color: var(--muted);
+    border: 2px solid rgba(2,7,14,0.2);
+    border-bottom: 4px solid rgba(2,7,14,0.3);
+    padding: 12px 18px;
+    font-family: var(--font-sub);
+    font-size: 0.7em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.18s;
+}
+.btn-clear:hover { border-color: var(--blood); color: var(--blood); }
+
+/* status bar */
+.status-bar {
+    margin-top: 14px;
+    padding: 10px 14px;
+    font-family: var(--font-sub);
+    font-size: 0.65em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    border: 1px solid transparent;
+    transition: 0.2s;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.status-bar.success {
+    background: rgba(0,80,0,0.08);
+    border-color: rgba(0,100,0,0.25);
+    color: #2a5c2a;
+}
+.status-bar.error {
+    background: var(--blood-dim);
+    border-color: var(--blood);
+    color: var(--blood);
+}
+
+/* ── LEDGER PANEL ── */
+.ledger-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ledger-card {
+    background: var(--parchment);
+    border: 4px solid var(--iron);
+    box-shadow: 0 0 0 1px var(--gold-line), 0 10px 30px rgba(0,0,0,0.7);
+    padding: 18px 20px 20px;
+}
+.ledger-head {
+    font-family: var(--font-heading);
+    font-size: 1.1em;
+    color: var(--blood);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--gold-line);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+/* existing entries list */
+#entryList { list-style: none; padding: 0; margin: 0; max-height: 420px; overflow-y: auto; }
+#entryList::-webkit-scrollbar { width: 5px; }
+#entryList::-webkit-scrollbar-track { background: rgba(2,7,14,0.05); }
+#entryList::-webkit-scrollbar-thumb { background: var(--gold-line); }
+.entry-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(2,7,14,0.08);
+    gap: 8px;
+}
+.entry-item:last-child { border-bottom: none; }
+.entry-item-title {
+    font-family: var(--font-sub);
+    font-size: 0.7em;
+    letter-spacing: 0.5px;
+    color: var(--iron);
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+}
+.entry-item-letter {
+    font-family: var(--font-heading);
+    font-size: 1em;
+    color: var(--gold);
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+}
+.btn-delete {
+    background: none;
+    border: 1px solid rgba(168,24,24,0.25);
+    color: var(--blood);
+    padding: 2px 7px;
+    font-family: var(--font-mono);
+    font-size: 0.7em;
+    cursor: pointer;
+    transition: 0.15s;
+    flex-shrink: 0;
+}
+.btn-delete:hover { background: var(--blood); color: var(--parchment); }
+.entry-empty {
+    font-size: 0.88em;
+    font-style: italic;
+    color: var(--muted);
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* how it works card */
+.how-card { background: rgba(2,7,14,0.03); border: 1px solid var(--gold-line); padding: 14px 16px; }
+.how-card p {
+    font-size: 0.85em;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+    text-align: left;
+}
+.how-card p:last-child { margin-bottom: 0; }
+.how-card strong { color: var(--iron); }
+
+/* category colors */
+.cat-faction   { border-left: 3px solid #A32D2D; padding-left: 6px; }
+.cat-location  { border-left: 3px solid #534AB7; padding-left: 6px; }
+.cat-character { border-left: 3px solid #BA7517; padding-left: 6px; }
+.cat-artifact  { border-left: 3px solid #0F6E56; padding-left: 6px; }
+.cat-history   { border-left: 3px solid #5F5E5A; padding-left: 6px; }
+.cat-cosmology { border-left: 3px solid #185FA5; padding-left: 6px; }
+.cat-other     { border-left: 3px solid var(--gold); padding-left: 6px; }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+    <a href="lore.html" class="btn-nav">⬅ Return to Tome</a>
+    <a href="index.html" class="btn-nav">⬅ Main Hub</a>
+</div>
+
+<div class="scribe-wrap">
+
+    <!-- ── WRITING PANEL ── -->
+    <div class="write-panel">
+        <p class="panel-eyebrow">Blood and Purpose</p>
+        <h1 class="panel-title">Lore Scribe</h1>
+
+        <div class="field-row">
+            <div class="field">
+                <label>Entry Title *</label>
+                <input type="text" id="f-title" placeholder="e.g. The Terra-Titan" maxlength="80">
+            </div>
+            <div class="field">
+                <label>Category Tag</label>
+                <input type="text" id="f-tag" placeholder="e.g. Ancient Entity · Location" maxlength="60">
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Category (for filing)</label>
+            <select id="f-category">
+                <option value="other">— Select a category —</option>
+                <option value="faction">Faction</option>
+                <option value="location">Location</option>
+                <option value="character">Character / NPC</option>
+                <option value="artifact">Artifact / Item</option>
+                <option value="history">History / Myth</option>
+                <option value="cosmology">Cosmology / World</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Lore Body *</label>
+            <textarea id="f-body" placeholder="Write the lore here in the bardic-mythic voice of Blood and Purpose. Paragraph breaks become separate paragraphs in the tome."></textarea>
+            <p class="char-note" id="body-count">0 characters</p>
+        </div>
+
+        <div class="field">
+            <label>Section Headers (optional)</label>
+            <textarea id="f-sections" class="tall" placeholder="Format: ## Header Name&#10;Text for this section&#10;&#10;## Another Header&#10;More text here"></textarea>
+        </div>
+
+        <div class="field">
+            <label>Open Hook (optional)</label>
+            <textarea id="f-hook" class="tall" placeholder="The unresolved thread this entry opens — one sentence or two. Appears as a gold hook block."></textarea>
+        </div>
+
+        <div class="btn-row">
+            <button class="btn-commit" onclick="commitEntry()">✦ Commit to Tome</button>
+            <button class="btn-clear" onclick="clearForm()">Clear</button>
+        </div>
+
+        <div class="status-bar" id="statusBar"></div>
+    </div>
+
+    <!-- ── LEDGER + HELP ── -->
+    <div class="ledger-panel">
+
+        <div class="ledger-card">
+            <div class="ledger-head">Committed Entries</div>
+            <ul id="entryList"><li class="entry-empty">No entries yet</li></ul>
+            <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="btn-clear" style="flex:1;font-size:0.62em;" onclick="exportEntries()">⬇ Export JSON</button>
+                <label class="btn-clear" style="flex:1;font-size:0.62em;text-align:center;cursor:pointer;padding:12px 18px;border:2px solid rgba(2,7,14,0.2);border-bottom:4px solid rgba(2,7,14,0.3);">
+                    ⬆ Import JSON
+                    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importEntries(this)">
+                </label>
+            </div>
+        </div>
+
+        <div class="ledger-card how-card">
+            <div class="ledger-head">How It Works</div>
+            <p>Write your entry here. Hit <strong>Commit to Tome</strong>. The entry is saved to your browser's local storage.</p>
+            <p>Open <strong>lore.html</strong> (the Tome) in the same browser. Scribed entries appear automatically under the correct alphabetical section, marked with a <strong>Scribed</strong> badge.</p>
+            <p>If the Tome is already open in another tab, it updates live when you commit.</p>
+            <p><strong>Export JSON</strong> backs up all your entries to a file. <strong>Import JSON</strong> restores them — useful if you change browser or device.</p>
+            <p>The <strong>Section Headers</strong> field supports simple formatting: start a line with <strong>##</strong> to create a section header, followed by the text for that section.</p>
+        </div>
+
+        <div class="ledger-card">
+            <div class="ledger-head">Category Key</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
+                <span class="entry-item-title cat-faction">Faction</span>
+                <span class="entry-item-title cat-location">Location</span>
+                <span class="entry-item-title cat-character">Character / NPC</span>
+                <span class="entry-item-title cat-artifact">Artifact / Item</span>
+                <span class="entry-item-title cat-history">History / Myth</span>
+                <span class="entry-item-title cat-cosmology">Cosmology / World</span>
+                <span class="entry-item-title cat-other">Other</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'potu_lore_entries';
+
+function getEntries() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    catch(e) { return []; }
+}
+function saveEntries(entries) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+}
+
+function renderList() {
+    const entries = getEntries();
+    const ul = document.getElementById('entryList');
+    if (!entries.length) {
+        ul.innerHTML = '<li class="entry-empty">No entries yet — write one above.</li>';
+        return;
+    }
+    ul.innerHTML = entries.map(e => `
+        <li class="entry-item">
+            <span class="entry-item-letter">${(e.title||'?')[0].toUpperCase()}</span>
+            <span class="entry-item-title cat-${e.category||'other'}">${escHtml(e.title)}${e.tag ? ` <span style="color:var(--muted);font-weight:400;">· ${escHtml(e.tag)}</span>` : ''}</span>
+            <button class="btn-delete" onclick="deleteEntry('${e.id}')">✕</button>
+        </li>
+    `).join('');
+}
+
+document.getElementById('f-body').addEventListener('input', function() {
+    document.getElementById('body-count').textContent = this.value.length + ' characters';
+});
+
+function setStatus(msg, type) {
+    const bar = document.getElementById('statusBar');
+    bar.textContent = msg;
+    bar.className = 'status-bar ' + type;
+    if (type === 'success') setTimeout(() => { bar.textContent = ''; bar.className = 'status-bar'; }, 4000);
+}
+
+function commitEntry() {
+    const title    = document.getElementById('f-title').value.trim();
+    const tag      = document.getElementById('f-tag').value.trim();
+    const category = document.getElementById('f-category').value;
+    const body     = document.getElementById('f-body').value.trim();
+    const sections = document.getElementById('f-sections').value.trim();
+    const hook     = document.getElementById('f-hook').value.trim();
+
+    if (!title) { setStatus('Entry title is required.', 'error'); return; }
+    if (!body && !sections) { setStatus('Lore body or sections are required.', 'error'); return; }
+
+    const entry = {
+        id: 'scribe_' + Date.now(),
+        title, tag, category, body, sections, hook,
+        created: new Date().toISOString()
+    };
+
+    const entries = getEntries();
+    entries.push(entry);
+    // sort alphabetically by title
+    entries.sort((a,b) => a.title.localeCompare(b.title));
+    saveEntries(entries);
+    renderList();
+    setStatus('✦ "' + title + '" committed to the Tome.', 'success');
+    clearForm();
+}
+
+function deleteEntry(id) {
+    if (!confirm('Remove this entry from the Tome?')) return;
+    const entries = getEntries().filter(e => e.id !== id);
+    saveEntries(entries);
+    renderList();
+}
+
+function clearForm() {
+    ['f-title','f-tag','f-body','f-sections','f-hook'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('f-category').value = 'other';
+    document.getElementById('body-count').textContent = '0 characters';
+    document.getElementById('statusBar').textContent = '';
+    document.getElementById('statusBar').className = 'status-bar';
+}
+
+function exportEntries() {
+    const data = JSON.stringify(getEntries(), null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'potu-lore-entries-' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function importEntries(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const imported = JSON.parse(e.target.result);
+            if (!Array.isArray(imported)) throw new Error('Invalid format');
+            const existing = getEntries();
+            const existingIds = new Set(existing.map(e => e.id));
+            const merged = [...existing, ...imported.filter(e => !existingIds.has(e.id))];
+            merged.sort((a,b) => a.title.localeCompare(b.title));
+            saveEntries(merged);
+            renderList();
+            setStatus('✦ Imported ' + imported.length + ' entries.', 'success');
+        } catch(err) {
+            setStatus('Import failed — invalid JSON file.', 'error');
+        }
+    };
+    reader.readAsText(file);
+    input.value = '';
+}
+
+function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+renderList();
+</script>
+</body>
+</html>

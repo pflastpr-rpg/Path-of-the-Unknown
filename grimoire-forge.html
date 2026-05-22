@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grimoire Forge v2 — Encounter Pack Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --iron:#02070e; --blood:#A81818; --parchment:#f3e7c9;
+            --gold:#B8860B; --gold-lt:#D4A017; --input-bg:#FCF7EB;
+            --ink:#111111; --success:#2d6a2d; --indigo:#3D1A6E;
+            --font-h:'Grenze Gotisch',serif; --font-main:'IM Fell English',serif;
+            --font-hand:'MedievalSharp',cursive; --font-mono:'Courier New',monospace;
+        }
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{background:#0d0d12;background-image:radial-gradient(ellipse at 20% 20%,rgba(168,24,24,.08),transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(61,26,110,.08),transparent 50%);color:var(--ink);font-family:var(--font-main);min-height:100vh;padding:20px;}
+        .app-header{text-align:center;background:var(--iron);border:3px solid var(--blood);border-bottom:6px solid var(--gold);padding:18px 20px 12px;margin-bottom:16px;position:relative;}
+        .app-header h1{font-family:var(--font-h);font-size:30pt;color:var(--gold);text-transform:uppercase;letter-spacing:3px;text-shadow:2px 2px 0 var(--blood);line-height:1;}
+        .app-header p{font-family:var(--font-hand);font-size:11pt;color:rgba(184,134,11,.7);margin-top:4px;}
+        .version-tag{position:absolute;top:12px;right:16px;background:var(--blood);color:white;font-size:8pt;font-weight:900;padding:2px 8px;letter-spacing:1px;}
+        .app-body{display:grid;grid-template-columns:260px 1fr 320px;gap:12px;align-items:start;}
+        .panel{background:var(--parchment);border:3px solid var(--iron);display:flex;flex-direction:column;}
+        .panel-head{background:var(--iron);color:var(--gold);font-family:var(--font-h);font-size:13pt;text-transform:uppercase;letter-spacing:1px;padding:8px 12px;border-bottom:2px solid var(--blood);display:flex;align-items:center;justify-content:space-between;}
+        .panel-body{padding:12px;}
+        .pack-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;max-height:280px;overflow-y:auto;}
+        .pack-item{display:flex;align-items:center;gap:6px;padding:8px 10px;background:var(--input-bg);border:1.5px solid rgba(0,0,0,.15);cursor:pointer;transition:.15s;border-left:4px solid transparent;}
+        .pack-item:hover{border-left-color:var(--gold);}
+        .pack-item.active{border-left-color:var(--blood);background:rgba(168,24,24,.07);}
+        .pack-item-name{flex:1;font-weight:900;font-size:11pt;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+        .pack-item-count{font-size:9pt;color:var(--blood);font-weight:900;background:rgba(168,24,24,.1);padding:1px 6px;border-radius:10px;flex-shrink:0;}
+        .pack-del{background:none;border:none;cursor:pointer;color:rgba(0,0,0,.3);font-size:14pt;line-height:1;padding:0 2px;flex-shrink:0;}
+        .pack-del:hover{color:var(--blood);}
+        .new-pack-row{display:flex;gap:6px;}
+        .new-pack-row input{flex:1;padding:7px 8px;font-family:var(--font-hand);font-size:10pt;background:var(--input-bg);border:2px solid var(--iron);}
+        .btn-sm{padding:7px 12px;font-family:var(--font-h);font-size:10pt;font-weight:bold;cursor:pointer;border:2px solid var(--gold);text-transform:uppercase;transition:.15s;white-space:nowrap;}
+        .btn-sm.blood{background:var(--blood);color:white;}
+        .btn-sm.iron{background:var(--iron);color:var(--gold);}
+        .btn-sm:hover{opacity:.85;}
+        .pack-stats{margin-top:10px;padding:8px;background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.1);font-size:10pt;display:flex;flex-direction:column;gap:4px;}
+        .pack-stat-row{display:flex;justify-content:space-between;}
+        .pack-stat-row strong{color:var(--blood);}
+        .export-btn{margin-top:10px;padding:10px;font-family:var(--font-h);font-size:13pt;cursor:pointer;border:2px solid var(--gold);text-transform:uppercase;width:100%;font-weight:bold;transition:.15s;}
+        .export-btn.main{background:var(--blood);color:white;}
+        .export-btn.secondary{background:var(--iron);color:var(--gold);margin-top:6px;font-size:11pt;}
+        .export-btn:hover{opacity:.85;}
+        .export-status{text-align:center;font-size:10pt;font-weight:900;min-height:18px;margin-top:4px;}
+        .no-pack-msg{text-align:center;padding:40px 20px;color:rgba(0,0,0,.4);font-style:italic;font-size:13pt;}
+        .no-pack-msg strong{display:block;font-size:18pt;color:var(--blood);font-style:normal;font-family:var(--font-h);margin-bottom:8px;}
+        .builder-hidden{display:none;}
+        .builder-active{display:block;}
+        .form-label{font-weight:bold;font-size:11pt;display:block;margin-top:12px;margin-bottom:3px;color:var(--iron);text-transform:uppercase;letter-spacing:.5px;}
+        .form-label:first-child{margin-top:0;}
+        input[type="text"].fi,select.fi,textarea.fi{width:100%;padding:8px 10px;font-family:var(--font-hand);font-size:11pt;background:var(--input-bg);border:2px solid var(--iron);border-bottom:3px solid rgba(0,0,0,.3);color:var(--ink);}
+        textarea.fi{resize:vertical;min-height:70px;}
+        select.fi{cursor:pointer;height:38px;}
+        .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+        .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+        .grid-6{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;}
+        .grid-6 small{font-size:9pt;font-weight:900;display:block;text-align:center;color:var(--blood);margin-bottom:2px;}
+        .grid-6 input{text-align:center;}
+        .hint{font-size:9.5pt;color:var(--blood);font-style:italic;margin-top:2px;}
+        .category-tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap;}
+        .cat-tab{padding:5px 12px;border:2px solid var(--ink);background:var(--input-bg);color:var(--ink);font-family:var(--font-hand);font-size:9.5pt;font-weight:900;cursor:pointer;border-bottom:3px solid rgba(0,0,0,.3);transition:.15s;}
+        .cat-tab:hover{background:var(--gold);color:var(--iron);}
+        .cat-tab.active{background:var(--blood);color:white;border-color:var(--blood);}
+        .dynamic-section{display:none;}
+        .active-section{display:block;}
+        .add-entry-btn{margin-top:14px;padding:12px;font-family:var(--font-h);font-size:14pt;cursor:pointer;border:2px solid var(--gold);background:var(--blood);color:white;text-transform:uppercase;width:100%;font-weight:bold;transition:.15s;letter-spacing:1px;}
+        .add-entry-btn:hover{background:var(--iron);color:var(--gold);}
+        .pack-entries{display:flex;flex-direction:column;gap:6px;max-height:520px;overflow-y:auto;}
+        .entry-card{background:var(--input-bg);border:1.5px solid rgba(0,0,0,.15);border-left:5px solid var(--gold);padding:8px 10px;display:flex;align-items:flex-start;gap:8px;}
+        .entry-card.type-bestiary{border-left-color:var(--blood);}
+        .entry-card.type-location{border-left-color:var(--gold);}
+        .entry-card.type-trap{border-left-color:var(--gold-lt);}
+        .entry-card.type-npc{border-left-color:var(--indigo);}
+        .entry-card.type-condition{border-left-color:var(--success);}
+        .entry-card-info{flex:1;min-width:0;}
+        .entry-card-title{font-weight:900;font-size:11pt;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+        .entry-card-type{font-size:9pt;font-weight:900;text-transform:uppercase;letter-spacing:.5px;opacity:.6;margin-top:1px;}
+        .entry-card-actions{display:flex;gap:4px;flex-shrink:0;}
+        .entry-btn{background:none;border:1px solid rgba(0,0,0,.2);cursor:pointer;width:26px;height:26px;font-size:11pt;display:flex;align-items:center;justify-content:center;transition:.15s;}
+        .entry-btn:hover{background:rgba(168,24,24,.1);border-color:var(--blood);}
+        .entry-btn.del:hover{background:var(--blood);color:white;}
+        .empty-pack{text-align:center;padding:30px 15px;color:rgba(0,0,0,.35);font-style:italic;border:2px dashed rgba(0,0,0,.15);font-size:11pt;}
+        .preview-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;justify-content:center;align-items:flex-start;padding:40px 20px;overflow-y:auto;}
+        .preview-overlay.open{display:flex;}
+        .preview-box{background:var(--parchment);border:6px solid var(--iron);width:700px;max-width:100%;padding:30px;position:relative;box-shadow:0 0 60px rgba(168,24,24,.4);}
+        .preview-close{position:absolute;top:10px;right:14px;font-size:22pt;cursor:pointer;color:var(--blood);font-weight:bold;line-height:1;background:none;border:none;}
+        .preview-box table{width:100%;border-collapse:collapse;margin:12px 0;border:2px solid var(--iron);}
+        .preview-box th{background:var(--iron);color:var(--gold);padding:6px;text-transform:uppercase;font-size:10pt;}
+        .preview-box td{padding:6px;border:1px solid rgba(0,0,0,.2);text-align:center;font-weight:bold;background:var(--input-bg);}
+        .preview-box h2{color:var(--blood);font-family:var(--font-h);margin:12px 0 8px;border-bottom:1px solid rgba(0,0,0,.2);}
+        .preview-box h3{color:var(--iron);margin:10px 0 5px;border-bottom:1px solid rgba(0,0,0,.15);}
+        .preview-box p{margin-bottom:8px;line-height:1.5;}
+        .preview-box ul{padding-left:20px;margin-bottom:8px;}
+        .preview-box li{margin-bottom:5px;line-height:1.5;}
+        .export-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;justify-content:center;align-items:center;padding:20px;}
+        .export-overlay.open{display:flex;}
+        .export-box{background:var(--parchment);border:6px solid var(--iron);width:800px;max-width:100%;max-height:90vh;display:flex;flex-direction:column;position:relative;box-shadow:0 0 60px rgba(168,24,24,.4);}
+        .export-box-head{background:var(--iron);color:var(--gold);font-family:var(--font-h);font-size:16pt;padding:12px 16px;border-bottom:3px solid var(--blood);display:flex;align-items:center;justify-content:space-between;}
+        .export-code{flex:1;font-family:var(--font-mono);font-size:10pt;background:#111;color:#0f0;padding:15px;overflow-y:auto;white-space:pre-wrap;word-break:break-all;min-height:300px;max-height:50vh;border:none;resize:none;}
+        .export-box-foot{padding:12px 16px;display:flex;gap:8px;align-items:center;border-top:2px solid rgba(0,0,0,.15);}
+        .copy-status-inline{font-size:10pt;font-weight:900;color:var(--success);}
+        .instructions{background:rgba(184,134,11,.08);border:2px dashed var(--gold);padding:10px 12px;margin-top:10px;font-size:10pt;line-height:1.6;}
+        .instructions strong{color:var(--blood);}
+        ::-webkit-scrollbar{width:6px;}
+        ::-webkit-scrollbar-track{background:rgba(0,0,0,.1);}
+        ::-webkit-scrollbar-thumb{background:var(--gold);}
+        @media(max-width:900px){.app-body{grid-template-columns:1fr;}}
+    </style>
+</head>
+<body>
+
+<div class="app-header">
+    <span class="version-tag">v2.0</span>
+    <h1>The Grimoire Forge</h1>
+    <p>Encounter Pack Builder — Power of Three DM Tool</p>
+</div>
+
+<div class="app-body">
+
+<!-- ── COL 1: PACK MANAGER ─────────────────────────────────── -->
+<div class="panel">
+    <div class="panel-head">⚔ Encounter Packs <span id="pack-total" style="font-size:10pt;opacity:.7;">0 packs</span></div>
+    <div class="panel-body">
+        <div class="pack-list" id="pack-list">
+            <div class="empty-pack" id="no-packs-msg">No packs yet. Create one below.</div>
+        </div>
+        <div class="new-pack-row">
+            <input type="text" id="new-pack-name" placeholder="New encounter name..." onkeydown="if(event.key==='Enter')createPack()">
+            <button class="btn-sm blood" onclick="createPack()" title="Create Pack">+</button>
+        </div>
+        <div class="pack-stats" id="pack-stats" style="display:none;">
+            <div class="pack-stat-row"><span>Pack:</span><strong id="stat-pack-name">—</strong></div>
+            <div class="pack-stat-row"><span>Total entries:</span><strong id="stat-entry-count">0</strong></div>
+            <div class="pack-stat-row"><span>Monsters:</span><strong id="stat-bestiary">0</strong></div>
+            <div class="pack-stat-row"><span>NPCs:</span><strong id="stat-npc">0</strong></div>
+            <div class="pack-stat-row"><span>Locations:</span><strong id="stat-location">0</strong></div>
+            <div class="pack-stat-row"><span>Traps:</span><strong id="stat-trap">0</strong></div>
+            <div class="pack-stat-row"><span>Conditions:</span><strong id="stat-condition">0</strong></div>
+        </div>
+        <button class="export-btn main" onclick="openExport()" id="export-main-btn" style="display:none;">📜 Export Pack</button>
+        <button class="export-btn secondary" onclick="downloadAllPacks()" id="export-all-btn" style="display:none;">💾 Save All Packs</button>
+        <button class="export-btn secondary" onclick="document.getElementById('import-input').click()" style="margin-top:6px;">📂 Load Saved Packs</button>
+        <input type="file" id="import-input" accept=".gpacks,.json" style="display:none" onchange="importPacks(this)">
+        <div class="export-status" id="export-status"></div>
+        <div class="instructions">
+            <strong>How to use:</strong><br>
+            1. Create a named Encounter Pack<br>
+            2. Build entries using the middle form<br>
+            3. Click <strong>+ Add to Pack</strong><br>
+            4. Preview entries with the 👁 button<br>
+            5. Export Pack → paste into Grimoire
+        </div>
+    </div>
+</div>
+
+<!-- ── COL 2: ENTRY BUILDER ───────────────────────────────── -->
+<div class="panel">
+    <div class="panel-head">🔨 Entry Builder <span id="builder-pack-label" style="font-size:10pt;color:rgba(184,134,11,.5);">— select a pack —</span></div>
+    <div class="panel-body">
+        <div id="no-pack-placeholder" class="no-pack-msg">
+            <strong>No Pack Selected</strong>
+            Create or select an Encounter Pack to begin building entries.
+        </div>
+        <div id="builder-form" class="builder-hidden">
+            <div class="category-tabs">
+                <button class="cat-tab active" onclick="switchCat('bestiary',this)">👹 Monster</button>
+                <button class="cat-tab" onclick="switchCat('npc',this)">🧙 NPC</button>
+                <button class="cat-tab" onclick="switchCat('location',this)">🗺 Location</button>
+                <button class="cat-tab" onclick="switchCat('trap',this)">⚙ Trap</button>
+                <button class="cat-tab" onclick="switchCat('condition',this)">💀 Condition</button>
+            </div>
+            <span class="form-label">Entry Name (Title) *</span>
+            <input type="text" class="fi" id="entry-name" placeholder="e.g., Pyreborn Cultist">
+            <span class="form-label">Flavor Text / Box Text</span>
+            <textarea class="fi" id="flavor-text" placeholder="Read-aloud description for players..."></textarea>
+
+            <!-- BESTIARY -->
+            <div id="form-bestiary" class="dynamic-section active-section">
+                <div class="grid-2">
+                    <div><span class="form-label">Wounds</span><input type="text" class="fi" id="b-wounds" placeholder="35"></div>
+                    <div><span class="form-label">Defense</span><input type="text" class="fi" id="b-def" placeholder="12"></div>
+                    <div><span class="form-label">W. Mitigation</span><input type="text" class="fi" id="b-mit" placeholder="4 (Leather)"></div>
+                    <div><span class="form-label">To-Hit</span><input type="text" class="fi" id="b-hit" placeholder="+2"></div>
+                    <div><span class="form-label">Move</span><input type="text" class="fi" id="b-move" placeholder="15 Squares"></div>
+                    <div><span class="form-label">Action Points</span><input type="text" class="fi" id="b-ap" placeholder="2"></div>
+                </div>
+                <span class="form-label">Characteristics</span>
+                <div class="grid-6">
+                    <div><small>Agl</small><input type="text" class="fi" id="b-agl" value="1"></div>
+                    <div><small>Awa</small><input type="text" class="fi" id="b-awa" value="1"></div>
+                    <div><small>Cha</small><input type="text" class="fi" id="b-cha" value="1"></div>
+                    <div><small>Int</small><input type="text" class="fi" id="b-int" value="1"></div>
+                    <div><small>Phys</small><input type="text" class="fi" id="b-phys" value="1"></div>
+                    <div><small>Wil</small><input type="text" class="fi" id="b-wil" value="1"></div>
+                </div>
+                <span class="form-label">Actions &amp; Abilities</span>
+                <textarea class="fi" id="b-actions" placeholder="Rusty Sword (1 AP): 1d10+2 Wounds.&#10;Goblin Tactics (Passive): +1 To-Hit when adjacent to ally."></textarea>
+                <p class="hint">Each ability on a new line — auto-formatted as a bullet list.</p>
+            </div>
+
+            <!-- NPC -->
+            <div id="form-npc" class="dynamic-section">
+                <div class="grid-2">
+                    <div><span class="form-label">Wounds</span><input type="text" class="fi" id="n-wounds" placeholder="95"></div>
+                    <div><span class="form-label">Defense</span><input type="text" class="fi" id="n-def" placeholder="11"></div>
+                    <div><span class="form-label">W. Mitigation</span><input type="text" class="fi" id="n-mit" placeholder="12 (Warlord Plate)"></div>
+                    <div><span class="form-label">To-Hit</span><input type="text" class="fi" id="n-hit" placeholder="+5"></div>
+                    <div><span class="form-label">Move</span><input type="text" class="fi" id="n-move" placeholder="12 Squares"></div>
+                    <div><span class="form-label">Action Points</span><input type="text" class="fi" id="n-ap" placeholder="4"></div>
+                </div>
+                <span class="form-label">Characteristics</span>
+                <div class="grid-6">
+                    <div><small>Agl</small><input type="text" class="fi" id="n-agl" value="1"></div>
+                    <div><small>Awa</small><input type="text" class="fi" id="n-awa" value="1"></div>
+                    <div><small>Cha</small><input type="text" class="fi" id="n-cha" value="1"></div>
+                    <div><small>Int</small><input type="text" class="fi" id="n-int" value="1"></div>
+                    <div><small>Phys</small><input type="text" class="fi" id="n-phys" value="1"></div>
+                    <div><small>Wil</small><input type="text" class="fi" id="n-wil" value="1"></div>
+                </div>
+                <span class="form-label">Actions &amp; Abilities</span>
+                <textarea class="fi" id="n-actions" placeholder="Blood Rally (2 AP): Allies gain +1 AP next turn.&#10;Titan's Resurgence (Reaction): Heal 20 Wounds once."></textarea>
+                <span class="form-label">The Spoils (Loot)</span>
+                <textarea class="fi" id="n-spoils" placeholder="Masterwork Plate: +4 Defense.&#10;250 Gold Pieces." style="min-height:55px;"></textarea>
+            </div>
+
+            <!-- LOCATION -->
+            <div id="form-location" class="dynamic-section">
+                <div class="grid-3">
+                    <div><span class="form-label">Lighting</span><input type="text" class="fi" id="l-light" placeholder="Flickering Torches"></div>
+                    <div><span class="form-label">Atmosphere</span><input type="text" class="fi" id="l-atmos" placeholder="Damp &amp; Cold"></div>
+                    <div><span class="form-label">Hazard Level</span><input type="text" class="fi" id="l-hazard" placeholder="Moderate"></div>
+                </div>
+                <span class="form-label">The Visuals</span>
+                <textarea class="fi" id="l-visuals" placeholder="Iron braziers line the walls.&#10;A hidden lever behind the tapestry."></textarea>
+                <span class="form-label">The Garrison (use [[Name]] for wiki links)</span>
+                <textarea class="fi" id="l-enemies" placeholder="[[Goblin Warrior]] x4&#10;[[Hobgoblin Champion]] x1"></textarea>
+                <span class="form-label">Tactics &amp; Hazards</span>
+                <textarea class="fi" id="l-tactics" placeholder="Enemies hold actions. Blood-slick: DV 9 Agility or [[Prone]]."></textarea>
+                <span class="form-label">Path Connections</span>
+                <textarea class="fi" id="l-paths" placeholder="North: Leads to [[The Great Hall]].&#10;South: Back toward [[The Entrance]]." style="min-height:55px;"></textarea>
+            </div>
+
+            <!-- TRAP -->
+            <div id="form-trap" class="dynamic-section">
+                <div class="grid-2">
+                    <div><span class="form-label">Detection DV</span><input type="text" class="fi" id="t-detect" placeholder="DV 10 Perception"></div>
+                    <div><span class="form-label">Disarm DV</span><input type="text" class="fi" id="t-disarm" placeholder="DV 12 Thievery"></div>
+                </div>
+                <span class="form-label">Danger Level</span>
+                <input type="text" class="fi" id="t-danger" placeholder="e.g., Lethal">
+                <span class="form-label">Trigger</span>
+                <textarea class="fi" id="t-trigger" placeholder="Stepping on the raised floor tile near the altar." style="min-height:55px;"></textarea>
+                <span class="form-label">Effect</span>
+                <textarea class="fi" id="t-effect" placeholder="3d10 Fire Wounds. DV 12 Agility or [[Stunned]]."></textarea>
+                <span class="form-label">Reset / Notes</span>
+                <input type="text" class="fi" id="t-reset" placeholder="Resets after 1 hour. Cannot be disarmed while active.">
+            </div>
+
+            <!-- CONDITION -->
+            <div id="form-condition" class="dynamic-section">
+                <span class="form-label">Mechanical Effects</span>
+                <textarea class="fi" id="c-effect" placeholder="All attacks against target gain Advantage.&#10;Target loses 1 AP at start of turn per stack."></textarea>
+                <span class="form-label">Duration / Removal</span>
+                <input type="text" class="fi" id="c-duration" placeholder="DV 9 Willpower test at end of each turn to remove.">
+                <span class="form-label">Stacking Rules (optional)</span>
+                <input type="text" class="fi" id="c-stack" placeholder="Stacks reduce by 1 at end of each turn.">
+            </div>
+
+            <button class="add-entry-btn" onclick="addEntryToPack()">+ Add to Pack</button>
+            <div id="add-status" style="text-align:center;font-size:10pt;font-weight:900;min-height:18px;margin-top:6px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ── COL 3: PACK CONTENTS ───────────────────────────────── -->
+<div class="panel">
+    <div class="panel-head">📖 Pack Contents <span id="entry-count-label" style="font-size:10pt;opacity:.7;">0 entries</span></div>
+    <div class="panel-body">
+        <div class="pack-entries" id="pack-entries">
+            <div class="empty-pack">Select a pack to see its entries.</div>
+        </div>
+    </div>
+</div>
+
+</div><!-- end app-body -->
+
+<!-- PREVIEW MODAL -->
+<div class="preview-overlay" id="preview-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="preview-box">
+        <button class="preview-close" onclick="document.getElementById('preview-overlay').classList.remove('open')">×</button>
+        <div id="preview-content"></div>
+    </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div class="export-overlay" id="export-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="export-box">
+        <div class="export-box-head">
+            📜 Export Pack — Paste into vaultData
+            <button onclick="document.getElementById('export-overlay').classList.remove('open')" style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:18pt;line-height:1;">×</button>
+        </div>
+        <textarea class="export-code" id="export-code" readonly></textarea>
+        <div class="export-box-foot">
+            <button class="btn-sm blood" onclick="copyExport()">📋 Copy Code</button>
+            <button class="btn-sm iron" onclick="document.getElementById('export-overlay').classList.remove('open')">Close</button>
+            <span class="copy-status-inline" id="copy-status-modal"></span>
+            <span style="flex:1;"></span>
+            <span style="font-size:9pt;color:rgba(0,0,0,.5);font-style:italic;">Paste after any existing category in vaultData</span>
+        </div>
+    </div>
+</div>
+
+<script>
+// ── STATE ────────────────────────────────────────────────────
+let packs = {};
+let activePack = null;
+let currentCat = 'bestiary';
+const STORAGE_KEY = 'grimoire_forge_packs_v2';
+
+// ── PERSISTENCE ──────────────────────────────────────────────
+function savePacks() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(packs)); } catch(e) {}
+}
+function loadPacks() {
+    try { const s = localStorage.getItem(STORAGE_KEY); if (s) packs = JSON.parse(s); } catch(e) { packs = {}; }
+}
+
+// ── PACK MANAGEMENT ──────────────────────────────────────────
+function createPack() {
+    const el = document.getElementById('new-pack-name');
+    const name = el.value.trim();
+    if (!name) { el.focus(); return; }
+    const id = 'pack_' + Date.now();
+    packs[id] = { name, entries: [] };
+    el.value = '';
+    savePacks();
+    renderPackList();
+    selectPack(id);
+}
+
+function deletePack(id) {
+    if (!confirm('Delete pack "' + packs[id]?.name + '"? This cannot be undone.')) return;
+    delete packs[id];
+    if (activePack === id) { activePack = null; renderBuilderState(); }
+    savePacks();
+    renderPackList();
+    renderPackContents();
+}
+
+function selectPack(id) {
+    activePack = id;
+    renderPackList();
+    renderBuilderState();
+    renderPackContents();
+    updatePackStats();
+}
+
+function renderPackList() {
+    const list = document.getElementById('pack-list');
+    const ids = Object.keys(packs);
+    document.getElementById('pack-total').innerText = ids.length + ' pack' + (ids.length !== 1 ? 's' : '');
+    if (ids.length === 0) {
+        list.innerHTML = '<div class="empty-pack" id="no-packs-msg">No packs yet. Create one below.</div>';
+        document.getElementById('export-main-btn').style.display = 'none';
+        document.getElementById('export-all-btn').style.display = 'none';
+        document.getElementById('pack-stats').style.display = 'none';
+        return;
+    }
+    list.innerHTML = '';
+    ids.forEach(id => {
+        const p = packs[id];
+        const div = document.createElement('div');
+        div.className = 'pack-item' + (id === activePack ? ' active' : '');
+        div.innerHTML = '<span class="pack-item-name" title="' + esc(p.name) + '">' + esc(p.name) + '</span>' +
+            '<span class="pack-item-count">' + p.entries.length + '</span>' +
+            '<button class="pack-del" onclick="event.stopPropagation();deletePack(\'' + id + '\')" title="Delete">✕</button>';
+        div.onclick = () => selectPack(id);
+        list.appendChild(div);
+    });
+    document.getElementById('export-all-btn').style.display = 'block';
+    if (activePack && packs[activePack]) {
+        document.getElementById('export-main-btn').style.display = 'block';
+        document.getElementById('pack-stats').style.display = 'flex';
+    }
+}
+
+function renderBuilderState() {
+    const ph = document.getElementById('no-pack-placeholder');
+    const form = document.getElementById('builder-form');
+    const label = document.getElementById('builder-pack-label');
+    if (activePack && packs[activePack]) {
+        ph.style.display = 'none';
+        form.classList.remove('builder-hidden'); form.classList.add('builder-active');
+        label.innerText = packs[activePack].name;
+        label.style.color = 'var(--gold-lt)';
+    } else {
+        ph.style.display = 'block';
+        form.classList.add('builder-hidden'); form.classList.remove('builder-active');
+        label.innerText = '— select a pack —';
+        label.style.color = 'rgba(184,134,11,.5)';
+    }
+}
+
+function updatePackStats() {
+    if (!activePack || !packs[activePack]) return;
+    const pack = packs[activePack];
+    const counts = { bestiary:0, location:0, npc:0, trap:0, condition:0 };
+    pack.entries.forEach(e => { if (counts[e.type] !== undefined) counts[e.type]++; });
+    document.getElementById('stat-pack-name').innerText = pack.name;
+    document.getElementById('stat-entry-count').innerText = pack.entries.length;
+    Object.keys(counts).forEach(k => { const el = document.getElementById('stat-' + k); if (el) el.innerText = counts[k]; });
+}
+
+// ── CATEGORY SWITCH ──────────────────────────────────────────
+function switchCat(cat, btn) {
+    currentCat = cat;
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.dynamic-section').forEach(s => s.classList.remove('active-section'));
+    document.getElementById('form-' + cat).classList.add('active-section');
+    document.getElementById('add-status').innerText = '';
+}
+
+// ── HELPERS ──────────────────────────────────────────────────
+function esc(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/`/g,"'");
+}
+function val(id) { return (document.getElementById(id)?.value||'').trim(); }
+
+function formatListEsc(text) {
+    if (!text) return '';
+    const lines = text.replace(/\r/g,'').split('\n').filter(l => l.trim());
+    if (!lines.length) return '';
+    return '<ul style="line-height:1.6;margin-top:8px;">\n' +
+        lines.map(l => '        <li style="margin-bottom:6px;">' + esc(l) + '</li>').join('\n') +
+        '\n    </ul>';
+}
+function formatList(text) {
+    if (!text) return '';
+    const lines = text.replace(/\r/g,'').split('\n').filter(l => l.trim());
+    if (!lines.length) return '';
+    return '<ul style="line-height:1.6;margin-top:8px;">\n' +
+        lines.map(l => '        <li style="margin-bottom:6px;">' + l + '</li>').join('\n') +
+        '\n    </ul>';
+}
+function formatGarrison(text) {
+    if (!text) return '<p>Total Enemies: <strong>0</strong></p>';
+    const lines = text.replace(/\r/g,'').split('\n').filter(l => l.trim());
+    return '<p>Total Enemies: <strong>' + lines.length + '</strong></p>\n    ' +
+        '<ul style="line-height:1.6;margin-top:8px;">\n' +
+        lines.map(l => '        <li style="margin-bottom:6px;"><strong>' + l + '</strong></li>').join('\n') +
+        '\n    </ul>';
+}
+
+// ── ENTRY HTML BUILDER ───────────────────────────────────────
+function buildEntryHTML(type) {
+    const name = val('entry-name');
+    const flavor = val('flavor-text');
+
+    if (type === 'bestiary') return (
+        '\n    <div style="border-left:5px solid var(--blood);padding-left:10px;margin-bottom:15px;">' +
+        '\n        <h2 style="margin:0;color:var(--blood);font-size:22pt;">' + esc(name) + '</h2>' +
+        '\n        <p style="font-style:italic;font-size:11pt;margin-top:2px;color:var(--iron);">"' + esc(flavor) + '"</p>' +
+        '\n    </div>' +
+        '\n    <table>\n        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>To-Hit</th><th>Move</th><th>AP</th></tr>' +
+        '\n        <tr>\n            <td style="color:var(--blood);font-size:14pt;"><strong>' + esc(val('b-wounds')) + '</strong></td>' +
+        '\n            <td>' + esc(val('b-def')) + '</td><td>' + esc(val('b-mit')) + '</td>' +
+        '\n            <td>' + esc(val('b-hit')) + '</td><td>' + esc(val('b-move')) + '</td><td>' + esc(val('b-ap')) + '</td>' +
+        '\n        </tr>\n    </table>' +
+        '\n    <h3 style="margin-top:15px;border-bottom:2px solid var(--gold);">Characteristics</h3>' +
+        '\n    <table>\n        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>' +
+        '\n        <tr><td>' + esc(val('b-agl')) + '</td><td>' + esc(val('b-awa')) + '</td><td>' + esc(val('b-cha')) + '</td>' +
+        '\n            <td>' + esc(val('b-int')) + '</td><td>' + esc(val('b-phys')) + '</td><td>' + esc(val('b-wil')) + '</td></tr>' +
+        '\n    </table>' +
+        '\n    <h3 style="margin-top:15px;border-bottom:2px solid var(--gold);">Actions &amp; Abilities</h3>' +
+        '\n    ' + formatListEsc(val('b-actions'))
+    );
+
+    if (type === 'npc') return (
+        '\n    <div style="border-left:5px solid var(--blood);padding-left:10px;margin-bottom:15px;background:rgba(168,24,24,0.05);">' +
+        '\n        <h2 style="margin:0;color:var(--blood);font-size:24pt;">' + esc(name) + '</h2>' +
+        '\n        <p style="font-style:italic;font-size:12pt;color:var(--iron);">"' + esc(flavor) + '"</p>' +
+        '\n    </div>' +
+        '\n    <table>\n        <tr><th>Wounds</th><th>Defense</th><th>W. Mit</th><th>To-Hit</th><th>Move</th><th>AP</th></tr>' +
+        '\n        <tr>\n            <td style="color:var(--blood);font-size:14pt;"><strong>' + esc(val('n-wounds')) + '</strong></td>' +
+        '\n            <td>' + esc(val('n-def')) + '</td><td>' + esc(val('n-mit')) + '</td>' +
+        '\n            <td>' + esc(val('n-hit')) + '</td><td>' + esc(val('n-move')) + '</td><td>' + esc(val('n-ap')) + '</td>' +
+        '\n        </tr>\n    </table>' +
+        '\n    <h3 style="margin-top:15px;border-bottom:2px solid var(--gold);">Characteristics</h3>' +
+        '\n    <table>\n        <tr><th>Agl</th><th>Awa</th><th>Cha</th><th>Int</th><th>Phys</th><th>Wil</th></tr>' +
+        '\n        <tr><td>' + esc(val('n-agl')) + '</td><td>' + esc(val('n-awa')) + '</td><td>' + esc(val('n-cha')) + '</td>' +
+        '\n            <td>' + esc(val('n-int')) + '</td><td>' + esc(val('n-phys')) + '</td><td>' + esc(val('n-wil')) + '</td></tr>' +
+        '\n    </table>' +
+        '\n    <h3 style="margin-top:15px;border-bottom:2px solid var(--gold);">Actions &amp; Abilities</h3>' +
+        '\n    ' + formatListEsc(val('n-actions')) +
+        '\n    <h3 style="margin-top:15px;border-bottom:2px solid var(--gold);">The Spoils</h3>' +
+        '\n    ' + formatListEsc(val('n-spoils'))
+    );
+
+    if (type === 'location') {
+        const pathsHTML = val('l-paths')
+            ? '\n    <h3 style="border-bottom:2px solid var(--iron);color:var(--blood);">Path Connections</h3>\n    ' + formatList(val('l-paths'))
+            : '';
+        return (
+            '\n    <div style="border-left:5px solid var(--blood);padding-left:10px;margin-bottom:15px;background:rgba(168,24,24,0.05);">' +
+            '\n        <h2 style="margin:0;color:var(--blood);font-size:20pt;">' + esc(name) + '</h2>' +
+            '\n        <p style="font-style:italic;font-size:12pt;color:var(--ink);">"' + esc(flavor) + '"</p>' +
+            '\n    </div>' +
+            '\n    <table>\n        <tr><th>Lighting</th><th>Atmosphere</th><th>Hazard Level</th></tr>' +
+            '\n        <tr><td>' + esc(val('l-light')) + '</td><td>' + esc(val('l-atmos')) + '</td>' +
+            '\n            <td style="color:var(--blood);"><strong>' + esc(val('l-hazard')) + '</strong></td></tr>' +
+            '\n    </table>' +
+            '\n    <h3 style="border-bottom:2px solid var(--iron);color:var(--blood);">The Visuals</h3>' +
+            '\n    ' + formatList(val('l-visuals')) +
+            '\n    <h3 style="border-bottom:2px solid var(--iron);color:var(--blood);">The Garrison</h3>' +
+            '\n    ' + formatGarrison(val('l-enemies')) +
+            '\n    <h3 style="border-bottom:2px solid var(--iron);color:var(--blood);">Tactics &amp; Hazards</h3>' +
+            '\n    <div style="background:rgba(168,24,24,0.05);padding:10px;border:1px dashed var(--blood);">' +
+            '\n        <p>' + val('l-tactics') + '</p>\n    </div>' +
+            pathsHTML
+        );
+    }
+
+    if (type === 'trap') {
+        const resetHTML = val('t-reset')
+            ? '\n    <h3 style="border-bottom:2px solid var(--iron);color:var(--blood);">Notes &amp; Reset</h3>\n    <p>' + esc(val('t-reset')) + '</p>'
+            : '';
+        return (
+            '\n    <div style="border-left:5px solid var(--gold);padding-left:10px;margin-bottom:15px;background:rgba(184,134,11,0.05);">' +
+            '\n        <h2 style="margin:0;color:var(--gold);font-size:20pt;">' + esc(name) + '</h2>' +
+            '\n        <p style="font-style:italic;font-size:11pt;color:var(--ink);">"' + esc(flavor) + '"</p>' +
+            '\n    </div>' +
+            '\n    <table>\n        <tr><th>Detection</th><th>Disarm</th><th>Danger Level</th></tr>' +
+            '\n        <tr><td>' + esc(val('t-detect')) + '</td><td>' + esc(val('t-disarm')) + '</td>' +
+            '\n            <td style="color:var(--blood);"><strong>' + esc(val('t-danger')) + '</strong></td></tr>' +
+            '\n    </table>' +
+            '\n    <h3 style="border-bottom:2px solid var(--iron);color:var(--blood);">Trigger</h3>' +
+            '\n    <p>' + esc(val('t-trigger')) + '</p>' +
+            '\n    <h3 style="border-bottom:2px solid var(--iron);color:var(--blood);">Effect</h3>' +
+            '\n    <div style="background:rgba(168,24,24,0.05);padding:10px;border:1px dashed var(--blood);">' +
+            '\n        <p><strong>⚠️</strong> ' + esc(val('t-effect')) + '</p>\n    </div>' +
+            resetHTML
+        );
+    }
+
+    if (type === 'condition') {
+        const lines = val('c-effect').replace(/\r/g,'').split('\n').filter(l => l.trim());
+        const dur = val('c-duration');
+        const stack = val('c-stack');
+        return (
+            '\n    <h2 style="color:var(--blood);">' + esc(name) + '</h2>' +
+            '\n    <ul style="line-height:1.8;margin-top:10px;">\n' +
+            lines.map(l => '        <li>' + esc(l) + '</li>').join('\n') +
+            (dur   ? '\n        <li><strong>Duration:</strong> '  + esc(dur)   + '</li>' : '') +
+            (stack ? '\n        <li><strong>Stacking:</strong> '  + esc(stack) + '</li>' : '') +
+            '\n    </ul>'
+        );
+    }
+    return '';
+}
+
+// ── ADD TO PACK ──────────────────────────────────────────────
+function addEntryToPack() {
+    if (!activePack || !packs[activePack]) return;
+    const name = val('entry-name');
+    const statusEl = document.getElementById('add-status');
+    if (!name) {
+        statusEl.style.color = 'var(--blood)';
+        statusEl.innerText = '⚠ Entry Name is required.';
+        document.getElementById('entry-name').focus();
+        return;
+    }
+    const html = buildEntryHTML(currentCat);
+    packs[activePack].entries.push({ type: currentCat, title: name, html });
+    savePacks();
+    renderPackContents();
+    updatePackStats();
+    statusEl.style.color = 'var(--success)';
+    statusEl.innerText = '✓ "' + name + '" added!';
+    setTimeout(() => statusEl.innerText = '', 2500);
+    clearFields();
+}
+
+function clearFields() {
+    ['entry-name','flavor-text',
+     'b-wounds','b-def','b-mit','b-hit','b-move','b-ap','b-actions',
+     'n-wounds','n-def','n-mit','n-hit','n-move','n-ap','n-actions','n-spoils',
+     'l-light','l-atmos','l-hazard','l-visuals','l-enemies','l-tactics','l-paths',
+     't-detect','t-disarm','t-danger','t-trigger','t-effect','t-reset',
+     'c-effect','c-duration','c-stack'
+    ].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    ['b-agl','b-awa','b-cha','b-int','b-phys','b-wil',
+     'n-agl','n-awa','n-cha','n-int','n-phys','n-wil'
+    ].forEach(id => { const el = document.getElementById(id); if (el) el.value = '1'; });
+}
+
+// ── PACK CONTENTS ────────────────────────────────────────────
+const TLABELS = { bestiary:'Monster', npc:'NPC', location:'Location', trap:'Trap', condition:'Condition' };
+const TICONS  = { bestiary:'👹', npc:'🧙', location:'🗺', trap:'⚙', condition:'💀' };
+
+function renderPackContents() {
+    const container = document.getElementById('pack-entries');
+    const countLabel = document.getElementById('entry-count-label');
+    if (!activePack || !packs[activePack]) {
+        container.innerHTML = '<div class="empty-pack">Select a pack to see its entries.</div>';
+        countLabel.innerText = '0 entries';
+        return;
+    }
+    const entries = packs[activePack].entries;
+    countLabel.innerText = entries.length + ' entr' + (entries.length === 1 ? 'y' : 'ies');
+    if (!entries.length) {
+        container.innerHTML = '<div class="empty-pack">No entries yet — use the form to add some.</div>';
+        return;
+    }
+    container.innerHTML = '';
+    entries.forEach((entry, idx) => {
+        const div = document.createElement('div');
+        div.className = 'entry-card type-' + entry.type;
+        const upDis  = idx === 0 ? 'style="opacity:.3;pointer-events:none;"' : '';
+        const dnDis  = idx === entries.length - 1 ? 'style="opacity:.3;pointer-events:none;"' : '';
+        div.innerHTML =
+            '<div class="entry-card-info">' +
+            '<div class="entry-card-title">' + (TICONS[entry.type]||'📄') + ' ' + esc(entry.title) + '</div>' +
+            '<div class="entry-card-type">' + (TLABELS[entry.type]||entry.type) + '</div>' +
+            '</div>' +
+            '<div class="entry-card-actions">' +
+            '<button class="entry-btn" onclick="previewEntry(' + idx + ')" title="Preview">👁</button>' +
+            '<button class="entry-btn" onclick="moveEntry(' + idx + ',-1)" title="Move up" ' + upDis + '>↑</button>' +
+            '<button class="entry-btn" onclick="moveEntry(' + idx + ',1)" title="Move down" ' + dnDis + '>↓</button>' +
+            '<button class="entry-btn del" onclick="removeEntry(' + idx + ')" title="Remove">✕</button>' +
+            '</div>';
+        container.appendChild(div);
+    });
+}
+
+function removeEntry(idx) {
+    if (!activePack) return;
+    packs[activePack].entries.splice(idx, 1);
+    savePacks(); renderPackContents(); updatePackStats();
+}
+function moveEntry(idx, dir) {
+    if (!activePack) return;
+    const e = packs[activePack].entries;
+    const n = idx + dir;
+    if (n < 0 || n >= e.length) return;
+    [e[idx], e[n]] = [e[n], e[idx]];
+    savePacks(); renderPackContents();
+}
+
+// ── PREVIEW ──────────────────────────────────────────────────
+function previewEntry(idx) {
+    if (!activePack) return;
+    const entry = packs[activePack].entries[idx];
+    if (!entry) return;
+    document.getElementById('preview-content').innerHTML =
+        '<h2 style="color:var(--blood);font-family:var(--font-h);border-bottom:2px solid var(--iron);padding-bottom:4px;margin-bottom:12px;">' +
+        esc(entry.title) + '</h2>' + entry.html;
+    document.getElementById('preview-overlay').classList.add('open');
+}
+
+// ── EXPORT ───────────────────────────────────────────────────
+function buildPackCode(id) {
+    const pack = packs[id];
+    if (!pack || !pack.entries.length) return '';
+    const safeKey = pack.name.replace(/"/g,'\\"').replace(/`/g,"'");
+    let code = '        "' + safeKey + '": {\n';
+    pack.entries.forEach((entry, i) => {
+        const safeTitle = entry.title.replace(/"/g,'\\"').replace(/`/g,"'");
+        code += '            "' + safeTitle + '": `' + entry.html + '`';
+        code += i < pack.entries.length - 1 ? ',\n' : '\n';
+    });
+    code += '        },';
+    return code;
+}
+
+function openExport() {
+    if (!activePack || !packs[activePack]) return;
+    const pack = packs[activePack];
+    if (!pack.entries.length) { showStatus('Pack is empty — add entries first.', 'error'); return; }
+    const code = buildPackCode(activePack);
+    document.getElementById('export-code').value =
+        '// ─────────────────────────────────────────────────────────\n' +
+        '// PACK: "' + pack.name + '" (' + pack.entries.length + ' entries)\n' +
+        '// Paste this block inside vaultData = { ... } in DM-Grimoire.html\n' +
+        '// ─────────────────────────────────────────────────────────\n' +
+        code;
+    document.getElementById('export-overlay').classList.add('open');
+}
+
+function copyExport() {
+    const text = document.getElementById('export-code').value;
+    const statusEl = document.getElementById('copy-status-modal');
+    const done = () => { statusEl.innerText = '✓ Copied!'; setTimeout(() => statusEl.innerText = '', 2500); };
+    if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(done).catch(() => { document.getElementById('export-code').select(); document.execCommand('copy'); done(); });
+    else { document.getElementById('export-code').select(); document.execCommand('copy'); done(); }
+}
+
+function downloadAllPacks() {
+    const blob = new Blob([JSON.stringify(packs, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'grimoire_packs.gpacks'; a.click();
+    showStatus('✓ All packs saved!', 'success');
+}
+
+function importPacks(input) {
+    if (!input.files?.[0]) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        try {
+            Object.assign(packs, JSON.parse(e.target.result));
+            savePacks(); renderPackList();
+            showStatus('✓ Packs loaded!', 'success');
+        } catch(err) { showStatus('✗ Invalid file.', 'error'); }
+        input.value = '';
+    };
+    reader.readAsText(input.files[0]);
+}
+
+function showStatus(msg, type) {
+    const el = document.getElementById('export-status');
+    el.innerText = msg;
+    el.style.color = type === 'error' ? 'var(--blood)' : 'var(--success)';
+    setTimeout(() => el.innerText = '', 3000);
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        document.getElementById('preview-overlay').classList.remove('open');
+        document.getElementById('export-overlay').classList.remove('open');
+    }
+});
+
+window.onload = function() {
+    loadPacks();
+    renderPackList();
+    renderBuilderState();
+    renderPackContents();
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blood and Purpose — A Dark Fantasy RPG</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --iron:      #02070e;
+    --deep:      #080f18;
+    --blood:     #8B1010;
+    --blood-dim: #5a0808;
+    --gold:      #B8860B;
+    --gold-bright: #d4a017;
+    --gold-dim:  #6b4e08;
+    --parchment: #f0e2c0;
+    --ash:       #c4b89a;
+    --mist:      rgba(184,134,11,0.07);
+    --border:    rgba(184,134,11,0.2);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--iron);
+    color: var(--parchment);
+    font-family: 'Crimson Pro', Georgia, serif;
+    overflow-x: hidden;
+    line-height: 1.7;
+}
+
+/* ── TEXTURES ── */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── HERO ── */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    padding: 60px 20px;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(139,16,16,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(184,134,11,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(139,16,16,0.1) 0%, transparent 40%),
+        linear-gradient(180deg, #030810 0%, #02070e 40%, #060c14 100%);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to top, var(--iron), transparent);
+    pointer-events: none;
+}
+
+/* Runic circle decoration */
+.hero-rune {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,134,11,0.06);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: runespin 120s linear infinite;
+}
+.hero-rune::before {
+    content: '';
+    position: absolute;
+    inset: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(139,16,16,0.08);
+    animation: runespin 80s linear infinite reverse;
+}
+.hero-rune::after {
+    content: '';
+    position: absolute;
+    inset: 60px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,134,11,0.05);
+}
+@keyframes runespin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+.hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--blood);
+    margin-bottom: 24px;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(36pt, 8vw, 72pt);
+    font-weight: 900;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    line-height: 1.05;
+    text-shadow:
+        0 0 60px rgba(184,134,11,0.25),
+        0 0 120px rgba(184,134,11,0.1),
+        0 2px 4px rgba(0,0,0,0.8);
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+    animation: titlefade 1.2s ease-out forwards;
+}
+
+@keyframes titlefade {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-rule {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blood), transparent);
+    margin: 20px auto;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-tagline {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(13pt, 2.5vw, 18pt);
+    font-style: italic;
+    color: var(--ash);
+    letter-spacing: 1px;
+    max-width: 680px;
+    margin: 0 auto 48px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+    animation: taglinefade 1.6s ease-out 0.3s both;
+}
+@keyframes taglinefade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.hero-cta-group {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+    animation: taglinefade 1.6s ease-out 0.6s both;
+}
+
+.btn-primary {
+    background: var(--blood);
+    color: var(--parchment);
+    border: 2px solid var(--blood);
+    padding: 14px 36px;
+    font-family: 'Cinzel', serif;
+    font-size: 11pt;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+.btn-primary:hover {
+    background: #a01212;
+    box-shadow: 0 0 24px rgba(139,16,16,0.5);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    padding: 14px 36px;
+    font-family: 'Cinzel', serif;
+    font-size: 11pt;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+.btn-secondary:hover {
+    border-color: var(--gold);
+    background: rgba(184,134,11,0.08);
+    box-shadow: 0 0 20px rgba(184,134,11,0.15);
+}
+
+/* ── SCROLL INDICATOR ── */
+.scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.4;
+    animation: bounce 2s ease-in-out infinite;
+    z-index: 1;
+}
+.scroll-hint span { font-size: 8pt; letter-spacing: 3px; text-transform: uppercase; font-family: 'Cinzel', serif; }
+.scroll-hint::after { content: '↓'; font-size: 16pt; color: var(--gold); }
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ── SECTIONS ── */
+.section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.section-full {
+    position: relative;
+    z-index: 1;
+    padding: 80px 20px;
+    background: rgba(0,0,0,0.2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.section-full-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 8pt;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--blood);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.section-label::before, .section-label::after {
+    content: '';
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(90deg, transparent, var(--blood-dim));
+}
+.section-label::after {
+    background: linear-gradient(90deg, var(--blood-dim), transparent);
+}
+
+.section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(18pt, 3.5vw, 28pt);
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 24px;
+    line-height: 1.2;
+}
+
+.section-body {
+    font-size: 13pt;
+    color: var(--ash);
+    max-width: 760px;
+    line-height: 1.85;
+}
+
+.section-body p + p { margin-top: 16px; }
+
+/* ── PHILOSOPHY GRID ── */
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    margin-top: 48px;
+    border: 1px solid var(--border);
+}
+
+.philosophy-card {
+    padding: 36px 28px;
+    background: rgba(2,7,14,0.5);
+    border: 1px solid var(--border);
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.philosophy-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--blood);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s;
+}
+
+.philosophy-card:hover::before { transform: scaleY(1); }
+.philosophy-card:hover { background: rgba(139,16,16,0.06); }
+
+.philosophy-number {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 32pt;
+    color: rgba(184,134,11,0.15);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.philosophy-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.philosophy-text {
+    font-size: 11.5pt;
+    color: var(--ash);
+    line-height: 1.75;
+}
+
+/* ── WORLD STRIP ── */
+.world-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    margin-top: 48px;
+    background: var(--border);
+}
+
+.world-card {
+    background: var(--iron);
+    padding: 32px 24px;
+    border-top: 3px solid transparent;
+    transition: border-color 0.2s, background 0.2s;
+}
+.world-card:hover {
+    border-top-color: var(--blood);
+    background: rgba(139,16,16,0.05);
+}
+
+.world-icon {
+    font-size: 22pt;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.world-name {
+    font-family: 'Cinzel', serif;
+    font-size: 10pt;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.world-desc {
+    font-size: 10.5pt;
+    color: var(--ash);
+    line-height: 1.7;
+    opacity: 0.85;
+}
+
+/* ── DISCIPLINES ── */
+.disciplines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 40px;
+}
+
+.disc-card {
+    border: 1px solid var(--border);
+    padding: 24px 16px;
+    text-align: center;
+    background: rgba(2,7,14,0.6);
+    transition: all 0.2s;
+    position: relative;
+}
+.disc-card:hover {
+    border-color: var(--gold-dim);
+    background: rgba(184,134,11,0.05);
+    transform: translateY(-2px);
+}
+
+.disc-icon { font-size: 20pt; margin-bottom: 10px; display: block; }
+
+.disc-name {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.disc-flavor {
+    font-size: 9.5pt;
+    font-style: italic;
+    color: rgba(196,184,154,0.6);
+    line-height: 1.5;
+}
+
+.disc-stat {
+    margin-top: 10px;
+    font-size: 8pt;
+    font-family: 'Cinzel', serif;
+    color: var(--blood);
+    letter-spacing: 1px;
+}
+
+/* ── QUOTE BLOCK ── */
+.quote-block {
+    margin: 64px 0;
+    padding: 48px 40px;
+    border-left: 4px solid var(--blood);
+    background: rgba(139,16,16,0.06);
+    position: relative;
+}
+
+.quote-block::before {
+    content: '\201C';
+    font-family: 'Crimson Pro', serif;
+    font-size: 80pt;
+    color: rgba(139,16,16,0.2);
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    line-height: 1;
+}
+
+.quote-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(15pt, 2.5vw, 20pt);
+    font-style: italic;
+    color: var(--parchment);
+    line-height: 1.6;
+    max-width: 700px;
+}
+
+.quote-attr {
+    margin-top: 16px;
+    font-family: 'Cinzel', serif;
+    font-size: 8.5pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+}
+
+/* ── RACES ROW ── */
+.races-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 48px;
+    background: var(--border);
+}
+
+.race-card {
+    background: var(--iron);
+    padding: 36px 20px 28px;
+    text-align: center;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
+.race-card:hover {
+    border-bottom-color: var(--blood);
+    background: rgba(139,16,16,0.05);
+}
+
+.race-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 13pt;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 12px;
+}
+
+.race-tagline {
+    font-size: 10pt;
+    font-style: italic;
+    color: rgba(196,184,154,0.7);
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.race-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: 'Cinzel', serif;
+    font-size: 7.5pt;
+    letter-spacing: 1px;
+    color: var(--blood);
+}
+
+/* ── CONTENTS LIST ── */
+.contents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0;
+    margin-top: 40px;
+    border: 1px solid var(--border);
+}
+
+.content-item {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.content-check {
+    color: var(--blood);
+    font-size: 14pt;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.content-info { flex: 1; }
+
+.content-name {
+    font-family: 'Cinzel', serif;
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.content-desc {
+    font-size: 10pt;
+    color: rgba(196,184,154,0.7);
+    line-height: 1.5;
+}
+
+/* ── THREAT SECTION ── */
+.threat-block {
+    background: rgba(139,16,16,0.08);
+    border: 1px solid rgba(139,16,16,0.25);
+    border-top: 4px solid var(--blood);
+    padding: 40px;
+    margin-top: 48px;
+}
+
+.threat-title {
+    font-family: 'Cinzel', serif;
+    font-size: 8pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--blood);
+    margin-bottom: 16px;
+}
+
+.threat-body {
+    font-size: 12pt;
+    color: var(--ash);
+    line-height: 1.8;
+    max-width: 800px;
+}
+
+/* ── FOOTER CTA ── */
+.footer-cta {
+    text-align: center;
+    padding: 120px 20px;
+    background:
+        radial-gradient(ellipse at 50% 100%, rgba(139,16,16,0.3) 0%, transparent 60%),
+        var(--iron);
+    border-top: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-cta-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(20pt, 4vw, 36pt);
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.footer-cta-sub {
+    font-size: 13pt;
+    font-style: italic;
+    color: var(--ash);
+    margin-bottom: 40px;
+    opacity: 0.8;
+}
+
+/* ── NAV ── */
+.nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(2,7,14,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(184,134,11,0.1);
+    transition: all 0.3s;
+}
+
+.nav-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+}
+
+.nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 8pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(196,184,154,0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* ── DIVIDER ── */
+.ornament {
+    text-align: center;
+    color: var(--blood);
+    opacity: 0.4;
+    font-size: 18pt;
+    letter-spacing: 16px;
+    margin: 20px 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+    .races-row { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+    .quote-block { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+    <a href="#" class="nav-logo">Blood &amp; Purpose</a>
+    <ul class="nav-links">
+        <li><a href="#system">The System</a></li>
+        <li><a href="#world">The World</a></li>
+        <li><a href="#races">The Races</a></li>
+        <li><a href="#disciplines">Magic</a></li>
+        <li><a href="#contents">What's Inside</a></li>
+        <li><a href="index.html">↗ Enter the Game</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-rune"></div>
+    <div class="hero-eyebrow">A Dark Fantasy Tabletop RPG</div>
+    <h1 class="hero-title">Blood &amp;<br>Purpose</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-tagline">Knowledge is power. Purpose is everything.<br>Blood is the price of both.</p>
+    <div class="hero-cta-group">
+        <a href="#system" class="btn-primary">Discover the System</a>
+        <a href="index.html" class="btn-secondary">Enter the Game</a>
+    </div>
+    <div class="scroll-hint"><span>Scroll</span></div>
+</section>
+
+<!-- OPENING STATEMENT -->
+<div class="section" id="system">
+    <div class="section-label">The Philosophy</div>
+    <h2 class="section-title">No Class. No Destiny.<br>Only What You Earn.</h2>
+    <div class="section-body">
+        <p>Blood and Purpose is a classless, skill-based dark fantasy tabletop RPG. There are no pre-built archetypes. No wizard class that tells you what you are, no fighter template that decides how you fight. You build the hero you want from the ground up — investing Experience Points in the skills, characteristics, and disciplines that define your play style.</p>
+        <p>You are not born to a role. You are hammered into one. The world is hard, consequence is real, and nothing is given. Every scar on your character sheet was earned at a price your character chose to pay.</p>
+    </div>
+
+    <div class="philosophy-grid">
+        <div class="philosophy-card">
+            <div class="philosophy-number">01</div>
+            <div class="philosophy-title">Classless</div>
+            <div class="philosophy-text">Six characteristics. Thirty-seven primary skills. Six magic disciplines. Any combination is possible. A Halfling can wade through slaughter. A Dwarf can master the arcane. The world does not care what you were born to be.</div>
+        </div>
+        <div class="philosophy-card">
+            <div class="philosophy-number">02</div>
+            <div class="philosophy-title">Skill-Based</div>
+            <div class="philosophy-text">Every point matters. Skills have tiered benefits at 3, 6, and 9 points — meaningful upgrades that reward commitment. Investing deep in two or three areas produces a dramatically more effective hero than spreading thin across everything.</div>
+        </div>
+        <div class="philosophy-card">
+            <div class="philosophy-number">03</div>
+            <div class="philosophy-title">Consequential</div>
+            <div class="philosophy-text">Conditions stack. Wounds accumulate. The Threshold of Collapse is real — three concurrent conditions and your body begins to shut down. The battlefield does not pause for hesitation.</div>
+        </div>
+        <div class="philosophy-card">
+            <div class="philosophy-number">04</div>
+            <div class="philosophy-title">Purpose-Driven</div>
+            <div class="philosophy-text">Before play begins, every character answers three questions: What do they want? What do they fear? What do they carry from their past? Mechanics decide outcomes. The reasons you care about those outcomes are yours to write.</div>
+        </div>
+    </div>
+</div>
+
+<!-- QUOTE 1 -->
+<div class="section" style="padding-top:0;">
+    <div class="quote-block">
+        <p class="quote-text">The world of Blood and Purpose is profoundly indifferent to the legacy of your birth. It does not care what you were born to be; it measures you only by the actions you take and the scars you leave behind.</p>
+        <div class="quote-attr">— Core Rulebook, Chapter I</div>
+    </div>
+</div>
+
+<!-- WORLD -->
+<div class="section-full" id="world">
+    <div class="section-full-inner">
+        <div class="section-label">The Setting</div>
+        <h2 class="section-title">A World That Has Already Seen Too Much</h2>
+        <div class="section-body">
+            <p>The world of Blood and Purpose is not young. It bears the geological weight of civilisations that rose, overreached, and were buried by what they disturbed. The Aakzad — a biomechanical intelligence from the dark between stars — invaded during the First Age and were not destroyed, only entombed. Their psychic pull never ceased. Something has recently stolen the largest fragment of their shattered artefact. The mass awakening has already begun.</p>
+            <p>Into this world walk four races, six magical traditions, and an unknown number of people who have decided that their purpose is worth the price.</p>
+        </div>
+
+        <div class="world-strip">
+            <div class="world-card">
+                <span class="world-icon">⛰</span>
+                <div class="world-name">Kel Thurum</div>
+                <div class="world-desc">The great Dwarven mountain kingdom. Every citizen is militia. Every miner has spilled blood. A philosophy carved in stone: the city outlasts the individual.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">🏛</span>
+                <div class="world-name">Thalasien</div>
+                <div class="world-desc">The silver city of the Elves. Cold beauty, calculated architecture, and a Golden Age that ended in something the scholars describe only with academic citations.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">⛪</span>
+                <div class="world-name">The Radiant Compact</div>
+                <div class="world-desc">The closest thing humanity has to a universal authority. Its dogma travels faster than any army. The gaps in its own historical record are methodically maintained.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">☠</span>
+                <div class="world-name">The Aakzad</div>
+                <div class="world-desc">Ancient biomechanical intelligence. They do not seek conquest — they harvest the frequency of life itself. Where they walk, the living are not killed. They are emptied.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">🌿</span>
+                <div class="world-name">The Deep Earth</div>
+                <div class="world-desc">The Titan-Blood veins that corrupted the Birn clan have never been fully mapped. The question of whether they remain active is one Kel Thurum officially considers closed.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">🌑</span>
+                <div class="world-name">The Unknown</div>
+                <div class="world-desc">The Halflings possess oral histories of the world before the other races arrived. What the world was then is knowledge they share with no outsider. Their silence yields no answers.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">🩸</span>
+                <div class="world-name">The Pale Weald</div>
+                <div class="world-desc">The Blight Elves do not hate those they raid. Hatred is an expenditure. They regard the north with the patient attention of a harvester regarding a field. The field's opinion of the harvest is not a variable.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">🔥</span>
+                <div class="world-name">The Ashlands</div>
+                <div class="world-desc">The Pyreborn nomads carry Titan-Blood in their ancestry — touched by the same deep-earth corruption that took the Birn clan. They name Aethon the World-Breaker as a cousin. They do not consider this a comforting relationship.</div>
+            </div>
+        </div>
+
+        <div class="threat-block">
+            <div class="threat-title">⚠ The Opening Hook</div>
+            <div class="threat-body">The fragment stolen from SunsReach is the largest of three pieces of the Death Priest's shattered artefact. The other two remain unaccounted for. Whether the groundskeeper Amako "Kazamas" Pikari acted alone — or was drawn to the tomb by the Death Priest's psychic reach — is a question no one has yet asked in the right room. The Aakzad awakening has already begun. The world does not yet know it.</div>
+        </div>
+    </div>
+</div>
+
+<!-- RACES -->
+<div class="section" id="races">
+    <div class="section-label">The Four Peoples</div>
+    <h2 class="section-title">Your Bloodline Is Your Architecture</h2>
+    <div class="section-body">
+        <p>Four peoples walk the unforgiving earth of this world. Your bloodline dictates the architecture of your bones, the swiftness of your stride, and the volume of punishment your flesh can endure before breaking. Yet pedigree is not destiny.</p>
+    </div>
+
+    <div class="races-row">
+        <div class="race-card">
+            <div class="race-name">Dwarf</div>
+            <div class="race-tagline">"Built for corridors where there is no room to swing. Only to drive forward."</div>
+            <div class="race-stats">
+                <span>Move 7 · Distance 35ft</span>
+                <span>Dense. Patient. Grudge-carrying.</span>
+            </div>
+        </div>
+        <div class="race-card">
+            <div class="race-name">Elf</div>
+            <div class="race-tagline">"Scholarship at that depth is a solitary burial."</div>
+            <div class="race-stats">
+                <span>Move 12 · Distance 60ft</span>
+                <span>Cold. Precise. Five centuries deep.</span>
+            </div>
+        </div>
+        <div class="race-card">
+            <div class="race-name">Halfling</div>
+            <div class="race-tagline">"They settle near hillsides where the earth remembers old bloodshed."</div>
+            <div class="race-stats">
+                <span>Move 8 · Distance 40ft</span>
+                <span>Harmless. Until they aren't.</span>
+            </div>
+        </div>
+        <div class="race-card">
+            <div class="race-name">Human</div>
+            <div class="race-tagline">"A Human builds to outrun the grave."</div>
+            <div class="race-stats">
+                <span>Move 10 · Distance 50ft</span>
+                <span>Numerous. Hungry. Consuming.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- OTHER PEOPLES -->
+<div class="section-full">
+    <div class="section-full-inner">
+        <div class="section-label">The World's Other Peoples</div>
+        <h2 class="section-title">The World Does Not Belong Only to Those Who Claim It</h2>
+        <div class="section-body">
+            <p>Beyond the four playable races, the world is populated by peoples who have their own histories, their own grievances, and their own answers to the question of survival. They are not background dressing. They are forces.</p>
+        </div>
+
+        <div class="world-strip" style="margin-top:36px; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));">
+            <div class="world-card">
+                <span class="world-icon">🌑</span>
+                <div class="world-name">Blight Elves</div>
+                <div class="world-desc">Cousins of Thalasien, shaped by centuries in the Pale Weald's corrupted shadow. Raiders by necessity, methodical by nature. They do not hate what they take. Hatred is an expenditure they cannot afford.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">🔥</span>
+                <div class="world-name">Pyreborn</div>
+                <div class="world-desc">Ashlands nomads with Titan-Blood ancestry. Fire-touched, war-hardened, carrying oral traditions that predate the mountain kingdoms. They name the World-Breaker as kin. This does not make them comfortable to know.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">🐗</span>
+                <div class="world-name">Beastmen</div>
+                <div class="world-desc">Warband-organised, theologically certain, and led by Horned Oracles who find power in the rotting of things. They consider decay more fundamental than destruction. They are not wrong.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">⚔</span>
+                <div class="world-name">The Orcish Host</div>
+                <div class="world-desc">To lead requires not merely strength but violent relentlessness applied so consistently no challenger can find the gap. The Chieftains have been finding gaps in every other army's line for three centuries.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">👁</span>
+                <div class="world-name">Daemon Lords</div>
+                <div class="world-desc">They do not arrive with fire and spectacle. They arrive with dark majesty and the patience of something that already knows the shape of the room. They are almost always already seated when you notice them.</div>
+            </div>
+            <div class="world-card">
+                <span class="world-icon">🦴</span>
+                <div class="world-name">The Gnolls</div>
+                <div class="world-desc">They do not hold territory the way settled peoples hold territory — they hold the idea of it. Armies that have cleared Gnoll lands have cleared the Gnolls that were there. Then dealt with the Gnolls that came back.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- QUOTE 2 -->
+<div class="section" style="padding-top:0; padding-bottom:60px;">
+    <div class="quote-block">
+        <p class="quote-text">Collectively, they are a sprawling, unpredictable equation that the rest of the world is still bleeding to solve.</p>
+        <div class="quote-attr">— On Humanity, Core Rulebook Chapter I</div>
+    </div>
+</div>
+
+<!-- DISCIPLINES -->
+<div class="section-full" id="disciplines">
+    <div class="section-full-inner">
+        <div class="section-label">The Six Disciplines</div>
+        <h2 class="section-title">Magic Is Not Safe. It Was Never Meant to Be.</h2>
+        <div class="section-body">
+            <p>Six magical traditions exist in this world. Each draws from a different source, answers to different laws, and carries different consequences. A Natural 1 on any casting roll is an Arcane Backlash — the weave is volatile, the spirits are fickle, the gods demand perfection. An unmitigated failure triggers immediate consequences from the Miscast table.</p>
+            <p>Not all disciplines coexist peacefully. Wizardry and Runecraft are philosophically and practically opposed. Combining them is not merely forbidden — it is an incoherence the universe refuses to permit.</p>
+        </div>
+
+        <div class="disciplines-grid">
+            <div class="disc-card">
+                <span class="disc-icon">✝</span>
+                <div class="disc-name">Theology</div>
+                <div class="disc-flavor">Divine blessings. The faith of the Radiant Compact. Governs through Charisma.</div>
+                <div class="disc-stat">47 Blessings</div>
+            </div>
+            <div class="disc-card">
+                <span class="disc-icon">🌿</span>
+                <div class="disc-name">Druidism</div>
+                <div class="disc-flavor">Living power. The world's own current channelled through those attuned to it.</div>
+                <div class="disc-stat">45 Spells</div>
+            </div>
+            <div class="disc-card">
+                <span class="disc-icon">💀</span>
+                <div class="disc-name">Shamanism</div>
+                <div class="disc-flavor">The spirit world does not forget. Ancestral power. Willpower made weaponised.</div>
+                <div class="disc-stat">55 Powers</div>
+            </div>
+            <div class="disc-card">
+                <span class="disc-icon">📖</span>
+                <div class="disc-name">Wizardry</div>
+                <div class="disc-flavor">The arcane weave as system. Cold. Intellectual. Devastating when mastered.</div>
+                <div class="disc-stat">83 Spells</div>
+            </div>
+            <div class="disc-card">
+                <span class="disc-icon">🔥</span>
+                <div class="disc-name">Ki</div>
+                <div class="disc-flavor">Internal energy mastery. The body itself as the instrument of destruction.</div>
+                <div class="disc-stat">37 Techniques</div>
+            </div>
+            <div class="disc-card">
+                <span class="disc-icon">ᚱ</span>
+                <div class="disc-name">Runecraft</div>
+                <div class="disc-flavor">Power bound into matter. Scripture carved into steel. A craft, not a calling.</div>
+                <div class="disc-stat">32 Runes</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CONTENTS -->
+<div class="section" id="contents">
+    <div class="section-label">What's Inside</div>
+    <h2 class="section-title">Everything You Need to Begin</h2>
+    <div class="section-body">
+        <p>Blood and Purpose is a complete game. Everything required to play — from character creation to the grimoire to the bestiary — is contained in the system.</p>
+    </div>
+
+    <div class="contents-grid">
+        <div class="content-item">
+            <div class="content-check">⚔</div>
+            <div class="content-info">
+                <div class="content-name">Core Rulebook</div>
+                <div class="content-desc">Complete rules — character creation, combat, magic, conditions, advancement. 12 chapters.</div>
+            </div>
+        </div>
+        <div class="content-item">
+            <div class="content-check">⚔</div>
+            <div class="content-info">
+                <div class="content-name">The Grimoire</div>
+                <div class="content-desc">299 spells, blessings, techniques and runes across six disciplines. Every spell sorted by TN.</div>
+            </div>
+        </div>
+        <div class="content-item">
+            <div class="content-check">⚔</div>
+            <div class="content-info">
+                <div class="content-name">Primary Skills</div>
+                <div class="content-desc">37 skills across six characteristics. Every skill has tiered benefits at 3, 6, and 9 points.</div>
+            </div>
+        </div>
+        <div class="content-item">
+            <div class="content-check">⚔</div>
+            <div class="content-info">
+                <div class="content-name">Advanced Masteries</div>
+                <div class="content-desc">Flat-unlock specialisations for veterans. Battle-Ready, Counter-Caster, Iron Bastion and more.</div>
+            </div>
+        </div>
+        <div class="content-item">
+            <div class="content-check">⚔</div>
+            <div class="content-info">
+                <div class="content-name">The Bestiary</div>
+                <div class="content-desc">Full creature compendium — from Aakzad Crypt Priests to Ash-Blight Dragons.</div>
+            </div>
+        </div>
+        <div class="content-item">
+            <div class="content-check">⚔</div>
+            <div class="content-info">
+                <div class="content-name">Character Ledger</div>
+                <div class="content-desc">A fully calculated interactive character sheet. XP tracking, wound mitigation, spell tables — all live.</div>
+            </div>
+        </div>
+        <div class="content-item">
+            <div class="content-check">⚔</div>
+            <div class="content-info">
+                <div class="content-name">GM Grimoire</div>
+                <div class="content-desc">NPC stat blocks, encounter tables, and the tools a Game Master needs to run the world.</div>
+            </div>
+        </div>
+        <div class="content-item">
+            <div class="content-check">⚔</div>
+            <div class="content-info">
+                <div class="content-name">World Atlas</div>
+                <div class="content-desc">An interactive world map with full lore entries — factions, locations, threats, and open hooks.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER CTA -->
+<div class="footer-cta">
+    <div class="ornament">✦ ✦ ✦</div>
+    <h2 class="footer-cta-title">The World Is Waiting.<br>It Will Not Wait Long.</h2>
+    <p class="footer-cta-sub">Blood and Purpose — coming to Kickstarter</p>
+    <div class="hero-cta-group">
+        <a href="index.html" class="btn-primary">Enter the Game</a>
+        <a href="core-rules.html" class="btn-secondary">Read the Rules</a>
+    </div>
+    <div style="margin-top:60px; font-family:'Cinzel',serif; font-size:8pt; letter-spacing:3px; color:rgba(196,184,154,0.25); text-transform:uppercase;">
+        Knowledge is power &nbsp;·&nbsp; Purpose is everything &nbsp;·&nbsp; Blood is the price of both
+    </div>
+</div>
+
+<script>
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// Nav shadow on scroll
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('.nav');
+    nav.style.boxShadow = window.scrollY > 50
+        ? '0 4px 24px rgba(0,0,0,0.5)'
+        : 'none';
+});
+
+// Fade in sections on scroll
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.style.opacity = '1';
+            e.target.style.transform = 'translateY(0)';
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.philosophy-card, .world-card, .disc-card, .race-card, .content-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+});
+</script>
+</body>
+</html>
