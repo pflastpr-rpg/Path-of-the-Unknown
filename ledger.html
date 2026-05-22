@@ -1265,7 +1265,7 @@ const advancedSkills = [
     {name:"Battle-Ready / Berzerker",cost:200,type:"melee",bonus:1,desc:"Negates outnumbering; Stance adds 1d10 wounds."},
     {name:"Block / Bulwark",cost:100,type:"none",bonus:0,desc:"Mitigate all wounds from same-size or smaller enemies."},
     {name:"Cleave / Whirlwind",cost:100,type:"melee",bonus:1,desc:"Strike adjacent targets; 360-degree circle of steel."},
-    {name:"Devout / Runepriest",cost:100,type:"heal",bonus:1,desc:"Aura of protection; deal extra wounds to Evil."},
+    {name:"Cleric / Crusader",cost:100,type:"heal",bonus:1,desc:"Aura of protection; deal extra wounds to Evil."},
     {name:"Command / Blood Rally",cost:100,type:"none",bonus:0,desc:"Grant AP to allies; rally them from 0 wounds."},
     {name:"Concentrate / Intensify",cost:200,type:"cast",bonus:3,desc:"Advantage on To-Cast; potentially massive damage."},
     {name:"Deflect / Revert-Back",cost:50,type:"none",bonus:0,desc:"Reactionary redirect; force enemies to hit themselves."},
@@ -1669,7 +1669,7 @@ function processAdvancedSkills(state) {
             if (txt.includes("Block / Bulwark")) sv('def-block', 1);
             if (txt.includes("Deflect / Revert-Back")) sv('def-deflect', 1);
             if (txt.includes("Dodge / Jailbreak")) sv('def-dodge', 1);
-            if (txt.includes("Devout / Runepriest")) { advMitigationBonus += 1; clericEvilMitigation += 1; }
+            if (txt.includes("Cleric / Crusader")) { advMitigationBonus += 1; clericEvilMitigation += 1; }
             if (txt.includes("Unwavering / Unstoppable")) advMitigationBonus += 3;
             if (txt.includes("Sovereign Mind / Indomitable")) advMitigationBonus += 1;
         }
