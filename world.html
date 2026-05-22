@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas of the Known World</title>
+    <style>
+        :root {
+            --parchment: #eaddc5;
+            --iron: #2c2c2c;
+            --blood: #8a0303;
+            --gold: #b89b5e;
+            --ink: #1a1a1a;
+            --font-hand: 'Georgia', serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #000;
+            font-family: Arial, sans-serif;
+            color: var(--parchment);
+            overflow: hidden;
+        }
+
+        .world-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            height: 100vh;
+        }
+
+        /* MAP SECTION */
+        .map-section {
+            position: relative;
+            background: var(--iron);
+            border: 4px solid var(--gold);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.9);
+            overflow: auto;
+        }
+
+        /* BUG FIX: zoom-controls must be sticky inside the scrollable map-section,
+           and width:fit-content + pointer-events:none on the container prevents
+           the invisible bar from blocking map clicks across the full row. */
+        .zoom-controls {
+            position: sticky;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+            display: inline-flex;
+            gap: 5px;
+            width: fit-content;
+            pointer-events: none;
+        }
+        .zoom-controls button {
+            pointer-events: all;
+            background: rgba(0,0,0,0.85);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 8px 12px;
+            font-family: var(--font-hand);
+            font-size: 10pt;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        .zoom-controls button:hover { background: var(--blood); color: #fff; border-color: #fff; }
+        .zoom-controls button.active-mode {
+            background: var(--blood); color: #fff; border-color: #fff;
+            animation: btn-pulse 1.5s infinite;
+        }
+        @keyframes btn-pulse {
+            0%,100% { box-shadow: 0 0 0 0 rgba(138,3,3,0.7); }
+            50%      { box-shadow: 0 0 0 8px rgba(138,3,3,0); }
+        }
+
+        .map-wrapper {
+            position: relative;
+            width: 100%;
+            height: auto;
+            transition: width 0.3s ease-in-out;
+        }
+        /* BUG FIX: img pointer-events:none so image drag doesn't swallow click coords */
+        .map-wrapper img {
+            width: 100%; height: auto; display: block;
+            pointer-events: none; user-select: none;
+        }
+        .map-wrapper.placing-pin { cursor: crosshair; }
+
+        /* PINS */
+        .map-pin {
+            position: absolute;
+            width: 18px; height: 18px;
+            background: var(--blood);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(138,3,3,0.8);
+            animation: pulse 2s infinite;
+            transition: transform 0.2s ease, background 0.2s ease;
+            z-index: 5;
+        }
+        .map-pin:hover { transform: translate(-50%,-50%) scale(1.4); background: #ff1a1a; z-index: 10; }
+        .map-pin.custom-pin {
+            background: var(--gold); border-color: var(--parchment);
+            box-shadow: 0 0 10px rgba(184,155,94,0.8);
+        }
+        .map-pin.custom-pin:hover { background: #ffe0a0; }
+        @keyframes pulse {
+            0%   { box-shadow: 0 0 0 0 rgba(138,3,3,0.7); }
+            70%  { box-shadow: 0 0 0 15px rgba(138,3,3,0); }
+            100% { box-shadow: 0 0 0 0 rgba(138,3,3,0); }
+        }
+
+        /* LORE PANEL */
+        .lore-section {
+            background: #111;
+            border: 4px solid var(--iron);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .lore-header {
+            font-size: 21pt; font-weight: 900;
+            color: var(--gold);
+            border-bottom: 2px solid var(--blood);
+            padding-bottom: 10px; margin-bottom: 14px;
+            text-transform: uppercase; text-align: center;
+            flex-shrink: 0;
+        }
+        .lore-content {
+            background: var(--parchment); color: var(--ink);
+            padding: 16px; border: 2px solid var(--iron); border-radius: 4px;
+            flex-grow: 1; font-family: var(--font-hand);
+            font-size: 13pt; line-height: 1.6; overflow-y: auto;
+        }
+        .lore-stat-box {
+            background: rgba(138,3,3,0.1); border-left: 4px solid var(--blood);
+            padding: 10px; margin-top: 12px; font-size: 11pt; font-weight: bold;
+        }
+        .lore-notes-box {
+            background: rgba(184,155,94,0.1); border-left: 4px solid var(--gold);
+            padding: 10px; margin-top: 12px; font-size: 11pt; font-style: italic;
+            white-space: pre-wrap; word-break: break-word;
+        }
+        .lore-actions {
+            display: flex; gap: 8px; margin-top: 12px; flex-shrink: 0;
+        }
+        .lore-actions button {
+            flex: 1; padding: 8px;
+            font-family: var(--font-hand); font-size: 10pt; font-weight: bold;
+            cursor: pointer; border-radius: 4px;
+            border: 1px solid var(--gold); background: rgba(0,0,0,0.7);
+            color: var(--gold); text-transform: uppercase; transition: all 0.2s;
+        }
+        .lore-actions button:hover { background: var(--blood); color: #fff; border-color: #fff; }
+        .lore-actions button.delete-btn { border-color: var(--blood); color: #ff6666; }
+        .lore-actions button.delete-btn:hover { background: #5a0000; color: #fff; }
+
+        .back-to-hub {
+            display: inline-block; background: #000; color: var(--gold);
+            font-family: var(--font-hand); font-size: 11pt; font-weight: bold;
+            text-decoration: none; text-transform: uppercase;
+            padding: 8px 12px; border: 1px solid var(--gold); border-radius: 4px;
+            margin-bottom: 12px; align-self: flex-start; flex-shrink: 0;
+            transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+        .back-to-hub:hover { background: var(--blood); color: var(--parchment); border-color: var(--parchment); }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.85); z-index: 1000;
+            align-items: center; justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-box {
+            background: #1a1a1a; border: 3px solid var(--gold); border-radius: 8px;
+            padding: 28px; width: 520px; max-width: 95vw;
+            box-shadow: 0 0 40px rgba(184,155,94,0.3);
+            display: flex; flex-direction: column; gap: 14px;
+        }
+        .modal-box h2 {
+            font-family: var(--font-hand); font-size: 17pt; color: var(--gold);
+            text-transform: uppercase; border-bottom: 1px solid var(--blood); padding-bottom: 8px;
+        }
+        .modal-box label {
+            font-size: 9pt; font-weight: bold; text-transform: uppercase;
+            color: var(--gold); letter-spacing: 0.5px; display: block; margin-bottom: 4px;
+        }
+        .modal-box input[type="text"], .modal-box textarea {
+            width: 100%; background: #0d0d0d; color: var(--parchment);
+            border: 1px solid var(--iron); border-radius: 4px;
+            padding: 8px 10px; font-family: var(--font-hand); font-size: 11pt; resize: vertical;
+        }
+        .modal-box input[type="text"]:focus, .modal-box textarea:focus {
+            outline: none; border-color: var(--gold);
+        }
+        .modal-box textarea { min-height: 75px; }
+        .modal-box textarea.tall { min-height: 110px; }
+        .modal-btn-row {
+            display: flex; gap: 10px; justify-content: flex-end; margin-top: 4px;
+        }
+        .modal-btn-row button {
+            padding: 9px 22px; font-family: var(--font-hand); font-size: 10pt;
+            font-weight: bold; text-transform: uppercase; cursor: pointer;
+            border-radius: 4px; border: 1px solid var(--gold);
+            background: rgba(0,0,0,0.6); color: var(--gold); transition: all 0.2s;
+        }
+        .modal-btn-row button:hover { background: var(--blood); color: #fff; border-color: #fff; }
+        .modal-btn-row button.cancel-btn { border-color: var(--iron); color: #aaa; }
+        .modal-btn-row button.cancel-btn:hover { background: #333; color: #fff; border-color: #fff; }
+        .coord-display { font-size: 9pt; color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div class="world-container">
+
+    <!-- MAP -->
+    <div class="map-section" id="map-section">
+        <div class="zoom-controls">
+            <button onclick="adjustZoom(50)">➕ Zoom In</button>
+            <button onclick="adjustZoom(-50)">➖ Zoom Out</button>
+            <button onclick="resetZoom()">↺ Reset</button>
+            <button id="place-pin-btn" onclick="togglePlaceMode()">📍 Add Location</button>
+        </div>
+        <div class="map-wrapper" id="zoomable-map" onclick="handleMapClick(event)">
+            <img src="RPG-World4K (1).jpg" alt="Atlas of the Known World" id="map-img">
+            <!-- Pins rendered by JS -->
+        </div>
+    </div>
+
+    <!-- LORE PANEL -->
+    <div class="lore-section">
+        <a href="index.html" class="back-to-hub">⮜ Return to Main Hub</a>
+        <div class="lore-header" id="lore-title">The Known World</div>
+        <div class="lore-content">
+            <div id="lore-desc">Welcome to the Atlas. Select a pulsing marker on the map to access geographical records, regional threats, and local inhabitants.</div>
+            <div id="lore-stats" class="lore-stat-box" style="display:none;"></div>
+            <div id="lore-notes" class="lore-notes-box" style="display:none;"></div>
+        </div>
+        <div class="lore-actions" id="lore-actions" style="display:none;">
+            <button onclick="openEditModal(currentRegionId)">✏️ Edit Location</button>
+            <button class="delete-btn" onclick="deleteLocation(currentRegionId)">🗑 Delete Pin</button>
+        </div>
+    </div>
+</div>
+
+<!-- EDITOR MODAL -->
+<div class="modal-overlay" id="editor-modal">
+    <div class="modal-box">
+        <h2 id="modal-title">New Location</h2>
+        <div>
+            <label>Location Name</label>
+            <input type="text" id="ed-name" placeholder="e.g. The Shattered Keep">
+        </div>
+        <div>
+            <label>Description</label>
+            <textarea class="tall" id="ed-desc" placeholder="Geographical, cultural, or historical details…"></textarea>
+        </div>
+        <div>
+            <label>Encounter &amp; Hazard Notes</label>
+            <textarea id="ed-stats" placeholder="Primary Encounters: …&#10;Hazard: …"></textarea>
+        </div>
+        <div>
+            <label>Session Notes <span style="color:#666;font-weight:normal;">(ongoing GM observations)</span></label>
+            <textarea id="ed-notes" placeholder="Add session notes, discoveries, party history here…"></textarea>
+        </div>
+        <p class="coord-display" id="ed-coords"></p>
+        <div class="modal-btn-row">
+            <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+            <button onclick="saveLocationFromModal()">💾 Save Location</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// BASE LORE — always present, restored on every load
+// ============================================================
+const BASE_LORE = {
+    rysahm: {
+        title: "Rysahm Ashlands", top: 25, left: 19,
+        desc: "A brutal, volcanic wasteland where the sky is perpetually choked with smoke. The extreme heat makes standard travel impossible without magical warding.",
+        stats: "Primary Encounters: The Pyreborn, Fire Elementals\nHazard: Extreme Heat (Wound Mitigation halved)",
+        notes: "", base: true
+    },
+    dwarven: {
+        title: "Dwarven Kingdoms", top: 32, left: 67,
+        desc: "A sprawling network of mountain strongholds. At the heart lies the impenetrable Birn Uluhm fortress, renowned for its advanced mechanical defenses.",
+        stats: "Primary Encounters: Birn Uluhm Dwarves, Golems\nResources: High-tier Iron and Gold forging",
+        notes: "", base: true
+    },
+    dragon: {
+        title: "Dragon Kingdom", top: 48, left: 93,
+        desc: "An isolated eastern continent ruled by ancient wyrms. The terrain is scarred by centuries of elemental breath weapons, creating dangerous, unpredictable magic zones.",
+        stats: "Primary Encounters: Dragons, Drakes\nHazard: Unstable Magic Zones",
+        notes: "", base: true
+    },
+    crumbling_wall: {
+        title: "The Crumbling Wall", top: 70, left: 20,
+        desc: "A colossal, magically warded barrier maintained for centuries by the northern Human and High Elf kingdoms. The glowing wards are currently flickering under relentless, suicidal assaults from bound undead hordes directed by Blight Elf tacticians.",
+        stats: "Primary Encounters: Undead Siege Waves, Blight Elf Strike Teams\nHazard: Failing Magical Wards",
+        notes: "", base: true
+    },
+    pale_weald: {
+        title: "The Pale Weald", top: 79, left: 26,
+        desc: "A massive, ancient forest of bone-white, iron-hard petrified trees. A thick, toxic fog rolls across the floor where lesser undead roam. This is the domain of the Blight Elves.",
+        stats: "Primary Encounters: Blight Elves (Necro-Druids, Spirit-Binders)\nHazard: Toxic Fog (Visibility and Spirit Drain)",
+        notes: "", base: true
+    },
+    syl_kares: {
+        title: "Syl-Kares (The Bone Canopy)", top: 75, left: 23,
+        desc: "The capital of the Blight Elves, suspended high above the toxic fog. The city is woven directly into the dead canopy, connected by bridges of writhing vines kept 'alive' through dark blood-magic.",
+        stats: "Primary Encounters: Blight-Druid High Council, Elite Spirit-Binders\nHazard: Hostile Mutated Flora",
+        notes: "", base: true
+    },
+    harvest_pens: {
+        title: "The Spirit Pens", top: 83, left: 28,
+        desc: "Horrifying containment camps located on the precipice of the deep Blight. Captured prisoners from northern border raids are brought here and used as 'Spirit batteries,' slowly drained by the Dark Elven nobility to stave off the necrotic corruption.",
+        stats: "Primary Encounters: Blight Elf Wardens, Bound Undead Guards\nHazard: Willpower/Spirit Drain (Rapid)",
+        notes: "", base: true
+    },
+    blight: {
+        title: "Land of Blight", top: 82, left: 45,
+        desc: "A catastrophic, necrotic wasteland located in the far south of the continent. The very soil drains the Spirit and Willpower from all living things, turning them into mindless undead. It is a creeping infection that seeks to consume the entire world.",
+        stats: "Primary Encounters: Mindless Undead Hordes, Necrotic Aberrations\nHazard: Continual drain on Spirit Points",
+        notes: "", base: true
+    },
+    barbarian: {
+        title: "Barbarian Hordes", top: 15, left: 81,
+        desc: "The frozen northern peaks. The harsh climate breeds unparalleled resilience among the tribes that survive here, producing fearsome warriors.",
+        stats: "Primary Encounters: Berserkers, Frost Giants\nHazard: Freezing Winds",
+        notes: "", base: true
+    }
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let worldLore     = {};
+let currentRegionId = null;
+let placingPin    = false;
+let pendingCoords = null;
+let currentZoom   = 100;
+const STORAGE_KEY = 'bap_world_lore';
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+
+    worldLore = {};
+
+    // Base entries: always start from BASE_LORE, overlay saved edits/notes on top
+    for (const [id, base] of Object.entries(BASE_LORE)) {
+        worldLore[id] = Object.assign({}, base, {
+            desc:  (saved[id]?.desc  ?? base.desc),
+            stats: (saved[id]?.stats ?? base.stats),
+            notes: (saved[id]?.notes ?? base.notes),
+        });
+    }
+
+    // Custom (GM-added) entries
+    for (const [id, entry] of Object.entries(saved)) {
+        if (!BASE_LORE[id]) worldLore[id] = entry;
+    }
+
+    renderAllPins();
+}
+
+// ============================================================
+// STORAGE
+// ============================================================
+function saveToStorage() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(worldLore));
+}
+
+// ============================================================
+// PINS
+// ============================================================
+function renderAllPins() {
+    document.querySelectorAll('.map-pin').forEach(p => p.remove());
+    for (const [id, data] of Object.entries(worldLore)) addPinToMap(id, data);
+}
+
+function addPinToMap(id, data) {
+    const pin = document.createElement('div');
+    pin.className = 'map-pin' + (data.base ? '' : ' custom-pin');
+    pin.style.top  = data.top  + '%';
+    pin.style.left = data.left + '%';
+    pin.title = data.title;
+    pin.dataset.id = id;
+    pin.addEventListener('click', e => {
+        e.stopPropagation();
+        if (!placingPin) loadLore(id);
+    });
+    document.getElementById('zoomable-map').appendChild(pin);
+}
+
+// ============================================================
+// ZOOM
+// ============================================================
+function adjustZoom(amount) {
+    currentZoom = Math.min(400, Math.max(100, currentZoom + amount));
+    document.getElementById('zoomable-map').style.width = currentZoom + '%';
+}
+function resetZoom() {
+    currentZoom = 100;
+    document.getElementById('zoomable-map').style.width = '100%';
+}
+
+// ============================================================
+// LORE PANEL
+// ============================================================
+function loadLore(regionId) {
+    const data = worldLore[regionId];
+    if (!data) return;
+    currentRegionId = regionId;
+
+    document.getElementById('lore-title').innerText = data.title;
+    document.getElementById('lore-desc').innerHTML  = (data.desc  || '').replace(/\n/g,'<br>');
+
+    const statsBox = document.getElementById('lore-stats');
+    if (data.stats && data.stats.trim()) {
+        statsBox.innerHTML = data.stats.replace(/\n/g,'<br>');
+        statsBox.style.display = 'block';
+    } else {
+        statsBox.style.display = 'none';
+    }
+
+    const notesBox = document.getElementById('lore-notes');
+    if (data.notes && data.notes.trim()) {
+        notesBox.textContent   = data.notes;
+        notesBox.style.display = 'block';
+    } else {
+        notesBox.style.display = 'none';
+    }
+
+    document.getElementById('lore-actions').style.display = 'flex';
+}
+
+function clearLorePanel() {
+    currentRegionId = null;
+    document.getElementById('lore-title').innerText = 'The Known World';
+    document.getElementById('lore-desc').innerText  = 'Welcome to the Atlas. Select a pulsing marker on the map to access geographical records, regional threats, and local inhabitants.';
+    document.getElementById('lore-stats').style.display  = 'none';
+    document.getElementById('lore-notes').style.display  = 'none';
+    document.getElementById('lore-actions').style.display = 'none';
+}
+
+// ============================================================
+// PIN PLACEMENT
+// ============================================================
+function togglePlaceMode() {
+    placingPin = !placingPin;
+    const btn     = document.getElementById('place-pin-btn');
+    const wrapper = document.getElementById('zoomable-map');
+    if (placingPin) {
+        btn.classList.add('active-mode');
+        btn.textContent = '✖ Cancel Placement';
+        wrapper.classList.add('placing-pin');
+    } else {
+        btn.classList.remove('active-mode');
+        btn.textContent = '📍 Add Location';
+        wrapper.classList.remove('placing-pin');
+    }
+}
+
+function handleMapClick(e) {
+    if (!placingPin) return;
+    const wrapper = document.getElementById('zoomable-map');
+    const rect    = wrapper.getBoundingClientRect();
+    pendingCoords = {
+        top:  parseFloat(((e.clientY - rect.top)  / rect.height * 100).toFixed(2)),
+        left: parseFloat(((e.clientX - rect.left) / rect.width  * 100).toFixed(2))
+    };
+    togglePlaceMode();
+    openNewModal(pendingCoords);
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openNewModal(coords) {
+    document.getElementById('modal-title').innerText = 'New Location';
+    document.getElementById('ed-name').value  = '';
+    document.getElementById('ed-desc').value  = '';
+    document.getElementById('ed-stats').value = '';
+    document.getElementById('ed-notes').value = '';
+    document.getElementById('ed-coords').innerText = `Pin position: ${coords.top}% top, ${coords.left}% left`;
+    document.getElementById('editor-modal').classList.add('open');
+}
+
+function openEditModal(regionId) {
+    const data = worldLore[regionId];
+    if (!data) return;
+    pendingCoords = { top: data.top, left: data.left, editId: regionId };
+    document.getElementById('modal-title').innerText  = 'Edit Location';
+    document.getElementById('ed-name').value          = data.title || '';
+    document.getElementById('ed-desc').value          = data.desc  || '';
+    document.getElementById('ed-stats').value         = data.stats || '';
+    document.getElementById('ed-notes').value         = data.notes || '';
+    document.getElementById('ed-coords').innerText    = `Pin position: ${data.top}% top, ${data.left}% left`;
+    document.getElementById('editor-modal').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('editor-modal').classList.remove('open');
+    pendingCoords = null;
+}
+
+function saveLocationFromModal() {
+    const name = document.getElementById('ed-name').value.trim();
+    if (!name) { alert('Please enter a location name.'); return; }
+
+    const isEdit   = pendingCoords?.editId;
+    const regionId = isEdit ? pendingCoords.editId : 'loc_' + Date.now();
+
+    worldLore[regionId] = {
+        title: name,
+        desc:  document.getElementById('ed-desc').value.trim(),
+        stats: document.getElementById('ed-stats').value.trim(),
+        notes: document.getElementById('ed-notes').value.trim(),
+        top:   pendingCoords.top,
+        left:  pendingCoords.left,
+        base:  isEdit ? (worldLore[regionId]?.base || false) : false
+    };
+
+    saveToStorage();
+    renderAllPins();
+    closeModal();
+    loadLore(regionId);
+}
+
+function deleteLocation(regionId) {
+    if (!worldLore[regionId]) return;
+    const isBase = worldLore[regionId].base;
+    const label  = isBase ? 'this base location' : `"${worldLore[regionId].title}"`;
+    if (!confirm(`Delete ${label}? This cannot be undone.`)) return;
+
+    delete worldLore[regionId];
+    saveToStorage();
+    renderAllPins();
+    clearLorePanel();
+}
+
+// Close modal on overlay backdrop click
+document.getElementById('editor-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+window.onload = init;
+</script>
+</body>
+</html>
