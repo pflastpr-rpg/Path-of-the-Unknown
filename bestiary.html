@@ -221,6 +221,7 @@ body{font-family:var(--f-body);background:#1a1208;color:var(--ink);font-size:14.
 .mc-art:hover{background:rgba(154,123,47,0.08);}
 .mc-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .mc-art input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.mc-art{transition:outline 0.15s;}
 .mc-art-label{display:flex;flex-direction:column;align-items:center;gap:5px;pointer-events:none;text-align:center;}
 .mc-art-label .al-icon{font-size:20pt;opacity:0.22;}
 .mc-art-label .al-text{font-family:var(--f-label);font-size:7pt;letter-spacing:2px;color:var(--gold);opacity:0.45;}
@@ -882,11 +883,14 @@ function renderDetail() {
   const panel = document.getElementById('detail-panel');
   const cmpWith = (compareMode && pinnedMonster && pinnedMonster !== currentMonster) ? pinnedMonster : null;
   panel.innerHTML = renderCard(currentMonster, cmpWith);
-  // Reapply comparing class after innerHTML wipe
   if(compareMode) panel.classList.add('comparing');
   attachCardListeners();
-  renderArtSlot(currentMonster, 'mc-art-slot');
-  if(compareMode && pinnedMonster && pinnedMonster !== currentMonster) renderCompare();
+  if(compareMode && pinnedMonster && pinnedMonster !== currentMonster) {
+    renderCompare();
+  } else {
+    renderArtSlot(currentMonster, 'mc-art-slot');
+    setupArtDrop('mc-art-slot', currentMonster.name);
+  }
 }
 
 // ══════════════════════════════════════════════ COMPARE
@@ -926,13 +930,17 @@ function clearPin() {
 function renderCompare() {
   if(!pinnedMonster) return;
   const content = document.getElementById('compare-content');
-  content.innerHTML = renderCard(pinnedMonster, currentMonster);
-  renderArtSlot(pinnedMonster, 'cmp-art-slot');
   const panel = document.getElementById('detail-panel');
+  // Set both cards HTML first, then load art
+  content.innerHTML = renderCard(pinnedMonster, currentMonster);
   panel.innerHTML = renderCard(currentMonster, pinnedMonster);
   panel.classList.add('comparing');
   attachCardListeners();
+  // Load art after both cards are in DOM
+  renderArtSlot(pinnedMonster, 'cmp-art-slot');
   renderArtSlot(currentMonster, 'mc-art-slot');
+  setupArtDrop('cmp-art-slot', pinnedMonster.name);
+  setupArtDrop('mc-art-slot', currentMonster.name);
 }
 
 // ══════════════════════════════════════════════ ART
@@ -967,6 +975,24 @@ function renderArtSlot(m, slotId) {
   tryNext();
 }
 function triggerArtUpload(){const f=document.getElementById('mc-art-slot')?.querySelector('input[type=file]');if(f)f.click();}
+function loadArtFile(file,name,slotId){
+  if(!file||!file.type.startsWith('image/')) return;
+  const reader=new FileReader();
+  reader.onload=e=>{artCache[name]=e.target.result; renderArtSlot({name},slotId);};
+  reader.readAsDataURL(file);
+}
+function setupArtDrop(slotId,name){
+  const slot=document.getElementById(slotId);
+  if(!slot) return;
+  slot.addEventListener('dragover',e=>{e.preventDefault();slot.style.outline='3px dashed #B8860B';slot.style.outlineOffset='−2px';});
+  slot.addEventListener('dragleave',()=>{slot.style.outline='';});
+  slot.addEventListener('drop',e=>{
+    e.preventDefault();
+    slot.style.outline='';
+    const file=e.dataTransfer.files[0];
+    if(file) loadArtFile(file,name,slotId);
+  });
+}
 function loadArt(event,name,slotId){
   const file=event.target.files[0]; if(!file) return;
   const reader=new FileReader();
