@@ -954,8 +954,10 @@ function renderArtSlot(m, slotId) {
     return;
   }
   const base=ART_DIR+slugify(m.name);
-  const bases=[base];
-  let baseIdx=0, extIdx=0;
+  const base2=ART_DIR+m.name.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+  const base3=ART_DIR+m.name.toLowerCase().split('').map(c=>/[a-z0-9]/.test(c)?c:'_').join('').replace(/^_+/,'');
+  const bases=[base,base2,base3];
+  let baseIdx=0,extIdx=0;
   function tryNext(){
     if(extIdx>=ART_EXTS.length){
       extIdx=0; baseIdx++;
