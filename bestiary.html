@@ -958,7 +958,9 @@ function renderArtSlot(m, slotId) {
   const baseAlt=ART_DIR+m.name.toLowerCase().replace(/:/g,'__').replace(/[^a-z0-9_]+/g,'_').replace(/_{3,}/g,'__').replace(/^_+|_+$/g,'');
   const baseAlt2=ART_DIR+m.name.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
   const aliases=getArtAliases(m.name).map(a=>ART_DIR+a);
-  const bases=[base, baseAlt, baseAlt2, ...aliases];
+  // 4th attempt: each non-alnum char → _ (preserves double/triple underscores from Nano Banana)
+  const baseAlt3=ART_DIR+m.name.toLowerCase().split('').map(c=>/[a-z0-9]/.test(c)?c:'_').join('').replace(/^_+/,'');
+  const bases=[base, baseAlt, baseAlt2, baseAlt3, ...aliases];
   let baseIdx=0, extIdx=0;
   function tryNext(){
     if(extIdx>=ART_EXTS.length){
