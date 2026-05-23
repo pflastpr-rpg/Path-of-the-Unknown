@@ -954,13 +954,7 @@ function renderArtSlot(m, slotId) {
     return;
   }
   const base=ART_DIR+slugify(m.name);
-  // Also try underscore variant (Nano Banana naming: spaces→_ colons→__)
-  const baseAlt=ART_DIR+m.name.toLowerCase().replace(/:/g,'__').replace(/[^a-z0-9_]+/g,'_').replace(/_{3,}/g,'__').replace(/^_+|_+$/g,'');
-  const baseAlt2=ART_DIR+m.name.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
-  const aliases=getArtAliases(m.name).map(a=>ART_DIR+a);
-  // 4th attempt: each non-alnum char → _ (preserves double/triple underscores from Nano Banana)
-  const baseAlt3=ART_DIR+m.name.toLowerCase().split('').map(c=>/[a-z0-9]/.test(c)?c:'_').join('').replace(/^_+/,'');
-  const bases=[base, baseAlt, baseAlt2, baseAlt3, ...aliases];
+  const bases=[base];
   let baseIdx=0, extIdx=0;
   function tryNext(){
     if(extIdx>=ART_EXTS.length){
@@ -984,12 +978,7 @@ function loadArtFile(file,name,slotId){
   reader.onload=e=>{artCache[name]=e.target.result; renderArtSlot({name},slotId);};
   reader.readAsDataURL(file);
 }
-function getArtAliases(name){
-  // Creatures that share art with a variant
-  const aliases={'vulkan-kahn':['vulkan-kahn-the-first-forge']};
-  const slug=name.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-  return aliases[slug]||[];
-}
+
 function setupArtDrop(slotId,name){
   const slot=document.getElementById(slotId);
   if(!slot) return;
