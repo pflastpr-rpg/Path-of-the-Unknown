@@ -946,16 +946,23 @@ function renderArtSlot(m, slotId) {
     return;
   }
   const base=ART_DIR+slugify(m.name);
-  let idx=0;
+  // Also try underscore variant (Nano Banana naming: spaces→_ colons→__)
+  const baseAlt=ART_DIR+m.name.toLowerCase().replace(/:/g,'__').replace(/[^a-z0-9_]+/g,'_').replace(/_{3,}/g,'__').replace(/^_+|_+$/g,'');
+  const baseAlt2=ART_DIR+m.name.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+  const bases=[base, baseAlt, baseAlt2];
+  let baseIdx=0, extIdx=0;
   function tryNext(){
-    if(idx>=ART_EXTS.length){
-      slot.innerHTML=`<input type="file" accept="image/*" onchange="loadArt(event,'${m.name}','${slotId}')" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%"><div class="mc-art-label"><div class="al-icon">🖼</div><div class="al-text">CLICK TO ADD ART</div><div class="al-sub">${base}.jpg</div></div>`;
-      return;
+    if(extIdx>=ART_EXTS.length){
+      extIdx=0; baseIdx++;
+      if(baseIdx>=bases.length){
+        slot.innerHTML=`<input type="file" accept="image/*" onchange="loadArt(event,'${m.name}','${slotId}')" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%"><div class="mc-art-label"><div class="al-icon">🖼</div><div class="al-text">CLICK TO ADD ART</div><div class="al-sub">${base}.png</div></div>`;
+        return;
+      }
     }
     const img=new Image();
     img.onload=()=>{slot.innerHTML=`<img src="${img.src}"><button class="art-clear" onclick="clearArt(event,'${m.name}','${slotId}')">✕ REMOVE</button>`;};
     img.onerror=tryNext;
-    img.src=base+'.'+ART_EXTS[idx++];
+    img.src=bases[baseIdx]+'.'+ART_EXTS[extIdx++];
   }
   tryNext();
 }
@@ -1211,7 +1218,7 @@ function importData(event) {
 }
 
 // ══════════════════════════════════════════════ INIT
-// Delegation — walk up from click target to find data-action.
+// Delegation — walk up from click target to find data-action
 function handleCardClick(e) {
   let el = e.target;
   while(el && el !== document.body) {
