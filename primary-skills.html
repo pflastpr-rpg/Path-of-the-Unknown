@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood and Purpose - Primary Skills Compendium</title>
+    <title>Scars and Purpose - Primary Skills Compendium</title>
     <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -130,7 +130,7 @@
 
     <div class="compendium-wrapper">
         <h1>Primary Skills Compendium</h1>
-        <p style="text-align:center; font-style:italic; color:var(--blood); font-size:11pt; margin-bottom:8px;">Knowledge is power. Purpose is everything. Blood is the price of both.</p>
+        <p style="text-align:center; font-style:italic; color:var(--blood); font-size:11pt; margin-bottom:8px;">Knowledge is power. Purpose is everything. Scars are the price of both.</p>
         <div class="top-nav">
             <a href="index.html" class="btn-hub">🏠 Return to Hub</a>
             <a href="core-rules.html" class="btn-hub">📖 Core Rulebook</a>
@@ -573,19 +573,34 @@
         </div>
 
         <div class="skill-block">
-            <span class="skill-name">Runes (Ancestral Vocation)</span>
-            <span class="skill-mechanic">Power of Three: +1 Intellect per 3 pts. | Prereqs: Knowledge Runes (1), Read/Write (1) | Cost: Dwarf (10), Human/Halfling (15), Elf (20)</span>
+            <span class="skill-name">Runecraft (Ancestral Vocation)</span>
+            <span class="skill-mechanic">Power of Three: +1 Intellect per 3 pts. | Prereqs: Knowledge Runecraft (1), Read/Write (1) | Cost: Dwarf (10), Human/Halfling (15), Elf (20)</span>
             <a class="example-link" href="skills-in-play.html#s-runes" target="_blank">&#9654; In Play</a>
-            <p><em>While the wizard dances with the chaotic weave of magic, the runekeeper binds it in cold, unyielding stone. This is the art of the Duverger—etching the very language of the earth into iron and wood to create wonders that endure long after the caster's breath has gone cold.</em></p>
-            <p><strong>The Art of Inscription:</strong> You possess the ancient knowledge required to bind magical energy into physical objects through sacred geometry and runic script.</p>
+            <p><em>To cast a spell is to whisper to the wind. To carve a rune is to command the stone to remember. Where wizards bend the weave to their will in the moment, a Runemaster binds magical certainty into matter — steel, bone, and stone that hold their power long after the craftsman's hands have stilled.</em></p>
+            <p><strong>The Craft of Inscription:</strong> You possess the knowledge to bind magical effects permanently or temporarily into physical objects through precise runic inscription. The power is in the preparation.</p>
             <ul>
-                <li><strong>Tiered Unlocks:</strong> Your investment in this skill determines the stability and power of the runes you can forge.
-                    <br> - <strong>Points 1–3:</strong> You can create Minor Temporary Runes (etchings that provide a single-use bonus or last for the duration of one encounter).
-                    <br> - <strong>Points 4–6:</strong> You unlock Greater Runes and the ability to create semi-permanent marks that last for a full game session.
-                    <br> - <strong>Points 7+:</strong> You reach the level of Master Runesmith, allowing for the creation of Permanent Enchantments on weapons, armor, and artifacts.
+                <li><strong>Two Forms of Inscription:</strong> Runecraft operates across two modes.
+                    <br><strong>Temporary Runes</strong> are scratched quickly in the heat of battle — chalk lines, blood symbols, carved sigils. They sit dormant until activated and are consumed or fade after their duration. They can be inscribed during combat using AP.
+                    <br><strong>Permanent Runes</strong> are crafted between adventures, requiring uninterrupted time, quality tools, and appropriate materials. Once complete, they are always active — constant, passive, and bound to the object until erased or destroyed.
                 </li>
-                <li><strong>The Vocation Lockout:</strong> The logic of runes is fundamentally static. Because it requires a mindset of permanence and order, one cannot possess both the Wizardry skill and the Runes skill. Choosing the path of the Rune is a permanent rejection of the Wizard's chaotic weave.</li>
-                <li><strong>Passive Progression:</strong> For every 3 points invested in Runes, your core Intellect characteristic permanently increases by 1.</li>
+                <li><strong>Skill Points = Runes Known:</strong> Each point invested in Runecraft unlocks one rune from the Runecraft list in the Grimoire. You may inscribe any rune you know on any qualifying object — there is no daily limit to Temporary inscriptions beyond AP cost and the object's Threshold of Collapse.</li>
+                <li><strong>The Threshold of Collapse:</strong> No single object may bear more than 3 total runes. The material can only hold so much bound power before it begins to reject further inscriptions. Only 1 Master Rune may be active on any object at a time.</li>
+                <li><strong>Passive Progression:</strong> For every 3 points invested in Runecraft, your core Intellect characteristic permanently increases by 1, reflecting the precise, analytical mind the craft demands.</li>
+            </ul>
+
+            <p style="font-weight: bold; color: var(--iron); border-bottom: 1px dashed var(--gold); padding-bottom: 5px; margin-top: 15px;">Passive Mastery Scaling</p>
+            <ul style="margin-top: 10px;">
+                <li><strong>Fledgling (Points 1–3):</strong> You may inscribe Temporary Simple runes (1 AP). You know the five Fledgling Cantrips freely — Minor Ward Rune, Rune Read, Mark of Passage, Runic Knock, Stone Sense — these require no skill point investment.</li>
+                <li><strong>Journeyman (Points 4–6):</strong> You unlock Standard runes and may now inscribe Temporary Standard runes (2 AP). Your understanding of the craft deepens — Permanent Standard inscriptions (2–3 days) become available.</li>
+                <li><strong>Master (Points 7–9):</strong> You unlock Powerful Temporary runes (3 AP) and Permanent inscriptions up to TN 20. Objects inscribed by you hold runes more reliably — masterwork objects under your hand never reject a rune on the first attempt.</li>
+                <li><strong>Runemaster (Points 10+):</strong> Master Runes become available to you. These are the pinnacle of the craft — inscriptions so demanding they often require your total focus for days. Only one Master Rune may exist on any object at a time. Your name enters the lineage of the great Runemasters — Vorn the Hollow, Thessan the Precise, the First Forge.</li>
+            </ul>
+
+            <p style="font-weight: bold; color: var(--iron); border-bottom: 1px dashed var(--gold); padding-bottom: 5px; margin-top: 15px;">The Vocation Restrictions</p>
+            <ul style="margin-top: 10px;">
+                <li><strong>Absolute Lockout — Wizardry:</strong> The static binding of Runecraft and the fluid command of the Weave are philosophically and practically opposed. A Wizard who begins carving runes is fundamentally contradicting their own understanding of how magic works. This restriction is absolute and cannot be waived by any GM ruling.</li>
+                <li><strong>Absolute Lockout — Druidism:</strong> The living current of druidic magic flows and changes; Runecraft binds magic as physical law into matter. These are not different methods — they are opposing philosophies. The static binding of Runecraft is antithetical to the living current of druidic magic.</li>
+                <li><strong>Racial Affinity:</strong> Dwarves have an innate affinity for the craft — their minds are naturally ordered, patient, and precise in ways that suit inscription work. Elves find the permanence of runes philosophically uncomfortable; they can learn the craft but rarely choose to. Any race may walk this path.</li>
             </ul>
         </div>
 
