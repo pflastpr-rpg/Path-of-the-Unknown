@@ -402,7 +402,136 @@
         }
 
         /* --- PRINT STYLES (Ledger 7 Strict Edition) --- */
+        
+        /* ── RACIAL TRAITS PANEL ── */
+        .racial-panel {
+            margin: 8px 0;
+            border: 1px solid var(--iron);
+            border-top: 3px solid var(--blood);
+            background: var(--parchment);
+            page-break-inside: avoid;
+        }
+
+        .racial-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            cursor: pointer;
+            background: rgba(139,16,16,0.06);
+            user-select: none;
+        }
+
+        .racial-panel-header:hover { background: rgba(139,16,16,0.1); }
+
+        .racial-panel-title {
+            font-family: 'Cinzel', serif;
+            font-size: 8pt;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--blood);
+        }
+
+        .racial-panel-race {
+            font-family: 'Cinzel', serif;
+            font-size: 7pt;
+            color: var(--iron);
+            opacity: 0.6;
+            letter-spacing: 1px;
+        }
+
+        .racial-panel-toggle {
+            font-size: 10pt;
+            color: var(--blood);
+            transition: transform 0.2s;
+        }
+
+        .racial-panel-toggle.open { transform: rotate(180deg); }
+
+        .racial-panel-body {
+            display: none;
+            padding: 10px;
+            gap: 8px;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .racial-panel-body.open {
+            display: grid;
+        }
+
+        .racial-trait-card {
+            background: rgba(2,7,14,0.04);
+            border: 1px solid rgba(2,7,14,0.15);
+            border-top: 2px solid var(--blood);
+            padding: 8px 10px;
+        }
+
+        .racial-trait-name {
+            font-family: 'Cinzel', serif;
+            font-size: 7.5pt;
+            font-weight: 900;
+            color: var(--iron);
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+
+        .racial-trait-desc {
+            font-size: 7pt;
+            color: rgba(2,7,14,0.7);
+            line-height: 1.5;
+            margin-bottom: 6px;
+        }
+
+        .racial-trait-tracker {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 7pt;
+            color: var(--blood);
+            font-family: 'Cinzel', serif;
+        }
+
+        .racial-trait-tracker input[type="checkbox"] {
+            width: 13px; height: 13px;
+            accent-color: var(--blood);
+            cursor: pointer;
+        }
+
+        .racial-trait-tracker input[type="text"] {
+            flex: 1;
+            border: 1px solid rgba(2,7,14,0.2);
+            border-bottom: 1px solid var(--blood);
+            background: transparent;
+            font-size: 7pt;
+            padding: 2px 4px;
+            color: var(--iron);
+        }
+
+        .racial-none {
+            grid-column: 1 / -1;
+            text-align: center;
+            font-size: 8pt;
+            color: rgba(2,7,14,0.35);
+            font-style: italic;
+            padding: 10px;
+        }
+
+        
         @media print {
+            .popout-dropdown { display: block !important; position: static !important;
+                box-shadow: none; border: 1px solid rgba(2,7,14,0.15); margin-top: 2px; }
+            .pb-arrow { display: none !important; }
+            .popout-btn { cursor: default; }
+        }
+
+@media print {
+            .racial-panel-header { cursor: default; }
+            .racial-panel-body { display: grid !important; }
+            .racial-panel-toggle { display: none; }
+        }
+
+@media print {
             @page { size: letter portrait; margin: 0.2in; }
             
             /* 1. Force the page to stay Letter sized and keep the colors */
@@ -735,7 +864,7 @@
             <div class="id-f w-name"><label>Name</label><input type="text" id="char-name-input" maxlength="31" oninput="document.title = this.value ? this.value + ' - RPG Ledger' : 'RPG Ledger v14'"></div>
             <div class="id-f w-race">
                 <label>Race</label>
-                <select id="race-select" onchange="enforceRaceWeaponRules(); upd()">
+                <select id="race-select" onchange="enforceRaceWeaponRules(); renderRacialTraits(); upd()">
                     <option value="none">-</option>
                     <option value="dwarf">Dwarf</option>
                     <option value="elf">Elf</option>
@@ -969,17 +1098,33 @@
         </div>
 
         <div class="readiness-table" style="flex:1; display:flex; flex-direction:column;">
-            <div class="rt-head" style="font-size:9.5pt; padding:2px 6px;">Character Size</div>
-            <div style="flex:1; padding:8px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;">
-                <select id="char-size" onchange="upd()" style="width:100%; height:42px; font-size:15pt; font-weight:900; border:1.5px solid var(--ink); background:var(--input-bg); color:var(--ink); font-family:inherit;">
-                    <option>Med</option><option>Sm</option><option>Lg</option>
-                    <option>Giant</option><option>Enormous</option><option>Titanic</option>
-                </select>
-                <div style="font-size:8pt; font-weight:900; text-transform:uppercase; color:var(--iron); text-align:center; line-height:1.4; opacity:0.7;">
-                    Sm: –2 Agl &bull; Lg: ×1.5 W<br>
-                    Giant: ×2 W &bull; Enorm: ×3 W<br>
-                    Titanic: ×4 W
+            <div class="rt-head" style="font-size:9.5pt; padding:2px 6px;">Size &amp; Race</div>
+            <div style="flex:1; padding:6px 8px; display:flex; flex-direction:column; gap:6px; justify-content:center;">
+
+                <!-- SIZE -->
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <label style="font-size:6.5pt; letter-spacing:1px; text-transform:uppercase; color:rgba(2,7,14,0.4); white-space:nowrap;">Size</label>
+                    <select id="char-size" onchange="upd(); renderRacialTraits();" style="flex:1; height:26px; font-size:9pt; font-weight:900; border:1.5px solid var(--ink); background:var(--input-bg); color:var(--ink); font-family:inherit;">
+                        <option>Med</option><option>Sm</option><option>Lg</option>
+                        <option>Giant</option><option>Enormous</option><option>Titanic</option>
+                    </select>
                 </div>
+
+                <!-- RACIAL BADGE -->
+                <button id="racial-badge-btn" onclick="openRacialModal()" style="
+                    width:100%; padding:5px 8px;
+                    background:rgba(139,16,16,0.06);
+                    border:1px solid rgba(139,16,16,0.25);
+                    border-left:3px solid var(--blood);
+                    cursor:pointer; text-align:left;
+                    display:flex; align-items:center; justify-content:space-between;
+                    font-family:inherit;
+                ">
+                    <span style="font-family:'Cinzel',serif; font-size:7pt; font-weight:900; letter-spacing:1px; text-transform:uppercase; color:var(--blood);">Racial Passives</span>
+                    <span id="racial-badge-label" style="font-size:7pt; color:rgba(2,7,14,0.45); font-style:italic;">—</span>
+                    <span style="font-size:9pt; color:var(--blood);">⚑</span>
+                </button>
+
             </div>
         </div>
 
@@ -1092,6 +1237,9 @@
     <div class="extra-gear-box"><label>Artifact 2</label><input type="text" id="art_2" placeholder="..."></div>
     <div class="extra-gear-box"><label>Artifact 3</label><input type="text" id="art_3" placeholder="..."></div>
 </div>
+
+
+
 
 
 <div class="page-div"></div>
@@ -2550,6 +2698,159 @@ function buildWeaponRow(targetId) {
 // ================================================================
 // 7. INITIALIZATION
 // ================================================================
+
+// ── RACIAL TRAITS DATA ────────────────────────────────────────────────────────
+const RACIAL_TRAITS = {
+    dwarf: [
+        {
+            name: 'Stone Sense',
+            desc: 'Always knows the way out of any underground structure regardless of depth or darkness. Cannot be lost underground. Detects structural instability within 20ft passively.',
+            tracker: null
+        },
+        {
+            name: 'Grudge-Forged',
+            desc: 'Against any creature that has wounded you this encounter, deal +3 wounds on all successful hits.',
+            tracker: { type: 'note', label: 'Grudge target:' }
+        },
+        {
+            name: 'Iron Constitution',
+            desc: 'The first Stunned condition each encounter caused by a creature of the same size or smaller is ignored entirely.',
+            tracker: { type: 'checkbox', label: 'First Stun used' }
+        }
+    ],
+    elf: [
+        {
+            name: 'Centuries of Practice',
+            desc: 'Permanent +1 bonus to all Awareness tests. Five hundred years of accumulated awareness does not switch off.',
+            tracker: null
+        },
+        {
+            name: 'The Long Memory',
+            desc: 'Permanent +1 bonus to all Knowledge tests relating to history, lore, and the arcane.',
+            tracker: null
+        },
+        {
+            name: 'Weald-Attuned',
+            desc: 'Always know true north. Sense the presence of active magic within 20ft — not its source, only that it exists.',
+            tracker: null
+        }
+    ],
+    halfling: [
+        {
+            name: 'Beneath Notice',
+            desc: 'Enemies with 3+ other valid targets never select you as primary target unless no other option exists.',
+            tracker: null
+        },
+        {
+            name: 'Unreadable Luck',
+            desc: 'Once per encounter, after seeing any dice result, force a complete reroll of that result.',
+            tracker: { type: 'checkbox', label: 'Used this encounter' }
+        },
+        {
+            name: 'Small Target',
+            desc: 'Ranged attacks against you suffer Disadvantage when you are behind any form of cover, however partial.',
+            tracker: null
+        }
+    ],
+    human: [
+        {
+            name: 'Driven',
+            desc: 'Once per session, declare a Purpose. Gain +1 to all rolls directly tied to achieving it until fulfilled or abandoned.',
+            tracker: { type: 'text', label: 'Current Purpose:' }
+        },
+        {
+            name: 'Adaptable',
+            desc: 'One skill chosen at character creation costs 5xp less than the listed racial price. Chosen once, locked permanently.',
+            tracker: { type: 'text', label: 'Reduced skill:' }
+        },
+        {
+            name: 'The Relentless',
+            desc: 'Once per session when reduced to 0 wounds, roll 1d10. On a natural 10 only, survive at 1 wound. No bonuses apply — always 10% chance.',
+            tracker: { type: 'checkbox', label: 'Used this session' }
+        }
+    ]
+};
+
+
+
+
+// ── POPOUT PANELS ────────────────────────────────────────────────────────────
+
+
+
+
+// Close popouts when clicking elsewhere
+document.addEventListener('click', e => {
+    if (!e.target.closest('.popout-group') && 
+        !e.target.closest('.popout-btn') && 
+        !e.target.closest('.popout-dropdown')) {
+        document.querySelectorAll('.popout-dropdown').forEach(d => d.classList.remove('open'));
+        document.querySelectorAll('.popout-btn').forEach(b => b.classList.remove('active'));
+    }
+});
+
+
+function renderRacialTraits() {
+    const race = (document.getElementById('race-select')?.value || 'none').toLowerCase();
+    const label = document.getElementById('racial-badge-label');
+    if (label) {
+        label.textContent = (race === 'none') ? '—' :
+            race.charAt(0).toUpperCase() + race.slice(1);
+    }
+}
+
+function openRacialModal() {
+    const race = (document.getElementById('race-select')?.value || 'none').toLowerCase();
+    const traits = RACIAL_TRAITS[race];
+    const modal = document.getElementById('racial-modal');
+    const body  = document.getElementById('racial-modal-body');
+    if (!modal || !body) return;
+
+    if (!traits) {
+        body.innerHTML = '<p style="text-align:center;font-style:italic;color:rgba(2,7,14,0.4);padding:20px;">Select a race on the character sheet to view racial passives.</p>';
+    } else {
+        const raceName = race.charAt(0).toUpperCase() + race.slice(1);
+        body.innerHTML = `
+            <div style="font-family:'Cinzel',serif;font-size:10pt;letter-spacing:3px;text-transform:uppercase;color:var(--blood);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(139,16,16,0.2);">
+                ${raceName} — Racial Passives
+            </div>
+            ${traits.map((t, i) => {
+                let tracker = '';
+                if (t.tracker?.type === 'checkbox') {
+                    tracker = `<label style="display:flex;align-items:center;gap:5px;margin-top:8px;font-size:9.5pt;color:var(--blood);font-weight:700;">
+                        <input type="checkbox" id="rt_cb_${i}" onchange="upd()" style="accent-color:var(--blood);width:12px;height:12px;">
+                        ${t.tracker.label}
+                    </label>`;
+                } else if (t.tracker?.type === 'text' || t.tracker?.type === 'note') {
+                    tracker = `<div style="display:flex;align-items:center;gap:6px;margin-top:6px;">
+                        <span style="font-size:9.5pt;color:var(--blood);font-weight:700;white-space:nowrap;">${t.tracker.label}</span>
+                        <input type="text" id="rt_txt_${i}" placeholder="..." maxlength="40" oninput="upd()"
+                            style="flex:1;border:none;border-bottom:1px solid rgba(2,7,14,0.2);background:transparent;font-size:10pt;padding:3px 5px;color:var(--ink);">
+                    </div>`;
+                }
+                return `<div style="padding:10px 0;border-bottom:1px solid rgba(2,7,14,0.08);">
+                    <div style="font-family:'Cinzel',serif;font-size:11pt;font-weight:900;color:var(--ink);margin-bottom:5px;letter-spacing:0.5px;">${t.name}</div>
+                    <div style="font-size:11pt;color:rgba(2,7,14,0.75);line-height:1.6;">${t.desc}</div>
+                    ${tracker}
+                </div>`;
+            }).join('')}
+        `;
+    }
+
+    modal.style.display = 'flex';
+    // Close on outside click
+    modal.onclick = function(e) {
+        if (e.target === modal) closeRacialModal();
+    };
+}
+
+function closeRacialModal() {
+    const modal = document.getElementById('racial-modal');
+    if (modal) modal.style.display = 'none';
+}
+
+
+
 function init() {
     // Characteristics grid
     const charGrid = g('char-grid');
@@ -2649,6 +2950,7 @@ function init() {
 
     if (g('ap_total')) { g('ap_total').readOnly = true; g('ap_total').style.background = "rgba(0,0,0,0.08)"; }
     upd();
+    renderRacialTraits();
 }
 
 // ================================================================
@@ -3085,5 +3387,39 @@ window.addEventListener('afterprint', () => {
 window.onload = init;
 
 </script>
+
+<!-- RACIAL TRAITS MODAL -->
+<div id="racial-modal" style="
+    display:none; position:fixed; inset:0;
+    background:rgba(2,7,14,0.75);
+    z-index:9999; align-items:center; justify-content:center;
+    padding:20px;
+">
+    <div style="
+        background:var(--parchment); max-width:480px; width:100%;
+        border:1px solid rgba(139,16,16,0.3);
+        border-top:4px solid var(--blood);
+        padding:28px; position:relative;
+        box-shadow:0 20px 60px rgba(0,0,0,0.5);
+        max-height:80vh; overflow-y:auto;
+    ">
+        <button onclick="closeRacialModal()" style="
+            position:absolute; top:10px; right:12px;
+            background:none; border:none; cursor:pointer;
+            font-size:14pt; color:var(--blood); line-height:1;
+            font-family:'Cinzel',serif; font-weight:900;
+        ">✕</button>
+        <div id="racial-modal-body"></div>
+        <div style="text-align:right;margin-top:16px;padding-top:12px;border-top:1px solid rgba(2,7,14,0.1);">
+            <button onclick="closeRacialModal()" style="
+                background:var(--blood); color:var(--parchment);
+                border:none; padding:7px 20px; cursor:pointer;
+                font-family:'Cinzel',serif; font-size:7.5pt;
+                letter-spacing:2px; text-transform:uppercase;
+            ">Close</button>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
