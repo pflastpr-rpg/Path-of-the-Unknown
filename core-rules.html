@@ -786,10 +786,11 @@
             <span class="trait-title">The Discipline of the String (Weapon Proficiencies)</span>
             <p>You must select a specific ranged proficiency when investing your first point in the Combat (Ranged) skill. Wielding an unfamiliar instrument of war imposes <strong>Disadvantage To-Hit</strong>.</p>
             <ul style="margin-top: 8px;">
-                <li><strong>Bow:</strong> Short Bow, Longbow, Recurve, Elven Bow.</li>
-                <li><strong>Crossbow:</strong> Light, Standard, and Heavy Crossbows.</li>
-                <li><strong>Throwing:</strong> Javelins, Knives, Axes, Spears. <em>(The brutal weight of these weapons allows you to add your <strong>Physique bonus</strong> to the Wound rolls).</em></li>
-                <li><strong>Black Powder:</strong> Pistols, Rifles, Blunderbuss.</li>
+                <li><strong>Bow:</strong> Shortbow (1 AP), Longbow, Recurve, Elven Bow (2 AP). Each requires its own proficiency investment.</li>
+                <li><strong>Crossbow:</strong> Hand Crossbow (1 AP), Standard Crossbow (2 AP), Heavy Crossbow (3 AP).</li>
+                <li><strong>Throwing:</strong> Knives, Throwing Axes, Javelins, Darts, Slings. <em>Throwing weapons add your full <strong>Physique modifier</strong> to wounds — the weight of the projectile carries the force.</em></li>
+                <li><strong>Black Powder:</strong> Pistol (2 AP), Rifle (3 AP), Blunderbuss (3 AP, 15 Ft AoE).</li>
+                <li><strong>Entangling:</strong> Whip, Lasso. These weapons do not deal wounds directly — on a successful hit the target must pass an Agility test or be Bound. The attacker chooses which limb is snared.</li>
             </ul>
         </div>
 
@@ -1886,7 +1887,7 @@
                     <td><strong>Cloth / Padded</strong></td>
                     <td style="text-align:center; color: var(--blood);">1</td>
                     <td style="text-align:center;">1</td>
-                    <td>None</td>
+                    <td><strong>-1 Melee To-Hit</strong></td>
                 </tr>
                 <tr>
                     <td><strong>Leather</strong></td>
@@ -1907,7 +1908,7 @@
                     <td><strong>-2 Agility, +2 TN to Cast, -5 Ft Move</strong></td>
                 </tr>
                 <tr>
-                    <td><strong>Splint Mail</strong></td>
+                    <td><strong>Banded / Splint Mail</strong></td>
                     <td style="text-align:center; color: var(--blood);">3</td>
                     <td style="text-align:center;">5</td>
                     <td><strong>-2 Agility, -1 Awareness, +3 TN to Cast, -10 Ft Move</strong></td>
@@ -1929,6 +1930,12 @@
                     <td style="text-align:center; color: var(--blood);">4</td>
                     <td style="text-align:center;">5</td>
                     <td><em>None — Absolute arcane and physical perfection</em></td>
+                </tr>
+                <tr style="background: rgba(184, 134, 11, 0.07);">
+                    <td><strong>Mithril (Elven)</strong></td>
+                    <td style="text-align:center; color: var(--blood);">4</td>
+                    <td style="text-align:center;">6</td>
+                    <td><em>None — Elven-forged, lighter and denser than standard mithril</em></td>
                 </tr>
             </table>
 
@@ -1995,11 +2002,39 @@
                     <td>Advantage To-Wound vs Leather/Cloth</td>
                 </tr>
                 <tr>
-                    <td><strong>Polearm</strong></td>
-                    <td>Halberd, Pike</td>
-                    <td style="color: var(--blood);">Disadvantage</td>
+                    <td><strong>Finesse</strong></td>
+                    <td>Dagger, Rapier, Shortsword, Whip</td>
+                    <td>Normal</td>
                     <td>1d10</td>
-                    <td>Ranks (Permits striking safely from the 2nd line)</td>
+                    <td>Wound modifier uses Agility + Physique/3 instead of raw Physique</td>
+                </tr>
+                <tr>
+                    <td><strong>Polearm</strong></td>
+                    <td>Halberd, Pike, Glaive</td>
+                    <td>Normal</td>
+                    <td>1d10</td>
+                    <td>Ranks — permits striking safely from the 2nd line. 2 AP.</td>
+                </tr>
+                <tr>
+                    <td><strong>Lance</strong></td>
+                    <td>Lance</td>
+                    <td>Normal</td>
+                    <td>1d10</td>
+                    <td>Mounted only. Wound modifier uses Physique ×3. 2 AP.</td>
+                </tr>
+                <tr>
+                    <td><strong>Flail</strong></td>
+                    <td>Flail, Morningstar</td>
+                    <td>Normal</td>
+                    <td>1d10</td>
+                    <td>Adds Awareness modifier to wounds on top of Physique modifier.</td>
+                </tr>
+                <tr>
+                    <td><strong>Unarmed</strong></td>
+                    <td>Fists, Feet</td>
+                    <td>Normal</td>
+                    <td>1d10</td>
+                    <td>Disadvantage To-Wound vs Leather or heavier. Grants 1 additional attack per turn.</td>
                 </tr>
             </table>
         </div>
@@ -2008,39 +2043,95 @@
             <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px; margin-top: 20px;">III. Ranged Weaponry</h3>
             <table>
                 <tr>
-                    <th>Class</th>
-                    <th>Instruments of Violence</th>
+                    <th>Weapon</th>
+                    <th>AP Cost</th>
                     <th>Wounds</th>
                     <th>Effective Range</th>
                     <th>Special Traits</th>
                 </tr>
                 <tr>
-                    <td><strong>Black Powder</strong></td>
-                    <td>Pistol, Rifle</td>
-                    <td>A2d10 / A3d10</td>
-                    <td>75–400 Ft</td>
-                    <td>Piercing (Ignores 4 points of Wound Mitigation)</td>
-                </tr>
-                <tr>
-                    <td><strong>Bows</strong></td>
-                    <td>Short, Long, Elven</td>
+                    <td><strong>Shortbow</strong></td>
+                    <td style="text-align:center;">1</td>
                     <td>1d10</td>
-                    <td>80–400 Ft</td>
-                    <td>Quickload (Requires only 1 Action Point)</td>
+                    <td>80 Ft</td>
+                    <td>Quickload. 1 AP to fire.</td>
                 </tr>
                 <tr>
-                    <td><strong>Crossbows</strong></td>
-                    <td>Light, Heavy</td>
-                    <td>2d10 / 3d10</td>
-                    <td>60–300 Ft</td>
-                    <td>Piercing (Ignores 3 points of Wound Mitigation)</td>
-                </tr>
-                <tr>
-                    <td><strong>Throwing</strong></td>
-                    <td>Knife, Javelin, Axe</td>
+                    <td><strong>Longbow / Elven Bow</strong></td>
+                    <td style="text-align:center;">2</td>
                     <td>1d10</td>
-                    <td>15–80 Ft</td>
-                    <td>Brutal Arc (Add your Physique Bonus to Wounds)</td>
+                    <td>400 Ft</td>
+                    <td>Recurve: reduces target's armor mitigation by half up to half range.</td>
+                </tr>
+                <tr>
+                    <td><strong>Hand Crossbow</strong></td>
+                    <td style="text-align:center;">1</td>
+                    <td>1d10</td>
+                    <td>50 Ft</td>
+                    <td>Concealable. One-handed.</td>
+                </tr>
+                <tr>
+                    <td><strong>Crossbow (Standard)</strong></td>
+                    <td style="text-align:center;">2</td>
+                    <td>2d10</td>
+                    <td>300 Ft</td>
+                    <td>Piercing — ignores all armor mitigation at half range.</td>
+                </tr>
+                <tr>
+                    <td><strong>Heavy Crossbow</strong></td>
+                    <td style="text-align:center;">3</td>
+                    <td>3d10</td>
+                    <td>300 Ft</td>
+                    <td>Piercing — ignores all mitigation (except magical). Natural 10 To-Hit inflicts Bleeding.</td>
+                </tr>
+                <tr>
+                    <td><strong>Pistol</strong></td>
+                    <td style="text-align:center;">2</td>
+                    <td>2d10</td>
+                    <td>75 Ft</td>
+                    <td>Piercing — ignores 4 points of Wound Mitigation.</td>
+                </tr>
+                <tr>
+                    <td><strong>Rifle</strong></td>
+                    <td style="text-align:center;">3</td>
+                    <td>3d10</td>
+                    <td>400 Ft</td>
+                    <td>Piercing — ignores all armor mitigation at standard range.</td>
+                </tr>
+                <tr>
+                    <td><strong>Blunderbuss</strong></td>
+                    <td style="text-align:center;">3</td>
+                    <td>2d10</td>
+                    <td>60 Ft (15 Ft AoE)</td>
+                    <td>AoE cone. All targets in 15 Ft AoE: DV10 Physique or suffer Stunned.</td>
+                </tr>
+                <tr>
+                    <td><strong>Throwing (Knife / Axe)</strong></td>
+                    <td style="text-align:center;">1</td>
+                    <td>1d10</td>
+                    <td>80 Ft</td>
+                    <td>Brutal Arc — add full Physique modifier to wounds.</td>
+                </tr>
+                <tr>
+                    <td><strong>Javelin</strong></td>
+                    <td style="text-align:center;">1</td>
+                    <td>1d10</td>
+                    <td>80 Ft</td>
+                    <td>Brutal Arc — add full Physique modifier to wounds.</td>
+                </tr>
+                <tr>
+                    <td><strong>Dart / Sling</strong></td>
+                    <td style="text-align:center;">1</td>
+                    <td>1d10</td>
+                    <td>30–80 Ft</td>
+                    <td>Concealable. Low profile — rarely provokes attention.</td>
+                </tr>
+                <tr>
+                    <td><strong>Whip / Lasso</strong></td>
+                    <td style="text-align:center;">1</td>
+                    <td>—</td>
+                    <td>15 Ft</td>
+                    <td>Entangling — on failed Agility test, target is Bound. Attacker chooses which limb is snared.</td>
                 </tr>
             </table>
         </div>
