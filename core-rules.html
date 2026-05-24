@@ -738,7 +738,7 @@
             <p>Proficiency is the foundation. You must declare a single weapon category (Blunt, Edged, Piercing, Polearm, or Ranged) when investing your first point in the Combat skill. Wielding a weapon you are not formally trained in is a fool's gamble — imposing <strong>Disadvantage</strong> on both your To-Hit and To-Wound rolls.</p>
             <p style="margin-top: 10px;"><strong>The Gateway to Mastery:</strong> Advanced specializations are not universal. You may only purchase an advanced mastery (such as <em>Skewer</em> or <em>Linebreaker</em>) if you possess a formal proficiency in the required weapon category and meet the specific characteristic requirements defined in your ledger.</p>
             <ul style="margin-top: 10px;">
-                <li><strong>Weapon Stances:</strong> Stances like <em>2H-Weapon</em> (Disadvantage To-Hit / Advantage To-Wound) are considered passive modifiers. They stack with active specialization maneuvers (e.g., using <em>Skewer</em> while wielding a 2H-weapon).</li>
+                <li><strong>Weapon Stances:</strong> Stances like <em>2H-Weapon</em> (doubles Physique modifier to wounds, 2 AP cost) are considered passive modifiers. They stack with active specialization maneuvers (e.g., using <em>Skewer</em> while wielding a 2H-weapon).</li>
                 <li><strong>The Action Economy:</strong> Maneuvers defined in your ledger (e.g., <em>Blitz</em>, <em>Full-Weight</em>) override standard attack AP costs. You pay the maneuver's cost; you do not pay for both.</li>
             </ul>
         </div>
@@ -747,8 +747,8 @@
             <span class="trait-title">Weapon Stances &amp; Tactical Choices</span>
             <ul style="margin-top: 8px;">
                 <li><strong>1H-Weapon w/ Shield:</strong> The veteran's choice. Balanced defense and offense. Suffers no penalty To-Hit or To-Wound.</li>
-                <li><strong>2H-Weapon / Polearm:</strong> Devastating weight, unwieldy momentum. Suffer <strong>Disadvantage To-Hit</strong>, but gain <strong>Advantage To-Wound</strong> when the strike lands.</li>
-                <li><strong>Dual-Wield:</strong> A flurry of steel. Grants <strong>1 additional attack</strong> per turn. Suffer Disadvantage To-Hit and gain no Advantage To-Wound. <em>(Requires the use of two Small/Medium weapons, or one Large and one Small/Medium weapon).</em></li>
+                <li><strong>2H-Weapon:</strong> Both hands on the grip focus every ounce of your Physique into the blow. Your <strong>Physique modifier to wounds is doubled</strong>. There is no To-Hit penalty for a proficient wielder — the weight demands commitment, not recklessness. Costs 2 AP per strike. Halflings cannot wield 2H weapons.</li>
+                <li><strong>Dual-Wield (Off-Hand):</strong> A flurry of steel. Grants <strong>1 additional attack</strong> per turn with the off-hand weapon. The off-hand strike uses <strong>half your Physique modifier</strong> to wounds (finesse weapons use half Agility modifier instead). No To-Hit penalty for proficient wielders. <em>(Requires two Small/Medium weapons, or one Large and one Small/Medium weapon).</em></li>
                 <li><strong>Unarmed:</strong> Desperate, brutal brawling. Grants 1 additional attack. Suffer Disadvantage To-Wound against any target wearing Leather armor or heavier.</li>
                 <li><strong>Mounted:</strong> The terror of the high ground. Gain Advantage on both To-Hit and To-Wound against smaller or equal-sized unmounted targets.</li>
             </ul>
@@ -1982,10 +1982,10 @@
                 </tr>
                 <tr>
                     <td><strong>2-Handed</strong></td>
-                    <td>Greatsword, Greataxe</td>
-                    <td style="color: var(--blood);">Disadvantage</td>
-                    <td style="color: var(--blood);">Ad10</td>
-                    <td>Ignores 2 points of Wound Mitigation</td>
+                    <td>Greatsword, Greataxe, Maul, Halberd</td>
+                    <td>Normal</td>
+                    <td>1d10</td>
+                    <td>Doubles Physique modifier on wounds. Costs 2 AP to strike.</td>
                 </tr>
                 <tr>
                     <td><strong>Piercing</strong></td>
