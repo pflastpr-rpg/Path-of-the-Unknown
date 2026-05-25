@@ -3370,7 +3370,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Exoskeleton (TN 7)</span>
             <span style="font-weight: bold; font-size: 10pt; color: var(--gold); display: block; margin-bottom: 8px;">Actions: 2 | Range: Touch | Duration: 1 + bonus turns</span>
-            <p>Mutate the target's epidermis into a rigid carapace. <strong>Wound Mitigation</strong> increases by their Willpower characteristic against melee and normal ranged attacks, but the stiffness imposes a <strong>-1 penalty to Agility</strong>. This effect does not stack with itself.</p>
+            <p>Mutate the target's epidermis into a rigid carapace. <strong>Wound Mitigation</strong> increases by their <strong>Willpower modifier</strong> against melee and normal ranged attacks, but the stiffness imposes a <strong>-1 penalty to Agility</strong>. This effect does not stack with itself.</p>
         </div>
 
         <div class="trait-box">
@@ -3394,7 +3394,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Fire Sling (TN 7)</span>
             <span style="font-weight: bold; font-size: 10pt; color: var(--gold); display: block; margin-bottom: 8px;">Actions: 2 | Range: 125 Ft | Duration: Instant</span>
-            <p>Ignite and hurl kinetic bullets dealing <strong>2d10 + casting bonus</strong> wounds. Targets susceptible to fire take an additional wound bonus equal to your Intellect characteristic.</p>
+            <p>Ignite and hurl kinetic bullets dealing <strong>2d10 + casting bonus</strong> wounds. Targets susceptible to fire take an additional <strong>Dis.d10</strong> wounds from the searing impact.</p>
         </div>
 
         <div class="trait-box">
@@ -3465,8 +3465,8 @@ APPENDIX: XI-A</span>
 
         <div class="trait-box">
             <span class="trait-title">Weapon Ward (TN 8)</span>
-            <span style="font-weight: bold; font-size: 10pt; color: var(--gold); display: block; margin-bottom: 8px;">Actions: 2 | Range: 40 Ft | Duration: 1 + bonus turns</span>
-            <p>A kinetic dampening field. All non-magical melee and ranged attacks against the target are mitigated by the caster's <strong>Intellect characteristic</strong>. Magical weapons bypass this ward entirely.</p>
+            <span style="font-weight: bold; font-size: 10pt; color: var(--gold); display: block; margin-bottom: 8px;">Actions: 2 | Range: 40 Ft | Duration: 1 turn</span>
+            <p>A kinetic dampening field snaps into existence around the target. For <strong>1 turn</strong>, all non-magical melee and ranged attacks against the target are completely negated. Magical weapons bypass this ward entirely.</p>
         </div>
 
         <div class="trait-box">
@@ -3529,13 +3529,7 @@ APPENDIX: XI-A</span>
             <p>A heavy magical projectile deals <strong>2d10 + casting damage bonus</strong> wounds. The target must surpass Willpower TN 9 + Resist bonus to endure or suffer the Stunned condition and lose 1 AP on their next turn.</p>
         </div>
 
-TN 10)</span>
-                <strong>Actions:</strong> 3 | <strong>Range:</strong> 150 Ft | <strong>Target:</strong> 20 Ft AoE | <strong>Duration:</strong> 1 + bonus turns
-                <p>Detonate an electrified field at a target point. All creatures in the AoE take <strong>3d10 + casting damage bonus</strong> wounds immediately. Targets must surpass Willpower TN 10 + Resist bonus to break free or be Immobilized for 1 turn. Any creature that remains inside the AoE takes <strong>1d10</strong> wounds at the start of each subsequent turn.</p>
-            </div>
-
 <div class="trait-box">
-                <span class="trait-title">        <div class="trait-box">
             <span class="trait-title">Static Bomb (TN 10)</span>
             <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 3 | Range: 150 Ft | Target: 20 Ft AoE | Duration: 1 + bonus turns</span>
             <p>Detonate an electrified field of geometric stasis at a target point. All creatures in the AoE take <strong>3d10 + casting damage bonus</strong> wounds immediately. Targets must surpass Willpower TN 10 + Resist bonus to break free or be Immobilized for 1 turn. Any creature that remains inside the crackling AoE takes <strong>1d10</strong> wounds at the start of each subsequent turn.</p>
@@ -3568,7 +3562,7 @@ TN 10)</span>
         <div class="trait-box">
             <span class="trait-title">Decompose (TN 10)</span>
             <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 3 | Range: 120 Ft | Duration: 1 + bonus turns</span>
-            <p>A targeted unravelling of cellular cohesion. The rot seeps through armor and flesh alike — the initial <strong>2d10 + casting damage bonus</strong> wounds and the <strong>1d10</strong> wounds dealt at the start of each subsequent turn bypass all Wound Mitigation entirely. Non-magical organic armor (leather, fur) is completely destroyed after <strong>Dis.d10</strong> turns of exposure. The target must desperately shatter Willpower TN 10 + Resist bonus each turn to halt the necrosis.</p>
+            <p>A targeted unravelling of cellular cohesion. The rot eats through flesh and material alike — dealing <strong>2d10 + casting damage bonus</strong> wounds immediately and <strong>1d10</strong> wounds at the start of each subsequent turn. Non-magical organic armor (leather, fur) loses <strong>1 point of Wound Mitigation</strong> per turn of exposure, crumbling completely at 0. The target must surpass Willpower TN 10 + Resist bonus each turn to halt the necrosis.</p>
         </div>
 
         <div class="trait-box">
@@ -3693,7 +3687,7 @@ TN 10)</span>
         <div class="trait-box">
             <span class="trait-title">Time Suspended (TN 13)</span>
             <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 4 | Range: 80 Ft | Duration: Instant</span>
-            <p>Sever the flow of chronomancy for a fraction of a second. The caster and up to <strong>2 allies</strong> within 80 Ft each gain <strong>1 free action</strong> (Melee, Ranged, or Cast) that resolves immediately before time resumes. Enemies have no awareness that time was suspended. The free actions must be declared and resolved in the same instant — no movement is granted.</p>
+            <p>Sever the flow of chronomancy for a fraction of a second. The caster and <strong>1 ally</strong> within 80 Ft split <strong>1 free action</strong> between them — one acts, the other does not. The chosen action (Melee, Ranged, or Cast) resolves immediately before time resumes. Enemies have no awareness that time was suspended. The free action must be declared instantly — no movement is granted.</p>
         </div>
 
         <div class="trait-box">
