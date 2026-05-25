@@ -864,7 +864,7 @@
             <div class="id-f w-name"><label>Name</label><input type="text" id="char-name-input" maxlength="31" oninput="document.title = this.value ? this.value + ' - RPG Ledger' : 'RPG Ledger v14'"></div>
             <div class="id-f w-race">
                 <label>Race</label>
-                <select id="race-select" onchange="enforceRaceWeaponRules(); renderRacialTraits(); upd()">
+                <select id="race-select" onchange="adaptableLocked=false; try{localStorage.removeItem('pou_adaptable_locked');}catch(e){} enforceRaceWeaponRules(); renderRacialTraits(); upd()">
                     <option value="none">-</option>
                     <option value="dwarf">Dwarf</option>
                     <option value="elf">Elf</option>
@@ -1464,6 +1464,21 @@ function calcWeaponCompounding(n, base) {
     return total;
 }
 
+// Tracks whether the Human Adaptable skill choice has been locked
+let adaptableLocked = false;
+
+function getEffectiveBase(skillName, base) {
+    const race = (document.getElementById('race-select')?.value || 'none').toLowerCase();
+    if (race !== 'human' || base < 20) return base;
+    const adaptableInput = document.getElementById('rt_txt_1');
+    if (!adaptableInput) return base;
+    const chosenSkill = adaptableInput.value.trim().toLowerCase();
+    if (chosenSkill && skillName.toLowerCase() === chosenSkill) {
+        return Math.max(1, base - 5);
+    }
+    return base;
+}
+
 function marginalWeaponCost(n, base) {
     // Cost of the nth specialisation (1-indexed)
     return base * Math.pow(3, n - 1);
@@ -1577,10 +1592,24 @@ function processAllSkills(state) {
             // total drives all derived stats and characteristics
             extractSkillPoints(skillName, total, state);
             state.categoryTotals[gName] += total;
-            skillInput.value = base;
+
+            // Apply Human Adaptable discount if applicable
+            const effectiveBase = getEffectiveBase(skillName, base);
+
+            // Show effective base in the cost box; green if discounted
+            skillInput.value = effectiveBase;
+            if (effectiveBase !== base) {
+                skillInput.style.color = '#3B6D11';
+                skillInput.style.fontWeight = '900';
+                skillInput.title = `Adaptable discount active: ${base} → ${effectiveBase} XP base`;
+            } else {
+                skillInput.style.color = '';
+                skillInput.style.fontWeight = '';
+                skillInput.title = '';
+            }
 
             // Only purchased pts cost XP — bonus is free
-            state.spentXP += calcCompounding(purchased, base);
+            state.spentXP += calcCompounding(purchased, effectiveBase);
         });
     });
 }
@@ -2168,11 +2197,12 @@ function handleSkillInput(input) {
             // Find base XP cost for this skill
             const race = document.getElementById('race-select')?.value || 'none';
             const base = (race !== 'none' && SKILL_COSTS[skillName]) ? (SKILL_COSTS[skillName][race] || 0) : 0;
+            const effectiveAtrophyBase = getEffectiveBase(skillName, base);
 
-            if (base > 0) {
+            if (effectiveAtrophyBase > 0) {
                 // XP spent on the removed points (compounding from actualNew+1 to oldVal)
-                const xpOnAll    = calcCompounding(oldVal, base);
-                const xpOnKept   = calcCompounding(actualNew, base);
+                const xpOnAll    = calcCompounding(oldVal, effectiveAtrophyBase);
+                const xpOnKept   = calcCompounding(actualNew, effectiveAtrophyBase);
                 const xpOnRemoved = xpOnAll - xpOnKept;
 
                 // 2/3 permanently lost, 1/3 returned
@@ -2760,8 +2790,8 @@ const RACIAL_TRAITS = {
         },
         {
             name: 'Adaptable',
-            desc: 'One skill chosen at character creation costs 5xp less than the listed racial price. Chosen once, locked permanently.',
-            tracker: { type: 'text', label: 'Reduced skill:' }
+            desc: 'One skill chosen at character creation costs 5 XP less per rank across its entire compounding chain. Must be a skill with a base cost of 20 XP or higher for Humans. Chosen once, locked permanently. Enter the exact skill name below.',
+            tracker: { type: 'text', label: 'Chosen skill:' }
         },
         {
             name: 'The Relentless',
@@ -2806,6 +2836,11 @@ function openRacialModal() {
     const body  = document.getElementById('racial-modal-body');
     if (!modal || !body) return;
 
+    // Restore lock state from localStorage before rebuilding
+    if (race === 'human') {
+        try { if (localStorage.getItem('pou_adaptable_locked') === '1') adaptableLocked = true; } catch(e) {}
+    }
+
     if (!traits) {
         body.innerHTML = '<p style="text-align:center;font-style:italic;color:rgba(2,7,14,0.4);padding:20px;">Select a race on the character sheet to view racial passives.</p>';
     } else {
@@ -2822,11 +2857,12 @@ function openRacialModal() {
                         ${t.tracker.label}
                     </label>`;
                 } else if (t.tracker?.type === 'text' || t.tracker?.type === 'note') {
+                    const isAdaptable = (race === 'human' && t.name === 'Adaptable');
                     tracker = `<div style="display:flex;align-items:center;gap:6px;margin-top:6px;">
                         <span style="font-size:9.5pt;color:var(--blood);font-weight:700;white-space:nowrap;">${t.tracker.label}</span>
-                        <input type="text" id="rt_txt_${i}" placeholder="..." maxlength="40" oninput="upd()"
+                        <input type="text" id="rt_txt_${i}" placeholder="..." maxlength="40" oninput="${isAdaptable ? 'validateAdaptable();' : ''}upd()"
                             style="flex:1;border:none;border-bottom:1px solid rgba(2,7,14,0.2);background:transparent;font-size:10pt;padding:3px 5px;color:var(--ink);">
-                    </div>`;
+                    </div>${isAdaptable ? '<div id="adaptable-status" style="font-size:9pt;margin-top:4px;padding-left:2px;"></div>' : ''}`;
                 }
                 return `<div style="padding:10px 0;border-bottom:1px solid rgba(2,7,14,0.08);">
                     <div style="font-family:'Cinzel',serif;font-size:11pt;font-weight:900;color:var(--ink);margin-bottom:5px;letter-spacing:0.5px;">${t.name}</div>
@@ -2838,6 +2874,10 @@ function openRacialModal() {
     }
 
     modal.style.display = 'flex';
+    // Restore lock styling if already locked
+    if (race === 'human' && adaptableLocked) {
+        setTimeout(() => applyAdaptableLock(), 0);
+    }
     // Close on outside click
     modal.onclick = function(e) {
         if (e.target === modal) closeRacialModal();
@@ -2849,9 +2889,85 @@ function closeRacialModal() {
     if (modal) modal.style.display = 'none';
 }
 
+function validateAdaptable() {
+    const status = document.getElementById('adaptable-status');
+    const input = document.getElementById('rt_txt_1');
+    if (!status || !input) return;
+
+    // If already locked, don't revalidate
+    if (adaptableLocked) return;
+
+    const entered = input.value.trim().toLowerCase();
+    if (!entered) { status.textContent = ''; return; }
+
+    const race = (document.getElementById('race-select')?.value || 'none').toLowerCase();
+    if (race !== 'human') { status.textContent = ''; return; }
+
+    let matchedBase = 0;
+    let matchedName = '';
+    if (SKILL_COSTS) {
+        for (const sk of Object.keys(SKILL_COSTS)) {
+            if (sk.toLowerCase() === entered) {
+                matchedBase = SKILL_COSTS[sk]['human'] || 0;
+                matchedName = sk;
+                break;
+            }
+        }
+    }
+
+    if (!matchedName) {
+        status.innerHTML = '<span style="color:#A32D2D;">Skill not recognised — check spelling.</span>';
+    } else if (matchedBase < 20) {
+        status.innerHTML = `<span style="color:#A32D2D;">${matchedName} costs ${matchedBase} XP — minimum is 20 XP. Choose another skill.</span>`;
+    } else {
+        status.innerHTML = `<span style="color:#3B6D11;">${matchedName} (base ${matchedBase} XP) — discount active. All ranks cost ${matchedBase - 5} XP base.</span>
+            <button onclick="lockAdaptable()" style="margin-left:8px;font-size:9pt;padding:2px 8px;background:var(--blood);color:#fff;border:none;cursor:pointer;border-radius:3px;">Lock choice</button>`;
+    }
+}
+
+function lockAdaptable() {
+    const input = document.getElementById('rt_txt_1');
+    const status = document.getElementById('adaptable-status');
+    if (!input) return;
+    const entered = input.value.trim();
+    if (!confirm(`Lock "${entered}" as your Adaptable skill? This cannot be undone on this character.`)) return;
+    adaptableLocked = true;
+    try { localStorage.setItem('pou_adaptable_locked', '1'); } catch(e) {}
+    applyAdaptableLock();
+    upd();
+}
+
+function applyAdaptableLock() {
+    const input = document.getElementById('rt_txt_1');
+    const status = document.getElementById('adaptable-status');
+    if (!input) return;
+    input.disabled = true;
+    input.style.color = '#3B6D11';
+    input.style.fontWeight = '900';
+    input.style.opacity = '1';
+    input.style.cursor = 'not-allowed';
+    if (status) {
+        const entered = input.value.trim();
+        const race = (document.getElementById('race-select')?.value || 'none').toLowerCase();
+        let matchedBase = 0;
+        if (SKILL_COSTS) {
+            for (const sk of Object.keys(SKILL_COSTS)) {
+                if (sk.toLowerCase() === entered.toLowerCase()) {
+                    matchedBase = SKILL_COSTS[sk]['human'] || 0;
+                    break;
+                }
+            }
+        }
+        status.innerHTML = `<span style="color:#3B6D11;">Locked — ${entered} (${matchedBase - 5} XP base). Cannot be changed.</span>`;
+    }
+}
+
 
 
 function init() {
+    // Restore Human Adaptable lock state on page load
+    try { if (localStorage.getItem('pou_adaptable_locked') === '1') adaptableLocked = true; } catch(e) {}
+
     // Characteristics grid
     const charGrid = g('char-grid');
     if (charGrid && charGrid.children.length === 0) {
