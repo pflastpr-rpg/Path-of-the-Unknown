@@ -4,7 +4,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPG Ledger v14 - Scars and Purpose</title>
+    <title>RPG Ledger v14 - Thrice-Marked</title>
     <style>
         :root {
             --iron: #02070e;
@@ -270,7 +270,7 @@
         .k-item input[type="text"] { border: none; flex: 1; font-weight: 900; font-size: 9pt; background: transparent; min-width: 0 !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .k-item select, .k-item select.spell-select { border: none; flex: 1; font-weight: 900; font-size: 10pt; outline: none; font-family: inherit; background: transparent; color: var(--ink); min-width: 0 !important; }
         .k-item.locked { opacity: 0.3; pointer-events: none; filter: grayscale(100%); background: rgba(0,0,0,0.2) !important; position: relative; }
-        .k-item.locked::after { content: "🔒"; position: absolute; right: 5px; font-size: 8pt; }
+        .k-item.locked::after { content: "◈"; position: absolute; right: 5px; font-size: 8pt; }
         .k-cb { transform: scale(1.2); }
         #spells-grid .k-item { gap: 1px; }
         #spells-grid .k-item.cantrip-slot { border-color: #3D1A6E; background: rgba(61,26,110,0.06); }
@@ -818,7 +818,7 @@
 <div class="sheet">
 
 <div class="no-print top-bar">
-    <div class="top-bar-title">Scars and Purpose</div>
+    <div class="top-bar-title">Thrice-Marked</div>
     <div class="vault-controls">
         <select id="cloud-char-select" class="btn-vault" style="background:var(--white); color:var(--ink); height:26px; font-size:9pt; width:140px; cursor:pointer;">
             <option value="Baanon Kervarsha">Baanon Kervarsha</option>
@@ -828,30 +828,30 @@
             <option value="Leorlian">Leorlian</option>
             <option value="Unknown Hero">Unknown</option>
         </select>
-        <button class="btn-vault" id="btn-cloud-load" onclick="fetchCharacterFromCloud()">☁️ Cloud</button>
+        <button class="btn-vault" id="btn-cloud-load" onclick="fetchCharacterFromCloud()">⌁ Cloud</button>
         <div style="width:1px; height:20px; background:var(--iron); margin:0 2px; opacity:0.3;"></div>
         <div class="vault-menu">
-            <button class="vault-menu-btn">📁 File ▾</button>
+            <button class="vault-menu-btn">≡ File ▾</button>
             <div class="vault-dropdown">
-                <button onclick="saveData()">💾 Save .JSON</button>
-                <button onclick="saveAsHTML()">📑 Save .HTML</button>
+                <button onclick="saveData()">↓ Save .JSON</button>
+                <button onclick="saveAsHTML()">↓ Save .HTML</button>
                 <button onclick="exportToTracker()" style="color:#7ec87e;">⚔ Send to Tracker</button>
                 <div class="drop-divider"></div>
-                <label>📂 Load Local<input type="file" id="load-input" accept=".json,.rpg" style="display:none" onchange="loadData(this)"></label>
-                <label style="color:#7ec87e;">📥 Import Creator<input type="file" id="import-pou-input" style="display:none" accept=".pou,.json" onchange="importFromCreator(this)"></label>
+                <label>↑ Load Local<input type="file" id="load-input" accept=".json,.rpg" style="display:none" onchange="loadData(this)"></label>
+                <label style="color:#7ec87e;">↓ Import Creator<input type="file" id="import-pou-input" style="display:none" accept=".pou,.json" onchange="importFromCreator(this)"></label>
                 <div class="drop-divider"></div>
-                <button onclick="recoverAutosave()" style="color:#f0c040;">♻ Recover Autosave</button>
+                <button onclick="recoverAutosave()" style="color:#f0c040;">⟳ Recover Autosave</button>
             </div>
         </div>
         <div style="width:1px; height:20px; background:var(--iron); margin:0 2px; opacity:0.3;"></div>
-        <button class="btn-vault" style="background:var(--blood); color:var(--parchment);" onclick="openChronicle()">📖 Chronicle</button>
-        <button class="btn-vault" style="background:var(--ink); color:var(--gold);" onclick="location.href='index.html'">🏠 Hub</button>
+        <button class="btn-vault" style="background:var(--blood); color:var(--parchment);" onclick="openChronicle()">✦ Chronicle</button>
+        <button class="btn-vault" style="background:var(--ink); color:var(--gold);" onclick="location.href='index.html'">⌂ Hub</button>
         <div style="width:1px; height:20px; background:var(--iron); margin:0 4px; opacity:0.3;"></div>
         <div style="display:flex; align-items:center; gap:10px; padding:4px 12px; background:#ffffff; border:2px solid var(--ink); border-radius:2px;">
-            <label style="font-family:var(--font-hand); font-size:13pt; font-weight:900; color:var(--ink); white-space:nowrap; cursor:pointer;" for="atrophy-mode" title="Enable Skill Atrophy — reducing skills permanently loses 2/3 XP">⚗ Atrophy</label>
+            <label style="font-family:var(--font-hand); font-size:13pt; font-weight:900; color:var(--ink); white-space:nowrap; cursor:pointer;" for="atrophy-mode" title="Enable Skill Atrophy — reducing skills permanently loses 2/3 XP">⊘ Atrophy</label>
             <input type="checkbox" id="atrophy-mode" onchange="toggleAtrophyMode()" style="width:18px; height:18px; cursor:pointer; accent-color:var(--blood);" title="Atrophy Mode">
             <div id="atrophy-lost-row" style="display:none; align-items:center; gap:6px;">
-                <span style="font-family:var(--font-hand); font-size:13pt; font-weight:900; color:var(--blood);">⚗ Lost:</span>
+                <span style="font-family:var(--font-hand); font-size:13pt; font-weight:900; color:var(--blood);">⊘ Lost:</span>
                 <input type="number" id="atrophy-lost" value="0" readonly style="width:58px; height:26px; background:#fff8e8; color:var(--blood); font-weight:900; border:2px solid var(--blood); text-align:center; font-size:13pt; font-family:var(--font-hand);" title="XP permanently lost to skill atrophy">
             </div>
         </div>
@@ -864,7 +864,7 @@
             <div class="id-f w-name"><label>Name</label><input type="text" id="char-name-input" maxlength="31" oninput="document.title = this.value ? this.value + ' - RPG Ledger' : 'RPG Ledger v14'"></div>
             <div class="id-f w-race">
                 <label>Race</label>
-                <select id="race-select" onchange="adaptableLocked=false; try{localStorage.removeItem('pou_adaptable_locked');}catch(e){} enforceRaceWeaponRules(); renderRacialTraits(); upd()">
+                <select id="race-select" onchange="adaptableLocked=false; try{localStorage.removeItem('tm_adaptable_locked');}catch(e){} enforceRaceWeaponRules(); renderRacialTraits(); upd()">
                     <option value="none">-</option>
                     <option value="dwarf">Dwarf</option>
                     <option value="elf">Elf</option>
@@ -1284,24 +1284,24 @@
         <div style="display:flex; flex-direction:column; gap:6px;">
             <div class="cond-entry"><span class="cond-lbl">🩸 Bleed</span><input type="text" id="cond_bleed" placeholder="Stacks: 1d10/stack/turn — Magic heal only"></div>
             <div class="cond-entry"><span class="cond-lbl">🧪 Poison</span><input type="text" id="cond_poison" placeholder="Lesser: 1d10/TN7 | Greater: 2d10/TN10"></div>
-            <div class="cond-entry"><span class="cond-lbl">🦠 Disease</span><input type="text" id="cond_disease" placeholder="1d10 W / -1 Stat 24h"></div>
-            <div class="cond-entry danger"><span class="cond-lbl" style="color:var(--blood);">💤 Down</span><input type="text" id="cond_uncon" placeholder="Unconscious (0 W)"></div>
+            <div class="cond-entry"><span class="cond-lbl">⊗ Disease</span><input type="text" id="cond_disease" placeholder="1d10 W / -1 Stat 24h"></div>
+            <div class="cond-entry danger"><span class="cond-lbl" style="color:var(--blood);">◌ Down</span><input type="text" id="cond_uncon" placeholder="Unconscious (0 W)"></div>
         </div>
         <div style="display:flex; flex-direction:column; gap:6px;">
-            <div class="cond-entry"><span class="cond-lbl">💫 Stunned</span><input type="text" id="cond_stun" placeholder="Stacks: -1 AP/stack — excess carries over"></div>
-            <div class="cond-entry"><span class="cond-lbl">🧎 Prone</span><input type="text" id="cond_prone" placeholder="Disadv all attacks, Adv vs you, -2 Def, no React"></div>
-            <div class="cond-entry"><span class="cond-lbl">🕸️ Pinned</span><input type="text" id="cond_pinned" placeholder="No Move / Disadv"></div>
-            <div class="cond-entry"><span class="cond-lbl">🧊 Frozen</span><input type="text" id="cond_frozen" placeholder="No Move / Mentals Only"></div>
+            <div class="cond-entry"><span class="cond-lbl">⊛ Stunned</span><input type="text" id="cond_stun" placeholder="Stacks: -1 AP/stack — excess carries over"></div>
+            <div class="cond-entry"><span class="cond-lbl">⇓ Prone</span><input type="text" id="cond_prone" placeholder="Disadv all attacks, Adv vs you, -2 Def, no React"></div>
+            <div class="cond-entry"><span class="cond-lbl">⊠ Pinned</span><input type="text" id="cond_pinned" placeholder="No Move / Disadv"></div>
+            <div class="cond-entry"><span class="cond-lbl">❄ Frozen</span><input type="text" id="cond_frozen" placeholder="No Move / Mentals Only"></div>
         </div>
         <div style="display:flex; flex-direction:column; gap:6px;">
-            <div class="cond-entry"><span class="cond-lbl">😱 Fear (X)</span><input type="text" id="cond_fear" placeholder="Wil Test - Penalty (X)"></div>
-            <div class="cond-entry"><span class="cond-lbl">🌑 Blinded</span><input type="text" id="cond_blind" placeholder="Disadv / Def = Armor Only"></div>
-            <div class="cond-entry"><span class="cond-lbl">🥀 Dismay</span><input type="text" id="cond_dismay" placeholder="No Move / No Reactions"></div>
-            <div class="cond-entry"><span class="cond-lbl">💖 Allure</span><input type="text" id="cond_allure" placeholder="Treat as Ally / No Attack"></div>
+            <div class="cond-entry"><span class="cond-lbl">Ψ Fear (X)</span><input type="text" id="cond_fear" placeholder="Wil Test - Penalty (X)"></div>
+            <div class="cond-entry"><span class="cond-lbl">⦿ Blinded</span><input type="text" id="cond_blind" placeholder="Disadv / Def = Armor Only"></div>
+            <div class="cond-entry"><span class="cond-lbl">⌁ Dismay</span><input type="text" id="cond_dismay" placeholder="No Move / No Reactions"></div>
+            <div class="cond-entry"><span class="cond-lbl">⁂ Allure</span><input type="text" id="cond_allure" placeholder="Treat as Ally / No Attack"></div>
         </div>
     </div>
     <div class="cond-rule-box">
-        <span style="color:var(--gold); font-weight:900; font-size:10pt; text-transform:uppercase; letter-spacing:1px;">🌀 The Rule of Three: Overwhelmed</span>
+        <span style="color:var(--gold); font-weight:900; font-size:10pt; text-transform:uppercase; letter-spacing:1px;">᛭ The Rule of Three: Overwhelmed</span>
         <div style="font-size:8.5pt; font-weight:900; color:var(--ink); margin-top:2px;">If 3+ DIFFERENT conditions are active: No Reaction actions. Stacking conditions (e.g. Bleeding ×3) count as one type.</div>
     </div>
 </div>
@@ -2219,7 +2219,7 @@ function handleSkillInput(input) {
                 if (skillItem && !skillItem.querySelector('.atrophy-mark')) {
                     const mark = document.createElement('span');
                     mark.className = 'atrophy-mark';
-                    mark.textContent = '⚗';
+                    mark.textContent = '⊘';
                     mark.title = `Atrophied — ${xpLost} XP lost permanently`;
                     mark.style.cssText = 'color:var(--gold); font-size:8pt; margin-left:2px; opacity:0.9;';
                     const nameEl = skillItem.querySelector('.sk-name') || skillItem.querySelector('.sk-b');
@@ -2290,7 +2290,7 @@ function markAtrophiedSkill(skillItem, atrophied) {
         if (!skillItem.querySelector('.atrophy-mark')) {
             const mark = document.createElement('span');
             mark.className = 'atrophy-mark';
-            mark.textContent = ' ⚗';
+            mark.textContent = ' ⊘';
             mark.style.cssText = 'color:var(--gold); font-size:9pt; opacity:0.8;';
             mark.title = 'Skill Atrophied — 1/3 XP returned';
             label.parentNode.insertBefore(mark, label.nextSibling);
@@ -2346,7 +2346,7 @@ function upd() {
             checked: item.querySelector('.k-cb')?.checked || false,
             text:    item.querySelector('input[type="text"]')?.value || ''
         }));
-        localStorage.setItem('pou_ledger_autosave', JSON.stringify(snap));
+        localStorage.setItem('tm_ledger_autosave', JSON.stringify(snap));
     } catch(e) { /* storage unavailable */ }
 }
 
@@ -2838,7 +2838,7 @@ function openRacialModal() {
 
     // Restore lock state from localStorage before rebuilding
     if (race === 'human') {
-        try { if (localStorage.getItem('pou_adaptable_locked') === '1') adaptableLocked = true; } catch(e) {}
+        try { if (localStorage.getItem('tm_adaptable_locked') === '1') adaptableLocked = true; } catch(e) {}
     }
 
     if (!traits) {
@@ -2932,7 +2932,7 @@ function lockAdaptable() {
     const entered = input.value.trim();
     if (!confirm(`Lock "${entered}" as your Adaptable skill? This cannot be undone on this character.`)) return;
     adaptableLocked = true;
-    try { localStorage.setItem('pou_adaptable_locked', '1'); } catch(e) {}
+    try { localStorage.setItem('tm_adaptable_locked', '1'); } catch(e) {}
     applyAdaptableLock();
     upd();
 }
@@ -2966,7 +2966,7 @@ function applyAdaptableLock() {
 
 function init() {
     // Restore Human Adaptable lock state on page load
-    try { if (localStorage.getItem('pou_adaptable_locked') === '1') adaptableLocked = true; } catch(e) {}
+    try { if (localStorage.getItem('tm_adaptable_locked') === '1') adaptableLocked = true; } catch(e) {}
 
     // Characteristics grid
     const charGrid = g('char-grid');
@@ -3288,7 +3288,7 @@ function exportToTracker() {
 
 function recoverAutosave() {
     try {
-        const saved = localStorage.getItem('pou_ledger_autosave');
+        const saved = localStorage.getItem('tm_ledger_autosave');
         if (!saved) { alert('No autosave found.'); return; }
         if (!confirm('Restore last autosaved session? This will overwrite current data.')) return;
         applyCharacterData(JSON.parse(saved));
@@ -3317,7 +3317,7 @@ function importFromCreator(input) {
         try {
             const pkg = JSON.parse(e.target.result);
             if (pkg._schema !== 'pou-character-v1') {
-                alert('This file was not exported from the Scars and Purpose Character Creator.');
+                alert('This file was not exported from the Thrice-Marked Character Creator.');
                 return;
             }
             applyCreatorPackage(pkg);
@@ -3420,18 +3420,18 @@ async function fetchCharacterFromCloud() {
     const charDropdown = g('cloud-char-select');
     if (!charDropdown) return;
     const charName = charDropdown.value;
-    const url = "https://raw.githubusercontent.com/pflastpr-rpg/Path-of-the-Unknown/main/characters/" + encodeURIComponent(charName) + ".rpg?v=" + Date.now();
+    const url = "https://raw.githubusercontent.com/pflastpr-rpg/Thrice-Marked/main/characters/" + encodeURIComponent(charName) + ".rpg?v=" + Date.now();
     try {
-        btn.innerText = "⏳ Loading...";
+        btn.innerText = "◎ Loading...";
         const resp = await fetch(url);
-        if (!resp.ok) { btn.innerText = "❌ 404"; return; }
+        if (!resp.ok) { btn.innerText = "✕ 404"; return; }
         applyCharacterData(await resp.json());
-        btn.innerText = "✅ Loaded!";
+        btn.innerText = "✦ Loaded!";
     } catch (err) {
         alert("Cloud load error: " + err.message);
-        btn.innerText = "❌ Error";
+        btn.innerText = "✕ Error";
     } finally {
-        setTimeout(() => { btn.innerText = "☁️ Load Cloud"; }, 2500);
+        setTimeout(() => { btn.innerText = "⌁ Load Cloud"; }, 2500);
     }
 }
 
@@ -3466,7 +3466,7 @@ function prev(input) {
 
 function openChronicle() {
     const charName = document.querySelector('.w-name input')?.value.trim();
-    if (charName) localStorage.setItem('po3_transfer_name', charName);
+    if (charName) localStorage.setItem('tm_transfer_name', charName);
     window.open('Player-Chronicle.html', '_blank');
 }
 
@@ -3500,7 +3500,24 @@ window.addEventListener('afterprint', () => {
     });
 });
 
-window.onload = init;
+// ── localStorage key migration: legacy → tm_ (Thrice-Marked) ──
+    function migrateLegacyKeys() {
+        const prefixes = ['tm_', 'tm_', 'tm_', 'potu_'];
+        const keys = Object.keys(localStorage);
+        keys.forEach(key => {
+            const matched = prefixes.find(p => key.startsWith(p));
+            if (matched) {
+                const newKey = 'tm_' + key.slice(matched.length);
+                if (!localStorage.getItem(newKey)) {
+                    localStorage.setItem(newKey, localStorage.getItem(key));
+                }
+                localStorage.removeItem(key);
+            }
+        });
+    }
+    migrateLegacyKeys();
+
+    window.onload = init;
 
 </script>
 
