@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blood and Purpose — Combat Tracker</title>
+<title>Thrice-Marked — Combat Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@600;700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -446,7 +446,7 @@ body {
     </div>
     <button class="btn" onclick="nextTurn()">Next Turn ▶</button>
     <button class="btn" onclick="nextRound()">New Round ↺</button>
-    <button class="btn success" onclick="document.getElementById('import-snap').click()">📥 Load Character</button>
+    <button class="btn success" onclick="document.getElementById('import-snap').click()">↓ Load Character</button>
     <input type="file" id="import-snap" style="display:none" accept=".pou,.json" multiple onchange="loadCombatants(this)">
     <button class="btn" onclick="openAddManual()">＋ Add NPC</button>
     <button class="btn danger" onclick="clearAll()">✕ Clear All</button>
@@ -457,7 +457,7 @@ body {
 <div class="init-strip">
   <span class="init-strip-label">Turn Order:</span>
   <div id="init-chips" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;"></div>
-  <button class="btn" style="margin-left:8px;font-size:8pt;padding:3px 8px;" onclick="rollAllInitiative()">🎲 Roll All Init</button>
+  <button class="btn" style="margin-left:8px;font-size:8pt;padding:3px 8px;" onclick="rollAllInitiative()">⬡ Roll All Init</button>
 </div>
 
 <!-- MAIN -->
@@ -468,7 +468,7 @@ body {
     <div class="empty-state" id="empty-state">
       <h2>No Combatants</h2>
       <p>Load a character from a <strong>.pou</strong> file exported by the ledger, or add an NPC manually. Load multiple files at once to build a full encounter.</p>
-      <button class="btn success" onclick="document.getElementById('import-snap').click()" style="margin-top:8px;padding:8px 20px;font-size:10pt;">📥 Load Character</button>
+      <button class="btn success" onclick="document.getElementById('import-snap').click()" style="margin-top:8px;padding:8px 20px;font-size:10pt;">↓ Load Character</button>
     </div>
   </div>
 
@@ -485,11 +485,11 @@ body {
       <div style="font-size:8pt;line-height:1.7;color:rgba(243,231,201,0.6);">
         <div>🩸 <b>Bleed</b> — 1d10 W/turn</div>
         <div>🧪 <b>Poison</b> — progressive dmg</div>
-        <div>💫 <b>Stun</b> — −1 AP per stack</div>
-        <div>😱 <b>Fear</b> — Wil test penalty</div>
-        <div>🧎 <b>Prone</b> — disadv To-Hit</div>
-        <div>🌑 <b>Blind</b> — disadv / Def=armor</div>
-        <div>🕸 <b>Bound</b> — no move/react</div>
+        <div>⊛ <b>Stun</b> — −1 AP per stack</div>
+        <div>Ψ <b>Fear</b> — Wil test penalty</div>
+        <div>⇓ <b>Prone</b> — disadv To-Hit</div>
+        <div>⦿ <b>Blind</b> — disadv / Def=armor</div>
+        <div>⊠ <b>Bound</b> — no move/react</div>
         <div style="margin-top:4px;padding-top:4px;border-top:1px solid var(--border);color:var(--blood);">
           ⚠ <b>Rule of 3:</b> 3+ conditions = no reactions
         </div>
@@ -577,8 +577,8 @@ let round = 1;
 let activeTurnIdx = 0; // index into initiative-sorted combatants
 
 const CONDITIONS = ['bleed','poison','stun','fear','prone','blind','bound'];
-const COND_LABELS = {bleed:'🩸 Bleed',poison:'🧪 Poison',stun:'💫 Stun',
-                    fear:'😱 Fear',prone:'🧎 Prone',blind:'🌑 Blind',bound:'🕸 Bound'};
+const COND_LABELS = {bleed:'🩸 Bleed',poison:'🧪 Poison',stun:'⊛ Stun',
+                    fear:'Ψ Fear',prone:'⇓ Prone',blind:'⦿ Blind',bound:'⊠ Bound'};
 const COND_CLASS  = {bleed:'bleed',poison:'poison',stun:'stun',
                     fear:'',prone:'',blind:'',bound:''};
 
@@ -982,7 +982,7 @@ function roll(sides) {
   const result = Math.ceil(Math.random() * sides);
   document.getElementById('dice-result').textContent = result;
   document.getElementById('dice-detail').textContent = `(d${sides})`;
-  log(`🎲 d${sides} → ${result}`);
+  log(`⬡ d${sides} → ${result}`);
 }
 
 // ================================================================
