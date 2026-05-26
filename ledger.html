@@ -1253,6 +1253,14 @@
         <label><input type="checkbox" id="magic_religion" class="magic-cb" value="Religion" onchange="handleMagicCheck(this)"> Theology <span style="font-size:9pt; color:var(--blood);">(200 XP)</span></label>
         <label><input type="checkbox" id="magic_shaman" class="magic-cb" value="Shaman" onchange="handleMagicCheck(this)"> Shaman <span style="font-size:9pt; color:var(--blood);">(200 XP)</span></label>
         <label><input type="checkbox" id="magic_runes" class="magic-cb" value="Runes" onchange="handleMagicCheck(this)"> Runes <span style="font-size:9pt; color:var(--blood);">(200 XP)</span></label>
+        <label><input type="checkbox" id="magic_voicemark" class="magic-cb" value="Voicemark" onchange="handleMagicCheck(this)"> Voicemark <span style="font-size:9pt; color:var(--blood);">GM-granted only</span></label>
+        <div id="voicemark-stats" style="display:none; align-items:center; gap:4px;">
+            <div class="sk-item" style="min-width:180px; height:36px;">
+                <span class="sk-name" style="font-family:var(--font-hand); font-size:13pt; text-transform:none; letter-spacing:1px; color:var(--blood);">Speaker</span>
+                <input type="text" id="voicemark_cost_label" class="sk-b" readonly value="—" style="width:36px; text-align:center;">
+                <input type="number" id="voicemark_pts" class="sk-p xc" oninput="upd()" placeholder="Pts" style="width:46px;">
+            </div>
+        </div>
         <div id="runemaster-stats" style="display:none; align-items:center; gap:4px;">
             <div class="sk-item" style="min-width:180px; height:36px;">
                 <span class="sk-name" style="font-family:var(--font-hand); font-size:13pt; text-transform:none; letter-spacing:1px; color:var(--iron);">Runemaster</span>
@@ -1268,6 +1276,9 @@
 
 <div class="h-box" id="runes-header" style="display:none; border-color:var(--gold); color:var(--gold);">Runes &amp; Glyphs</div>
 <div class="knowledge-section" id="runes-section" style="display:none;"><div class="knowledge-grid" id="runes-grid"></div></div>
+
+<div class="h-box" id="voicemark-header" style="display:none; border-color:var(--blood); color:var(--blood);">✦ The Voicemark — Invocations</div>
+<div class="knowledge-section" id="voicemark-section" style="display:none;"><div class="knowledge-grid" id="voicemark-grid"></div></div>
 
 <div class="h-box">Knowledge</div>
 <div class="knowledge-section"><div class="knowledge-grid" id="knowledge-grid"></div></div>
@@ -1446,6 +1457,22 @@ const DRUIDIC_SPELLS=[{name:"Speak with Plants",tn:"TN0",desc:"Touch bark/root/s
 const MAGIC_SPELLS=[{name:"Mage Light",tn:"TN0",desc:"Conjure a pale arcane orb (15ft radius) that orbits you or fixes to a surface. 1 hour. Dismissed free."},{name:"Prestidigitation",tn:"TN0",desc:"One minor trick: clean/soil/colour a small object, produce a harmless spark, smoke wisp, or faint sound."},{name:"Detect Magic",tn:"TN0",desc:"Sense whether any object/creature/area within 30ft carries active magic. Presence only — not school or strength."},{name:"Arcane Spark",tn:"TN0",desc:"Produce a tiny harmless arcane effect: ignite a candle, flash of light, sharp crack, or briefly magnetize a small metal object."},{name:"Read Inscription",tn:"TN0",desc:"Touch any written surface to instantly comprehend its meaning in any language or age. Single inscription only. Not magical writing."},{name:"Aethereal Strike",tn:"TN8"},{name:"Allure",tn:"TN8"},{name:"Bind Daemon",tn:"TN10"},{name:"Blackout",tn:"TN6"},{name:"Blast",tn:"TN7"},{name:"Blink",tn:"TN5"},{name:"Bonded in Blood",tn:"TN3"},{name:"Bolt",tn:"TN7"},{name:"Call the Unhallowed",tn:"TN~"},{name:"Comprehend Language",tn:"TN4"},{name:"Cold Blast",tn:"TN8"},{name:"Consumed in Flame",tn:"TN10"},{name:"Corpselike",tn:"TN4"},{name:"Daemon Slayer",tn:"TN9"},{name:"Dart",tn:"TN4"},{name:"Debilitating Plasm",tn:"TN11"},{name:"Decompose",tn:"TN10"},{name:"Dismiss Daemon",tn:"TN9"},{name:"Dispel Magic",tn:"TN~"},{name:"Endless Light",tn:"TN3"},{name:"Feared",tn:"TN4"},{name:"Fireball",tn:"TN13"},{name:"Firebomb",tn:"TN8"},{name:"Fire Sling",tn:"TN7"},{name:"Flay Malignant",tn:"TN7"},{name:"Fly",tn:"TN6"},{name:"Frostbite",tn:"TN10"},{name:"Frozen Shards",tn:"TN9"},{name:"Exoskeleton",tn:"TN6"},{name:"Heightened Senses",tn:"TN4"},{name:"Ice Blade",tn:"TN9"},{name:"Ice Field",tn:"TN7"},{name:"Ice Lance",tn:"TN9"},{name:"Incinerate",tn:"TN10"},{name:"Indestructible Instant",tn:"TN12"},{name:"Invisibility",tn:"TN6"},{name:"Iron Missile",tn:"TN9"},{name:"Know Object",tn:"TN4"},{name:"Lacerate",tn:"TN11"},{name:"Lava Spray",tn:"TN11"},{name:"Life Diverted",tn:"TN7"},{name:"Life Leash",tn:"TN10"},{name:"Lightning Bolt",tn:"TN8"},{name:"Mage's Armor",tn:"TN8"},{name:"Mage's Arrow",tn:"TN6"},{name:"Magic Lock",tn:"TN~"},{name:"Malefic",tn:"TN12"},{name:"Molten Earth",tn:"TN15"},{name:"Mote Storm",tn:"TN13"},{name:"Pulverize",tn:"TN14"},{name:"Restore Material",tn:"TN7"},{name:"Reveal Magic",tn:"TN3"},{name:"Ritual Defense",tn:"TN6"},{name:"Scourge",tn:"TN10"},{name:"Searing Heat",tn:"TN8"},{name:"Silence",tn:"TN7"},{name:"Sleep",tn:"TN5"},{name:"Show the Way",tn:"TN15"},{name:"Soul Burst",tn:"TN11"},{name:"Static Bomb",tn:"TN9"},{name:"Summon Damned",tn:"TN~"},{name:"Firebrand Weapon",tn:"TN10"},{name:"Tainted Ground",tn:"TN10"},{name:"Thirsting Blade",tn:"TN6"},{name:"Time Suspended",tn:"TN12"},{name:"Tornado",tn:"TN12"},{name:"Transform Object",tn:"TN11"},{name:"Twisted Words",tn:"TN10"},{name:"Weapon Ward",tn:"TN8"},{name:"Whiteout",tn:"TN12"},{name:"Wind Shear",tn:"TN8"},{name:"Reality Fracture",tn:"TN21",desc:"Break local reality in 40ft AoE. 6d10 wounds immediately. Disoriented on failed Intellect resist (lose all AP next turn). 3d10 bypass mitigation per turn. Enemy spells misfire 50% inside AoE. Caster cannot enter zone."},{name:"Obliteration",tn:"TN22",desc:"8d10 bypass all Wound Mitigation. No resistance roll. No mitigation. Survivors suffer 3 Stunned + permanent −2 Intellect. Caster takes 3d10 feedback. Once per encounter."}];
 const SHAMAN_SPELLS=[{name:"Spirit Sense",tn:"TN0",desc:"Detect presence of ghosts, bound spirits, or restless dead within 30ft. Sense their emotional state but cannot communicate."},{name:"Ward Sign",tn:"TN0",desc:"Scratch a spirit ward on a threshold. Minor spirits cannot cross without passing a Willpower test. 1 hour."},{name:"Ancestor's Whisper",tn:"TN0",desc:"Ask ancestors one yes/no question. DM answers truthfully if ancestors would know — may answer in riddle or silence."},{name:"Hex Sign",tn:"TN0",desc:"Mark a surface. Feel a premonition if someone hostile touches it within the same building. Fades after triggering once. 8 hours."},{name:"Tribal Tongue",tn:"TN0",desc:"Understand and be understood by one creature whose language you don't speak for 10 minutes. Spoken only."},{name:"Agony",tn:"TN13"},{name:"Astral Recall",tn:"TN12"},{name:"Bones",tn:"TN7"},{name:"Blood Boil",tn:"TN12"},{name:"Blood of the Old God",tn:"TN8"},{name:"Chain Lightning",tn:"TN14"},{name:"Circle",tn:"TN4"},{name:"Cleanse",tn:"TN3"},{name:"Corrupt",tn:"TN12"},{name:"Cure Major Wounds",tn:"TN11"},{name:"Cure Minor Wounds",tn:"TN4"},{name:"Cure Moderate Wounds",tn:"TN7"},{name:"Cursed Wound",tn:"TN11"},{name:"Cursed Spells",tn:"TN7"},{name:"Control Elemental",tn:"TN10"},{name:"Daydream",tn:"TN7"},{name:"Enduring Agony",tn:"TN11"},{name:"Exsanguinate",tn:"TN10"},{name:"Ghost Wolf",tn:"TN7"},{name:"Flame Burst",tn:"TN7"},{name:"Frost Shock",tn:"TN8"},{name:"Grumbling",tn:"TN6"},{name:"Haste",tn:"TN7"},{name:"Hex",tn:"TN6"},{name:"Lava Eruption",tn:"TN11"},{name:"Maelstrom",tn:"TN7"},{name:"Mental Anguish",tn:"TN8"},{name:"Pin Doll",tn:"TN5"},{name:"Polymorph",tn:"TN6"},{name:"Rain Dance",tn:"TN12"},{name:"Read Magic",tn:"TN7"},{name:"Remove Curse",tn:"TN~"},{name:"Scarlet Venom",tn:"TN10"},{name:"Spirit Transference",tn:"TN10"},{name:"Soul Reaper",tn:"TN14"},{name:"Speak with Animals",tn:"TN5"},{name:"Stabilize",tn:"TN14"},{name:"Stinking Cloud",tn:"TN11"},{name:"Tribal Tenacity",tn:"TN10"},{name:"Unwieldy",tn:"TN5"},{name:"Vigor",tn:"TN7"},{name:"Wind Walker",tn:"TN6"},{name:"The Hungry Dead",tn:"TN21",desc:"Tear the veil. Dozens of spirits rise and feed. 6d10 bypass non-magical mitigation immediately. Each turn: Willpower resist or permanent −1 Willpower. −1 Willpower = soul consumed, unresurrectable. Caster takes 2d10 per maintenance turn."},{name:"Ancestor's Dominion",tn:"TN22",desc:"Every ancestor acts through you. 3 bonus actions per turn, +Willpower modifier wounds, immune to conditions. Allies in 40ft AoE gain +1 action and heal 2d10 per turn. Ends: caster unconscious rest of encounter. Once per day."}];
 const KI_POWERS=[{name:"Focus Breath",tn:"TN0",desc:"Remove 1 Stun counter from yourself. Once per turn only."},{name:"Iron Skin",tn:"TN0",desc:"Reaction: reduce next single hit's wounds by 1. Declare before wound roll."},{name:"Centered Step",tn:"TN0",desc:"Your next movement ignores difficult terrain and does not trigger free attacks from disengaging."},{name:"Slow Fall",tn:"TN0",desc:"Reduce falling damage to zero once per scene. Land silently. Cannot use if Stunned or Bound."},{name:"Ki Pulse",tn:"TN0",desc:"Sense the life force of all living/undead within 10ft — direction, alive/dying/undead status. No identity or wounds."},{name:"Agni-Fire",tn:"TN6"},{name:"Astra-Launch",tn:"TN8"},{name:"Avoidance",tn:"TN6"},{name:"Bija",tn:"TN7"},{name:"Boost",tn:"TN8"},{name:"Cauterize",tn:"TN5"},{name:"Empowered Strikes",tn:"TN6"},{name:"Expel Wounds",tn:"TN9"},{name:"Force Kick",tn:"TN9"},{name:"Healing Chakra",tn:"TN5"},{name:"Ignite Weapons",tn:"TN9"},{name:"Karma",tn:"TN11"},{name:"Purification",tn:"TN5"},{name:"Purity of Body",tn:"TN7"},{name:"Revive",tn:"TN15"},{name:"Shadows",tn:"TN8"},{name:"Shockwave",tn:"TN11"},{name:"Shower of Fire",tn:"TN10"},{name:"Silent Hand Strike",tn:"TN8"},{name:"Step of the Wind",tn:"TN3"},{name:"Stillness of Mind",tn:"TN7"},{name:"Stunning Strikes",tn:"TN6"},{name:"Touch of Death",tn:"TN15"},{name:"Zen",tn:"TN10"},{name:"Iron Body",tn:"TN4",desc:"+2 Wound Mitigation vs physical attacks for duration. Cannot be knocked Prone by non-magical effects. Does not stack with itself."},{name:"Chi Strike",tn:"TN7",desc:"Unarmed strike dealing 2d10 + casting bonus, bypassing all non-magical Wound Mitigation. Natural 10 pushes target back 10ft."},{name:"Mind Fortress",tn:"TN9",desc:"Immune to all mind-affecting spells, fear, and mental conditions for duration. Spells targeting your mind reflected back on failed Willpower TN9."},{name:"Ki Barrier",tn:"TN11",desc:"Shimmering wall of Ki, 20ft wide x 10ft tall. 3d10 + casting bonus wounds. Blocks physical and non-magical projectiles. Shatters: 1d10 wounds to creatures within 10ft."},{name:"Pressure Points",tn:"TN10",desc:"Precise nerve strike. Physique resist or choose: Crippled Arm (Disadvantage attacks), Crippled Leg (halved movement), or Silenced Throat (no verbal spells). New test each turn."},{name:"Soul Resonance",tn:"TN12",desc:"Bond with ally. Absorb up to half their wounds. Ally gains +1 To-Hit and To-Cast while bonded. Breaks if >60ft apart or either reaches 0 wounds."},{name:"Void Step",tn:"TN12",desc:"Teleport up to 150ft instantly through walls and terrain. 3d10 + casting bonus wounds to creatures within 5ft of arrival. Does not trigger reactions."},{name:"Astral Projection",tn:"TN13",desc:"Separate spirit from body. Invisible, passes through walls, 500ft range. Body unconscious and vulnerable. Natural 10: spirit may take one Ki action per turn."},{name:"Perfect Form",tn:"TN14",desc:"+Willpower modifier wounds on melee, +2 Defense, immune to first Stunned and Prone each turn. Movement cannot be reduced below half. Cannot cast other Ki powers while active."},{name:"Quake Fist",tn:"TN14",desc:"Fist into earth releases 25ft AoE shockwave. 4d10 + casting bonus wounds. Physique resist or Prone + halved movement next turn. Unaffected if not touching ground."},{name:"Ki Eruption",tn:"TN17",desc:"Catastrophic Ki explosion in 40ft AoE. 5d10 + casting bonus bypassing all mitigation. Caster takes 2d10 (unmitigable). All creatures Prone + pushed 15ft on failed Physique resist."},{name:"Thousand Strikes",tn:"TN16",desc:"5 separate unarmed attacks, each 1d10 + Willpower modifier + casting bonus. Cumulative −1 To-Hit per strike after first. Target at 0 wounds cannot be stabilised. Caster Exhausted until next turn."},{name:"Transcendence",tn:"TN19",desc:"Immune to all conditions. Unarmed attacks deal 6d10 + casting bonus bypass all mitigation. +3 Defense, +3 To-Hit, 1 bonus action per turn. Costs 5 wounds per maintenance turn. Ends with 3 Exhausted."},{name:"Death Touch",tn:"TN21",desc:"Map and collapse target's Ki network. 7d10 bypass all mitigation. Failed Physique resist: permanent Ki disruption. Non-Ki users: permanent −3 Physique. 0 wounds = instant death, cannot be stabilised."},{name:"The Still Point",tn:"TN22",desc:"Exist outside time for 1 turn. 6 free actions. Untouchable — nothing can hit, damage, or apply conditions. All enemies in 60ft Stunned 1 turn. All allies gain 1 free action. Ends: caster drops to 1 wound + 5 Exhausted. Once per day."}];
+
+const VOICEMARK_SPELLS=[
+  {name:"The Hush",tn:"TN0",desc:"All ambient sound within 10ft drops to silence for 1 turn. Does not silence the Speaker. Sound cannot travel beyond the radius."},
+  {name:"The Sounding",tn:"TN0",desc:"Press lips to object, vocalize softly. Learn whether it has been touched by Voicemark, Runic, or Chaos-mark in the last 24 hours."},
+  {name:"The Silencing Strike",tn:"TN4",desc:"Consonant-burst at target within 30ft. Silenced condition 1d3 turns — cannot cast verbal disciplines. Non-vocal disciplines unaffected."},
+  {name:"The Frequency Read",tn:"TN5",desc:"Sustained tone toward creature/object within 20ft. Learn current wound total, active magical effects, and recent Voicemark contact (last hour)."},
+  {name:"The Carrying Word",tn:"TN6",desc:"Encode message up to 30 words into a surface. Plays once on trigger condition. Duration: indefinite. Unsay: counter-syllable against same surface."},
+  {name:"The Warding Tone",tn:"TN7",desc:"Subsonic tone. Void-class entities within 20ft suffer Disadvantage on all rolls. Costs 1 AP per turn to maintain. Unsaying: stop vocalising."},
+  {name:"The Drowning Answer",tn:"TN9",desc:"Counter-frequency to fire-class effects. Suppresses active fire within 60ft for 1d3 turns. Does not prevent new fire. No wound damage."},
+  {name:"The Revealing Light",tn:"TN10",desc:"Solar frequency. Concealed/invisible/obscured entities within 30ft outlined in pale gold (visible to Speaker only) for 2 turns. Chaos marks glow through clothing."},
+  {name:"The Refiner's Tongue",tn:"TN12",desc:"RIGHT OF BEARING required. 3d10 wounds ignoring mundane WM. Suppresses active Chaos boon 1d3 turns. Undead: wounds doubled. Void entities: tripled + pushed 20ft on failed Willpower TN15. Unsay within 2 turns."},
+  {name:"The Yielding Law",tn:"TN14",desc:"RIGHT OF BEARING required. 40ft AoE. Reads intent — aggressive intent: 4d10 wounds bypass all WM. Laying down arms and offering no resistance: unaffected. Cannot be deceived. Unsay within 1 turn or double-severity failure."},
+  {name:"The Iron Throat",tn:"TN15",desc:"Speaker's voice as weapon. Single target within 40ft. 2d10 wounds per turn bypassing all WM. 2 AP per turn to sustain. Cannot move. Target Physique test (TN = Speaker Willpower score) or Stunned each turn. Max turns = Voicemark pts. Unsaying: active."},
+  {name:"The Binding Frequency",tn:"TN16",desc:"Lock creature's movement by resonating its physical density. Target within 50ft completely immobilised (no move, no physical actions) for Willpower modifier turns. Mental actions and speech unaffected. Unsaying required each turn."},
+  {name:"The Sundering Word",tn:"TN22",desc:"RIGHT OF BEARING required. 60ft AoE. 8d10 wounds — ally and enemy alike, no exceptions. No Deepening. No recall mid-invocation. No Unsaying exists. Speaker permanently loses 1 Willpower per use. Once per day. Three uses: permanent audible harmonic in Speaker's voice at all times."}
+];
 const RUNES_LIST=[{name:"Minor Ward Rune",tn:"T0/P~",desc:"Scratch an alerting ward on a surface. Feel a mental ping when crossed. Fades after one trigger. 8 hours."},{name:"Rune Read",tn:"T0/P~",desc:"Identify whether a rune/glyph is magical, active, and which tradition (Druidic/Divine/Arcane). Not its exact effect."},{name:"Mark of Passage",tn:"T0/P~",desc:"Scratch a directional rune on a surface. Know its exact direction and rough distance up to 1 mile. One active at a time."},{name:"Rune of Speed",tn:"T8/P12"},{name:"Rune of Striking",tn:"T10/P15"},{name:"Rune of Warding",tn:"T7/P13"},{name:"Rune of Stone",tn:"T8/P15"},{name:"Rune of the Old Wound",tn:"T10/P16"},{name:"Rune of Spell Breaking",tn:"T6/P~"},{name:"Rune of Cleaving",tn:"T5/P10"},{name:"Rune of Shielding",tn:"T6/P14"},{name:"Rune of Iron",tn:"T5/P14"},{name:"Rune of Might",tn:"T10/P20"},{name:"Rune of Fate",tn:"T8/P20"},{name:"Rune of Fire",tn:"T10/P18"},{name:"Rune of Fortitude",tn:"T10/P22"},{name:"Rune of the Furnace",tn:"T15/P25"},{name:"Rune of Resistance",tn:"T12/P26"},{name:"Rune of the Blood-Surge",tn:"T15/P25"},{name:"Rune of Luck",tn:"T4/P10"},{name:"Rune of Spell-Eating",tn:"T9/P18"},{name:"Master Rune of Weapon Flight",tn:"T8/P16"},{name:"Master Rune of Swiftness",tn:"T12/P22"},{name:"Master Rune of Spite",tn:"T10/P20"},{name:"Master Rune of Adamant",tn:"T6/P12"},{name:"Master Rune of Balance",tn:"T10/P26"},{name:"Master Rune of Breaking",tn:"T12/P28"},{name:"Master Rune of Spellbinding",tn:"T12/P26"},{name:"Master Rune of Vorn the Hollow",tn:"T10/P25"},{name:"Master Rune of the Dread Horn",tn:"T8/P20"},{name:"Master Rune of Steel",tn:"T15/P30"},{name:"Master Rune of Thessan the Precise",tn:"T14/P28"},{name:"Master Rune of the Ironbound",tn:"T12/P27"},{name:"Master Rune of the First Forge",tn:"T15/P30"},{name:"Master Rune of Dominion",tn:"T~/P25"},{name:"Rune of the Old Wound",tn:"T10/P16",desc:"Nominate one enemy at combat start. Re-roll all missed attacks against that target for the encounter."},{name:"Rune of the Blood-Surge",tn:"T15/P25",desc:"+1 Attack while wielding the inscribed weapon."},{name:"Master Rune of Vorn the Hollow",tn:"T10/P25",desc:"Attacks ignore all non-magical Armor Mitigation."},{name:"Master Rune of the Ironbound",tn:"T12/P27",desc:"+2 bonus to Defense."},{name:"Master Rune of the First Forge",tn:"T15/P30",desc:"Weapon grants 3× Physique bonus To-Wound."},{name:"Master Rune of Thessan the Precise",tn:"T14/P28",desc:"+3 bonus To-Hit on all attacks."},{name:"Master Rune of the Dread Horn",tn:"T8/P20",desc:"When horn sounded, all enemies in 100ft lose movement next turn on failed Willpower resist."},{name:"Master Rune of Dominion",tn:"P25",desc:"Wearer and all allies within 125ft immune to Fear. Permanent only."},{name:"Master Rune of the Undying Edge",tn:"P28",desc:"Weapon gains +1 To-Hit and +1 To-Wound per 10 kills (max +5/+5). Only one may exist in the world. Permanent only."},{name:"Master Rune of the Soul-Chain",tn:"P30",desc:"Bearer cannot die once per day — stabilises at 1 wound. Immune to instant-death and soul-consuming effects. Costs Runemaster 3 permanent Physique. Bound to first bearer. Permanent only."}];
 
 // ================================================================
@@ -1574,7 +1601,7 @@ function processAllSkills(state) {
             if (ptsInput) {
                 // In atrophy mode, enforce minimum 1 point for non-discipline skills
                 const atrophyActive = document.getElementById('atrophy-mode')?.checked;
-                const isDisciplineSkill = ['Faith','Druidism','Wizardry','Shaman','Ki','Runes'].includes(skillName);
+                const isDisciplineSkill = ['Faith','Druidism','Wizardry','Shaman','Ki','Runes','Voicemark'].includes(skillName);
                 let effectivePurchased = purchased;
                 if (atrophyActive && !isDisciplineSkill && purchased < 1 && (ptsInput.dataset.purchased || 0) >= 1) {
                     effectivePurchased = 1;
@@ -1665,7 +1692,7 @@ function determineMagicState(state) {
     let magicState = {
         isMagicActive: false, isDruidActive: false, isKiActive: false,
         isReligionActive: false, isShamanActive: false, isMagActive: false,
-        isRunesActive: false, activeMagicSkillPts: 0, activeMagicSkillName: ""
+        isRunesActive: false, isVoicemarkActive: false, activeMagicSkillPts: 0, activeMagicSkillName: ""
     };
 
     document.querySelectorAll('.magic-cb').forEach(cb => {
@@ -1678,10 +1705,12 @@ function determineMagicState(state) {
             if (cb.value === "Shaman") magicState.isShamanActive = true;
             if (cb.value === "Magic") magicState.isMagActive = true;
             if (cb.value === "Runes") magicState.isRunesActive = true;
+            if (cb.value === "Voicemark") magicState.isVoicemarkActive = true;
         }
     });
 
-    magicState.activeMagicSkillName = magicState.isReligionActive ? "Faith" :
+    magicState.activeMagicSkillName = magicState.isVoicemarkActive ? "Voicemark" :
+                                      magicState.isReligionActive ? "Faith" :
                                       magicState.isMagActive ? "Wizardry" :
                                       magicState.isKiActive ? "Ki" :
                                       magicState.isShamanActive ? "Shaman" :
@@ -1701,6 +1730,32 @@ function determineMagicState(state) {
 
 function handleRunes(state, magicState) {
     let rmPts = 0;
+    if (magicState.isVoicemarkActive) {
+        const vmPts = gv('voicemark_pts');
+        // Racial base costs — Halfling cheapest (Old Record affinity), Dwarf most expensive
+        const vmBase = state.race === 'halfling' ? 10 :
+                       state.race === 'human'    ? 10 :
+                       state.race === 'dwarf'    ? 15 : 20; // Elf — cultural contempt
+        const vmCostLabel = g('voicemark_cost_label');
+        if (vmCostLabel) vmCostLabel.value = `${vmBase}`;
+        state.spentXP += calcCompounding(vmPts, vmBase);
+        if (g('voicemark-stats')) g('voicemark-stats').style.display = 'flex';
+        if (g('voicemark-header')) g('voicemark-header').style.display = '';
+        if (g('voicemark-section')) g('voicemark-section').style.display = '';
+        const vmGrid = g('voicemark-grid');
+        if (vmGrid && vmGrid.children.length === 0) {
+            VOICEMARK_SPELLS.forEach(s => {
+                const item = document.createElement('div');
+                item.className = 'k-item';
+                item.innerHTML = `<select class="spell-select" style="flex:1 1 auto; width:100%; min-width:0; font-size:10.5pt; font-weight:900; font-family:var(--font-main); padding:0; background:transparent; border:none;"><option value="" data-tn="">-</option>${VOICEMARK_SPELLS.map(sp=>`<option value="${sp.name}" data-tn="${sp.tn}" title="${sp.desc||''}">${sp.name}</option>`).join('')}</select><input type="text" class="spell-cost" placeholder="TN" readonly><input type="text" class="spell-ap" placeholder="AP" readonly>`;
+                vmGrid.appendChild(item);
+            });
+        }
+    } else {
+        if (g('voicemark-stats')) g('voicemark-stats').style.display = 'none';
+        if (g('voicemark-header')) g('voicemark-header').style.display = 'none';
+        if (g('voicemark-section')) g('voicemark-section').style.display = 'none';
+    }
     if (magicState.isRunesActive) {
         rmPts = gv('runemaster_pts');
         state.categoryTotals["Agility"] = (state.categoryTotals["Agility"] || 0) + rmPts;
@@ -1859,6 +1914,7 @@ function calculateCastStats(state, stats, armorData, magicState) {
     let castStats = { castHit: 0, castWounds: 0, castHealing: 0, resistCast: 0, turnsCast: 0, arcaneMastery: 0 };
 
     if (magicState.isRunesActive) return castStats;
+    if (magicState.isVoicemarkActive) { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn <= 1 ? 0 : armorData.tn; }
 
     const halvedTN = Math.floor(armorData.tn / 2);
     let coreCastStat = 0, castArmorPenalty = 0;
@@ -2179,7 +2235,7 @@ function handleSkillInput(input) {
     const atrophyActive = document.getElementById('atrophy-mode')?.checked;
     const skillItem = input.closest('.sk-item');
     const skillName = skillItem?.querySelector('.sk-b')?.getAttribute('data-skill') || '';
-    const isDiscipline = ['Faith','Druidism','Wizardry','Shaman','Ki','Runes'].includes(skillName);
+    const isDiscipline = ['Faith','Druidism','Wizardry','Shaman','Ki','Runes','Voicemark'].includes(skillName);
 
     const newVal = parseInt(input.value) || 0;
     const oldVal = parseInt(input.dataset.purchased) || 0;
@@ -2248,7 +2304,7 @@ function toggleAtrophyMode() {
         const pts = el.querySelector('.sk-p');
         const name = el.querySelector('.sk-b')?.getAttribute('data-skill') || '';
         // Disciplines cannot be atrophied
-        const isDiscipline = ['Faith','Druidism','Wizardry','Shaman','Ki','Runes'].includes(name);
+        const isDiscipline = ['Faith','Druidism','Wizardry','Shaman','Ki','Runes','Voicemark'].includes(name);
         if (pts) {
             pts.style.borderColor = active && !isDiscipline ? 'var(--gold)' : '';
             pts.title = active && !isDiscipline
@@ -2438,6 +2494,7 @@ function updateSpellUnlocks() {
                           activeTradition === "Magic"    ? MAGIC_SPELLS    :
                           activeTradition === "Ki"       ? KI_POWERS       :
                           activeTradition === "Runes"    ? RUNES_LIST      :
+                          activeTradition === "Voicemark" ? VOICEMARK_SPELLS :
                           activeTradition === "Shaman"   ? SHAMAN_SPELLS   : [];
         // Cantrips first with divider, then full spell list
         const cantrips = spellList.filter(s => s.tn === "TN0" || s.tn === "T0/P~");
@@ -3354,6 +3411,7 @@ function applyCreatorPackage(pkg) {
     // 4. Runemaster pts
     const rmEl = g('runemaster_pts');
     if (rmEl) rmEl.value = pkg.runemasterPts || 0;
+    const vmEl = g('voicemark_pts'); if (vmEl) vmEl.value = pkg.voicemarkPts || 0;
 
     // 5. Skills — write to each .sk-p via label-{SkillName} anchor.
     //    Knowledge is EXCLUDED here because syncKnowledgeSkill() in upd()
