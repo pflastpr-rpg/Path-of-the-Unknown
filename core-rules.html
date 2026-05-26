@@ -326,7 +326,8 @@
                 <a href="#discipline-3" class="toc-link">Shamanic Magic</a><br>
                 <a href="#discipline-4" class="toc-link">Wizardry</a><br>
                 <a href="#discipline-5" class="toc-link">Ki Powers</a><br>
-                <a href="#discipline-6" class="toc-link">Runecraft</a>
+                <a href="#discipline-6" class="toc-link">Runecraft</a><br>
+                <a href="#discipline-7" class="toc-link">The Voicemark</a>
             </div>
         </div>
     </div>
@@ -511,6 +512,8 @@
                     <td><strong>Physique</strong></td>
                     <td>The stubborn density of flesh and bone. Raw physical power, lung capacity, and the sheer volume of punishment your body can absorb before failing. Your Physique modifier applies directly to the wounds you tear into an enemy in melee, and to your Total Wounds — a high Physique hero is a fortress of meat and iron. Masters of Ki draw their miraculous inner power from this bodily perfection.</td>
                     <td>Fortitude, Hard as Nails, Ki, Rugged, Shieldsman, Strength Conditioning</td>
+                </tr>
+
                 </tr>
                 <tr>
                     <td><strong>Willpower</strong></td>
@@ -864,7 +867,7 @@
                 <li style="margin-bottom: 8px;"><strong>⌁ Echo:</strong> Apply a non-damaging aura or buff to +1 additional soul.</li>
             </ul>
             <p style="margin-top: 15px; font-size: 10pt; border-top: 1px dashed var(--gold); padding-top: 10px;">
-                <em><strong>Primary Characteristics Dictated By Blood:</strong> Intellect (Wizardry/Shamanism), Charisma (Theology), or Awareness (Druidism).</em>
+                <em><strong>Primary Characteristics Dictated By Blood:</strong> Intellect (Wizardry), Willpower (Shamanism), Charisma (Faith), or Awareness (Druidism). The Voicemark stands apart — a lost discipline with no characteristic home in the current age.</em>
             </p>
         </div>
 
@@ -885,21 +888,23 @@
                     <th style="padding:6px 10px; text-align:center;">TN</th>
                     <th style="padding:6px 10px; text-align:center;">Wizard / Druid / Shaman</th>
                     <th style="padding:6px 10px; text-align:center;">Faith (halved)</th>
+                    <th style="padding:6px 10px; text-align:center;">Voicemark</th>
                     <th style="padding:6px 10px; text-align:center;">Ki</th>
                 </tr>
             </thead>
             <tbody>
-                <tr style="border-bottom:1px solid rgba(2,7,14,0.15);"><td style="padding:5px 10px;">Furs / Leather / Mithril</td><td style="text-align:center;">0</td><td style="text-align:center; color: var(--blood);">None</td><td style="text-align:center; color: var(--blood);">None</td><td style="text-align:center; color: var(--blood);">None</td></tr>
-                <tr style="border-bottom:1px solid rgba(2,7,14,0.15); background:rgba(2,7,14,0.03);"><td style="padding:5px 10px;">Studded Leather</td><td style="text-align:center;">1</td><td style="text-align:center;">−1 To-Cast</td><td style="text-align:center; color: var(--blood);">None</td><td style="text-align:center; color: var(--blood);">None</td></tr>
-                <tr style="border-bottom:1px solid rgba(2,7,14,0.15);"><td style="padding:5px 10px;">Chainmail</td><td style="text-align:center;">2</td><td style="text-align:center;">−2 To-Cast</td><td style="text-align:center;">−1 To-Cast</td><td style="text-align:center; color: var(--blood);">None</td></tr>
-                <tr style="border-bottom:1px solid rgba(2,7,14,0.15); background:rgba(2,7,14,0.03);"><td style="padding:5px 10px;">Banded / Splint Mail</td><td style="text-align:center;">3</td><td style="text-align:center;">−3 To-Cast</td><td style="text-align:center;">−1 To-Cast</td><td style="text-align:center; color: var(--blood);">None</td></tr>
-                <tr style="border-bottom:1px solid rgba(2,7,14,0.15);"><td style="padding:5px 10px;">Plate / Field Plate</td><td style="text-align:center;">4</td><td style="text-align:center;">−4 To-Cast</td><td style="text-align:center;">−2 To-Cast</td><td style="text-align:center; color: var(--blood);">None</td></tr>
-                <tr><td style="padding:5px 10px;">Full Plate</td><td style="text-align:center;">5</td><td style="text-align:center;">−5 To-Cast</td><td style="text-align:center;">−2 To-Cast</td><td style="text-align:center; color: var(--blood);">None</td></tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.15);"><td style="padding:5px 10px;">Furs / Leather / Mithril</td><td style="text-align:center;">0</td><td style="text-align:center; color: var(--blood);">None</td><td style="text-align:center; color: var(--blood);">None</td><td style="text-align:center; color: var(--blood);">None</td><td style="text-align:center; color: var(--blood);">None</td></tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.15); background:rgba(2,7,14,0.03);"><td style="padding:5px 10px;">Studded Leather</td><td style="text-align:center;">1</td><td style="text-align:center;">−1 To-Cast</td><td style="text-align:center; color: var(--blood);">None</td><td style="text-align:center; color: var(--blood);">None ⚑</td><td style="text-align:center; color: var(--blood);">None</td></tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.15);"><td style="padding:5px 10px;">Chainmail</td><td style="text-align:center;">2</td><td style="text-align:center;">−2 To-Cast</td><td style="text-align:center;">−1 To-Cast</td><td style="text-align:center; color: var(--blood);">−2 To-Cast</td><td style="text-align:center; color: var(--blood);">None</td></tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.15); background:rgba(2,7,14,0.03);"><td style="padding:5px 10px;">Banded / Splint Mail</td><td style="text-align:center;">3</td><td style="text-align:center;">−3 To-Cast</td><td style="text-align:center;">−1 To-Cast</td><td style="text-align:center; color: var(--blood);">−3 To-Cast</td><td style="text-align:center; color: var(--blood);">None</td></tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.15);"><td style="padding:5px 10px;">Plate / Field Plate</td><td style="text-align:center;">4</td><td style="text-align:center;">−4 To-Cast</td><td style="text-align:center;">−2 To-Cast</td><td style="text-align:center; color: var(--blood);">−4 To-Cast</td><td style="text-align:center; color: var(--blood);">None</td></tr>
+                <tr><td style="padding:5px 10px;">Full Plate</td><td style="text-align:center;">5</td><td style="text-align:center;">−5 To-Cast</td><td style="text-align:center;">−2 To-Cast</td><td style="text-align:center; color: var(--blood);">−5 To-Cast</td><td style="text-align:center; color: var(--blood);">None</td></tr>
             </tbody>
         </table>
         <ul>
             <li><strong>Wizard / Druid / Shaman:</strong> Suffer the full unabated TN value as a penalty to all To-Cast rolls. The clinical geometry of the weave, attunement to the earth, and the flow of spirits are utterly scrambled by restrictive steel.</li>
             <li><strong>Faith:</strong> Suffer exactly half the TN value, rounded down. Their connection is absolute and spiritual; iron may cage the flesh, but it cannot fully silence a covenant.</li>
+            <li><strong>Voicemark:</strong> Suffer no penalty in furs, leather, or studded leather — the ceiling of what a Speaker may wear without consequence. Chainmail and heavier impose the full TN penalty, identical to Wizard/Druid/Shaman. The constriction of chest and throat against metal disrupts the precise breath control and vocal resonance that invocation demands. A Speaker in plate is someone who has made a decision about which survival matters more. Unlike other disciplines, the Voicemark advances no characteristic — it is standalone, like Runecraft, and its reward is the invocations themselves.</li>
             <li><strong>Ki:</strong> Suffer no magical penalty whatsoever. Ki is born of the blood and bone, completely divorced from external manipulation.</li>
             <li><strong>Mithril:</strong> Bears a TN of 0. The ancient, perfect construction of this metal excises the interference entirely.</li>
         </ul>
@@ -1084,7 +1089,7 @@
                 <ul style="margin:10px 0 10px 20px; line-height:1.6;">
                     <li><strong>The body remembers.</strong> A skill cannot be reduced to zero. Minimum 1 point must remain.</li>
                     <li><strong>The quiet dark.</strong> Atrophy requires a minimum of one week of in-game downtime. It cannot be done in the chaos of a dungeon.</li>
-                    <li><strong>Magic is permanent.</strong> Faith, Druidism, Shamanism, Wizardry, Ki, and Runecraft cannot be atrophied. The weave does not forget those who touch it.</li>
+                    <li><strong>Magic is permanent.</strong> Faith, Druidism, Shamanism, Wizardry, Ki, Runecraft, and the Voicemark cannot be atrophied. The weave does not forget those who touch it — and the forces the Voicemark invokes do not forget those who have spoken their frequencies.</li>
                     <li><strong>The foundation crumbles.</strong> If atrophying a skill drops your total investment below the Power of Three threshold, the parent characteristic score drops immediately.</li>
                 </ul>
 
@@ -1224,6 +1229,18 @@
             <strong>XP Cost:</strong> Dwarf/Human/Halfling (25) | Elf (30)
             <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: Knowledge (Theology), Read/Scribe (1)</span>
             <p>Unlocks divine blessings. Each point allows you to learn one blessing. Every 3 points increases your <strong>Charisma</strong> characteristic by 1.</p>
+        </div>
+
+        <div class="trait-box" style="border-color: var(--blood); background: rgba(168,24,24,0.04);">
+            <span class="trait-title" style="color: var(--blood);">Voicemark <span style="font-size:9pt; font-weight:400; color: var(--gold);">— The Lost Seventh Discipline</span></span>
+            <strong>XP Cost:</strong> Halfling (10) | Elf (12) | Human (15) | Dwarf (20) — compounding per point, GM-granted access only
+            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: GM-granted access only | GOVERNS: Willpower (standalone — no characteristic advancement) | ARMOUR: Studded leather or lighter — no penalty. Chainmail and heavier: full TN penalty (identical to Wizard/Druid/Shaman)</span>
+            <p>The projection of divine force as spoken frequency — a lost pre-Empire discipline systematically destroyed by the Church of the Radiant Compact. A Speaker cannot be trained; they must find surviving texts, a living transmission, or contact with something ancient enough to remember when the Voicemark was practiced openly. Each point unlocks one invocation from the Voicemark grimoire. <strong>The Voicemark does not advance any characteristic</strong> — like Runecraft, it stands outside the Power of Three entirely. It is a standalone discipline whose cost reflects racial affinity for the lost tradition: Halflings carry the closest living memory of the pre-Empire world; Dwarves are furthest from its frequency.</p>
+            <ul style="margin-top:8px;">
+                <li><strong>Governing characteristic:</strong> Willpower. Add your Willpower modifier to To-Cast rolls. The force of absolute intent carries the syllable to its target.</li>
+                <li><strong>Iron penalty:</strong> Studded leather or lighter — no penalty. Chainmail and heavier — full TN penalty identical to Wizard/Druid/Shaman. The constriction of metal against chest and throat disrupts the precise breath control invocation demands.</li>
+                <li><strong>Advancement:</strong> Cannot be atrophied. Cannot be transferred. The forces the Voicemark invokes do not forget those who have spoken their frequencies.</li>
+            </ul>
         </div>
 
         <div class="trait-box">
@@ -4117,6 +4134,24 @@ APPENDIX: XI-A</span>
         </div>
 
         <div class="trait-box">
+            <span class="trait-title">The Vajra Lance (TN 14)</span>
+            <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 4 | Range: 400 Ft | Target: Single | Duration: Instant</span>
+            <p>Compress every ounce of available Ki into a single, needle-thin projectile of pure kinetic force — the body's lightning made physical. Deals <strong>5d10 wounds bypassing all Wound Mitigation</strong>. The Lance punches through cover, walls up to 2 Ft thick, and any object in a straight line to the target. A natural 10 To-Cast strikes with divine precision — the target must pass a Physique test (TN 18) or lose the use of one limb entirely until magically healed. <strong>The Vajra Lance can only be fired once per encounter.</strong> The body cannot compress that density of force twice in a single confrontation. The Monk is rendered Exhausted until end of their next turn.</p>
+        </div>
+
+        <div class="trait-box">
+            <span class="trait-title">The Pashupata Stance (TN 16)</span>
+            <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 5 | Range: Self | Duration: 1 + bonus turns | Prerequisite: Perfect Form</span>
+            <p>The most dangerous posture in the Ki tradition — the stance named for the force that ends things. The Monk channels all internal energy into a state of absolute destructive readiness. For the duration: every unarmed strike deals <strong>4d10 + Physique modifier wounds bypassing all Mitigation</strong>; the Monk is immune to all forced movement; and any creature that strikes the Monk in melee must pass a Physique test (TN = Monk's Ki skill points) or suffer the ⇓ Prone condition from the shockwave of the impact absorption. <strong>The stance cannot be maintained indefinitely.</strong> At the end of each turn it is held beyond the first, the Monk loses <strong>3 wounds per turn</strong> that cannot be mitigated — the body burns itself to sustain the force. When the stance ends, the Monk suffers 3 Exhausted conditions. Cannot be combined with Perfect Form.</p>
+        </div>
+
+        <div class="trait-box">
+            <span class="trait-title">The Narayana Strike (TN 17)</span>
+            <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 5 | Range: 200 Ft AoE | Duration: Instant</span>
+            <p>The rarest working in the Ki tradition and the most morally demanding. The Monk releases a radial pulse of absolute force that reads the intent of every creature within range simultaneously. Those bearing aggressive intent toward the Monk suffer <strong>6d10 wounds bypassing all Wound Mitigation</strong>. Those who are neutral or flee suffer <strong>3d10 wounds</strong>. <strong>Those who are prostrate, surrendered, or genuinely offer no resistance are entirely unharmed.</strong> The Strike cannot be deceived — it reads the body's Ki frequency, not its posture. A creature that kneels while planning to attack is struck with full force. The Monk cannot use any Ki powers for the remainder of the encounter after this working. The body has nothing left to give.</p>
+        </div>
+
+        <div class="trait-box">
             <span class="trait-title">Reality Fracture (TN 21)</span>
             <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 6 | Range: 350 Ft | Target: 40 Ft AoE | Duration: 1 + bonus turns</span>
             <p>Break the local rules of reality. Gravity shifts, matter stutters. All creatures take <strong>6d10 + casting bonus wounds</strong> and must surpass Intellect TN 21 + Resist bonus or be <strong>Disoriented</strong> (losing all AP next turn). Subsequent turns deal <strong>3d10 wounds</strong> regardless of mitigation. Spells cast within the AoE by anyone other than the caster have a 50% chance of misfiring (Roll 1d10; on 1–5, targets a random creature).</p>
@@ -4140,7 +4175,7 @@ APPENDIX: XI-A</span>
     <div class="rpg-columns">  
         <a href="#top" class="back-to-top">↑ Return to Index</a>
         <div class="full-width">
-            <p>Unlike standard spellcasting, <strong>Ki Powers</strong> represent the mastery of the energy within, fueled entirely by the Monk's <strong>Willpower</strong> and <strong>Physique</strong>. Because this power is internal, Ki practitioners suffer <strong>zero penalties</strong> from wearing iron or heavy armor.</p>
+            <p>Unlike standard spellcasting, <strong>Ki Powers</strong> represent the mastery of the energy within, fuelled entirely by the Monk's <strong>Physique</strong>. Ki is the body's own power — bone, blood, breath, and the absolute discipline to push all three past their limits. It owes nothing to the mind's geometry or the will's conviction. The casting bonus for all Ki powers is the <strong>Physique modifier</strong>. Because this power is entirely internal, Ki practitioners suffer <strong>zero penalties</strong> from wearing iron or heavy armour.</p>
         </div>
 
         <div class="full-width">
@@ -4206,9 +4241,9 @@ APPENDIX: XI-A</span>
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Agni-Fire (TN 6)</span>
+            <span class="trait-title">Inner Flame (TN 6)</span>
             <span style="color: var(--gold); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 1 | Range: 100 Ft | Duration: Instant</span>
-            <p>Hurl a condensed orb of friction-heated Ki. Deals <strong>1d10 + casting bonus</strong> fire wounds. A natural 10 To-Hit burns deep into the meat, dealing an additional 1d10 wounds.</p>
+            <p>Compress internal thermal energy into a superheated orb of friction-born Ki and hurl it. Deals <strong>1d10 + Physique modifier</strong> fire wounds. A natural 10 To-Hit burns deep into the meat, dealing an additional 1d10 wounds. This is not arcane fire — it is the body's own heat weaponised. It cannot be suppressed by the Thermal Nullification.</p>
         </div>
 
         <div class="trait-box">
@@ -4782,6 +4817,160 @@ APPENDIX: XI-A</span>
         </div>
 
     </div>
+        </div>
+
+    </div>
+
+<div class="magic-break" style="margin-top: 60px;">
+        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">DISCIPLINE VII</span>
+        <h2 id="discipline-7">The Primordial Lexicon (The Voicemark)</h2>
+        <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The weave bends to a Wizard's geometry. The stone remembers the Runemaster's chisel. The Voicemark does not negotiate with the world's material — it speaks directly to what existed before the world had material. The difference is not academic. It is terminal."</p>
+    </div>
+
+    <div class="rpg-columns">
+        <a href="#top" class="back-to-top">↑ Return to Index</a>
+
+        <div class="full-width">
+            <p>The Voicemark is not a discipline — it is an atrocity of lost physics. It cannot be purchased with Experience Points, cannot be taught by an academy, and exists in no curriculum of the settled world. The Church of the Radiant Compact classified the surviving texts as pre-Empire theological anomalies and burned them — the Corvus family library being the most significant erasure. What remains exists only in fragments: partial invocations copied in hidden margins, oral transmissions passed in dying languages, and the Old Record that the Halfling elders carry in living memory and fiercely protect.</p>
+            <p>The practitioners of this art are called <strong>Speakers</strong>. There are fewer than a dozen living Speakers in the current age. Most do not know the others exist. Most believe themselves to be the last.</p>
+            <p>The Voicemark projects divine or cosmic force as <em>spoken frequency</em>. It is not a prayer, which petitions, nor a blessing, which channels. A Voicemark <em>states</em> — in the exact syllable-pattern the cosmos recognises — what is to occur, and reality executes it. The Speaker is not a conduit; they are a mechanical transmitter. The force does not flow through them, but through the atmospheric vibration between their mouth and the target.</p>
+            <p>This is why iron does not interfere. The voice is not the weave.</p>
+            <p><strong>No healing.</strong> The Voicemark carries no restorative tradition. It cannot restore wounds. It can suppress harm, silence threats, and purify corruption — but it does not mend flesh. Speakers who need healing must carry another discipline or rely on allies.</p>
+            <p><strong>No bonus wounds.</strong> Unlike other disciplines, the Voicemark adds no characteristic modifier to wound totals. There is no casting bonus. The invocations are fixed cosmic forces — the wounds listed are the wounds dealt. The discipline's power lies in its properties and precision, not in scaling with the Speaker's statistics.</p>
+
+            <div class="trait-box" style="border-color: var(--blood); background: rgba(168,24,24,0.06);">
+                <span class="trait-title" style="color: var(--blood);">The Lost Transmission (Acquisition)</span>
+                <p>A character cannot merely decide to become a Speaker. The Lexicon must be <em>found</em> — recovered from a surviving text, transmitted by a living Speaker, or triggered by contact with an entity ancient enough to remember the spoken world. When authorised by the GM, the character gains access to the discipline at 0 points, knowing only the cantrips.</p>
+                <p style="margin-top:8px;"><strong>XP Cost per point (compounding, same structure as Runecraft):</strong> Halfling (10) | Human (10) | Dwarf (15) | Elf (20). Halflings and Humans hold the closest living connection to the pre-Empire world. Dwarves find the tradition architecturally foreign to their forge-and-stone framework. Elves, who regard the Voicemark as a crude and lesser form of weaving beneath the dignity of Wizardry or Druidism, pay the highest price — their cultural contempt makes the knowledge actively harder to integrate.</p>
+                <p style="margin-top:8px;">The GM must confirm that narrative access to further texts or transmission is plausible before XP can be spent on advancement.</p>
+                <p style="margin-top:8px;"><strong>The Voicemark cannot be atrophied.</strong> Once the syllables are embedded in the mind, they cannot be unlearned. The forces that answer these frequencies permanently know where the Speaker is.</p>
+            </div>
+
+            <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.08);">
+                <span class="trait-title" style="color: var(--gold);">The Axiom of Bearing (Adhikara)</span>
+                <p>Standard Voicemarks can be invoked by any Speaker with sufficient skill. But the apex invocations — the <em>Axiom of the Absolute</em>, the <em>Preserver's Axiom</em>, the <em>Agni-Axiom</em> — require the Speaker to hold the <strong>Axiom of Bearing</strong> granted directly by the force invoked.</p>
+                <p style="margin-top:8px;">The Axiom is not purchased; it is <em>tested for</em>. The cosmic force assesses the Speaker dynamically. A Speaker who attempts an invocation without authorisation does not simply fail — the frequency misfires, and the force dictates the consequence. The arcane academies term this lethal feedback <em>Refusal</em>.</p>
+                <p style="margin-top:8px;"><strong>Holding an Axiom</strong> is recorded in the Speaker's ledger as a permanent, untransferable mark. Upon the Speaker's death, the Axiom immediately returns to the void.</p>
+            </div>
+
+            <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.08);">
+                <span class="trait-title" style="color: var(--gold);">The Retraction (Pratyahara)</span>
+                <p>Every Voicemark possesses a counter-frequency — the closing syllable that withdraws the command. This is the <strong>Retraction</strong>. Minor invocations retract automatically at the end of their duration. For major invocations, the Speaker must actively speak the Retraction before the duration expires or suffer devastating biological consequences.</p>
+                <p style="margin-top:8px;">A Speaker incapacitated or killed leaves the frequency running blindly. It will not distinguish friend from foe, executing its intent until the duration expires or an authorised Speaker forces the Retraction.</p>
+                <p style="margin-top:8px;"><strong>Mechanical consequence of a failed Retraction:</strong> The Speaker immediately suffers <strong>2 Exhausted conditions</strong> and must pass a <strong>Willpower test (TN = the invocation's TN)</strong> or permanently lose <strong>1 point of Willpower</strong>. The force literally scars the vocal architecture, widening the gap between the Speaker's intent and the universe's execution. Three accumulated failures marks the Speaker permanently — cosmic forces begin answering before they are called, and the gap between intention and invocation narrows in ways the Speaker cannot control.</p>
+            </div>
+
+            <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.08);">
+                <span class="trait-title" style="color: var(--gold);">The Resonance Override (Extended Invocation)</span>
+                <p>Where lesser disciplines permit Overcasting, the Voicemark demands <strong>Resonance Override</strong> — forcing the vocal cords to hold the syllables past their safe biological limits. Each additional turn the Speaker maintains the Override adds 1d10 to the effect and extends the duration by 1 encounter, but violently haemorrhages <strong>1d6 wounds per turn</strong> directly from the Speaker's flesh.</p>
+                <p style="margin-top:8px;">An Overridden invocation cannot be Retracted mid-cycle. Releasing it early triggers the failed Retraction consequence at double severity.</p>
+                <p style="margin-top:8px;"><strong>The Toll of Iron:</strong> Speakers suffer no casting penalties from iron itself — the voice passes through metal. What causes penalty is constriction. Chainmail or heavier armour imposes the full TN penalty identical to Wizardry and Druidism, as the restriction of chest and throat disrupts the precise breath control invocation demands. Studded leather or lighter imposes no penalty. If a Speaker cannot produce clear sound — through the Silenced condition, a sealed helm, or a crushed trachea — they cannot invoke. A mimed or written invocation does not function.</p>
+            </div>
+
+            <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.08);">
+                <span class="trait-title" style="color: var(--gold);">The Lexicon Casting Scale</span>
+                <table style="width:100%; border-collapse:collapse; margin: 10px 0; font-size:0.9em;">
+                    <thead>
+                        <tr style="background: var(--iron); color: var(--parchment);">
+                            <th style="padding:6px 10px; text-align:left;">Invocation TN</th>
+                            <th style="padding:6px 10px; text-align:left;">Base AP Toll</th>
+                            <th style="padding:6px 10px; text-align:left;">Max d10s</th>
+                            <th style="padding:6px 10px; text-align:left;">Axiom Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style="padding:5px 10px;">TN 0 — Fledgling Marks</td><td style="padding:5px 10px;">1 AP</td><td style="padding:5px 10px;">Dis.d10</td><td style="padding:5px 10px;">No</td></tr>
+                        <tr style="background:rgba(0,0,0,0.04);"><td style="padding:5px 10px;">TN 1–6</td><td style="padding:5px 10px;">1 AP</td><td style="padding:5px 10px;">1d10</td><td style="padding:5px 10px;">No</td></tr>
+                        <tr><td style="padding:5px 10px;">TN 7–12</td><td style="padding:5px 10px;">2 AP</td><td style="padding:5px 10px;">2d10</td><td style="padding:5px 10px;">No</td></tr>
+                        <tr style="background:rgba(0,0,0,0.04);"><td style="padding:5px 10px;">TN 13–18</td><td style="padding:5px 10px;">3 AP</td><td style="padding:5px 10px;">3d10</td><td style="padding:5px 10px;">Recommended</td></tr>
+                        <tr><td style="padding:5px 10px;">TN 19+ — Sundering Marks</td><td style="padding:5px 10px;">5 AP</td><td style="padding:5px 10px;">5d10</td><td style="padding:5px 10px;"><strong>Required</strong></td></tr>
+                    </tbody>
+                </table>
+                <p style="margin-top:8px;"><strong>Governing Characteristic:</strong> Willpower. Add your Willpower modifier to all Voicemark To-Cast rolls only. The Voicemark is a standalone discipline like Runecraft — it advances no characteristic, adds no bonus wounds, and carries no healing. The invocations themselves are the reward.</p>
+                <p style="margin-top:8px;"><strong>Refusal (Backlash):</strong> A natural 1 on any Voicemark To-Cast roll triggers Refusal — the force withdraws violently, locking the vocal cords and inflicting the <strong>Silenced</strong> condition for 1d3 turns. Forcing speech through this tears the throat for 1d10 wounds and resets the silence.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEXICON SPELL LIST -->
+    <div class="rpg-columns">
+        <a href="#top" class="back-to-top">↑ Return to Index</a>
+        <div class="full-width">
+
+            <div class="trait-box" style="border-color: #3D1A6E; background: rgba(61,26,110,0.05);">
+                <span class="trait-title" style="color: #3D1A6E;">✦ Fledgling Marks (TN 0)</span>
+                <p><strong>The Absolute Hush</strong> (TN 0, 1 AP) — Exhale a syllable of pure acoustic negation. All ambient sound within 10 Ft is deleted for 1 turn. The Speaker is not silenced, but sound cannot travel beyond the radius boundary.</p>
+                <p style="margin-top:8px;"><strong>The Resonance Read</strong> (TN 0, 1 AP) — Press lips to a surface and vocalise a sub-audible tone. You immediately sense if the object has been touched by Voicemark invocation, Runic geometry, or Chaos-marks within 24 hours. No damage. Pure, sterile data.</p>
+            </div>
+
+            <h3 class="sub-header">Minor Marks (TN 1–6)</h3>
+
+            <div class="trait-box">
+                <span class="trait-title">The Severed Chord (TN 4, 1 AP)</span>
+                <p>A sharp, weaponised consonant-burst targeting the vocal centres of a single creature within 30 Ft. The target suffers the <strong>Silenced condition for 1d3 turns</strong> — unable to cast Faith, Voicemark, or verbal Shamanic magic. Non-vocal disciplines (Ki, Runecraft, written Wizardry) are unaffected. Retraction is passive.</p>
+            </div>
+
+            <div class="trait-box">
+                <span class="trait-title">The Autopsy Tone (TN 5, 1 AP)</span>
+                <p>Sustain a continuous diagnostic frequency toward a target within 20 Ft. You read the acoustic return — learning the target's exact current wound total, all active magical conditions, and any Voicemark exposure within the last hour. No damage. Retraction is passive.</p>
+            </div>
+
+            <div class="trait-box">
+                <span class="trait-title">The Sleeper Syllable (TN 6, 1 AP)</span>
+                <p>Encode up to 30 words into a solid object by speaking directly into its material matrix. The message lies dormant until a precise stated condition is met — a specific person's touch, a stated hour, a spoken trigger word — at which point it plays once at normal volume in the Speaker's voice. Duration: indefinite. Retraction: whisper the counter-syllable into the same surface to erase it.</p>
+            </div>
+
+            <h3 class="sub-header">Moderate Marks (TN 7–12)</h3>
+
+            <div class="trait-box">
+                <span class="trait-title">The Abyssal Deterrent (TN 7, 2 AP)</span>
+                <p>Produce a sustained subsonic vibration highly toxic to entities of the void — Daemons, Chaos-touched, and active Chaos-boon bearers. Such entities within 20 Ft suffer <strong>Disadvantage on all To-Hit and To-Cast rolls</strong>. Costs 1 AP per turn to maintain; movement halved. Retraction: passive upon ceasing the tone.</p>
+            </div>
+
+            <div class="trait-box">
+                <span class="trait-title">The Thermal Nullification (TN 9, 2 AP)</span>
+                <p>The acoustic counter-code to combustion. Entirely suppresses an active fire effect — mundane, magical, or Agneyastra-class — within 60 Ft for 1d3 turns. Silences what is currently burning, including fire conditions on living creatures. Does not prevent new fire. No wound damage. Retraction: passive, or released as a free action.</p>
+            </div>
+
+            <div class="trait-box">
+                <span class="trait-title">The Solar Diagnostic (TN 10, 2 AP)</span>
+                <p>Intone a concentrated solar frequency. All concealed, invisible, or magically obscured entities within 30 Ft are traced in pale gold light visible only to the Speaker for 2 turns. Hidden Chaos marks glow through clothing. Daemons masquerading in flesh display their true geometric distortion beneath the surface. No damage. Retraction: passive.</p>
+            </div>
+
+            <div class="trait-box">
+                <span class="trait-title">The Agni-Axiom (TN 12, 2 AP) — Axiom of Bearing: Purifying Force</span>
+                <p>Invoke the clinical fire that processes rather than consumes. A target within 30 Ft suffers <strong>3d10 wounds</strong> ignoring mundane Wound Mitigation. Any active Chaos boon on the target is forcibly locked for 1d3 turns — the Basalt Carapace reverts, the Umbral Shroud withdraws, the Overclock locks. Against undead, wounds double. Against Daemons and void entities, wounds triple and the target must pass Willpower TN 15 or be driven back 20 Ft. <strong>Retraction required within 2 turns</strong> or vocal haemorrhage triggers.</p>
+            </div>
+
+            <h3 class="sub-header">Major Marks (TN 13–18)</h3>
+
+            <div class="trait-box">
+                <span class="trait-title">The Preserver's Axiom (TN 14, 3 AP) — Axiom of Bearing: The Compact</span>
+                <p>Release a frequency that audits intent. All entities within 40 Ft bearing hostile intent toward the Speaker suffer <strong>4d10 wounds</strong> bypassing all Wound Mitigation. Those who genuinely lay down their arms and surrender intent are completely unharmed. The invocation cannot be deceived by feigned surrender — it reads the mind's acoustic frequency, not the posture of the body. <strong>Retraction required within 1 turn.</strong> Failed Retraction at this TN triggers the consequence at double severity and locks the Speaker in the Silenced condition for the remainder of the encounter.</p>
+            </div>
+
+            <div class="trait-box">
+                <span class="trait-title">The Osteo-Resonance (TN 15, 3 AP)</span>
+                <p>Weaponise the vocal cords to match the resonant frequency of mortal bone. A target within 40 Ft suffers <strong>2d10 unmitigated wounds per turn</strong> the tone is maintained. The Speaker must remain perfectly stationary and spend 2 AP per turn. The target must pass a <strong>Physique test (TN = Speaker's Willpower score)</strong> each turn or suffer the ⊛ Stunned condition as motor control fails. Maximum duration: Speaker's Voicemark skill points in turns. <strong>Retraction: active — the Speaker must consciously close the circuit or it continues past the intended target.</strong></p>
+            </div>
+
+            <div class="trait-box">
+                <span class="trait-title">The Kinetic Lock (TN 16, 3 AP)</span>
+                <p>Speak the exact resonant frequency of the target's physical density. One target within 50 Ft is <strong>absolutely immobilised</strong> — they cannot move or be moved by any physical force — for a number of turns equal to the Speaker's Willpower modifier. Mental actions and non-vocal spellcasting function normally. The target feels no pain. <strong>Retraction required each turn to maintain.</strong> If the Speaker is Silenced, the lock shatters immediately.</p>
+            </div>
+
+            <h3 class="sub-header">Sundering Marks (TN 19+)</h3>
+
+            <div class="trait-box" style="border-color: var(--blood); background: rgba(168,24,24,0.06);">
+                <span class="trait-title" style="color: var(--blood);">The Axiom of the Absolute (TN 22, 5 AP) — Axiom of Bearing: The Absolute</span>
+                <p>The most catastrophic unearthing of pre-world physics in the Primordial Lexicon. The Speaker invokes a frequency that does not discriminate, assess, or negotiate. Every living entity within 60 Ft — ally, enemy, and the Speaker themselves — suffers <strong>8d10 unmitigated wounds</strong>. Structures within the radius take full damage.</p>
+                <p style="margin-top:8px;">This cannot be Deepened, targeted, or recalled mid-invocation. <strong>The Retraction does not exist for this invocation.</strong> Once the syllable leaves the mouth it concludes violently. Attempting to halt mid-invocation triggers Refusal at triple severity against the Speaker alone. This is why the Church classified the entire Voicemark tradition rather than simply suppressing this invocation — the knowledge of its existence cannot be safely separated from the knowledge of its syllables.</p>
+                <p style="margin-top:8px;"><em>Cast once per day. The Speaker permanently loses 1 point of Willpower per use, regardless of outcome. After three lifetime uses, the Speaker's voice develops a permanent audible sub-harmonic resonance that terrifies animals and announces their presence to other Speakers within 100 Ft.</em></p>
+            </div>
+
+        </div>
+    </div>
+
 <div class="magic-break" style="margin-top: 60px;">
         <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER XIII</span>
         <h2 id="chapter-13">The Game Master's Ledger</h2>
