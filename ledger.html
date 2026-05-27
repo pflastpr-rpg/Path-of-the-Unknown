@@ -1937,7 +1937,7 @@ function calculateCastStats(state, stats, armorData, magicState) {
     let coreCastStat = 0, castArmorPenalty = 0;
 
     if (magicState.isKiActive) { coreCastStat = Math.floor(stats.physique / 5); castArmorPenalty = 0; }
-    else if (magicState.isSabdaActive) { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn <= 1 ? 0 : armorData.tn; }
+    else if (magicState.isSabdaActive) { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn <= 1 ? 0 : armorData.tn === 5 ? armorData.tn : Math.floor(armorData.tn / 2); }
     else if (magicState.isReligionActive) { coreCastStat = Math.floor(stats.charisma / 5); castArmorPenalty = halvedTN; }
     else if (magicState.isDruidActive) { coreCastStat = Math.floor(stats.awareness / 5); castArmorPenalty = armorData.tn; }
     else if (magicState.isShamanActive) { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn; }
