@@ -2487,6 +2487,87 @@ APPENDIX: XI-A</span>
         </div>
     </div>
 
+    <div class="rpg-columns">
+        <a href="#top" class="back-to-top">↑ Return to Index</a>
+        <div class="full-width">
+            <div class="trait-box" style="border-color: var(--blood); background: rgba(168,24,24,0.04);">
+                <span class="trait-title" style="color: var(--blood);">The Discipline Ledger — Casting Mechanics by Tradition</span>
+                <p style="margin-bottom:12px;">Every discipline calculates its casting bonuses differently. The formulas below are the mechanical law — what appears on your ledger is derived from these exact calculations. <em>pts</em> = skill points in the discipline. <em>Stat</em> = the characteristic score.</p>
+
+                <table style="width:100%; border-collapse:collapse; font-size:9.5pt;">
+                    <thead>
+                        <tr style="background:var(--iron); color:var(--parchment);">
+                            <th style="padding:6px 8px; text-align:left;">Discipline</th>
+                            <th style="padding:6px 8px; text-align:left;">Characteristic</th>
+                            <th style="padding:6px 8px; text-align:left;">To-Cast Bonus</th>
+                            <th style="padding:6px 8px; text-align:left;">Damage Bonus</th>
+                            <th style="padding:6px 8px; text-align:left;">Heal Bonus</th>
+                            <th style="padding:6px 8px; text-align:left;">Armour Penalty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.12);">
+                            <td style="padding:5px 8px;"><strong>Faith</strong></td>
+                            <td style="padding:5px 8px;">Charisma</td>
+                            <td style="padding:5px 8px;">floor(Cha÷5) + acc + Focus</td>
+                            <td style="padding:5px 8px;">Charisma + floor(pts÷3)×2</td>
+                            <td style="padding:5px 8px;">Charisma + floor(pts÷3)×2</td>
+                            <td style="padding:5px 8px;">Halved TN</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.12); background:rgba(0,0,0,0.03);">
+                            <td style="padding:5px 8px;"><strong>Druidism</strong></td>
+                            <td style="padding:5px 8px;">Awareness</td>
+                            <td style="padding:5px 8px;">floor(Awa÷5) + acc + Focus</td>
+                            <td style="padding:5px 8px;">Intellect + floor(pts÷3)</td>
+                            <td style="padding:5px 8px;">Awareness + floor(pts÷3)×2</td>
+                            <td style="padding:5px 8px;">Full TN</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.12);">
+                            <td style="padding:5px 8px;"><strong>Wizardry</strong></td>
+                            <td style="padding:5px 8px;">Intellect</td>
+                            <td style="padding:5px 8px;">floor(Int÷5) + acc + Focus</td>
+                            <td style="padding:5px 8px;">Intellect + floor(pts÷3)×3</td>
+                            <td style="padding:5px 8px;"><em>None</em></td>
+                            <td style="padding:5px 8px;">Full TN</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.12); background:rgba(0,0,0,0.03);">
+                            <td style="padding:5px 8px;"><strong>Shamanism</strong></td>
+                            <td style="padding:5px 8px;">Willpower</td>
+                            <td style="padding:5px 8px;">floor(Wil÷5) + acc + Focus</td>
+                            <td style="padding:5px 8px;">Intellect + floor(pts÷3)×2</td>
+                            <td style="padding:5px 8px;">Willpower + floor(pts÷3)×2</td>
+                            <td style="padding:5px 8px;">Full TN</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.12);">
+                            <td style="padding:5px 8px;"><strong>Ki</strong></td>
+                            <td style="padding:5px 8px;">Physique</td>
+                            <td style="padding:5px 8px;">floor(Phy÷5) + acc + Focus</td>
+                            <td style="padding:5px 8px;">Physique + floor(pts÷3)</td>
+                            <td style="padding:5px 8px;">Physique + floor(pts÷3)×2</td>
+                            <td style="padding:5px 8px;">None</td>
+                        </tr>
+                        <tr style="background:rgba(168,24,24,0.06);">
+                            <td style="padding:5px 8px;"><strong>Śabda-Axiom</strong></td>
+                            <td style="padding:5px 8px;">Willpower</td>
+                            <td style="padding:5px 8px;">floor(Wil÷5) + acc + Focus</td>
+                            <td style="padding:5px 8px;">Willpower + floor(pts÷3)×2</td>
+                            <td style="padding:5px 8px;"><em>None — no healing</em></td>
+                            <td style="padding:5px 8px;">None ≤ Studded. Full TN ≥ Chainmail</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-top:14px; font-size:9.5pt; line-height:1.8;">
+                    <p><strong>Skill Accuracy (acc):</strong> When a discipline reaches 9+ pts, every 3 pts beyond 6 adds +1 To-Cast: floor((pts − 6) / 3).</p>
+                    <p><strong>Focus:</strong> floor(Focus pts / 3) adds to To-Cast for all disciplines.</p>
+                    <p><strong>Perception:</strong> floor(Perception pts / 3) adds to casting damage for all disciplines.</p>
+                    <p><strong>Arcane Mastery:</strong> When any discipline reaches 15 pts, your Spirit skill pts are added to both damage and healing totals. Applies to Śabda damage.</p>
+                    <p><strong>Armour Penalty:</strong> Applied as a negative to the To-Cast roll. Faith halves the TN penalty. Ki and Śabda (studded leather or lighter) suffer no penalty. All others take the full armour TN as a penalty.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="magic-break">
         <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">DISCIPLINE I</span>
         <h2 id="discipline-1">Blessings of the Faith</h2>
