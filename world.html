@@ -360,7 +360,61 @@ const BASE_LORE = {
         stats: "Primary Encounters: Birn Dwarves (if opened)\nHazard: Do not open this.",
         notes: "", base: true
     },
-    varkai_steppe: {
+    coldbarrow: {
+        title: "Coldbarrow — Ashwalker Seat", top: 23.5, left: 47.2,
+        desc: "The closest thing the northern peoples have to a city — three thousand souls in winter, five thousand when the fishing fleets return. Built into a cliff face, each level carved deeper into the rock over centuries. Governed by the Three-Bench Council: warriors, fleet captains, and Skalds, with the Skalds holding a veto they have used twice. Both times they prevented a war. Jarl Brynn Haldvoss has held the bench for nineteen years — she is missing the last two fingers of her right hand, lost in a negotiation that went wrong before the negotiations were technically over. She negotiated the settlement anyway.",
+        stats: "Jarl: Brynn Haldvoss (Ran'keth, 53)\nPrimary Trade: Iron, whale oil, cured hides, northern timber\nHazard: None — treated as neutral ground by all six clans",
+        notes: "", base: true
+    },
+    grimholt: {
+        title: "Grimholt — Iron Mane Fortress", top: 17.8, left: 76.5,
+        desc: "Not a city. A fortified harbour where every structure is built to be defended and every resident can fight. Population eight hundred — no non-combatants. Children who cannot yet hold a weapon carry torches and know the escape routes. Built by the Iron Mane clan on the northeastern peninsula where the only productive activities are fishing, whaling, and raiding. Jarl Torsten Krauvald has been Ran'keth for thirty-one years and has survived seven formal challenges. He does not negotiate with the Church. He stated once that the Church's authority ends precisely where the Church's soldiers stop being willing to go.",
+        stats: "Jarl: Torsten Krauvald (Ran'keth, 61)\nPrimary Trade: None — Iron Mane do not trade. They raid.\nHazard: Unwelcome visitors are processed as a threat immediately",
+        notes: "", base: true
+    },
+    harrenfell: {
+        title: "Harrenfell — Three-Bone Winter Gathering", top: 20.5, left: 62.0,
+        desc: "Not a permanent settlement. The Three-Bone clan occupies frozen inland plateaus north of the central mountains and moves with the seasons. Harrenfell is the winter convergence point — a seasonal camp that becomes, in deep winter, a collection of longhouses capable of housing three thousand people and their animals. In summer it is empty ground. The Three-Bone find the concept of a city philosophically troubling. Their Ran'keth is always a Skald — the only qualified leader is someone who remembers everything the people have previously done wrong. Current leader: Skald-Chieftain Vessa of the Long Memory, who has memorised fourteen hundred years of clan history.",
+        stats: "Leader: Vessa of the Long Memory (Skald-Chieftain, 38)\nSeasonal: Empty May–September\nHazard: Interior plateau — extreme cold, no shelter outside Harrenfell radius",
+        notes: "", base: true
+    },
+    lost_souls_territory: {
+        title: "The Lost Souls — Territory of the Clanless", top: 17.5, left: 56.0,
+        desc: "The destination of last resort — those cast out from clans, those who left without explanation, those who simply ended up here. No Ran'keth. No formal structure. Approximately four thousand people in small groups of three to twelve across an area larger than most settled kingdoms. What the Lost Souls produce, with surprising consistency, is Skalds of unusual quality. People who have lost everything remember it with particular clarity. The finest Skald in the northern arc, Kael Without-Clan, lives here and refuses all formal affiliation. He has declined three clan membership offers with identical words: 'The thing you're offering is smaller than what I already have.'",
+        stats: "Leader: None (no formal authority)\nNotable: Kael Without-Clan (Skald, 46) — knows histories of four clans\nHazard: No clan protection — travellers are on their own",
+        notes: "", base: true
+    },
+    voidmere: {
+        title: "Voidmere — The Hollowed Settlement", top: 19.2, left: 68.0,
+        desc: "Built on the shore of a lake that freezes solid in winter and becomes the clan's primary road network. The Hollowed clan stripped everything non-essential from their culture after a catastrophic winter three generations ago that killed two-thirds of their people. Nothing in Voidmere is built that cannot be rebuilt. Nothing is stored that cannot be replaced. The people are not cold — they feel everything — but they have learned to set feeling aside until the immediate threat is addressed. Outside visitors consistently mistake this for either emptiness or danger. It is neither. Population twelve hundred. Ran'keth: Eira Pale-Hand, forty-four, who has not smiled in any witnessed interaction.",
+        stats: "Leader: Eira Pale-Hand (Ran'keth, 44)\nPrimary Trade: Preserved goods, winter survival equipment, knowledge of cold-terrain navigation\nHazard: The Hollowed do not warn strangers twice",
+        notes: "", base: true
+    },
+    brackwater: {
+        title: "Brackwater — Stoneback Clan Port", top: 22.8, left: 55.0,
+        desc: "Built on stilts at the mouth of a fast river that floods seasonally — the entire lower town is designed to be inundated, with all permanent structures elevated above the flood line. Population sixteen hundred. The Stoneback clan split from the Ashwalkers ninety years ago after a succession dispute of sufficient violence that both sides agreed separation was preferable. They occupy the awkward middle ground between Ashwalker and Iron Mane territory and survive by maintaining neutrality with both. Their smoked fish reaches as far south as Havenspire through intermediary traders who prefer the settled world not know the source. Jarl Aldric the Younger governs with the specific caution of a man who knows his clan's survival depends on not being absorbed by a neighbour.",
+        stats: "Jarl: Aldric the Younger (Ran'keth, 40)\nPrimary Trade: Smoked fish (best freshwater source in the arc), river navigation, pilot services\nNote: Aldric's father Aldric the Elder (70) is still alive and still offers opinions",
+        notes: "", base: true
+    },
+    orc_eastern_settlements: {
+        title: "Orc Settlements — Eastern Reaches", top: 30.5, left: 85.0,
+        desc: "The eastern Orc settlements are not a unified territory. They are a dozen overlapping warband ranges anchored around the Var'kai Steppe, each governed by its own Ran'keth and competing with adjacent warbands through a combination of raiding, blood-exchange agreements, and the Grak'thar Council that meets once per generation. The most powerful current presence is the Grak'vel clan, whose war-leader Vrakkus — first-generation, third son of Ur'keth Maren Voss — commands a warband the eastern trade routes have learned to reroute to avoid. The settlements range from permanent fortified camps to seasonal raiding staging grounds.",
+        stats: "Primary: Grak'vel Clan (led by Vrakkus, first-gen, exceptional)\nUr'keth Present: Maren Voss (Grak'vel, 11 offspring)\nHazard: Warband range — no safe passage without Ran'keth arrangement",
+        notes: "", base: true
+    },
+    sunken_archive: {
+        title: "The Sunken Archive", top: 38.5, left: 67.5,
+        desc: "The Lizardman containment complex, now unsealed. Pentagon-shaped chambers arranged not for habitation but for the circulation of a signal. Those who enter under the influence of the Aakzad Spirit-Echo describe the layout as inevitable. Those who enter without it are lost immediately and thoroughly. The complex is legible only to those it is already speaking to. Ten Aakzad emerged when the gateway opened. The Lizardman High Priest has dispatched urgent word to every settled kingdom. The Sunken Archive is no longer sealed. What it now is, is a question the world is not yet equipped to answer.",
+        stats: "Current Status: UNSEALED — Aakzad active in surrounding region\nHazard: Spirit-Echo broadcast active — Shamans and sensitives feel compulsion within 2 miles\nContact: Lizardman High Priest (SunsReach embassy) for access protocols",
+        notes: "", base: true
+    },
+    sunsreach: {
+        title: "SunsReach", top: 68.5, left: 61.0,
+        desc: "A port city existing in permanent negotiation between the Church of the Radiant Compact's doctrinal reach and the Lizardman Scaled Embassy's practical power. The civic culture that results treats pragmatism as the only working faith. The Lizardman Embassy operates out of a building that the Church has attempted to classify as a foreign territory, a trading post, a diplomatic mission, and a health hazard — depending on which classification would give it the most leverage. The Lizardmen have ignored all four attempts with identical courtesy. SunsReach is where the Aakzad warning reached the surface world first.",
+        stats: "Factions: Church Compact (nominal), Lizardman Scaled Embassy (practical), Merchant Guild\nKey Contact: Scaled Embassy (Aakzad intelligence), Church Inquisitors (hostile to non-Compact powers)\nTrade: Southern spices, Lizardman alchemical goods, passage to Dragon Kingdom",
+        notes: "", base: true
+    },
+        varkai_steppe: {
         title: "The Var'kai Steppe", top: 27.77, left: 88.65,
         desc: "The eastern steppe where the nomadic Var'kai once wandered for generations. Nothing marks the site of the ritual that ended them — no cairn, no ruin, no monument. The ground does not look different. It simply feels wrong to anyone with the sensitivity to notice. War-shamans of the Broken Tribe make the journey here alone and never speak of what they find.",
         stats: "Primary Encounters: Orc Warbands, Wandering Spirits\nHazard: Open Spirit Channel — Shamans and Ki users feel persistent unease within 1 mile",
