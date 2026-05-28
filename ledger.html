@@ -1585,7 +1585,12 @@ function syncKnowledgeSkill() {
         if (cb.checked) knowledgeCount++;
     });
     const kInp = document.getElementById('label-Knowledge')?.parentNode.querySelector('.sk-p');
-    if (kInp) kInp.value = knowledgeCount;
+    if (kInp) {
+        kInp.value = knowledgeCount;
+        // Also write dataset.purchased — processAllSkills reads from there once it's set,
+        // so without this the count gets clobbered back to the stale value on every upd().
+        kInp.dataset.purchased = knowledgeCount;
+    }
 }
 
 function processAllSkills(state) {
@@ -2679,6 +2684,19 @@ function handleMagicCheck(cb) {
     const spellSelects = document.querySelectorAll('.spell-select');
     const header = document.getElementById('spells-header');
 
+    // Map magic checkbox value → proper Knowledge name.
+    // Most disciplines self-name (Magic→Magic, Druidic→Druidic, etc.),
+    // but Theology's checkbox value is "Devotion" and needs Knowledge (Religion).
+    const KNOWLEDGE_NAME_MAP = {
+        "Devotion": "Religion",
+        "Magic": "Magic",
+        "Druidic": "Druidic",
+        "Ki": "Ki",
+        "Shaman": "Shaman",
+        "Sabda": "Sabda",
+        "Runes": "Runes"
+    };
+
     if (cb.checked) {
         // Runes is a secondary discipline — it can combine with Faith, Shaman, Ki
         // It CANNOT combine with Wizardry or Druid (forbidden combinations)
@@ -2738,7 +2756,7 @@ function handleMagicCheck(cb) {
 
         // --- THE KNOWLEDGE AUTO-CHECK ---
         if(kInputs.length > 0 && kChecks.length > 0) {
-            kInputs[0].value = cb.value; 
+            kInputs[0].value = KNOWLEDGE_NAME_MAP[cb.value] || cb.value; 
             kChecks[0].checked = true;
         }
 
@@ -2776,10 +2794,12 @@ function handleMagicCheck(cb) {
 
         // --- SAFE KNOWLEDGE CLEAR ---
         if(kInputs.length > 0 && kChecks.length > 0) {
-            // Clear if matches the unchecked discipline or either Willpower discipline
+            // Clear if matches the unchecked discipline (via the same name map)
+            // or either Willpower discipline
             const willpowerDisciplines = ["Shaman", "Sabda"];
             const isWillpower = willpowerDisciplines.includes(cb.value);
-            if(kInputs[0].value === cb.value || 
+            const mappedName = KNOWLEDGE_NAME_MAP[cb.value] || cb.value;
+            if(kInputs[0].value === mappedName || 
                (isWillpower && willpowerDisciplines.includes(kInputs[0].value))) {
                 kInputs[0].value = ""; 
                 kChecks[0].checked = false;
