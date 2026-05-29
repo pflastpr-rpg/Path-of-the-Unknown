@@ -4,7 +4,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPG Ledger v14 - Thrice-Marked</title>
+    <title>RPG Ledger v14 - Thrice-Marked [build 2026-05-29 · weapon-fix]</title>
     <style>
         :root {
             --iron: #02070e;
@@ -820,6 +820,7 @@
 <div class="no-print top-bar">
     <div class="top-bar-title">Thrice-Marked</div>
     <div class="vault-controls">
+        <span title="Build identifier — confirms you are running the fixed ledger" style="font-size:8pt; font-weight:700; letter-spacing:0.5px; color:var(--iron); background:rgba(184,134,11,0.18); border:1px solid var(--gold); border-radius:2px; padding:2px 6px; margin-right:4px; white-space:nowrap;">BUILD 2026-05-29 ✓ weapon-fix</span>
         <select id="cloud-char-select" class="btn-vault" style="background:var(--white); color:var(--ink); height:26px; font-size:9pt; width:140px; cursor:pointer;">
             <option value="Baanon Kervarsha">Baanon Kervarsha</option>
             <option value="Dresin">Dresin</option>
@@ -2886,7 +2887,11 @@ function handleActionChange(select, type) {
 }
 
 function buildWeaponRow(targetId) {
-    const rowIdx = document.getElementById(targetId)?.children.length || 0;
+    // Count only actual weapon rows, not the .t-h header div, so indices start
+    // at 0 (mr-0, mr-1, mr-2). Using raw children.length counted the header as
+    // child[0] and pushed the first row to index 1, leaving the 0-indexed save
+    // format and the Layer 3 migration with no matching DOM inputs to write to.
+    const rowIdx = document.getElementById(targetId)?.querySelectorAll('.weapon-entry').length || 0;
     const pfx = targetId + '-' + rowIdx + '-';  // e.g. "mr-0-", "rr-1-"
     const ALL_MELEE = ["-","Axe","Battleaxe","Club","Dagger","Flail","Glaive","Greataxe","Greatsword","Halberd","Lance","Longsword","Mace","Maul","Morningstar","Rapier","Shortsword","Spear","Staff","Unarmed","Warhammer","Whip"];
     const MELEE_1H_ONLY = ["-","Axe","Club","Dagger","Flail","Longsword","Mace","Morningstar","Rapier","Shortsword","Spear","Unarmed","Warhammer","Whip"];
