@@ -2061,9 +2061,6 @@ function calculateRangeCombat(state, stats, armorData, wMult) {
     const preciseAcc = Math.floor(state.skillPts.preciseStrike / 3);
     const percAcc = Math.floor(state.skillPts.perception / 3);
 
-    const sMult = (state.charSize === "Lg") ? 1.5 : (state.charSize === "Giant") ? 2 :
-                  (state.charSize === "Enormous") ? 3 : (state.charSize === "Titanic") ? 4 : 1;
-
     let fRange1 = 0, fRange2 = 0, isT1 = false, isT2 = false;
 
     document.querySelectorAll('#rr .weapon-entry').forEach((row, idx) => {
@@ -2093,8 +2090,9 @@ function calculateRangeCombat(state, stats, armorData, wMult) {
         sv(`cm-range-hit-${idx + 1}`, coreAcc + skillAcc - armorData.r_pen + hitBonus);
     });
 
-    const finalRange1 = isT1 ? Math.floor(fRange1 * sMult) : fRange1;
-    const finalRange2 = isT2 ? Math.floor(fRange2 * sMult) : fRange2;
+    // Size scaling now matches melee: full wound-multiplier applies to ALL ranged weapons.
+    const finalRange1 = Math.floor(fRange1 * wMult);
+    const finalRange2 = Math.floor(fRange2 * wMult);
     sv('cm-wounds-range-1', finalRange1);
     sv('cm-wounds-range-2', finalRange2);
 
