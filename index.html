@@ -291,6 +291,24 @@
             pointer-events: none;
             z-index: 10;
         }
+        .tool-card--new {
+            border-bottom-color: var(--gold) !important;
+        }
+        .tool-card--new::after {
+            content: "What's New";
+            position: absolute;
+            top: 8px; right: 8px;
+            background: var(--blood);
+            color: var(--parchment);
+            font-family: 'Cinzel', serif;
+            font-size: 6.5pt;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            pointer-events: none;
+            z-index: 10;
+        }
 
         /* ── FOOTER ── */
         .footer {
@@ -417,6 +435,13 @@
                     <span class="p-label">The Ledger v2</span>
                 </div>
                 <div class="tool-link">Forge Hero (v2 — Preview)</div>
+            </a>
+            <a href="ledger-v2-changelog.html" class="tool-card tool-card--new" style="position:relative;">
+                <div class="portrait-holder">
+                    <img src="ledger-v2.png" class="grimoire-art" alt="Ledger v2 Changelog">
+                    <span class="p-label">v1 vs v2</span>
+                </div>
+                <div class="tool-link">What Changed?</div>
             </a>
             <a href="combat-tracker.html" class="tool-card" style="position:relative;">
                 <div class="portrait-holder">
