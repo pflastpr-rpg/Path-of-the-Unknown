@@ -73,6 +73,7 @@
             border-bottom: 2px solid var(--blood);
             margin-bottom: 15px;
         }
+        .toc-container h3::after { display: none; }
 
         .toc-grid {
             display: grid;
@@ -126,11 +127,23 @@
         /* --- TYPOGRAPHY & SECTIONS --- */
         h2 {
             color: var(--blood);
-            font-size: 20pt;
+            font-size: 22pt;
+            font-weight: 500;
             text-transform: uppercase;
-            border-bottom: 2px solid var(--gold);
-            padding-bottom: 5px;
+            letter-spacing: 0.5px;
+            border-bottom: none;
+            padding-bottom: 0;
             margin-top: 40px;
+            margin-bottom: 14px;
+            position: relative;
+        }
+        h2::after {
+            content: "";
+            display: block;
+            width: 46px;
+            height: 2px;
+            background: var(--gold);
+            margin-top: 8px;
         }
 
         p {
@@ -231,11 +244,22 @@
 
         h3 {
             color: var(--ink);
-            font-size: 16pt;
+            font-size: 14pt;
+            font-weight: 600;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            border-bottom: 1px solid var(--blood);
-            margin-top: 0;
-            padding-bottom: 5px;
+            border-bottom: none;
+            margin-top: 22px;
+            margin-bottom: 4px;
+            padding-bottom: 0;
+        }
+        h3::after {
+            content: "";
+            display: block;
+            width: 28px;
+            height: 1px;
+            background: rgba(168,24,24,0.5);
+            margin-top: 5px;
         }
         
         .step-number {
@@ -290,7 +314,7 @@
 <div class="hub-wrapper">
     <div class="nav-bar">
         <a href="index.html" class="btn-hub">⌂ Return to Hub</a>
-        <span style="font-weight: 900; font-size: 14pt; color: var(--ink);">CORE RULEBOOK</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CORE RULEBOOK</span>
     </div>
 
     <h1>Thrice-Marked</h1>
@@ -321,6 +345,7 @@
                 <strong>III. The Grimoire</strong><br>
                 <a href="#chapter-12" class="toc-link">12. The Grimoire</a><br>
                 <a href="#chapter-13" class="toc-link">13. GM's Reference</a><br>
+                <a href="#appendix-xiv" class="toc-link" style="color: var(--gold);">14. Optional Rules — Flubs &amp; Criticals</a><br>
                 <a href="#discipline-1" class="toc-link">Devotion Blessings</a><br>
                 <a href="#discipline-2" class="toc-link">Druidic Spells</a><br>
                 <a href="#discipline-3" class="toc-link">Shamanic Magic</a><br>
@@ -337,7 +362,7 @@
     </div>
 
     <div class="magic-break" style="margin-top: 40px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER I</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER I</span>
         <h2 id="chapter-1">The Foundation</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"You are not a hero. You are thirty pounds of bone and a few pints of blood wrapped in fragile skin, stepping into a world that actively wants you dead. Measure your worth carefully."</p>
     </div>
@@ -685,7 +710,7 @@
         </div>
 
     <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER II</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER II</span>
         <h2 id="chapter-2">Anatomy of a Turn</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"Time on the battlefield is measured in panicked breaths and drawn steel. Hesitation is a luxury paid for in blood."</p>
     </div>
@@ -722,7 +747,7 @@
     </div>
 
     <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER III</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER III</span>
         <h2 id="chapter-3">Core Mechanics</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The dice govern the chaos of the unknown. Learn to master them, or be broken by them."</p>
     </div>
@@ -763,7 +788,7 @@
     </div>
    
     <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER IV</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER IV</span>
         <h2 id="chapter-4">Melee Combat</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The clash of steel and the breaking of bone. In the melee, only the swift and the brutal survive."</p>
     </div>
@@ -810,7 +835,7 @@
         </div>
     </div>
 <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER V</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER V</span>
         <h2 id="chapter-5">Ranged Combat</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"Death from afar. A steady hand and a cold eye can end a skirmish before the enemy even clears their scabbards."</p>
     </div>
@@ -849,7 +874,7 @@
     </div>
 
     <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER VI</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER VI</span>
         <h2 id="chapter-6">The Arcane &amp; Divine</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"Magic is the bleeding essence of a ruined world. To channel it is to rewrite the laws of reality, but the weave always demands a toll."</p>
     </div>
@@ -957,7 +982,7 @@
         </div>
     </div>
 <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER VII</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER VII</span>
         <h2 id="chapter-7">Status &amp; Conditions</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The battlefield is profoundly cruel. Blood loss, terror, and the breaking of bone will pull you into the dark just as swiftly as an enemy's steel."</p>
     </div>
@@ -966,7 +991,7 @@
         <a href="#top" class="back-to-top">↑ Return to Index</a>
 
         <div class="full-width">
-            <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px;">I. Physical Trauma</h3>
+            <h3>I. Physical Trauma</h3>
         </div>
 
         <div class="trait-box">
@@ -988,7 +1013,7 @@
         </div>
 
         <div class="full-width">
-            <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px; margin-top: 20px;">II. Tactical Conditions</h3>
+            <h3>II. Tactical Conditions</h3>
         </div>
 
         <div class="trait-box">
@@ -1023,7 +1048,7 @@
         </div>
 
         <div class="full-width">
-            <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px; margin-top: 20px;">III. Mental &amp; Sensory</h3>
+            <h3>III. Mental &amp; Sensory</h3>
         </div>
 
         <div class="trait-box">
@@ -1042,7 +1067,7 @@
         </div>
 
         <div class="full-width">
-            <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px; margin-top: 20px;">IV. The Threshold of Collapse</h3>
+            <h3>IV. The Threshold of Collapse</h3>
         </div>
 
         <div class="trait-box" style="border-left: 8px solid var(--blood); background: rgba(168, 24, 24, 0.05);">
@@ -1059,7 +1084,7 @@
     </div>
 
     <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER VIII</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER VIII</span>
         <h2 id="chapter-8">Growth &amp; Advancement</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"Experience is the finest teacher, though its lessons are exclusively paid for in blood and bone. You do not advance; you merely survive long enough to become something harder to kill."</p>
     </div>
@@ -1123,7 +1148,7 @@
     </div>
 
     <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER IX</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER IX</span>
         <h2 id="chapter-9">The Master Skill List</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"A sword can be shattered and a shield can be sundered. Your skills are the only tools the world cannot pry from your hands. Master them, or die holding them."</p>
         <p>For an exhaustive breakdown of all primary skills, consult the <a href="Primary_Skills.html" style="color: var(--blood); font-weight: bold;">Primary Skills Compendium</a>.</p>
@@ -1234,6 +1259,13 @@
         </div>
 
         <div class="trait-box">
+            <span class="trait-title">Devotion</span>
+            <strong>XP Cost:</strong> Dwarf/Human/Halfling (25) | Elf (30)
+            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: Knowledge (Theology), Read/Scribe (1)</span>
+            <p>Unlocks divine blessings. Each point allows you to learn one blessing. Every 3 points increases your <strong>Charisma</strong> characteristic by 1.</p>
+        </div>
+
+        <div class="trait-box">
             <span class="trait-title">Discipline</span><span style="display:inline-block; background:rgba(184,134,11,0.15); color:var(--ink-soft); font-size:8.5pt; font-weight:700; letter-spacing:0.5px; padding:1px 8px; border:1px solid var(--gold-line); border-radius:2px; margin-left:8px; text-transform:uppercase; vertical-align:middle;" title="This skill is a swap-pool alternate under the 3-core + 3-swap structure. See 'The Architecture of the Self' in Chapter 9.">⚯ Pool Alternate</span>
             <strong>XP Cost:</strong> Dwarf/Elf/Human (15) | Halfling (20) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Willpower per 3 pts
             <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Willpower</span>
@@ -1254,19 +1286,6 @@
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Evasion</span>
-            <strong>XP Cost:</strong> Halfling (10) | Elf (15) | Human (20) | Dwarf (25) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Agility per 3 pts
-            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Agility</span>
-            <p>Tactical flexibility in combat — the difference between a blade that bites and one that meets empty air. You read where the strike is going before it arrives, slipping just enough to turn lethal into survivable. Your Evasion bonus applies to both Defense and Wound Mitigation, reduced by your armor's Agility penalty.</p>
-            <ul style="margin-top:8px;">
-                <li><strong>Passive:</strong> Every 3 points adds <strong>+1 Defense</strong> and <strong>+1 Wound Mitigation</strong> against physical attacks. This bonus is reduced by your armor's Agility penalty for the Defense component, but always applies fully to Wound Mitigation.</li>
-                <li><strong>At 3 points — Dodge:</strong> Once per encounter, spend <strong>1 AP as a reaction</strong> to completely negate all wounds from one physical attack that hits you. Declare after the hit is confirmed but before wounds are applied. Does not work against spells.</li>
-                <li><strong>At 6 points — Roll Clear:</strong> Whenever you are caught in an AoE effect, you suffer only <strong>half wounds</strong> — your instinct carries you to the edge of the blast.</li>
-                <li><strong>At 9 points — Impossible to Pin:</strong> Your dodge reaction now applies to spells targeting you directly. When a spell hits, spend <strong>1 AP as a reaction</strong> to suffer only <strong>half wounds</strong> as you twist clear. Does not apply to AoE spells.</li>
-            </ul>
-        </div>
-
-        <div class="trait-box">
             <span class="trait-title">Evaluation</span>
             <strong>XP Cost:</strong> All Races (15) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Intellect per 3 pts
             <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Intellect</span>
@@ -1279,21 +1298,15 @@
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Devotion</span>
-            <strong>XP Cost:</strong> Dwarf/Human/Halfling (25) | Elf (30)
-            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: Knowledge (Theology), Read/Scribe (1)</span>
-            <p>Unlocks divine blessings. Each point allows you to learn one blessing. Every 3 points increases your <strong>Charisma</strong> characteristic by 1.</p>
-        </div>
-
-        <div class="trait-box" style="border-color: var(--blood); background: rgba(168,24,24,0.04);">
-            <span class="trait-title" style="color: var(--blood);">Śabda-Axiom <span style="font-size:9pt; font-weight:400; color: var(--gold);">— The Lost Seventh Discipline</span></span>
-            <strong>XP Cost:</strong> Halfling (10) | Elf (12) | Human (15) | Dwarf (20) — compounding per point, GM-granted access only
-            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: GM-granted access only | GOVERNS: Willpower (standalone — no characteristic advancement) | ARMOUR: Studded leather or lighter — no penalty. Chainmail and heavier: full TN penalty (identical to Wizard/Druid/Shaman) | INDIVIDUAL INVOCATIONS: Śabda | SEED SOUNDS: Bija</span>
-            <p>The projection of cosmic force as spoken frequency — a lost pre-Empire discipline the Church of the Radiant Compact systematically burned. A Speaker cannot be trained; they must find surviving Bija, a living transmission, or contact with something ancient enough to remember when the Śabda was practiced openly. Each point unlocks one Śabda from the Primordial Lexicon. <strong>The Śabda-Axiom does not advance any characteristic</strong> — like Runecraft, it stands outside the Power of Three entirely. Elves, who regard the Śabda as a crude and primitive precursor that their Wizardry and Druidism have long since surpassed, find the Bija difficult to integrate — not because they lack capability, but because their contempt for the tradition makes it resist them.</p>
+            <span class="trait-title">Evasion</span>
+            <strong>XP Cost:</strong> Halfling (10) | Elf (15) | Human (20) | Dwarf (25) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Agility per 3 pts
+            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Agility</span>
+            <p>Tactical flexibility in combat — the difference between a blade that bites and one that meets empty air. You read where the strike is going before it arrives, slipping just enough to turn lethal into survivable. Your Evasion bonus applies to both Defense and Wound Mitigation, reduced by your armor's Agility penalty.</p>
             <ul style="margin-top:8px;">
-                <li><strong>Governing characteristic:</strong> Willpower. Add your Willpower modifier to all Śabda To-Cast rolls. The force does not respond to intellect or faith — it responds to the absolute intent carried in the Speaker's Bija.</li>
-                <li><strong>Iron penalty:</strong> Studded leather or lighter — no penalty. Chainmail and heavier — full TN penalty identical to Wizard/Druid/Shaman. The constriction of metal against chest and throat disrupts the precise breath control invocation demands.</li>
-                <li><strong>Advancement:</strong> Cannot be atrophied. Cannot be transferred. The forces the Śabda invokes do not forget those who have spoken their Bija.</li>
+                <li><strong>Passive:</strong> Every 3 points adds <strong>+1 Defense</strong> and <strong>+1 Wound Mitigation</strong> against physical attacks. This bonus is reduced by your armor's Agility penalty for the Defense component, but always applies fully to Wound Mitigation.</li>
+                <li><strong>At 3 points — Dodge:</strong> Once per encounter, spend <strong>1 AP as a reaction</strong> to completely negate all wounds from one physical attack that hits you. Declare after the hit is confirmed but before wounds are applied. Does not work against spells.</li>
+                <li><strong>At 6 points — Roll Clear:</strong> Whenever you are caught in an AoE effect, you suffer only <strong>half wounds</strong> — your instinct carries you to the edge of the blast.</li>
+                <li><strong>At 9 points — Impossible to Pin:</strong> Your dodge reaction now applies to spells targeting you directly. When a spell hits, spend <strong>1 AP as a reaction</strong> to suffer only <strong>half wounds</strong> as you twist clear. Does not apply to AoE spells.</li>
             </ul>
         </div>
 
@@ -1475,6 +1488,18 @@
             <p style="margin-top:8px;">Every 3 points invested permanently increases your <strong>Awareness</strong> characteristic by 1.</p>
         </div>
 
+        <div class="trait-box" style="border-color: var(--blood); background: rgba(168,24,24,0.04);">
+            <span class="trait-title" style="color: var(--blood);">Śabda-Axiom <span style="font-size:9pt; font-weight:400; color: var(--gold);">— The Lost Seventh Discipline</span></span>
+            <strong>XP Cost:</strong> Halfling (10) | Elf (12) | Human (15) | Dwarf (20) — compounding per point, GM-granted access only
+            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: GM-granted access only | GOVERNS: Willpower (standalone — no characteristic advancement) | ARMOUR: Studded leather or lighter — no penalty. Chainmail and heavier: full TN penalty (identical to Wizard/Druid/Shaman) | INDIVIDUAL INVOCATIONS: Śabda | SEED SOUNDS: Bija</span>
+            <p>The projection of cosmic force as spoken frequency — a lost pre-Empire discipline the Church of the Radiant Compact systematically burned. A Speaker cannot be trained; they must find surviving Bija, a living transmission, or contact with something ancient enough to remember when the Śabda was practiced openly. Each point unlocks one Śabda from the Primordial Lexicon. <strong>The Śabda-Axiom does not advance any characteristic</strong> — like Runecraft, it stands outside the Power of Three entirely. Elves, who regard the Śabda as a crude and primitive precursor that their Wizardry and Druidism have long since surpassed, find the Bija difficult to integrate — not because they lack capability, but because their contempt for the tradition makes it resist them.</p>
+            <ul style="margin-top:8px;">
+                <li><strong>Governing characteristic:</strong> Willpower. Add your Willpower modifier to all Śabda To-Cast rolls. The force does not respond to intellect or faith — it responds to the absolute intent carried in the Speaker's Bija.</li>
+                <li><strong>Iron penalty:</strong> Studded leather or lighter — no penalty. Chainmail and heavier — full TN penalty identical to Wizard/Druid/Shaman. The constriction of metal against chest and throat disrupts the precise breath control invocation demands.</li>
+                <li><strong>Advancement:</strong> Cannot be atrophied. Cannot be transferred. The forces the Śabda invokes do not forget those who have spoken their Bija.</li>
+            </ul>
+        </div>
+
         <div class="trait-box">
             <span class="trait-title">Shieldsman</span><span style="display:inline-block; background:rgba(184,134,11,0.15); color:var(--ink-soft); font-size:8.5pt; font-weight:700; letter-spacing:0.5px; padding:1px 8px; border:1px solid var(--gold-line); border-radius:2px; margin-left:8px; text-transform:uppercase; vertical-align:middle;" title="This skill is a swap-pool alternate under the 3-core + 3-swap structure. See 'The Architecture of the Self' in Chapter 9.">⚯ Pool Alternate</span>
             <strong>XP Cost:</strong> Dwarf/Elf/Human (30) | Halfling (35) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Physique per 3 pts
@@ -1487,6 +1512,18 @@
             </ul>
         </div>
         <div class="trait-box">
+            <span class="trait-title">Spirit</span>
+            <strong>XP Cost:</strong> All Races (15) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Willpower per 3 pts
+            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Willpower</span>
+            <p>Your body is not a closed vessel but a cathedral of the soul — open to the restorative currents of the world and resistant to the arcane forces that seek to corrupt it. Every point grants <strong>+1 wound whenever healed by any Blessing</strong>. Every 3 points increases your Willpower characteristic by 1 and grants <strong>+1 Wound Mitigation against Blessings and Spells</strong>.</p>
+            <ul style="margin-top:8px;">
+                <li><strong>Passive:</strong> Gain <strong>+1 wound</strong> on every Blessing heal. Gain <strong>+1 WM against magical damage</strong> per 3 points invested.</li>
+                <li><strong>At 3 points — Arcane Sensitivity:</strong> You can sense the presence of <strong>active magic</strong> within <strong>30 Ft</strong> — a subtle awareness of the weave, not its details. You know something magical is present, not what it is.</li>
+                <li><strong>At 6 points — Resonant Vessel:</strong> Once per encounter, the next Blessing that heals you grants <strong>+Willpower modifier</strong> additional wounds on top of the normal roll — your spirit draws the healing deeper than flesh alone allows.</li>
+            </ul>
+        </div>
+
+                <div class="trait-box">
             <span class="trait-title">Stamina</span><span style="display:inline-block; background:rgba(184,134,11,0.15); color:var(--ink-soft); font-size:8.5pt; font-weight:700; letter-spacing:0.5px; padding:1px 8px; border:1px solid var(--gold-line); border-radius:2px; margin-left:8px; text-transform:uppercase; vertical-align:middle;" title="This skill is a swap-pool alternate under the 3-core + 3-swap structure. See 'The Architecture of the Self' in Chapter 9.">⚯ Pool Alternate</span>
             <strong>XP Cost:</strong> Dwarf/Human (10) | Elf/Halfling (15) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Awareness per 3 pts
             <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Awareness</span>
@@ -1496,18 +1533,6 @@
                 <li><strong>At 3 points — Iron Lungs:</strong> The duration of any <strong>Exhausted</strong> condition is halved — your body recovers faster than it has any right to.</li>
                 <li><strong>At 6 points — Relentless Recovery:</strong> You require only <strong>half the normal rest time</strong> to gain full recovery benefits.</li>
                 <li><strong>At 9 points — Second Wind:</strong> Once per encounter, spend <strong>1 AP</strong> to immediately remove any one physical condition — Bleeding, Exhausted, Prone, Stunned, or Bound.</li>
-            </ul>
-        </div>
-
-                <div class="trait-box">
-            <span class="trait-title">Spirit</span>
-            <strong>XP Cost:</strong> All Races (15) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Willpower per 3 pts
-            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Willpower</span>
-            <p>Your body is not a closed vessel but a cathedral of the soul — open to the restorative currents of the world and resistant to the arcane forces that seek to corrupt it. Every point grants <strong>+1 wound whenever healed by any Blessing</strong>. Every 3 points increases your Willpower characteristic by 1 and grants <strong>+1 Wound Mitigation against Blessings and Spells</strong>.</p>
-            <ul style="margin-top:8px;">
-                <li><strong>Passive:</strong> Gain <strong>+1 wound</strong> on every Blessing heal. Gain <strong>+1 WM against magical damage</strong> per 3 points invested.</li>
-                <li><strong>At 3 points — Arcane Sensitivity:</strong> You can sense the presence of <strong>active magic</strong> within <strong>30 Ft</strong> — a subtle awareness of the weave, not its details. You know something magical is present, not what it is.</li>
-                <li><strong>At 6 points — Resonant Vessel:</strong> Once per encounter, the next Blessing that heals you grants <strong>+Willpower modifier</strong> additional wounds on top of the normal roll — your spirit draws the healing deeper than flesh alone allows.</li>
             </ul>
         </div>
 
@@ -1525,20 +1550,6 @@
         </div>
 
         <div class="trait-box">
-            <span class="trait-title">Tumble</span>
-            <strong>XP Cost:</strong> Halfling (15) | Elf (20) | Human (25) | Dwarf (30) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Agility per 3 pts
-            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Agility</span>
-            <p>The art of controlled falling and dynamic evasion — rolling clear of danger before it arrives, landing without losing your footing, and denying the battlefield the satisfaction of putting you on the ground. Where Evasion avoids a targeted strike, Tumble handles the chaos: explosions, knockbacks, grapples, and every force that tries to rob you of your position.</p>
-            <ul style="margin-top:8px;">
-                <li><strong>Passive Resistance:</strong> Each point in Tumble grants <strong>+1</strong> to any test made to avoid being knocked <strong>Prone</strong>, <strong>Pushed</strong>, or <strong>Grappled</strong>.</li>
-                <li><strong>At 3 points — Emergency Roll:</strong> Once per turn, spend <strong>1 AP as a reaction</strong> to roll clear of any AoE effect, moving up to <strong>10 Ft</strong> in any direction before it resolves.</li>
-                <li><strong>At 6 points — Sure Footing:</strong> Falling no longer knocks you <strong>Prone</strong>. You ignore the first <strong>Prone</strong> condition applied to you each encounter.</li>
-                <li><strong>At 9 points — Death Roll:</strong> Once per encounter, when reduced to 0 wounds by a physical impact, make a Tumble test against <strong>TN 12</strong>. On success, remain at <strong>1 wound</strong> on your feet.</li>
-            </ul>
-            <p style="margin-top:8px;">Every 3 points invested permanently increases your <strong>Agility</strong> characteristic by 1.</p>
-        </div>
-
-                <div class="trait-box">
             <span class="trait-title">Strength Conditioning</span>
             <strong>XP Cost:</strong> Dwarf/Human (30) | Elf/Halfling (35) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Physique per 3 pts
             <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Physique</span>
@@ -1550,19 +1561,6 @@
             </ul>
         </div>
         <div class="trait-box">
-            <span class="trait-title">Tracker</span><span style="display:inline-block; background:rgba(184,134,11,0.15); color:var(--ink-soft); font-size:8.5pt; font-weight:700; letter-spacing:0.5px; padding:1px 8px; border:1px solid var(--gold-line); border-radius:2px; margin-left:8px; text-transform:uppercase; vertical-align:middle;" title="This skill is a swap-pool alternate under the 3-core + 3-swap structure. See 'The Architecture of the Self' in Chapter 9.">⚯ Pool Alternate</span>
-            <strong>XP Cost:</strong> Halfling (15) | Dwarf/Elf/Human (20) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Awareness per 3 pts
-            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Intellect</span>
-            <p>Whether it is the snap of a twig, a tuft of fur on a thorn, or the faint scent of woodsmoke on the wind — the world is a book that most people have forgotten how to read. Roll <strong>1d10 + Tracker Points + Awareness modifier</strong> against the GM's DV to follow a trail. Every 3 points increases your Awareness characteristic by 1.</p>
-            <ul style="margin-top:8px;">
-                <li><strong>Passive:</strong> For every 2 points you exceed the tracking DV, learn one additional detail — number of targets, creature type, condition, or time elapsed.</li>
-                <li><strong>At 3 points — Read the Trail:</strong> Predict the <strong>general direction and likely destination</strong> of a tracked target based on their trail — not just where they went but where they are going.</li>
-                <li><strong>At 6 points — All Terrain:</strong> Track through any surface — stone, water, snow, rooftops — with <strong>no terrain penalty</strong> to your test. The trail is always there if you know how to look.</li>
-                <li><strong>At 9 points — Sixth Sense:</strong> Once per session, the GM must warn you if your current path leads into a <strong>prepared ambush or trap</strong> within 300 Ft — not its nature, just that something is waiting. Your instincts read the silence wrong before your eyes do.</li>
-            </ul>
-        </div>
-
-                <div class="trait-box">
             <span class="trait-title">Survival</span>
             <strong>XP Cost:</strong> Dwarf/Elf/Human (25) | Halfling (30) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Willpower per 3 pts
             <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Willpower</span>
@@ -1588,6 +1586,33 @@
         </div>
 
         <div class="trait-box">
+            <span class="trait-title">Tracker</span><span style="display:inline-block; background:rgba(184,134,11,0.15); color:var(--ink-soft); font-size:8.5pt; font-weight:700; letter-spacing:0.5px; padding:1px 8px; border:1px solid var(--gold-line); border-radius:2px; margin-left:8px; text-transform:uppercase; vertical-align:middle;" title="This skill is a swap-pool alternate under the 3-core + 3-swap structure. See 'The Architecture of the Self' in Chapter 9.">⚯ Pool Alternate</span>
+            <strong>XP Cost:</strong> Halfling (15) | Dwarf/Elf/Human (20) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Awareness per 3 pts
+            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Intellect</span>
+            <p>Whether it is the snap of a twig, a tuft of fur on a thorn, or the faint scent of woodsmoke on the wind — the world is a book that most people have forgotten how to read. Roll <strong>1d10 + Tracker Points + Awareness modifier</strong> against the GM's DV to follow a trail. Every 3 points increases your Awareness characteristic by 1.</p>
+            <ul style="margin-top:8px;">
+                <li><strong>Passive:</strong> For every 2 points you exceed the tracking DV, learn one additional detail — number of targets, creature type, condition, or time elapsed.</li>
+                <li><strong>At 3 points — Read the Trail:</strong> Predict the <strong>general direction and likely destination</strong> of a tracked target based on their trail — not just where they went but where they are going.</li>
+                <li><strong>At 6 points — All Terrain:</strong> Track through any surface — stone, water, snow, rooftops — with <strong>no terrain penalty</strong> to your test. The trail is always there if you know how to look.</li>
+                <li><strong>At 9 points — Sixth Sense:</strong> Once per session, the GM must warn you if your current path leads into a <strong>prepared ambush or trap</strong> within 300 Ft — not its nature, just that something is waiting. Your instincts read the silence wrong before your eyes do.</li>
+            </ul>
+        </div>
+
+                <div class="trait-box">
+            <span class="trait-title">Tumble</span>
+            <strong>XP Cost:</strong> Halfling (15) | Elf (20) | Human (25) | Dwarf (30) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Agility per 3 pts
+            <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Agility</span>
+            <p>The art of controlled falling and dynamic evasion — rolling clear of danger before it arrives, landing without losing your footing, and denying the battlefield the satisfaction of putting you on the ground. Where Evasion avoids a targeted strike, Tumble handles the chaos: explosions, knockbacks, grapples, and every force that tries to rob you of your position.</p>
+            <ul style="margin-top:8px;">
+                <li><strong>Passive Resistance:</strong> Each point in Tumble grants <strong>+1</strong> to any test made to avoid being knocked <strong>Prone</strong>, <strong>Pushed</strong>, or <strong>Grappled</strong>.</li>
+                <li><strong>At 3 points — Emergency Roll:</strong> Once per turn, spend <strong>1 AP as a reaction</strong> to roll clear of any AoE effect, moving up to <strong>10 Ft</strong> in any direction before it resolves.</li>
+                <li><strong>At 6 points — Sure Footing:</strong> Falling no longer knocks you <strong>Prone</strong>. You ignore the first <strong>Prone</strong> condition applied to you each encounter.</li>
+                <li><strong>At 9 points — Death Roll:</strong> Once per encounter, when reduced to 0 wounds by a physical impact, make a Tumble test against <strong>TN 12</strong>. On success, remain at <strong>1 wound</strong> on your feet.</li>
+            </ul>
+            <p style="margin-top:8px;">Every 3 points invested permanently increases your <strong>Agility</strong> characteristic by 1.</p>
+        </div>
+
+                <div class="trait-box">
             <span class="trait-title">Wizardry</span>
             <strong>XP Cost:</strong> Elf (25) | Halfling (30) | Human (35) | Dwarf (40)
             <br><span style="color: var(--gold); font-weight: bold; font-size: 10pt;">MIN. REQ: Knowledge (Magic), Read/Scribe (1)</span>
@@ -1596,7 +1621,7 @@
     </div>
 
     <div style="text-align: center; margin-top: 60px; margin-bottom: 30px;">
-    <span style="font-weight: 900; font-size: 14pt; color: var(--ink);">CHAPTER X</span>
+    <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER X</span>
     <h2 id="chapter-10">Advanced Masteries</h2>
 </div>
 
@@ -1909,8 +1934,8 @@
         
 
 <div class="magic-break" style="margin-top: 60px;">
-    <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">APPENDIX X-B</span>
-    <h2 style="color: var(--gold); border-color: var(--gold);">Alternate Skills — Swap Slot Options</h2>
+    <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">APPENDIX X-B</span>
+    <h2 style="color: var(--gold);">Alternate Skills — Swap Slot Options</h2>
     <p style="max-width: 640px; margin: 10px auto; font-size: 11pt;">These skills are available to players who choose to fill one of their characteristic's three swap slots. Each slot defaults to the skill listed in the ledger — these are the alternatives. While a slot holds zero invested points, it may be reassigned freely; the first point invested seals the choice. A sealed slot can be changed thereafter only through a GM-authorised Reformation, which refunds 1 XP per 3 invested. See "The Architecture of the Self" in Chapter 9 for the full mechanic.</p>
 </div>
 
@@ -1918,7 +1943,7 @@
     <a href="#top" class="back-to-top">↑ Return to Index</a>
     <div class="full-width">
 
-    <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px;">Agility — Alternate Skills</h3>
+    <h3>Agility — Alternate Skills</h3>
 
     <div class="trait-box">
         <span class="trait-title">Acrobatics</span>
@@ -1976,7 +2001,7 @@
         <p style="margin-top:8px;">Every 3 points invested permanently increases your <strong>Agility</strong> characteristic by 1.</p>
     </div>
 
-    <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px; margin-top:24px;">Awareness — Alternate Skills</h3>
+    <h3>Awareness — Alternate Skills</h3>
 
     <div class="trait-box">
         <span class="trait-title">Danger Sense</span>
@@ -2020,7 +2045,7 @@
         <p style="margin-top:8px;">Every 3 points invested permanently increases your <strong>Awareness</strong> characteristic by 1.</p>
     </div>
 
-    <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px; margin-top:24px;">Charisma — Alternate Skills</h3>
+    <h3>Charisma — Alternate Skills</h3>
 
     <div class="trait-box">
         <span class="trait-title">Deception</span>
@@ -2078,7 +2103,7 @@
         <p style="margin-top:8px;">Every 3 points invested permanently increases your <strong>Charisma</strong> characteristic by 1.</p>
     </div>
 
-    <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px; margin-top:24px;">Intellect — Alternate Skills</h3>
+    <h3>Intellect — Alternate Skills</h3>
 
     <div class="trait-box">
         <span class="trait-title">Alchemy</span>
@@ -2136,7 +2161,7 @@
         <p style="margin-top:8px;">Every 3 points invested permanently increases your <strong>Intellect</strong> characteristic by 1.</p>
     </div>
 
-    <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px; margin-top:24px;">Physique — Alternate Skills</h3>
+    <h3>Physique — Alternate Skills</h3>
 
     <div class="trait-box">
         <span class="trait-title">Brawling</span>
@@ -2194,7 +2219,7 @@
         <p style="margin-top:8px;">Every 3 points invested permanently increases your <strong>Physique</strong> characteristic by 1.</p>
     </div>
 
-    <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px; margin-top:24px;">Willpower — Alternate Skills</h3>
+    <h3>Willpower — Alternate Skills</h3>
 
     <div class="trait-box">
         <span class="trait-title">Meditation</span>
@@ -2256,14 +2281,14 @@
 </div>
 
 <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER XI</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER XI</span>
         <h2 id="chapter-11">The Armory</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"Steel is only as strong as the will of the one who wears it. Choose your burden wisely, for in the end, it will not save you."</p>
     </div>
 
     <div class="rpg-columns"> <a href="#top" class="back-to-top">↑ Return to Index</a>
         <div class="full-width">
-            <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px;">I. Armor &amp; Protection</h3>
+            <h3>I. Armor &amp; Protection</h3>
             <p>Defense (Def) is the static threshold an attacker must meet or exceed to land a blow. Wound Mitigation (W. Mit) is the cold reality of physics — the exact volume of butchery the material absorbs before the remainder reaches your flesh.</p>
 
             <table>
@@ -2358,7 +2383,7 @@
         </div>
 
         <div class="full-width">
-            <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px; margin-top: 20px;">II. Melee Weaponry</h3>
+            <h3>II. Melee Weaponry</h3>
             <p style="margin-bottom: 10px; font-style: italic;">The Law of Iron: Any confirmed strike in melee deals an absolute minimum of <strong>1 wound</strong>, regardless of the target's mitigation. The kinetic force of a blow cannot be entirely ignored.</p>
             
             <table>
@@ -2436,7 +2461,7 @@
         </div>
 
         <div class="full-width">
-            <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px; margin-top: 20px;">III. Ranged Weaponry</h3>
+            <h3>III. Ranged Weaponry</h3>
             <table>
                 <tr>
                     <th>Weapon</th>
@@ -2533,7 +2558,7 @@
         </div>
 
        <div class="full-width">
-            <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px; margin-top: 20px;">IV. Weapon Special Rules</h3>
+            <h3>IV. Weapon Special Rules</h3>
 
             <div class="trait-box" style="border-left-color: var(--iron);">
                 <span class="trait-title">Heater &amp; Heavy Shields</span>
@@ -2557,7 +2582,7 @@
         </div>
 
         <div class="full-width">
-            <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px; margin-top: 20px;">V. The Economy of Violence</h3>
+            <h3>V. The Economy of Violence</h3>
             <p>Coin is minted by those who survive long enough to mint it. Three denominations circulate across the known world — though in the deep wilds and ruined frontier, a sharp blade and a full stomach will buy more than any coin.</p>
 
             <div class="trait-box" style="border-left: 8px solid var(--gold); background: rgba(184, 134, 11, 0.05); margin-bottom: 16px;">
@@ -2882,14 +2907,14 @@
         </div>
     </div>
 APPENDIX: XI-A</span>
-        <h2 style="color: var(--gold); border-color: var(--gold);">Relics &amp; Artifacts</h2>
+        <h2 style="color: var(--gold);">Relics &amp; Artifacts</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"Forged in forgotten eras, bought with blood."</p>
         <p style="max-width: 640px; margin: 10px auto; font-size: 11pt;">Powerful enchantments warp the very weave of reality. Magic items, legendary relics, and cursed artifacts are catalogued in the dedicated Armory compendium.</p>
         <a href="magic-items.html" class="btn-hub" style="display:inline-block; margin-top: 16px; font-size: 13pt; padding: 12px 32px;">⚔ Open Relics &amp; Artifacts</a>
     </div>
         <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--ink);">APPENDIX: XI-B</span>
-        <h2 style="color: var(--gold); border-color: var(--gold);">The Economy — Coin, Commerce & Property</h2>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">APPENDIX: XI-B</span>
+        <h2 style="color: var(--gold);">The Economy — Coin, Commerce & Property</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"Gold doesn't buy survival. It buys the tools that give survival a fighting chance."</p>
     </div>
 
@@ -2933,7 +2958,7 @@ APPENDIX: XI-A</span>
                 <p style="margin-top:10px; font-size:9.5pt;"><em>Starting gold (50–100 Crown) represents a competent professional's savings — enough to equip a fighter, not enough to buy land. Prices below are in Gold Crowns unless marked with p (Pennies) or m (Marks).</em></p>
             </div>
 
-            <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px; margin-top:24px;">I. Armour Prices</h3>
+            <h3>I. Armour Prices</h3>
             <table style="width:100%; border-collapse:collapse; font-size:10.5pt;">
                 <thead>
                     <tr style="background:var(--iron); color:var(--parchment);">
@@ -2959,7 +2984,7 @@ APPENDIX: XI-A</span>
                 </tbody>
             </table>
 
-            <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px; margin-top:24px;">II. Weapon Prices</h3>
+            <h3>II. Weapon Prices</h3>
             <table style="width:100%; border-collapse:collapse; font-size:10.5pt;">
                 <thead>
                     <tr style="background:var(--iron); color:var(--parchment);">
@@ -2991,7 +3016,7 @@ APPENDIX: XI-A</span>
                 </tbody>
             </table>
 
-            <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px; margin-top:24px;">III. General Equipment & Supplies</h3>
+            <h3>III. General Equipment & Supplies</h3>
             <table style="width:100%; border-collapse:collapse; font-size:10.5pt;">
                 <thead>
                     <tr style="background:var(--iron); color:var(--parchment);">
@@ -3024,7 +3049,7 @@ APPENDIX: XI-A</span>
                 </tbody>
             </table>
 
-            <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px; margin-top:24px;">IV. Property & Structures</h3>
+            <h3>IV. Property & Structures</h3>
             <p style="font-size:10.5pt; margin-bottom:12px;">Property prices reflect settled kingdom markets. In frontier towns reduce by 40%. In Havenspire or SunsReach add 30%. The Church of the Radiant Compact claims tithing rights on all property transfers — 10% of purchase price, payable in Gold Crowns. In territories where the Church has no authority, this tax does not exist.</p>
             <table style="width:100%; border-collapse:collapse; font-size:10.5pt;">
                 <thead>
@@ -3049,7 +3074,7 @@ APPENDIX: XI-A</span>
                 </tbody>
             </table>
 
-            <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px; margin-top:24px;">V. Vessels</h3>
+            <h3>V. Vessels</h3>
             <p style="font-size:10.5pt; margin-bottom:12px;">Boat prices assume purchase in a port city with an active shipyard. In inland settlements, add 50% for overland transport. The northern clans build their own vessels and do not sell them — a northern longship encountered on the open sea has not been purchased from anyone.</p>
             <table style="width:100%; border-collapse:collapse; font-size:10.5pt;">
                 <thead>
@@ -3073,7 +3098,7 @@ APPENDIX: XI-A</span>
                 </tbody>
             </table>
 
-            <h3 style="border-bottom:2px solid var(--ink); padding-bottom:5px; margin-top:24px;">VI. Services & Wages</h3>
+            <h3>VI. Services & Wages</h3>
             <table style="width:100%; border-collapse:collapse; font-size:10.5pt;">
                 <thead>
                     <tr style="background:var(--iron); color:var(--parchment);">
@@ -3101,7 +3126,7 @@ APPENDIX: XI-A</span>
     </div>
 
         <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--ink);">CHAPTER XII</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER XII</span>
         <h2 id="chapter-12">The Grimoire</h2>
         </div>
 
@@ -3198,7 +3223,7 @@ APPENDIX: XI-A</span>
     </div>
 
     <div class="magic-break">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">DISCIPLINE I</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">DISCIPLINE I</span>
         <h2 id="discipline-1">Blessings of Devotion</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The divine does not ask the world to heal or burn; it commands it. A blessing is the sheer weight of a god's authority forced through a mortal vessel."</p>
     </div>
@@ -3544,7 +3569,7 @@ APPENDIX: XI-A</span>
     </div>
 
 <div class="magic-break">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">DISCIPLINE II</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">DISCIPLINE II</span>
         <h2 id="discipline-2">Druidic Spells</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The Druid does not command the earth; they merely align themselves with its ancient, unfathomable hostility. To cast a Druidic spell is to invite the mother's ruthlessness to act through you."</p>
     </div>
@@ -3886,7 +3911,7 @@ APPENDIX: XI-A</span>
     </div>
 
 <div class="magic-break">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">DISCIPLINE III</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">DISCIPLINE III</span>
         <h2 id="discipline-3">Shamanic Magic</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The Shaman walks between worlds — spirit and flesh, life and death, the seen and the unseen. To cross them is power. To master them is terror. The spirits are hungry, and the Shaman is their most dangerous creditor."</p>
     </div>
@@ -4270,8 +4295,8 @@ APPENDIX: XI-A</span>
 
     </div>
 <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);"><div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">DISCIPLINE IV</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);"><div class="magic-break" style="margin-top: 60px;">
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">DISCIPLINE IV</span>
         <h2 id="discipline-4">Wizardry</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The Weave is not a mystery; it is a mechanism. A Wizard does not pray — they calculate the exact, agonizing geometric cost of breaking reality, and they pay it in full."</p>
     </div>
@@ -4876,8 +4901,8 @@ APPENDIX: XI-A</span>
     </div>
 
 <div class="magic-break">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);"><div class="magic-break">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">DISCIPLINE V</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);"><div class="magic-break">
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">DISCIPLINE V</span>
         <h2 id="discipline-5">Ki Powers</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The master of Ki does not command the world; they command the self until the world has no choice but to follow. It is the absolute, uncompromising perfection of blood and bone."</p>
     </div>
@@ -5155,7 +5180,7 @@ APPENDIX: XI-A</span>
         </div>
     </div>
 <div class="magic-break" style="background: rgba(70, 70, 70, 0.05); border-color: var(--ink);">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--ink);">DISCIPLINE VI</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">DISCIPLINE VI</span>
         <h2 id="discipline-6">Runecraft</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"To cast a spell is to whisper to the wind. To carve a rune is to command the stone to remember. It is not magic; it is the brutal, physical labor of hammering law into matter."</p>
     </div>
@@ -5413,7 +5438,7 @@ APPENDIX: XI-A</span>
         </div>
 
         <div class="full-width">
-            <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px; margin-top: 20px;">Mastery Inscriptions</h3>
+            <h3>Mastery Inscriptions</h3>
             <p>The pinnacle of the craft. Master Runes are so mathematically and physically demanding that they monopolize the material entirely. <em>An object may never hold more than one Master Rune</em>.</p>
         </div>
 
@@ -5532,7 +5557,7 @@ APPENDIX: XI-A</span>
     </div>
 
 <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">DISCIPLINE VII</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">DISCIPLINE VII</span>
         <h2 id="discipline-7">The Primordial Lexicon (The Śabda-Axiom)</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The weave bends to a Wizard's geometry. The stone remembers the Runemaster's chisel. The Śabda does not negotiate with the world's material — it speaks directly to what the world was before it had a name for itself. The difference is not academic. It is terminal."</p>
     </div>
@@ -5784,7 +5809,7 @@ APPENDIX: XI-A</span>
     </div>
 
 <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 900; font-size: 14pt; color: var(--blood);">CHAPTER XIII</span>
+        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER XIII</span>
         <h2 id="chapter-13">The Game Master's Ledger</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The world does not pause for the players. It existed before them, it is profoundly indifferent to their survival, and it will outlast them. Run it accordingly."</p>
     </div>
@@ -5793,7 +5818,7 @@ APPENDIX: XI-A</span>
         <a href="#top" class="back-to-top">↑ Return to Index</a>
 
         <div class="full-width">
-            <h3 style="border-bottom: 2px solid var(--ink); padding-bottom: 5px;">The Hierarchy of Slaughter (Creature Tiers)</h3>
+            <h3>The Hierarchy of Slaughter (Creature Tiers)</h3>
             <p>Every entity in Thrice-Marked is bound to a tier reflecting its capacity for violence and its role on the battlefield. Tiers carry absolute mechanical defaults, allowing the GM to deploy horrors without charting every minute statistic. Where a specific Bestiary entry contradicts these defaults, the specific entry acts as the law.</p>
         </div>
 
@@ -5900,6 +5925,459 @@ APPENDIX: XI-A</span>
                 </ul>
             </div>
         </div>
+
+
+<div class="magic-break" style="margin-top: 60px;">
+    <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">APPENDIX XIV — OPTIONAL</span>
+    <h2 id="appendix-xiv" style="color: var(--gold);">Flubs &amp; Criticals</h2>
+    <p style="max-width: 680px; margin: 10px auto; font-style: italic;">"The dice care nothing for your intentions. Sometimes the sword slips. Sometimes it finds the gap in the armour. The world is indifferent to which one happens to you today."</p>
+    <p style="max-width: 680px; margin: 12px auto; font-size: 10.5pt;">These rules are <strong>entirely optional</strong>. They introduce a layer of dramatic variance — spectacular failures and confirmed killing blows — that rewards investment in To-Hit and To-Cast while keeping catastrophic outcomes rare. GMs should discuss with their table before the first session whether these rules are in play.</p>
+</div>
+
+<div class="rpg-columns">
+    <a href="#top" class="back-to-top">↑ Return to Index</a>
+    <div class="full-width">
+
+    <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.05);">
+        <span class="trait-title" style="color: var(--gold);">Core Mechanic — The Confirmation Roll</span>
+        <p>Both Flubs and Criticals use the same two-roll confirmation structure. The first roll produces the trigger (a natural 1 or natural 10 on the relevant die). The second roll — the <strong>Confirmation Roll</strong> — determines whether the trigger actually resolves. This prevents the system from activating so frequently it disrupts the session's rhythm.</p>
+        <p style="margin-top:8px;">A Flub or Critical that requires a Confirmation Roll occurs on roughly a 1-in-100 basis in standard conditions — rare enough to feel significant, common enough to happen several times across a full session.</p>
+        <ul style="margin-top:8px;">
+            <li><strong>Flub Trigger:</strong> Roll a natural, unmodified <strong>1</strong> on any To-Hit or To-Cast roll.</li>
+            <li><strong>Flub Confirmation:</strong> Roll again immediately. If the result still <strong>fails to meet the target's Defense or the spell's TN</strong> (including all modifiers), the Flub is confirmed — roll on the appropriate Flub table. If the confirmation roll succeeds, the attack or cast is simply a standard miss.</li>
+            <li><strong>Critical Trigger:</strong> Roll a natural, unmodified <strong>10</strong> on any To-Hit roll, and the total <strong>meets or exceeds</strong> the target's Defense. A natural 10 that does not achieve a hit is not a Critical — it is simply a standard hit or miss by the math.</li>
+            <li><strong>Critical Confirmation:</strong> Roll again immediately. If the second roll also <strong>meets or exceeds</strong> the target's Defense, the Critical is confirmed — roll on the Critical Strike table. If the confirmation roll fails, the attack is a standard hit.</li>
+        </ul>
+    </div>
+
+    <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.05); margin-top:12px;">
+        <span class="trait-title" style="color: var(--gold);">Luck — Using Your Session Pool</span>
+        <p>Luck is already defined in the core rules (Chapter 1 — The Races &amp; Foundation). At the start of each session, every character rolls <strong>1d10</strong>. That result is your Luck pool for the session. It refreshes at the next session and does not carry over. In addition to its standard uses, Luck interacts with Flubs and Criticals as follows:</p>
+        <ul style="margin-top:8px;">
+            <li><strong>Avoiding a Flub:</strong> When a Flub trigger occurs (natural 1 on a To-Hit or To-Cast), spend 1 Luck point to skip the Confirmation Roll entirely. The action resolves as a standard miss. No table roll, no consequence beyond the failed attack.</li>
+            <li><strong>Retrying a Critical:</strong> When a Critical Confirmation Roll fails, spend 1 Luck point to reroll it once. If the reroll meets or exceeds the target's Defense, the Critical confirms. If it fails again, the attack resolves as a standard hit. Luck buys one more chance — it does not guarantee the result.</li>
+            <li><strong>A natural 1 cannot be saved from being a miss</strong> — but as the core rules state, Luck may still be spent to prevent the Flub Confirmation Roll, avoiding the table result even though the attack itself fails.</li>
+        </ul>
+    </div>
+
+    <h3>⚀ Flub Tables</h3>
+    <p style="font-size:10.5pt; margin-bottom:16px;">When a Flub is confirmed, roll 1d10 on the appropriate table below. The category is determined by the action that triggered the Flub — Melee attack, Ranged attack, discipline cast, or Devotion invocation.</p>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- FLUB TABLE 1: MELEE                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="trait-box">
+        <span class="trait-title">Flub Table I — Melee Combat</span>
+        <table style="width:100%; border-collapse:collapse; font-size:10.5pt; margin-top:10px;">
+            <thead>
+                <tr style="background:var(--iron); color:var(--parchment);">
+                    <th style="padding:6px 10px; text-align:center; width:50px;">Roll</th>
+                    <th style="padding:6px 10px; text-align:left; width:140px;">Name</th>
+                    <th style="padding:6px 10px; text-align:left;">Effect</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">1</td>
+                    <td style="padding:5px 10px; font-weight:700;">Stumble</td>
+                    <td style="padding:5px 10px;">You lose your footing for a moment. Make a <strong>Physique TN 3</strong> test. On failure, lose all remaining attacks this turn.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">2</td>
+                    <td style="padding:5px 10px; font-weight:700;">Off Kilter</td>
+                    <td style="padding:5px 10px;">Make a <strong>Physique TN 5</strong> test to maintain your balance. On failure, suffer <strong>Disadvantage</strong> on all remaining attacks this turn.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">3</td>
+                    <td style="padding:5px 10px; font-weight:700;">Lose Grip</td>
+                    <td style="padding:5px 10px;">Your weapon slips momentarily. Make a <strong>Physique TN 5</strong> test. On failure, drop your weapon and lose all remaining attacks this turn.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">4</td>
+                    <td style="padding:5px 10px; font-weight:700;">Wild Swing</td>
+                    <td style="padding:5px 10px;">An overzealous attack goes wide. Lose all remaining attacks. Make a <strong>Physique TN 6</strong> test — on failure, all attacks against you this turn gain <strong>Advantage</strong>.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">5</td>
+                    <td style="padding:5px 10px; font-weight:700;">Drop Weapon</td>
+                    <td style="padding:5px 10px;">Your weapon falls at your feet. Lose all attacks this turn. Make a <strong>Physique TN 7</strong> test to scoop it up as a free action. On failure, your opponent immediately takes an <strong>Opportunity Attack with Advantage</strong>.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">6</td>
+                    <td style="padding:5px 10px; font-weight:700;">Bad Timing</td>
+                    <td style="padding:5px 10px;">You miss entirely and leave yourself wide open. Make a <strong>Physique TN 9</strong> test. On failure, you fall <strong>Prone</strong> and drop your weapon.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">7</td>
+                    <td style="padding:5px 10px; font-weight:700;">Thud</td>
+                    <td style="padding:5px 10px;">You connect awkwardly, dealing no damage, but your weapon suffers <strong>1 point of wear</strong>. You may continue attacking if you have remaining actions this turn.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">8</td>
+                    <td style="padding:5px 10px; font-weight:700;">Exposed</td>
+                    <td style="padding:5px 10px;">You stumble forward, completely exposed. Your opponent takes an immediate <strong>Opportunity Attack with Advantage</strong>. All remaining attacks this turn are lost.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">9</td>
+                    <td style="padding:5px 10px; font-weight:700;">Major Blunder</td>
+                    <td style="padding:5px 10px;">Your weapon breaks catastrophically. Lose all attacks this turn. The weapon is destroyed and cannot be repaired in the field.</td>
+                </tr>
+                <tr>
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">10</td>
+                    <td style="padding:5px 10px; font-weight:700;">That's Gonna Hurt</td>
+                    <td style="padding:5px 10px;">Your opponent sidesteps, you twist your ankle and fall onto your own weapon. Suffer <strong>1d10 wounds</strong>, fall <strong>Prone</strong>, and lose all remaining attacks and actions this turn.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- FLUB TABLE 2: RANGED                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="trait-box" style="margin-top:16px;">
+        <span class="trait-title">Flub Table II — Ranged Combat</span>
+        <table style="width:100%; border-collapse:collapse; font-size:10.5pt; margin-top:10px;">
+            <thead>
+                <tr style="background:var(--iron); color:var(--parchment);">
+                    <th style="padding:6px 10px; text-align:center; width:50px;">Roll</th>
+                    <th style="padding:6px 10px; text-align:left; width:140px;">Name</th>
+                    <th style="padding:6px 10px; text-align:left;">Effect</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">1</td>
+                    <td style="padding:5px 10px; font-weight:700;">Stumble</td>
+                    <td style="padding:5px 10px;">You stumble but recover immediately. The shot is simply a miss — no further consequence.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">2</td>
+                    <td style="padding:5px 10px; font-weight:700;">Twang</td>
+                    <td style="padding:5px 10px;">The arrow slips off the string as you release and the string snaps your wrist. Make a <strong>Physique TN 5</strong> test or lose all remaining attacks this turn.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">3</td>
+                    <td style="padding:5px 10px; font-weight:700;">Lose Grip</td>
+                    <td style="padding:5px 10px;">Your weapon slips. Make a <strong>Physique TN 5</strong> test or drop it entirely. On failure, lose all remaining attacks this turn.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">4</td>
+                    <td style="padding:5px 10px; font-weight:700;">Wild Shot</td>
+                    <td style="padding:5px 10px;">A bead of sweat blinds you for a moment and you flinch mid-aim. Make a <strong>Willpower TN 4</strong> test or lose all remaining attacks this turn.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">5</td>
+                    <td style="padding:5px 10px; font-weight:700;">Quiver Drop</td>
+                    <td style="padding:5px 10px;">Your quiver strap slips, scattering ammunition. Make a <strong>Physique TN 7</strong> test — on success, you may still fire the projectile currently equipped. Lose all remaining attacks regardless.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">6</td>
+                    <td style="padding:5px 10px; font-weight:700;">Snap</td>
+                    <td style="padding:5px 10px;">The string or cocking mechanism breaks. The weapon suffers <strong>1 point of wear</strong>. Lose all attacks this turn and next if you choose to restring or repair it.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">7</td>
+                    <td style="padding:5px 10px; font-weight:700;">Misjudgement</td>
+                    <td style="padding:5px 10px;">You wildly miscalculate range and angle. If any ally is within <strong>30 Ft</strong> of the intended target, make a standard To-Hit roll against them immediately to determine whether they are struck.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">8</td>
+                    <td style="padding:5px 10px; font-weight:700;">Poor Footing</td>
+                    <td style="padding:5px 10px;">You slip while readying. Make a <strong>Physique TN 5</strong> test or fall <strong>Prone</strong>. Make a second <strong>Physique TN 5</strong> test or drop your weapon. Lose all remaining attacks regardless.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">9</td>
+                    <td style="padding:5px 10px; font-weight:700;">Whoops</td>
+                    <td style="padding:5px 10px;">Your weapon leaves your hand entirely, landing <strong>1d10 Ft</strong> away in a random direction. Lose all remaining attacks this turn.</td>
+                </tr>
+                <tr>
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">10</td>
+                    <td style="padding:5px 10px; font-weight:700;">Self-Strike</td>
+                    <td style="padding:5px 10px;">Your hand cramps mid-release. You manage to strike yourself with your own weapon. Suffer <strong>1d10 wounds</strong> with no Wound Mitigation.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- FLUB TABLE 3: SPELL MISCAST                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="trait-box" style="margin-top:16px;">
+        <span class="trait-title">Flub Table III — Spell Miscast <span style="font-weight:400; font-size:9.5pt;">(Wizardry, Druidism, Shamanism, Ki, Runecraft)</span></span>
+        <table style="width:100%; border-collapse:collapse; font-size:10.5pt; margin-top:10px;">
+            <thead>
+                <tr style="background:var(--iron); color:var(--parchment);">
+                    <th style="padding:6px 10px; text-align:center; width:50px;">Roll</th>
+                    <th style="padding:6px 10px; text-align:left; width:140px;">Name</th>
+                    <th style="padding:6px 10px; text-align:left;">Effect</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">1</td>
+                    <td style="padding:5px 10px; font-weight:700;">Stammer</td>
+                    <td style="padding:5px 10px;">You lose concentration mid-cast. The spell or power fails entirely. No further consequence.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">2</td>
+                    <td style="padding:5px 10px; font-weight:700;">Misspoke</td>
+                    <td style="padding:5px 10px;">A wrong word or gesture causes a mental lapse. The cast attempt is lost. You may not attempt the same spell or power again until your next turn.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">3</td>
+                    <td style="padding:5px 10px; font-weight:700;">Lose Grip</td>
+                    <td style="padding:5px 10px;">Whatever you hold in your off-hand strikes you and breaks your focus. Make an <strong>Intellect TN 5</strong> test. On failure, the cast fails and you must begin again next turn. Make a <strong>Physique TN 3</strong> test or drop the held item.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">4</td>
+                    <td style="padding:5px 10px; font-weight:700;">Wild Cast</td>
+                    <td style="padding:5px 10px;">You lose your target mid-cast. If another creature is within <strong>10 Ft</strong> of the intended target, roll the To-Cast again at <strong>Disadvantage</strong> — on a hit, the spell strikes them instead. If multiple targets are present, determine the struck target randomly.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">5</td>
+                    <td style="padding:5px 10px; font-weight:700;">Reagent Drop</td>
+                    <td style="padding:5px 10px;">You fumble your casting components. Make a <strong>Physique TN 6</strong> test or drop them. The cast attempt is lost regardless of the result.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">6</td>
+                    <td style="padding:5px 10px; font-weight:700;">Enveloped</td>
+                    <td style="padding:5px 10px;">The spell fires but catches you in its own effect. The caster becomes the target, gaining all effects — beneficial or harmful — the spell would have applied. The caster may make any resist tests the spell normally calls for.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">7</td>
+                    <td style="padding:5px 10px; font-weight:700;">Tear</td>
+                    <td style="padding:5px 10px;">The miscast tears a momentary portal to a random plane. A creature of the GM's choice emerges <strong>2d10 Ft</strong> from the caster in a random direction and attacks the nearest target — friend or foe — for <strong>1d3 turns</strong> before the portal collapses.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">8</td>
+                    <td style="padding:5px 10px; font-weight:700;">Misdirection</td>
+                    <td style="padding:5px 10px;">Something strikes your eye and your hands move in a random direction. The spell fires in a random compass direction — roll 1d8: 1=N, 2=NE, 3=E, 4=SE, 5=S, 6=SW, 7=W, 8=NW. It strikes the first valid target in that path.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">9</td>
+                    <td style="padding:5px 10px; font-weight:700;">Powers Lost</td>
+                    <td style="padding:5px 10px;">The words or gestures invert. You lose access to all magical disciplines for the remainder of this turn and your next turn. Any maintained spells collapse immediately.</td>
+                </tr>
+                <tr>
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">10</td>
+                    <td style="padding:5px 10px; font-weight:700;">Detonation</td>
+                    <td style="padding:5px 10px;">The spell detonates prematurely. You are thrown <strong>2d10 Ft</strong> in a random direction and suffer <strong>1d10 wounds</strong> with no Wound Mitigation. Make a <strong>Physique TN 10</strong> test or fall <strong>Unconscious</strong> for 2 turns.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- FLUB TABLE 4: THE GOD TURNS AWAY                               -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="trait-box" style="margin-top:16px;">
+        <span class="trait-title">Flub Table IV — The God Turns Away <span style="font-weight:400; font-size:9.5pt;">(Devotion invocations)</span></span>
+        <table style="width:100%; border-collapse:collapse; font-size:10.5pt; margin-top:10px;">
+            <thead>
+                <tr style="background:var(--iron); color:var(--parchment);">
+                    <th style="padding:6px 10px; text-align:center; width:50px;">Roll</th>
+                    <th style="padding:6px 10px; text-align:left; width:140px;">Name</th>
+                    <th style="padding:6px 10px; text-align:left;">Effect</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">1</td>
+                    <td style="padding:5px 10px; font-weight:700;">Bow Down</td>
+                    <td style="padding:5px 10px;">You stumble into a prayer posture as something catches your robes, pulling you short. The invocation is lost. No further consequence.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">2</td>
+                    <td style="padding:5px 10px; font-weight:700;">Unknown Tongue</td>
+                    <td style="padding:5px 10px;">Your covenant speaks back in a language you do not recognise. You stand baffled for a moment. The invocation fails and you lose your turn entirely.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">3</td>
+                    <td style="padding:5px 10px; font-weight:700;">Small Mercy</td>
+                    <td style="padding:5px 10px;">The invocation fails, but your covenant takes pity. Your next invocation attempt this encounter gains <strong>+1 to the To-Cast roll</strong>.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">4</td>
+                    <td style="padding:5px 10px; font-weight:700;">Reversed</td>
+                    <td style="padding:5px 10px;">The invocation fires but its polarity flips. Beneficial effects become harmful and harmful effects become beneficial. The original target receives the inverted effect. The invoker may make any resist tests the spell would normally call for.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">5</td>
+                    <td style="padding:5px 10px; font-weight:700;">Dirty Deeds</td>
+                    <td style="padding:5px 10px;">Your recent conduct has not pleased the covenant. The invocation fails. Your next invocation attempt this encounter suffers <strong>Disadvantage</strong>.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">6</td>
+                    <td style="padding:5px 10px; font-weight:700;">Prove Thyself</td>
+                    <td style="padding:5px 10px;">Your covenant demands you demonstrate sincerity. The invocation fails. You must spend your next turn in focused prayer — taking no other actions — before any further invocations will be heard this encounter.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">7</td>
+                    <td style="padding:5px 10px; font-weight:700;">Sinner</td>
+                    <td style="padding:5px 10px;">Your covenant is disgusted. The invocation fails and you must spend your next turn in prayer, ignoring all other threats. Until prayer is complete, no invocations function.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">8</td>
+                    <td style="padding:5px 10px; font-weight:700;">Blasphemy</td>
+                    <td style="padding:5px 10px;">Your failure carries a spiritual shockwave. All allies within <strong>25 Ft</strong> suffer <strong>1d10 wounds</strong> as the covenant's displeasure radiates outward.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">9</td>
+                    <td style="padding:5px 10px; font-weight:700;">The God Stirs</td>
+                    <td style="padding:5px 10px;">The covenant registers your failure as evidence of straying. You suffer <strong>1d10 wounds</strong> as divine displeasure makes itself physically felt. Your body knows what your faith will not admit.</td>
+                </tr>
+                <tr>
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">10</td>
+                    <td style="padding:5px 10px; font-weight:700;">Smite</td>
+                    <td style="padding:5px 10px;">The covenant strikes you directly. You are hit by a bolt of concentrated divine force — suffer <strong>3d10 wounds bypassing all Wound Mitigation</strong> and fall <strong>Prone</strong>. Make a <strong>Physique TN 12</strong> test or fall <strong>Unconscious</strong> for 1d3 turns.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- FLUB TABLE 5: SABDA MISFIRE                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="trait-box" style="margin-top:16px; border-color: #3D1A6E; background: rgba(61,26,110,0.04);">
+        <span class="trait-title" style="color:#3D1A6E;">Flub Table V — The Frequency Turns <span style="font-weight:400; font-size:9.5pt;">(Śabda-Axiom invocations)</span></span>
+        <p style="font-style:italic; font-size:9.5pt; margin-bottom:8px;">A Speaker who miscasts does not simply fail — the frequency finds something else to speak to. The pre-world physics the Śabda invokes does not distinguish between intended and unintended targets. It simply propagates.</p>
+        <table style="width:100%; border-collapse:collapse; font-size:10.5pt; margin-top:10px;">
+            <thead>
+                <tr style="background:#3D1A6E; color:var(--parchment);">
+                    <th style="padding:6px 10px; text-align:center; width:50px;">Roll</th>
+                    <th style="padding:6px 10px; text-align:left; width:140px;">Name</th>
+                    <th style="padding:6px 10px; text-align:left;">Effect</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid rgba(61,26,110,0.15);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">1</td>
+                    <td style="padding:5px 10px; font-weight:700;">Silence</td>
+                    <td style="padding:5px 10px;">The frequency dies in the throat. The invocation fails without consequence. The Speaker's voice is slightly hoarse for 1 turn — no mechanical effect.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(61,26,110,0.15); background:rgba(61,26,110,0.04);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">2</td>
+                    <td style="padding:5px 10px; font-weight:700;">Echo</td>
+                    <td style="padding:5px 10px;">The invocation fails, but the frequency bounces. The Speaker suffers the <strong>⌁ Silenced condition</strong> for 1 turn as the misfire reverberates through their own vocal cords.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(61,26,110,0.15);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">3</td>
+                    <td style="padding:5px 10px; font-weight:700;">Wrong Register</td>
+                    <td style="padding:5px 10px;">The frequency invoked is adjacent to the intended one. The invocation fires at <strong>half its TN</strong> — reduced effect, different target. The GM determines the nearest valid alternate target within range.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(61,26,110,0.15); background:rgba(61,26,110,0.04);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">4</td>
+                    <td style="padding:5px 10px; font-weight:700;">Sympathetic Resonance</td>
+                    <td style="padding:5px 10px;">The frequency finds every metallic object within <strong>20 Ft</strong> simultaneously. All weapons, armour, and metal equipment in range vibrate audibly for 1 turn. Any creature holding or wearing metal must make a <strong>Physique TN 6</strong> test or drop what they are holding.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(61,26,110,0.15);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">5</td>
+                    <td style="padding:5px 10px; font-weight:700;">Feedback</td>
+                    <td style="padding:5px 10px;">The frequency reflects off a hard surface and returns to the Speaker. The invocation's full effect — damage, condition, or utility — is applied to the Speaker instead of the intended target. The Speaker may make any resist tests the invocation normally allows.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(61,26,110,0.15); background:rgba(61,26,110,0.04);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">6</td>
+                    <td style="padding:5px 10px; font-weight:700;">Bone Song</td>
+                    <td style="padding:5px 10px;">The misfire hits the structural frequency of living bone indiscriminately. All creatures within <strong>15 Ft</strong> — ally, enemy, and Speaker — suffer <strong>1d10 wounds</strong> as their skeletons vibrate at the wrong pitch.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(61,26,110,0.15);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">7</td>
+                    <td style="padding:5px 10px; font-weight:700;">The Hum</td>
+                    <td style="padding:5px 10px;">The frequency drops into the register of the Mycelian Veil — the deep, subsonic signal that moves through root systems and soil. Every creature in contact with the ground within <strong>40 Ft</strong> feels an overwhelming sense of wrongness. All affected must make a <strong>Willpower TN 8</strong> test or suffer the <strong>Ψ Shaken condition</strong> for 1 turn.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(61,26,110,0.15); background:rgba(61,26,110,0.04);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">8</td>
+                    <td style="padding:5px 10px; font-weight:700;">Aakzad Register</td>
+                    <td style="padding:5px 10px;">The frequency briefly touches the pre-world register shared with the Aakzad. If any Aakzad are within <strong>100 Ft</strong>, they immediately become aware of the Speaker's precise location and turn toward them. If no Aakzad are present, every Shaman and Śabda practitioner within 100 Ft hears the Speaker's voice clearly in their mind for 1 turn — with no message attached.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(61,26,110,0.15);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">9</td>
+                    <td style="padding:5px 10px; font-weight:700;">Frequency Lost</td>
+                    <td style="padding:5px 10px;">The Speaker loses access to the Śabda entirely for the remainder of this turn and the next. The invocation fails. Any maintained Śabda effects collapse immediately. The Speaker's next successful invocation after this costs 1 additional AP as the frequency reestablishes.</td>
+                </tr>
+                <tr>
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">10</td>
+                    <td style="padding:5px 10px; font-weight:700;">Axiom Breach</td>
+                    <td style="padding:5px 10px;">The misfire invokes a fragment of Axiom of the Absolute — uncontrolled and undirected. Every creature within <strong>30 Ft</strong> including the Speaker suffers <strong>2d10 wounds bypassing all Wound Mitigation</strong>. The Speaker is then <strong>⌁ Silenced</strong> for <strong>1d3 turns</strong> as their voice recovers from the uncontrolled output. No Retraction is possible.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- CRITICAL STRIKE TABLE                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <h3 style="color: var(--gold);">⚔ Critical Strike Table</h3>
+    <p style="font-size:10.5pt; margin-bottom:16px;">When a Critical is confirmed, roll 1d10 on the table below. Critical Strikes are applied to the <strong>target</strong> of the confirmed hit — these are results suffered, not inflicted.</p>
+
+    <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.04);">
+        <span class="trait-title" style="color: var(--gold);">Critical Strike — Confirmed Hit Results</span>
+        <table style="width:100%; border-collapse:collapse; font-size:10.5pt; margin-top:10px;">
+            <thead>
+                <tr style="background:var(--iron); color:var(--parchment);">
+                    <th style="padding:6px 10px; text-align:center; width:50px;">Roll</th>
+                    <th style="padding:6px 10px; text-align:left; width:160px;">Name</th>
+                    <th style="padding:6px 10px; text-align:left;">Effect</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">1</td>
+                    <td style="padding:5px 10px; font-weight:700;">Devastating Hit</td>
+                    <td style="padding:5px 10px;">The blow lands with staggering force. Suffer normal wounds plus an additional <strong>1d10 wounds</strong>. Make a <strong>Physique TN equal to total wounds received</strong> or fall <strong>Prone</strong>.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">2</td>
+                    <td style="padding:5px 10px; font-weight:700;">Gash</td>
+                    <td style="padding:5px 10px;">The strike tears through armour, leaving a gaping wound. Suffer normal wounds plus an additional <strong>1d10 wounds</strong>. Gain the <strong>⊕ Bleed condition</strong>.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">3</td>
+                    <td style="padding:5px 10px; font-weight:700;">Foot Strike</td>
+                    <td style="padding:5px 10px;">The blow lands on the foot, removing armour and more. Suffer normal wounds. Make a <strong>Physique TN 10</strong> test or gain the <strong>⊛ Shaken condition</strong>. Movement is halved until treated by Medicine or Mending.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">4</td>
+                    <td style="padding:5px 10px; font-weight:700;">Crushed Limb</td>
+                    <td style="padding:5px 10px;">One limb takes a debilitating blow. Roll 1d10: 1–2 Left Arm, 3–4 Right Arm, 5–6 Left Leg, 7–8 Right Leg, 9–10 roll again. The limb is non-functional until treated. Suffer normal wounds plus an additional <strong>2d10 wounds</strong>.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">5</td>
+                    <td style="padding:5px 10px; font-weight:700;">Glass Jaw</td>
+                    <td style="padding:5px 10px;">A direct strike to the jaw. Suffer <strong>3d10 wounds</strong> and fall <strong>Prone</strong>. You may not invoke Devotion blessings, cast spells, or use the Śabda until your jaw is set by Medicine or Mending.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">6</td>
+                    <td style="padding:5px 10px; font-weight:700;">Bleeder</td>
+                    <td style="padding:5px 10px;">A catastrophic wound. Suffer normal wounds plus an additional <strong>2d10 wounds</strong>. Gain <strong>2 stacks of the ⊕ Bleed condition</strong> simultaneously.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">7</td>
+                    <td style="padding:5px 10px; font-weight:700;">Cracked Skull</td>
+                    <td style="padding:5px 10px;">A direct hit to the skull. Suffer an additional <strong>3d10 wounds</strong>. Make a <strong>Physique TN 15</strong> test or fall <strong>Unconscious</strong> for <strong>1d10 turns</strong>.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">8</td>
+                    <td style="padding:5px 10px; font-weight:700;">Lost Limb</td>
+                    <td style="padding:5px 10px;">Roll 1d10 as for Crushed Limb to determine which limb is severed. Only magical or immediate surgical intervention saves the appendage. Make a <strong>Physique TN 10</strong> test or fall <strong>Unconscious</strong>. Suffer <strong>3d10 wounds</strong> and gain <strong>3 stacks of the ⊕ Bleed condition</strong>.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">9</td>
+                    <td style="padding:5px 10px; font-weight:700;">Gut Shot</td>
+                    <td style="padding:5px 10px;">A brutal strike to the midsection. You are knocked off your feet and fall <strong>Prone</strong>. Gain the <strong>⊛ Shaken condition</strong>. Make a <strong>Physique TN 15</strong> test or be reduced to 0 wounds immediately regardless of your current total.</td>
+                </tr>
+                <tr>
+                    <td style="padding:5px 10px; text-align:center; font-weight:900;">10</td>
+                    <td style="padding:5px 10px; font-weight:700;">Death</td>
+                    <td style="padding:5px 10px;">The target is killed outright, regardless of remaining wounds. The manner is determined by the attack — the result is not. No resist test. No stabilisation. The story ends here for this creature.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top:12px; font-size:9.5pt; font-style:italic;">Note: Results 8 and 10 (Lost Limb and Death) are inherently lethal and should be reserved for named enemies and significant encounters. GMs running a less brutal campaign may choose to treat result 10 as "reduced to 0 wounds with the Gut Shot condition" rather than outright death for player characters.</p>
+    </div>
+
+    </div>
+</div>
 
     </div>
 </div>
