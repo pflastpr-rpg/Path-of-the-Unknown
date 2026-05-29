@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thrice-Marked — Quickstart Rules</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --iron:      #02070e;
+    --blood:     #8B1010;
+    --gold:      #B8860B;
+    --gold-dim:  #7a5808;
+    --parchment: #f0e2c0;
+    --input-bg:  #FCF7EB;
+    --ink:       #1a1008;
+    --ash:       #5a4a2a;
+    --border:    rgba(2,7,14,0.2);
+    --font-head: 'Cinzel Decorative', serif;
+    --font-sub:  'Cinzel', serif;
+    --font-body: 'Crimson Pro', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: #1a1208;
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.7;
+}
+
+/* ── PAGE WRAPPER ── */
+.page {
+    max-width: 820px;
+    margin: 0 auto;
+    background: var(--input-bg);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ── HEADER ── */
+.qs-header {
+    background: var(--iron);
+    padding: 48px 48px 36px;
+    text-align: center;
+    border-bottom: 6px solid var(--blood);
+    position: relative;
+    overflow: hidden;
+}
+
+.qs-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(139,16,16,0.3) 0%, transparent 70%);
+}
+
+.qs-eyebrow {
+    font-family: var(--font-sub);
+    font-size: 8pt;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--blood);
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.qs-title {
+    font-family: var(--font-head);
+    font-size: 36pt;
+    font-weight: 900;
+    color: var(--gold);
+    text-shadow: 0 0 40px rgba(184,134,11,0.3);
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+}
+
+.qs-subtitle {
+    font-family: var(--font-sub);
+    font-size: 11pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(184,134,11,0.6);
+    position: relative;
+    z-index: 1;
+    margin-bottom: 16px;
+}
+
+.qs-tagline {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 12pt;
+    color: rgba(240,226,192,0.5);
+    position: relative;
+    z-index: 1;
+}
+
+/* ── CHAPTER BREAKS ── */
+.chapter {
+    padding: 44px 48px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+}
+
+.chapter:nth-child(even) {
+    background: rgba(2,7,14,0.03);
+}
+
+.chapter-label {
+    font-family: var(--font-sub);
+    font-size: 7.5pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--blood);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.chapter-label::after {
+    content: '';
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(90deg, rgba(139,16,16,0.4), transparent);
+}
+
+.chapter-title {
+    font-family: var(--font-head);
+    font-size: 18pt;
+    font-weight: 700;
+    color: var(--iron);
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.chapter-body {
+    font-size: 12pt;
+    color: var(--ink);
+    line-height: 1.8;
+}
+
+.chapter-body p + p { margin-top: 14px; }
+
+/* ── RULE BOXES ── */
+.rule-box {
+    background: var(--iron);
+    color: var(--parchment);
+    padding: 24px 28px;
+    margin: 24px 0;
+    border-left: 5px solid var(--blood);
+    position: relative;
+}
+
+.rule-box-title {
+    font-family: var(--font-sub);
+    font-size: 9pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.rule-box-body {
+    font-size: 11.5pt;
+    line-height: 1.75;
+    color: rgba(240,226,192,0.85);
+}
+
+.rule-box-body strong { color: var(--gold); }
+
+/* ── GOLD BOXES ── */
+.gold-box {
+    background: rgba(184,134,11,0.08);
+    border: 1px solid rgba(184,134,11,0.3);
+    border-top: 3px solid var(--gold);
+    padding: 20px 24px;
+    margin: 20px 0;
+}
+
+.gold-box-title {
+    font-family: var(--font-sub);
+    font-size: 8.5pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+}
+
+.gold-box-body {
+    font-size: 11pt;
+    color: var(--ash);
+    line-height: 1.7;
+}
+
+/* ── STAT TABLES ── */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 11pt;
+}
+
+th {
+    background: var(--iron);
+    color: var(--gold);
+    font-family: var(--font-sub);
+    font-size: 8pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    text-align: left;
+    border: 1px solid rgba(2,7,14,0.3);
+}
+
+td {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    vertical-align: top;
+}
+
+tr:nth-child(even) td { background: rgba(2,7,14,0.04); }
+tr:hover td { background: rgba(184,134,11,0.06); }
+
+/* ── CHARACTER SHEET ── */
+.char-sheet {
+    border: 3px solid var(--iron);
+    border-top: 6px solid var(--blood);
+    background: var(--input-bg);
+    margin: 24px 0;
+}
+
+.char-header {
+    background: var(--iron);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.char-name {
+    font-family: var(--font-head);
+    font-size: 16pt;
+    color: var(--gold);
+}
+
+.char-role {
+    font-family: var(--font-sub);
+    font-size: 8pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(184,134,11,0.6);
+}
+
+.char-body {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.char-section-title {
+    font-family: var(--font-sub);
+    font-size: 8pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--blood);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+}
+
+.char-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px dotted var(--border);
+    font-size: 11pt;
+}
+
+.char-stat-name { color: var(--ash); }
+.char-stat-val { font-weight: 900; color: var(--iron); font-family: 'Courier New', monospace; }
+
+.char-wounds {
+    grid-column: 1 / -1;
+    background: rgba(139,16,16,0.06);
+    border: 1px solid rgba(139,16,16,0.2);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wounds-label {
+    font-family: var(--font-sub);
+    font-size: 8pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blood);
+}
+
+.wounds-value {
+    font-family: var(--font-head);
+    font-size: 24pt;
+    color: var(--blood);
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* ── SPELL CARDS ── */
+.spell-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.spell-card {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blood);
+    padding: 12px 14px;
+    background: rgba(2,7,14,0.02);
+}
+
+.spell-name {
+    font-family: var(--font-sub);
+    font-size: 9pt;
+    font-weight: 600;
+    color: var(--iron);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.spell-stats {
+    font-size: 8.5pt;
+    color: var(--gold-dim);
+    font-family: 'Courier New', monospace;
+    margin-bottom: 6px;
+}
+
+.spell-desc {
+    font-size: 10pt;
+    color: var(--ash);
+    line-height: 1.5;
+}
+
+/* ── ENCOUNTER ── */
+.enemy-block {
+    border: 2px solid var(--iron);
+    border-top: 4px solid var(--blood);
+    margin: 16px 0;
+    background: rgba(2,7,14,0.03);
+}
+
+.enemy-header {
+    background: var(--iron);
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.enemy-name {
+    font-family: var(--font-head);
+    font-size: 12pt;
+    color: var(--gold);
+}
+
+.enemy-type {
+    font-family: var(--font-sub);
+    font-size: 7.5pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blood);
+}
+
+.enemy-body {
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    font-size: 10.5pt;
+}
+
+.enemy-stat { text-align: center; }
+.enemy-stat-label {
+    font-family: var(--font-sub);
+    font-size: 7pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blood);
+    display: block;
+    margin-bottom: 2px;
+}
+.enemy-stat-val {
+    font-weight: 900;
+    font-family: 'Courier New', monospace;
+    color: var(--iron);
+}
+
+.enemy-notes {
+    padding: 0 16px 14px;
+    font-size: 10.5pt;
+    color: var(--ash);
+    line-height: 1.6;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+}
+
+/* ── HIGHLIGHT ── */
+.highlight {
+    background: rgba(139,16,16,0.07);
+    border-left: 3px solid var(--blood);
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-size: 11pt;
+    color: var(--ink);
+    line-height: 1.7;
+}
+
+/* ── NAV BAR ── */
+.qs-nav {
+    background: var(--iron);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--blood);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.qs-nav-title {
+    font-family: var(--font-sub);
+    font-size: 8pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+.qs-nav-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+.qs-nav-links a {
+    font-family: var(--font-sub);
+    font-size: 7.5pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(184,134,11,0.5);
+    text-decoration: none;
+    transition: color 0.15s;
+}
+.qs-nav-links a:hover { color: var(--gold); }
+
+/* ── FOOTER ── */
+.qs-footer {
+    background: var(--iron);
+    padding: 32px 48px;
+    text-align: center;
+    border-top: 4px solid var(--blood);
+}
+
+.qs-footer-title {
+    font-family: var(--font-head);
+    font-size: 14pt;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.qs-footer-body {
+    font-size: 11pt;
+    color: rgba(240,226,192,0.5);
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    font-family: var(--font-sub);
+    font-size: 9pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin: 4px;
+    transition: all 0.2s;
+}
+
+.btn-blood {
+    background: var(--blood);
+    color: var(--parchment);
+    border: 2px solid var(--blood);
+}
+.btn-blood:hover { background: #a01212; }
+
+.btn-gold {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+}
+.btn-gold:hover { background: rgba(184,134,11,0.1); }
+
+/* ── PRINT ── */
+@media print {
+    @page { size: letter portrait; margin: 0.6in; }
+    body { background: white; }
+    .qs-nav { display: none; }
+    .page { max-width: 100%; }
+    .chapter { padding: 28px 0; page-break-inside: avoid; }
+    .enemy-block, .char-sheet { page-break-inside: avoid; }
+}
+
+@media (max-width: 600px) {
+    .chapter { padding: 28px 20px; }
+    .qs-header { padding: 32px 20px; }
+    .char-body { grid-template-columns: 1fr; }
+    .spell-list { grid-template-columns: 1fr; }
+    .enemy-body { grid-template-columns: repeat(2, 1fr); }
+    .qs-nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- NAV -->
+<nav class="qs-nav">
+    <span class="qs-nav-title">Thrice-Marked — Quickstart</span>
+    <ul class="qs-nav-links">
+        <li><a href="#mechanics">Mechanics</a></li>
+        <li><a href="#character">Character</a></li>
+        <li><a href="#combat">Combat</a></li>
+        <li><a href="#magic">Magic</a></li>
+        <li><a href="#encounter">Encounter</a></li>
+        
+    </ul>
+</nav>
+
+<!-- HEADER -->
+<header class="qs-header">
+    <div class="qs-eyebrow">Quickstart Rules</div>
+    <h1 class="qs-title">Thrice-Marked</h1>
+    <div class="qs-subtitle">Everything you need to play in one hour</div>
+    <p class="qs-tagline">You start clean. You don't stay that way.</p>
+</header>
+
+<!-- CHAPTER 1: WHAT IS THIS GAME -->
+<div class="chapter" id="what">
+    <div class="chapter-label">Introduction</div>
+    <h2 class="chapter-title">What Is Thrice-Marked?</h2>
+    <div class="chapter-body">
+        <p>You begin this game as a blank sheet of parchment — a hollow vessel of bone and muscle. There are no classes to guide you; your choices are the only ink available. Every time you sharpen a skill, forge a weapon, or make a desperate bargain to survive an encounter, you are adding permanent marks to your ledger. You can endure the first mark. You can manage the second. But the moment you are Thrice-Marked, you have hit the absolute ceiling of physics, magic, and biology. The game is an accounting of how close you are to that third mark — and what you are willing to look like before you break.</p>
+        <p>You need: this document, one ten-sided die (1d10) per player, and people willing to find out what their character is made of.</p>
+
+        <div class="gold-box">
+            <div class="gold-box-title">The Unified Rule of Three</div>
+            <div class="gold-box-body">
+                <p style="margin-bottom:10px;">The number three is the structural limit of this world. It operates on three simultaneous scales:</p>
+                <table style="width:100%; border-collapse:collapse; font-size:10pt;">
+                    <thead>
+                        <tr style="border-bottom:2px solid var(--gold);">
+                            <th style="padding:6px 8px; text-align:left; color:var(--gold); font-size:9pt; letter-spacing:.06em; text-transform:uppercase;">Column I — Flesh</th>
+                            <th style="padding:6px 8px; text-align:left; color:var(--gold); font-size:9pt; letter-spacing:.06em; text-transform:uppercase;">Column II — Matter</th>
+                            <th style="padding:6px 8px; text-align:left; color:var(--gold); font-size:9pt; letter-spacing:.06em; text-transform:uppercase;">Column III — Trauma</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:6px 8px; vertical-align:top; border-right:1px solid rgba(184,134,11,0.3);"><strong>The Power of Three</strong><br>Every 3 Skill Points in a category forces the parent characteristic up by +1. You are literally sculpted by what you survive.</td>
+                            <td style="padding:6px 8px; vertical-align:top; border-right:1px solid rgba(184,134,11,0.3);"><strong>The Runic Threshold</strong><br>No item may bear more than 3 total rune marks. A fourth rune shatters the material into shrapnel. The geometry of matter has limits.</td>
+                            <td style="padding:6px 8px; vertical-align:top;"><strong>The Condition Matrix</strong><br>A 3rd simultaneous condition triggers Overwhelmed — structural biological collapse. The body has a ceiling. It does not negotiate.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="rule-box">
+            <div class="rule-box-title">Three Questions Every Veteran Will Ask</div>
+            <div class="rule-box-body">
+                <p style="margin-bottom:8px;"><strong>What is marked upon my character sheet?</strong> An active, evolving ledger of systemic debt. Every row begins empty. You force the world to carve a path into it.</p>
+                <p style="margin-bottom:8px;"><strong>Who is doing the marking?</strong> Three forces compete for your ledger — the Church of the Radiant Compact demands your compliance; the borderland factions demand your blood; the outer void demands your sanity. To survive is to choose whose ink you are willing to wear.</p>
+                <p><strong>What happens when the third mark lands?</strong> The Threshold of Collapse. The ledger closes. Your weapon shatters, your body locks, your characteristics freeze. The game is the calculation of how close you are to that third mark — and whether you can clear the ledger before you unravel.</p>
+            </div>
+        </div>
+
+        <div class="gold-box">
+            <div class="gold-box-title">The World in One Paragraph</div>
+            <div class="gold-box-body">The world has already survived one invasion — the Aakzad, biomechanical harvesters from the dark between stars, were not defeated but entombed. Something has recently stolen the largest fragment of their shattered artefact. The awakening has begun. Into this world walk four races, six magical traditions, and an unknown number of people who have decided their purpose is worth the price. The Church of the Radiant Compact provides theological unity across Human kingdoms — and maintains careful, deliberate gaps in its own historical record. The great Dwarven empire of Kel Thurum holds the mountains. The silver city of Thalasien holds its scholars and its silence. The Halflings hold knowledge no outsider will ever be given.</div>
+        </div>
+    </div>
+</div>
+
+<!-- CHAPTER 2: CORE MECHANICS -->
+<div class="chapter" id="mechanics">
+    <div class="chapter-label">Chapter I</div>
+    <h2 class="chapter-title">The Core Mechanic</h2>
+    <div class="chapter-body">
+        <p>Thrice-Marked uses a single die: the <strong>1d10</strong>. Almost every action that matters is resolved the same way — roll 1d10, add relevant bonuses, meet or beat a Target Number (TN). If you do, you succeed. If you don't, consequences follow.</p>
+
+        <div class="rule-box">
+            <div class="rule-box-title">The Core Roll</div>
+            <div class="rule-box-body">
+                <strong>1d10 + Skill Points + Characteristic Modifier ≥ Target Number</strong><br><br>
+                Roll one ten-sided die. Add your relevant skill points. Add the modifier of the governing characteristic (score ÷ 6, rounded down). If the total meets or beats the TN set by the GM — or by the rules — you succeed.
+            </div>
+        </div>
+
+        <p><strong>Advantage:</strong> Roll 2d10 and take the higher result. Granted by skills, positioning, or circumstances in your favour.</p>
+        <p><strong>Disadvantage:</strong> Roll 2d10 and take the lower result. Imposed by injury, environment, or being outmatched.</p>
+
+        <div class="gold-box">
+            <div class="gold-box-title">The Decisive Strike (Natural 10)</div>
+            <div class="gold-box-body">When a To-Hit roll meets or exceeds the target's Defence and the unmodified d10 shows a <strong>natural 10</strong>, the strike is decisive. The attacker immediately rolls an additional 1d10 for bonus wounds. No To-Hit bonuses apply to this secondary roll — only the raw instinct of the Precise Strike skill.</div>
+        </div>
+
+        <div class="rule-box">
+            <div class="rule-box-title">The Arcane Backlash (Natural 1)</div>
+            <div class="rule-box-body">The weave is volatile; the spirits are fickle; the gods demand perfection. An unmodified <strong>1</strong> on any To-Cast roll is an absolute failure. Unless mitigated by Fortune, this failure triggers a catastrophic backfire from the Miscast/Wrath table. In this Quickstart: on a Backlash, the spell fails and the caster loses 1d10 wounds from the feedback.</div>
+        </div>
+
+        <table>
+            <tr><th>Action</th><th>Roll</th><th>TN</th></tr>
+            <tr><td>Attack (melee)</td><td>1d10 + Combat skill + Agility mod</td><td>Target's Defence</td></tr>
+            <tr><td>Attack (ranged)</td><td>1d10 + Combat skill + Awareness mod</td><td>Target's Defence</td></tr>
+            <tr><td>Cast a spell</td><td>1d10 + Discipline skill + Governing char mod</td><td>Spell's TN</td></tr>
+            <tr><td>Resist magic</td><td>1d10 + Willpower mod + Resist bonus</td><td>Spell's TN</td></tr>
+            <tr><td>Skill test</td><td>1d10 + Relevant skill + Characteristic mod</td><td>GM-set TN</td></tr>
+        </table>
+
+        <p><strong>Characteristic Modifier:</strong> Each characteristic has a score (typically 2–6 at start). Divide the score by 6, round down. A score of 4 gives a modifier of 0. A score of 6 gives +1. A score of 12 gives +2.</p>
+        <p><strong>Resist Bonus:</strong> Derived from Willpower. Added to tests made to resist magical effects, fear, and conditions targeting the mind.</p>
+    </div>
+</div>
+
+<!-- CHAPTER 3: ACTION POINTS -->
+<div class="chapter" id="ap">
+    <div class="chapter-label">Chapter II</div>
+    <h2 class="chapter-title">Action Points &amp; Combat Flow</h2>
+    <div class="chapter-body">
+        <p>Time on the battlefield is measured in heartbeats and drawn steel. Every combatant is granted a base of <strong>1 Action Point (AP)</strong> per exchange. This pool is expanded through the Quickness skill or deliberate investment of Experience.</p>
+
+        <table>
+            <tr><th>Action</th><th>AP Cost</th></tr>
+            <tr><td>Melee Attack</td><td>1 AP</td></tr>
+            <tr><td>Ranged Attack</td><td>1 AP</td></tr>
+            <tr><td>Cast a Spell (TN 1–6)</td><td>1 AP</td></tr>
+            <tr><td>Cast a Spell (TN 7–9)</td><td>2 AP</td></tr>
+            <tr><td>Cast a Spell (TN 10–12)</td><td>3 AP</td></tr>
+            <tr><td>Cast a Spell (TN 13–15)</td><td>4 AP</td></tr>
+            <tr><td>Move (full movement)</td><td>1 AP</td></tr>
+            <tr><td>Use an Item / Drink Potion</td><td>1 AP</td></tr>
+            <tr><td>Enter Reactive Stance</td><td>1 AP — declare trigger &amp; held action</td></tr>
+            <tr><td>Riposte (reaction)</td><td>1 AP — triggers on enemy natural 1</td></tr>
+        </table>
+
+                <div class="highlight">
+                    <strong>AP Carry-Over:</strong> For every 3 points of base AP a character has, they may carry 1 unused AP into their next turn — declared at the end of that turn. A character with 3 base AP can carry 1; with 6 they can carry 2. Carried AP is lost if not spent the following turn. It cannot be used with spells or channelling.
+                </div>
+
+        <div class="gold-box">
+            <div class="gold-box-title">Wound Mitigation</div>
+            <div class="gold-box-body">When you take a hit, you don't always take the full wounds. <strong>Wound Mitigation (WM)</strong> reduces incoming wounds by a flat amount — from armour, skills, or abilities. If WM equals or exceeds wounds dealt, you take 0 wounds from that hit. WM does not apply to falling, environmental hazards, or poison damage unless a skill specifically states otherwise.</div>
+        </div>
+    </div>
+</div>
+
+<!-- CHAPTER 4: PRE-MADE CHARACTER -->
+<div class="chapter" id="character">
+    <div class="chapter-label">Chapter III</div>
+    <h2 class="chapter-title">A Ready-Made Hero</h2>
+    <div class="chapter-body">
+        <p>Use this pre-built character to play immediately. Mira Ashvane is a Human soldier — experienced, pragmatic, and carrying the kind of faith that comes from having needed it and found it present. She can fight, endure, and call upon simple blessings when steel isn't enough.</p>
+
+        <div class="char-sheet">
+            <div class="char-header">
+                <div>
+                    <div class="char-name">Mira Ashvane</div>
+                    <div class="char-role">Human Soldier — Devotion-Touched</div>
+                </div>
+                <div style="text-align:right; color:rgba(184,134,11,0.6); font-family:'Cinzel',serif; font-size:8pt; letter-spacing:1px;">
+                    300 XP Spent<br>Human · Move 10
+                </div>
+            </div>
+            <div class="char-body">
+                <div>
+                    <div class="char-section-title">Characteristics</div>
+                    <div class="char-stat"><span class="char-stat-name">Agility</span><span class="char-stat-val">4</span></div>
+                    <div class="char-stat"><span class="char-stat-name">Awareness</span><span class="char-stat-val">3</span></div>
+                    <div class="char-stat"><span class="char-stat-name">Charisma</span><span class="char-stat-val">4</span></div>
+                    <div class="char-stat"><span class="char-stat-name">Intellect</span><span class="char-stat-val">2</span></div>
+                    <div class="char-stat"><span class="char-stat-name">Physique</span><span class="char-stat-val">5</span></div>
+                    <div class="char-stat"><span class="char-stat-name">Willpower</span><span class="char-stat-val">3</span></div>
+                </div>
+                <div>
+                    <div class="char-section-title">Combat Stats</div>
+                    <div class="char-stat"><span class="char-stat-name">Defence</span><span class="char-stat-val">12</span></div>
+                    <div class="char-stat"><span class="char-stat-name">Action Points</span><span class="char-stat-val">2</span></div>
+                    <div class="char-stat"><span class="char-stat-name">Wound Mitigation</span><span class="char-stat-val">3</span></div>
+                    <div class="char-stat"><span class="char-stat-name">Resist Bonus</span><span class="char-stat-val">+0</span></div>
+                    <div class="char-stat"><span class="char-stat-name">Melee Bonus</span><span class="char-stat-val">+1</span></div>
+                    <div class="char-stat"><span class="char-stat-name">Devotion Skill</span><span class="char-stat-val">3 pts</span></div>
+                </div>
+                <div class="char-wounds">
+                    <div>
+                        <div class="wounds-label">Total Wounds</div>
+                        <div style="font-size:10pt; color:var(--blood); font-style:italic; margin-top:2px;">Track on paper as you take damage</div>
+                    </div>
+                    <div class="wounds-value">28</div>
+                </div>
+                <div style="grid-column: 1/-1;">
+                    <div class="char-section-title">Key Skills</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px;">
+                        <div class="char-stat"><span class="char-stat-name">Combat (Melee)</span><span class="char-stat-val">4 pts</span></div>
+                        <div class="char-stat"><span class="char-stat-name">Evasion</span><span class="char-stat-val">3 pts</span></div>
+                        <div class="char-stat"><span class="char-stat-name">Devotion (Theology)</span><span class="char-stat-val">3 pts</span></div>
+                        <div class="char-stat"><span class="char-stat-name">Fortitude</span><span class="char-stat-val">1 pt</span></div>
+                        <div class="char-stat"><span class="char-stat-name">Hard as Nails</span><span class="char-stat-val">2 pts</span></div>
+                        <div class="char-stat"><span class="char-stat-name">Resolve</span><span class="char-stat-val">2 pts</span></div>
+                    </div>
+                </div>
+                <div style="grid-column:1/-1;">
+                    <div class="char-section-title">Equipment</div>
+                    <div style="font-size:11pt; color:var(--ash); line-height:1.7;">
+                        <strong>Longsword</strong> — 1d10 + Physique mod wounds | <strong>Chainmail</strong> — WM 3, Agility -1 | <strong>Shield</strong> — +1 Defence | <strong>Holy Symbol</strong> — required for Devotion blessings
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="gold-box">
+            <div class="gold-box-title">How to Read Mira's Stats</div>
+            <div class="gold-box-body">
+                <strong>Defence 12</strong> — enemies need to roll 12+ to hit her. <strong>WM 3</strong> — every hit she takes is reduced by 3 wounds before applied. <strong>Action Points 2</strong> — she gets 2 actions per turn: attack + move, attack + attack, cast + attack, etc. <strong>Melee Bonus +1</strong> — Mira has 1 point in Strength Conditioning which grants +1 to all melee wound rolls. Her Physique modifier is 0 (floor(5÷6)=0). She rolls 1d10 + 4 (Combat skill) + 0 (Agility mod, floor(4÷6)=0) to hit — needs to beat target's Defence. On a hit her longsword deals 1d10 + 1 (Strength Conditioning bonus) wounds.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CHAPTER 5: FAITH SPELLS -->
+<div class="chapter" id="magic">
+    <div class="chapter-label">Chapter IV</div>
+    <h2 class="chapter-title">The Theology Discipline</h2>
+    <div class="chapter-body">
+        <p>Mira carries 3 points in Devotion — enough to cast blessings up to TN 6 without penalty. To cast, roll <strong>1d10 + Devotion skill + Charisma modifier</strong> against the spell's TN. Mira's maximum casting roll is 13 (10 + 3 Devotion skill + 0 Charisma mod).</p>
+        <p>Mira can hold <strong>3 blessings</strong> in memory — equal to her Devotion skill points. She must choose which to prepare before play begins. She must choose which to prepare before play begins. Below are her available blessings for this quickstart.</p>
+
+        <div class="spell-list">
+            <div class="spell-card">
+                <div class="spell-name">Mend Minor Wound</div>
+                <div class="spell-stats">TN 1 · 1 AP · Touch · Instant</div>
+                <div class="spell-desc">Closes the smallest wounds. Target regains exactly 1 wound. Cannot be used on self in combat.</div>
+            </div>
+            <div class="spell-card">
+                <div class="spell-name">Purify</div>
+                <div class="spell-stats">TN 2 · 1 AP · Touch · Permanent</div>
+                <div class="spell-desc">Purify water or food of all poison or disease. Up to 1 gallon. Permanent effect.</div>
+            </div>
+            <div class="spell-card">
+                <div class="spell-name">Lesser Heal</div>
+                <div class="spell-stats">TN 3 · 1 AP · 30ft · Instant</div>
+                <div class="spell-desc">Restorative prayer. Target regains Dis.d10 + healing bonus wounds. Healing bonus = Charisma mod.</div>
+            </div>
+            <div class="spell-card">
+                <div class="spell-name">Fearless</div>
+                <div class="spell-stats">TN 4 · 1 AP · 60ft · 2 turns</div>
+                <div class="spell-desc">Target becomes immune to Fear and Terror for duration. Cannot be used on an already-Feared target.</div>
+            </div>
+            <div class="spell-card">
+                <div class="spell-name">Shield Ally</div>
+                <div class="spell-stats">TN 5 · 1 AP · 50ft · 2 turns</div>
+                <div class="spell-desc">If the shielded target suffers wounds, Mira takes half those wounds instead. Ends if Mira falls.</div>
+            </div>
+            <div class="spell-card">
+                <div class="spell-name">Turn Undead</div>
+                <div class="spell-stats">TN 5 · 1 AP · Self · 15ft AoE</div>
+                <div class="spell-desc">Roll Devotion vs each Undead's Willpower TN. Those that fail are Shaken and flee for 1d3 turns.</div>
+            </div>
+        </div>
+
+        <div class="highlight">
+            <strong>Remember:</strong> An unmodified 1 on the casting roll is an Arcane Backlash — the blessing fails and Mira loses 1d10 wounds from the feedback. Fortune (if she has it) can prevent this. In this quickstart, she does not.
+        </div>
+    </div>
+</div>
+
+<!-- CHAPTER 6: SAMPLE ENCOUNTER -->
+<div class="chapter" id="encounter">
+    <div class="chapter-label">Chapter V</div>
+    <h2 class="chapter-title">The First Encounter</h2>
+    <div class="chapter-body">
+        <p>Use this encounter to learn the system. Three Aakzad Warriors have located Mira in the ruins of a village they emptied three days ago. They were not searching for her. They simply noted her presence as a variable.</p>
+
+        <div class="enemy-block">
+            <div class="enemy-header">
+                <div class="enemy-name">Aakzad Warrior</div>
+                <div class="enemy-type">Construct · Biomechanical · ×3</div>
+            </div>
+            <div class="enemy-body">
+                <div class="enemy-stat">
+                    <span class="enemy-stat-label">Wounds</span>
+                    <span class="enemy-stat-val">18</span>
+                </div>
+                <div class="enemy-stat">
+                    <span class="enemy-stat-label">Defence</span>
+                    <span class="enemy-stat-val">11</span>
+                </div>
+                <div class="enemy-stat">
+                    <span class="enemy-stat-label">WM</span>
+                    <span class="enemy-stat-val">2</span>
+                </div>
+                <div class="enemy-stat">
+                    <span class="enemy-stat-label">AP</span>
+                    <span class="enemy-stat-val">2</span>
+                </div>
+            </div>
+            <div class="enemy-notes">
+                <strong>Attack:</strong> Bone-blade strike — 1d10 + 3 to hit, deals 1d10 + 2 wounds.<br>
+                <strong>Frequency Pulse (1/turn):</strong> Free action. Any other Warrior within 30ft gains +1 to their next To-Hit roll — they are communicating.<br>
+                <strong>Immunity:</strong> Fear, Charm, Poison. They do not feel these things.<br>
+                <strong>Weakness:</strong> Take +2 wounds from Devotion blessings and Shaman spirit attacks.
+            </div>
+        </div>
+
+        <div class="gold-box">
+            <div class="gold-box-title">Running the Encounter — GM Notes</div>
+            <div class="gold-box-body">
+                <strong>Round 1:</strong> The Warriors advance in formation. They do not rush. One moves into melee range (costs 1 AP), the second prepares to strike (holds 1 AP as reaction), the third uses Frequency Pulse to link them. Mira gets the first action — she bought initiative with her Quickness investment.<br><br>
+                <strong>Escalation:</strong> If Mira uses Turn Undead, remind the player it affects Undead — Aakzad Warriors are Constructs, not Undead. This matters. It is not a mistake in the rules. It is information about what she is facing.<br><br>
+                <strong>Victory Condition:</strong> Reduce all three to 0 wounds, or escape the engagement. Escape costs 2 AP and triggers a free attack from any Warrior in melee range.
+            </div>
+        </div>
+
+        <div class="rule-box">
+            <div class="rule-box-title">Step-by-Step: Mira's First Turn</div>
+            <div class="rule-box-body">
+                1. <strong>Declare actions</strong> — Mira has 2 AP. She declares: Attack (1 AP) + Cast Lesser Heal on herself if she took damage in the surprise round (1 AP).<br><br>
+                2. <strong>To-Hit roll</strong> — 1d10 + 4 (Combat) + 0 (Agility mod) = result. Enemy Defence is 11. If she rolls 7+, she hits.<br><br>
+                3. <strong>Wound roll</strong> — Longsword: 1d10 + Strength Conditioning bonus (+1) = wounds dealt. Enemy WM of 2 reduces this. Remainder applied to their 18 wounds. (Physique modifier is 0 at score 5 — the +1 comes from Strength Conditioning, not the characteristic.)<br><br>
+                4. <strong>Natural 10?</strong> The strike is decisive — roll an extra 1d10 for bonus wounds. No bonuses apply to this roll.<br><br>
+                5. <strong>Enemy response</strong> — one Warrior attacks back: 1d10 + 3 vs Mira's Defence 12. If they hit, roll 1d10 + 2 wounds. Mira's WM 3 reduces this.
+            </div>
+        </div>
+
+        <div class="highlight">
+            <strong>The Threshold of Collapse:</strong> If Mira acquires three different conditions simultaneously (Bleeding + Shaken + Stunned, for example), she is Overwhelmed — she cannot take any Reaction Actions until one condition is cleared. The Warriors know this. They apply conditions deliberately.
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="qs-footer">
+    <div class="qs-footer-title">The Full Game Awaits</div>
+    <div class="qs-footer-body">Thirty-seven primary skills. Six magic disciplines with 299 spells, blessings, and runes. Advanced Masteries. A complete Bestiary. A world with open wounds that have never healed.</div>
+    
+    <a href="pitch.html" class="btn btn-gold">Back to the Pitch</a>
+    <a href="preview.html" class="btn btn-gold">Back to Preview</a>
+    <div style="margin-top:32px; font-family:'Cinzel',serif; font-size:7.5pt; letter-spacing:3px; color:rgba(184,134,11,0.2); text-transform:uppercase;">
+        Thrice-Marked &nbsp;·&nbsp; You start clean. You don't stay that way.
+    </div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
+    });
+});
+</script>
+</body>
+</html>
