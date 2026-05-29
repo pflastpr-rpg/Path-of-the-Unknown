@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood and Purpose - Build Guide & Mechanics Reference</title>
+    <title>Thrice-Marked - Build Guide & Mechanics Reference</title>
     <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -107,7 +107,7 @@
 
     <h1 class="page-title">Build Guide & Mechanics Reference</h1>
     <p class="page-subtitle">"Know the numbers. Master the battlefield."</p>
-    <p class="page-intro">Every formula in Blood and Purpose, derived directly from the Ledger calculations and Core Rules. Each term is fully broken down — so you know exactly what feeds each number and how to push it higher.</p>
+    <p class="page-intro">Every formula in Thrice-Marked, derived directly from the Ledger calculations and Core Rules. Each term is fully broken down — so you know exactly what feeds each number and how to push it higher.</p>
 
     <div class="toc">
         <h3>Contents</h3>
@@ -235,13 +235,13 @@
         <p>Every 3 pts invested in skills belonging to a characteristic's group raises that characteristic by 1. Armor modifiers then apply on top for Agility and Awareness.</p>
     </div>
     <table class="comp-table">
-        <tr><th>Characteristic</th><th>Skills that feed it</th><th>Armor modifier</th></tr>
-        <tr><td>Agility</td><td>Athletics, Tumble, Evasion, Quickness, Stealth, Thieving</td><td>–Armor Agility penalty (Leather –1, Chain –2, Plate –3)</td></tr>
-        <tr><td>Awareness</td><td>Acute Senses, Druidism, Focus, Precise Strike, Riposte, Stamina</td><td>–Armor Awareness penalty (Splint –1, Field Plate –2, Full Plate –3)</td></tr>
-        <tr><td>Charisma</td><td>Authority, Charm, Faith, Inspire, Light-Soul, Mending</td><td>None</td></tr>
-        <tr><td>Intellect</td><td>Evaluate, Knowledge, Perception, Read/Write, Tracker, Wizardry</td><td>None</td></tr>
-        <tr><td>Physique</td><td>Fortitude, Hard as Nails, Ki, Rugged, Shieldsman, Strength Conditioning</td><td>None</td></tr>
-        <tr><td>Willpower</td><td>Discipline, Iron Will, Resolve, Shaman, Spirit, Survival</td><td>None</td></tr>
+        <tr><th>Characteristic</th><th>Core + Swap Pool</th><th>Armor modifier</th></tr>
+        <tr><td>Agility</td><td><strong>Athletics, Evasion, Quickness</strong> <span style="opacity:0.7">+ swap: Stealth, Thieving, Tumble, Acrobatics, Disguise, Escapology, Sleight of Hand</span></td><td>–Armor Agility penalty (Leather –1, Chain –2, Plate –3)</td></tr>
+        <tr><td>Awareness</td><td><strong>Acute Senses, Focus, Precise Strike</strong> <span style="opacity:0.7">+ swap: Druidism, Riposte, Stamina, Danger Sense, Lip Reading, Swift Read</span></td><td>–Armor Awareness penalty (Splint –1, Field Plate –2, Full Plate –3)</td></tr>
+        <tr><td>Charisma</td><td><strong>Authority, Charm, Inspire</strong> <span style="opacity:0.7">+ swap: Mending, Devotion, Light-Soul, Deception, Intimidation, Performance, Seduction</span></td><td>None</td></tr>
+        <tr><td>Intellect</td><td><strong>Evaluation, Knowledge, Read/Write</strong> <span style="opacity:0.7">+ swap: Tracker, Perception, Wizardry, Alchemy, Engineering, Medicine, Navigation</span></td><td>None</td></tr>
+        <tr><td>Physique</td><td><strong>Fortitude, Hard as Nails, Rugged</strong> <span style="opacity:0.7">+ swap: Shieldsman, Ki, Strength Conditioning, Brawling, Climbing, Endurance, Swimming</span></td><td>None</td></tr>
+        <tr><td>Willpower</td><td><strong>Iron Will, Resolve, Spirit</strong> <span style="opacity:0.7">+ swap: Discipline, Shaman, Śabda, Survival, Meditation, Oathkeeper, Pain Tolerance, Willpower Reserve</span></td><td>None</td></tr>
     </table>
     <div class="example-box"><strong>Example:</strong> 6 pts Athletics + 3 pts Stealth + 3 pts Evasion = 12 total Agility-group pts. floor(12÷3) = +4 Agility. Wearing Studded Leather (–1 Agility) gives net Agility of <strong>3</strong>.</div>
 
@@ -311,7 +311,7 @@
     <div class="formula-block">MAGICAL WM = Willpower + floor(Spirit ÷ 3) + floor(Survival ÷ 2) + floor(Resolve ÷ 2) + Adv.Voc bonuses + Bonus field</div>
     <table class="comp-table">
         <tr><th>Source</th><th>Rate</th><th>Notes</th></tr>
-        <tr><td>Willpower characteristic</td><td>floor(Willpower skill group ÷ 3)</td><td>Grows from Iron Will, Resolve, Shaman, Spirit, Survival, Enraged</td></tr>
+        <tr><td>Willpower characteristic</td><td>floor(Willpower skill group ÷ 3)</td><td>Grows from Iron Will, Resolve, Shaman, Spirit, Survival</td></tr>
         <tr><td>Spirit</td><td>+1 magic WM per 3 pts</td><td>Also +1 healing received per pt invested</td></tr>
         <tr><td>Survival</td><td>+1 magic WM per 2 pts</td><td>Also +1 max wound per pt + env. resistance</td></tr>
         <tr><td>Resolve</td><td>+1 magic WM per 2 pts</td><td>Also +1 max wound per pt + Fear resistance primary</td></tr>
@@ -495,7 +495,7 @@
     <table class="comp-table">
         <tr><th>Magic School</th><th>Core Cast Stat</th><th>Skill Accuracy Bonus</th><th>Armor Penalty</th></tr>
         <tr><td>Wizardry</td><td>floor(Intellect ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN (Chain +2 → Full Plate +5)</td></tr>
-        <tr><td>Faith</td><td>floor(Charisma ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Half armor TN (rounded down)</td></tr>
+        <tr><td>Devotion</td><td>floor(Charisma ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>0 if armor TN ≤3; −2 if armor TN ≥4</td></tr>
         <tr><td>Druidism</td><td>floor(Awareness ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN</td></tr>
         <tr><td>Shaman</td><td>floor(Willpower ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN</td></tr>
         <tr><td>Ki</td><td>floor(Physique ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>No armor penalty</td></tr>
@@ -519,7 +519,7 @@
     <table class="comp-table">
         <tr><th>School</th><th>Core Wound Stat</th><th>Skill Wound Bonus</th><th>Scaling</th></tr>
         <tr><td>Wizardry</td><td>Intellect characteristic</td><td>floor(Wizardry ÷ 3) × 3</td><td>+3 per 3 pts — strongest wound scaling</td></tr>
-        <tr><td>Faith</td><td>Charisma characteristic</td><td>floor(Faith ÷ 3) × 2</td><td>+2 per 3 pts — also strongest healer</td></tr>
+        <tr><td>Devotion</td><td>Charisma characteristic</td><td>floor(Devotion ÷ 3) × 2</td><td>+2 per 3 pts — also strongest healer</td></tr>
         <tr><td>Druidism</td><td>Intellect characteristic</td><td>floor(Druidism ÷ 3) × 1</td><td>+1 per 3 pts — compensated by AoE utility</td></tr>
         <tr><td>Shaman</td><td>Intellect characteristic</td><td>floor(Shaman ÷ 3) × 2</td><td>+2 per 3 pts — dual offensive/healing</td></tr>
         <tr><td>Ki</td><td>Physique characteristic</td><td>floor(Ki ÷ 3) × 1</td><td>+1 per 3 pts — melee-range physical magic</td></tr>
@@ -549,19 +549,19 @@
     <h2 class="section-title" id="healing">Healing Bonus</h2>
     <span class="tag tag-heal">Heal</span>
 
-    <h3 class="subsection-title">Magic Healing — Faith, Druidism, Shaman</h3>
+    <h3 class="subsection-title">Magic Healing — Devotion, Druidism, Shaman</h3>
     <div class="formula-block">CAST HEALING = Core Heal Stat + Magic Heal Bonus + Spirit pts (if Arcane Mastery) + Bonus field</div>
     <table class="comp-table">
         <tr><th>School</th><th>Core Heal Stat</th><th>Skill Heal Bonus</th></tr>
-        <tr><td>Faith</td><td>Charisma characteristic</td><td>floor(Faith ÷ 3) × 2</td></tr>
+        <tr><td>Devotion</td><td>Charisma characteristic</td><td>floor(Devotion ÷ 3) × 2</td></tr>
         <tr><td>Druidism</td><td>Awareness characteristic</td><td>floor(Druidism ÷ 3) × 2</td></tr>
         <tr><td>Shaman</td><td>Willpower characteristic</td><td>floor(Shaman ÷ 3) × 2</td></tr>
     </table>
     <div class="mech-card">
         <p><strong>Spirit skill:</strong> Each pt in Spirit adds +1 wound to healing received from any Blessing — this stacks on top of the healer's output bonus and comes from the recipient's sheet, not the healer's.</p>
         <p><strong>Cleric Advanced Vocation:</strong> Adds +1 wound healed whenever you receive any Blessing.</p>
-        <p><strong>Divinity Advanced Vocation:</strong> Heals Normal + Faith pts (TN≤7 blessings). Crit: Normal + (Faith×2) + removes 1 Bleeding.</p>
-        <p><strong>Sanctity spec (Divinity):</strong> Normal + (Faith×2) + 1d10, removes Bleeding, allies gain +1 Fear resistance 2 turns.</p>
+        <p><strong>Divinity Advanced Vocation:</strong> Heals Normal + Devotion pts (TN≤7 blessings). Crit: Normal + (Devotion×2) + removes 1 Bleeding.</p>
+        <p><strong>Sanctity spec (Divinity):</strong> Normal + (Devotion×2) + 1d10, removes Bleeding, allies gain +1 Fear resistance 2 turns.</p>
     </div>
 
     <h3 class="subsection-title">Non-Magic Healing — Mending Skill</h3>
@@ -662,13 +662,13 @@ Wounds (Bow): Awareness + (Agility × AP) + Physique + passives (+2 Marksman +1 
 Wounds: Intellect + (Wizardry÷3)×3 + Spirit pts (at Wizardry 15+)</div>
     </div>
 
-    <h3 class="subsection-title">🙏 Battle Priest — Faith Healer</h3>
+    <h3 class="subsection-title">🙏 Battle Priest — Devotion Healer</h3>
     <div class="build-card">
         <p><strong>Core stats:</strong> Charisma → Willpower → Spirit</p>
-        <p><strong>Key skills:</strong> Faith (to 15+), Light-Soul, Spirit, Resolve, Mending</p>
+        <p><strong>Key skills:</strong> Devotion (to 15+), Light-Soul, Spirit, Resolve, Mending</p>
         <p><strong>Advanced Vocations:</strong> Divinity, Cleric, Metaphysical, Rebirth</p>
-        <div class="formula-block inline-blood">To-Cast: floor(Charisma÷5) + floor((Faith–6)÷3, if ≥9) – half Armor TN
-Healing: Charisma + (Faith÷3)×2 + Spirit pts (at Faith 15+)
+        <div class="formula-block inline-blood">To-Cast: floor(Charisma÷5) + floor((Devotion–6)÷3, if ≥9) – Armor Penalty (0 if TN≤3, −2 if TN≥4)
+Healing: Charisma + (Devotion÷3)×2 + Spirit pts (at Devotion 15+)
 Magic WM: Willpower + Spirit÷3 + Resolve÷2 + Cleric +1 + Unwavering +3</div>
     </div>
 
