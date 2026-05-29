@@ -2247,7 +2247,7 @@ function updateTacticalConditions() {
 
     tactIds.forEach(id => {
         const el = g(id);
-        if (el && (parseInt(el.value) || 0) > 0) activeCondCount++;
+        if (el) activeCondCount += (parseInt(el.value) || 0);
     });
 
     const overwhelmed = activeCondCount >= 3;
