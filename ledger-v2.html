@@ -3278,7 +3278,11 @@ function handleActionChange(select, type) {
 }
 
 function buildWeaponRow(targetId) {
-    const rowIdx = document.getElementById(targetId)?.children.length || 0;
+    // Count only actual weapon rows, not the .t-h header div, so indices start
+    // at 0 (mr-0, mr-1, mr-2). Using raw children.length counted the header as
+    // child[0] and pushed the first row to index 1, leaving the 0-indexed save
+    // format and the Layer 3 migration with no matching DOM inputs to write to.
+    const rowIdx = document.getElementById(targetId)?.querySelectorAll('.weapon-entry').length || 0;
     const pfx = targetId + '-' + rowIdx + '-';  // e.g. "mr-0-", "rr-1-"
     const ALL_MELEE = ["-","Axe","Battleaxe","Club","Dagger","Flail","Glaive","Greataxe","Greatsword","Halberd","Lance","Longsword","Mace","Maul","Morningstar","Rapier","Shortsword","Spear","Staff","Unarmed","Warhammer","Whip"];
     const MELEE_1H_ONLY = ["-","Axe","Club","Dagger","Flail","Longsword","Mace","Morningstar","Rapier","Shortsword","Spear","Unarmed","Warhammer","Whip"];
@@ -3702,8 +3706,14 @@ function saveData() {
 }
 
 function applyLegacySkillKeys(data) {
-    // ── Layer 1: Old .rpg positional skill pts (f_84 offset) ──────────
-    const legacyMap = {
+    // ── Two positional formats once shared one merged map, which caused 13 key
+    //    collisions (e.g. f_121 meant pts-evaluate in old .rpg files but
+    //    melee-spec-flexible-chain in JSON files). They are now split into two
+    //    maps and only the map matching the detected format is applied, so the
+    //    two schemes can never overwrite each other.
+
+    // Old .rpg layout: skill pts live at odd offsets f_85..f_155.
+    const legacyRpgMap = {
         "f_85": "pts-athletics",
         "f_87": "pts-riposte",
         "f_89": "pts-evasion",
@@ -3766,8 +3776,12 @@ function applyLegacySkillKeys(data) {
         "f_193": "rr-1-type", "f_194": "rr-1-act",
         "f_195": "rr-1-wb",   "f_196": "rr-1-wdb",
         "f_197": "rr-1-range","f_198": "rr-1-aoe", "f_199": "rr-1-note",
-        "f_200": "rr-2-type", "f_201": "rr-2-act",
-        // ── Layer 2: JSON (f_120 offset) — melee spec ─────────────────
+        "f_200": "rr-2-type", "f_201": "rr-2-act"
+    };
+
+    // Newer JSON layout: melee spec begins at f_120 (even offset).
+    const legacyJsonMap = {
+        // Melee spec — JSON (f_120 offset)
         "f_120": "melee-spec-axes---cleavers",
         "f_121": "melee-spec-flexible-chain",
         "f_122": "melee-spec-hammers---maces",
@@ -3787,12 +3801,24 @@ function applyLegacySkillKeys(data) {
         "f_183": "ammo-2-name", "f_184": "ammo-2-qty",
         "f_185": "ammo-3-name", "f_186": "ammo-3-qty"
     };
-    Object.entries(legacyMap).forEach(([oldKey, newId]) => {
-        if (data[oldKey] !== undefined) {
-            if (data[newId] === undefined) data[newId] = data[oldKey];
-            delete data[oldKey];
-        }
-    });
+
+    // Detect format via a signature key unique to each scheme:
+    //   f_85  (pts-athletics)        only ever exists in old .rpg files
+    //   f_120 (melee-spec-axes…)     only ever exists in JSON files
+    // If neither signature is present the file uses named keys already and
+    // neither map is needed.
+    const isRpg  = (data['f_85']  !== undefined) || (data['f_127'] !== undefined);
+    const isJson = !isRpg && (data['f_120'] !== undefined);
+    const activeMap = isRpg ? legacyRpgMap : (isJson ? legacyJsonMap : null);
+
+    if (activeMap) {
+        Object.entries(activeMap).forEach(([oldKey, newId]) => {
+            if (data[oldKey] !== undefined) {
+                if (data[newId] === undefined) data[newId] = data[oldKey];
+                delete data[oldKey];
+            }
+        });
+    }
     // Also delete skill COST keys (f_84,86,88...) — sk-b excluded from allInputs
     for (let i = 84; i <= 155; i += 2) delete data['f_' + i];
 
