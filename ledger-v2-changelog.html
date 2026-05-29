@@ -141,6 +141,53 @@
         margin: 12px 0;
         font-size: 11pt;
     }
+    .skill-group {
+        font-family: var(--font-heading);
+        font-size: 14pt;
+        color: var(--gold);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 26px 0 10px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid rgba(184,134,11,0.4);
+    }
+    .skill-full {
+        margin: 12px 0;
+        padding: 12px 16px;
+        border: 1px solid rgba(2,7,14,0.18);
+        border-left: 3px solid var(--gold);
+        background: rgba(2,7,14,0.02);
+    }
+    .skill-full .sk-head { margin-bottom: 4px; }
+    .skill-full .sk-name {
+        font-weight: 700;
+        color: var(--iron);
+        font-family: var(--font-heading);
+        font-size: 14pt;
+    }
+    .skill-full .sk-gov {
+        font-size: 9pt;
+        color: var(--blood);
+        font-style: italic;
+        margin-left: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .skill-full .sk-meta {
+        font-size: 9.5pt;
+        color: #5a4a2a;
+        background: rgba(184,134,11,0.08);
+        padding: 4px 8px;
+        margin: 4px 0 8px;
+        border-radius: 2px;
+    }
+    .skill-full .sk-desc { margin: 6px 0 8px; font-size: 10.5pt; }
+    .skill-full .sk-tiers {
+        margin: 6px 0 0 18px;
+        font-size: 10pt;
+        line-height: 1.5;
+    }
+    .skill-full .sk-tiers li { margin: 4px 0; }
     ul { margin: 8px 0 8px 22px; }
     li { margin: 6px 0; }
 
@@ -200,6 +247,374 @@
     <p><strong>New skills now reachable in the pools:</strong></p>
     <div class="pool-list">
         Acrobatics · Disguise · Escapology · Sleight of Hand · Danger Sense · Lip Reading · Swift Read · Deception · Intimidation · Performance · Seduction · Alchemy · Engineering · Medicine · Navigation · Brawling · Climbing · Endurance · Swimming · Meditation · Oathkeeper · Pain Tolerance · Willpower Reserve — and the Lost Seventh Discipline, <strong>Śabda-Axiom</strong>, is now selectable in the Willpower pool.
+    </div>
+
+    <h2><span class="tick">✦</span> New Skills — Full Reference</h2>
+    <p style="font-style:italic; color:#6f5f3f;">Complete details for every newly-available pool skill: description, cost by race, Power of Three growth, and all point-tier benefits. Everything you need to build under v2 without opening the Core Rulebook.</p>
+
+    <div class="skill-group">Agility Pool</div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Acrobatics</span><span class="sk-gov">Agility</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Halfling (15) | Elf/Human (20) | Dwarf (25) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Agility per 3 pts</div>
+        <p class="sk-desc">The body as instrument — trained to move through space with precision that looks effortless and is anything but. Acrobatics covers the gap between what the battlefield gives you and where you need to be: vaulting obstacles, running across surfaces that shouldn't hold weight, threading gaps that shouldn't fit a person. Roll 1d10 + Acrobatics Points + Agility modifier against the GM's DV for all tests involving dynamic movement, balance, and precision athletics. Every 3 points increases your Agility characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Fluid Movement:</strong> You suffer no movement penalty for difficult terrain that can be vaulted, climbed over, or navigated dynamically. You treat unstable surfaces (ship decks, icy slopes, rooftops) as firm ground for the purposes of movement and attack.</li>
+            <li><strong>At 3 points — Wall Run:</strong> Once per turn, you may run along a vertical surface for up to 15 Ft as part of your movement — crossing a wall face or scrambling over a sheer obstacle through momentum alone. This is lateral or upward travel across the surface, not inverted movement; you cannot run along ceilings. You must end your movement on a surface that supports weight, or you fall.</li>
+            <li><strong>At 6 points — Aerial Strike:</strong> When you attack an enemy after vaulting or dropping from height, add +1 To-Hit and +1d10 wounds to the attack — the momentum translates directly into killing force. Once per turn.</li>
+            <li><strong>At 9 points — Perfect Form:</strong> Falling damage is reduced by half (you land rolling, never quite right but never broken). Additionally, once per encounter you may use Acrobatics to move through an occupied space — passing through enemy lines or over a target — as a 2 AP action without triggering opportunity attacks, provided you succeed on an Acrobatics test against the highest enemy Awareness in the path.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Disguise</span><span class="sk-gov">Agility</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Human/Halfling (15) | Elf (20) | Dwarf (25) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Agility per 3 pts</div>
+        <p class="sk-desc">Identity is a costume worn over a skeleton, and you have learned to change costumes faster than most people change their minds. Disguise is not merely prosthetics and dye — it is posture, gait, voice, and the specific quality of confidence that makes an assumed identity feel inevitable rather than performed. Roll 1d10 + Disguise Points + Agility modifier against the target's Awareness when maintaining a disguise under scrutiny. Every 3 points increases your Agility characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Second Skin:</strong> Maintaining a passive disguise (moving through a crowd, conducting routine business) requires no roll — only active scrutiny or prolonged close interaction triggers a test. You know how to make your disguise survive the glance.</li>
+            <li><strong>At 3 points — Voice Work:</strong> Your disguise now extends convincingly to voice, accent, and mannerism. Impersonating a specific known individual requires a Disguise test against observers' Awareness + 1; impersonating a type (a guard, a merchant, a clerk) is a standard test. Written documents, signatures, and official seals can be forged with a Disguise test against a DV the GM sets by the forgery's complexity and the scrutiny it will face.</li>
+            <li><strong>At 6 points — Field Kit:</strong> You can construct a functional disguise from available materials in 10 minutes with a DV 8 Disguise test rather than requiring specialist supplies. A natural environment with clothing and basic tools is sufficient. The disguise is good enough to withstand casual inspection and a single roll of scrutiny.</li>
+            <li><strong>At 9 points — Perfect Mirror:</strong> Once per session, after observing a target for at least 10 minutes, you may assume their identity so precisely that people who know them well require an Awareness test against DV 12 to detect the deception. You replicate their speech patterns, movement habits, and social rhythms. The disguise holds until the target themselves appears in the same space.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Escapology</span><span class="sk-gov">Agility</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Halfling (10) | Elf/Human (20) | Dwarf (25) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Agility per 3 pts</div>
+        <p class="sk-desc">The study of restraint — not how to apply it, but how to refuse it. Manacles, rope, grapples, nets, magical binding, and the grip of something three times your size: none of these are permanent if you know where the give is. Escapology is half anatomy, half engineering, and half the cold certainty that you will find the weakness before your captor realises you're looking. Roll 1d10 + Escapology Points + Agility modifier for all escape, slip, and counter-grapple attempts. Every 3 points increases your Agility characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Read the Bind:</strong> When restrained by any means, you immediately gain a mental assessment of the restraint's weakest point. The GM must tell you the type of restraint and its approximate difficulty to escape — you cannot be kept ignorant of what holds you.</li>
+            <li><strong>At 3 points — Slip:</strong> Once per encounter, when successfully Grappled, spend 1 AP as a reaction to immediately attempt an escape roll against the grappler's Physique + 1. On success, you are free and may move up to 5 Ft. On failure, the grapple continues normally.</li>
+            <li><strong>At 6 points — Patience:</strong> Given time and no active supervision, you can attempt to escape any non-magical restraint — chains, manacles, rope, locked rooms — over the course of minutes to an hour depending on complexity, with an Escapology test at +3 against a DV the GM sets by complexity. You may retry as time allows. With supervision, you escape as soon as the supervisor's attention lapses.</li>
+            <li><strong>At 9 points — Counter-Lock:</strong> Once per encounter when an enemy attempts to Grapple you, you may counter-grapple as a reaction — turning their attempt into your grapple at no AP cost. Make an opposed Physique test; on success, they are now Grappled by you. On failure, they complete their grapple normally.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Sleight of Hand</span><span class="sk-gov">Agility</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Halfling (15) | Elf/Human (20) | Dwarf (25) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Agility per 3 pts</div>
+        <p class="sk-desc">The hand is faster than the eye, and the eye sees what it expects to see. Sleight of Hand is the discipline of misdirection — making the audience look at the wrong thing while the interesting event happens somewhere they aren't watching. In combat, it translates to concealed weapons, palmed items, and the ability to introduce objects into spaces that should be impossible to reach undetected. Roll 1d10 + Sleight of Hand Points + Agility modifier against the target's Awareness for all concealment, palming, and misdirection tests. Every 3 points increases your Agility characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Always Prepared:</strong> You may conceal up to 3 items smaller than dagger-size on your person that cannot be found by a standard search — only a thorough strip-search with at least 1 minute of inspection discovers them. A single concealed weapon of up to shortsword size can be drawn as a free action once per combat.</li>
+            <li><strong>At 3 points — The Pass:</strong> Transfer an item to or from another person within arm's reach as a free action without detection. Both parties must be willing for a transfer; a forced extraction from an unwilling target (picking a pocket in combat) requires a roll against their Awareness.</li>
+            <li><strong>At 6 points — Poisoner's Touch:</strong> During melee combat, you may apply a contact poison, a picked pocket, or swap an object within an enemy's reach as a 1 AP action alongside an attack. The target must succeed on an Awareness test against DV 8 + your Agility modifier to notice.</li>
+            <li><strong>At 9 points — Now You See It:</strong> Once per encounter, you may cause a weapon, potion, or small object being held or worn by an enemy to simply vanish from their possession — transferred to your own — during a moment of contact. The target does not notice until they reach for the item. No test required if the target is currently engaged in combat with another creature; a test is required if you are their primary focus.</li>
+        </ul>
+    </div>
+    <div class="skill-group">Awareness Pool</div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Danger Sense</span><span class="sk-gov">Awareness</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Elf/Halfling (25) | Human/Dwarf (30) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Awareness per 3 pts</div>
+        <p class="sk-desc">Something moves wrong in the corner of your vision. The silence is the wrong quality. The air smells like iron half a second before anyone has bled. Danger Sense is not prophecy — it is the body's accumulated experience compressed into a signal faster than conscious processing, and the discipline of trusting it. Every 3 points increases your Awareness characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Threat Radar:</strong> You are never caught flat-footed. Even when surprised, you act in the surprise round at half initiative rather than being locked out entirely. Your instincts register the threat before your mind does.</li>
+            <li><strong>At 3 points — Ambush Instinct:</strong> Your instincts sound a silent alarm near prepared ambushes within 50 Ft — the GM must tell you that something is wrong, but never what, where, or how many. This is a gut-warning, not a sighting; reading the trap's specifics is the work of Acute Senses. It triggers before you enter the kill zone. In addition, you are never the target of an automatic flanking bonus — your Danger Sense registers the flanker's movement before it completes.</li>
+            <li><strong>At 6 points — Sixth Sense:</strong> Once per encounter, when an attack would reduce you to 0 wounds, you may spend 1 AP as a reaction to interpose — throwing yourself aside and reducing the damage by Danger Sense pts × 2. This triggers on instinct: you do not need to declare it in advance.</li>
+            <li><strong>At 9 points — Precognitive Edge:</strong> Your initiative is permanently increased by +Danger Sense pts. Additionally, once per session, you may declare that your Danger Sense has screamed loudly enough to stop you doing something catastrophic — walking into a lethal trap, opening a cursed container, drinking a poisoned drink. The GM must confirm the threat was real. You learn nothing beyond the fact that stopping was correct.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Lip Reading</span><span class="sk-gov">Awareness</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Human/Halfling (15) | Elf (20) | Dwarf (25) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Awareness per 3 pts &nbsp;·&nbsp; <strong>Req:</strong> Read/Write (1)</div>
+        <p class="sk-desc">Mouths are a second ledger kept by the inattentive. What people say aloud is the version they've decided to share — what their lips form when they think no one is watching is closer to the truth. Lip Reading extends your intelligence range across a room without requiring proximity, letting you attend two conversations simultaneously: the one happening in front of you and the one happening thirty feet away. Roll 1d10 + Lip Reading Points + Awareness modifier against DV for unclear or fast speech. Every 3 points increases your Awareness characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Silent Read:</strong> You can read the lips of any speaker you can clearly see within 50 Ft who is speaking a language you know. In standard lighting and calm conditions this requires no roll. Poor light, a beard, or a speaker turned partially away increases DV by 2–4.</li>
+            <li><strong>At 3 points — Cross-Language:</strong> You may attempt to lip-read speakers of languages you do not know fluently — extracting individual words, names, or numbers on a DV 10 test. On a natural 10 you reconstruct the grammatical structure of the sentence. Over time and repeated exposure, this can serve as functional language acquisition for spoken languages.</li>
+            <li><strong>At 6 points — Double Audience:</strong> You may conduct a conversation normally while simultaneously lip-reading a different conversation across the room with no penalty to either — your attention splits cleanly. This is the skill at full function: you become the room's second pair of ears without being audible in either channel.</li>
+            <li><strong>At 9 points — The Unguarded Moment:</strong> Once per session, when you observe a target at an unguarded moment — speaking to themselves, reacting silently, mouthing words in thought — the GM must give you one truthful piece of information the target has not consciously chosen to reveal. What a person says when they think no one is watching is the most honest thing about them.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Swift Read</span><span class="sk-gov">Awareness</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Elf/Halfling (15) | Human/Dwarf (20) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Awareness per 3 pts &nbsp;·&nbsp; <strong>Req:</strong> Read/Write (3)</div>
+        <p class="sk-desc">The ability to extract information faster than it can be hidden. A document left on a desk, a letter being sealed, a ledger opened during a tense negotiation: Swift Read is the skill of consuming text at a rate that turns a glance into a complete briefing. In a world where information is power and most powerful people do not expect to be read in real time, this is a weapon that never runs out of ammunition. Every 3 points increases your Awareness characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Speed of Comprehension:</strong> You read at Swift Read pts × 3 times normal speed with full retention and comprehension. At 1 point, a ten-page document takes two minutes. At 9 points, you can absorb a full legal document while it is being passed across a table.</li>
+            <li><strong>At 3 points — Photographic Glimpse:</strong> On a successful Awareness test against DV 9, you may retain the full, word-for-word content of any written text you have seen — even briefly. This functions as perfect recall: the text is stored in memory as if you had it in front of you, and can be recalled and transcribed accurately later.</li>
+            <li><strong>At 6 points — Structural Analysis:</strong> When reading any document, you automatically identify redactions, forgeries, substituted pages, added marginalia, or alterations — anything that was not part of the original composition reads to you as a discordant note. You cannot be fooled by sophisticated document manipulation without an opposed test against your Swift Read + Awareness.</li>
+            <li><strong>At 9 points — Living Archive:</strong> Your reading retention is now absolute and permanent. Any text you have ever fully read can be recalled and reproduced verbatim, in full, at any time — every book, every contract, every intercepted letter. Additionally, once per session you may cross-reference your stored information to produce a connection between two texts you have read that yields a piece of intelligence the GM confirms as accurate.</li>
+        </ul>
+    </div>
+    <div class="skill-group">Charisma Pool</div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Deception</span><span class="sk-gov">Charisma</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Human/Halfling (20) | Elf (25) | Dwarf (30) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Charisma per 3 pts</div>
+        <p class="sk-desc">The lie that lands is the one that contains more truth than the target can immediately verify. Deception is not the art of fabrication — fabrications unravel under pressure. It is the art of constructing narratives that feel real because they are adjacent to something real, told by someone who believes them in the moment. Roll 1d10 + Deception Points + Charisma modifier against the target's Awareness for all deceptive social interactions. Every 3 points increases your Charisma characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Baseline:</strong> You never reveal tells under passive social observation — nervous habits, micro-expressions, vocal stress, tells that betray lying. A target can only detect your deception through active scrutiny and an opposed Awareness test.</li>
+            <li><strong>At 3 points — The Confident Lie:</strong> Once per encounter, you may state a falsehood as an absolute fact with such conviction that the target must succeed on a Resolve test against DV 7 + your Charisma modifier or act on it as if it were true for 1 turn. This functions even in combat — a false call of "Cease fire!" or "They're retreating!" can redirect enemies for a turn.</li>
+            <li><strong>At 6 points — Plausible Deniability:</strong> Retroactively, once per session, you may decide that something you said earlier in the session was deliberately misleading rather than simply wrong — reframing a statement you made in good faith as intentional misdirection. The GM must allow the retroactive interpretation if it is narratively plausible.</li>
+            <li><strong>At 9 points — Deep Cover:</strong> You may construct a false identity so thoroughly that even magic designed to detect lies finds nothing — the deception has been internalised to the point where it is not a lie to you in the moment of speaking. This does not protect against abilities that read thoughts rather than words, but defeats all aura-based and verbal truth-detection effects while the identity is active.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Intimidation</span><span class="sk-gov">Charisma</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Dwarf (15) | Human/Halfling (20) | Elf (25) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Charisma per 3 pts</div>
+        <p class="sk-desc">Fear is the oldest currency and you have learned to spend it efficiently. Intimidation is not rage, not size, and not the volume of your voice — it is the specific quality of presence that makes a target run an internal calculation and conclude the math does not favour them. The most effective practitioners barely raise their voice. Roll 1d10 + Intimidation Points + Charisma modifier against the target's Willpower for all intimidation attempts. Every 3 points increases your Charisma characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Weight of Reputation:</strong> Any target who has witnessed you successfully Intimidate someone this session suffers −2 Willpower on their own resist test against your Intimidation — the demonstration is its own argument. This stacks once.</li>
+            <li><strong>At 3 points — Stand Down:</strong> As a 1 AP action in combat, you may direct a single Intimidation attempt against one enemy within 30 Ft: roll 1d10 + Intimidation points + Charisma modifier against the target's Resolve. On success, they must spend their next action on a withdrawal action rather than attacking — they cannot be compelled to flee entirely, but they cannot advance toward you. This has no effect on mindless creatures or creatures immune to Fear.</li>
+            <li><strong>At 6 points — Break the Line:</strong> Once per encounter, direct your Intimidation at all enemies within 20 Ft simultaneously. Each must make a Willpower test against DV 8 + your Intimidation points or suffer the Ψ Shaken condition for 1 turn. A result of natural 1 on the resist roll causes Ψ Fear instead.</li>
+            <li><strong>At 9 points — The Last Offer:</strong> Once per session, you may make an Intimidation attempt against a single target that functions as a binding ultimatum — if they fail the resist, they comply completely with one demand you state, provided compliance does not mean their certain death. They know what will happen if they refuse. So do you. So does everyone watching.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Performance</span><span class="sk-gov">Charisma</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Human/Elf (20) | Halfling (25) | Dwarf (30) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Charisma per 3 pts</div>
+        <p class="sk-desc">The crowd is a single creature with a hundred eyes and Performance is the art of feeding it exactly what it wants before it knows what that is. Music, theatre, oratory, storytelling, religious ceremony, political address — the mechanism is the same in all of them: a calibrated emotional transfer from practitioner to audience that leaves the audience feeling what you intended rather than what they arrived with. Roll 1d10 + Performance Points + Charisma modifier against the GM's DV for all performance and oratory tests. Every 3 points increases your Charisma characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Command the Room:</strong> In any social situation involving more than five people, you automatically draw attention — you are the focal point of any space you inhabit when you choose to be. All Charisma-based tests made while performing or addressing a crowd gain Advantage.</li>
+            <li><strong>At 3 points — Cover:</strong> A performance in progress provides active concealment for other party members operating in the area — the audience's attention is locked onto you. Other party members gain Advantage on all Stealth and Thieving tests made while your performance is active. The moment the performance ends or you are interrupted, the cover evaporates.</li>
+            <li><strong>At 6 points — Crowd Reading:</strong> Over the course of a performance, you can assess the emotional state, hidden concerns, and likely behaviour of your audience with the precision of a political survey. After 10 minutes of performance, the GM provides you with one significant piece of accurate intelligence about the crowd — who the powerbroker is, what the room is afraid of, what they want to hear that would move them.</li>
+            <li><strong>At 9 points — The Rally:</strong> Once per session, you may deliver a performance of sufficient force to alter the morale state of all allies within earshot. All allies who hear you gain +2 To-Hit, +2 Wound Mitigation, and immunity to Fear effects for 3 turns. This requires 1 full turn of uninterrupted performance to activate and ends if you are Silenced, Stunned, or Unconscious.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Seduction</span><span class="sk-gov">Charisma</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Human/Elf (20) | Halfling (25) | Dwarf (35) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Charisma per 3 pts</div>
+        <p class="sk-desc">Desire is the oldest lever and Seduction is the art of finding it in people who believe they do not have one. This is not primarily a romantic skill — it is the skill of making a target want to give you what you need because giving it to you is the most appealing option available. A merchant seduced toward a bad deal. A guard seduced toward inattention. A commander seduced toward confidence. The application is negotiation, intelligence gathering, distraction, and access. Roll 1d10 + Seduction Points + Charisma modifier against the target's Willpower. Every 3 points increases your Charisma characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Read the Want:</strong> You automatically identify what a target most desires within the first minute of interaction — not a specific object, but the category: recognition, security, power, belonging, relief, escape. The GM tells you the type. You choose how to present yourself as the source of it.</li>
+            <li><strong>At 3 points — The Opening:</strong> A successful Seduction test creates a Receptive state in the target for the rest of the scene — they are favourably disposed, lower their guard, and answer questions without suspicion. This is not compulsion; they will still resist requests that conflict with their values, but the initial social barrier is gone.</li>
+            <li><strong>At 6 points — Exploit:</strong> Against a target already in the Receptive state, you may make one request that they would normally refuse — extract a secret, gain access to a restricted area, receive a significant material favour. They must make a Willpower test against DV 10 + your Charisma modifier to refuse. If they fail, they comply and do not realise the request was unusual until later, if at all.</li>
+            <li><strong>At 9 points — Loyal Tool:</strong> Once per session, after at least one hour of interaction with a non-hostile target, you may attempt a full Seduction against DV 14. On success, the target becomes a reliable social asset — providing information, access, or cover on request for the remainder of the session without requiring further tests. This creates a genuine temporary alignment of interest rather than mind control; the target believes the arrangement benefits them.</li>
+        </ul>
+    </div>
+    <div class="skill-group">Intellect Pool</div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Alchemy</span><span class="sk-gov">Intellect</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Dwarf/Human/Halfling (20) | Elf (25) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Intellect per 3 pts &nbsp;·&nbsp; <strong>Req:</strong> Read/Write (1), Evaluate (1)</div>
+        <p class="sk-desc">Chemistry applied to lethality, healing, and the grey space between them. Alchemy is not magic — it does not require a tradition or a mark or the Church's tolerance. It requires access to materials, a stable workspace, and the specific kind of patience that does not flinch when something explodes. Roll 1d10 + Alchemy Points + Intellect modifier against the formula's DV when crafting compounds. Every 3 points increases your Intellect characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Identification:</strong> You can identify any alchemical compound, poison, or reagent by inspection. You know whether a substance is magical in origin, its general class, and its approximate potency. This requires no test for compounds of DV 8 or below; higher complexity requires a roll.</li>
+            <li><strong>At 3 points — Field Synthesis:</strong> Given basic reagents (available in any market or most wilderness environments), you can craft Alchemist's Fire, basic Antitoxin, Acid Flask, or Healing Draughts (restoring Alchemy pts × 2 wounds) over 30 minutes. The crafted item functions identically to purchased versions. You can produce up to 3 items per long rest.</li>
+            <li><strong>At 6 points — Advanced Compounds:</strong> You can craft complex formulas: contact poisons (Physique TN 9 or Poisoned + one condition of your choice), sleep agents (inhaled, Willpower TN 8 or Unconscious for 1 hour), and alchemical grenades (2d10 fire or acid in a 10 Ft AoE on impact). Crafting advanced compounds takes 1 hour and requires specific reagents the GM determines are available in the region.</li>
+            <li><strong>At 9 points — Masterwork Formula:</strong> Once per long rest, you may craft a Masterwork compound — a single-use alchemical item of significant power. Examples: a Philosopher's Draught that restores all wounds and clears all conditions; a contact compound that renders a target unconscious on skin contact for 8 hours; a hardening agent that grants +3 Wound Mitigation to armour for one encounter. The GM determines appropriate DV for each Masterwork (typically DV 12–16).</li>
+        </ul>
+        <p style="margin-top:14px;"><strong>Crafting Table.</strong> A crafting attempt is a single Alchemy test against the listed DV, given appropriate reagents and an hour of work (combat items can be thrown as a 1 AP action once made). You may only craft items whose tier you have reached. On a failed test the reagents are wasted; on a natural 1 a volatile batch affects the crafter instead.</p>
+            <table style="width:100%; border-collapse:collapse; font-size:10pt; margin-top:8px;">
+            <thead>
+                <tr style="background:var(--iron); color:var(--parchment);">
+                    <th style="padding:6px 10px; text-align:left; width:150px;">Item</th>
+                    <th style="padding:6px 10px; text-align:center; width:50px;">Tier</th>
+                    <th style="padding:6px 10px; text-align:center; width:50px;">DV</th>
+                    <th style="padding:6px 10px; text-align:left;">Effect (game terms)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background:rgba(168,24,24,0.12);">
+                    <td colspan="4" style="padding:5px 10px; font-weight:bold; color:var(--blood); text-transform:uppercase; letter-spacing:0.5px;">Poisons (applied to a weapon or thrown; target resists with Physique vs the DV)</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Dull-Edge Draught</td>
+                    <td style="padding:5px 10px; text-align:center;">1</td>
+                    <td style="padding:5px 10px; text-align:center;">6</td>
+                    <td style="padding:5px 10px;">On a hit, target suffers <strong>Poison (1)</strong>: 2 wounds at the start of each of their turns for 2 turns unless they pass a Physique test vs DV 6.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Crawling Numbness</td>
+                    <td style="padding:5px 10px; text-align:center;">3</td>
+                    <td style="padding:5px 10px; text-align:center;">8</td>
+                    <td style="padding:5px 10px;">Target who fails a Physique test vs DV 8 is <strong>Slowed</strong> (half movement, −2 to AP-based actions) for 1d3 turns.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Black Lily Extract</td>
+                    <td style="padding:5px 10px; text-align:center;">6</td>
+                    <td style="padding:5px 10px; text-align:center;">10</td>
+                    <td style="padding:5px 10px;">Potent contact poison. Target failing Physique vs DV 10 takes <strong>Poison (3)</strong> — 3 wounds/turn for 3 turns — and cannot recover Wounds by any means while poisoned.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Widow's Silence</td>
+                    <td style="padding:5px 10px; text-align:center;">9</td>
+                    <td style="padding:5px 10px; text-align:center;">12</td>
+                    <td style="padding:5px 10px;">Masterwork. On a failed Physique test vs DV 12, target is <strong>Paralyzed</strong> for 1 turn, then suffers Poison (3) for 3 turns. A natural 1 on the resist is lethal at the GM's discretion. One dose per long rest.</td>
+                </tr>
+                <tr style="background:rgba(168,24,24,0.12);">
+                    <td colspan="4" style="padding:5px 10px; font-weight:bold; color:var(--blood); text-transform:uppercase; letter-spacing:0.5px;">Remedies & Healing (consumed as a 1 AP action)</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Field Poultice</td>
+                    <td style="padding:5px 10px; text-align:center;">1</td>
+                    <td style="padding:5px 10px; text-align:center;">6</td>
+                    <td style="padding:5px 10px;">Restores <strong>1d10 wounds</strong> and stops one active Bleed. Non-magical; usable once per wound site.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Antitoxin</td>
+                    <td style="padding:5px 10px; text-align:center;">3</td>
+                    <td style="padding:5px 10px; text-align:center;">8</td>
+                    <td style="padding:5px 10px;">Immediately ends one Poison or Disease condition and grants <strong>Advantage</strong> on the next resist against the same within the hour.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Greater Restorative</td>
+                    <td style="padding:5px 10px; text-align:center;">6</td>
+                    <td style="padding:5px 10px; text-align:center;">10</td>
+                    <td style="padding:5px 10px;">Restores <strong>2d10 wounds</strong> and clears one of: Stunned, Slowed, Shaken, or Blinded. Does not stack with magical healing in the same turn.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Phoenix Tincture</td>
+                    <td style="padding:5px 10px; text-align:center;">9</td>
+                    <td style="padding:5px 10px; text-align:center;">12</td>
+                    <td style="padding:5px 10px;">Masterwork. Stabilises a dying character at <strong>1 wound</strong> and restores 3d10 on the next turn, or pre-emptively grants the drinker <strong>+10 temporary Wounds</strong> for the encounter. One per long rest.</td>
+                </tr>
+                <tr style="background:rgba(168,24,24,0.12);">
+                    <td colspan="4" style="padding:5px 10px; font-weight:bold; color:var(--blood); text-transform:uppercase; letter-spacing:0.5px;">Utility (thrown as a 1 AP action; affects a 10 Ft area unless noted)</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Smoke Vial</td>
+                    <td style="padding:5px 10px; text-align:center;">1</td>
+                    <td style="padding:5px 10px; text-align:center;">6</td>
+                    <td style="padding:5px 10px;">Creates a 10 Ft cloud of obscuring smoke for 1d3 turns — all attacks through it are at <strong>Disadvantage</strong>; grants cover for escape.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Acid Flask</td>
+                    <td style="padding:5px 10px; text-align:center;">3</td>
+                    <td style="padding:5px 10px; text-align:center;">8</td>
+                    <td style="padding:5px 10px;">Direct hit deals <strong>2d10 wounds</strong> and reduces the target's armour mitigation by 2 for the encounter (eats through plate, leather, hide alike).</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Alchemist's Fire</td>
+                    <td style="padding:5px 10px; text-align:center;">6</td>
+                    <td style="padding:5px 10px; text-align:center;">10</td>
+                    <td style="padding:5px 10px;">Hits for <strong>3d10 wounds</strong> and sets the target alight: 1d10 wounds/turn until they spend an action to douse it. Ignites flammable terrain.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
+                    <td style="padding:5px 10px; font-weight:bold;">Sunburst Charge</td>
+                    <td style="padding:5px 10px; text-align:center;">9</td>
+                    <td style="padding:5px 10px; text-align:center;">12</td>
+                    <td style="padding:5px 10px;">Masterwork. A 15 Ft detonation: 4d10 wounds (Agility vs DV 12 for half) and all who fail are <strong>Blinded</strong> for 1d3 turns. One per long rest.</td>
+                </tr>
+            </tbody>
+            </table>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Engineering</span><span class="sk-gov">Intellect</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Dwarf (20) | Human (25) | Elf/Halfling (30) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Intellect per 3 pts &nbsp;·&nbsp; <strong>Req:</strong> Read/Write (1)</div>
+        <p class="sk-desc">Structures do not fail at random — they fail at precisely the point where load exceeds design, and the engineer is the person who can read that point in advance. Engineering covers construction, demolition, trap design, siege mechanics, and the structural analysis of anything built by human or inhuman hands. Roll 1d10 + Engineering Points + Intellect modifier against DV for all construction and analysis tests. Every 3 points increases your Intellect characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Structural Eye:</strong> You automatically identify the structural weaknesses of any building, bridge, wall, or constructed surface within your line of sight — the GM tells you the load-bearing points, the collapse sequence, and the minimum force required to trigger a failure. In dungeons and underground spaces, you sense instability in ceilings, floors, and tunnels before anyone else does.</li>
+            <li><strong>At 3 points — Rapid Construction:</strong> You can construct functional field fortifications — barricades, palisades, covered positions — in half the time of an unskilled crew, and your constructions provide double the standard cover bonus to those behind them. Traps you design grant Advantage to the opponent's roll to detect them and deal an additional Engineering pts wounds on activation.</li>
+            <li><strong>At 6 points — Controlled Demolition:</strong> Given access to a structure's foundation or a key load-bearing point — and the appropriate tools, charges, or equipment for the job — you can bring down a building, collapse a tunnel, or breach a wall in a controlled manner — directing the collapse with Engineering pts × 5 Ft of precision. Uncontrolled collapse creates a 30 Ft AoE of debris; controlled collapse can target a specific area as small as 10 Ft across.</li>
+            <li><strong>At 9 points — Master Siege:</strong> You understand every siege weapon, fortification design, and military engineering application in the known world. You can command siege operations at full effectiveness, design fortifications that add +Engineering pts to the effective Defense of any position you have had 24 hours to prepare, and analyse any magical or mundane barrier to identify whether it can be physically bypassed and how.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Medicine</span><span class="sk-gov">Intellect</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Human/Halfling (20) | Elf/Dwarf (25) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Intellect per 3 pts &nbsp;·&nbsp; <strong>Req:</strong> Read/Write (1), Mending (1)</div>
+        <p class="sk-desc">The body is a system, and systems have known failure modes. Medicine is the empirical discipline of understanding those failure modes well enough to interrupt them — setting bones, managing infection, identifying disease, and extracting foreign objects from places they were never supposed to be. Where Mending is field instinct, Medicine is methodology. Roll 1d10 + Medicine Points + Intellect modifier against DV for all medical diagnosis and treatment tests. Every 3 points increases your Intellect characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Diagnosis:</strong> On examination of a patient, you immediately and accurately identify all injuries, diseases, and conditions — their cause, severity, and progression. You know exactly what is wrong and what is required to address it. You never waste resources treating the symptom instead of the cause.</li>
+            <li><strong>At 3 points — Clinical Treatment:</strong> Out of combat, you restore Medicine pts × 3 wounds to a patient over 10 minutes of treatment. This can be repeated once per long rest per patient. You can also remove any non-magical Disease or Poison condition with a Medicine test against DV 8 — the treatment takes 30 minutes and basic medical supplies.</li>
+            <li><strong>At 6 points — Surgery:</strong> With 1 hour, appropriate tools, and a stable environment, you can address injuries that would otherwise be permanent — restoring lost function, repairing internal damage from massive wounds, or counteracting the secondary effects of extreme physical trauma. A successful Medicine test against DV 12 allows a patient to recover from injuries that the standard wound system would treat as permanent consequences of 0-wound events.</li>
+            <li><strong>At 9 points — Battlefield Clarity:</strong> Once per encounter, you may spend 2 AP to perform emergency medicine on an adjacent ally at 0 wounds — restoring them to Medicine pts × 2 wounds and removing the Unconscious condition. This is not standard stabilisation; it is emergency intervention. The patient can act normally from their next turn. This functions even in active combat.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Navigation</span><span class="sk-gov">Intellect</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Human/Elf (20) | Halfling (25) | Dwarf (30) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Intellect per 3 pts &nbsp;·&nbsp; <strong>Req:</strong> Read/Write (1)</div>
+        <p class="sk-desc">The world has a geometry if you know how to read it — stars, currents, prevailing winds, the angle of shadows, the way moss grows and rivers cut. Navigation is the translation of environment into position, and position into direction. At its highest levels it extends beyond physical space into the reading of political geography, trade routes, and the kind of situational awareness that tells you which direction threat comes from before it arrives. Roll 1d10 + Navigation Points + Intellect modifier against DV for all orientation, charting, and route-planning tests. Every 3 points increases your Intellect characteristic by 1. Navigation is domain-specific: you must hold the relevant Knowledge for the environment you are navigating (e.g. Knowledge: Seas for ocean voyaging, Knowledge: Forests for wildwood travel, Knowledge: Skies for aerial routes). Without the matching Knowledge, you can read a compass and follow obvious landmarks but gain no Navigation bonus in that domain.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Orientation:</strong> You are never lost. In any environment — underground, at sea, in magical obscurement, or in an unmarked city — you maintain accurate awareness of your position and direction. You always know which way north is. You can always retrace a path you have travelled.</li>
+            <li><strong>At 3 points — Route Planning:</strong> Given a destination and basic geographic information, you identify the optimal route with regard to speed, safety, or concealment — your choice. Your travel time for any overland journey is reduced by 25% through efficient path selection. You automatically identify ambush-prone terrain, chokepoints, and positions of tactical advantage along any planned route.</li>
+            <li><strong>At 6 points — Dead Reckoning:</strong> At sea or in completely unmapped territory, you can determine your precise position through environmental observation alone — star angle, water temperature, wind direction, geological markers. You can produce an accurate sketch-map of any area you have moved through. Your estimates of position are accurate to within 5% of actual distance, regardless of how long you have been without landmarks.</li>
+            <li><strong>At 9 points — The Long View:</strong> Your Navigation extends into strategic cartographic intelligence. Given 24 hours of study of any region — maps, reports, locals' accounts, aerial observation — you can identify the three most likely invasion routes, the two most defensible positions, the single most critical supply chokepoint, and the location any army would most plausibly establish as a headquarters. This is strategic military intelligence extracted from geography, and it is accurate.</li>
+        </ul>
+    </div>
+    <div class="skill-group">Physique Pool</div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Brawling</span><span class="sk-gov">Physique</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Dwarf/Human (20) | Halfling (25) | Elf (30) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Physique per 3 pts</div>
+        <p class="sk-desc">The oldest form of combat — no weapons, no rules, and the deeply practical understanding that most fights happen in spaces too small for a sword. Brawling is the skill of making your body itself into a weapon: elbows, knees, headbutts, improvised grips, and the specific economy of violence that operates in taverns, alleys, and anywhere else that combat becomes immediate and close. Every 3 points increases your Physique characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Always Armed:</strong> Your unarmed strikes deal 1d10 + Physique modifier + Brawling pts wounds. Against an unprepared or unarmed-untrained opponent, your attacks impose Disadvantage on their defence. You suffer no penalty for fighting in confined spaces where weapons cannot be freely swung — tight corridors, grapples, and crowd situations are your natural habitat.</li>
+            <li><strong>At 3 points — Opportunist:</strong> Whenever an adjacent enemy fails an attack roll against you, you may spend 1 AP as a reaction to immediately deliver one unarmed strike against them. The missed attack opened a gap. You fill it.</li>
+            <li><strong>At 6 points — Dirty Fighter:</strong> Once per turn, alongside your normal attack, you may attempt one of the following as a free action: eye gouge (target suffers −2 To-Hit for 1 turn), kidney shot (target loses 1 AP on their next turn), or leg sweep (target must make a Physique test against DV 8 or be Prone). No roll required on your part — only a test for the target.</li>
+            <li><strong>At 9 points — Brawler's Finish:</strong> Once per encounter, when an enemy is Prone, Stunned, or Grappled by you, you may make a Brawling attack as a 2 AP action that deals 3d10 + Physique modifier wounds bypassing all mundane Wound Mitigation. This is not a finisher — it is simply what happens when you have someone where you want them and no reason to stop.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Climbing</span><span class="sk-gov">Physique</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Halfling/Elf (15) | Human (20) | Dwarf (25) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Physique per 3 pts</div>
+        <p class="sk-desc">Gravity is the most democratic of opponents. Climbing is the art of refusing to acknowledge its authority over you — reading surfaces for purchase, distributing weight across holds that would crumble under anything but expert technique, and covering vertical distance that tactical planning always fails to account for. Roll 1d10 + Climbing Points + Physique modifier against DV for difficult ascents. Every 3 points increases your Physique characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Vertical Movement:</strong> You move vertically at half your standard movement speed without a test in standard conditions — rough stone, timber framing, cliff faces with natural features. Sheer surfaces, wet stone, or extreme angles require a test. You are never surprised while climbing — you always have at least one free hand available.</li>
+            <li><strong>At 3 points — Free Climber:</strong> You can ascend surfaces that offer minimal purchase — smooth stone, brick walls, worked marble, ship hulls — with a Climbing test against DV 9. On success you move at half speed. Ropes, pitons, and climbing gear give you Advantage on all tests and allow normal movement speed on any climbable surface.</li>
+            <li><strong>At 6 points — Combat Climber:</strong> You may attack and cast spells at full effectiveness while climbing. You no longer need to find a stable platform — a wall hold is sufficient. In addition, you may drop from any height as a free action to land adjacent to an enemy and immediately make one attack as part of the same action, adding Climbing pts as bonus wounds from the impact.</li>
+            <li><strong>At 9 points — The Impossible Wall:</strong> No surface is unclimbable. You can scale surfaces that offer zero natural purchase — glass, ice, water-soaked stone — by reading micro-variations in texture, pressure, and thermal differential that are invisible to everyone else. Tests against these surfaces are never at Disadvantage. You automatically identify the fastest and most tactically useful climbing route in any environment.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Endurance</span><span class="sk-gov">Physique</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Dwarf (20) | Human/Halfling (25) | Elf (30) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Physique per 3 pts</div>
+        <p class="sk-desc">Every point grants +1 permanent Wound. The body that doesn't stop is the body that wins. Endurance is not strength — it is the systematic refusal of the nervous system to register that stopping is an option. The practitioner runs further, fights longer, absorbs more, and continues operating in conditions that have already rendered everyone else non-functional. Every 3 points increases your Physique characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Iron Constitution:</strong> +1 wound per point. You require half the normal recovery time between encounters to recover to full wounds — your body's baseline repair rate is elevated. Exhaustion conditions that would remove AP or impose Disadvantage take one additional stack to apply against you.</li>
+            <li><strong>At 3 points — Second Wind:</strong> Once per encounter, as a free action, recover Endurance pts × 2 wounds. This does not require any action expenditure and can be used even at 0 wounds before collapsing — it functions as the body's emergency reserve kicking in.</li>
+            <li><strong>At 6 points — Sustained Effort:</strong> You may maintain peak physical performance indefinitely without fatigue penalties. Forced marches, extended swims, sustained combat, and any other activity where other characters accumulate Exhausted conditions over time do not stack on you until the activity has continued for twice the normal threshold. When they do begin, they stack at half rate.</li>
+            <li><strong>At 9 points — Won't Stay Down:</strong> Once per session, when you reach 0 wounds, you do not become Unconscious. Instead you remain at 1 wound for one full round — acting normally, ignoring all incoming wounds during this time — before the damage catches up and you collapse unless healed. You cannot be killed during this round by direct damage; only by effects that state "cannot be saved from death" or equivalent.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Swimming</span><span class="sk-gov">Physique</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Human/Elf (15) | Halfling (20) | Dwarf (30) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Physique per 3 pts</div>
+        <p class="sk-desc">Water is not a barrier — it is a medium, and those who have trained in it treat it accordingly. Swimming covers open water, rough seas, strong currents, underwater navigation, and the specific combat applications of a three-dimensional space where most opponents have stopped thinking tactically. Roll 1d10 + Swimming Points + Physique modifier against DV for difficult water conditions. Every 3 points increases your Physique characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Water Competency:</strong> You move through water at Swimming pts × Ft per AP (minimum your standard land speed at 5 points). You can hold your breath for Swimming pts × 2 minutes and suffer no panic or disorientation while submerged. Armour penalty to Swimming: worn armour drags in water and applies a penalty to all Swimming tests and to swimming speed — Mithril/Elven, Padded, or Gambeson −1; Leather or Studded −2; Chain −3; Plate −5. A character in Plate who fails a Swimming test risks sinking; the GM may require the armour be shed to continue.</li>
+            <li><strong>At 3 points — Subsurface Combat:</strong> You fight underwater without penalty. Standard attacks, spells with audible components (where relevant), and tactical positioning all function normally while submerged. Enemies without Swimming skill suffer Disadvantage attacking you underwater — the medium is alien to them and familiar to you.</li>
+            <li><strong>At 6 points — Powerful Current:</strong> In rough water, currents, or tidal conditions that would sweep an unskilled swimmer off course, you move freely. Additionally, once per encounter when in water or an adjacent water source, you may drag a creature into the water as a 2 AP grapple action — the target is Grappled and must contend with water conditions while you operate freely. A target without Swimming skill is immediately Stunned by the transition.</li>
+            <li><strong>At 9 points — Aquatic Predator:</strong> In water, your movement speed is doubled and you may move in three dimensions at full speed. Any creature without Swimming skill that is Grappled by you in water must make a Physique test against DV 10 + your Swimming points each turn or gain one Exhausted condition from the effort of fighting the water and you simultaneously. At 3 Exhausted conditions, they begin drowning.</li>
+        </ul>
+    </div>
+    <div class="skill-group">Willpower Pool</div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Meditation</span><span class="sk-gov">Willpower</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Elf (20) | Human/Halfling (25) | Dwarf (30) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Willpower per 3 pts</div>
+        <p class="sk-desc">Every point grants +1 permanent Wound. The mind that does not panic is the mind that survives. Meditation is the systematic discipline of the inner space — controlling the response to fear, pain, shock, and the accumulated weight of conditions that would break an untrained mind. It does not prevent the damage; it determines what the damage means. Every 3 points increases your Willpower characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Composure:</strong> +1 wound per point. All tests to resist mental conditions — Fear, Shaken, Dominated, Confused — gain a bonus equal to Meditation pts. This stacks directly with your Willpower characteristic bonus. The inner discipline provides a structural floor beneath which psychological assault cannot reach.</li>
+            <li><strong>At 3 points — Meditative Recovery:</strong> During a short rest (10 minutes of undisturbed quiet), recover Meditation pts × 2 wounds and clear one mental condition — Fear, Shaken, Confused, or Exhausted. This requires genuine stillness; combat situations prevent it.</li>
+            <li><strong>At 6 points — Iron Mind:</strong> You are immune to mundane fear — the Shaken condition from non-magical sources cannot be applied to you. Against magical Fear effects, you add Meditation pts to your resist roll. Additionally, you can operate normally under conditions of extreme psychological stress — torture, prolonged isolation, sustained horror — that would impose penalties on other characters.</li>
+            <li><strong>At 9 points — The Eye:</strong> Once per encounter, as a free action, you may enter a state of absolute concentration for 1 turn. During this turn: you are immune to all conditions, your next action costs 0 AP, and any test you make is rolled with Advantage. The Eye cannot be maintained — it lasts exactly one turn and then the ordinary world rushes back in.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Oathkeeper</span><span class="sk-gov">Willpower</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Dwarf (20) | Human/Elf/Halfling (25) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Willpower per 3 pts</div>
+        <p class="sk-desc">Every point grants +1 permanent Wound. An oath is an anchor, and an anchor holds against current. Oathkeeper is the discipline of binding oneself to a stated commitment — a pledge, a vow, a covenant — and deriving mechanical power from the act of maintaining it. The character who has sworn does not fight the same fight as the character who merely intends. Every 3 points increases your Willpower characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — The Sworn State:</strong> +1 wound per point. At character creation or with GM approval, declare one active Oath — a specific obligation, prohibition, or commitment. While the Oath is intact, you gain +Oathkeeper pts bonus to all Willpower resist tests and +1 To-Hit per 3 Oathkeeper pts when acting directly in service of the Oath. If the Oath is broken, all bonuses are lost until the Oath is renewed or a new Oath is sworn.</li>
+            <li><strong>At 3 points — Oath-Bound Strike:</strong> Once per encounter, when attacking a creature or in a situation that directly violates your Oath, your attack deals an additional Oathkeeper pts × 2 wounds — the conviction behind the blow makes it land differently.</li>
+            <li><strong>At 6 points — Unbreakable:</strong> While your Oath is active, you are immune to compulsion effects — Dominated, Charmed, and mind-control effects that would cause you to act against your Oath fail automatically without a test. Your sworn intent is a structural barrier that external will cannot navigate around.</li>
+            <li><strong>At 9 points — Martyr's Force:</strong> Once per session, when you would be reduced to 0 wounds while acting in direct service of your Oath, you instead remain at 1 wound. Additionally, all allies who can see or hear you witnessing this moment gain +2 To-Hit and +2 Willpower resist for the remainder of the encounter — the sight of someone who will not fall for a reason they believe in changes the arithmetic for everyone around them.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Pain Tolerance</span><span class="sk-gov">Willpower (Power of Three: Physique)</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Dwarf (25) | Human (30) | Halfling (35) | Elf (40) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Physique per 3 pts</div>
+        <p class="sk-desc">Every point grants +2 permanent Wounds. Pain is data. Pain Tolerance is the training that separates the signal from the noise — allowing the body to continue functioning under conditions where the nervous system's interrupts have fired and most organisms have stopped. This is not numbness; it is the precise calibration of what requires stopping for and what does not. Every 3 points increases your Physique characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — High Threshold:</strong> +2 wounds per point. The wound total at which you suffer mechanical penalties (Disadvantage, AP reduction) is increased by Pain Tolerance pts × 3. The body's protest is registered and set aside. You fight at full effectiveness until significantly closer to 0 than most characters.</li>
+            <li><strong>At 3 points — Ignore It:</strong> Once per turn, negate the mechanical effect of one Stunned condition — the AP cost is not applied this turn. You register the hit; you simply refuse to give it the attention it is demanding.</li>
+            <li><strong>At 6 points — Through the Wound:</strong> Once per encounter, continue acting normally for 1 full turn after reaching 0 wounds — taking normal actions at normal cost. The body has not consented to being finished yet. This functions identically to the Endurance skill's "Won't Stay Down" — the two abilities are separate and both apply if you have both skills.</li>
+            <li><strong>At 9 points — Tectonic:</strong> Conditions that impose wound penalties — Bleeding, Poison dealing ongoing damage, and burns — deal half their stated damage per turn against you. The ongoing damage mechanism still functions, but your body processes it at reduced rate. Additionally, you add Pain Tolerance pts to all tests made to resist torture, interrogation, or prolonged physical duress.</li>
+        </ul>
+    </div>
+    <div class="skill-full">
+        <div class="sk-head"><span class="sk-name">Willpower Reserve</span><span class="sk-gov">Willpower</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> All Races (20) &nbsp;·&nbsp; <strong>Power of Three:</strong> +1 Willpower per 3 pts &nbsp;·&nbsp; <strong>Req:</strong> Willpower (10)</div>
+        <p class="sk-desc">Every point grants +1 permanent Wound. The trained mind holds more than it needs for ordinary circumstances — a reservoir that exists precisely for the moment when ordinary circumstances have ended and something beyond ordinary reserves is required. Willpower Reserve does not increase power in normal conditions. It determines how much is left when everything else has run out. Every 3 points increases your Willpower characteristic by 1.</p>
+        <ul class="sk-tiers">
+            <li><strong>Passive — Deep Well:</strong> +1 wound per point. Your Spirit Points — the resource pool for magical disciplines — are increased by Willpower Reserve pts × 2. Abilities and effects that drain Spirit Points drain at half the listed rate against you — the reserve feeds back into the primary pool as it depletes.</li>
+            <li><strong>At 3 points — Emergency Draw:</strong> Once per encounter, when a discipline cast roll would fail due to insufficient Spirit Points, you may draw from your Willpower Reserve to complete it — treating yourself as having sufficient Spirit Points for that cast only. This can be used when you have 0 Spirit Points remaining.</li>
+            <li><strong>At 6 points — Overflow:</strong> When your Spirit Points would exceed their maximum through healing or restoration effects, the overflow is stored in your Willpower Reserve as temporary Spirit Points that persist until used, up to a maximum of Willpower Reserve pts × 3 temporary. These are spent first before your normal pool.</li>
+            <li><strong>At 9 points — The Last Cast:</strong> Once per session, at any Spirit Point total — including 0 — you may cast one spell or blessing as if you had full Spirit Points. The Reserve momentarily provides everything. After this, your Spirit Points are set to 0 regardless of their previous total, and you suffer the ⊛ Exhausted condition for the remainder of the encounter.</li>
+        </ul>
+    </div>
+    <div class="skill-group" style="color:var(--blood);">The Lost Seventh Discipline</div>
+    <div class="skill-full" style="border-color:var(--blood); background:rgba(168,24,24,0.04);">
+        <div class="sk-head"><span class="sk-name" style="color:var(--blood);">Śabda-Axiom</span><span class="sk-gov">Willpower · GM-granted access only</span></div>
+        <div class="sk-meta"><strong>Cost:</strong> Halfling (10) | Elf (12) | Human (15) | Dwarf (20) — compounding per point, GM-granted access only</div>
+        <p class="sk-desc">The projection of cosmic force as spoken frequency — a lost pre-Empire discipline the Church of the Radiant Compact systematically burned. A Speaker cannot be trained; they must find surviving Bija, a living transmission, or contact with something ancient enough to remember when the Śabda was practiced openly. Each point unlocks one Śabda from the Primordial Lexicon. The Śabda-Axiom does not advance any characteristic — like Runecraft, it stands outside the Power of Three entirely. Elves, who regard the Śabda as a crude and primitive precursor that their Wizardry and Druidism have long since surpassed, find the Bija difficult to integrate — not because they lack capability, but because their contempt for the tradition makes it resist them.</p>
+        <ul class="sk-tiers">
+            <li><strong>Governing characteristic:</strong> Willpower. Add your Willpower modifier to all Śabda To-Cast rolls. The force does not respond to intellect or faith — it responds to the absolute intent carried in the Speaker's Bija.</li>
+            <li><strong>Iron penalty:</strong> Studded leather or lighter — no penalty. Chainmail and heavier — full TN penalty identical to Wizard/Druid/Shaman. The constriction of metal against chest and throat disrupts the precise breath control invocation demands.</li>
+            <li><strong>Advancement:</strong> Cannot be atrophied. Cannot be transferred. The forces the Śabda invokes do not forget those who have spoken their Bija.</li>
+        </ul>
     </div>
 
     <h2><span class="tick">᛭</span> Rules Updates</h2>
