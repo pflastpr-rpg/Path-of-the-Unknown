@@ -55,6 +55,9 @@
 .skb{width:26px;height:26px;border-radius:50%;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
 .skb:active{background:#02070e;color:#B8860B}
 .sk-pts{min-width:20px;text-align:center;font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.sk-swap{font-size:12px;padding:2px 6px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);max-width:180px;margin-left:4px;cursor:pointer}
+.sk-swap:disabled{opacity:0.7;cursor:not-allowed}
+.sk-row.locked .sk-swap{pointer-events:auto;opacity:1}
 .sk-bon{font-size:10px;color:#B8860B;text-align:right;min-width:60px}
 .badge{font-size:9px;border-radius:3px;padding:2px 5px;margin-left:4px;display:inline-flex;align-items:center;gap:2px}
 .badge.lock{color:#888;background:var(--color-background-secondary)}
@@ -95,7 +98,7 @@
 .arch-tag.combat{background:#A8181815;color:#791F1F}
 </style>
 
-<h2 class="sr-only">Thrice-Marked character creation</h2>
+<h2 class="sr-only">Blood and Purpose character creation</h2>
 
 <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px">
 <div class="phone">
@@ -161,7 +164,7 @@
   </div>
 
   <div class="screen" id="sc4">
-    <div class="sh"><h2>Primary Skills</h2><p>Prereq skills shown in blue. Light-Soul requires Faith > 0.</p></div>
+    <div class="sh"><h2>Primary Skills</h2><p>Prereq skills shown in blue. Light-Soul requires Devotion > 0.</p></div>
     <div class="sb" id="sk-body"></div>
     <div class="foot"><button class="bb" onclick="go(3)">Back</button><button class="bn" onclick="go(5)">Next — Resources</button></div>
   </div>
@@ -181,7 +184,7 @@
   <div class="screen" id="sc7">
     <div class="sh"><h2>Character ready</h2><p>Every XP sink accounted for</p></div>
     <div class="sb" id="sum-body"></div>
-    <div class="foot"><button class="bb" onclick="go(6)">Edit</button><button class="bn" onclick="exportCharacter()" style="background:#3B6D11; color:#f3e7c9;">⬇ Export to Ledger</button><button class="bfin" onclick="sendPrompt('Prereqs are wired, wounds are correct, Light-Soul is gated. What should we refine or build next for the Thrice-Marked companion app?')">Save to Roster ↗</button></div>
+    <div class="foot"><button class="bb" onclick="go(6)">Edit</button><button class="bn" onclick="exportCharacter()" style="background:#3B6D11; color:#f3e7c9;">⬇ Export to Ledger</button><button class="bfin" onclick="sendPrompt('Prereqs are wired, wounds are correct, Light-Soul is gated. What should we refine or build next for the Blood and Purpose companion app?')">Save to Roster ↗</button></div>
   </div>
 </div>
 </div>
@@ -201,36 +204,46 @@ const SIZES=[
   {id:'Giant',label:'Giant',mult:3,note:'×3W'},
   {id:'Enormous',label:'Enorm.',mult:6,note:'×6W'},
 ];
-const ALL_MAGIC=['Faith','Wizardry','Ki','Shaman','Druidism'];
+const ALL_MAGIC=['Devotion','Wizardry','Ki','Shaman','Druidism','Sabda'];
 
 // Vocation prereqs: Knowledge type auto-granted at 1 pt, Read/Write floor set to 1
 // knowledgeType is what gets written into the Knowledge skill name for tracking
 const VOCATIONS=[
   {id:'none',   label:'No Vocation',       icon:'ti-shield',  color:'#888',    desc:'Pure skill build. No magic.',       magic:null,     knowledgeType:null,    locks:ALL_MAGIC},
-  {id:'Religion',label:'Theology — Devout',   icon:'ti-cross',   color:'#B8860B', desc:'Divine healing & anti-Evil.',       magic:'Faith',  knowledgeType:'Religion', locks:['Wizardry','Ki','Shaman','Druidism']},
-  {id:'Magic',  label:'Wizardry — Arcane', icon:'ti-wand',    color:'#185FA5', desc:'Intellect damage & counter-cast.',  magic:'Wizardry',knowledgeType:'Magic',  locks:['Faith','Ki','Shaman','Druidism']},
-  {id:'Ki',     label:'Ki — Monk',         icon:'ti-yin-yang',color:'#2d6a2d', desc:'Internal energy, Physique cast.',   magic:'Ki',     knowledgeType:'Ki',      locks:['Faith','Wizardry','Shaman','Druidism']},
-  {id:'Shaman', label:'Shaman — Spirit',   icon:'ti-flame',   color:'#854F0B', desc:'Willpower spirit magic.',           magic:'Shaman', knowledgeType:'Shaman',  locks:['Faith','Wizardry','Ki','Druidism']},
-  {id:'Druidic',label:'Druidism — Primal', icon:'ti-leaf',    color:'#3B6D11', desc:'Nature magic & shapeshifting.',     magic:'Druidism',knowledgeType:'Druidic', locks:['Faith','Wizardry','Ki','Shaman']},
+  {id:'Religion',label:'Theology — Devout',   icon:'ti-cross',   color:'#B8860B', desc:'Divine healing & anti-Evil.',       magic:'Devotion',  knowledgeType:'Religion', locks:['Wizardry','Ki','Shaman','Druidism','Sabda']},
+  {id:'Magic',  label:'Wizardry — Arcane', icon:'ti-wand',    color:'#185FA5', desc:'Intellect damage & counter-cast.',  magic:'Wizardry',knowledgeType:'Magic',  locks:['Devotion','Ki','Shaman','Druidism','Sabda']},
+  {id:'Ki',     label:'Ki — Monk',         icon:'ti-yin-yang',color:'#2d6a2d', desc:'Internal energy, Physique cast.',   magic:'Ki',     knowledgeType:'Ki',      locks:['Devotion','Wizardry','Shaman','Druidism','Sabda']},
+  {id:'Shaman', label:'Shaman — Spirit',   icon:'ti-flame',   color:'#854F0B', desc:'Willpower spirit magic.',           magic:'Shaman', knowledgeType:'Shaman',  locks:['Devotion','Wizardry','Ki','Druidism','Sabda']},
+  {id:'Druidic',label:'Druidism — Primal', icon:'ti-leaf',    color:'#3B6D11', desc:'Nature magic & shapeshifting.',     magic:'Druidism',knowledgeType:'Druidic', locks:['Devotion','Wizardry','Ki','Shaman','Sabda']},
+  {id:'Sabda',  label:'Śabda-Axiom — Speaker',icon:'ti-volume',color:'#3D1A6E', desc:'Spoken cosmic frequency. Willpower-cast.', magic:'Sabda', knowledgeType:'Sabda', locks:['Devotion','Wizardry','Ki','Shaman','Druidism']},
   {id:'Runes',  label:'Runemaster — Runes',icon:'ti-hexagon', color:'#534AB7', desc:'Runic wards & Agility utility.',    magic:'Runes',  knowledgeType:'Runes',   locks:ALL_MAGIC},
 ];
 
 const PHYSIQUE_CAT=['Fortitude','Hard as Nails','Ki','Rugged','Shieldsman','Strength Con.'];
 const SKILL_COSTS={
-  human:   {'Rugged':15,'Stamina':10,'Iron Will':30,'Hard as Nails':30,'Fortitude':50,'Strength Con.':30,'Shieldsman':30,'Ki':30,'Athletics':25,'Evasion':20,'Quickness':40,'Stealth':20,'Thieving':15,'Tumble':25,'Acute Senses':25,'Discipline':15,'Druidism':35,'Focus':35,'Precise Strk':45,'Authority':15,'Charm':15,'Faith':25,'Inspire':20,'Light-Soul':20,'Mending':25,'Evaluate':15,'Knowledge':15,'Perception':30,'Read/Write':15,'Tracker':15,'Wizardry':35,'Riposte':30,'Resolve':15,'Shaman':30,'Spirit':15,'Survival':25},
-  elf:     {'Rugged':15,'Stamina':15,'Iron Will':30,'Hard as Nails':35,'Fortitude':55,'Strength Con.':35,'Shieldsman':30,'Ki':35,'Athletics':20,'Evasion':15,'Quickness':35,'Stealth':15,'Thieving':15,'Tumble':20,'Acute Senses':20,'Discipline':15,'Druidism':30,'Focus':35,'Precise Strk':40,'Authority':15,'Charm':20,'Faith':30,'Inspire':20,'Light-Soul':20,'Mending':25,'Evaluate':15,'Knowledge':15,'Perception':30,'Read/Write':15,'Tracker':15,'Wizardry':25,'Riposte':30,'Resolve':15,'Shaman':35,'Spirit':15,'Survival':25},
-  dwarf:   {'Rugged':15,'Stamina':10,'Iron Will':25,'Hard as Nails':25,'Fortitude':45,'Strength Con.':30,'Shieldsman':30,'Ki':35,'Athletics':30,'Evasion':25,'Quickness':40,'Stealth':25,'Thieving':20,'Tumble':30,'Acute Senses':15,'Discipline':15,'Druidism':35,'Focus':35,'Precise Strk':45,'Authority':15,'Charm':25,'Faith':25,'Inspire':20,'Light-Soul':20,'Mending':25,'Evaluate':15,'Knowledge':15,'Perception':30,'Read/Write':15,'Tracker':15,'Wizardry':40,'Riposte':30,'Resolve':15,'Shaman':35,'Spirit':15,'Survival':25},
-  halfling:{'Rugged':15,'Stamina':15,'Iron Will':30,'Hard as Nails':35,'Fortitude':55,'Strength Con.':35,'Shieldsman':35,'Ki':35,'Athletics':30,'Evasion':10,'Quickness':35,'Stealth':15,'Thieving':10,'Tumble':15,'Acute Senses':15,'Discipline':20,'Druidism':30,'Focus':35,'Precise Strk':50,'Authority':20,'Charm':15,'Faith':25,'Inspire':25,'Light-Soul':20,'Mending':20,'Evaluate':15,'Knowledge':15,'Perception':30,'Read/Write':15,'Tracker':10,'Wizardry':30,'Riposte':30,'Resolve':15,'Shaman':30,'Spirit':15,'Survival':30},
+  human:{'Athletics':25,'Evasion':20,'Quickness':40,'Acute Senses':25,'Focus':35,'Precise Strike':45,'Authority':15,'Charm':15,'Inspire':20,'Evaluate':15,'Knowledge':15,'Read/Write':15,'Fortitude':45,'Hard as Nails':30,'Rugged':15,'Iron Will':30,'Resolve':15,'Spirit':15,'Stealth':20,'Thieving':15,'Tumble':25,'Acrobatics':20,'Disguise':15,'Escapology':20,'Sleight of Hand':20,'Druidism':35,'Riposte':30,'Stamina':10,'Danger Sense':25,'Lip Reading':15,'Swift Read':20,'Mending':25,'Devotion':25,'Light-Soul':20,'Deception':20,'Intimidation':20,'Performance':20,'Seduction':20,'Tracker':20,'Perception':35,'Wizardry':35,'Alchemy':20,'Engineering':20,'Medicine':20,'Navigation':20,'Shieldsman':30,'Ki':30,'Strength Con.':30,'Brawling':20,'Climbing':20,'Endurance':20,'Swimming':15,'Discipline':15,'Shaman':30,'Sabda':15,'Survival':25,'Meditation':20,'Oathkeeper':20,'Pain Tolerance':20,'Willpower Reserve':20},
+  elf:{'Athletics':20,'Evasion':15,'Quickness':35,'Acute Senses':20,'Focus':35,'Precise Strike':40,'Authority':15,'Charm':20,'Inspire':20,'Evaluate':15,'Knowledge':15,'Read/Write':15,'Fortitude':50,'Hard as Nails':35,'Rugged':15,'Iron Will':30,'Resolve':15,'Spirit':15,'Stealth':15,'Thieving':15,'Tumble':20,'Acrobatics':20,'Disguise':20,'Escapology':20,'Sleight of Hand':20,'Druidism':30,'Riposte':30,'Stamina':15,'Danger Sense':20,'Lip Reading':20,'Swift Read':15,'Mending':25,'Devotion':30,'Light-Soul':20,'Deception':25,'Intimidation':25,'Performance':20,'Seduction':20,'Tracker':20,'Perception':35,'Wizardry':25,'Alchemy':20,'Engineering':25,'Medicine':25,'Navigation':20,'Shieldsman':30,'Ki':35,'Strength Con.':35,'Brawling':30,'Climbing':15,'Endurance':25,'Swimming':15,'Discipline':15,'Shaman':35,'Sabda':12,'Survival':25,'Meditation':15,'Oathkeeper':20,'Pain Tolerance':30,'Willpower Reserve':20},
+  dwarf:{'Athletics':30,'Evasion':25,'Quickness':40,'Acute Senses':20,'Focus':35,'Precise Strike':45,'Authority':15,'Charm':25,'Inspire':20,'Evaluate':15,'Knowledge':15,'Read/Write':15,'Fortitude':40,'Hard as Nails':25,'Rugged':15,'Iron Will':25,'Resolve':15,'Spirit':15,'Stealth':25,'Thieving':20,'Tumble':30,'Acrobatics':25,'Disguise':25,'Escapology':25,'Sleight of Hand':25,'Druidism':35,'Riposte':30,'Stamina':10,'Danger Sense':25,'Lip Reading':25,'Swift Read':20,'Mending':25,'Devotion':25,'Light-Soul':20,'Deception':30,'Intimidation':15,'Performance':30,'Seduction':35,'Tracker':20,'Perception':35,'Wizardry':40,'Alchemy':20,'Engineering':15,'Medicine':25,'Navigation':30,'Shieldsman':30,'Ki':35,'Strength Con.':30,'Brawling':20,'Climbing':25,'Endurance':15,'Swimming':30,'Discipline':15,'Shaman':35,'Sabda':20,'Survival':25,'Meditation':25,'Oathkeeper':15,'Pain Tolerance':15,'Willpower Reserve':20},
+  halfling:{'Athletics':30,'Evasion':10,'Quickness':35,'Acute Senses':15,'Focus':35,'Precise Strike':50,'Authority':20,'Charm':15,'Inspire':20,'Evaluate':15,'Knowledge':15,'Read/Write':15,'Fortitude':45,'Hard as Nails':35,'Rugged':15,'Iron Will':30,'Resolve':15,'Spirit':15,'Stealth':15,'Thieving':10,'Tumble':15,'Acrobatics':15,'Disguise':15,'Escapology':10,'Sleight of Hand':10,'Druidism':30,'Riposte':30,'Stamina':15,'Danger Sense':20,'Lip Reading':15,'Swift Read':15,'Mending':20,'Devotion':25,'Light-Soul':20,'Deception':20,'Intimidation':20,'Performance':25,'Seduction':25,'Tracker':15,'Perception':35,'Wizardry':30,'Alchemy':20,'Engineering':25,'Medicine':25,'Navigation':25,'Shieldsman':35,'Ki':35,'Strength Con.':35,'Brawling':25,'Climbing':15,'Endurance':20,'Swimming':20,'Discipline':20,'Shaman':30,'Sabda':10,'Survival':30,'Meditation':20,'Oathkeeper':20,'Pain Tolerance':25,'Willpower Reserve':20}
 };
 const COMBAT_CHECK_COSTS={melee:{dwarf:25,elf:30,human:30,halfling:35},range:{elf:25,dwarf:30,halfling:30,human:30}};
-const SKS={
-  'Physique': ['Fortitude','Hard as Nails','Ki','Rugged','Shieldsman','Strength Con.'],
-  'Agility':  ['Athletics','Evasion','Quickness','Stealth','Thieving','Tumble'],
-  'Awareness':['Acute Senses','Druidism','Focus','Precise Strk','Riposte','Stamina'],
-  'Charisma': ['Authority','Charm','Faith','Inspire','Light-Soul','Mending'],
-  'Intellect':['Evaluate','Knowledge','Perception','Read/Write','Tracker','Wizardry'],
-  'Willpower':['Discipline','Iron Will','Resolve','Shaman','Spirit','Survival'],
+const CORE_SKS={
+  'Agility':["Athletics", "Evasion", "Quickness"],
+  'Awareness':["Acute Senses", "Focus", "Precise Strike"],
+  'Charisma':["Authority", "Charm", "Inspire"],
+  'Intellect':["Evaluate", "Knowledge", "Read/Write"],
+  'Physique':["Fortitude", "Hard as Nails", "Rugged"],
+  'Willpower':["Iron Will", "Resolve", "Spirit"]
 };
+const SWAP_POOLS={
+  'Agility':["Stealth", "Thieving", "Tumble", "Acrobatics", "Disguise", "Escapology", "Sleight of Hand"],
+  'Awareness':["Druidism", "Riposte", "Stamina", "Danger Sense", "Lip Reading", "Swift Read"],
+  'Charisma':["Mending", "Devotion", "Light-Soul", "Deception", "Intimidation", "Performance", "Seduction"],
+  'Intellect':["Tracker", "Perception", "Wizardry", "Alchemy", "Engineering", "Medicine", "Navigation"],
+  'Physique':["Shieldsman", "Ki", "Strength Con.", "Brawling", "Climbing", "Endurance", "Swimming"],
+  'Willpower':["Discipline", "Shaman", "Sabda", "Survival", "Meditation", "Oathkeeper", "Pain Tolerance", "Willpower Reserve"]
+};
+const DISCIPLINES={'Devotion':'Devotion','Wizardry':'Wizardry','Ki':'Ki','Shaman':'Shaman','Druidism':'Druidism','Sabda':'Sabda'};
 const ADV_SKILLS=[
   {name:'Deflect / Revert-Back',cost:50},{name:'Shield Rush / Blitz',cost:50},
   {name:'Block / Bulwark',cost:100},{name:'Cleave / Whirlwind',cost:100},
@@ -252,9 +265,9 @@ const MELEE_WEAPONS=['Swords/Daggers','Axes & Cleavers','Hammers & Maces','Polea
 const RANGE_WEAPONS=['Bow','Crossbow','Firearm','Throwing'];
 const ARCHETYPES=[
   {id:'warrior', label:'Iron Warrior',  icon:'ti-sword',   color:'#A81818',race:'dwarf',   voc:'none',    melee:['Swords/Daggers','Axes & Cleavers'],range:[],              skills:{'Strength Con.':3,'Hard as Nails':3,'Fortitude':2,'Iron Will':2,'Rugged':2},adv:['Block / Bulwark','Cleave / Whirlwind'],tags:['melee','tank']},
-  {id:'ranger',  label:'Ranger',        icon:'ti-bow',     color:'#3B6D11',race:'elf',     voc:'none',    melee:[],                                   range:['Bow','Crossbow'],skills:{'Evasion':3,'Stealth':2,'Perception':3,'Athletics':2,'Precise Strk':2},adv:['Marksman / Sniper','Opportunist / Seeker'],tags:['ranged','mobile']},
+  {id:'ranger',  label:'Ranger',        icon:'ti-bow',     color:'#3B6D11',race:'elf',     voc:'none',    melee:[],                                   range:['Bow','Crossbow'],skills:{'Evasion':3,'Stealth':2,'Perception':3,'Athletics':2,'Precise Strike':2},adv:['Marksman / Sniper','Opportunist / Seeker'],tags:['ranged','mobile']},
   {id:'rogue',   label:'Shadow Rogue',  icon:'ti-mask',    color:'#534AB7',race:'halfling', voc:'none',    melee:['Swords/Daggers'],                   range:['Throwing'],    skills:{'Stealth':3,'Thieving':3,'Evasion':3,'Charm':2,'Athletics':2},adv:['Phantom Assassin / Sever','Nimble / Shadow Strike'],tags:['stealth','social']},
-  {id:'crusader',label:'Devout Sentinel', icon:'ti-cross',   color:'#B8860B',race:'human',   voc:'Religion',melee:['Swords/Daggers'],                   range:[],              skills:{'Faith':4,'Light-Soul':3,'Iron Will':2,'Hard as Nails':2,'Inspire':2},adv:['Devout / Runepriest','Divinity / Sanctity'],tags:['magic','heal','melee']},
+  {id:'crusader',label:'Devout Sentinel', icon:'ti-cross',   color:'#B8860B',race:'human',   voc:'Religion',melee:['Swords/Daggers'],                   range:[],              skills:{'Devotion':4,'Light-Soul':3,'Iron Will':2,'Hard as Nails':2,'Inspire':2},adv:['Devout / Runepriest','Divinity / Sanctity'],tags:['magic','heal','melee']},
   {id:'wizard',  label:'Arcane Wizard', icon:'ti-wand',    color:'#185FA5',race:'elf',     voc:'Magic',   melee:[],                                   range:[],              skills:{'Wizardry':5,'Focus':3,'Perception':2,'Knowledge':2,'Spirit':2},adv:['Arcane Duelist / Spell-Eater','Concentrate / Intensify'],tags:['magic','cast']},
   {id:'druid',   label:'Primal Druid',  icon:'ti-leaf',    color:'#3B6D11',race:'elf',     voc:'Druidic', melee:[],                                   range:[],              skills:{'Druidism':5,'Focus':3,'Survival':2,'Spirit':2,'Stamina':2},adv:['Primal Aspect / Mutation','Infusion / True Fusion'],tags:['magic','nature','heal']},
   {id:'shaman',  label:'Spirit Shaman', icon:'ti-flame',   color:'#854F0B',race:'human',   voc:'Shaman',  melee:['Axes & Cleavers'],                  range:[],              skills:{'Shaman':4,'Spirit':3,'Resolve':2,'Survival':2,'Focus':2},adv:['Concentrate / Intensify','Sovereign Mind / Indomitable'],tags:['magic','spirit']},
@@ -271,9 +284,9 @@ const SK_BONUS={
   'Stealth':p=>`+${Math.floor(p/3)} Agl`,'Thieving':p=>`+${Math.floor(p/3)} Agl`,
   'Acute Senses':p=>`+${Math.floor(p/3)} Awa`,'Discipline':p=>`+${p}W`,
   'Druidism':p=>`Druid cast`,'Focus':p=>`Pool ${p}`,
-  'Precise Strk':p=>`+${Math.floor(p/3)} Hit +${Math.floor(p/3)*2}W`,
+  'Precise Strike':p=>`+${Math.floor(p/3)} Hit +${Math.floor(p/3)*2}W`,
   'Authority':p=>`+${Math.floor(p/3)} Cha`,'Charm':p=>`+${Math.floor(p/3)} Cha`,
-  'Faith':p=>`Faith cast`,'Inspire':p=>`Rally`,
+  'Devotion':p=>`Devotion cast`,'Inspire':p=>`Rally`,
   'Light-Soul':p=>`+${p} vs Evil`,'Mending':p=>`${p*2} heal`,
   'Evaluate':p=>`+${Math.floor(p/3)} Int`,'Knowledge':p=>`+${Math.floor(p/3)} Int`,
   'Perception':p=>`+${Math.floor(p/3)} Hit`,'Read/Write':p=>`+${Math.floor(p/3)} Int`,
@@ -313,6 +326,7 @@ let S={
   weaponsReset:false,skillsReset:false,advReset:false,
   meleeCategories:[],rangeCategories:[],mountedCount:0,
   skills:{},runemasterPts:0,
+  swapSel:{},
   apPts:0,fortunePts:0,ridingPts:0,
   advSkills:[],
 };
@@ -347,8 +361,8 @@ function switchVocation(newVocId){
   S.vocation=newVocId;
   // Apply new prereqs
   applyVocPrereqs(newVocId);
-  // Also clear Light-Soul if Faith now locked
-  if(getVoc().locks&&getVoc().locks.includes('Faith')&&S.skills['Light-Soul']){
+  // Also clear Light-Soul if Devotion now locked
+  if(getVoc().locks&&getVoc().locks.includes('Devotion')&&S.skills['Light-Soul']){
     delete S.skills['Light-Soul'];
   }
 }
@@ -358,10 +372,10 @@ function isVocLocked(sk){
   if(S.vocation==='none'&&ALL_MAGIC.includes(sk))return true;
   return voc&&voc.locks&&voc.locks.includes(sk);
 }
-function isLSLocked(){return(S.skills['Faith']||0)===0;}
+function isLSLocked(){return(S.skills['Devotion']||0)===0;}
 function isSkillLocked(sk){
   if(isVocLocked(sk))return{locked:true,reason:'Requires different vocation'};
-  if(sk==='Light-Soul'&&isLSLocked())return{locked:true,reason:'Requires Faith > 0'};
+  if(sk==='Light-Soul'&&isLSLocked())return{locked:true,reason:'Requires Devotion > 0'};
   return{locked:false,reason:''};
 }
 // Is this skill a vocation prereq (auto-applied at minimum 1)?
@@ -369,6 +383,46 @@ function isPrereqSkill(sk){
   if(!S.knowledgeSubtype)return false;
   return(sk==='Knowledge'||sk==='Read/Write')&&S.vocation!=='none';
 }
+
+// ── Swap-slot helpers ───────────────────────────────────────────────
+// Initialize swap selections; surface any already-invested pool skills into slots.
+// Two passes: (1) seat every invested pool skill in a slot, (2) fill the rest with defaults.
+function initSwapSel(){
+  Object.entries(SWAP_POOLS).forEach(([cat,pool])=>{
+    const keys=[0,1,2].map(i=>cat+'_'+i);
+    const invested=pool.filter(sk=>(S.skills[sk]||0)>0);
+    const assigned={};            // slotKey -> skill
+    const used=new Set();
+    // Keep existing committed picks that are still invested
+    keys.forEach(k=>{const cur=S.swapSel[k];if(cur&&invested.includes(cur)&&!used.has(cur)){assigned[k]=cur;used.add(cur);}});
+    // Seat any remaining invested skills into free slots
+    invested.forEach(sk=>{
+      if(used.has(sk))return;
+      const free=keys.find(k=>!assigned[k]);
+      if(free){assigned[free]=sk;used.add(sk);}
+    });
+    // Fill leftover slots with pool defaults (preferring this slot's natural default, else first unused)
+    keys.forEach((k,i)=>{
+      if(assigned[k])return;
+      let pick=pool[i];
+      if(used.has(pick)) pick=pool.find(p=>!used.has(p))||pool[i];
+      assigned[k]=pick;used.add(pick);
+    });
+    keys.forEach(k=>{S.swapSel[k]=assigned[k];});
+  });
+}
+// The skill currently chosen in a given swap slot.
+function swapSkill(cat,i){return S.swapSel[cat+'_'+i]||SWAP_POOLS[cat][i]||SWAP_POOLS[cat][0];}
+// Is a skill a discipline? (costs XP AND requires the matching vocation unlock)
+function isDiscipline(sk){return sk in DISCIPLINES;}
+// A discipline is locked unless the active vocation grants it.
+function isDisciplineLocked(sk){
+  if(!isDiscipline(sk))return false;
+  const voc=getVoc();
+  return !(voc&&voc.magic===DISCIPLINES[sk]);
+}
+// Has the player committed (invested points in) a skill currently sitting in a slot?
+function slotCommitted(cat,i){const sk=swapSkill(cat,i);return (S.skills[sk]||0)>0;}
 
 function calcSpent(){
   let s=0;
@@ -578,7 +632,7 @@ function buildSkills(){
   // Prereq info banner
   if(S.vocation!=='none'&&S.knowledgeSubtype){
     const pBanner=document.createElement('div');pBanner.className='prereq-banner';
-    pBanner.innerHTML=`<i class="ti ti-info-circle" style="font-size:13px;vertical-align:-2px;margin-right:5px;color:#185FA5" aria-hidden="true"></i><b style="color:var(--color-text-primary)">Vocation prereqs applied:</b> Knowledge (${S.knowledgeSubtype}) at 1 pt minimum + Read/Write at 1 pt minimum. You can invest more points in either at any time. Light-Soul also requires Faith > 0.`;
+    pBanner.innerHTML=`<i class="ti ti-info-circle" style="font-size:13px;vertical-align:-2px;margin-right:5px;color:#185FA5" aria-hidden="true"></i><b style="color:var(--color-text-primary)">Vocation prereqs applied:</b> Knowledge (${S.knowledgeSubtype}) at 1 pt minimum + Read/Write at 1 pt minimum. You can invest more points in either at any time. Light-Soul also requires Devotion > 0.`;
     body.appendChild(pBanner);
   } else {
     const notice=document.createElement('div');
@@ -587,51 +641,84 @@ function buildSkills(){
     body.appendChild(notice);
   }
 
-  Object.entries(SKS).forEach(([cat,skills])=>{
+  initSwapSel();
+  Object.keys(CORE_SKS).forEach(cat=>{
     const sec=document.createElement('div');sec.className='sk-sec';
-    sec.innerHTML=`<div class="sk-head"><span>${cat}</span><span style="font-weight:normal;text-transform:none;font-size:9px">→ ${cat} stat</span></div>`;
-    skills.forEach(sk=>{
+    sec.innerHTML=`<div class="sk-head"><span>${cat}</span><span style="font-weight:normal;text-transform:none;font-size:9px">3 core + 3 swap → ${cat} stat</span></div>`;
+
+    // helper to render one skill row (core or chosen-swap)
+    const renderRow=(sk,opts)=>{
+      opts=opts||{};
       const {locked,reason}=isSkillLocked(sk);
-      if(locked&&S.skills[sk])delete S.skills[sk];
-      const pts=locked?0:(S.skills[sk]||0);
+      const discLocked=isDisciplineLocked(sk);
+      const fullLocked=locked||discLocked;
+      const lockReason=discLocked?'Requires '+sk+' vocation':reason;
+      if(fullLocked&&S.skills[sk])delete S.skills[sk];
+      const pts=fullLocked?0:(S.skills[sk]||0);
       const base=costs[sk]||0;
-      const isPre=arch&&!S.skillsReset&&sk in arch.skills&&arch.skills[sk]>0&&!locked;
-      const isReq=isPrereqSkill(sk)&&!locked;
+      const isPre=arch&&!S.skillsReset&&sk in arch.skills&&arch.skills[sk]>0&&!fullLocked;
+      const isReq=isPrereqSkill(sk)&&!fullLocked;
       const nextCost=base*(pts+1);
       const bon=SK_BONUS[sk]&&pts>0?SK_BONUS[sk](pts):'';
-      // Prereq skills: can still invest more but minimum is locked at 1
       const isAtPrereqMin=isReq&&pts<=1;
+      const discTag=isDiscipline(sk)?`<span class="badge" style="background:#3D1A6E;color:#fff">discipline</span>`:'';
 
       const row=document.createElement('div');
-      row.className='sk-row'+(locked?' locked':isPre?' preloaded':isReq?' prereq':'');
+      row.className='sk-row'+(fullLocked?' locked':isPre?' preloaded':isReq?' prereq':'');
+      const ctrl=opts.swap?`<div class="sk-swapsel">${opts.selectEl}</div>`:'';
       row.innerHTML=`<div class="sk-lbl">
-        <div class="sk-nm">${sk}
+        <div class="sk-nm">${opts.swap?'':sk} ${opts.swap?opts.selectEl:''}
+          ${opts.swap?'':discTag}
           ${isPre?`<span class="badge arch">★ ×${arch.skills[sk]}</span>`:''}
           ${isReq?`<span class="badge prereq"><i class="ti ti-info-circle" style="font-size:9px" aria-hidden="true"></i> vocation req.</span>`:''}
-          ${locked?`<span class="badge lock"><i class="ti ti-lock" style="font-size:9px" aria-hidden="true"></i> ${reason}</span>`:''}
+          ${fullLocked?`<span class="badge lock"><i class="ti ti-lock" style="font-size:9px" aria-hidden="true"></i> ${lockReason}</span>`:''}
         </div>
-        <div class="sk-ct">${locked?reason:isReq&&isAtPrereqMin?`Min 1 required · next ${nextCost} XP`:`Base ${base} · next ${nextCost} XP`}</div>
+        <div class="sk-ct">${fullLocked?lockReason:isReq&&isAtPrereqMin?`Min 1 required · next ${nextCost} XP`:`Base ${base} · next ${nextCost} XP`}</div>
       </div>
       <div class="sk-ctrl">
-        <button class="skb" onclick="adjSk('${sk}',-1)" aria-label="Remove">−</button>
+        <button class="skb" onclick="adjSk('${sk}',-1)" aria-label="Remove" ${fullLocked?'disabled':''}>−</button>
         <div class="sk-pts" id="p_${sk.replace(/\W/g,'_')}">${pts}</div>
-        <button class="skb" onclick="adjSk('${sk}',1)" aria-label="Add">+</button>
+        <button class="skb" onclick="adjSk('${sk}',1)" aria-label="Add" ${fullLocked?'disabled':''}>+</button>
       </div>
       <div class="sk-bon" id="b_${sk.replace(/\W/g,'_')}">${bon}</div>`;
-      sec.appendChild(row);
-    });
+      return row;
+    };
+
+    // 3 locked CORE skills
+    CORE_SKS[cat].forEach(sk=>sec.appendChild(renderRow(sk,{})));
+
+    // 3 SWAP slots — each a dropdown picking from the pool
+    for(let i=0;i<3;i++){
+      const chosen=swapSkill(cat,i);
+      const committed=slotCommitted(cat,i);
+      const pool=SWAP_POOLS[cat];
+      const optsHtml=pool.map(o=>`<option value="${o}"${o===chosen?' selected':''}>${o}${isDiscipline(o)?' ◇':''}</option>`).join('');
+      const sel=`<select class="sk-swap" onchange="changeSwap('${cat}',${i},this.value)" ${committed?'disabled title="Committed — reset to change"':''}>${optsHtml}</select>`;
+      sec.appendChild(renderRow(chosen,{swap:true,selectEl:sel,slot:i}));
+    }
     body.appendChild(sec);
   });
 }
 function resetSkills(){
-  // When resetting, re-apply prereqs so they don't get wiped
+  // When resetting, re-apply prereqs and reset swap selections to pool defaults
   S.skills={};
+  S.swapSel={};
+  initSwapSel();
   applyVocPrereqs(S.vocation);
   S.skillsReset=true;
   buildSkills();
 }
+// Change a swap slot's selection. Only allowed while uncommitted (0 points in current pick).
+function changeSwap(cat,i,newSk){
+  if(slotCommitted(cat,i))return;            // sealed once invested
+  // Prevent duplicate skill across slots in the same characteristic
+  for(let j=0;j<3;j++){ if(j!==i && swapSkill(cat,j)===newSk){ buildSkills(); return; } }
+  S.swapSel[cat+'_'+i]=newSk;
+  buildSkills();
+}
 function adjSk(sk,d){
-  const {locked}=isSkillLocked(sk);if(locked)return;
+  const {locked}=isSkillLocked(sk);
+  if(locked||isDisciplineLocked(sk))return;
   const costs=SKILL_COSTS[S.race]||{};
   const cur=S.skills[sk]||0;
   const newVal=cur+d;
@@ -641,11 +728,13 @@ function adjSk(sk,d){
   if(d>0&&!canAfford(costs[sk]*(cur+1)))return;
   S.skills[sk]=newVal;
   S.skillsReset=true;
-  // Faith changed — check Light-Soul
-  if(sk==='Faith'){
+  // Devotion changed — check Light-Soul; also rebuild so swap-slot seals/unseals reflect
+  if(sk==='Devotion'){
     if(S.skills[sk]===0&&S.skills['Light-Soul']){delete S.skills['Light-Soul'];}
     buildSkills();return;
   }
+  // A swap-pool skill going to/from 0 changes its slot's committed state — full rebuild
+  if((cur===0&&newVal>0)||(cur>0&&newVal===0)){buildSkills();return;}
   const id=sk.replace(/\W/g,'_');
   const p=document.getElementById('p_'+id);const b=document.getElementById('b_'+id);
   if(p)p.textContent=S.skills[sk];
