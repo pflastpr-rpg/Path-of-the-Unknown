@@ -4074,6 +4074,11 @@ async function fetchCharacterFromCloud() {
     if (!charDropdown) return;
     const charName = charDropdown.value;
     if (!charName) { alert("Select a character first."); return; }
+    // The dropdown value is the human-readable name (e.g. "Baanon Kervarsha"),
+    // but saveData() writes files with non-alphanumerics replaced by underscores
+    // (e.g. Baanon_Kervarsha.rpg). Apply the SAME transform here so the fetched
+    // URL matches the committed filename — otherwise multi-word names 404.
+    const fileName = charName.replace(/[^a-z0-9_\-]/gi, '_');
     // Try Thrice-Marked repo first, fall back to Path-of-the-Unknown
     const repos = [
         "https://raw.githubusercontent.com/pflastpr-rpg/Thrice-Marked/main/characters/",
@@ -4083,7 +4088,7 @@ async function fetchCharacterFromCloud() {
         btn.innerText = "◎ Loading...";
         let data = null;
         for (const base of repos) {
-            const url = base + encodeURIComponent(charName) + ".rpg?v=" + Date.now();
+            const url = base + encodeURIComponent(fileName) + ".rpg?v=" + Date.now();
             try {
                 const resp = await fetch(url);
                 if (resp.ok) { data = await resp.json(); break; }
