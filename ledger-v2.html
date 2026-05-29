@@ -998,8 +998,8 @@
                 <div class="tact-item"><span class="tact-lbl">&#x1F578; Bound</span><input type="number" id="stat_bound" min="0" value="0" oninput="upd()" class="tact-inp"></div>
                 <div class="tact-item tact-rule" id="tact-rule-box" title="3+ active conditions: No Reactions">
                     <span class="tact-lbl" style="font-size:6.5pt; color:var(--gold); font-weight:900;">Rule of 3</span>
-                    <div id="tact-count" style="font-size:15pt; font-weight:900; color:var(--blood); line-height:1;">0</div>
-                    <span class="tact-lbl" style="font-size:5.5pt; color:var(--ink); opacity:0.7;">active</span>
+                    <div id="tact-count" style="font-size:15pt; font-weight:900; color:var(--gold); line-height:1;">0</div>
+                    <span class="tact-lbl" id="tact-status" style="font-size:5.5pt; color:var(--ink); opacity:0.7;">dormant</span>
                 </div>
             </div>
         </div>
@@ -2438,14 +2438,26 @@ function updateTacticalConditions() {
         if (el && (parseInt(el.value) || 0) > 0) activeCondCount++;
     });
 
-    si('tact-count', activeCondCount);
+    const overwhelmed = activeCondCount >= 3;
+
+    // Status indicator: stays dormant (0) until 3+ conditions, then lights up as Overwhelmed.
+    const countEl = g('tact-count');
+    if (countEl) {
+        countEl.textContent = overwhelmed ? activeCondCount : 0;
+        countEl.style.color = overwhelmed ? 'var(--blood)' : 'var(--gold)';
+    }
+    const statusEl = g('tact-status');
+    if (statusEl) {
+        statusEl.textContent = overwhelmed ? 'OVERWHELMED' : 'dormant';
+        statusEl.style.color = overwhelmed ? 'var(--blood)' : 'var(--ink)';
+        statusEl.style.opacity = overwhelmed ? '1' : '0.7';
+        statusEl.style.fontWeight = overwhelmed ? '900' : '400';
+    }
 
     const ruleBox = g('tact-rule-box');
     if (ruleBox) {
-        ruleBox.style.background = activeCondCount >= 3 ?
-                                   'rgba(168,24,24,0.18)' : 'rgba(2,7,14,0.06)';
-        ruleBox.style.borderColor = activeCondCount >= 3 ?
-                                    'var(--blood)' : 'var(--gold)';
+        ruleBox.style.background = overwhelmed ? 'rgba(168,24,24,0.18)' : 'rgba(2,7,14,0.06)';
+        ruleBox.style.borderColor = overwhelmed ? 'var(--blood)' : 'var(--gold)';
     }
 }
 
