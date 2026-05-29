@@ -1518,6 +1518,29 @@ const RANGED_WEAPON_STATS = {
 };
 
 const SKILL_COSTS = {
+    "Acrobatics":{halfling:15,dwarf:25,elf:20,human:20},
+    "Disguise":{halfling:15,dwarf:25,elf:20,human:15},
+    "Escapology":{halfling:10,dwarf:25,elf:20,human:20},
+    "Sleight of Hand":{halfling:15,dwarf:25,elf:20,human:20},
+    "Danger Sense":{halfling:25,dwarf:30,elf:25,human:30},
+    "Lip Reading":{halfling:15,dwarf:25,elf:20,human:15},
+    "Swift Read":{halfling:15,dwarf:20,elf:15,human:20},
+    "Deception":{halfling:20,dwarf:30,elf:25,human:20},
+    "Intimidation":{halfling:20,dwarf:15,elf:25,human:20},
+    "Performance":{halfling:25,dwarf:30,elf:20,human:20},
+    "Seduction":{halfling:25,dwarf:35,elf:20,human:20},
+    "Alchemy":{halfling:20,dwarf:20,elf:25,human:20},
+    "Engineering":{halfling:30,dwarf:20,elf:30,human:25},
+    "Medicine":{halfling:20,dwarf:25,elf:25,human:20},
+    "Navigation":{halfling:25,dwarf:30,elf:20,human:20},
+    "Brawling":{halfling:25,dwarf:20,elf:30,human:20},
+    "Climbing":{halfling:15,dwarf:25,elf:15,human:20},
+    "Endurance":{halfling:25,dwarf:20,elf:30,human:25},
+    "Swimming":{halfling:20,dwarf:30,elf:15,human:15},
+    "Meditation":{halfling:25,dwarf:30,elf:20,human:25},
+    "Oathkeeper":{halfling:25,dwarf:20,elf:25,human:25},
+    "Pain Tolerance":{halfling:35,dwarf:25,elf:40,human:30},
+    "Willpower Reserve":{halfling:20,dwarf:20,elf:20,human:20},
     "Acute Senses":{halfling:15,dwarf:20,elf:20,human:25},
     "Authority":{dwarf:15,elf:15,human:15,halfling:20},
     "Athletics":{elf:20,human:25,dwarf:30,halfling:30},
@@ -1873,7 +1896,7 @@ function extractSkillPoints(skillName, pts, state) {
     const woundBonuses = {
         "Hard as Nails": 2, "Survival": 1, "Stamina": 1, "Strength Con.": 2,
         "Iron Will": 2, "Fortitude": 10, "Rugged": 2, "Discipline": 1, "Resolve": 1,
-        "Endurance": 1, "Pain Tolerance": 1, "Oathkeeper": 1, "Brawling": 1
+        "Endurance": 1, "Pain Tolerance": 2, "Oathkeeper": 1, "Brawling": 1
     };
 
     if (woundBonuses[skillName]) state.woundSkillBonuses += pts * woundBonuses[skillName];
