@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE PROVING — Thrice-Marked Rules Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;600;700;900&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blood:#8B1010; --blood2:#b01818;
+  --gold:#8a6a1a; --gold2:#c9a030;
+  --parch:#faf3e0; --parch2:#f0e6cc; --parch3:#ddc898;
+  --iron:#1a1208; --iron2:#241a0d;
+  --ink:#1a1208; --ink-soft:#473a25;
+  --green:#3a6b35; --green2:#4e8a46;
+  --f-deco:'Cinzel Decorative',serif;
+  --f-head:'Grenze Gotisch',serif;
+  --f-body:'IM Fell English',serif;
+  --f-label:'Cinzel',serif;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  background:var(--iron);
+  background-image:radial-gradient(ellipse at 50% 0%, #2a1e0e 0%, var(--iron) 70%);
+  color:var(--parch); font-family:var(--f-body); min-height:100vh;
+  padding:0 0 60px;
+}
+.wrap{max-width:780px; margin:0 auto; padding:0 20px;}
+
+/* Header */
+header{
+  text-align:center; padding:38px 20px 26px; border-bottom:3px solid var(--gold);
+  background:linear-gradient(180deg, var(--iron2), transparent);
+  position:relative;
+}
+header::after{content:""; position:absolute; left:0; right:0; bottom:-3px; height:3px;
+  background:linear-gradient(90deg,transparent,var(--blood),transparent);}
+.kicker{font-family:var(--f-label); font-size:9pt; letter-spacing:6px; color:var(--blood2); text-transform:uppercase; margin-bottom:6px;}
+h1{font-family:var(--f-deco); font-size:38pt; font-weight:900; color:var(--gold2); line-height:1; letter-spacing:2px; text-shadow:0 2px 0 #000;}
+.sub{font-family:var(--f-body); font-style:italic; color:var(--parch3); margin-top:10px; font-size:12pt;}
+
+/* Intro / setup card */
+.card{
+  background:var(--parch); color:var(--ink); border:1px solid var(--gold);
+  border-left:5px solid var(--blood); border-radius:3px; padding:24px 26px; margin:28px 0;
+  box-shadow:0 6px 24px rgba(0,0,0,0.4);
+}
+.card h2{font-family:var(--f-head); font-size:22pt; color:var(--blood); margin-bottom:10px; font-weight:700;}
+.card p{font-size:12.5pt; line-height:1.6; margin-bottom:12px;}
+.card p strong{color:var(--blood);}
+
+.mode-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:18px 0 6px;}
+.mode-btn{
+  font-family:var(--f-label); font-size:11pt; padding:14px 10px; cursor:pointer;
+  background:var(--parch2); border:2px solid var(--gold); border-radius:3px; color:var(--ink);
+  transition:all .15s; text-align:center; font-weight:600;
+}
+.mode-btn:hover{background:var(--gold2); border-color:var(--blood);}
+.mode-btn .mb-sub{display:block; font-family:var(--f-body); font-style:italic; font-size:9.5pt; color:var(--ink-soft); margin-top:4px; font-weight:400;}
+
+.start-row{display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:16px;}
+.len-select{font-family:var(--f-label); padding:10px 14px; border:2px solid var(--gold); background:var(--parch2); color:var(--ink); border-radius:3px; font-size:11pt;}
+.start-btn{
+  font-family:var(--f-label); font-weight:700; font-size:13pt; letter-spacing:1px; padding:13px 30px; cursor:pointer;
+  background:var(--blood); color:var(--parch); border:2px solid var(--blood2); border-radius:3px; transition:all .15s;
+}
+.start-btn:hover{background:var(--blood2);}
+.start-btn:active{transform:translateY(1px);}
+
+/* Quiz */
+.quiz-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;
+  font-family:var(--f-label); font-size:10.5pt; color:var(--parch3); letter-spacing:1px;}
+.prog-track{height:8px; background:var(--iron2); border:1px solid var(--gold); border-radius:5px; overflow:hidden; margin-bottom:22px;}
+.prog-fill{height:100%; background:linear-gradient(90deg,var(--blood),var(--blood2)); width:0%; transition:width .4s;}
+.q-cat{font-family:var(--f-label); font-size:9pt; letter-spacing:3px; text-transform:uppercase; color:var(--blood); margin-bottom:8px;}
+.q-text{font-family:var(--f-head); font-size:20pt; line-height:1.25; color:var(--ink); margin-bottom:20px; font-weight:600;}
+.opt{
+  display:block; width:100%; text-align:left; font-family:var(--f-body); font-size:13pt;
+  padding:14px 18px; margin-bottom:11px; cursor:pointer; color:var(--ink);
+  background:var(--parch2); border:2px solid var(--parch3); border-radius:3px; transition:all .12s; line-height:1.4;
+}
+.opt:hover:not(:disabled){border-color:var(--gold); background:#fff;}
+.opt:disabled{cursor:default;}
+.opt.correct{border-color:var(--green2); background:#e8f0e2; color:var(--green);}
+.opt.wrong{border-color:var(--blood2); background:#f5e2e2; color:var(--blood);}
+.opt .opt-key{font-family:var(--f-label); font-weight:700; margin-right:10px; color:var(--blood);}
+.opt.correct .opt-key{color:var(--green2);}
+
+.explain{
+  margin-top:6px; padding:16px 18px; border-radius:3px; font-size:12pt; line-height:1.55;
+  border-left:4px solid; display:none;
+}
+.explain.show{display:block; animation:fade .3s;}
+.explain.right{background:#e8f0e2; border-color:var(--green2); color:#27431f;}
+.explain.notright{background:#f5e2e2; border-color:var(--blood2); color:#5a1010;}
+.explain b{font-family:var(--f-label);}
+@keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.next-row{margin-top:18px; text-align:right; min-height:50px;}
+.next-btn{
+  font-family:var(--f-label); font-weight:700; font-size:12pt; letter-spacing:1px; padding:11px 26px; cursor:pointer;
+  background:var(--blood); color:var(--parch); border:2px solid var(--blood2); border-radius:3px; transition:all .15s; display:none;
+}
+.next-btn.show{display:inline-block;}
+.next-btn:hover{background:var(--blood2);}
+
+/* Results */
+.score-big{font-family:var(--f-deco); font-size:56pt; font-weight:900; color:var(--blood); text-align:center; line-height:1;}
+.score-band{font-family:var(--f-head); font-size:24pt; text-align:center; color:var(--ink); margin:6px 0 18px; font-weight:700;}
+.breakdown{margin:18px 0;}
+.bd-row{display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--parch3); font-size:12pt;}
+.bd-row .bd-cat{font-family:var(--f-label); color:var(--ink);}
+.bd-row .bd-score{font-family:var(--f-label); font-weight:700; color:var(--blood);}
+.review-toggle{font-family:var(--f-label); font-size:11pt; color:var(--blood); cursor:pointer; text-decoration:underline; margin-top:8px; display:inline-block;}
+.review{margin-top:16px; display:none;}
+.review.show{display:block;}
+.rev-item{padding:12px 0; border-bottom:1px solid var(--parch3); font-size:11.5pt; line-height:1.5;}
+.rev-q{font-family:var(--f-head); font-size:13pt; color:var(--ink); margin-bottom:4px;}
+.rev-mark{font-family:var(--f-label); font-weight:700; margin-right:6px;}
+.rev-mark.ok{color:var(--green2);} .rev-mark.no{color:var(--blood2);}
+
+.footer{text-align:center; font-family:var(--f-label); font-size:8.5pt; letter-spacing:3px; color:var(--parch3); opacity:.6; margin-top:30px; text-transform:uppercase;}
+.hidden{display:none;}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">Thrice-Marked &middot; Trial of Knowledge</div>
+  <h1>The Proving</h1>
+  <div class="sub">Learn the laws of iron, the arcane, and the coin &mdash; one question at a time.</div>
+</header>
+
+<div class="wrap">
+  <!-- SETUP -->
+  <div id="setup" class="card">
+    <h2>Choose Your Trial</h2>
+    <p>Test your command of the rules. Each question explains the <strong>why</strong>, so a wrong answer still teaches. Pick a discipline of study, or take the <strong>Full Gauntlet</strong> across all of them.</p>
+    <div class="mode-grid" id="modeGrid"></div>
+    <div class="start-row">
+      <select class="len-select" id="lenSelect">
+        <option value="5">Short &mdash; 5 questions</option>
+        <option value="10" selected>Standard &mdash; 10 questions</option>
+        <option value="0">All available</option>
+      </select>
+      <button class="start-btn" id="startBtn">Begin the Proving</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="card hidden">
+    <div class="quiz-head"><span id="qCount">Question 1</span><span id="qScore">Correct: 0</span></div>
+    <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+    <div class="q-cat" id="qCat"></div>
+    <div class="q-text" id="qText"></div>
+    <div id="optWrap"></div>
+    <div class="explain" id="explain"></div>
+    <div class="next-row"><button class="next-btn" id="nextBtn">Next &rarr;</button></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card hidden">
+    <div class="score-big" id="scoreBig">0%</div>
+    <div class="score-band" id="scoreBand"></div>
+    <div class="breakdown" id="breakdown"></div>
+    <span class="review-toggle" id="reviewToggle">Review every question &darr;</span>
+    <div class="review" id="review"></div>
+    <div class="start-row" style="margin-top:22px;">
+      <button class="start-btn" id="againBtn">Take Another Trial</button>
+    </div>
+  </div>
+
+  <div class="footer">The Proving &middot; Knowledge Is The First Weapon</div>
+</div>
+
+<script>
+/* ─── QUESTION BANK (all answers verified against core-rules) ─── */
+const BANK = [
+  // ===== CASTING / ARCANE =====
+  {cat:'Arcane', q:'A spell has a Target Number of 8. What does it cost to cast, and how many dice do you roll?', opts:[
+    '1 AP, 1d10','2 AP, 2d10','3 AP, 3d10','2 AP, 1d10'], a:1,
+    why:'TN 7–9 sits in the <b>2 Action Points / 2d10</b> band. The casting framework scales AP and dice together as TN rises.'},
+  {cat:'Arcane', q:'What is the casting cost and dice pool for a TN 1–3 cantrip?', opts:[
+    '1 AP, roll 1d10 normally','1 AP, roll 1d10 at Disadvantage','Free, roll 1d10','2 AP, 2d10'], a:1,
+    why:'TN 1–3 is <b>1 AP, 1d10 at Disadvantage</b> — these are fledgling efforts, the weakest band.'},
+  {cat:'Arcane', q:'A spell of TN 19 or higher requires how many Action Points?', opts:[
+    '5 AP','6 AP','4 AP','7 AP'], a:1,
+    why:'TN 19+ is the top band: <b>6 AP and 6d10</b>. It is the most a caster can safely draw.'},
+  {cat:'Arcane', q:'You spend 1 extra AP beyond a spell\u2019s baseline cost. What does that buy you?', opts:[
+    'An extra target automatically','One enhancement from the Overcast Menu','Double the dice','Nothing; AP cannot be overspent'], a:1,
+    why:'Every additional 1 AP beyond baseline lets you select one enhancement from the <b>Overcast Menu</b>. The TN caps how much you can safely draw.'},
+  {cat:'Arcane', q:'How does heavy armour affect spellcasting?', opts:[
+    'No effect if you are proficient','It imposes severe penalties to To-Cast rolls','It only affects Devotion','It halves your dice pool'], a:1,
+    why:'<b>Iron blinds the arcane</b> — heavy armour imposes severe To-Cast penalties. Consult the Arcane Interference laws before caging a caster in plate.'},
+
+  // ===== COMBAT =====
+  {cat:'Combat', q:'You act in a reaction outside your own turn. What penalty applies to your To-Hit or To-Cast?', opts:[
+    '-1','-2','-4','None'], a:1,
+    why:'The <b>Reaction Penalty is -2</b> — acting in the chaotic fraction of a second outside your turn is harder.'},
+  {cat:'Combat', q:'How can a character ignore the Reaction Penalty entirely?', opts:[
+    'By having 6+ points in Discipline','By being proficient with their weapon','By spending 1 extra AP','It can never be ignored'], a:0,
+    why:'A mind forged with <b>6 or more points in the Discipline skill</b> ignores the Reaction Penalty completely.'},
+  {cat:'Combat', q:'You wield a weapon outside your Combat training. What happens?', opts:[
+    'Disadvantage to hit and to wound','-2 to hit only','You cannot use it at all','Half damage'], a:0,
+    why:'Wielding outside your proficiency imposes <b>Disadvantage on both the attempt to hit and to wound</b>. It is a fool\u2019s gamble.'},
+  {cat:'Combat', q:'A Two-Handed weapon changes your wound output how?', opts:[
+    'Adds your Awareness modifier','Doubles your Physique modifier on wounds','Triples Physique','Adds a flat +5'], a:1,
+    why:'Gripping with both hands <b>doubles your Physique modifier to wounds</b>, at the cost of 2 AP per strike. This is a legitimate type identity.'},
+  {cat:'Combat', q:'A ranged attack is made against a target behind partial cover. What do they gain?', opts:[
+    'Nothing; cover is cosmetic','Attacks against them suffer Disadvantage','+2 Defense','Immunity to the first hit'], a:1,
+    why:'<b>Small Target</b>: ranged attacks against a creature behind any cover, however partial, suffer Disadvantage.'},
+
+  // ===== CHARACTERISTICS =====
+  {cat:'Characteristics', q:'Your Physique characteristic is 14. What is your Physique modifier?', opts:[
+    '+1','+2','+3','+14'], a:1,
+    why:'The modifier is <b>floor(stat \u00f7 5)</b>. 14 \u00f7 5 = 2.8, floored to <b>+2</b>. The raw characteristic is the big number; the modifier is what you add to rolls.'},
+  {cat:'Characteristics', q:'A stat of 20 gives what modifier?', opts:[
+    '+3','+4','+5','+2'], a:1,
+    why:'floor(20 \u00f7 5) = <b>+4</b>. Every full 5 points of a characteristic grants +1 to its modifier.'},
+  {cat:'Characteristics', q:'How many Skill Points must you invest to raise a characteristic by 1 point?', opts:[
+    '1','2','3','5'], a:2,
+    why:'Characteristics grow <b>+1 per 3 Skill Points</b> invested. The raw value climbs slowly; modifiers climb slower still.'},
+  {cat:'Characteristics', q:'Which characteristic governs the accuracy of ranged combat?', opts:[
+    'Agility','Awareness','Physique','Intellect'], a:1,
+    why:'<b>Awareness</b> governs the terrifying accuracy of ranged attacks — it is the archer\u2019s and gunner\u2019s prime characteristic.'},
+  {cat:'Characteristics', q:'How many core characteristics does a character have?', opts:[
+    'Five','Six','Seven','Four'], a:1,
+    why:'Six: <b>Physique, Agility, Awareness, Intellect, Willpower, Charisma</b>.'},
+
+  // ===== CONDITIONS =====
+  {cat:'Conditions', q:'Which condition causes ongoing wounds each turn until treated?', opts:[
+    'Shaken','Bleed','Prone','Stunned'], a:1,
+    why:'<b>Bleed</b> deals recurring wounds over time. It is cleared by healing effects such as a Draught of Mending.'},
+  {cat:'Conditions', q:'A creature is Prone. What is the most accurate consequence?', opts:[
+    'It cannot cast spells','It is knocked to the ground and must spend effort to rise','It loses all AP','It is asleep'], a:1,
+    why:'<b>Prone</b> means knocked to the ground — rising costs movement/action, and the creature is more vulnerable while down.'},
+  {cat:'Conditions', q:'Which condition primarily represents fear-shock that hurts a creature\u2019s effectiveness?', opts:[
+    'Shaken','Poisoned','Exhausted','Bound'], a:0,
+    why:'<b>Shaken</b> is the fear/morale condition. Steadying effects remove it; Fear-immune gear wards against it.'},
+  {cat:'Conditions', q:'A Whip or Lasso that succeeds against a failed Agility test inflicts which condition?', opts:[
+    'Stunned','Bound','Blind','Bleed'], a:1,
+    why:'<b>Entangling</b>: on a failed Agility test the target is <b>Bound</b>, and the attacker chooses which limb is snared.'},
+
+  // ===== CURRENCY / ECONOMY =====
+  {cat:'Economy', q:'How many Iron Pennies make one Gold Crown?', opts:[
+    '10','50','100','1000'], a:2,
+    why:'The Gold Crown is the base unit, worth <b>100 Iron Pennies</b>. The Silver Mark sits between them.'},
+  {cat:'Economy', q:'What is a Silver Mark worth relative to a Gold Crown?', opts:[
+    'One half','One tenth','One hundredth','Twice as much'], a:1,
+    why:'A Silver Mark is <b>one tenth of a Gold Crown</b> (so ten Marks to a Crown, ten Pennies to a Mark).'},
+
+  // ===== WEAPONS =====
+  {cat:'Weapons', q:'After the rules cleanup, does a Blunt weapon ignore Wound Mitigation just for being Blunt?', opts:[
+    'Yes, it ignores 1 point','No — no weapon gets damage perks purely by type now','Only vs leather','Only on a natural 10'], a:1,
+    why:'That type-based perk was <b>removed</b>. No weapon grants special damage bonuses purely by class now — except genuine stat-scaling identities like Lance and Two-Handed.'},
+  {cat:'Weapons', q:'A Lance used in a mounted charge multiplies which characteristic?', opts:[
+    'Physique \u00d72','Physique \u00d73','Agility \u00d73','Awareness \u00d72'], a:1,
+    why:'The Lance uses <b>Physique \u00d73</b> on a mounted charge — a legitimate, documented type identity (it also costs 2 AP and requires a mount).'},
+  {cat:'Weapons', q:'How much Physique modifier do thrown weapons (Throwing/Javelin) add to wounds?', opts:[
+    'Full Physique modifier','Half your Physique modifier','Triple Physique','None'], a:1,
+    why:'Brutal Arc adds <b>half your Physique modifier</b> to wounds — the rules text was corrected to match how the ledger computes it.'},
+  {cat:'Weapons', q:'A Longbow\u2019s Recurve trait does what?', opts:[
+    'Adds fire damage','Reduces the target\u2019s armour mitigation by half, up to half range','Always hits','Ignores cover'], a:1,
+    why:'<b>Recurve</b> halves the target\u2019s armour mitigation up to half range — a penetration trait, not a flat damage bonus. The Longbow also adds Physique \u00d73 and costs 2 AP.'},
+  {cat:'Weapons', q:'Which firearm sprays a 15 Ft cone and can inflict Stunned?', opts:[
+    'Pistol','Rifle','Blunderbuss','Hand Crossbow'], a:2,
+    why:'The <b>Blunderbuss</b> fires a 15 Ft AoE cone; caught targets test Physique (DV 10) or are Stunned.'},
+];
+
+/* ─── STATE ─── */
+const CATS = [...new Set(BANK.map(q=>q.cat))];
+let selectedCat = 'All';
+let quiz = [], idx = 0, score = 0, answers = [];
+
+/* ─── SETUP UI ─── */
+const modeGrid = document.getElementById('modeGrid');
+function buildModes(){
+  const modes = [{key:'All', sub:'Full Gauntlet'}].concat(CATS.map(c=>({key:c, sub:countCat(c)+' questions'})));
+  modeGrid.innerHTML = '';
+  modes.forEach(m=>{
+    const b = document.createElement('button');
+    b.className = 'mode-btn' + (m.key===selectedCat?' active':'');
+    b.style.cssText = m.key===selectedCat ? 'background:var(--gold2);border-color:var(--blood);' : '';
+    b.innerHTML = m.key + '<span class="mb-sub">'+m.sub+'</span>';
+    b.onclick = ()=>{ selectedCat = m.key; buildModes(); };
+    modeGrid.appendChild(b);
+  });
+}
+function countCat(c){ return BANK.filter(q=>q.cat===c).length; }
+buildModes();
+
+function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+
+document.getElementById('startBtn').onclick = startQuiz;
+document.getElementById('againBtn').onclick = ()=>{ show('setup'); };
+
+function startQuiz(){
+  let pool = selectedCat==='All' ? BANK.slice() : BANK.filter(q=>q.cat===selectedCat);
+  pool = shuffle(pool.slice());
+  let len = parseInt(document.getElementById('lenSelect').value,10);
+  if(len>0 && len<pool.length) pool = pool.slice(0,len);
+  // shuffle options within each question, tracking correct index
+  quiz = pool.map(q=>{
+    const order = shuffle(q.opts.map((_,i)=>i));
+    return {cat:q.cat, q:q.q, why:q.why,
+      opts: order.map(i=>q.opts[i]),
+      a: order.indexOf(q.a)};
+  });
+  idx=0; score=0; answers=[];
+  show('quiz'); renderQ();
+}
+
+/* ─── QUIZ RENDER ─── */
+const optWrap=document.getElementById('optWrap');
+const explain=document.getElementById('explain');
+const nextBtn=document.getElementById('nextBtn');
+const KEYS=['A','B','C','D','E'];
+
+function renderQ(){
+  const item = quiz[idx];
+  document.getElementById('qCount').textContent = 'Question '+(idx+1)+' / '+quiz.length;
+  document.getElementById('qScore').textContent = 'Correct: '+score;
+  document.getElementById('progFill').style.width = (idx/quiz.length*100)+'%';
+  document.getElementById('qCat').textContent = item.cat;
+  document.getElementById('qText').textContent = item.q;
+  explain.className='explain'; explain.innerHTML='';
+  nextBtn.className='next-btn';
+  optWrap.innerHTML='';
+  item.opts.forEach((text,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML='<span class="opt-key">'+KEYS[i]+'</span>'+text;
+    b.onclick=()=>choose(i,b);
+    optWrap.appendChild(b);
+  });
+}
+
+function choose(i,btn){
+  const item=quiz[idx];
+  const correct = i===item.a;
+  if(correct) score++;
+  answers.push({q:item.q, correct, picked:item.opts[i], right:item.opts[item.a], why:item.why, cat:item.cat});
+  // lock all options, mark
+  [...optWrap.children].forEach((b,bi)=>{
+    b.disabled=true;
+    if(bi===item.a) b.classList.add('correct');
+    else if(bi===i) b.classList.add('wrong');
+  });
+  explain.className='explain show '+(correct?'right':'notright');
+  explain.innerHTML = (correct?'<b>Correct.</b> ':'<b>Not quite.</b> ')+item.why;
+  document.getElementById('qScore').textContent='Correct: '+score;
+  nextBtn.classList.add('show');
+  nextBtn.textContent = (idx===quiz.length-1)?'See Results \u2192':'Next \u2192';
+}
+
+nextBtn.onclick=()=>{
+  idx++;
+  if(idx>=quiz.length) showResults();
+  else renderQ();
+};
+
+/* ─── RESULTS ─── */
+function showResults(){
+  show('results');
+  const pct = Math.round(score/quiz.length*100);
+  document.getElementById('scoreBig').textContent = score+' / '+quiz.length;
+  let band;
+  if(pct===100) band='Flawless &mdash; A Master of the Law';
+  else if(pct>=80) band='Seasoned &mdash; You Know Your Craft';
+  else if(pct>=60) band='Proven &mdash; Solid Footing';
+  else if(pct>=40) band='Initiate &mdash; Keep Studying';
+  else band='Unmarked &mdash; The Trial Awaits Again';
+  document.getElementById('scoreBand').innerHTML = band + ' &middot; '+pct+'%';
+  // breakdown by category
+  const byCat={};
+  answers.forEach(a=>{ if(!byCat[a.cat]) byCat[a.cat]={c:0,t:0}; byCat[a.cat].t++; if(a.correct) byCat[a.cat].c++; });
+  const bd=document.getElementById('breakdown'); bd.innerHTML='';
+  Object.entries(byCat).forEach(([cat,v])=>{
+    const r=document.createElement('div'); r.className='bd-row';
+    r.innerHTML='<span class="bd-cat">'+cat+'</span><span class="bd-score">'+v.c+' / '+v.t+'</span>';
+    bd.appendChild(r);
+  });
+  // review
+  const rev=document.getElementById('review'); rev.innerHTML=''; rev.className='review';
+  answers.forEach((a,i)=>{
+    const d=document.createElement('div'); d.className='rev-item';
+    d.innerHTML='<div class="rev-q"><span class="rev-mark '+(a.correct?'ok':'no')+'">'+(a.correct?'\u2713':'\u2717')+'</span>'+(i+1)+'. '+a.q+'</div>'+
+      (a.correct?'':'<div style="color:var(--blood);font-size:11pt;margin:2px 0;">You chose: '+a.picked+'</div>')+
+      '<div style="color:var(--green);font-size:11pt;margin:2px 0;">Answer: '+a.right+'</div>'+
+      '<div style="color:var(--ink-soft);font-size:11pt;font-style:italic;">'+a.why.replace(/<\/?b>/g,'')+'</div>';
+    rev.appendChild(d);
+  });
+}
+document.getElementById('reviewToggle').onclick=function(){
+  const r=document.getElementById('review');
+  r.classList.toggle('show');
+  this.innerHTML = r.classList.contains('show')?'Hide review &uarr;':'Review every question &darr;';
+};
+
+/* ─── VIEW SWITCH ─── */
+function show(which){
+  ['setup','quiz','results'].forEach(id=>{
+    document.getElementById(id).classList.toggle('hidden', id!==which);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
