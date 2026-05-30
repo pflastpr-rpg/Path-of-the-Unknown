@@ -2111,7 +2111,7 @@ function calculateRangeCombat(state, stats, armorData, wMult) {
         else { rStat = stats.awareness + (stats.agility * rAct); }
 
         if (rType === "Bow" || rType === "Shortbow") rStat += stats.physique;
-        else if (rType === "Longbow") rStat += stats.physique * 3;
+        else if (rType === "Longbow") rStat += stats.physique * 2;
 
         const total = rStat + dmgBonus + pStrikeBonus + athBonus;
         if (idx === 0) fRange1 = total; else fRange2 = total;
