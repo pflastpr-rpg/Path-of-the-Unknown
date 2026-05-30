@@ -193,6 +193,7 @@ tr[data-tier="Cursed"] .td-name{border-left:3px solid var(--t-cursed);}
         <option value="discipline">Discipline Relics</option>
         <option value="tomes">Tomes &amp; Grimoires</option>
         <option value="trinkets">Trinkets &amp; Curios</option>
+        <option value="enchanted">Enchanted Arms &amp; Armour</option>
         <option value="cursed">Cursed (GM)</option>
       </select>
       <button class="roll-btn" onclick="rollItem()">Roll d100</button>
@@ -247,66 +248,17 @@ const TIER_COLORS = {
    Master routing: d100 -> category (weighted)
 */
 const MASTER = [
-  {
-    lo: 1,
-    hi: 15,
-    cat: "melee",
-    label: "Melee Weapons"
-  },
-  {
-    lo: 16,
-    hi: 28,
-    cat: "ranged",
-    label: "Ranged Weapons"
-  },
-  {
-    lo: 29,
-    hi: 43,
-    cat: "armor",
-    label: "Armor & Shields"
-  },
-  {
-    lo: 44,
-    hi: 59,
-    cat: "potions",
-    label: "Potions & Consumables"
-  },
-  {
-    lo: 60,
-    hi: 70,
-    cat: "wondrous",
-    label: "Wondrous & Utility"
-  },
-  {
-    lo: 71,
-    hi: 79,
-    cat: "rings",
-    label: "Rings, Amulets & Charms"
-  },
-  {
-    lo: 80,
-    hi: 86,
-    cat: "discipline",
-    label: "Discipline Relics"
-  },
-  {
-    lo: 87,
-    hi: 92,
-    cat: "tomes",
-    label: "Tomes & Grimoires"
-  },
-  {
-    lo: 93,
-    hi: 97,
-    cat: "trinkets",
-    label: "Trinkets & Curios"
-  },
-  {
-    lo: 98,
-    hi: 100,
-    cat: "cursed",
-    label: "Cursed Relic (GM)"
-  }
+  { lo: 1, hi: 13, cat: "melee", label: "Melee Weapons" },
+  { lo: 14, hi: 24, cat: "ranged", label: "Ranged Weapons" },
+  { lo: 25, hi: 37, cat: "armor", label: "Armor & Shields" },
+  { lo: 38, hi: 50, cat: "enchanted", label: "Enchanted Arms & Armour" },
+  { lo: 51, hi: 64, cat: "potions", label: "Potions & Consumables" },
+  { lo: 65, hi: 73, cat: "wondrous", label: "Wondrous & Utility" },
+  { lo: 74, hi: 81, cat: "rings", label: "Rings, Amulets & Charms" },
+  { lo: 82, hi: 87, cat: "discipline", label: "Discipline Relics" },
+  { lo: 88, hi: 92, cat: "tomes", label: "Tomes & Grimoires" },
+  { lo: 93, hi: 97, cat: "trinkets", label: "Trinkets & Curios" },
+  { lo: 98, hi: 100, cat: "cursed", label: "Cursed Relic (GM)" }
 ];
 
 const DATA = {
@@ -648,6 +600,75 @@ const DATA = {
       {lo:91,hi:94,tier:'Legendary',name:'The Horn of the Mustered Dead',meta:'Charm (folklore)',desc:'Sound it once, ever, and the honored dead of the nearest battlefield rise to fight for you for one battle, then return to rest. The horn cracks and falls silent forever after. Use it for something worth the dead’s last march.',price:'2,300 Crown'},
       {lo:95,hi:99,tier:'Legendary',name:'Sand from the Hourless Glass',meta:'Curio',desc:'A pinch of grey sand. Cast it to stop time for everyone but you for the span of three breaths (three of your turns), once. The grains are gone after.',price:'2,600 Crown'},
       {lo:100,hi:100,tier:'Artifact',name:'The Coin of Khugron',meta:'Artifact charm (Khugron)',desc:'A black coin taken from the hoard beneath Khugron. Spend it — once — to undo the last minute as though it never happened, with only you remembering. The coin then vanishes to the next hoard it chooses, somewhere in the world. Some say there has only ever been one. <em>Unique.</em>',price:'Priceless'},
+    ]
+  },
+  enchanted: {
+    title:'Enchanted Arms & Armour', icon:'\u2694',
+    blurb:"The reliable magic of the working soldier — no flaming blades or singing bows, just dependable enchantment. A weapon’s bonus applies to BOTH To-Hit and Wounds; armour and shields add their bonus to Defense. By the enchanter’s convention, +1 is Common-grade, +2 Rare, +3 Legendary. Roll d100.",
+    items:[
+      {lo:1,hi:2,tier:'Common',name:'Longsword +1',meta:'Melee',desc:'A finely enchanted longsword. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:3,hi:4,tier:'Common',name:'Mace +1',meta:'Melee',desc:'A finely enchanted mace. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:5,hi:6,tier:'Common',name:'Axe +1',meta:'Melee',desc:'A finely enchanted axe. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:7,hi:8,tier:'Common',name:'Spear +1',meta:'Melee',desc:'A finely enchanted spear. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:9,hi:10,tier:'Common',name:'Dagger +1',meta:'Melee',desc:'A finely enchanted dagger. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:11,hi:12,tier:'Common',name:'Shortsword +1',meta:'Melee',desc:'A finely enchanted shortsword. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:13,hi:14,tier:'Common',name:'Warhammer +1',meta:'Melee',desc:'A finely enchanted warhammer. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:15,hi:16,tier:'Common',name:'Greataxe +1',meta:'Melee',desc:'A finely enchanted greataxe. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:17,hi:18,tier:'Common',name:'Greatsword +1',meta:'Melee',desc:'A finely enchanted greatsword. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:19,hi:20,tier:'Common',name:'Halberd +1',meta:'Melee',desc:'A finely enchanted halberd. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:21,hi:22,tier:'Common',name:'Shortbow +1',meta:'Ranged',desc:'A finely enchanted shortbow. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:23,hi:24,tier:'Common',name:'Longbow +1',meta:'Ranged',desc:'A finely enchanted longbow. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:25,hi:26,tier:'Common',name:'Hand Crossbow +1',meta:'Ranged',desc:'A finely enchanted hand crossbow. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:27,hi:28,tier:'Common',name:'Pistol +1',meta:'Ranged',desc:'A finely enchanted pistol. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:29,hi:30,tier:'Common',name:'Padded / Cloth +1',meta:'Armour',desc:'Warded padded / cloth armour. Grants <strong>+1 Defense</strong> (harder to hit), stacking with its normal Wound Mitigation. No casting penalty beyond the base type’s.',price:'85 Crown'},
+      {lo:31,hi:32,tier:'Common',name:'Leather +1',meta:'Armour',desc:'Warded leather armour. Grants <strong>+1 Defense</strong> (harder to hit), stacking with its normal Wound Mitigation. No casting penalty beyond the base type’s.',price:'85 Crown'},
+      {lo:33,hi:34,tier:'Common',name:'Studded Leather +1',meta:'Armour',desc:'Warded studded leather armour. Grants <strong>+1 Defense</strong> (harder to hit), stacking with its normal Wound Mitigation. No casting penalty beyond the base type’s.',price:'85 Crown'},
+      {lo:35,hi:37,tier:'Common',name:'Buckler +1',meta:'Shield',desc:'An enchanted buckler. Grants <strong>+1 Defense</strong> on top of the shield’s normal bonus.',price:'85 Crown'},
+      {lo:38,hi:40,tier:'Common',name:'Light Shield +1',meta:'Shield',desc:'An enchanted light shield. Grants <strong>+1 Defense</strong> on top of the shield’s normal bonus.',price:'85 Crown'},
+      {lo:41,hi:41,tier:'Uncommon',name:'Battleaxe +1',meta:'Melee',desc:'A finely enchanted battleaxe. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:42,hi:42,tier:'Uncommon',name:'Club +1',meta:'Melee',desc:'A finely enchanted club. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:43,hi:43,tier:'Uncommon',name:'Flail +1',meta:'Melee',desc:'A finely enchanted flail. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:44,hi:44,tier:'Uncommon',name:'Glaive +1',meta:'Melee',desc:'A finely enchanted glaive. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:45,hi:45,tier:'Uncommon',name:'Lance +1',meta:'Melee',desc:'A finely enchanted lance. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:46,hi:46,tier:'Uncommon',name:'Maul +1',meta:'Melee',desc:'A finely enchanted maul. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:47,hi:47,tier:'Uncommon',name:'Morningstar +1',meta:'Melee',desc:'A finely enchanted morningstar. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:48,hi:48,tier:'Uncommon',name:'Rapier +1',meta:'Melee',desc:'A finely enchanted rapier. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:49,hi:50,tier:'Uncommon',name:'Staff +1',meta:'Melee',desc:'A finely enchanted staff. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:51,hi:52,tier:'Uncommon',name:'Whip +1',meta:'Melee',desc:'A finely enchanted whip. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:53,hi:54,tier:'Uncommon',name:'Heavy Crossbow +1',meta:'Ranged',desc:'A finely enchanted heavy crossbow. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:55,hi:56,tier:'Uncommon',name:'Rifle +1',meta:'Ranged',desc:'A finely enchanted rifle. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:57,hi:58,tier:'Uncommon',name:'Blunderbuss +1',meta:'Ranged',desc:'A finely enchanted blunderbuss. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:59,hi:60,tier:'Uncommon',name:'Sling +1',meta:'Ranged',desc:'A finely enchanted sling. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:61,hi:62,tier:'Uncommon',name:'Throwing Knife +1',meta:'Ranged',desc:'A finely enchanted throwing knife. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:63,hi:64,tier:'Uncommon',name:'Javelin +1',meta:'Ranged',desc:'A finely enchanted javelin. Grants <strong>+1</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'85 Crown'},
+      {lo:65,hi:66,tier:'Uncommon',name:'Chainmail +1',meta:'Armour',desc:'Warded chainmail armour. Grants <strong>+1 Defense</strong> (harder to hit), stacking with its normal Wound Mitigation. No casting penalty beyond the base type’s.',price:'85 Crown'},
+      {lo:67,hi:68,tier:'Uncommon',name:'Banded / Splint Mail +1',meta:'Armour',desc:'Warded banded / splint mail armour. Grants <strong>+1 Defense</strong> (harder to hit), stacking with its normal Wound Mitigation. No casting penalty beyond the base type’s.',price:'85 Crown'},
+      {lo:69,hi:70,tier:'Uncommon',name:'Heavy Shield +1',meta:'Shield',desc:'An enchanted heavy shield. Grants <strong>+1 Defense</strong> on top of the shield’s normal bonus.',price:'85 Crown'},
+      {lo:71,hi:71,tier:'Rare',name:'Longsword +2',meta:'Melee',desc:'A finely enchanted longsword. Grants <strong>+2</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'400 Crown'},
+      {lo:72,hi:72,tier:'Rare',name:'Greatsword +2',meta:'Melee',desc:'A finely enchanted greatsword. Grants <strong>+2</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'400 Crown'},
+      {lo:73,hi:73,tier:'Rare',name:'Mace +2',meta:'Melee',desc:'A finely enchanted mace. Grants <strong>+2</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'400 Crown'},
+      {lo:74,hi:74,tier:'Rare',name:'Axe +2',meta:'Melee',desc:'A finely enchanted axe. Grants <strong>+2</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'400 Crown'},
+      {lo:75,hi:75,tier:'Rare',name:'Spear +2',meta:'Melee',desc:'A finely enchanted spear. Grants <strong>+2</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'400 Crown'},
+      {lo:76,hi:76,tier:'Rare',name:'Rapier +2',meta:'Melee',desc:'A finely enchanted rapier. Grants <strong>+2</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'400 Crown'},
+      {lo:77,hi:77,tier:'Rare',name:'Greataxe +2',meta:'Melee',desc:'A finely enchanted greataxe. Grants <strong>+2</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'400 Crown'},
+      {lo:78,hi:78,tier:'Rare',name:'Longbow +2',meta:'Ranged',desc:'A finely enchanted longbow. Grants <strong>+2</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'400 Crown'},
+      {lo:79,hi:79,tier:'Rare',name:'Heavy Crossbow +2',meta:'Ranged',desc:'A finely enchanted heavy crossbow. Grants <strong>+2</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'400 Crown'},
+      {lo:80,hi:80,tier:'Rare',name:'Pistol +2',meta:'Ranged',desc:'A finely enchanted pistol. Grants <strong>+2</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'400 Crown'},
+      {lo:81,hi:81,tier:'Rare',name:'Rifle +2',meta:'Ranged',desc:'A finely enchanted rifle. Grants <strong>+2</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'400 Crown'},
+      {lo:82,hi:82,tier:'Rare',name:'Chainmail +2',meta:'Armour',desc:'Warded chainmail armour. Grants <strong>+2 Defense</strong> (harder to hit), stacking with its normal Wound Mitigation. No casting penalty beyond the base type’s.',price:'400 Crown'},
+      {lo:83,hi:84,tier:'Rare',name:'Banded / Splint Mail +2',meta:'Armour',desc:'Warded banded / splint mail armour. Grants <strong>+2 Defense</strong> (harder to hit), stacking with its normal Wound Mitigation. No casting penalty beyond the base type’s.',price:'400 Crown'},
+      {lo:85,hi:86,tier:'Rare',name:'Full Plate +2',meta:'Armour',desc:'Warded full plate armour. Grants <strong>+2 Defense</strong> (harder to hit), stacking with its normal Wound Mitigation. No casting penalty beyond the base type’s.',price:'400 Crown'},
+      {lo:87,hi:88,tier:'Rare',name:'Light Shield +2',meta:'Shield',desc:'An enchanted light shield. Grants <strong>+2 Defense</strong> on top of the shield’s normal bonus.',price:'400 Crown'},
+      {lo:89,hi:90,tier:'Rare',name:'Heavy Shield +2',meta:'Shield',desc:'An enchanted heavy shield. Grants <strong>+2 Defense</strong> on top of the shield’s normal bonus.',price:'400 Crown'},
+      {lo:91,hi:91,tier:'Legendary',name:'Longsword +3',meta:'Melee',desc:'A finely enchanted longsword. Grants <strong>+3</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'1,500 Crown'},
+      {lo:92,hi:92,tier:'Legendary',name:'Greatsword +3',meta:'Melee',desc:'A finely enchanted greatsword. Grants <strong>+3</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'1,500 Crown'},
+      {lo:93,hi:93,tier:'Legendary',name:'Greataxe +3',meta:'Melee',desc:'A finely enchanted greataxe. Grants <strong>+3</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'1,500 Crown'},
+      {lo:94,hi:94,tier:'Legendary',name:'Spear +3',meta:'Melee',desc:'A finely enchanted spear. Grants <strong>+3</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'1,500 Crown'},
+      {lo:95,hi:95,tier:'Legendary',name:'Longbow +3',meta:'Ranged',desc:'A finely enchanted longbow. Grants <strong>+3</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'1,500 Crown'},
+      {lo:96,hi:96,tier:'Legendary',name:'Rifle +3',meta:'Ranged',desc:'A finely enchanted rifle. Grants <strong>+3</strong> to both To-Hit and Wounds. No special properties beyond reliable, potent magic.',price:'1,500 Crown'},
+      {lo:97,hi:97,tier:'Legendary',name:'Full Plate +3',meta:'Armour',desc:'Warded full plate armour. Grants <strong>+3 Defense</strong> (harder to hit), stacking with its normal Wound Mitigation. No casting penalty beyond the base type’s.',price:'1,500 Crown'},
+      {lo:98,hi:99,tier:'Legendary',name:'Heavy Shield +3',meta:'Shield',desc:'An enchanted heavy shield. Grants <strong>+3 Defense</strong> on top of the shield’s normal bonus.',price:'1,500 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'Masterwork +3 (any type)',meta:'Arms & Armour',desc:'The pinnacle of the enchanter’s art: choose any weapon (<strong>+3</strong> To-Hit and Wounds) or any armour/shield (<strong>+3 Defense</strong>). Flawless, signed by a master whose mark alone doubles its worth.',price:'2,400 Crown'},
     ]
   },
   cursed: {
