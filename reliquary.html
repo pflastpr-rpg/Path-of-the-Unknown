@@ -131,6 +131,7 @@ tbody tr:last-child td{border-bottom:none;}
 tbody tr:nth-child(even){background:rgba(221,200,152,0.25);}
 .td-roll{font-family:var(--f-deco); font-weight:700; white-space:nowrap; width:62px; color:var(--ink);}
 .td-name{font-family:var(--f-head); font-weight:700; width:24%;}
+.td-meta{display:block; font-family:var(--f-label); font-weight:400; font-size:8.5pt; letter-spacing:0.5px; text-transform:uppercase; color:var(--parch3); margin-top:2px;}
 .td-price{font-family:var(--f-label); font-size:9.5pt; white-space:nowrap; width:90px; color:var(--gold);}
 .tier-pip{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; vertical-align:middle;}
 
@@ -231,6 +232,18 @@ const TIER_COLORS = {
    Category d100 bands: Common 01-40 | Uncommon 41-70 | Rare 71-90 | Legendary 91-99 | Artifact 100
    Master routing: d100 -> category (weighted)
 */
+/* THE RELIQUARY — full-coverage data
+   Category d100 bands: Common 01-40 | Uncommon 41-70 | Rare 71-90 | Legendary 91-99 | Artifact 100
+   Master routing: d100 -> category (weighted)
+*/
+/* THE RELIQUARY — full-coverage data
+   Category d100 bands: Common 01-40 | Uncommon 41-70 | Rare 71-90 | Legendary 91-99 | Artifact 100
+   Master routing: d100 -> category (weighted)
+*/
+/* THE RELIQUARY — full-coverage data
+   Category d100 bands: Common 01-40 | Uncommon 41-70 | Rare 71-90 | Legendary 91-99 | Artifact 100
+   Master routing: d100 -> category (weighted)
+*/
 const MASTER = [
   {lo:1,  hi:18, cat:'melee',      label:'Melee Weapons'},
   {lo:19, hi:34, cat:'ranged',     label:'Ranged Weapons'},
@@ -247,28 +260,28 @@ const DATA = {
     title:'Melee Weapons', icon:'\u2694',
     blurb:'Every melee class the rules recognise \u2014 Blunt, Edged, Two-Handed, Piercing, Finesse, Polearm, Lance, Flail, and the bare-handed arts. Enhancement bonuses (+1/+2/+3) add to both To-Hit and wound rolls unless noted; each weapon keeps its class traits.',
     items:[
-      {lo:1,hi:6,tier:'Common',name:'Trueworn Sword',meta:'Edged',desc:'Never dulls or rusts. <strong>+1</strong> To-Hit and wounds.',price:'45 Crown'},
-      {lo:7,hi:11,tier:'Common',name:'Reliable Mace',meta:'Blunt',desc:'<strong>+1</strong> wounds. Keeps the Blunt trait (ignores 1 Wound Mitigation), now ignoring 2.',price:'42 Crown'},
-      {lo:12,hi:16,tier:'Common',name:'Keen Dagger',meta:'Piercing / Finesse',desc:'<strong>+1</strong> To-Hit. Thrown, it returns to your hand at the start of your next turn.',price:'40 Crown'},
-      {lo:17,hi:21,tier:'Common',name:'Honed Greataxe',meta:'Two-Handed',desc:'<strong>+1</strong> wounds. Retains the 2-Handed trait (doubles Physique modifier, 2 AP).',price:'48 Crown'},
-      {lo:22,hi:26,tier:'Common',name:'Wrapped Quarterstaff',meta:'Blunt (Staff)',desc:'<strong>+1</strong> To-Hit and Defense. A monk\u2019s favored foundation.',price:'30 Crown'},
-      {lo:27,hi:31,tier:'Common',name:'Studded Cestus',meta:'Unarmed',desc:'Unarmed strikes count as armed and lose the Disadvantage vs Leather+. <strong>+1</strong> unarmed wounds.',price:'36 Crown'},
-      {lo:32,hi:36,tier:'Common',name:'Balanced Spear',meta:'Piercing',desc:'<strong>+1</strong> To-Hit. Retains Advantage To-Wound vs Leather/Cloth; usable one- or two-handed.',price:'38 Crown'},
-      {lo:37,hi:40,tier:'Common',name:'Footman\u2019s Halberd',meta:'Polearm',desc:'<strong>+1</strong> wounds. Strikes safely from the 2nd rank (2 AP).',price:'44 Crown'},
-      {lo:41,hi:46,tier:'Uncommon',name:'Flametongue',meta:'Edged',desc:'1 AP to ignite. <strong>+2</strong> wounds (fire); undead and plant creatures take Disadvantage on Wound Mitigation against it.',price:'160 Crown'},
-      {lo:47,hi:51,tier:'Uncommon',name:'Frostbrand Maul',meta:'Two-Handed',desc:'<strong>+1</strong> To-Hit and wounds. Natural 9\u201310 halves the target\u2019s movement until their next turn.',price:'180 Crown'},
-      {lo:52,hi:56,tier:'Uncommon',name:'Duelist\u2019s Rapier',meta:'Finesse',desc:'<strong>+1</strong> To-Hit. Grants <strong>+2 Riposte</strong> while wielded.',price:'170 Crown'},
-      {lo:57,hi:61,tier:'Uncommon',name:'Skullcleaver Axe',meta:'Edged',desc:'<strong>+2</strong> wounds. Natural 10 also leaves the target <strong>Shaken</strong>.',price:'155 Crown'},
-      {lo:62,hi:66,tier:'Uncommon',name:'Awakened Flail',meta:'Flail',desc:'<strong>+1</strong> wounds. While your Awareness and Agility are both 3+, it adds your full Awareness to wounds (stacking with the base flail trait).',price:'175 Crown'},
-      {lo:67,hi:70,tier:'Uncommon',name:'Reaching Pike',meta:'Polearm',desc:'<strong>+2</strong> wounds. Strikes from the 2nd or 3rd rank; first hit each battle against a charging foe deals double wounds.',price:'150 Crown'},
-      {lo:71,hi:76,tier:'Rare',name:'Reaver of the Line',meta:'Two-Handed',desc:'<strong>+2</strong> To-Hit and wounds. Dropping a foe to 0 grants a free 1 AP attack on an adjacent enemy (once per turn).',price:'480 Crown'},
-      {lo:77,hi:81,tier:'Rare',name:'The Patient Needle',meta:'Finesse',desc:'<strong>+2</strong> To-Hit. First strike against an unaware target bypasses non-magical Wound Mitigation and inflicts <strong>Bleed</strong>.',price:'560 Crown'},
-      {lo:82,hi:86,tier:'Rare',name:'Crusader\u2019s Warhammer',meta:'Blunt',desc:'<strong>+2</strong> To-Hit and wounds, ignores 3 Wound Mitigation. <strong>+1</strong> wound vs Evil and the unliving.',price:'520 Crown'},
-      {lo:87,hi:90,tier:'Rare',name:'Dragonbone Lance',meta:'Lance',desc:'<strong>+2</strong> wounds. Mounted charge multiplies Physique \u00d74 instead of \u00d73 and ignores half the target\u2019s Wound Mitigation.',price:'600 Crown'},
-      {lo:91,hi:94,tier:'Legendary',name:'Oathkeeper\u2019s Edge',meta:'Edged (Sword)',desc:'<strong>+3</strong> To-Hit and wounds. Once per battle, when an ally within 30 Ft falls to 0, teleport to them and gain a free attack on what felled them.',price:'2,400 Crown'},
-      {lo:95,hi:97,tier:'Legendary',name:'Stormcaller Maul',meta:'Two-Handed',desc:'<strong>+3</strong> wounds. Natural 10 arcs lightning to three foes within 15 Ft (3d10 each, Physique or <strong>Stunned</strong>).',price:'2,800 Crown'},
-      {lo:98,hi:99,tier:'Legendary',name:'Whisperfang',meta:'Finesse (Dagger)',desc:'<strong>+3</strong> To-Hit. Strikes from stealth deal triple wounds and make no sound. Grants <strong>+3 Thieving</strong>.',price:'2,600 Crown'},
-      {lo:100,hi:100,tier:'Artifact',name:'Var\u2019thuun\u2019s Sundering',meta:'Artifact Greataxe (Two-Handed)',desc:'Forged in the Chaos Forge from a fallen god\u2019s shackle. <strong>+3</strong> To-Hit and wounds, ignores all non-magical Wound Mitigation. Each kill grants +1 wound to your next hit (stacking through the battle). Bearer cannot be healed by divine magic. <em>Unique.</em>',price:'Priceless'},
+      {lo:1,hi:6,tier:'Common',name:'Trueworn Sword',meta:'Longsword · Edged',desc:'Never dulls or rusts. <strong>+1</strong> To-Hit and wounds.',price:'45 Crown'},
+      {lo:7,hi:11,tier:'Common',name:'Reliable Mace',meta:'Mace · Blunt',desc:'<strong>+1</strong> To-Hit and wounds; its enchantment lets it ignore 1 point of the target\u2019s Wound Mitigation.',price:'42 Crown'},
+      {lo:12,hi:16,tier:'Common',name:'Keen Dagger',meta:'Dagger · Piercing/Finesse',desc:'<strong>+1</strong> To-Hit. Thrown, it returns to your hand at the start of your next turn.',price:'40 Crown'},
+      {lo:17,hi:21,tier:'Common',name:'Honed Greataxe',meta:'Greataxe · Two-Handed',desc:'<strong>+1</strong> To-Hit and wounds.',price:'48 Crown'},
+      {lo:22,hi:26,tier:'Common',name:'Wrapped Quarterstaff',meta:'Quarterstaff · Blunt',desc:'<strong>+1</strong> To-Hit and Defense. A monk\u2019s favored foundation.',price:'30 Crown'},
+      {lo:27,hi:31,tier:'Common',name:'Studded Cestus',meta:'Cestus · Unarmed',desc:'<strong>+1</strong> unarmed wounds, and your unarmed strikes no longer suffer Disadvantage against armored foes.',price:'36 Crown'},
+      {lo:32,hi:36,tier:'Common',name:'Balanced Spear',meta:'Spear · Piercing',desc:'<strong>+1</strong> To-Hit and wounds.',price:'38 Crown'},
+      {lo:37,hi:40,tier:'Common',name:'Footman\u2019s Halberd',meta:'Halberd · Polearm',desc:'<strong>+1</strong> To-Hit and wounds.',price:'44 Crown'},
+      {lo:41,hi:46,tier:'Uncommon',name:'Flametongue',meta:'Longsword · Edged',desc:'1 AP to ignite. <strong>+2</strong> wounds (fire); undead and plant creatures take Disadvantage on Wound Mitigation against it.',price:'160 Crown'},
+      {lo:47,hi:51,tier:'Uncommon',name:'Frostbrand Maul',meta:'Maul · Two-Handed',desc:'<strong>+1</strong> To-Hit and wounds. Natural 9\u201310 halves the target\u2019s movement until their next turn.',price:'180 Crown'},
+      {lo:52,hi:56,tier:'Uncommon',name:'Duelist\u2019s Rapier',meta:'Rapier · Finesse',desc:'<strong>+1</strong> To-Hit. Grants <strong>+2 Riposte</strong> while wielded.',price:'170 Crown'},
+      {lo:57,hi:61,tier:'Uncommon',name:'Skullcleaver Axe',meta:'Battleaxe · Edged',desc:'<strong>+2</strong> wounds. Natural 10 also leaves the target <strong>Shaken</strong>.',price:'155 Crown'},
+      {lo:62,hi:66,tier:'Uncommon',name:'Awakened Flail',meta:'Flail · Flail',desc:'<strong>+1</strong> To-Hit and wounds. (As all flails, it adds your Awareness to wounds while your Awareness and Agility are both 3+ — see the weapon rules.)',price:'175 Crown'},
+      {lo:67,hi:70,tier:'Uncommon',name:'Reaching Pike',meta:'Pike · Polearm',desc:'<strong>+2</strong> wounds; reaches one rank further than a normal polearm, and its first hit each battle against a charging foe deals double wounds.',price:'150 Crown'},
+      {lo:71,hi:76,tier:'Rare',name:'Reaver of the Line',meta:'Greatsword · Two-Handed',desc:'<strong>+2</strong> To-Hit and wounds. Dropping a foe to 0 grants a free 1 AP attack on an adjacent enemy (once per turn).',price:'480 Crown'},
+      {lo:77,hi:81,tier:'Rare',name:'The Patient Needle',meta:'Stiletto · Finesse',desc:'<strong>+2</strong> To-Hit. First strike against an unaware target bypasses non-magical Wound Mitigation and inflicts <strong>Bleed</strong>.',price:'560 Crown'},
+      {lo:82,hi:86,tier:'Rare',name:'Crusader\u2019s Warhammer',meta:'Warhammer · Blunt',desc:'<strong>+2</strong> To-Hit and wounds; ignores 2 points of the target\u2019s Wound Mitigation, and deals <strong>+1</strong> wound vs Evil and the unliving.',price:'520 Crown'},
+      {lo:87,hi:90,tier:'Rare',name:'Dragonbone Lance',meta:'Lance · Lance',desc:'<strong>+2</strong> To-Hit and wounds. On a mounted charge its Physique multiplier rises from \u00d73 to \u00d74, and it ignores half the target\u2019s Wound Mitigation.',price:'600 Crown'},
+      {lo:91,hi:94,tier:'Legendary',name:'Oathkeeper\u2019s Edge',meta:'Longsword · Edged',desc:'<strong>+3</strong> To-Hit and wounds. Once per battle, when an ally within 30 Ft falls to 0, teleport to them and gain a free attack on what felled them.',price:'2,400 Crown'},
+      {lo:95,hi:97,tier:'Legendary',name:'Stormcaller Maul',meta:'Maul · Two-Handed',desc:'<strong>+3</strong> wounds. Natural 10 arcs lightning to three foes within 15 Ft (3d10 each, Physique or <strong>Stunned</strong>).',price:'2,800 Crown'},
+      {lo:98,hi:99,tier:'Legendary',name:'Whisperfang',meta:'Dagger · Finesse',desc:'<strong>+3</strong> To-Hit. Strikes from stealth deal triple wounds and make no sound. Grants <strong>+3 Thieving</strong>.',price:'2,600 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'Var\u2019thuun\u2019s Sundering',meta:'Greataxe · Two-Handed (Artifact)',desc:'Forged in the Chaos Forge from a fallen god\u2019s shackle. <strong>+3</strong> To-Hit and wounds, ignores all non-magical Wound Mitigation. Each kill grants +1 wound to your next hit (stacking through the battle). Bearer cannot be healed by divine magic. <em>Unique.</em>',price:'Priceless'},
     ]
   },
 
@@ -277,59 +290,61 @@ const DATA = {
     blurb:'Bows, crossbows, black-powder arms, and thrown weapons \u2014 every ranged type the rules list. Each keeps its base traits (Piercing values, AoE, Brutal Arc, Entangling) on top of the enchantment.',
     items:[
       {lo:1,hi:6,tier:'Common',name:'Steadyshaft Shortbow',meta:'Shortbow',desc:'<strong>+1</strong> To-Hit. Quickload (1 AP); ignores the first point of wind/weather penalty.',price:'40 Crown'},
-      {lo:7,hi:11,tier:'Common',name:'Trueflight Throwing Set',meta:'Throwing Knife/Axe',desc:'Three returning blades. <strong>+1</strong> wounds; retains Brutal Arc (full Physique modifier to wounds).',price:'42 Crown'},
-      {lo:12,hi:16,tier:'Common',name:'Hunter\u2019s Javelin',meta:'Javelin',desc:'<strong>+1</strong> wounds, Brutal Arc. <strong>+1</strong> additional vs Beasts and large creatures.',price:'38 Crown'},
+      {lo:7,hi:11,tier:'Common',name:'Trueflight Throwing Set',meta:'Throwing Knives · Thrown',desc:'Three blades that fly back to your hand at the start of your next turn. <strong>+1</strong> To-Hit and wounds.',price:'42 Crown'},
+      {lo:12,hi:16,tier:'Common',name:'Hunter\u2019s Javelin',meta:'Javelin · Thrown',desc:'<strong>+1</strong> wounds, and <strong>+1</strong> more vs Beasts and large creatures.',price:'38 Crown'},
       {lo:17,hi:21,tier:'Common',name:'Concealed Hand Crossbow',meta:'Hand Crossbow',desc:'<strong>+1</strong> To-Hit. Stays concealable and one-handed; first shot from hiding ignores 2 Wound Mitigation.',price:'46 Crown'},
-      {lo:22,hi:26,tier:'Common',name:'Whispering Sling',meta:'Dart / Sling',desc:'<strong>+1</strong> To-Hit. Low profile \u2014 a hit from concealment rarely reveals your position.',price:'30 Crown'},
-      {lo:27,hi:31,tier:'Common',name:'Snare-Wrapped Whip',meta:'Whip / Lasso',desc:'Entangling. On a failed Agility test the target is Bound; <strong>+1</strong> to the test\u2019s DV.',price:'34 Crown'},
-      {lo:32,hi:36,tier:'Common',name:'Reliable Crossbow',meta:'Standard Crossbow',desc:'<strong>+1</strong> To-Hit. Retains Piercing (negates all armor mitigation at half range).',price:'48 Crown'},
-      {lo:37,hi:40,tier:'Common',name:'Tuned Longbow',meta:'Longbow / Elven Bow',desc:'<strong>+1</strong> To-Hit at the bow\u2019s long range. Recurve: halves armor mitigation up to half range.',price:'44 Crown'},
-      {lo:41,hi:46,tier:'Uncommon',name:'Hungering Quiver',meta:'Arrows (any bow)',desc:'12 black-fletched arrows, each <strong>+2</strong> wounds; crumble to ash on impact. Refills one per dawn (max 12).',price:'120 Crown'},
+      {lo:22,hi:26,tier:'Common',name:'Whispering Sling',meta:'Sling · Dart/Sling',desc:'<strong>+1</strong> To-Hit. Low profile \u2014 a hit from concealment rarely reveals your position.',price:'30 Crown'},
+      {lo:27,hi:31,tier:'Common',name:'Snare-Wrapped Whip',meta:'Whip · Whip/Lasso',desc:'Entangling. On a failed Agility test the target is Bound; <strong>+1</strong> to the test\u2019s DV.',price:'34 Crown'},
+      {lo:32,hi:36,tier:'Common',name:'Reliable Crossbow',meta:'Crossbow · Standard',desc:'<strong>+1</strong> To-Hit and wounds.',price:'48 Crown'},
+      {lo:37,hi:40,tier:'Common',name:'Tuned Longbow',meta:'Longbow',desc:'<strong>+1</strong> To-Hit and wounds at any range.',price:'44 Crown'},
+      {lo:41,hi:46,tier:'Uncommon',name:'Hungering Quiver',meta:'Arrows · any bow',desc:'12 black-fletched arrows, each <strong>+2</strong> wounds; crumble to ash on impact. Refills one per dawn (max 12).',price:'120 Crown'},
       {lo:47,hi:51,tier:'Uncommon',name:'Stinging Hand Crossbow',meta:'Hand Crossbow',desc:'<strong>+1</strong> To-Hit. Bolts carry a mild toxin: on a hit, target tests Physique or is <strong>Poisoned</strong>.',price:'150 Crown'},
-      {lo:52,hi:56,tier:'Uncommon',name:'Duelist\u2019s Pistol',meta:'Pistol',desc:'<strong>+1</strong> To-Hit. Piercing (ignores 4 Wound Mitigation), now 5; reloads as a free action once per battle.',price:'180 Crown'},
-      {lo:57,hi:61,tier:'Uncommon',name:'Scattershot Blunderbuss',meta:'Blunderbuss',desc:'<strong>+1</strong> wounds. The 15 Ft AoE cone\u2019s Stun test rises to DV 12; reload is 1 AP cheaper.',price:'170 Crown'},
-      {lo:62,hi:66,tier:'Uncommon',name:'Heavy Siege Crossbow',meta:'Heavy Crossbow',desc:'<strong>+1</strong> To-Hit. Negates all non-magical mitigation; natural 9\u201310 inflicts <strong>Bleed</strong>.',price:'190 Crown'},
-      {lo:67,hi:70,tier:'Uncommon',name:'Returning Javelins',meta:'Javelin (set of 3)',desc:'<strong>+2</strong> wounds, Brutal Arc. Each thrown javelin flies back to your hand at the start of your next turn.',price:'140 Crown'},
-      {lo:71,hi:76,tier:'Rare',name:'Thunderbolt Longbow',meta:'Longbow / Elven Bow',desc:'<strong>+2</strong> To-Hit and wounds. Once per battle, a shot becomes a 15 Ft line of lightning (all caught test Physique or are <strong>Stunned</strong>).',price:'600 Crown'},
-      {lo:77,hi:81,tier:'Rare',name:'Duelist\u2019s Brace of Pistols',meta:'Pistol (pair)',desc:'<strong>+2</strong> To-Hit. Fire both in one action (2 AP); each ignores 5 Wound Mitigation.',price:'640 Crown'},
-      {lo:82,hi:86,tier:'Rare',name:'Marksman\u2019s Rifle',meta:'Rifle',desc:'<strong>+2</strong> To-Hit and wounds. Ignores all armor mitigation at standard range; <strong>+3</strong> wounds on the first shot of a battle.',price:'700 Crown'},
-      {lo:87,hi:90,tier:'Rare',name:'Stranglevine Lasso',meta:'Whip / Lasso',desc:'Entangling at Advantage. A Bound target also takes 2d10 wounds each turn until it breaks free (Physique test).',price:'520 Crown'},
+      {lo:52,hi:56,tier:'Uncommon',name:'Duelist\u2019s Pistol',meta:'Pistol · Firearm',desc:'<strong>+1</strong> To-Hit; ignores 1 additional point of Wound Mitigation, and reloads as a free action once per battle.',price:'180 Crown'},
+      {lo:57,hi:61,tier:'Uncommon',name:'Scattershot Blunderbuss',meta:'Blunderbuss · Firearm',desc:'<strong>+1</strong> wounds; its cone\u2019s Stun test is harder to resist (DV 12), and reloading costs 1 less AP.',price:'170 Crown'},
+      {lo:62,hi:66,tier:'Uncommon',name:'Heavy Siege Crossbow',meta:'Heavy Crossbow',desc:'<strong>+1</strong> To-Hit and wounds; widens its <strong>Bleed</strong> trigger to a natural 9\u201310.',price:'190 Crown'},
+      {lo:67,hi:70,tier:'Uncommon',name:'Returning Javelins',meta:'Javelins · Thrown (set of 3)',desc:'<strong>+2</strong> wounds. Each thrown javelin flies back to your hand at the start of your next turn.',price:'140 Crown'},
+      {lo:71,hi:76,tier:'Rare',name:'Thunderbolt Longbow',meta:'Longbow',desc:'<strong>+2</strong> To-Hit and wounds. Once per battle, a shot becomes a 15 Ft line of lightning (all caught test Physique or are <strong>Stunned</strong>).',price:'600 Crown'},
+      {lo:77,hi:81,tier:'Rare',name:'Duelist\u2019s Brace of Pistols',meta:'Pistols · Firearm (pair)',desc:'<strong>+2</strong> To-Hit. Fire both in one action (2 AP); each ignores 1 additional point of Wound Mitigation.',price:'640 Crown'},
+      {lo:82,hi:86,tier:'Rare',name:'Marksman\u2019s Rifle',meta:'Rifle · Firearm',desc:'<strong>+2</strong> To-Hit and wounds, and <strong>+3</strong> additional wounds on the first shot of a battle.',price:'700 Crown'},
+      {lo:87,hi:90,tier:'Rare',name:'Stranglevine Lasso',meta:'Lasso · Whip/Lasso',desc:'Entangling at Advantage. A Bound target also takes 2d10 wounds each turn until it breaks free (Physique test).',price:'520 Crown'},
       {lo:91,hi:94,tier:'Legendary',name:'The Far Whisper',meta:'Longbow',desc:'<strong>+3</strong> To-Hit and wounds, no range penalty at any distance you can see. Once per battle, a shot cannot miss.',price:'2,500 Crown'},
-      {lo:95,hi:97,tier:'Legendary',name:'Hand Cannon of Ruin',meta:'Rifle / heavy firearm',desc:'<strong>+3</strong> wounds, 25 Ft AoE on impact (5d10, Physique or <strong>Prone</strong> + <strong>Stunned</strong>). Deafening; one shot per two turns.',price:'2,800 Crown'},
-      {lo:98,hi:99,tier:'Legendary',name:'The Endless Quiver',meta:'Quiver (any bow)',desc:'Conjures any arrow type at will and never empties. All shots gain <strong>+2</strong> To-Hit; once per battle, fire at three targets in one action.',price:'2,600 Crown'},
-      {lo:100,hi:100,tier:'Artifact',name:'Heartpiercer',meta:'Artifact Longbow',desc:'Strung with a sinew that remembers every shot ever loosed. <strong>+3</strong> To-Hit and wounds, ignores all mitigation. Once per session, name a target you can see \u2014 the arrow finds them through walls, armies, and lies, dealing 6d10. The bow then falls silent until the next session. <em>Unique.</em>',price:'Priceless'},
+      {lo:95,hi:97,tier:'Legendary',name:'Hand Cannon of Ruin',meta:'Hand Cannon · Firearm',desc:'<strong>+3</strong> wounds, 25 Ft AoE on impact (5d10, Physique or <strong>Prone</strong> + <strong>Stunned</strong>). Deafening; one shot per two turns.',price:'2,800 Crown'},
+      {lo:98,hi:99,tier:'Legendary',name:'The Endless Quiver',meta:'Quiver · any bow',desc:'Conjures any arrow type at will and never empties. All shots gain <strong>+2</strong> To-Hit; once per battle, fire at three targets in one action.',price:'2,600 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'Heartpiercer',meta:'Longbow (Artifact)',desc:'Strung with a sinew that remembers every shot ever loosed. <strong>+3</strong> To-Hit and wounds, ignores all mitigation. Once per session, name a target you can see \u2014 the arrow finds them through walls, armies, and lies, dealing 6d10. The bow then falls silent until the next session. <em>Unique.</em>',price:'Priceless'},
     ]
   },
 
   armor: {
     title:'Armor & Shields', icon:'\uD83D\uDEE1',
-    blurb:'Every armor and shield type the rules define gets a guaranteed enchanted entry. Enchantments add to Wound Mitigation or Defense and may waive a type\u2019s native casting/Agility penalty as noted; base armor traits (Physique gates, To-Cast penalties) otherwise still apply.',
+    blurb:'Every armor and shield type the rules define gets a guaranteed enchanted entry \u2014 including enchanted robes that ward a caster like the lightest armour. Enchantments add to Wound Mitigation or Defense and may waive a type\u2019s native casting/Agility penalty as noted; base armor traits otherwise still apply.',
     items:[
       {lo:1,hi:5,tier:'Common',name:'Spirit-Touched Furs',meta:'Animal Furs',desc:'<strong>+1</strong> Wound Mitigation (total 2) and immunity to natural cold. The lightest protection, now worth wearing.',price:'30 Crown'},
-      {lo:6,hi:10,tier:'Common',name:'Blessed Padded Cloth',meta:'Cloth / Padded',desc:'<strong>+1</strong> Wound Mitigation and <strong>+1</strong> to Resist tests vs spells, with no casting penalty.',price:'34 Crown'},
-      {lo:11,hi:15,tier:'Common',name:'Truefit Leather',meta:'Leather',desc:'<strong>+1</strong> Wound Mitigation (total 3); silent to move in (<strong>+1</strong> Thieving/stealth).',price:'40 Crown'},
-      {lo:16,hi:20,tier:'Common',name:'Riveted Studded Leather',meta:'Studded Leather',desc:'<strong>+1</strong> Wound Mitigation (total 4); the \u22121 To-Cast penalty is waived.',price:'48 Crown'},
-      {lo:21,hi:25,tier:'Common',name:'Warding Buckler',meta:'Light Shield / Buckler',desc:'<strong>+1</strong> Defense. Once per battle, negate a single ranged hit entirely.',price:'42 Crown'},
-      {lo:26,hi:30,tier:'Common',name:'Sure-Step Greaves',meta:'Leg armor',desc:'Cannot be knocked <strong>Prone</strong> by non-magical force; ignore difficult terrain for the first 10 Ft each turn.',price:'40 Crown'},
-      {lo:31,hi:35,tier:'Common',name:'Helm of Clear Sight',meta:'Helm',desc:'Immune to <strong>Blind</strong>; <strong>+1</strong> Awareness for sight-based tests.',price:'44 Crown'},
-      {lo:36,hi:40,tier:'Common',name:'Gauntlets of Grip',meta:'Gloves',desc:'Cannot be <strong>Disarmed</strong>; <strong>+1</strong> Climbing and grapple tests.',price:'38 Crown'},
-      {lo:41,hi:46,tier:'Uncommon',name:'Linked Chainmail of Ease',meta:'Chainmail',desc:'<strong>+1</strong> Wound Mitigation (total 5); the \u22122 To-Cast penalty is reduced to \u22121.',price:'150 Crown'},
-      {lo:47,hi:51,tier:'Uncommon',name:'Bulwark Banded Mail',meta:'Banded / Splint Mail',desc:'<strong>+2</strong> Wound Mitigation (total 7). If you take no movement on your turn, gain <strong>+1</strong> Defense.',price:'185 Crown'},
-      {lo:52,hi:56,tier:'Uncommon',name:'Heater of the Unbroken',meta:'Heater / Heavy Shield',desc:'<strong>+2</strong> Defense and the Physique-4 gate is waived. A successful Block pushes the attacker 5 Ft and costs them their next reaction.',price:'180 Crown'},
-      {lo:57,hi:61,tier:'Uncommon',name:'Cloak of the Drifting Ash',meta:'Cloak',desc:'In dim light or smoke, attackers roll Disadvantage To-Hit against you. Inert in full daylight.',price:'140 Crown'},
-      {lo:62,hi:66,tier:'Uncommon',name:'Hide of the Bear-Spirit',meta:'Leather / medium',desc:'<strong>+1</strong> Wound Mitigation and <strong>+3</strong> to the maximum Wound Threshold.',price:'160 Crown'},
-      {lo:67,hi:70,tier:'Uncommon',name:'Field Plate of the Vanguard',meta:'Field Plate',desc:'<strong>+1</strong> Wound Mitigation (total 7); the \u22124 To-Cast penalty is reduced to \u22122. Immune to <strong>Exhausted</strong> from armor weight.',price:'190 Crown'},
+      {lo:6,hi:9,tier:'Common',name:'Blessed Padded Cloth',meta:'Cloth / Padded',desc:'<strong>+1</strong> Wound Mitigation and <strong>+1</strong> to Resist tests vs spells, with no casting penalty.',price:'34 Crown'},
+      {lo:10,hi:14,tier:'Common',name:'Apprentice\u2019s Mage Robes',meta:'Robes (count as Cloth / Padded)',desc:'Enchanted cloth that wards like the lightest armour: counts as <strong>Cloth / Padded</strong> (Wound Mitigation 1, no casting penalty) for a wearer of any discipline. <strong>+1</strong> to Resist tests vs spells. The standard dress of a working caster.',price:'40 Crown'},
+      {lo:15,hi:19,tier:'Common',name:'Truefit Leather',meta:'Leather',desc:'<strong>+1</strong> Wound Mitigation (total 3); silent to move in (<strong>+1</strong> Thieving/stealth).',price:'40 Crown'},
+      {lo:20,hi:24,tier:'Common',name:'Riveted Studded Leather',meta:'Studded Leather',desc:'<strong>+1</strong> Wound Mitigation (total 4); the \u22121 To-Cast penalty is waived.',price:'48 Crown'},
+      {lo:25,hi:28,tier:'Common',name:'Warding Buckler',meta:'Light Shield / Buckler',desc:'<strong>+1</strong> Defense. Once per battle, negate a single ranged hit entirely.',price:'42 Crown'},
+      {lo:29,hi:32,tier:'Common',name:'Sure-Step Greaves',meta:'Leg armor',desc:'Cannot be knocked <strong>Prone</strong> by non-magical force; ignore difficult terrain for the first 10 Ft each turn.',price:'40 Crown'},
+      {lo:33,hi:36,tier:'Common',name:'Helm of Clear Sight',meta:'Helm',desc:'Immune to <strong>Blind</strong>; <strong>+1</strong> Awareness for sight-based tests.',price:'44 Crown'},
+      {lo:37,hi:40,tier:'Common',name:'Gauntlets of Grip',meta:'Gloves',desc:'Cannot be <strong>Disarmed</strong>; <strong>+1</strong> Climbing and grapple tests.',price:'38 Crown'},
+      {lo:41,hi:45,tier:'Uncommon',name:'Linked Chainmail of Ease',meta:'Chainmail',desc:'<strong>+1</strong> Wound Mitigation (total 5); the \u22122 To-Cast penalty is reduced to \u22121.',price:'150 Crown'},
+      {lo:46,hi:50,tier:'Uncommon',name:'Archmage\u2019s Warded Robes',meta:'Robes (count as Animal Furs / Cloth)',desc:'Fine enchanted robes that count as <strong>Animal Furs or Cloth / Padded</strong> (Wound Mitigation 1, no casting penalty). Additionally grant <strong>+1</strong> To-Cast for your discipline and <strong>+2</strong> to Resist tests vs spells.',price:'180 Crown'},
+      {lo:51,hi:55,tier:'Uncommon',name:'Bulwark Banded Mail',meta:'Banded / Splint Mail',desc:'<strong>+2</strong> Wound Mitigation (total 7). If you take no movement on your turn, gain <strong>+1</strong> Defense.',price:'185 Crown'},
+      {lo:56,hi:60,tier:'Uncommon',name:'Heater of the Unbroken',meta:'Heater / Heavy Shield',desc:'<strong>+2</strong> Defense and the Physique-4 gate is waived. A successful Block pushes the attacker 5 Ft and costs them their next reaction.',price:'180 Crown'},
+      {lo:61,hi:64,tier:'Uncommon',name:'Cloak of the Drifting Ash',meta:'Cloak',desc:'In dim light or smoke, attackers roll Disadvantage To-Hit against you. Inert in full daylight.',price:'140 Crown'},
+      {lo:65,hi:67,tier:'Uncommon',name:'Hide of the Bear-Spirit',meta:'Leather / medium',desc:'<strong>+1</strong> Wound Mitigation and <strong>+3</strong> to the maximum Wound Threshold.',price:'160 Crown'},
+      {lo:68,hi:70,tier:'Uncommon',name:'Field Plate of the Vanguard',meta:'Field Plate',desc:'<strong>+1</strong> Wound Mitigation (total 7); the \u22124 To-Cast penalty is reduced to \u22122. Immune to <strong>Exhausted</strong> from armor weight.',price:'190 Crown'},
       {lo:71,hi:76,tier:'Rare',name:'Mithril Weave of the Vigilant',meta:'Mithril',desc:'<strong>+2</strong> Wound Mitigation with no Agility or casting penalty (Mithril\u2019s native trait). <strong>+1</strong> to all Awareness tests.',price:'620 Crown'},
       {lo:77,hi:81,tier:'Rare',name:'Elven Mithril of the Glade',meta:'Mithril (Elven)',desc:'<strong>+2</strong> Wound Mitigation, no penalties, weightless. <strong>+1</strong> Agility and <strong>+1</strong> Defense; counts as no armor for Druidism.',price:'720 Crown'},
       {lo:82,hi:86,tier:'Rare',name:'Aegis of Returning',meta:'Any shield',desc:'<strong>+2</strong> Defense. Once per battle, when an enemy misses you in melee, reflect the wounds they would have dealt.',price:'700 Crown'},
       {lo:87,hi:90,tier:'Rare',name:'Full Plate of the Tireless',meta:'Full Plate',desc:'<strong>+2</strong> Wound Mitigation (total 10), no movement penalty, and the \u22125 To-Cast penalty halved. You are immune to <strong>Exhausted</strong>.',price:'780 Crown'},
       {lo:91,hi:94,tier:'Legendary',name:'Carapace of the Deep Stone',meta:'Full Plate',desc:'<strong>+3</strong> Wound Mitigation. The first time each battle you would hit 0 wounds, stay at 1 and become condition-immune until your next turn.',price:'2,600 Crown'},
-      {lo:95,hi:97,tier:'Legendary',name:'Veil of the Unseen Saint',meta:'Cloak',desc:'<strong>+2</strong> Defense. Spend 2 AP to turn invisible (up to three turns, ends on attack/cast). Once per battle.',price:'2,900 Crown'},
+      {lo:95,hi:96,tier:'Legendary',name:'Veil of the Unseen Saint',meta:'Cloak',desc:'<strong>+2</strong> Defense. Spend 2 AP to turn invisible (up to three turns, ends on attack/cast). Once per battle.',price:'2,900 Crown'},
+      {lo:97,hi:97,tier:'Legendary',name:'Robes of the Living Word',meta:'Robes (count as Cloth / Padded)',desc:'Legendary caster\u2019s robes that count as <strong>Cloth / Padded</strong> with no penalty. <strong>+3</strong> Wound Mitigation that applies only against spells and magical effects, and <strong>+2</strong> To-Cast for your discipline. Woven from a saint\u2019s burial shroud.',price:'2,700 Crown'},
       {lo:98,hi:99,tier:'Legendary',name:'Wall-Shield of the Last Stand',meta:'Heater / Heavy Shield',desc:'<strong>+3</strong> Defense. While planted, allies directly behind you share your Defense bonus and cannot be targeted at range.',price:'2,500 Crown'},
       {lo:100,hi:100,tier:'Artifact',name:'The Last Bastion',meta:'Artifact Full Plate',desc:'Worn by the final defender of a vanished city. <strong>+4</strong> Wound Mitigation, no penalties of any kind. Allies within 20 Ft gain <strong>+1</strong> Wound Mitigation and cannot be reduced below 1 wound by a single hit while you live. <em>Unique.</em>',price:'Priceless'},
     ]
   },
-
   potions: {
     title:'Potions & Consumables', icon:'\u2697',
     blurb:'Drunk, thrown, or smeared \u2014 single-use and often the difference between a war story and a grave. Drinking or applying is 1 AP.',
@@ -487,7 +502,7 @@ function buildTables(){
       const band = (it.lo===it.hi) ? pad(it.lo) : pad(it.lo)+'\u2013'+pad(it.hi);
       rows += `<tr data-tier="${it.tier}">
         <td class="td-roll">${band}</td>
-        <td class="td-name"><span class="tier-pip" style="background:${TIER_COLORS[it.tier]}"></span>${it.name}</td>
+        <td class="td-name"><span class="tier-pip" style="background:${TIER_COLORS[it.tier]}"></span>${it.name}${it.meta?`<span class="td-meta">${it.meta}</span>`:''}</td>
         <td>${it.desc}</td>
         <td class="td-price">${it.price}</td>
       </tr>`;
