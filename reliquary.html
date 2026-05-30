@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thrice-Marked — The Reliquary [build 2026-05-29]</title>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blood:#8B1010; --blood2:#b01818;
+  --gold:#8a6a1a; --gold2:#c9a030;
+  --ink:#0e0a04; --parch:#faf3e0; --parch2:#f0e4c0; --parch3:#ddc898;
+  --iron:#1a1208; --iron2:#2a1e10;
+  --t-common:#6b7280; --t-uncommon:#2f6d4f; --t-rare:#1f5f8b;
+  --t-legendary:#7c3aed; --t-artifact:#b8860b; --t-cursed:#7a1020;
+  --f-head:'Grenze Gotisch',serif; --f-body:'IM Fell English',serif;
+  --f-label:'Cinzel',serif; --f-deco:'Cinzel Decorative',serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:var(--f-body); background:var(--iron); color:var(--ink);
+  font-size:13.5pt; line-height:1.55; min-height:100vh;
+}
+/* parchment texture backdrop */
+body::before{
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(139,16,16,0.06), transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(138,106,26,0.08), transparent 55%);
+}
+
+/* ── Header ── */
+.site-header{
+  background:var(--iron); border-bottom:3px solid var(--gold);
+  padding:0 22px; display:flex; align-items:center; gap:18px;
+  height:58px; position:relative; z-index:5; flex-wrap:wrap;
+}
+.site-header::after{
+  content:''; position:absolute; bottom:-6px; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,transparent,var(--blood),transparent);
+}
+.site-title{font-family:var(--f-deco); font-size:15pt; color:var(--gold2); letter-spacing:2px; white-space:nowrap;}
+.site-title span{color:var(--blood); font-family:var(--f-label); font-size:8pt; letter-spacing:4px; display:block; margin-bottom:-3px;}
+.nav-spacer{flex:1;}
+.hdr-btn{
+  font-family:var(--f-label); font-size:8.5pt; letter-spacing:1px; padding:6px 13px;
+  border:1px solid rgba(154,123,47,0.4); background:transparent; color:var(--gold2);
+  cursor:pointer; transition:all .15s; text-transform:uppercase; white-space:nowrap; text-decoration:none;
+}
+.hdr-btn:hover{background:var(--gold); color:var(--ink); border-color:var(--gold);}
+.hdr-btn.blood{border-color:rgba(139,16,16,0.5); color:var(--blood2);}
+.hdr-btn.blood:hover{background:var(--blood); color:var(--parch);}
+
+/* ── Page frame ── */
+.wrap{max-width:1080px; margin:0 auto; padding:30px 24px 90px; position:relative; z-index:1;}
+.page-title{
+  font-family:var(--f-deco); font-size:34pt; color:var(--gold2); text-align:center;
+  letter-spacing:3px; margin:10px 0 2px; text-shadow:0 2px 24px rgba(139,16,16,0.4);
+}
+.page-sub{
+  font-family:var(--f-body); font-style:italic; text-align:center; color:var(--parch3);
+  font-size:13pt; margin-bottom:6px;
+}
+.page-rule{height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:14px auto 26px; max-width:520px;}
+
+.intro{
+  background:var(--parch); border:1px solid var(--gold); border-left:5px solid var(--blood);
+  padding:16px 20px; margin-bottom:26px; box-shadow:0 8px 30px rgba(0,0,0,0.5);
+}
+.intro p{margin:0 0 9px;}
+.intro p:last-child{margin-bottom:0;}
+.intro strong{color:var(--blood);}
+
+/* ── Roller ── */
+.roller{
+  background:var(--iron2); border:2px solid var(--gold); border-radius:3px;
+  padding:20px; margin-bottom:30px; box-shadow:0 10px 40px rgba(0,0,0,0.6);
+}
+.roller h2{font-family:var(--f-deco); color:var(--gold2); font-size:16pt; margin:0 0 14px; letter-spacing:1px; text-align:center;}
+.roller-controls{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; align-items:center;}
+.roller select, .roller button{
+  font-family:var(--f-label); font-size:10pt; letter-spacing:.5px; padding:9px 16px;
+  border:1px solid var(--gold); background:var(--parch); color:var(--ink); cursor:pointer; border-radius:2px;
+}
+.roller button.roll-btn{
+  background:var(--blood); color:var(--parch); border-color:var(--blood2);
+  font-family:var(--f-deco); font-size:11pt; letter-spacing:1px; text-transform:uppercase;
+}
+.roller button.roll-btn:hover{background:var(--blood2);}
+.roller button.roll-btn:active{transform:translateY(1px);}
+.roll-result{
+  margin-top:18px; min-height:40px; background:var(--parch); border:1px solid var(--gold3,var(--gold));
+  border-radius:3px; padding:0; overflow:hidden; display:none;
+}
+.roll-result.show{display:block; animation:reveal .4s ease;}
+@keyframes reveal{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+.rr-head{display:flex; justify-content:space-between; align-items:center; padding:10px 16px; color:var(--parch); font-family:var(--f-label); letter-spacing:1px;}
+.rr-roll{font-family:var(--f-deco); font-size:13pt;}
+.rr-tier{font-size:9pt; text-transform:uppercase; padding:3px 10px; border-radius:2px; background:rgba(0,0,0,0.25);}
+.rr-body{padding:14px 18px;}
+.rr-name{font-family:var(--f-head); font-size:18pt; color:var(--ink); margin:0 0 4px; font-weight:700;}
+.rr-meta{font-family:var(--f-label); font-size:8.5pt; letter-spacing:1px; text-transform:uppercase; color:var(--blood); margin-bottom:8px;}
+.rr-desc{font-size:12.5pt;}
+.rr-price{margin-top:10px; font-family:var(--f-label); font-size:10pt; color:var(--gold);}
+
+/* ── Tier legend ── */
+.legend{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:30px;}
+.legend-chip{font-family:var(--f-label); font-size:8.5pt; letter-spacing:1px; text-transform:uppercase; color:var(--parch); padding:5px 12px; border-radius:2px;}
+
+/* ── Tables ── */
+.cat-section{margin-bottom:42px;}
+.cat-title{
+  font-family:var(--f-deco); font-size:22pt; color:var(--gold2); letter-spacing:2px;
+  border-bottom:2px solid var(--blood); padding-bottom:6px; margin-bottom:4px;
+}
+.cat-blurb{font-style:italic; color:var(--parch3); margin:0 0 14px; font-size:12pt;}
+
+table{width:100%; border-collapse:collapse; background:var(--parch); box-shadow:0 6px 24px rgba(0,0,0,0.45);}
+thead th{
+  background:var(--iron); color:var(--gold2); font-family:var(--f-label); font-size:9pt;
+  letter-spacing:1px; text-transform:uppercase; text-align:left; padding:9px 12px; border-bottom:2px solid var(--gold);
+}
+tbody td{padding:9px 12px; border-bottom:1px solid var(--parch3); vertical-align:top; font-size:12pt;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:nth-child(even){background:rgba(221,200,152,0.25);}
+.td-roll{font-family:var(--f-deco); font-weight:700; white-space:nowrap; width:62px; color:var(--ink);}
+.td-name{font-family:var(--f-head); font-weight:700; width:24%;}
+.td-price{font-family:var(--f-label); font-size:9.5pt; white-space:nowrap; width:90px; color:var(--gold);}
+.tier-pip{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; vertical-align:middle;}
+
+/* tier accent borders on name cell */
+tr[data-tier="Common"] .td-name{border-left:3px solid var(--t-common);}
+tr[data-tier="Uncommon"] .td-name{border-left:3px solid var(--t-uncommon);}
+tr[data-tier="Rare"] .td-name{border-left:3px solid var(--t-rare);}
+tr[data-tier="Legendary"] .td-name{border-left:3px solid var(--t-legendary);}
+tr[data-tier="Artifact"] .td-name{border-left:3px solid var(--t-artifact);}
+tr[data-tier="Cursed"] .td-name{border-left:3px solid var(--t-cursed);}
+
+.cursed-section .cat-title{color:#d98a8a; border-bottom-color:var(--t-cursed);}
+.note{font-size:11pt; font-style:italic; color:var(--parch3); margin-top:10px;}
+
+.footer{text-align:center; color:var(--gold); font-family:var(--f-label); font-size:8.5pt; letter-spacing:2px; padding:30px 0 10px; opacity:.7;}
+
+@media (max-width:680px){
+  .page-title{font-size:24pt;}
+  .td-name,.td-price{width:auto;}
+  tbody td{font-size:11pt; padding:7px 8px;}
+}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="site-title"><span>Thrice-Marked</span>The Reliquary</div>
+  <div class="nav-spacer"></div>
+  <a href="index.html" class="hdr-btn blood">⌂ Main Hub</a>
+  <a href="core-rules.html" class="hdr-btn">⚙ Core Rules</a>
+  <a href="bestiary.html" class="hdr-btn">☠ Bestiary</a>
+  <a href="lore.html" class="hdr-btn">📖 Lore</a>
+</div>
+
+<div class="wrap">
+  <div class="page-title">The Reliquary</div>
+  <div class="page-sub">Tables of Found Power — Roll for What the Dark Gave Up</div>
+  <div class="page-rule"></div>
+
+  <div class="intro">
+    <p>Magic is not bought from a shelf. It is <strong>pried from corpses, dug from collapsed vaults, and bargained out of things that should have stayed buried.</strong> When the party recovers an unidentified relic, the GM rolls on the table for its category, or a player rolls if the GM prefers the dice to be public.</p>
+    <p>Each category is a single <strong>d100</strong> table, sorted by rarity from the common to the unique. Roll the die, read the band. Prices in <strong>Gold Crowns</strong> reflect what a relic would fetch from a discreet buyer — most found items are worth far more as tools than as coin, and Artifacts are not for sale at any honest price.</p>
+    <p>The <strong>Cursed</strong> table is separate. A GM may roll on it whenever a relic's provenance is grim, when an item is taken from a desecrated grave, or simply on a natural <strong>01</strong> on any category table. A cursed item still functions — that is what makes it dangerous.</p>
+  </div>
+
+  <!-- ── Roller ── -->
+  <div class="roller">
+    <h2>⚄ Cast the Bones</h2>
+    <div class="roller-controls">
+      <select id="cat-select">
+        <option value="weapons">Weapons</option>
+        <option value="armor">Armor &amp; Shields</option>
+        <option value="potions">Potions &amp; Consumables</option>
+        <option value="wondrous">Wondrous &amp; Utility</option>
+        <option value="cursed">Cursed (GM)</option>
+      </select>
+      <button class="roll-btn" onclick="rollItem()">Roll d100</button>
+    </div>
+    <div class="roll-result" id="roll-result"></div>
+  </div>
+
+  <!-- ── Legend ── -->
+  <div class="legend">
+    <span class="legend-chip" style="background:var(--t-common)">Common · 01–40</span>
+    <span class="legend-chip" style="background:var(--t-uncommon)">Uncommon · 41–70</span>
+    <span class="legend-chip" style="background:var(--t-rare)">Rare · 71–90</span>
+    <span class="legend-chip" style="background:var(--t-legendary)">Legendary · 91–99</span>
+    <span class="legend-chip" style="background:var(--t-artifact)">Artifact · 100</span>
+    <span class="legend-chip" style="background:var(--t-cursed)">Cursed · separate</span>
+  </div>
+
+  <div id="tables"></div>
+
+  <div class="footer">THE RELIQUARY · KNOWLEDGE IS POWER · SCARS ARE THE PRICE OF BOTH</div>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   ITEM DATA
+   Each category: array of { lo, hi, tier, name, meta, desc, price }
+   d100 bands: Common 01-40 | Uncommon 41-70 | Rare 71-90 | Legendary 91-99 | Artifact 100
+   ───────────────────────────────────────────────────────────── */
+const TIER_COLORS = {
+  Common:'var(--t-common)', Uncommon:'var(--t-uncommon)', Rare:'var(--t-rare)',
+  Legendary:'var(--t-legendary)', Artifact:'var(--t-artifact)', Cursed:'var(--t-cursed)'
+};
+
+const DATA = {
+  weapons: {
+    title:'Weapons', icon:'⚔',
+    blurb:'Blades, hafts, and bows that carry more than steel. Enhancement bonuses (+1/+2/+3) add to both To-Hit and wound rolls unless noted.',
+    items:[
+      {lo:1,hi:12,tier:'Common',name:'Trueworn Blade',meta:'Any melee weapon',desc:'A weapon that never dulls and never rusts. <strong>+1</strong> To-Hit and wounds. Common smith-enchantment, found on veteran officers.',price:'45 Crown'},
+      {lo:13,hi:24,tier:'Common',name:'Steadyshaft Bow',meta:'Any bow or crossbow',desc:'The draw is always smooth, the string never frays. <strong>+1</strong> To-Hit at range. Ignores the first point of wind or weather penalty.',price:'40 Crown'},
+      {lo:25,hi:34,tier:'Common',name:'Biting Edge',meta:'Any edged weapon',desc:'Honed by a whetstone that drank blood. On a natural 10 To-Hit, the target also suffers <strong>Bleed</strong>.',price:'50 Crown'},
+      {lo:35,hi:40,tier:'Common',name:'Weighted Head',meta:'Any blunt weapon',desc:'Lead-cored and brutal. On a successful hit, the target must pass a Physique Resist or be pushed back 5 Ft.',price:'38 Crown'},
+      {lo:41,hi:52,tier:'Uncommon',name:'Flametongue',meta:'Any melee weapon',desc:'Wreathed in fire on command (1 AP to ignite, free to quench). <strong>+2</strong> wounds, and deals fire — undead and plant creatures take Disadvantage on Wound Mitigation against it.',price:'160 Crown'},
+      {lo:53,hi:62,tier:'Uncommon',name:'Frostbrand',meta:'Any melee weapon',desc:'Rimed with killing cold. <strong>+1</strong> To-Hit and wounds. On a natural 9–10, the target\u2019s movement is halved until their next turn.',price:'150 Crown'},
+      {lo:63,hi:70,tier:'Uncommon',name:'Hungering Arrows',meta:'Quiver of 12',desc:'Black-fletched and eager. Each arrow deals <strong>+2</strong> wounds and cannot be recovered — it crumbles to ash on impact. Refills one arrow per dawn, to a maximum of 12.',price:'120 Crown'},
+      {lo:71,hi:80,tier:'Rare',name:'Reaver of the Line',meta:'Two-handed weapon',desc:'<strong>+2</strong> To-Hit and wounds. When you drop an enemy to 0 wounds, you may immediately make one free attack (1 AP) against an adjacent foe. Once per turn.',price:'480 Crown'},
+      {lo:81,hi:90,tier:'Rare',name:'The Patient Needle',meta:'Any finesse weapon',desc:'<strong>+2</strong> To-Hit. Against a target unaware of you, your first strike bypasses all non-magical Wound Mitigation and inflicts <strong>Bleed</strong> automatically.',price:'560 Crown'},
+      {lo:91,hi:95,tier:'Legendary',name:'Oathkeeper\u2019s Edge',meta:'Sword (1H)',desc:'<strong>+3</strong> To-Hit and wounds. Once per battle, when an ally within 30 Ft drops to 0 wounds, you may teleport to their side and gain a free attack against whatever felled them.',price:'2,400 Crown'},
+      {lo:96,hi:99,tier:'Legendary',name:'Stormcaller Maul',meta:'Two-handed maul',desc:'<strong>+3</strong> wounds. On a natural 10, lightning arcs to up to three other enemies within 15 Ft, each taking 3d10 and testing Physique or being <strong>Stunned</strong>.',price:'2,800 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'Var\u2019thuun\u2019s Sundering',meta:'Artifact greataxe',desc:'A blade forged in the Chaos Forge from a fallen god\u2019s shackle. <strong>+3</strong> To-Hit and wounds, ignores all non-magical Wound Mitigation. Each kill grants +1 wound to your next hit (stacking through the battle). Bearer cannot be healed by divine magic — the axe is jealous. <em>Unique.</em>',price:'Priceless'},
+    ]
+  },
+  armor: {
+    title:'Armor &amp; Shields', icon:'🛡',
+    blurb:'Worn protection that turns the butcher\u2019s blow. Bonuses add to Wound Mitigation or Defense as noted. Heavy enchanted armor still carries its base Agility and casting penalties unless stated.',
+    items:[
+      {lo:1,hi:12,tier:'Common',name:'Truefit Mail',meta:'Any armor',desc:'Fitted by a master\u2019s hand. <strong>+1</strong> Wound Mitigation, and the armor\u2019s Agility penalty is reduced by 1.',price:'48 Crown'},
+      {lo:13,hi:24,tier:'Common',name:'Warding Buckler',meta:'Light shield',desc:'<strong>+1</strong> Defense. Once per battle, negate a single ranged hit entirely (declare before the wound roll).',price:'42 Crown'},
+      {lo:25,hi:34,tier:'Common',name:'Sure-Step Greaves',meta:'Boots / leg armor',desc:'You cannot be knocked <strong>Prone</strong> by non-magical force, and ignore difficult terrain for the first 10 Ft of movement each turn.',price:'40 Crown'},
+      {lo:35,hi:40,tier:'Common',name:'Padded Ward',meta:'Any armor',desc:'Quilted with blessed thread. <strong>+1</strong> Wound Mitigation specifically against Beasts and the unliving.',price:'36 Crown'},
+      {lo:41,hi:52,tier:'Uncommon',name:'Bulwark Plate',meta:'Heavy armor',desc:'<strong>+2</strong> Wound Mitigation. While you take no movement on your turn, gain an additional <strong>+1</strong> Defense — a wall that chose to stand still.',price:'180 Crown'},
+      {lo:53,hi:62,tier:'Uncommon',name:'Heater of the Unbroken',meta:'Heavy shield',desc:'<strong>+2</strong> Defense. When you successfully Block, the attacker must pass a Physique Resist or be knocked back 5 Ft and lose their next reaction.',price:'170 Crown'},
+      {lo:63,hi:70,tier:'Uncommon',name:'Cloak of the Drifting Ash',meta:'Cloak',desc:'In dim light or smoke, attackers roll Disadvantage To-Hit against you. Does not function in full daylight.',price:'140 Crown'},
+      {lo:71,hi:80,tier:'Rare',name:'Mithril Weave of the Vigilant',meta:'Light/medium armor',desc:'<strong>+2</strong> Wound Mitigation with <em>no</em> Agility or casting penalty. You also gain <strong>+1</strong> to all Awareness tests — the weave hums at danger.',price:'620 Crown'},
+      {lo:81,hi:90,tier:'Rare',name:'Aegis of Returning',meta:'Any shield',desc:'<strong>+2</strong> Defense. Once per battle, when an enemy misses you with a melee attack, you may reflect the blow — they take the wounds they would have dealt you.',price:'700 Crown'},
+      {lo:91,hi:95,tier:'Legendary',name:'Carapace of the Deep Stone',meta:'Heavy armor',desc:'<strong>+3</strong> Wound Mitigation. The first time each battle you would drop to 0 wounds, you instead remain at 1 and become immune to conditions until your next turn.',price:'2,600 Crown'},
+      {lo:96,hi:99,tier:'Legendary',name:'Veil of the Unseen Saint',meta:'Cloak',desc:'<strong>+2</strong> Defense. Spend 2 AP to become invisible until you attack or cast, for up to three turns. Once per battle.',price:'2,900 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'The Last Bastion',meta:'Artifact plate',desc:'Worn by the final defender of a city that no longer exists. <strong>+4</strong> Wound Mitigation, no penalties of any kind. Allies within 20 Ft gain <strong>+1</strong> Wound Mitigation. While you live, no ally within that radius can be reduced below 1 wound by a single hit. The armor remembers every siege it survived. <em>Unique.</em>',price:'Priceless'},
+    ]
+  },
+  potions: {
+    title:'Potions &amp; Consumables', icon:'⚗',
+    blurb:'Drunk, thrown, or smeared — single-use and often the difference between a war story and a grave. Drinking is 1 AP; applying to a weapon is 1 AP.',
+    items:[
+      {lo:1,hi:12,tier:'Common',name:'Draught of Mending',meta:'Potion',desc:'Restores 2d10 wounds and clears the <strong>Bleed</strong> condition.',price:'25 Crown'},
+      {lo:13,hi:22,tier:'Common',name:'Steadying Tonic',meta:'Potion',desc:'Removes <strong>Shaken</strong> and <strong>Fear</strong>, and grants immunity to both for the next three turns.',price:'20 Crown'},
+      {lo:23,hi:32,tier:'Common',name:'Smoke Globe',meta:'Thrown',desc:'Shatters into a 15 Ft cloud of choking smoke for three turns. Everyone inside attacks at Disadvantage and cannot be targeted at range.',price:'18 Crown'},
+      {lo:33,hi:40,tier:'Common',name:'Whetstone Oil',meta:'Applied',desc:'Coats a weapon. The next three hits each deal <strong>+1</strong> wound.',price:'22 Crown'},
+      {lo:41,hi:52,tier:'Uncommon',name:'Potion of Fortitude',meta:'Potion',desc:'Grants 10 temporary wounds for the duration of a battle and <strong>+2</strong> Wound Mitigation. (The draught the party looted from the Khugron Champion.)',price:'90 Crown'},
+      {lo:53,hi:62,tier:'Uncommon',name:'Flask of Quickening',meta:'Potion',desc:'For three turns, gain <strong>+1 AP</strong> per turn. When it ends, you are <strong>Exhausted</strong> for one turn.',price:'120 Crown'},
+      {lo:63,hi:70,tier:'Uncommon',name:'Vial of Black Sleep',meta:'Applied / thrown',desc:'Coat a blade or shatter on a target. Victim tests Physique Resist (TN 9) or falls <strong>asleep</strong> for 1d10 minutes, waking if struck.',price:'110 Crown'},
+      {lo:71,hi:80,tier:'Rare',name:'Philosopher\u2019s Draught',meta:'Potion',desc:'Restores all wounds and clears every condition. One of the great alchemical workings — rarely sold, often stolen.',price:'420 Crown'},
+      {lo:81,hi:90,tier:'Rare',name:'Elixir of the Borrowed Hour',meta:'Potion',desc:'Take an extra full turn immediately after your current one. At the start of your next normal turn you gain 2 <strong>Exhausted</strong>.',price:'520 Crown'},
+      {lo:91,hi:95,tier:'Legendary',name:'Tears of the Drowned Saint',meta:'Potion',desc:'Revives a creature dead for less than one minute, restoring it to half its wound threshold. A single vial; the saint wept only so many times.',price:'1,800 Crown'},
+      {lo:96,hi:99,tier:'Legendary',name:'Dragon\u2019s Bile',meta:'Thrown',desc:'A 20 Ft burst dealing 5d10 fire, bypassing non-magical Wound Mitigation. The vessel itself is half the danger — a natural 1 to throw shatters it at your feet.',price:'2,000 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'The Final Cup',meta:'Artifact consumable',desc:'A chalice that fills once with whatever the drinker most needs and never again. The GM determines its single, perfect effect for the moment it is drunk — then the cup is inert metal forever. <em>Unique.</em>',price:'Priceless'},
+    ]
+  },
+  wondrous: {
+    title:'Wondrous &amp; Utility', icon:'✦',
+    blurb:'Rings, charms, tools, and stranger things — the relics that win problems combat cannot.',
+    items:[
+      {lo:1,hi:12,tier:'Common',name:'Everlit Lantern',meta:'Tool',desc:'Burns without fuel, casting steady light in a 30 Ft radius. Cannot be extinguished by wind or water, only by command.',price:'30 Crown'},
+      {lo:13,hi:22,tier:'Common',name:'Tracker\u2019s Compass',meta:'Charm',desc:'Points not north, but toward the nearest creature you have personally drawn blood from, within one mile.',price:'40 Crown'},
+      {lo:23,hi:32,tier:'Common',name:'Knot of Silence',meta:'Charm',desc:'Once per day, mute all sound within 10 Ft of you for one minute. Useful for a quiet kill, or a quiet escape.',price:'45 Crown'},
+      {lo:33,hi:40,tier:'Common',name:'Ration Stone',meta:'Charm',desc:'Hold it and feel fed and watered for a day. Does not heal, but staves off the slow death of the road.',price:'28 Crown'},
+      {lo:41,hi:52,tier:'Uncommon',name:'Ring of the Sure Hand',meta:'Ring',desc:'<strong>+1</strong> to all Agility-based skill tests (Thieving, Acrobatics, Sleight of Hand). Re-roll a natural 1 once per day.',price:'160 Crown'},
+      {lo:53,hi:62,tier:'Uncommon',name:'Band of Quickness',meta:'Ring',desc:'Grants a permanent <strong>+1 AP</strong> to your pool. Heavily sought; rarely sold willingly. (Matches the Altdorf merchant\u2019s reward ring.)',price:'200 Crown'},
+      {lo:63,hi:70,tier:'Uncommon',name:'Whispering Slate',meta:'Tool',desc:'A pair of stone tablets. Words written on one appear on the other, anywhere in the world. Sold as a pair; useless alone.',price:'150 Crown'},
+      {lo:71,hi:80,tier:'Rare',name:'Amulet of the Warded Mind',meta:'Amulet',desc:'Immune to <strong>Fear</strong> and to spells that read or control the mind. Once per battle, reflect a failed mental effect back at its caster.',price:'600 Crown'},
+      {lo:81,hi:90,tier:'Rare',name:'Boots of the Verge',meta:'Boots',desc:'Spend 2 AP to step through space up to 60 Ft to a point you can see. Three times per day.',price:'680 Crown'},
+      {lo:91,hi:95,tier:'Legendary',name:'The Cartographer\u2019s Eye',meta:'Monocle',desc:'See through one wall, illusion, or disguise within 60 Ft for one minute, once per battle. Reveals secret doors and the true form of the shapeshifted.',price:'1,900 Crown'},
+      {lo:96,hi:99,tier:'Legendary',name:'Heart of the Bound Elemental',meta:'Orb',desc:'A caged elemental spirit. Once per day, summon it to fight for three turns as a powerful ally — or shatter the orb to unleash it in a final, devastating burst (GM adjudicates), destroying the item.',price:'2,500 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'The Unwritten Page',meta:'Artifact relic',desc:'A single blank sheet from a book that records all things. Write one true sentence about the world upon it, and that sentence becomes true — once. The page then fills with the consequence in a script no one can read, and never accepts ink again. <em>Unique. Use with terror.</em>',price:'Priceless'},
+    ]
+  },
+  cursed: {
+    title:'Cursed Relics', icon:'☥', cursed:true,
+    blurb:'Power always asks a price; cursed relics simply name it after you have already paid. A cursed item functions as a normal relic of its apparent kind until the curse reveals itself — usually at the worst moment. Curses cannot be removed by selling. Roll d100.',
+    items:[
+      {lo:1,hi:15,tier:'Cursed',name:'The Clinging Blade',meta:'Weapon',desc:'A fine <strong>+2</strong> weapon that cannot be dropped or unequipped once drawn, until it has tasted blood — yours or another\u2019s — in the current battle.',price:'\u2014'},
+      {lo:16,hi:30,tier:'Cursed',name:'Armor of the Slow Rot',meta:'Armor',desc:'Grants <strong>+2</strong> Wound Mitigation, but you heal at half the normal rate while wearing it, and removing it takes a full minute of effort.',price:'\u2014'},
+      {lo:31,hi:45,tier:'Cursed',name:'Ring of Hunger',meta:'Ring',desc:'<strong>+1 AP</strong>, but you must deal damage to a living creature each turn or take 1d10 unpreventable wounds at the turn\u2019s end. The ring is always hungry.',price:'\u2014'},
+      {lo:46,hi:58,tier:'Cursed',name:'The Honest Mirror',meta:'Charm',desc:'Shows the bearer true visions of the future — and each vision inflicts <strong>Shaken</strong>. The visions are never wrong and never kind.',price:'\u2014'},
+      {lo:59,hi:70,tier:'Cursed',name:'Coin of the Drowned',meta:'Charm',desc:'You cannot die while you carry it — wounds that would kill you leave you at 1 instead. But every dawn, someone you have named aloud loses a year of their life. The coin keeps count.',price:'\u2014'},
+      {lo:71,hi:82,tier:'Cursed',name:'Crown of Borrowed Tongues',meta:'Wondrous',desc:'Understand and speak every language. While worn, you cannot tell a lie, and everyone can tell you cannot — a fatal honesty in the wrong room.',price:'\u2014'},
+      {lo:83,hi:92,tier:'Cursed',name:'The Generous Wound',meta:'Weapon',desc:'A <strong>+3</strong> weapon that heals the <em>target</em> for half the wounds it deals, the first time each battle you strike with it. You will forget this until it matters.',price:'\u2014'},
+      {lo:93,hi:99,tier:'Cursed',name:'Gauntlet of the Open Gate',meta:'Wondrous',desc:'Immense strength (<strong>+3</strong> wounds on unarmed and melee), but on any natural 1 you roll, a small tear opens to somewhere worse, and something comes through. The GM decides what.',price:'\u2014'},
+      {lo:100,hi:100,tier:'Cursed',name:'The Mark That Speaks',meta:'Artifact curse',desc:'Brands the bearer with a living sigil that grants a Legendary boon of the GM\u2019s choosing — and slowly writes its own will over yours. Each use advances the corruption. When the mark finishes its sentence, the character belongs to it. <em>This is how some are Thrice-Marked. Unique.</em>',price:'\u2014'},
+    ]
+  }
+};
+
+/* ── Build static tables ── */
+function buildTables(){
+  const root = document.getElementById('tables');
+  Object.entries(DATA).forEach(([key,cat])=>{
+    const sec = document.createElement('div');
+    sec.className = 'cat-section' + (cat.cursed?' cursed-section':'');
+    let rows='';
+    cat.items.forEach(it=>{
+      const band = (it.lo===it.hi) ? pad(it.lo) : pad(it.lo)+'\u2013'+pad(it.hi);
+      rows += `<tr data-tier="${it.tier}">
+        <td class="td-roll">${band}</td>
+        <td class="td-name"><span class="tier-pip" style="background:${TIER_COLORS[it.tier]}"></span>${it.name}</td>
+        <td>${it.desc}</td>
+        <td class="td-price">${it.price}</td>
+      </tr>`;
+    });
+    sec.innerHTML = `
+      <div class="cat-title">${cat.icon} ${cat.title}</div>
+      <p class="cat-blurb">${cat.blurb}</p>
+      <table>
+        <thead><tr><th>d100</th><th>Relic</th><th>Effect</th><th>Value</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+    root.appendChild(sec);
+  });
+}
+function pad(n){ return n===100 ? '100' : String(n).padStart(2,'0'); }
+
+/* ── Roller ── */
+function rollItem(){
+  const cat = document.getElementById('cat-select').value;
+  const roll = Math.floor(Math.random()*100)+1;
+  const items = DATA[cat].items;
+  const hit = items.find(it=> roll>=it.lo && roll<=it.hi) || items[items.length-1];
+  const color = TIER_COLORS[hit.tier];
+  const box = document.getElementById('roll-result');
+  box.innerHTML = `
+    <div class="rr-head" style="background:${color}">
+      <span class="rr-roll">d100 → ${pad(roll)}</span>
+      <span class="rr-tier">${hit.tier}</span>
+    </div>
+    <div class="rr-body">
+      <div class="rr-name">${hit.name}</div>
+      <div class="rr-meta">${hit.meta} · ${DATA[cat].title.replace('&amp;','&')}</div>
+      <div class="rr-desc">${hit.desc}</div>
+      ${hit.price!=='\u2014' ? `<div class="rr-price">Value: ${hit.price}</div>` : `<div class="rr-price">A curse has no honest price.</div>`}
+    </div>`;
+  box.classList.remove('show'); void box.offsetWidth; box.classList.add('show');
+}
+
+buildTables();
+</script>
+</body>
+</html>
