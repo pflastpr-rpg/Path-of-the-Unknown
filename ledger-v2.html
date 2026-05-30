@@ -1252,6 +1252,7 @@
                         <option value="none">-</option><option value="furs">Furs</option><option value="padded">Padded</option><option value="leather">Leather</option><option value="studded">Studded Leather</option><option value="chain">Mail - Chain</option><option value="banded">Mail - Banded</option><option value="splint">Mail - Splint</option><option value="plate">Mail - Plate</option><option value="field">Plate - Field</option><option value="full">Plate - Full</option><option value="mithril">Mithril</option><option value="mithril_elf">Mithril - Elven</option><option value="shield_light">Light Shield / Buckler</option><option value="shield_heavy">Heater / Heavy Shield</option>
                     </select>
                 </div>
+                <div class="g-item"><label style="text-align:center;">Ench</label><select id="armor-ench-1" onchange="applyArmorEnchant(this,'1')" title="Armour enchantment: +X Defense" style="width:48px; height:32px; font-size:10pt; font-weight:700; border:1.5px solid var(--ink); background:var(--input-bg);"><option value="0">&mdash;</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option></select></div>
                 <div class="g-item"><label style="text-align:center;">Bonus</label><input type="number" id="armor-bonus-1" oninput="upd()" placeholder="+B" style="width:45px; height:32px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); background:var(--input-bg);"></div>
                 <div class="g-item"><label style="text-align:center;">Total</label><input type="number" id="armor-total-1" readonly placeholder="Tot" style="width:45px; height:32px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); background:rgba(0,0,0,0.08);"></div>
             </div>
@@ -1268,6 +1269,7 @@
                         <option value="none">-</option><option value="furs">Furs</option><option value="padded">Padded</option><option value="leather">Leather</option><option value="studded">Studded Leather</option><option value="chain">Mail - Chain</option><option value="banded">Mail - Banded</option><option value="splint">Mail - Splint</option><option value="plate">Mail - Plate</option><option value="field">Plate - Field</option><option value="full">Plate - Full</option><option value="mithril">Mithril</option><option value="mithril_elf">Mithril - Elven</option><option value="shield_light">Light Shield / Buckler</option><option value="shield_heavy">Heater / Heavy Shield</option>
                     </select>
                 </div>
+                <div class="g-item"><label style="text-align:center;">Ench</label><select id="armor-ench-2" onchange="applyArmorEnchant(this,'2')" title="Armour enchantment: +X Defense" style="width:48px; height:32px; font-size:10pt; font-weight:700; border:1.5px solid var(--ink); background:var(--input-bg);"><option value="0">&mdash;</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option></select></div>
                 <div class="g-item"><label style="text-align:center;">Bonus</label><input type="number" id="armor-bonus-2" oninput="upd()" placeholder="+B" style="width:45px; height:32px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); background:var(--input-bg);"></div>
                 <div class="g-item"><label style="text-align:center;">Total</label><input type="number" id="armor-total-2" readonly placeholder="Tot" style="width:45px; height:32px; text-align:center; font-size:12pt; font-weight:900; border:1.5px solid var(--ink); background:rgba(0,0,0,0.08);"></div>
             </div>
@@ -3308,8 +3310,29 @@ function buildWeaponRow(targetId) {
     }
     const rangedExtra = targetId === 'rr' ? `<input type="text" class="w-range" id="${pfx}range" readonly tabindex="-1" style="background:rgba(0,0,0,0.08); font-size:10pt; width:100%; text-align:center;"><input type="text" class="w-aoe" id="${pfx}aoe" readonly tabindex="-1" style="background:rgba(0,0,0,0.08); font-size:10pt; width:100%; text-align:center;">` : '';
 
-    const html = `<div class="weapon-entry"><div class="t-r">${sel}${actSel}<input type="number" class="wb" id="${pfx}wb" oninput="upd()" placeholder="Bon"><input type="number" class="wdb" id="${pfx}wdb" oninput="upd()" placeholder="Bon">${rangedExtra}</div><div class="w-note-row"><span class="w-note-label">Note:</span><input type="text" class="w-note" id="${pfx}note" placeholder="Reach, Silver, Properties..."></div></div>`;
+    const html = `<div class="weapon-entry"><div class="t-r">${sel}${actSel}<input type="number" class="wb" id="${pfx}wb" oninput="upd()" placeholder="+Hit" title="Manual To-Hit bonus (separate from enchantment)"><input type="number" class="wdb" id="${pfx}wdb" oninput="upd()" placeholder="+Wnd" title="Manual Wound bonus (separate from enchantment)">${rangedExtra}</div><div class="w-note-row"><span class="w-note-label">Ench:</span><select class="w-ench" id="${pfx}ench" onchange="applyEnchant(this,'${pfx}')" title="Weapon enchantment: applies +X to BOTH To-Hit and Wounds" style="font-size:10pt; font-weight:700; width:54px; margin-right:8px;"><option value="0">&mdash;</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option></select><span class="w-note-label">Note:</span><input type="text" class="w-note" id="${pfx}note" placeholder="Reach, Silver, Properties..."></div></div>`;
     document.getElementById(targetId).insertAdjacentHTML('beforeend', html);
+}
+
+// Apply a +X weapon enchantment: fills BOTH the To-Hit bonus (.wb) and Wound bonus (.wdb)
+// for this weapon row with the same value, then recalculates. Lets a player drop in a
+// "+2 enchanted weapon" with one tap instead of typing the bonus into two boxes.
+function applyEnchant(sel, pfx){
+    const v = parseInt(sel.value) || 0;
+    const wb = document.getElementById(pfx + 'wb');
+    const wdb = document.getElementById(pfx + 'wdb');
+    if (wb)  wb.value  = v === 0 ? '' : v;
+    if (wdb) wdb.value = v === 0 ? '' : v;
+    if (typeof upd === 'function') upd();
+}
+
+// Apply a +X armour enchantment: fills the armour slot's Bonus field (which already
+// adds directly to Defense), then recalculates.
+function applyArmorEnchant(sel, num){
+    const v = parseInt(sel.value) || 0;
+    const bon = document.getElementById('armor-bonus-' + num);
+    if (bon) bon.value = v === 0 ? '' : v;
+    if (typeof upd === 'function') upd();
 }
 
 // ================================================================
