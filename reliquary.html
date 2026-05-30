@@ -89,6 +89,11 @@ body::before{
 }
 .roller button.roll-btn:hover{background:var(--blood2);}
 .roller button.roll-btn:active{transform:translateY(1px);}
+.roller button.roll-btn.master{background:var(--gold);color:var(--ink);border-color:var(--gold2);}
+.roller button.roll-btn.master:hover{background:var(--gold2);}
+.roller-or{font-family:var(--f-body);font-style:italic;color:var(--parch3);font-size:10.5pt;}
+.rr-step{font-family:var(--f-label);font-size:8.5pt;letter-spacing:1px;color:var(--parch3);padding:8px 18px 0;text-transform:uppercase;}
+.master-table-wrap{margin-bottom:42px;}
 .roll-result{
   margin-top:18px; min-height:40px; background:var(--parch); border:1px solid var(--gold3,var(--gold));
   border-radius:3px; padding:0; overflow:hidden; display:none;
@@ -175,11 +180,16 @@ tr[data-tier="Cursed"] .td-name{border-left:3px solid var(--t-cursed);}
   <div class="roller">
     <h2>⚄ Cast the Bones</h2>
     <div class="roller-controls">
+      <button class="roll-btn master" onclick="rollEverything()">⚅ Roll Everything (d100 → d100)</button>
+      <span class="roller-or">or pick a table:</span>
       <select id="cat-select">
-        <option value="weapons">Weapons</option>
+        <option value="melee">Melee Weapons</option>
+        <option value="ranged">Ranged Weapons</option>
         <option value="armor">Armor &amp; Shields</option>
         <option value="potions">Potions &amp; Consumables</option>
         <option value="wondrous">Wondrous &amp; Utility</option>
+        <option value="rings">Rings, Amulets &amp; Charms</option>
+        <option value="discipline">Discipline Relics</option>
         <option value="cursed">Cursed (GM)</option>
       </select>
       <button class="roll-btn" onclick="rollItem()">Roll d100</button>
@@ -213,99 +223,262 @@ const TIER_COLORS = {
   Legendary:'var(--t-legendary)', Artifact:'var(--t-artifact)', Cursed:'var(--t-cursed)'
 };
 
+/* THE RELIQUARY — expanded data
+   d100 bands per category: Common 01-40 | Uncommon 41-70 | Rare 71-90 | Legendary 91-99 | Artifact 100
+   Master routing: d10 -> category
+*/
+/* THE RELIQUARY — full-coverage data
+   Category d100 bands: Common 01-40 | Uncommon 41-70 | Rare 71-90 | Legendary 91-99 | Artifact 100
+   Master routing: d100 -> category (weighted)
+*/
+const MASTER = [
+  {lo:1,  hi:18, cat:'melee',      label:'Melee Weapons'},
+  {lo:19, hi:34, cat:'ranged',     label:'Ranged Weapons'},
+  {lo:35, hi:52, cat:'armor',      label:'Armor & Shields'},
+  {lo:53, hi:70, cat:'potions',    label:'Potions & Consumables'},
+  {lo:71, hi:82, cat:'wondrous',   label:'Wondrous & Utility'},
+  {lo:83, hi:91, cat:'rings',      label:'Rings, Amulets & Charms'},
+  {lo:92, hi:97, cat:'discipline', label:'Discipline Relics'},
+  {lo:98, hi:100,cat:'cursed',     label:'Cursed Relic (GM)'},
+];
+
 const DATA = {
-  weapons: {
-    title:'Weapons', icon:'⚔',
-    blurb:'Blades, hafts, and bows that carry more than steel. Enhancement bonuses (+1/+2/+3) add to both To-Hit and wound rolls unless noted.',
+  melee: {
+    title:'Melee Weapons', icon:'\u2694',
+    blurb:'Every melee class the rules recognise \u2014 Blunt, Edged, Two-Handed, Piercing, Finesse, Polearm, Lance, Flail, and the bare-handed arts. Enhancement bonuses (+1/+2/+3) add to both To-Hit and wound rolls unless noted; each weapon keeps its class traits.',
     items:[
-      {lo:1,hi:12,tier:'Common',name:'Trueworn Blade',meta:'Any melee weapon',desc:'A weapon that never dulls and never rusts. <strong>+1</strong> To-Hit and wounds. Common smith-enchantment, found on veteran officers.',price:'45 Crown'},
-      {lo:13,hi:24,tier:'Common',name:'Steadyshaft Bow',meta:'Any bow or crossbow',desc:'The draw is always smooth, the string never frays. <strong>+1</strong> To-Hit at range. Ignores the first point of wind or weather penalty.',price:'40 Crown'},
-      {lo:25,hi:34,tier:'Common',name:'Biting Edge',meta:'Any edged weapon',desc:'Honed by a whetstone that drank blood. On a natural 10 To-Hit, the target also suffers <strong>Bleed</strong>.',price:'50 Crown'},
-      {lo:35,hi:40,tier:'Common',name:'Weighted Head',meta:'Any blunt weapon',desc:'Lead-cored and brutal. On a successful hit, the target must pass a Physique Resist or be pushed back 5 Ft.',price:'38 Crown'},
-      {lo:41,hi:52,tier:'Uncommon',name:'Flametongue',meta:'Any melee weapon',desc:'Wreathed in fire on command (1 AP to ignite, free to quench). <strong>+2</strong> wounds, and deals fire — undead and plant creatures take Disadvantage on Wound Mitigation against it.',price:'160 Crown'},
-      {lo:53,hi:62,tier:'Uncommon',name:'Frostbrand',meta:'Any melee weapon',desc:'Rimed with killing cold. <strong>+1</strong> To-Hit and wounds. On a natural 9–10, the target\u2019s movement is halved until their next turn.',price:'150 Crown'},
-      {lo:63,hi:70,tier:'Uncommon',name:'Hungering Arrows',meta:'Quiver of 12',desc:'Black-fletched and eager. Each arrow deals <strong>+2</strong> wounds and cannot be recovered — it crumbles to ash on impact. Refills one arrow per dawn, to a maximum of 12.',price:'120 Crown'},
-      {lo:71,hi:80,tier:'Rare',name:'Reaver of the Line',meta:'Two-handed weapon',desc:'<strong>+2</strong> To-Hit and wounds. When you drop an enemy to 0 wounds, you may immediately make one free attack (1 AP) against an adjacent foe. Once per turn.',price:'480 Crown'},
-      {lo:81,hi:90,tier:'Rare',name:'The Patient Needle',meta:'Any finesse weapon',desc:'<strong>+2</strong> To-Hit. Against a target unaware of you, your first strike bypasses all non-magical Wound Mitigation and inflicts <strong>Bleed</strong> automatically.',price:'560 Crown'},
-      {lo:91,hi:95,tier:'Legendary',name:'Oathkeeper\u2019s Edge',meta:'Sword (1H)',desc:'<strong>+3</strong> To-Hit and wounds. Once per battle, when an ally within 30 Ft drops to 0 wounds, you may teleport to their side and gain a free attack against whatever felled them.',price:'2,400 Crown'},
-      {lo:96,hi:99,tier:'Legendary',name:'Stormcaller Maul',meta:'Two-handed maul',desc:'<strong>+3</strong> wounds. On a natural 10, lightning arcs to up to three other enemies within 15 Ft, each taking 3d10 and testing Physique or being <strong>Stunned</strong>.',price:'2,800 Crown'},
-      {lo:100,hi:100,tier:'Artifact',name:'Var\u2019thuun\u2019s Sundering',meta:'Artifact greataxe',desc:'A blade forged in the Chaos Forge from a fallen god\u2019s shackle. <strong>+3</strong> To-Hit and wounds, ignores all non-magical Wound Mitigation. Each kill grants +1 wound to your next hit (stacking through the battle). Bearer cannot be healed by divine magic — the axe is jealous. <em>Unique.</em>',price:'Priceless'},
+      {lo:1,hi:6,tier:'Common',name:'Trueworn Sword',meta:'Edged',desc:'Never dulls or rusts. <strong>+1</strong> To-Hit and wounds.',price:'45 Crown'},
+      {lo:7,hi:11,tier:'Common',name:'Reliable Mace',meta:'Blunt',desc:'<strong>+1</strong> wounds. Keeps the Blunt trait (ignores 1 Wound Mitigation), now ignoring 2.',price:'42 Crown'},
+      {lo:12,hi:16,tier:'Common',name:'Keen Dagger',meta:'Piercing / Finesse',desc:'<strong>+1</strong> To-Hit. Thrown, it returns to your hand at the start of your next turn.',price:'40 Crown'},
+      {lo:17,hi:21,tier:'Common',name:'Honed Greataxe',meta:'Two-Handed',desc:'<strong>+1</strong> wounds. Retains the 2-Handed trait (doubles Physique modifier, 2 AP).',price:'48 Crown'},
+      {lo:22,hi:26,tier:'Common',name:'Wrapped Quarterstaff',meta:'Blunt (Staff)',desc:'<strong>+1</strong> To-Hit and Defense. A monk\u2019s favored foundation.',price:'30 Crown'},
+      {lo:27,hi:31,tier:'Common',name:'Studded Cestus',meta:'Unarmed',desc:'Unarmed strikes count as armed and lose the Disadvantage vs Leather+. <strong>+1</strong> unarmed wounds.',price:'36 Crown'},
+      {lo:32,hi:36,tier:'Common',name:'Balanced Spear',meta:'Piercing',desc:'<strong>+1</strong> To-Hit. Retains Advantage To-Wound vs Leather/Cloth; usable one- or two-handed.',price:'38 Crown'},
+      {lo:37,hi:40,tier:'Common',name:'Footman\u2019s Halberd',meta:'Polearm',desc:'<strong>+1</strong> wounds. Strikes safely from the 2nd rank (2 AP).',price:'44 Crown'},
+      {lo:41,hi:46,tier:'Uncommon',name:'Flametongue',meta:'Edged',desc:'1 AP to ignite. <strong>+2</strong> wounds (fire); undead and plant creatures take Disadvantage on Wound Mitigation against it.',price:'160 Crown'},
+      {lo:47,hi:51,tier:'Uncommon',name:'Frostbrand Maul',meta:'Two-Handed',desc:'<strong>+1</strong> To-Hit and wounds. Natural 9\u201310 halves the target\u2019s movement until their next turn.',price:'180 Crown'},
+      {lo:52,hi:56,tier:'Uncommon',name:'Duelist\u2019s Rapier',meta:'Finesse',desc:'<strong>+1</strong> To-Hit. Grants <strong>+2 Riposte</strong> while wielded.',price:'170 Crown'},
+      {lo:57,hi:61,tier:'Uncommon',name:'Skullcleaver Axe',meta:'Edged',desc:'<strong>+2</strong> wounds. Natural 10 also leaves the target <strong>Shaken</strong>.',price:'155 Crown'},
+      {lo:62,hi:66,tier:'Uncommon',name:'Awakened Flail',meta:'Flail',desc:'<strong>+1</strong> wounds. While your Awareness and Agility are both 3+, it adds your full Awareness to wounds (stacking with the base flail trait).',price:'175 Crown'},
+      {lo:67,hi:70,tier:'Uncommon',name:'Reaching Pike',meta:'Polearm',desc:'<strong>+2</strong> wounds. Strikes from the 2nd or 3rd rank; first hit each battle against a charging foe deals double wounds.',price:'150 Crown'},
+      {lo:71,hi:76,tier:'Rare',name:'Reaver of the Line',meta:'Two-Handed',desc:'<strong>+2</strong> To-Hit and wounds. Dropping a foe to 0 grants a free 1 AP attack on an adjacent enemy (once per turn).',price:'480 Crown'},
+      {lo:77,hi:81,tier:'Rare',name:'The Patient Needle',meta:'Finesse',desc:'<strong>+2</strong> To-Hit. First strike against an unaware target bypasses non-magical Wound Mitigation and inflicts <strong>Bleed</strong>.',price:'560 Crown'},
+      {lo:82,hi:86,tier:'Rare',name:'Crusader\u2019s Warhammer',meta:'Blunt',desc:'<strong>+2</strong> To-Hit and wounds, ignores 3 Wound Mitigation. <strong>+1</strong> wound vs Evil and the unliving.',price:'520 Crown'},
+      {lo:87,hi:90,tier:'Rare',name:'Dragonbone Lance',meta:'Lance',desc:'<strong>+2</strong> wounds. Mounted charge multiplies Physique \u00d74 instead of \u00d73 and ignores half the target\u2019s Wound Mitigation.',price:'600 Crown'},
+      {lo:91,hi:94,tier:'Legendary',name:'Oathkeeper\u2019s Edge',meta:'Edged (Sword)',desc:'<strong>+3</strong> To-Hit and wounds. Once per battle, when an ally within 30 Ft falls to 0, teleport to them and gain a free attack on what felled them.',price:'2,400 Crown'},
+      {lo:95,hi:97,tier:'Legendary',name:'Stormcaller Maul',meta:'Two-Handed',desc:'<strong>+3</strong> wounds. Natural 10 arcs lightning to three foes within 15 Ft (3d10 each, Physique or <strong>Stunned</strong>).',price:'2,800 Crown'},
+      {lo:98,hi:99,tier:'Legendary',name:'Whisperfang',meta:'Finesse (Dagger)',desc:'<strong>+3</strong> To-Hit. Strikes from stealth deal triple wounds and make no sound. Grants <strong>+3 Thieving</strong>.',price:'2,600 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'Var\u2019thuun\u2019s Sundering',meta:'Artifact Greataxe (Two-Handed)',desc:'Forged in the Chaos Forge from a fallen god\u2019s shackle. <strong>+3</strong> To-Hit and wounds, ignores all non-magical Wound Mitigation. Each kill grants +1 wound to your next hit (stacking through the battle). Bearer cannot be healed by divine magic. <em>Unique.</em>',price:'Priceless'},
     ]
   },
+
+  ranged: {
+    title:'Ranged Weapons', icon:'\uD83C\uDF1F',
+    blurb:'Bows, crossbows, black-powder arms, and thrown weapons \u2014 every ranged type the rules list. Each keeps its base traits (Piercing values, AoE, Brutal Arc, Entangling) on top of the enchantment.',
+    items:[
+      {lo:1,hi:6,tier:'Common',name:'Steadyshaft Shortbow',meta:'Shortbow',desc:'<strong>+1</strong> To-Hit. Quickload (1 AP); ignores the first point of wind/weather penalty.',price:'40 Crown'},
+      {lo:7,hi:11,tier:'Common',name:'Trueflight Throwing Set',meta:'Throwing Knife/Axe',desc:'Three returning blades. <strong>+1</strong> wounds; retains Brutal Arc (full Physique modifier to wounds).',price:'42 Crown'},
+      {lo:12,hi:16,tier:'Common',name:'Hunter\u2019s Javelin',meta:'Javelin',desc:'<strong>+1</strong> wounds, Brutal Arc. <strong>+1</strong> additional vs Beasts and large creatures.',price:'38 Crown'},
+      {lo:17,hi:21,tier:'Common',name:'Concealed Hand Crossbow',meta:'Hand Crossbow',desc:'<strong>+1</strong> To-Hit. Stays concealable and one-handed; first shot from hiding ignores 2 Wound Mitigation.',price:'46 Crown'},
+      {lo:22,hi:26,tier:'Common',name:'Whispering Sling',meta:'Dart / Sling',desc:'<strong>+1</strong> To-Hit. Low profile \u2014 a hit from concealment rarely reveals your position.',price:'30 Crown'},
+      {lo:27,hi:31,tier:'Common',name:'Snare-Wrapped Whip',meta:'Whip / Lasso',desc:'Entangling. On a failed Agility test the target is Bound; <strong>+1</strong> to the test\u2019s DV.',price:'34 Crown'},
+      {lo:32,hi:36,tier:'Common',name:'Reliable Crossbow',meta:'Standard Crossbow',desc:'<strong>+1</strong> To-Hit. Retains Piercing (negates all armor mitigation at half range).',price:'48 Crown'},
+      {lo:37,hi:40,tier:'Common',name:'Tuned Longbow',meta:'Longbow / Elven Bow',desc:'<strong>+1</strong> To-Hit at the bow\u2019s long range. Recurve: halves armor mitigation up to half range.',price:'44 Crown'},
+      {lo:41,hi:46,tier:'Uncommon',name:'Hungering Quiver',meta:'Arrows (any bow)',desc:'12 black-fletched arrows, each <strong>+2</strong> wounds; crumble to ash on impact. Refills one per dawn (max 12).',price:'120 Crown'},
+      {lo:47,hi:51,tier:'Uncommon',name:'Stinging Hand Crossbow',meta:'Hand Crossbow',desc:'<strong>+1</strong> To-Hit. Bolts carry a mild toxin: on a hit, target tests Physique or is <strong>Poisoned</strong>.',price:'150 Crown'},
+      {lo:52,hi:56,tier:'Uncommon',name:'Duelist\u2019s Pistol',meta:'Pistol',desc:'<strong>+1</strong> To-Hit. Piercing (ignores 4 Wound Mitigation), now 5; reloads as a free action once per battle.',price:'180 Crown'},
+      {lo:57,hi:61,tier:'Uncommon',name:'Scattershot Blunderbuss',meta:'Blunderbuss',desc:'<strong>+1</strong> wounds. The 15 Ft AoE cone\u2019s Stun test rises to DV 12; reload is 1 AP cheaper.',price:'170 Crown'},
+      {lo:62,hi:66,tier:'Uncommon',name:'Heavy Siege Crossbow',meta:'Heavy Crossbow',desc:'<strong>+1</strong> To-Hit. Negates all non-magical mitigation; natural 9\u201310 inflicts <strong>Bleed</strong>.',price:'190 Crown'},
+      {lo:67,hi:70,tier:'Uncommon',name:'Returning Javelins',meta:'Javelin (set of 3)',desc:'<strong>+2</strong> wounds, Brutal Arc. Each thrown javelin flies back to your hand at the start of your next turn.',price:'140 Crown'},
+      {lo:71,hi:76,tier:'Rare',name:'Thunderbolt Longbow',meta:'Longbow / Elven Bow',desc:'<strong>+2</strong> To-Hit and wounds. Once per battle, a shot becomes a 15 Ft line of lightning (all caught test Physique or are <strong>Stunned</strong>).',price:'600 Crown'},
+      {lo:77,hi:81,tier:'Rare',name:'Duelist\u2019s Brace of Pistols',meta:'Pistol (pair)',desc:'<strong>+2</strong> To-Hit. Fire both in one action (2 AP); each ignores 5 Wound Mitigation.',price:'640 Crown'},
+      {lo:82,hi:86,tier:'Rare',name:'Marksman\u2019s Rifle',meta:'Rifle',desc:'<strong>+2</strong> To-Hit and wounds. Ignores all armor mitigation at standard range; <strong>+3</strong> wounds on the first shot of a battle.',price:'700 Crown'},
+      {lo:87,hi:90,tier:'Rare',name:'Stranglevine Lasso',meta:'Whip / Lasso',desc:'Entangling at Advantage. A Bound target also takes 2d10 wounds each turn until it breaks free (Physique test).',price:'520 Crown'},
+      {lo:91,hi:94,tier:'Legendary',name:'The Far Whisper',meta:'Longbow',desc:'<strong>+3</strong> To-Hit and wounds, no range penalty at any distance you can see. Once per battle, a shot cannot miss.',price:'2,500 Crown'},
+      {lo:95,hi:97,tier:'Legendary',name:'Hand Cannon of Ruin',meta:'Rifle / heavy firearm',desc:'<strong>+3</strong> wounds, 25 Ft AoE on impact (5d10, Physique or <strong>Prone</strong> + <strong>Stunned</strong>). Deafening; one shot per two turns.',price:'2,800 Crown'},
+      {lo:98,hi:99,tier:'Legendary',name:'The Endless Quiver',meta:'Quiver (any bow)',desc:'Conjures any arrow type at will and never empties. All shots gain <strong>+2</strong> To-Hit; once per battle, fire at three targets in one action.',price:'2,600 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'Heartpiercer',meta:'Artifact Longbow',desc:'Strung with a sinew that remembers every shot ever loosed. <strong>+3</strong> To-Hit and wounds, ignores all mitigation. Once per session, name a target you can see \u2014 the arrow finds them through walls, armies, and lies, dealing 6d10. The bow then falls silent until the next session. <em>Unique.</em>',price:'Priceless'},
+    ]
+  },
+
   armor: {
-    title:'Armor &amp; Shields', icon:'🛡',
-    blurb:'Worn protection that turns the butcher\u2019s blow. Bonuses add to Wound Mitigation or Defense as noted. Heavy enchanted armor still carries its base Agility and casting penalties unless stated.',
+    title:'Armor & Shields', icon:'\uD83D\uDEE1',
+    blurb:'Every armor and shield type the rules define gets a guaranteed enchanted entry. Enchantments add to Wound Mitigation or Defense and may waive a type\u2019s native casting/Agility penalty as noted; base armor traits (Physique gates, To-Cast penalties) otherwise still apply.',
     items:[
-      {lo:1,hi:12,tier:'Common',name:'Truefit Mail',meta:'Any armor',desc:'Fitted by a master\u2019s hand. <strong>+1</strong> Wound Mitigation, and the armor\u2019s Agility penalty is reduced by 1.',price:'48 Crown'},
-      {lo:13,hi:24,tier:'Common',name:'Warding Buckler',meta:'Light shield',desc:'<strong>+1</strong> Defense. Once per battle, negate a single ranged hit entirely (declare before the wound roll).',price:'42 Crown'},
-      {lo:25,hi:34,tier:'Common',name:'Sure-Step Greaves',meta:'Boots / leg armor',desc:'You cannot be knocked <strong>Prone</strong> by non-magical force, and ignore difficult terrain for the first 10 Ft of movement each turn.',price:'40 Crown'},
-      {lo:35,hi:40,tier:'Common',name:'Padded Ward',meta:'Any armor',desc:'Quilted with blessed thread. <strong>+1</strong> Wound Mitigation specifically against Beasts and the unliving.',price:'36 Crown'},
-      {lo:41,hi:52,tier:'Uncommon',name:'Bulwark Plate',meta:'Heavy armor',desc:'<strong>+2</strong> Wound Mitigation. While you take no movement on your turn, gain an additional <strong>+1</strong> Defense — a wall that chose to stand still.',price:'180 Crown'},
-      {lo:53,hi:62,tier:'Uncommon',name:'Heater of the Unbroken',meta:'Heavy shield',desc:'<strong>+2</strong> Defense. When you successfully Block, the attacker must pass a Physique Resist or be knocked back 5 Ft and lose their next reaction.',price:'170 Crown'},
-      {lo:63,hi:70,tier:'Uncommon',name:'Cloak of the Drifting Ash',meta:'Cloak',desc:'In dim light or smoke, attackers roll Disadvantage To-Hit against you. Does not function in full daylight.',price:'140 Crown'},
-      {lo:71,hi:80,tier:'Rare',name:'Mithril Weave of the Vigilant',meta:'Light/medium armor',desc:'<strong>+2</strong> Wound Mitigation with <em>no</em> Agility or casting penalty. You also gain <strong>+1</strong> to all Awareness tests — the weave hums at danger.',price:'620 Crown'},
-      {lo:81,hi:90,tier:'Rare',name:'Aegis of Returning',meta:'Any shield',desc:'<strong>+2</strong> Defense. Once per battle, when an enemy misses you with a melee attack, you may reflect the blow — they take the wounds they would have dealt you.',price:'700 Crown'},
-      {lo:91,hi:95,tier:'Legendary',name:'Carapace of the Deep Stone',meta:'Heavy armor',desc:'<strong>+3</strong> Wound Mitigation. The first time each battle you would drop to 0 wounds, you instead remain at 1 and become immune to conditions until your next turn.',price:'2,600 Crown'},
-      {lo:96,hi:99,tier:'Legendary',name:'Veil of the Unseen Saint',meta:'Cloak',desc:'<strong>+2</strong> Defense. Spend 2 AP to become invisible until you attack or cast, for up to three turns. Once per battle.',price:'2,900 Crown'},
-      {lo:100,hi:100,tier:'Artifact',name:'The Last Bastion',meta:'Artifact plate',desc:'Worn by the final defender of a city that no longer exists. <strong>+4</strong> Wound Mitigation, no penalties of any kind. Allies within 20 Ft gain <strong>+1</strong> Wound Mitigation. While you live, no ally within that radius can be reduced below 1 wound by a single hit. The armor remembers every siege it survived. <em>Unique.</em>',price:'Priceless'},
+      {lo:1,hi:5,tier:'Common',name:'Spirit-Touched Furs',meta:'Animal Furs',desc:'<strong>+1</strong> Wound Mitigation (total 2) and immunity to natural cold. The lightest protection, now worth wearing.',price:'30 Crown'},
+      {lo:6,hi:10,tier:'Common',name:'Blessed Padded Cloth',meta:'Cloth / Padded',desc:'<strong>+1</strong> Wound Mitigation and <strong>+1</strong> to Resist tests vs spells, with no casting penalty.',price:'34 Crown'},
+      {lo:11,hi:15,tier:'Common',name:'Truefit Leather',meta:'Leather',desc:'<strong>+1</strong> Wound Mitigation (total 3); silent to move in (<strong>+1</strong> Thieving/stealth).',price:'40 Crown'},
+      {lo:16,hi:20,tier:'Common',name:'Riveted Studded Leather',meta:'Studded Leather',desc:'<strong>+1</strong> Wound Mitigation (total 4); the \u22121 To-Cast penalty is waived.',price:'48 Crown'},
+      {lo:21,hi:25,tier:'Common',name:'Warding Buckler',meta:'Light Shield / Buckler',desc:'<strong>+1</strong> Defense. Once per battle, negate a single ranged hit entirely.',price:'42 Crown'},
+      {lo:26,hi:30,tier:'Common',name:'Sure-Step Greaves',meta:'Leg armor',desc:'Cannot be knocked <strong>Prone</strong> by non-magical force; ignore difficult terrain for the first 10 Ft each turn.',price:'40 Crown'},
+      {lo:31,hi:35,tier:'Common',name:'Helm of Clear Sight',meta:'Helm',desc:'Immune to <strong>Blind</strong>; <strong>+1</strong> Awareness for sight-based tests.',price:'44 Crown'},
+      {lo:36,hi:40,tier:'Common',name:'Gauntlets of Grip',meta:'Gloves',desc:'Cannot be <strong>Disarmed</strong>; <strong>+1</strong> Climbing and grapple tests.',price:'38 Crown'},
+      {lo:41,hi:46,tier:'Uncommon',name:'Linked Chainmail of Ease',meta:'Chainmail',desc:'<strong>+1</strong> Wound Mitigation (total 5); the \u22122 To-Cast penalty is reduced to \u22121.',price:'150 Crown'},
+      {lo:47,hi:51,tier:'Uncommon',name:'Bulwark Banded Mail',meta:'Banded / Splint Mail',desc:'<strong>+2</strong> Wound Mitigation (total 7). If you take no movement on your turn, gain <strong>+1</strong> Defense.',price:'185 Crown'},
+      {lo:52,hi:56,tier:'Uncommon',name:'Heater of the Unbroken',meta:'Heater / Heavy Shield',desc:'<strong>+2</strong> Defense and the Physique-4 gate is waived. A successful Block pushes the attacker 5 Ft and costs them their next reaction.',price:'180 Crown'},
+      {lo:57,hi:61,tier:'Uncommon',name:'Cloak of the Drifting Ash',meta:'Cloak',desc:'In dim light or smoke, attackers roll Disadvantage To-Hit against you. Inert in full daylight.',price:'140 Crown'},
+      {lo:62,hi:66,tier:'Uncommon',name:'Hide of the Bear-Spirit',meta:'Leather / medium',desc:'<strong>+1</strong> Wound Mitigation and <strong>+3</strong> to the maximum Wound Threshold.',price:'160 Crown'},
+      {lo:67,hi:70,tier:'Uncommon',name:'Field Plate of the Vanguard',meta:'Field Plate',desc:'<strong>+1</strong> Wound Mitigation (total 7); the \u22124 To-Cast penalty is reduced to \u22122. Immune to <strong>Exhausted</strong> from armor weight.',price:'190 Crown'},
+      {lo:71,hi:76,tier:'Rare',name:'Mithril Weave of the Vigilant',meta:'Mithril',desc:'<strong>+2</strong> Wound Mitigation with no Agility or casting penalty (Mithril\u2019s native trait). <strong>+1</strong> to all Awareness tests.',price:'620 Crown'},
+      {lo:77,hi:81,tier:'Rare',name:'Elven Mithril of the Glade',meta:'Mithril (Elven)',desc:'<strong>+2</strong> Wound Mitigation, no penalties, weightless. <strong>+1</strong> Agility and <strong>+1</strong> Defense; counts as no armor for Druidism.',price:'720 Crown'},
+      {lo:82,hi:86,tier:'Rare',name:'Aegis of Returning',meta:'Any shield',desc:'<strong>+2</strong> Defense. Once per battle, when an enemy misses you in melee, reflect the wounds they would have dealt.',price:'700 Crown'},
+      {lo:87,hi:90,tier:'Rare',name:'Full Plate of the Tireless',meta:'Full Plate',desc:'<strong>+2</strong> Wound Mitigation (total 10), no movement penalty, and the \u22125 To-Cast penalty halved. You are immune to <strong>Exhausted</strong>.',price:'780 Crown'},
+      {lo:91,hi:94,tier:'Legendary',name:'Carapace of the Deep Stone',meta:'Full Plate',desc:'<strong>+3</strong> Wound Mitigation. The first time each battle you would hit 0 wounds, stay at 1 and become condition-immune until your next turn.',price:'2,600 Crown'},
+      {lo:95,hi:97,tier:'Legendary',name:'Veil of the Unseen Saint',meta:'Cloak',desc:'<strong>+2</strong> Defense. Spend 2 AP to turn invisible (up to three turns, ends on attack/cast). Once per battle.',price:'2,900 Crown'},
+      {lo:98,hi:99,tier:'Legendary',name:'Wall-Shield of the Last Stand',meta:'Heater / Heavy Shield',desc:'<strong>+3</strong> Defense. While planted, allies directly behind you share your Defense bonus and cannot be targeted at range.',price:'2,500 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'The Last Bastion',meta:'Artifact Full Plate',desc:'Worn by the final defender of a vanished city. <strong>+4</strong> Wound Mitigation, no penalties of any kind. Allies within 20 Ft gain <strong>+1</strong> Wound Mitigation and cannot be reduced below 1 wound by a single hit while you live. <em>Unique.</em>',price:'Priceless'},
     ]
   },
+
   potions: {
-    title:'Potions &amp; Consumables', icon:'⚗',
-    blurb:'Drunk, thrown, or smeared — single-use and often the difference between a war story and a grave. Drinking is 1 AP; applying to a weapon is 1 AP.',
+    title:'Potions & Consumables', icon:'\u2697',
+    blurb:'Drunk, thrown, or smeared \u2014 single-use and often the difference between a war story and a grave. Drinking or applying is 1 AP.',
     items:[
-      {lo:1,hi:12,tier:'Common',name:'Draught of Mending',meta:'Potion',desc:'Restores 2d10 wounds and clears the <strong>Bleed</strong> condition.',price:'25 Crown'},
-      {lo:13,hi:22,tier:'Common',name:'Steadying Tonic',meta:'Potion',desc:'Removes <strong>Shaken</strong> and <strong>Fear</strong>, and grants immunity to both for the next three turns.',price:'20 Crown'},
-      {lo:23,hi:32,tier:'Common',name:'Smoke Globe',meta:'Thrown',desc:'Shatters into a 15 Ft cloud of choking smoke for three turns. Everyone inside attacks at Disadvantage and cannot be targeted at range.',price:'18 Crown'},
-      {lo:33,hi:40,tier:'Common',name:'Whetstone Oil',meta:'Applied',desc:'Coats a weapon. The next three hits each deal <strong>+1</strong> wound.',price:'22 Crown'},
-      {lo:41,hi:52,tier:'Uncommon',name:'Potion of Fortitude',meta:'Potion',desc:'Grants 10 temporary wounds for the duration of a battle and <strong>+2</strong> Wound Mitigation. (The draught the party looted from the Khugron Champion.)',price:'90 Crown'},
-      {lo:53,hi:62,tier:'Uncommon',name:'Flask of Quickening',meta:'Potion',desc:'For three turns, gain <strong>+1 AP</strong> per turn. When it ends, you are <strong>Exhausted</strong> for one turn.',price:'120 Crown'},
-      {lo:63,hi:70,tier:'Uncommon',name:'Vial of Black Sleep',meta:'Applied / thrown',desc:'Coat a blade or shatter on a target. Victim tests Physique Resist (TN 9) or falls <strong>asleep</strong> for 1d10 minutes, waking if struck.',price:'110 Crown'},
-      {lo:71,hi:80,tier:'Rare',name:'Philosopher\u2019s Draught',meta:'Potion',desc:'Restores all wounds and clears every condition. One of the great alchemical workings — rarely sold, often stolen.',price:'420 Crown'},
-      {lo:81,hi:90,tier:'Rare',name:'Elixir of the Borrowed Hour',meta:'Potion',desc:'Take an extra full turn immediately after your current one. At the start of your next normal turn you gain 2 <strong>Exhausted</strong>.',price:'520 Crown'},
-      {lo:91,hi:95,tier:'Legendary',name:'Tears of the Drowned Saint',meta:'Potion',desc:'Revives a creature dead for less than one minute, restoring it to half its wound threshold. A single vial; the saint wept only so many times.',price:'1,800 Crown'},
-      {lo:96,hi:99,tier:'Legendary',name:'Dragon\u2019s Bile',meta:'Thrown',desc:'A 20 Ft burst dealing 5d10 fire, bypassing non-magical Wound Mitigation. The vessel itself is half the danger — a natural 1 to throw shatters it at your feet.',price:'2,000 Crown'},
-      {lo:100,hi:100,tier:'Artifact',name:'The Final Cup',meta:'Artifact consumable',desc:'A chalice that fills once with whatever the drinker most needs and never again. The GM determines its single, perfect effect for the moment it is drunk — then the cup is inert metal forever. <em>Unique.</em>',price:'Priceless'},
+      {lo:1,hi:8,tier:'Common',name:'Draught of Mending',meta:'Potion',desc:'Restores 2d10 wounds and clears <strong>Bleed</strong>.',price:'25 Crown'},
+      {lo:9,hi:15,tier:'Common',name:'Steadying Tonic',meta:'Potion',desc:'Removes <strong>Shaken</strong> and <strong>Fear</strong>; immune to both for three turns.',price:'20 Crown'},
+      {lo:16,hi:22,tier:'Common',name:'Smoke Globe',meta:'Thrown',desc:'A 15 Ft smoke cloud for three turns. Everyone inside attacks at Disadvantage and cannot be targeted at range.',price:'18 Crown'},
+      {lo:23,hi:28,tier:'Common',name:'Whetstone Oil',meta:'Applied',desc:'Next three hits each deal <strong>+1</strong> wound.',price:'22 Crown'},
+      {lo:29,hi:34,tier:'Common',name:'Antitoxin Vial',meta:'Potion',desc:'Cures <strong>Poison</strong> and <strong>Disease</strong>; immune to both for one hour.',price:'24 Crown'},
+      {lo:35,hi:40,tier:'Common',name:'Firebomb',meta:'Thrown',desc:'A 10 Ft burst dealing 2d10 fire wounds.',price:'26 Crown'},
+      {lo:41,hi:48,tier:'Uncommon',name:'Potion of Fortitude',meta:'Potion',desc:'10 temporary wounds for the battle and <strong>+2</strong> Wound Mitigation. (Looted from the Khugron Champion.)',price:'90 Crown'},
+      {lo:49,hi:54,tier:'Uncommon',name:'Flask of Quickening',meta:'Potion',desc:'<strong>+1 AP</strong> per turn for three turns; then <strong>Exhausted</strong> for one turn.',price:'120 Crown'},
+      {lo:55,hi:60,tier:'Uncommon',name:'Vial of Black Sleep',meta:'Applied/thrown',desc:'Victim tests Physique Resist (TN 9) or sleeps 1d10 minutes, waking if struck.',price:'110 Crown'},
+      {lo:61,hi:65,tier:'Uncommon',name:'Oil of Sharpness',meta:'Applied',desc:'For one battle, the coated weapon gains <strong>+2</strong> wounds and ignores 2 points of Wound Mitigation.',price:'130 Crown'},
+      {lo:66,hi:70,tier:'Uncommon',name:'Draught of the Ox',meta:'Potion',desc:'For one hour, treat your Physique as 5 higher for carrying, breaking, and grappling.',price:'100 Crown'},
+      {lo:71,hi:77,tier:'Rare',name:'Philosopher\u2019s Draught',meta:'Potion',desc:'Restores all wounds and clears every condition.',price:'420 Crown'},
+      {lo:78,hi:83,tier:'Rare',name:'Elixir of the Borrowed Hour',meta:'Potion',desc:'Take an extra full turn now; gain 2 <strong>Exhausted</strong> at the start of your next turn.',price:'520 Crown'},
+      {lo:84,hi:87,tier:'Rare',name:'Phial of the Phoenix',meta:'Potion',desc:'When you drop to 0 wounds, this auto-shatters and restores you to half your Wound Threshold. One use, then gone.',price:'560 Crown'},
+      {lo:88,hi:90,tier:'Rare',name:'Mind\u2019s Eye Elixir',meta:'Potion',desc:'For three turns, see the invisible and the hidden, and gain <strong>+3</strong> Awareness.',price:'480 Crown'},
+      {lo:91,hi:94,tier:'Legendary',name:'Tears of the Drowned Saint',meta:'Potion',desc:'Revives a creature dead under a minute to half its Wound Threshold. A single vial.',price:'1,800 Crown'},
+      {lo:95,hi:97,tier:'Legendary',name:'Dragon\u2019s Bile',meta:'Thrown',desc:'A 20 Ft burst, 5d10 fire ignoring non-magical Wound Mitigation. Natural 1 to throw shatters it at your feet.',price:'2,000 Crown'},
+      {lo:98,hi:99,tier:'Legendary',name:'Draught of the Titan',meta:'Potion',desc:'For one battle, +10 Wound Threshold, <strong>+3</strong> wounds on all attacks, and immunity to forced movement. Collapse <strong>Exhausted</strong> for a full scene afterward.',price:'1,900 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'The Final Cup',meta:'Artifact consumable',desc:'Fills once with whatever the drinker most needs, then is inert forever. The GM determines its single perfect effect. <em>Unique.</em>',price:'Priceless'},
     ]
   },
+
   wondrous: {
-    title:'Wondrous &amp; Utility', icon:'✦',
-    blurb:'Rings, charms, tools, and stranger things — the relics that win problems combat cannot.',
+    title:'Wondrous & Utility', icon:'\u2726',
+    blurb:'Tools, boots, lenses, and stranger things \u2014 relics that win problems combat cannot.',
     items:[
-      {lo:1,hi:12,tier:'Common',name:'Everlit Lantern',meta:'Tool',desc:'Burns without fuel, casting steady light in a 30 Ft radius. Cannot be extinguished by wind or water, only by command.',price:'30 Crown'},
-      {lo:13,hi:22,tier:'Common',name:'Tracker\u2019s Compass',meta:'Charm',desc:'Points not north, but toward the nearest creature you have personally drawn blood from, within one mile.',price:'40 Crown'},
-      {lo:23,hi:32,tier:'Common',name:'Knot of Silence',meta:'Charm',desc:'Once per day, mute all sound within 10 Ft of you for one minute. Useful for a quiet kill, or a quiet escape.',price:'45 Crown'},
-      {lo:33,hi:40,tier:'Common',name:'Ration Stone',meta:'Charm',desc:'Hold it and feel fed and watered for a day. Does not heal, but staves off the slow death of the road.',price:'28 Crown'},
-      {lo:41,hi:52,tier:'Uncommon',name:'Ring of the Sure Hand',meta:'Ring',desc:'<strong>+1</strong> to all Agility-based skill tests (Thieving, Acrobatics, Sleight of Hand). Re-roll a natural 1 once per day.',price:'160 Crown'},
-      {lo:53,hi:62,tier:'Uncommon',name:'Band of Quickness',meta:'Ring',desc:'Grants a permanent <strong>+1 AP</strong> to your pool. Heavily sought; rarely sold willingly. (Matches the Altdorf merchant\u2019s reward ring.)',price:'200 Crown'},
-      {lo:63,hi:70,tier:'Uncommon',name:'Whispering Slate',meta:'Tool',desc:'A pair of stone tablets. Words written on one appear on the other, anywhere in the world. Sold as a pair; useless alone.',price:'150 Crown'},
-      {lo:71,hi:80,tier:'Rare',name:'Amulet of the Warded Mind',meta:'Amulet',desc:'Immune to <strong>Fear</strong> and to spells that read or control the mind. Once per battle, reflect a failed mental effect back at its caster.',price:'600 Crown'},
-      {lo:81,hi:90,tier:'Rare',name:'Boots of the Verge',meta:'Boots',desc:'Spend 2 AP to step through space up to 60 Ft to a point you can see. Three times per day.',price:'680 Crown'},
-      {lo:91,hi:95,tier:'Legendary',name:'The Cartographer\u2019s Eye',meta:'Monocle',desc:'See through one wall, illusion, or disguise within 60 Ft for one minute, once per battle. Reveals secret doors and the true form of the shapeshifted.',price:'1,900 Crown'},
-      {lo:96,hi:99,tier:'Legendary',name:'Heart of the Bound Elemental',meta:'Orb',desc:'A caged elemental spirit. Once per day, summon it to fight for three turns as a powerful ally — or shatter the orb to unleash it in a final, devastating burst (GM adjudicates), destroying the item.',price:'2,500 Crown'},
-      {lo:100,hi:100,tier:'Artifact',name:'The Unwritten Page',meta:'Artifact relic',desc:'A single blank sheet from a book that records all things. Write one true sentence about the world upon it, and that sentence becomes true — once. The page then fills with the consequence in a script no one can read, and never accepts ink again. <em>Unique. Use with terror.</em>',price:'Priceless'},
+      {lo:1,hi:8,tier:'Common',name:'Everlit Lantern',meta:'Tool',desc:'Burns without fuel, 30 Ft light, cannot be doused by wind or water.',price:'30 Crown'},
+      {lo:9,hi:15,tier:'Common',name:'Tracker\u2019s Compass',meta:'Charm',desc:'Points toward the nearest creature you\u2019ve drawn blood from, within one mile.',price:'40 Crown'},
+      {lo:16,hi:22,tier:'Common',name:'Knot of Silence',meta:'Charm',desc:'Once per day, mute all sound within 10 Ft for one minute.',price:'45 Crown'},
+      {lo:23,hi:28,tier:'Common',name:'Ration Stone',meta:'Charm',desc:'Hold it to feel fed and watered for a day. Staves off the slow death of the road.',price:'28 Crown'},
+      {lo:29,hi:34,tier:'Common',name:'Climber\u2019s Cord',meta:'Tool',desc:'30 Ft of rope that knots and unknots on command and holds any weight. <strong>+2</strong> Climbing.',price:'34 Crown'},
+      {lo:35,hi:40,tier:'Common',name:'Mask of Many Faces',meta:'Charm',desc:'Once per day, alter your appearance for one hour. <strong>+2</strong> Disguise while worn.',price:'46 Crown'},
+      {lo:41,hi:48,tier:'Uncommon',name:'Boots of Striding',meta:'Boots',desc:'Movement increased by 10 Ft; ignore difficult terrain entirely.',price:'150 Crown'},
+      {lo:49,hi:54,tier:'Uncommon',name:'Whispering Slate',meta:'Tool (pair)',desc:'Words written on one tablet appear on its twin, anywhere. Useless alone.',price:'150 Crown'},
+      {lo:55,hi:60,tier:'Uncommon',name:'Locksong Picks',meta:'Tool',desc:'<strong>+3</strong> Thieving for locks and traps. Re-roll a failed disarm once per day.',price:'140 Crown'},
+      {lo:61,hi:65,tier:'Uncommon',name:'Pouch of Plenty',meta:'Container',desc:'Holds ten times its apparent volume; contents weigh a tenth as much.',price:'130 Crown'},
+      {lo:66,hi:70,tier:'Uncommon',name:'Drum of the Warband',meta:'Instrument',desc:'2 AP to sound it: allies within 30 Ft remove <strong>Shaken</strong> and <strong>Fear</strong> and gain <strong>+1</strong> To-Hit for one turn. Once per battle.',price:'170 Crown'},
+      {lo:71,hi:77,tier:'Rare',name:'Amulet of the Warded Mind',meta:'Amulet',desc:'Immune to <strong>Fear</strong> and mind-reading/control. Once per battle, reflect a failed mental effect at its caster.',price:'600 Crown'},
+      {lo:78,hi:83,tier:'Rare',name:'Boots of the Verge',meta:'Boots',desc:'2 AP to step through space up to 60 Ft to a point you can see. Three times per day.',price:'680 Crown'},
+      {lo:84,hi:87,tier:'Rare',name:'Banner of the Unbroken Line',meta:'Standard',desc:'Planted (2 AP), allies within 25 Ft gain <strong>+1</strong> Defense and immunity to <strong>Fear</strong> while it stands.',price:'620 Crown'},
+      {lo:88,hi:90,tier:'Rare',name:'Glass of Distant Sight',meta:'Tool',desc:'See and hear through a linked point up to one mile away for one minute. Three times per day.',price:'560 Crown'},
+      {lo:91,hi:94,tier:'Legendary',name:'The Cartographer\u2019s Eye',meta:'Monocle',desc:'Once per battle, see through one wall, illusion, or disguise within 60 Ft for one minute. Reveals secret doors and true forms.',price:'1,900 Crown'},
+      {lo:95,hi:97,tier:'Legendary',name:'Heart of the Bound Elemental',meta:'Orb',desc:'Once per day, summon an elemental ally for three turns \u2014 or shatter the orb for a final devastating burst, destroying it.',price:'2,500 Crown'},
+      {lo:98,hi:99,tier:'Legendary',name:'Hourglass of the Stolen Moment',meta:'Relic',desc:'Once per battle, take an immediate extra turn. The sand never refills mid-battle.',price:'2,700 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'The Unwritten Page',meta:'Artifact relic',desc:'A blank sheet from a book that records all things. Write one true sentence and it becomes true \u2014 once. The page then fills with the consequence in unreadable script and never accepts ink again. <em>Unique. Use with terror.</em>',price:'Priceless'},
     ]
   },
-  cursed: {
-    title:'Cursed Relics', icon:'☥', cursed:true,
-    blurb:'Power always asks a price; cursed relics simply name it after you have already paid. A cursed item functions as a normal relic of its apparent kind until the curse reveals itself — usually at the worst moment. Curses cannot be removed by selling. Roll d100.',
+
+  rings: {
+    title:'Rings, Amulets & Charms', icon:'\uD83D\uDC8D',
+    blurb:'Worn relics that quietly reshape the wearer \u2014 lasting bonuses to characteristics, skills, and resources. One ring and one amulet may be worn at once unless a GM rules otherwise.',
     items:[
-      {lo:1,hi:15,tier:'Cursed',name:'The Clinging Blade',meta:'Weapon',desc:'A fine <strong>+2</strong> weapon that cannot be dropped or unequipped once drawn, until it has tasted blood — yours or another\u2019s — in the current battle.',price:'\u2014'},
-      {lo:16,hi:30,tier:'Cursed',name:'Armor of the Slow Rot',meta:'Armor',desc:'Grants <strong>+2</strong> Wound Mitigation, but you heal at half the normal rate while wearing it, and removing it takes a full minute of effort.',price:'\u2014'},
-      {lo:31,hi:45,tier:'Cursed',name:'Ring of Hunger',meta:'Ring',desc:'<strong>+1 AP</strong>, but you must deal damage to a living creature each turn or take 1d10 unpreventable wounds at the turn\u2019s end. The ring is always hungry.',price:'\u2014'},
-      {lo:46,hi:58,tier:'Cursed',name:'The Honest Mirror',meta:'Charm',desc:'Shows the bearer true visions of the future — and each vision inflicts <strong>Shaken</strong>. The visions are never wrong and never kind.',price:'\u2014'},
-      {lo:59,hi:70,tier:'Cursed',name:'Coin of the Drowned',meta:'Charm',desc:'You cannot die while you carry it — wounds that would kill you leave you at 1 instead. But every dawn, someone you have named aloud loses a year of their life. The coin keeps count.',price:'\u2014'},
-      {lo:71,hi:82,tier:'Cursed',name:'Crown of Borrowed Tongues',meta:'Wondrous',desc:'Understand and speak every language. While worn, you cannot tell a lie, and everyone can tell you cannot — a fatal honesty in the wrong room.',price:'\u2014'},
-      {lo:83,hi:92,tier:'Cursed',name:'The Generous Wound',meta:'Weapon',desc:'A <strong>+3</strong> weapon that heals the <em>target</em> for half the wounds it deals, the first time each battle you strike with it. You will forget this until it matters.',price:'\u2014'},
-      {lo:93,hi:99,tier:'Cursed',name:'Gauntlet of the Open Gate',meta:'Wondrous',desc:'Immense strength (<strong>+3</strong> wounds on unarmed and melee), but on any natural 1 you roll, a small tear opens to somewhere worse, and something comes through. The GM decides what.',price:'\u2014'},
-      {lo:100,hi:100,tier:'Cursed',name:'The Mark That Speaks',meta:'Artifact curse',desc:'Brands the bearer with a living sigil that grants a Legendary boon of the GM\u2019s choosing — and slowly writes its own will over yours. Each use advances the corruption. When the mark finishes its sentence, the character belongs to it. <em>This is how some are Thrice-Marked. Unique.</em>',price:'\u2014'},
+      {lo:1,hi:7,tier:'Common',name:'Ring of the Sure Hand',meta:'Ring',desc:'<strong>+1</strong> Agility-based skill tests (Thieving, Acrobatics, Sleight of Hand). Re-roll a natural 1 once per day.',price:'90 Crown'},
+      {lo:8,hi:14,tier:'Common',name:'Charm of the Steady Heart',meta:'Charm',desc:'<strong>+1</strong> to all Resist tests against <strong>Fear</strong> and <strong>Shaken</strong>.',price:'80 Crown'},
+      {lo:15,hi:21,tier:'Common',name:'Amulet of the Hale',meta:'Amulet',desc:'<strong>+3</strong> to your maximum Wound Threshold.',price:'95 Crown'},
+      {lo:22,hi:28,tier:'Common',name:'Scholar\u2019s Signet',meta:'Ring',desc:'<strong>+1</strong> Intellect for Knowledge and Engineering tests.',price:'85 Crown'},
+      {lo:29,hi:34,tier:'Common',name:'Pendant of the Silver Tongue',meta:'Amulet',desc:'<strong>+1</strong> Charisma for Seduction, Deception, and Performance.',price:'88 Crown'},
+      {lo:35,hi:40,tier:'Common',name:'Band of the Watchful',meta:'Ring',desc:'<strong>+1</strong> Awareness. You cannot be surprised while conscious.',price:'92 Crown'},
+      {lo:41,hi:47,tier:'Uncommon',name:'Band of Quickness',meta:'Ring',desc:'Permanent <strong>+1 AP</strong> to your pool. (Matches the Altdorf merchant\u2019s reward.)',price:'200 Crown'},
+      {lo:48,hi:53,tier:'Uncommon',name:'Ring of the Iron Body',meta:'Ring',desc:'<strong>+1</strong> Physique and <strong>+1</strong> Wound Mitigation against physical attacks.',price:'190 Crown'},
+      {lo:54,hi:59,tier:'Uncommon',name:'Amulet of the Wardstone',meta:'Amulet',desc:'<strong>+2</strong> to all Resist tests against spells and magical conditions.',price:'180 Crown'},
+      {lo:60,hi:64,tier:'Uncommon',name:'Charm of the Cat',meta:'Charm',desc:'<strong>+1</strong> Agility; you never take wounds from falls under 30 Ft and always land on your feet.',price:'170 Crown'},
+      {lo:65,hi:70,tier:'Uncommon',name:'Ring of the Duelist',meta:'Ring',desc:'<strong>+2</strong> Riposte and <strong>+1</strong> Defense while wielding a one-handed weapon.',price:'195 Crown'},
+      {lo:71,hi:76,tier:'Rare',name:'Amulet of the Second Wind',meta:'Amulet',desc:'<strong>+5</strong> Wound Threshold. Once per battle, spend 1 AP to recover 2d10 wounds.',price:'600 Crown'},
+      {lo:77,hi:81,tier:'Rare',name:'Ring of the Adept',meta:'Ring',desc:'Choose one characteristic on attunement: gain a permanent <strong>+2</strong> to it. Choice is locked once made.',price:'700 Crown'},
+      {lo:82,hi:86,tier:'Rare',name:'Pendant of the Open Mind',meta:'Amulet',desc:'<strong>+2</strong> to your governing casting characteristic and <strong>+1</strong> To-Cast for your discipline.',price:'660 Crown'},
+      {lo:87,hi:90,tier:'Rare',name:'Charm of the Untouched',meta:'Charm',desc:'Immune to <strong>Poison</strong> and <strong>Disease</strong>. Once per battle, ignore a single condition applied to you.',price:'580 Crown'},
+      {lo:91,hi:94,tier:'Legendary',name:'Ring of the Triune',meta:'Ring',desc:'<strong>+1</strong> to all six characteristics. Embodies the Power of Three \u2014 vanishingly rare and never sold willingly.',price:'2,600 Crown'},
+      {lo:95,hi:97,tier:'Legendary',name:'Amulet of Unyielding Life',meta:'Amulet',desc:'<strong>+10</strong> Wound Threshold. The first time each battle you would drop to 0, you instead stand at half your Threshold.',price:'2,800 Crown'},
+      {lo:98,hi:99,tier:'Legendary',name:'Band of the Extra Heartbeat',meta:'Ring',desc:'Permanent <strong>+2 AP</strong>. The wearer\u2019s pulse runs faster than time should allow.',price:'2,900 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'The Coil of Becoming',meta:'Artifact ring',desc:'A ring that remembers every hand that wore it. Grants <strong>+2</strong> to all characteristics and one ability of a past wearer (GM\u2019s choice). Each dawn it whispers one of their memories \u2014 and slowly, their habits become yours. <em>Unique.</em>',price:'Priceless'},
+    ]
+  },
+
+  discipline: {
+    title:'Discipline Relics', icon:'\u2734',
+    blurb:'Relics keyed to the seven disciplines \u2014 focuses, fetishes, and holy implements that empower a specific tradition. A relic is inert in the hands of one who lacks the discipline.',
+    items:[
+      {lo:1,hi:7,tier:'Common',name:'Prayer Beads of the Compact',meta:'Devotion focus',desc:'<strong>+1</strong> To-Cast for Devotion blessings. Once per day, re-roll a failed healing roll.',price:'90 Crown'},
+      {lo:8,hi:14,tier:'Common',name:'Druid\u2019s Knotted Staff',meta:'Druidism focus',desc:'<strong>+1</strong> To-Cast for Druidism. Plants and beasts treat you as non-threatening unless provoked.',price:'85 Crown'},
+      {lo:15,hi:21,tier:'Common',name:'Apprentice\u2019s Wand',meta:'Wizardry focus',desc:'<strong>+1</strong> To-Cast for Wizardry. Reduces the AP cost of one cantrip per battle to free.',price:'88 Crown'},
+      {lo:22,hi:28,tier:'Common',name:'Meditation Beads',meta:'Ki focus',desc:'<strong>+1</strong> To-Cast for Ki powers. Once per battle, remove one <strong>Stun</strong> counter as a free action.',price:'86 Crown'},
+      {lo:29,hi:34,tier:'Common',name:'Carved Rune-Bone',meta:'Runecraft focus',desc:'<strong>+1</strong> To-Cast for Runecraft. Holds one extra prepared rune.',price:'84 Crown'},
+      {lo:35,hi:40,tier:'Common',name:'Spirit-Bound Totem',meta:'Shamanism focus',desc:'<strong>+1</strong> To-Cast for Shamanism. Once per day, ask the ancestors one yes/no question.',price:'82 Crown'},
+      {lo:41,hi:47,tier:'Uncommon',name:'Censer of the Radiant Compact',meta:'Devotion focus',desc:'<strong>+2</strong> To-Cast for Devotion. Healing blessings restore an extra 1d10 wounds.',price:'190 Crown'},
+      {lo:48,hi:53,tier:'Uncommon',name:'Heartwood Circlet',meta:'Druidism focus',desc:'<strong>+2</strong> To-Cast for Druidism. Summoned creatures and conjured terrain last one extra turn.',price:'185 Crown'},
+      {lo:54,hi:59,tier:'Uncommon',name:'Scepter of the Weave',meta:'Wizardry focus',desc:'<strong>+2</strong> To-Cast for Wizardry. Offensive spells deal <strong>+2</strong> wounds.',price:'195 Crown'},
+      {lo:60,hi:64,tier:'Uncommon',name:'Bracers of Flowing Ki',meta:'Ki focus',desc:'<strong>+2</strong> To-Cast for Ki. Unarmed strikes count as magical and gain <strong>+1</strong> wound.',price:'180 Crown'},
+      {lo:65,hi:67,tier:'Uncommon',name:'Etched Runecraft Plates',meta:'Runecraft focus',desc:'<strong>+2</strong> To-Cast for Runecraft. One prepared rune each battle triggers without spending an action.',price:'185 Crown'},
+      {lo:68,hi:70,tier:'Uncommon',name:'The First Syllable',meta:'\u015Aabda focus',desc:'<strong>+2</strong> To-Cast for \u015Aabda. Hold one extra Bija in mind without strain.',price:'200 Crown'},
+      {lo:71,hi:76,tier:'Rare',name:'Reliquary of the Saint\u2019s Hand',meta:'Devotion focus',desc:'<strong>+2</strong> To-Cast and <strong>+2</strong> Charisma for Devotion. Once per battle, a blessing affects an extra target at no added cost.',price:'640 Crown'},
+      {lo:77,hi:81,tier:'Rare',name:'Stormcaller\u2019s Fetish',meta:'Shamanism focus',desc:'<strong>+2</strong> To-Cast and <strong>+2</strong> Willpower for Shamanism. Lightning and storm spells ignore 2 Wound Mitigation.',price:'660 Crown'},
+      {lo:82,hi:86,tier:'Rare',name:'The Archmage\u2019s Orb',meta:'Wizardry focus',desc:'<strong>+3</strong> To-Cast for Wizardry. Once per battle, cast a spell for 1 less AP (minimum 1).',price:'700 Crown'},
+      {lo:87,hi:90,tier:'Rare',name:'Mask of the Wild God',meta:'Druidism focus',desc:'<strong>+3</strong> To-Cast and <strong>+2</strong> Awareness for Druidism. Wild-shape forms gain <strong>+1</strong> Wound Mitigation.',price:'680 Crown'},
+      {lo:91,hi:94,tier:'Legendary',name:'Crown of the Speaking Flame',meta:'Devotion relic',desc:'<strong>+3</strong> To-Cast for Devotion; healing also clears one condition. Once per battle, a blessing cannot fail.',price:'2,600 Crown'},
+      {lo:95,hi:97,tier:'Legendary',name:'The Unbroken Bija',meta:'\u015Aabda relic',desc:'<strong>+3</strong> To-Cast and <strong>+3</strong> Willpower for \u015Aabda. The first Axiom of Bearing each battle requires no Retraction.',price:'2,800 Crown'},
+      {lo:98,hi:99,tier:'Legendary',name:'Heart of the Mountain',meta:'Ki relic',desc:'<strong>+3</strong> To-Cast for Ki and <strong>+1 AP</strong>. Once per battle, a Ki power that would Exhaust you does not.',price:'2,900 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'The Last Word',meta:'Artifact \u015Aabda relic',desc:'A focus containing a single uncorrupted primordial syllable. While held, your \u015Aabda invocations cannot be resisted by any non-divine being, and once per session you may speak one Axiom that simply happens \u2014 no roll, no Retraction. The syllable burns a little of the Speaker away each time. <em>Unique.</em>',price:'Priceless'},
+    ]
+  },
+
+  cursed: {
+    title:'Cursed Relics', icon:'\u2625', cursed:true,
+    blurb:'Power always asks a price; cursed relics name it after you have already paid. A cursed item functions as a normal relic of its kind until the curse reveals itself \u2014 usually at the worst moment. Curses cannot be removed by selling. Roll d100.',
+    items:[
+      {lo:1,hi:10,tier:'Cursed',name:'The Clinging Blade',meta:'Weapon',desc:'A fine <strong>+2</strong> weapon that cannot be dropped or unequipped once drawn until it has tasted blood this battle \u2014 yours or another\u2019s.',price:'\u2014'},
+      {lo:11,hi:20,tier:'Cursed',name:'Armor of the Slow Rot',meta:'Armor',desc:'<strong>+2</strong> Wound Mitigation, but you heal at half rate while wearing it, and removing it takes a full minute.',price:'\u2014'},
+      {lo:21,hi:30,tier:'Cursed',name:'Ring of Hunger',meta:'Ring',desc:'<strong>+1 AP</strong>, but you must deal damage to a living creature each turn or take 1d10 unpreventable wounds at the turn\u2019s end.',price:'\u2014'},
+      {lo:31,hi:40,tier:'Cursed',name:'The Honest Mirror',meta:'Charm',desc:'Shows the bearer true visions of the future \u2014 each inflicts <strong>Shaken</strong>. Never wrong, never kind.',price:'\u2014'},
+      {lo:41,hi:50,tier:'Cursed',name:'Coin of the Drowned',meta:'Charm',desc:'You cannot die while you carry it; lethal wounds leave you at 1. Each dawn, someone you have named aloud loses a year of life.',price:'\u2014'},
+      {lo:51,hi:60,tier:'Cursed',name:'Crown of Borrowed Tongues',meta:'Wondrous',desc:'Understand and speak every language. While worn, you cannot lie, and everyone can tell you cannot.',price:'\u2014'},
+      {lo:61,hi:70,tier:'Cursed',name:'The Generous Wound',meta:'Weapon',desc:'A <strong>+3</strong> weapon that heals the <em>target</em> for half the wounds it deals, the first time each battle you strike. You forget this until it matters.',price:'\u2014'},
+      {lo:71,hi:80,tier:'Cursed',name:'Gauntlet of the Open Gate',meta:'Wondrous',desc:'<strong>+3</strong> wounds on melee and unarmed, but any natural 1 you roll tears open a small gate to somewhere worse \u2014 something comes through.',price:'\u2014'},
+      {lo:81,hi:88,tier:'Cursed',name:'The Devourer\u2019s Locket',meta:'Amulet',desc:'<strong>+2</strong> to all characteristics. Each dawn, it consumes one of your memories; you do not get to choose which.',price:'\u2014'},
+      {lo:89,hi:95,tier:'Cursed',name:'Boots of the Endless Road',meta:'Boots',desc:'Movement <strong>+15 Ft</strong>, never tire from travel. But you can never remain in one place more than a single night before a dread compels you onward.',price:'\u2014'},
+      {lo:96,hi:99,tier:'Cursed',name:'Eye of the Patient Watcher',meta:'Wondrous',desc:'See in all directions and through illusion (<strong>+3</strong> Awareness). Something on the other side now sees through it too, and is learning your habits.',price:'\u2014'},
+      {lo:100,hi:100,tier:'Cursed',name:'The Mark That Speaks',meta:'Artifact curse',desc:'Brands the bearer with a living sigil granting a Legendary boon of the GM\u2019s choosing \u2014 and slowly writes its will over yours. Each use advances the corruption. When the mark finishes its sentence, the character belongs to it. <em>This is how some are Thrice-Marked. Unique.</em>',price:'\u2014'},
     ]
   }
 };
 
-/* ── Build static tables ── */
+function pad(n){ return n===100 ? '100' : String(n).padStart(2,'0'); }
+
+/* ── Build the master routing table + all category tables ── */
 function buildTables(){
   const root = document.getElementById('tables');
+
+  // Master d10 routing table
+  const mwrap = document.createElement('div');
+  mwrap.className = 'master-table-wrap';
+  let mrows = '';
+  MASTER.forEach(m=>{
+    const band = (m.lo===m.hi) ? pad(m.lo) : pad(m.lo)+'\u2013'+pad(m.hi);
+    mrows += `<tr><td class="td-roll">${band}</td><td class="td-name">${m.label}</td></tr>`;
+  });
+  mwrap.innerHTML = `
+    <div class="cat-title">\u2685 Master Table \u2014 What Did You Find?</div>
+    <p class="cat-blurb">Roll <strong>d100</strong> to determine which category the relic belongs to, then roll <strong>d100</strong> on that table. (The roller above does both at once.)</p>
+    <table style="max-width:440px;">
+      <thead><tr><th>d100</th><th>Table</th></tr></thead>
+      <tbody>${mrows}</tbody>
+    </table>`;
+  root.appendChild(mwrap);
+
+  // Category tables
   Object.entries(DATA).forEach(([key,cat])=>{
     const sec = document.createElement('div');
     sec.className = 'cat-section' + (cat.cursed?' cursed-section':'');
@@ -329,28 +502,44 @@ function buildTables(){
     root.appendChild(sec);
   });
 }
-function pad(n){ return n===100 ? '100' : String(n).padStart(2,'0'); }
 
-/* ── Roller ── */
-function rollItem(){
-  const cat = document.getElementById('cat-select').value;
-  const roll = Math.floor(Math.random()*100)+1;
+/* ── Render a rolled item into the result box ── */
+function showResult(cat, roll, stepLine){
   const items = DATA[cat].items;
   const hit = items.find(it=> roll>=it.lo && roll<=it.hi) || items[items.length-1];
   const color = TIER_COLORS[hit.tier];
   const box = document.getElementById('roll-result');
   box.innerHTML = `
+    ${stepLine ? `<div class="rr-step">${stepLine}</div>` : ''}
     <div class="rr-head" style="background:${color}">
-      <span class="rr-roll">d100 → ${pad(roll)}</span>
+      <span class="rr-roll">d100 \u2192 ${pad(roll)}</span>
       <span class="rr-tier">${hit.tier}</span>
     </div>
     <div class="rr-body">
       <div class="rr-name">${hit.name}</div>
-      <div class="rr-meta">${hit.meta} · ${DATA[cat].title.replace('&amp;','&')}</div>
+      <div class="rr-meta">${hit.meta} \u00b7 ${DATA[cat].title.replace('&amp;','&')}</div>
       <div class="rr-desc">${hit.desc}</div>
       ${hit.price!=='\u2014' ? `<div class="rr-price">Value: ${hit.price}</div>` : `<div class="rr-price">A curse has no honest price.</div>`}
     </div>`;
   box.classList.remove('show'); void box.offsetWidth; box.classList.add('show');
+}
+
+/* ── Roller: single category ── */
+function rollItem(){
+  const cat = document.getElementById('cat-select').value;
+  const roll = Math.floor(Math.random()*100)+1;
+  showResult(cat, roll, null);
+}
+
+/* ── Roller: master d10 then d100 ── */
+function rollEverything(){
+  const d100m = Math.floor(Math.random()*100)+1;
+  const route = MASTER.find(m=> d100m>=m.lo && d100m<=m.hi);
+  const roll = Math.floor(Math.random()*100)+1;
+  showResult(route.cat, roll, `d100 \u2192 ${pad(d100m)} \u00b7 ${route.label}`);
+  // sync the dropdown to the rolled category for clarity
+  const sel = document.getElementById('cat-select');
+  if (sel.querySelector(`option[value="${route.cat}"]`)) sel.value = route.cat;
 }
 
 buildTables();
