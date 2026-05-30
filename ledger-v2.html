@@ -4,7 +4,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPG Ledger v14 - Thrice-Marked</title>
+    <title>RPG Ledger v14 - Thrice-Marked [build 2026-05-29 · weapon-fix]</title>
     <style>
         :root {
             --iron: #02070e;
@@ -851,6 +851,7 @@
 <div class="no-print top-bar">
     <div class="top-bar-title">Thrice-Marked</div>
     <div class="vault-controls">
+        <span title="Build identifier — confirms you are running the fixed ledger" style="font-size:8pt; font-weight:700; letter-spacing:0.5px; color:var(--iron); background:rgba(184,134,11,0.18); border:1px solid var(--gold); border-radius:2px; padding:2px 6px; margin-right:4px; white-space:nowrap;">BUILD 2026-05-29 ✓ weapon-fix+flail</span>
         <select id="cloud-char-select" class="btn-vault" style="background:var(--white); color:var(--ink); height:26px; font-size:9pt; width:140px; cursor:pointer;">
             <option value="Baanon Kervarsha">Baanon Kervarsha</option>
             <option value="Dresin">Dresin</option>
@@ -2248,7 +2249,13 @@ function calculateMeleeCombat(state, stats, armorData) {
         else if (action === "Off-H") statMod = isFinesse ? Math.floor(statMod * 0.75) : Math.floor(statMod / 2);
         
         if (wepType === "Lance") statMod = stats.physique * 3;
-        const flailExtra = (wepType === "Flail") ? stats.awareness : 0;
+        // Flail: adds the full raw Awareness characteristic to wounds ON TOP of all
+        // normal 1H bonuses — but only for a wielder coordinated enough to control the
+        // chained head. Requires Awareness 3+ AND Agility 3+ (raw characteristic values).
+        // These stats are armor-adjusted, so heavy armour that drops Agility below 3
+        // removes the Awareness rider until Agility is raised back to 3+.
+        const flailGateMet = (stats.awareness >= 3) && (stats.agility >= 3);
+        const flailExtra = (wepType === "Flail" && flailGateMet) ? stats.awareness : 0;
 
         const total = statMod + strFlat + pStrikeBonus + athBonus + dmgBonus + flailExtra;
         const finalMelee = Math.floor(total * wMult);
