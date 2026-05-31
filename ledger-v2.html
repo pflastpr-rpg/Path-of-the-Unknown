@@ -1026,12 +1026,12 @@
                     <div class="cm-inputs"><input type="number" id="cm-range-hit-1" readonly><input type="number" id="cm-range-hit-2" readonly></div>
                 </div>
                 <div class="cm-row">
-                    <span class="cm-label">Wounds</span>
+                    <span class="cm-label">Damage</span>
                     <div class="cm-inputs"><input type="number" id="cm-wounds-melee-1" readonly><input type="number" id="cm-wounds-melee-2" readonly></div>
                     <div class="cm-inputs"><input type="number" id="cm-wounds-range-1" readonly><input type="number" id="cm-wounds-range-2" readonly></div>
                 </div>
                 <div class="cm-row" style="border-bottom:none;">
-                    <span class="cm-label">W. Evil</span>
+                    <span class="cm-label">D. Evil</span>
                     <div class="cm-inputs"><input type="number" id="cm-wevil-melee-1" readonly><input type="number" id="cm-wevil-melee-2" readonly></div>
                     <div class="cm-inputs"><input type="number" id="cm-wevil-range-1" readonly><input type="number" id="cm-wevil-range-2" readonly></div>
                 </div>
@@ -1047,6 +1047,11 @@
                         <span class="cm-label" style="color:var(--gold); width:64px; flex-shrink:0;">+Cast</span>
                         <input type="number" id="cm-cast-hit" readonly style="width:46px; height:34px; text-align:center; font-size:15pt; font-weight:900; border:1.5px solid var(--ink); background:rgba(0,0,0,0.08);">
                         <input type="number" id="bon-cast-hit" oninput="upd()" placeholder="+" style="width:38px; height:34px; text-align:center; font-size:13pt; font-weight:900; border:1.5px solid var(--ink); background:var(--input-bg);">
+                    </div>
+                    <div style="display:flex; align-items:center; gap:3px; padding-bottom:3px;">
+                        <span class="cm-label" style="color:var(--blood); width:64px; flex-shrink:0;" title="Max castable TN: your vocation's skill points + (Discipline ÷ 3). A magic item may raise it.">Max TN</span>
+                        <input type="number" id="cm-max-tn" readonly title="Max castable TN: your vocation's skill points + (Discipline ÷ 3). A magic item may raise it." style="width:46px; height:34px; text-align:center; font-size:15pt; font-weight:900; border:1.5px solid var(--blood); background:rgba(139,16,16,0.08); color:var(--blood);">
+                        <input type="number" id="bon-max-tn" oninput="upd()" placeholder="+itm" title="Bonus to Max TN from a magic item or special effect." style="width:38px; height:34px; text-align:center; font-size:13pt; font-weight:900; border:1.5px solid var(--ink); background:var(--input-bg);">
                     </div>
                     <div style="display:flex; align-items:center; gap:3px; padding-bottom:3px;">
                         <span class="cm-label" style="color:var(--blood); width:64px; flex-shrink:0;">Damage</span>
@@ -1483,17 +1488,17 @@ function skillLabelId(name) { return 'label-' + name; }
 const ARMOR_DATA = {
     "none":        {def:0,mit:0,agl:0,awa:0,mov:0,tn:0,range:0,m_pen:0,r_pen:0},
     "furs":        {def:0,mit:1,agl:0,awa:0,mov:0,tn:0,range:0,m_pen:0,r_pen:0},
-    "padded":      {def:1,mit:1,agl:0,awa:0,mov:0,tn:0,range:0,m_pen:1,r_pen:0},
-    "leather":     {def:2,mit:2,agl:-1,awa:0,mov:0,tn:0,range:0,m_pen:1,r_pen:1},
-    "studded":     {def:2,mit:3,agl:-1,awa:0,mov:0,tn:1,range:0,m_pen:2,r_pen:1},
-    "chain":       {def:3,mit:4,agl:-2,awa:0,mov:-5,tn:2,range:0,m_pen:2,r_pen:2},
-    "banded":      {def:3,mit:5,agl:-2,awa:-1,mov:-10,tn:3,range:0,m_pen:3,r_pen:2},
-    "splint":      {def:3,mit:5,agl:-2,awa:-1,mov:-10,tn:3,range:0,m_pen:3,r_pen:2},
-    "plate":       {def:4,mit:6,agl:-3,awa:-2,mov:-15,tn:4,range:0,m_pen:3,r_pen:3},
-    "field":       {def:4,mit:6,agl:-3,awa:-2,mov:-15,tn:4,range:0,m_pen:3,r_pen:3},
-    "full":        {def:5,mit:8,agl:-3,awa:-3,mov:-15,tn:5,range:-2,m_pen:4,r_pen:4},
-    "mithril":     {def:4,mit:5,agl:0,awa:0,mov:0,tn:0,range:0,m_pen:1,r_pen:0},
-    "mithril_elf": {def:4,mit:6,agl:0,awa:0,mov:0,tn:0,range:0,m_pen:1,r_pen:0},
+    "padded":      {def:1,mit:1,agl:0,awa:0,mov:0,tn:0,range:0,m_pen:0,r_pen:0},
+    "leather":     {def:2,mit:2,agl:-1,awa:0,mov:0,tn:0,range:0,m_pen:0,r_pen:0},
+    "studded":     {def:2,mit:3,agl:-1,awa:0,mov:0,tn:1,range:0,m_pen:1,r_pen:0},
+    "chain":       {def:3,mit:4,agl:-1,awa:0,mov:-5,tn:2,range:0,m_pen:1,r_pen:1},
+    "banded":      {def:3,mit:5,agl:-1,awa:-1,mov:-10,tn:3,range:0,m_pen:1,r_pen:1},
+    "splint":      {def:3,mit:5,agl:-1,awa:-1,mov:-10,tn:3,range:0,m_pen:1,r_pen:1},
+    "plate":       {def:4,mit:6,agl:-2,awa:-2,mov:-15,tn:4,range:0,m_pen:2,r_pen:2},
+    "field":       {def:4,mit:6,agl:-2,awa:-2,mov:-15,tn:4,range:0,m_pen:2,r_pen:2},
+    "full":        {def:5,mit:8,agl:-2,awa:-3,mov:-15,tn:5,range:-2,m_pen:2,r_pen:3},
+    "mithril":     {def:4,mit:5,agl:0,awa:0,mov:0,tn:0,range:0,m_pen:0,r_pen:0},
+    "mithril_elf": {def:4,mit:6,agl:0,awa:0,mov:0,tn:0,range:0,m_pen:0,r_pen:0},
     "shield_light":{def:1,mit:1,agl:0,awa:0,mov:0,tn:0,range:0,m_pen:0,r_pen:0},
     "shield_heavy":{def:2,mit:2,agl:-1,awa:0,mov:0,tn:0,range:0,m_pen:0,r_pen:0}
 };
@@ -1703,13 +1708,19 @@ function calcWeaponCompounding(n, base) {
 
 // Tracks whether the Human Adaptable skill choice has been locked
 let adaptableLocked = false;
+// Holds the Adaptable skill name restored from a saved character until the
+// racial modal is next built (the rt_txt_1 field lives inside that on-demand modal).
+let savedAdaptableSkill = null;
 
 function getEffectiveBase(skillName, base) {
     const race = (document.getElementById('race-select')?.value || 'none').toLowerCase();
     if (race !== 'human' || base < 20) return base;
+    // Prefer the live modal field; fall back to the value restored from a saved
+    // character (the modal may not have been opened yet this session, so rt_txt_1
+    // can be absent even though the player has a chosen Adaptable skill).
     const adaptableInput = document.getElementById('rt_txt_1');
-    if (!adaptableInput) return base;
-    const chosenSkill = adaptableInput.value.trim().toLowerCase();
+    const chosenRaw = (adaptableInput ? adaptableInput.value : (savedAdaptableSkill || ''));
+    const chosenSkill = (chosenRaw || '').trim().toLowerCase();
     if (chosenSkill && skillName.toLowerCase() === chosenSkill) {
         return Math.max(1, base - 5);
     }
@@ -1872,7 +1883,7 @@ function extractSkillPoints(skillName, pts, state) {
         "Survival": "survival", "Stamina": "stamina", "Light-Soul": "lightSoul",
         "Mending": "mending", "Strength Con.": "strengthCon", "Precise Strk": "preciseStrike",
         "Perception": "perception", "Druidism": "druidism", "Ki": "ki",
-        "Wizardry": "wizardry", "Devotion": "faith", "Shaman": "shaman",
+        "Wizardry": "wizardry", "Devotion": "faith", "Shaman": "shaman", "Sabda": "sabda",
         "Iron Will": "ironWill", "Fortitude": "fortitude", "Resolve": "resolve",
         "Discipline": "discipline", "Focus": "focus", "Tumble": "tumble", "Riposte": "riposte",
         // Swap-slot skills that affect mechanics
@@ -1964,8 +1975,16 @@ function determineMagicState(state) {
             // Keep checkbox value and dropdown in sync on every upd()
             const wdSel = g('willpower-discipline-select');
             if (wdSel && (cb.id === "magic_shaman")) {
-                // Dropdown is authoritative — always sync checkbox TO dropdown
+                // Dropdown is authoritative — always sync checkbox TO dropdown.
+                // Clear BOTH willpower-discipline flags first, then set only the
+                // one the dropdown selects. Without this reset, a checkbox still
+                // carrying its static "Shaman" value (e.g. just after import,
+                // before the value sync) leaves isShamanActive set, and since the
+                // downstream chain tests Shaman before Sabda, the character wrongly
+                // resolves as Shaman — which is exactly why imported Śabda failed.
                 cb.value = wdSel.value;
+                magicState.isShamanActive = false;
+                magicState.isSabdaActive = false;
                 if (cb.value === "Sabda") magicState.isSabdaActive = true;
                 if (cb.value === "Shaman") magicState.isShamanActive = true;
             }
@@ -2090,7 +2109,13 @@ function calculateDefenseAndMovement(state, stats, armorData) {
 function processActionsAndFortune(state) {
     const actionPtsPurchased = gv('ap_pts');
     const quicknessBonus = Math.floor(state.skillPts.quick / 3);
-    sv('ap_total', 1 + quicknessBonus + actionPtsPurchased);
+    const baseActions = 1 + quicknessBonus + actionPtsPurchased;
+    // Stunned reduces available Actions: each active Stun stack costs 1 Action this
+    // turn (2 Stuns = -2 Actions), floored at 0. Reading stat_stun from the Tactical
+    // Conditions panel. The reduction is temporary — clearing the Stuns restores AP.
+    const stunStacks = Math.max(0, parseInt(g('stat_stun')?.value) || 0);
+    const effectiveActions = Math.max(0, baseActions - stunStacks);
+    sv('ap_total', effectiveActions);
     state.spentXP += calcCompounding(actionPtsPurchased, state.race === "none" ? 0 : 175);
 
     const fortunePts = gv('fp_pts');
@@ -2156,20 +2181,53 @@ function calculateCastStats(state, stats, armorData, magicState) {
 
     const halvedTN = Math.floor(armorData.tn / 2);
     let coreCastStat = 0, castArmorPenalty = 0;
+    // Eased cast penalty for the arcane trio (Wizard / Druid / Shaman), who take
+    // the harshest hit. Maps the raw armour TN to a gentler curve so heavy armour
+    // is still clearly bad for them without being an absolute wall on a d10:
+    //   raw 0->0, 1->1 (studded), 2->1 (chain), 3->2 (banded/splint), 4->3 (plate/field), 5->3 (full).
+    // Devotion, Śabda, and Ki are unaffected — they keep their own forgiving rules.
+    const arcaneTrioPenalty = (raw => ({0:0,1:1,2:1,3:2,4:3,5:3})[raw] ?? raw)(armorData.tn);
 
-    if (magicState.isKiActive) { coreCastStat = Math.floor(stats.physique / 5); castArmorPenalty = 0; }
-    else if (magicState.isSabdaActive) { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn <= 1 ? 0 : armorData.tn === 5 ? armorData.tn : Math.floor(armorData.tn / 2); }
+    if (magicState.isKiActive) { coreCastStat = Math.floor(stats.physique / 5); castArmorPenalty = 0; }    else if (magicState.isSabdaActive) { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn <= 1 ? 0 : armorData.tn === 5 ? armorData.tn : Math.floor(armorData.tn / 2); }
     else if (magicState.isDevotionActive) { coreCastStat = Math.floor(stats.charisma / 5); castArmorPenalty = armorData.tn <= 3 ? 0 : 2; }
-    else if (magicState.isDruidActive) { coreCastStat = Math.floor(stats.awareness / 5); castArmorPenalty = armorData.tn; }
-    else if (magicState.isShamanActive) { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn; }
-    else if (magicState.isMagActive) { coreCastStat = Math.floor(stats.intellect / 5); castArmorPenalty = armorData.tn; }
+    else if (magicState.isDruidActive) { coreCastStat = Math.floor(stats.awareness / 5); castArmorPenalty = arcaneTrioPenalty; }
+    else if (magicState.isShamanActive) { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = arcaneTrioPenalty; }
+    else if (magicState.isMagActive) { coreCastStat = Math.floor(stats.intellect / 5); castArmorPenalty = arcaneTrioPenalty; }
 
     const primarySkillAcc = (magicState.activeMagicSkillPts >= 9) ? Math.floor((magicState.activeMagicSkillPts - 6) / 3) : 0;
     const focusAcc = Math.floor(state.skillPts.focus / 3);
     const castBon = gv('bon-cast-hit');
     const castTotVal = coreCastStat + primarySkillAcc + focusAcc - castArmorPenalty + castBon;
-    castStats.castHit = magicState.isMagicActive ? castTotVal : 0;
-    sv('cm-cast-hit', castStats.castHit);
+    castStats.castHit = magicState.isMagicActive ? castTotVal : 0;    sv('cm-cast-hit', castStats.castHit);
+    // ── Max castable TN ─────────────────────────────────────────────────
+    // Highest spell/blessing TN you can attempt = your active vocation's skill
+    // points + floor(Discipline ÷ 3), plus any magic-item bonus. Example:
+    // 9 Wizardry + floor(6 Discipline / 3 = 2) = TN 11.
+    // Vocation points: prefer the live activeMagicSkillPts, but fall back to the
+    // fully-processed state.skillPts total for the active discipline. This guards
+    // against the live read being stale for swap/discipline rows (e.g. Śabda/Shaman,
+    // which share one row) so the cap is always based on real invested points.
+    // Vocation points: prefer the live activeMagicSkillPts, but fall back to the
+    // fully-processed state.skillPts total for the active discipline. This guards
+    // against the live read being stale, and against Śabda being set up via a
+    // Willpower SWAP SLOT (points in skillPts.sabda) rather than the shared Shaman
+    // row (skillPts.shaman) — we take whichever holds the points so the cap is
+    // always based on real invested points no matter how the sheet was built.
+    let vocationPtsFromState = 0;
+    if (magicState.isMagActive)       vocationPtsFromState = state.skillPts.wizardry || 0;
+    else if (magicState.isShamanActive || magicState.isSabdaActive)
+                                      vocationPtsFromState = Math.max(state.skillPts.shaman || 0, state.skillPts.sabda || 0);
+    else if (magicState.isDevotionActive) vocationPtsFromState = state.skillPts.faith || 0;
+    else if (magicState.isDruidActive)    vocationPtsFromState = state.skillPts.druidism || 0;
+    else if (magicState.isKiActive)       vocationPtsFromState = state.skillPts.ki || 0;
+    const vocationPtsForTN = Math.max(magicState.activeMagicSkillPts || 0, vocationPtsFromState);
+    const disciplinePtsForTN = parseInt(g('label-Discipline')?.parentNode.querySelector('.sk-p')?.value) || 0;
+    const maxTNItemBon = gv('bon-max-tn');
+    const maxTN = magicState.isMagicActive
+        ? (vocationPtsForTN + Math.floor(disciplinePtsForTN / 3) + maxTNItemBon)
+        : 0;
+    castStats.maxTN = maxTN;
+    sv('cm-max-tn', maxTN);
 
     const arcaneBonus = (state.skillPts.wizardry >= 15 || state.skillPts.shaman >= 15 ||
                         state.skillPts.faith >= 15 || state.skillPts.druidism >= 15 ||
@@ -2681,6 +2739,7 @@ function upd() {
             checked: item.querySelector('.k-cb')?.checked || false,
             text:    item.querySelector('input[type="text"]')?.value || ''
         }));
+        snap['_adaptable_locked'] = !!adaptableLocked;
         localStorage.setItem('tm_ledger_autosave', JSON.stringify(snap));
     } catch(e) { /* storage unavailable */ }
 }
@@ -3484,6 +3543,18 @@ function openRacialModal() {
     }
 
     modal.style.display = 'flex';
+    // Re-apply a saved Adaptable skill choice into the freshly-built field.
+    // This is what makes the choice survive a reload: the value was stashed in
+    // savedAdaptableSkill at load time and is written in here whenever the modal
+    // is built. Only do this for Human and only if the field is currently empty
+    // (so we never clobber an in-progress edit).
+    if (race === 'human' && savedAdaptableSkill) {
+        const adaptEl = document.getElementById('rt_txt_1');
+        if (adaptEl && !adaptEl.value) {
+            adaptEl.value = savedAdaptableSkill;
+            if (typeof validateAdaptable === 'function') validateAdaptable();
+        }
+    }
     // Restore lock styling if already locked
     if (race === 'human' && adaptableLocked) {
         setTimeout(() => applyAdaptableLock(), 0);
@@ -3503,6 +3574,9 @@ function validateAdaptable() {
     const status = document.getElementById('adaptable-status');
     const input = document.getElementById('rt_txt_1');
     if (!status || !input) return;
+    // Keep the stash in sync with live edits so getEffectiveBase and a later
+    // save both see the current choice.
+    savedAdaptableSkill = input.value;
 
     // If already locked, don't revalidate
     if (adaptableLocked) return;
@@ -3728,6 +3802,9 @@ function saveData() {
     }));
     const pv = g('pv');
     if (pv && pv.src && pv.src.startsWith('data:image')) data['character_portrait'] = pv.src;
+    // Persist the Human "Adaptable" lock state in the file so it survives across
+    // devices/browsers (rt_txt_1's value is already captured by the loop above).
+    data['_adaptable_locked'] = !!adaptableLocked;
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], {type:'application/json'}));
     a.download = `${(g('char-name-input')?.value || 'character').replace(/[^a-z0-9_\-]/gi,'_')}.rpg`;
@@ -3933,6 +4010,20 @@ function applyCharacterData(data) {
     // Re-sort each characteristic's rows so the saved sheet reads A→Z.
     sortAllSkillRows();
     upd();
+    // ── Human "Adaptable" restore ───────────────────────────────────────
+    // The Adaptable skill field (rt_txt_1) lives inside the on-demand racial
+    // modal, which may not be built yet at load time. Stash the saved choice
+    // and lock state in module vars; openRacialModal() re-applies them every
+    // time it builds the modal, so the choice survives reload regardless of
+    // when the player next opens the panel. The lock flag travels in the file
+    // now, so it also survives across browsers/devices.
+    if (data['rt_txt_1'] !== undefined) savedAdaptableSkill = data['rt_txt_1'];
+    if (data['_adaptable_locked'] === true || data['_adaptable_locked'] === 'true') {
+        adaptableLocked = true;
+        try { localStorage.setItem('tm_adaptable_locked', '1'); } catch(e) {}
+    }
+    if (typeof renderRacialTraits === 'function') renderRacialTraits();
+    upd();
 }
 
 function exportToTracker() {
@@ -4027,9 +4118,25 @@ function applyCreatorPackage(pkg) {
     // 3. Magic vocation checkbox
     document.querySelectorAll('.magic-cb').forEach(cb => { cb.checked = false; });
     if (pkg.vocation.magic) {
-        const magicCb = Array.from(document.querySelectorAll('.magic-cb'))
-            .find(cb => cb.value === pkg.vocation.magic);
-        if (magicCb) { magicCb.checked = true; handleMagicCheck(magicCb); }
+        // Śabda has no checkbox of its own — it shares the Willpower row's
+        // checkbox (magic_shaman) and is distinguished by the discipline dropdown.
+        // Match it explicitly, otherwise the .find() below misses and Śabda never
+        // activates on import (leaving Max TN/cast scaling with no vocation points).
+        if (pkg.vocation.magic === 'Sabda' || pkg.vocation.magic === 'Shaman') {
+            const wdSel = g('willpower-discipline-select');
+            const shamCb = g('magic_shaman');
+            if (wdSel) wdSel.value = pkg.vocation.magic;
+            if (typeof updateWillpowerLabel === 'function') updateWillpowerLabel();
+            if (shamCb) {
+                shamCb.checked = true;
+                shamCb.value = pkg.vocation.magic;
+                handleMagicCheck(shamCb);
+            }
+        } else {
+            const magicCb = Array.from(document.querySelectorAll('.magic-cb'))
+                .find(cb => cb.value === pkg.vocation.magic);
+            if (magicCb) { magicCb.checked = true; handleMagicCheck(magicCb); }
+        }
     }
 
     // 4. Runemaster pts
