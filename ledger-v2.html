@@ -2840,8 +2840,38 @@ function updateSpellUnlocks() {
         cantrips.forEach(s => cantripsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`);
         if (cantrips.length) allSpellsHTML += '<option disabled>── Cantrips ──</option>';
         cantrips.forEach(s => allSpellsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`);
-        if (regular.length) allSpellsHTML += '<option disabled>── Spells ──</option>';
-        regular.forEach(s => allSpellsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`);
+        if (regular.length) {
+            // Group the regular spells by reachability against the caster's Max TN.
+            // Max TN is computed in calculateCastStats and shown in #cm-max-tn; read it
+            // here so the dropdown sorts spells into what you can cast, what you can
+            // reach only by Overreach (+1..+3 over), and what's beyond reach (+4 and up).
+            const maxTNEl = document.getElementById('cm-max-tn');
+            const maxTN = maxTNEl ? (parseInt(maxTNEl.value) || 0) : 0;
+            // Pull the first integer out of any TN string: "TN7"->7, "T8/P12"->8, "P25"->25, "TN~"->null
+            const parseTN = (tnStr) => { const m = String(tnStr).match(/\d+/); return m ? parseInt(m[0]) : null; };
+            const castable = [], overreach = [], beyond = [];
+            regular.forEach(s => {
+                const t = parseTN(s.tn);
+                if (t === null || maxTN <= 0) { castable.push(s); return; } // variable-TN or no cap yet → show normally
+                const over = t - maxTN;
+                if (over <= 0)      castable.push(s);
+                else if (over <= 3) overreach.push(s);
+                else                beyond.push(s);
+            });
+            const optFor = (s, prefix='') => `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${prefix}${s.name} [${s.tn}]</option>`;
+            if (castable.length) {
+                allSpellsHTML += '<option disabled>── Castable ──</option>';
+                castable.forEach(s => allSpellsHTML += optFor(s));
+            }
+            if (overreach.length) {
+                allSpellsHTML += '<option disabled>── ⚠ Overreach (risky) ──</option>';
+                overreach.forEach(s => allSpellsHTML += optFor(s, '⚠ '));
+            }
+            if (beyond.length) {
+                allSpellsHTML += '<option disabled>── ✕ Beyond Reach ──</option>';
+                beyond.forEach(s => allSpellsHTML += optFor(s, '✕ '));
+            }
+        }
     }
 
     document.querySelectorAll('#spells-grid .k-item').forEach((slot, index) => {
@@ -2863,10 +2893,14 @@ function updateSpellUnlocks() {
             if (sel) {
                 sel.disabled = false;
                 const slotTradition = sel.dataset.tradition || '';
-                if (slotTradition !== (activeTradition || '') || sel.querySelectorAll('option').length <= 2) {
+                const curMaxTN = (document.getElementById('cm-max-tn')?.value) || '';
+                // Rebuild when tradition changes, list is empty, OR Max TN changed
+                // (so the reachability grouping re-sorts as the caster grows).
+                if (slotTradition !== (activeTradition || '') || sel.querySelectorAll('option').length <= 2 || sel.dataset.maxtn !== curMaxTN) {
                     const saved = sel.value;
                     sel.innerHTML = allSpellsHTML;
                     sel.dataset.tradition = activeTradition || '';
+                    sel.dataset.maxtn = curMaxTN;
                     if (saved) sel.value = saved;
                     updateSpellCost(sel);
                 }
