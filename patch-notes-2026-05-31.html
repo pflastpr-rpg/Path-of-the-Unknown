@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thrice-Marked — Patch Notes (31 May 2026)</title>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --iron: #02070e;
+        --blood: #A81818;
+        --parchment: #f3e7c9;
+        --gold: #B8860B;
+        --input-bg: #FCF7EB;
+        --ink: #111111;
+        --font-heading: 'Grenze Gotisch', serif;
+        --font-main: 'IM Fell English', serif;
+        --font-hand: 'MedievalSharp', cursive;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        background: var(--parchment);
+        color: var(--ink);
+        font-family: var(--font-main);
+        line-height: 1.65;
+        padding: 24px 16px 60px;
+    }
+    .wrapper {
+        max-width: 820px;
+        margin: 0 auto;
+        background: var(--input-bg);
+        border: 4px solid var(--iron);
+        box-shadow: 8px 8px 0 rgba(168,24,24,0.8);
+        padding: 38px 42px;
+    }
+
+    .top-nav {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--gold);
+    }
+    .btn-hub {
+        background: var(--iron);
+        color: var(--gold);
+        border: 2px solid var(--gold);
+        padding: 8px 20px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 12pt;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: background 0.2s, color 0.2s;
+        font-family: var(--font-heading);
+    }
+    .btn-hub:hover { background: var(--blood); color: #fff; }
+
+    header { text-align: center; margin-bottom: 8px; }
+    h1 {
+        font-family: var(--font-heading);
+        font-size: 34pt;
+        color: var(--iron);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        line-height: 1.1;
+    }
+    .subtitle {
+        color: var(--blood);
+        font-style: italic;
+        font-size: 13.5pt;
+        margin: 10px auto 4px;
+        max-width: 640px;
+    }
+    .datestamp {
+        font-family: var(--font-heading);
+        font-size: 12pt;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-top: 6px;
+    }
+    .rule { height: 3px; background: var(--blood); margin: 22px 0 28px; }
+
+    h2 {
+        font-family: var(--font-heading);
+        font-size: 20pt;
+        color: var(--iron);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 36px 0 4px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--gold);
+    }
+    h2 .tick { color: var(--blood); }
+
+    .tldr {
+        background: rgba(184,134,11,0.10);
+        border-left: 5px solid var(--gold);
+        padding: 16px 22px;
+        margin: 8px 0 24px;
+    }
+    .tldr ul { margin: 6px 0 0 18px; }
+    .tldr li { margin: 5px 0; }
+
+    .change-item { margin: 18px 0; padding-bottom: 4px; }
+    .change-item .lead {
+        font-family: var(--font-heading);
+        font-size: 14pt;
+        color: var(--blood);
+        display: block;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+    }
+    .tag {
+        display: inline-block;
+        font-family: var(--font-heading);
+        font-size: 8.5pt;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 2px 8px;
+        border-radius: 2px;
+        vertical-align: middle;
+        margin-left: 8px;
+        color: var(--parchment);
+    }
+    .tag.rules { background: var(--blood); }
+    .tag.ledger { background: var(--iron); color: var(--gold); }
+    .tag.both { background: var(--gold); color: var(--iron); }
+    .tag.fix { background: #2f6b34; }
+
+    p { margin: 9px 0; }
+    strong { color: var(--iron); }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0;
+        font-size: 11.5pt;
+    }
+    th {
+        background: var(--iron);
+        color: var(--gold);
+        font-family: var(--font-heading);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 6px 10px;
+        text-align: left;
+        font-size: 11pt;
+    }
+    td { padding: 5px 10px; border-bottom: 1px solid rgba(2,7,14,0.15); }
+    tr:nth-child(even) td { background: rgba(2,7,14,0.03); }
+    .old-val { color: #8a6a2a; }
+    .new-val { color: var(--blood); font-weight: 700; }
+
+    .note {
+        font-style: italic;
+        font-size: 11.5pt;
+        background: rgba(2,7,14,0.04);
+        padding: 10px 14px;
+        border: 1px dashed var(--gold);
+        margin: 12px 0;
+    }
+    footer {
+        margin-top: 40px;
+        padding-top: 18px;
+        border-top: 2px solid var(--gold);
+        text-align: center;
+        font-style: italic;
+        color: #5a4a2a;
+        font-size: 11pt;
+    }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+    <div class="top-nav">
+        <a href="index.html" class="btn-hub">⌂ Compendium</a>
+        <a href="core-rules.html" class="btn-hub">Core Rules</a>
+        <a href="ledger-v2.html" class="btn-hub">The Ledger v2</a>
+    </div>
+
+    <header>
+        <h1>Patch Notes</h1>
+        <p class="subtitle">Everything that changed in the rules and the Ledger this session — a rundown for the table.</p>
+        <p class="datestamp">31 May 2026</p>
+    </header>
+
+    <div class="rule"></div>
+
+    <div class="tldr">
+        <strong>The short version:</strong>
+        <ul>
+            <li><strong>Casters got a real buff</strong> — armour interferes with spellcasting far less than before, and there's now a clear "highest spell you can cast" cap with a risky way to push past it.</li>
+            <li><strong>Armour is less punishing all around</strong> — lighter penalties to hitting, dodging, and awareness, rescaled to a clean curve.</li>
+            <li><strong>Stun now actually costs you Actions</strong> on the sheet, automatically.</li>
+            <li><strong>A few sheet fixes</strong> — the Human "Adaptable" discount now survives a reload, the Śabda discipline now calculates correctly, and the casting panel is cleaner.</li>
+            <li><strong>The "Cleric / Crusader" advanced skill</strong> is back under that name (it was hiding as "Devout / Runepriest").</li>
+        </ul>
+    </div>
+
+    <!-- ============ CASTING ============ -->
+    <h2><span class="tick">✦</span> Spellcasting &amp; Blessings</h2>
+
+    <div class="change-item">
+        <span class="lead">Armour no longer wrecks your casting <span class="tag both">Rules + Ledger</span></span>
+        <p>Heavy armour still interferes with the arcane (Wizard / Druid / Shaman), but the penalty is far gentler than before. The middle and heavy tiers were brutal on a d10 — a plate mage essentially couldn't cast. Now:</p>
+        <table>
+            <tr><th>Armour</th><th>Old Penalty</th><th>New Penalty</th></tr>
+            <tr><td>Studded</td><td class="old-val">−1</td><td class="new-val">−1</td></tr>
+            <tr><td>Chainmail</td><td class="old-val">−2</td><td class="new-val">−1</td></tr>
+            <tr><td>Banded / Splint</td><td class="old-val">−3</td><td class="new-val">−2</td></tr>
+            <tr><td>Plate / Field</td><td class="old-val">−4</td><td class="new-val">−3</td></tr>
+            <tr><td>Full Plate</td><td class="old-val">−5</td><td class="new-val">−3</td></tr>
+        </table>
+        <p class="note">Devotion, Śabda, and Ki are unchanged — they already had their own forgiving rules. This buff is specifically for the three traditions that took the worst of it.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">New rule: Maximum Castable TN <span class="tag both">Rules + Ledger</span></span>
+        <p>There is now a clear ceiling on the highest-TN spell or blessing you can attempt:</p>
+        <p style="text-align:center; font-size:13pt;"><strong>Max TN = (your vocation's skill points) + (Discipline skill ÷ 3)</strong></p>
+        <p>So a Wizard with <strong>9 Wizardry</strong> and <strong>6 Discipline</strong> can attempt spells up to <strong>TN 11</strong> (9 + 2). A magic item or relic can raise this ceiling further. The Ledger now shows your Max TN right next to your Cast bonus, with a "+itm" box for any item bonus.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">New rule: Overreach — reaching past your ceiling <span class="tag rules">Rules</span></span>
+        <p>A desperate caster <em>may</em> attempt a spell above their Max TN — but never by more than <strong>3</strong>. Each step over makes the To-Cast roll harder, and on a <strong>failure</strong> the weave tears its price from your own body. (Succeed, and you only eat the roll penalty.)</p>
+        <table>
+            <tr><th>Steps Over Max TN</th><th>To-Cast Penalty</th><th>Backlash on Failure</th></tr>
+            <tr><td>+1 over</td><td class="new-val">−2</td><td>4d10 wounds (ignore Mitigation) + 1 Stunned</td></tr>
+            <tr><td>+2 over</td><td class="new-val">−4</td><td>5d10 wounds (ignore Mitigation) + 2 Stunned</td></tr>
+            <tr><td>+3 over</td><td class="new-val">−6</td><td>6d10 wounds (ignore Mitigation) + 3 Stunned</td></tr>
+        </table>
+        <p class="note">The backlash wounds ignore all Mitigation — armour can't stop the weave turning on the one who forced it — and the Stuns feed straight into the new Action-loss rule. Reaching more than 3 TN above your maximum is simply impossible.</p>
+    </div>
+
+    <!-- ============ ARMOUR ============ -->
+    <h2><span class="tick">✦</span> Armour Penalties</h2>
+
+    <div class="change-item">
+        <span class="lead">The whole armour penalty curve was rescaled <span class="tag both">Rules + Ledger</span></span>
+        <p>Armour was stacking too many penalties at once (to-hit, Agility, Awareness all piling on). Everything was eased and smoothed into a cleaner curve. Here's the full current table:</p>
+        <table>
+            <tr><th>Armour</th><th>Agility</th><th>Awareness</th><th>Move</th><th>Melee Hit</th><th>Ranged Hit</th></tr>
+            <tr><td>None / Furs / Padded</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>Leather</td><td>−1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>Studded</td><td>−1</td><td>0</td><td>0</td><td>−1</td><td>0</td></tr>
+            <tr><td>Chainmail</td><td>−1</td><td>0</td><td>−5</td><td>−1</td><td>−1</td></tr>
+            <tr><td>Banded / Splint</td><td>−1</td><td>−1</td><td>−10</td><td>−1</td><td>−1</td></tr>
+            <tr><td>Plate / Field</td><td>−2</td><td>−2</td><td>−15</td><td>−2</td><td>−2</td></tr>
+            <tr><td>Full Plate</td><td>−2</td><td>−3</td><td>−15</td><td>−2</td><td>−3</td></tr>
+        </table>
+        <p>The biggest winners: <strong>Agility</strong> at the heavy end (chain/banded dropped from −2 to −1; plate from −3 to −2), and the <strong>to-hit penalties</strong> were trimmed across the board. Movement penalties were left alone.</p>
+    </div>
+
+    <!-- ============ CONDITIONS ============ -->
+    <h2><span class="tick">✦</span> Conditions &amp; Combat</h2>
+
+    <div class="change-item">
+        <span class="lead">Stunned now reduces your Actions — automatically <span class="tag ledger">Ledger</span></span>
+        <p>Each <strong>Stunned</strong> condition strips <strong>1 Action</strong> from your turn (2 Stuns = 2 fewer Actions, floored at 0). Enter your Stun count in the Tactical Conditions panel and the Ledger now drops your total Actions for you. Clear the Stuns and your Actions come right back. (The rulebook already described this — the sheet now enforces it.)</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Combat Mastery labels renamed <span class="tag ledger">Ledger</span></span>
+        <p>On the character sheet, <strong>"Wounds" → "Damage"</strong> and <strong>"W. Evil" → "D. Evil"</strong> for clarity. The math is unchanged — just clearer labels.</p>
+    </div>
+
+    <!-- ============ ADVANCED SKILL ============ -->
+    <h2><span class="tick">✦</span> Advanced Skills</h2>
+
+    <div class="change-item">
+        <span class="lead">"Cleric / Crusader" is back <span class="tag both">Rules + Ledger</span></span>
+        <p>The advanced skill some of you were looking for wasn't lost — it existed under the name <strong>"Devout / Runepriest."</strong> It's been renamed to <strong>"Cleric / Crusader"</strong> everywhere. The mechanics are unchanged and already balanced for 100 XP: requires Devotion (3) + Light Soul (2), gives a +1 Wound Mitigation / +1 Healing passive, and the Crusader action (Cause Fear to Evil, add Light Soul to wounds vs Evil).</p>
+    </div>
+
+    <!-- ============ FIXES ============ -->
+    <h2><span class="tick">✦</span> Sheet Fixes <span class="tag fix">Bug Fixes</span></h2>
+
+    <div class="change-item">
+        <span class="lead">Human "Adaptable" discount now survives a reload <span class="tag ledger">Ledger</span></span>
+        <p>The −5 XP discount on your chosen Adaptable skill was silently disappearing when you saved and reloaded a character. It now persists correctly — including across different devices/browsers — and applies even before you open the racial-traits panel.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Śabda casting now calculates correctly <span class="tag ledger">Ledger</span></span>
+        <p>Śabda characters were showing the wrong Max TN (scaling only with Discipline, ignoring the vocation itself), especially on imported sheets. Root cause: the Śabda skill's points weren't being read into the casting math at all. Fixed — Śabda now scales exactly like the other disciplines, however the character was built.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Cleaner casting panel <span class="tag ledger">Ledger</span></span>
+        <p>The Max TN display was overflowing its box. It now sits on its own tidy row, clearly labeled, with its value and an item-bonus field.</p>
+    </div>
+
+    <!-- ============ DISCUSSED ============ -->
+    <h2><span class="tick">✦</span> Discussed, No Change (Yet)</h2>
+
+    <div class="change-item">
+        <span class="lead">Martial to-hit bonuses — reviewed, left as-is</span>
+        <p>We looked hard at whether melee/ranged to-hit bonuses are too generous. Verdict for now: <strong>they're in range.</strong> A mid-tier fighter's +5 to-hit only lands ~30% of the time against a peer's Defense, and Defense scales on the same engine, so it's largely self-correcting. The thing that makes hits <em>feel</em> big is the exploding natural-10 crits plus high wound output — not the accuracy itself. If "hits land too often on elites" keeps coming up, the most likely fix is making sure elite enemies carry high enough Defense (16–18), not nerfing every character's to-hit.</p>
+    </div>
+
+    <footer>
+        Thrice-Marked — living rules. Questions or disagreements with any of these? Bring them to the table.
+    </footer>
+
+</div>
+</body>
+</html>
