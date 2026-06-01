@@ -197,7 +197,7 @@
             <li><strong>Casters got a real buff</strong> — armour interferes with spellcasting far less than before, and there's now a clear "highest spell you can cast" cap with a risky way to push past it.</li>
             <li><strong>Armour is less punishing all around</strong> — lighter penalties to hitting, dodging, and awareness, rescaled to a clean curve.</li>
             <li><strong>Stun now actually costs you Actions</strong> on the sheet, automatically.</li>
-            <li><strong>A few sheet fixes</strong> — the Human "Adaptable" discount now survives a reload, the Śabda discipline now calculates correctly, and the casting panel is cleaner.</li>
+            <li><strong>A few sheet fixes</strong> — the Human "Adaptable" discount now survives a reload, the Vibhuti discipline now calculates correctly, and the casting panel is cleaner.</li>
             <li><strong>The "Cleric / Crusader" advanced skill</strong> is back under that name (it was hiding as "Devout / Runepriest").</li>
         </ul>
     </div>
@@ -216,7 +216,7 @@
             <tr><td>Plate / Field</td><td class="old-val">−4</td><td class="new-val">−3</td></tr>
             <tr><td>Full Plate</td><td class="old-val">−5</td><td class="new-val">−3</td></tr>
         </table>
-        <p class="note">Devotion, Śabda, and Ki are unchanged — they already had their own forgiving rules. This buff is specifically for the three traditions that took the worst of it.</p>
+        <p class="note">Devotion, Vibhuti, and Ki are unchanged — they already had their own forgiving rules. This buff is specifically for the three traditions that took the worst of it.</p>
     </div>
 
     <div class="change-item">
@@ -325,14 +325,41 @@
     <div class="note">The rest of Shamanism was reviewed and left alone: the damage curve is clean, there are no misfiled spells, and the curse/hex utility spells (Hex, Bestial Curse, Cursed Spells, Mental Anguish, Death Hex) and totem/idol spells are already well separated by effect. The high-TN capstones (Spirit Apocalypse, The Grand Unravelling) pay for their Mitigation-bypass with very high TN and heavy cost, consistent with the rest of the system.</div>
 
     <!-- ============ SABDA PASS ============ -->
-    <h2><span class="tick">✦</span> Spell Balance — Śabda Pass</h2>
+    <h2><span class="tick">✦</span> Spell Balance — Vibhuti Pass</h2>
 
     <div class="change-item">
         <span class="lead">The Sphoṭa Strike (TN 13) — bypass narrowed to mundane armour <span class="tag both">Rules + Ledger</span></span>
         <p>Sphoṭa Strike was the cheapest "ignore all armour" attack in the game by a wide margin. Every other effect that bypasses <em>all</em> Wound Mitigation with no strings sits at TN 16 or higher and pays a real price — caster self-damage, a once-per-encounter limit, or permanent stat loss. Sphoṭa delivered clean full-bypass damage at <strong>TN 13</strong> with no resist roll and no cost. It now bypasses <strong>mundane Wound Mitigation only</strong> — it shears through ordinary armour, but magical wards still hold against it. The damage (4d10 + casting bonus) and TN are unchanged. <strong>Against Aakzad units the full bypass remains</strong> — their own pre-world architecture has no defence tuned against their register — so the spell keeps its signature role as the answer to the Aakzad. This brings it in line with The Agni-Axiom (TN 12), its smaller mundane-bypass sibling.</p>
     </div>
 
-    <div class="note">The rest of Śabda was reviewed and left alone. The high-TN workings that bypass all Mitigation are properly gated: The Osteo-Resonance (maintained, the Speaker cannot move, AP upkeep), The Brahmastra (TN 18, heavy cost, Retraction required), and The Agneyastra Volley (mundane bypass only, needs allied archers) all pay for their power. The Agni-Axiom's partial (mundane-only) bypass at TN 12 was already correctly priced.</div>
+    <div class="note">The rest of Vibhuti was reviewed and left alone. The high-TN workings that bypass all Mitigation are properly gated: The Osteo-Resonance (maintained, the Speaker cannot move, AP upkeep), The Brahmastra (TN 18, heavy cost, Retraction required), and The Agneyastra Volley (mundane bypass only, needs allied archers) all pay for their power. The Agni-Axiom's partial (mundane-only) bypass at TN 12 was already correctly priced.</div>
+
+    <!-- ============ BYPASS FLOOR ============ -->
+    <h2><span class="tick">✦</span> The Bypass Floor — Armour Matters Again</h2>
+
+    <div class="change-item">
+        <span class="lead">New rule: total Mitigation bypass is a capstone privilege <span class="tag rules">Rules</span></span>
+        <p>A new line in the magic chapter draws a hard floor under one of the game's most armour-invalidating effects. As a rule, <strong>only workings of TN 16 or higher may bypass all Wound Mitigation</strong> — that's the tier where a spell is costly and rare enough that turning steel to paper is its earned reward. Below that line, magic that "burns through armour" bypasses <strong>mundane Mitigation only</strong>: ordinary leather, mail, and plate yield, but magical wards and enchanted armour still hold. The single exception is a foe whose own nature has no defence against the effect (an Aakzad struck by its own pre-world register, for instance). The point: mid-tier magic should make armour <em>worse</em>, not <em>irrelevant</em>. Every existing full-bypass capstone (TN 16 and up) is unaffected — that's exactly the tier the rule protects.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">The Vajra Lance (TN 14) — bypass narrowed to mundane armour <span class="tag both">Rules + Ledger</span></span>
+        <p>The lone offender under the new floor. A 5d10 projectile that ignored <em>all</em> Mitigation from 400 Ft, once per encounter, at a TN a dedicated Monk reaches well before the capstone tier — it deleted an armoured target's entire defensive investment with no answer. It now bypasses <strong>mundane Wound Mitigation only</strong>; it still shears through ordinary armour and punches through cover and walls, but magical wards and enchanted plate bite against it. Damage, range, and the once-per-encounter limit are unchanged.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">The Preserver's Axiom (TN 14) — kept as a documented exception</span>
+        <p>This one sits below the floor but keeps its full bypass. It only strikes those bearing genuine hostile intent — it cannot be fooled by feigned surrender, and anyone who truly lays down their arms is unharmed — and it carries a brutal Retraction cost (failure inflicts double-severity backlash and locks the Speaker Silenced for the rest of the encounter). It behaves like a capstone in everything but its TN number, so rather than gut an elegant mechanic, it stands as an explicit exception to the bypass floor.</p>
+    </div>
+
+    <!-- ============ RENAME ============ -->
+    <h2><span class="tick">✦</span> The Śabda-Axiom is now Vibhuti</h2>
+
+    <div class="change-item">
+        <span class="lead">The seventh discipline has been renamed <span class="tag both">Rules + Ledger</span></span>
+        <p>The discipline formerly written as the <strong>Śabda-Axiom</strong> is now <strong>Vibhuti (The Manifest Power)</strong>. Vibhuti carries a double meaning that fits the tradition better than the old name did — it is both the sacred ash left when fire has consumed all that can burn, <em>and</em> the manifestation of divine power made visible. That range — from the quiet diagnostic syllables to the apocalyptic unmaking workings — is what the discipline actually spans, so the name now reflects the whole of it rather than only its sound. The old "Śabda" term has been retired from the rules; the body of surviving fragments is still called the Primordial Lexicon, and the individual Bija syllables are unchanged.</p>
+        <p class="note">This is a name change only — no mechanics, TNs, costs, or spell effects were touched. Every Vibhuti spell works exactly as it did. On the character sheet the discipline still shares the same skill row it always has; only the label you see has changed.</p>
+    </div>
 
     <!-- ============ ARMOUR ============ -->
     <h2><span class="tick">✦</span> Armour Penalties</h2>
@@ -383,8 +410,8 @@
     </div>
 
     <div class="change-item">
-        <span class="lead">Śabda casting now calculates correctly <span class="tag ledger">Ledger</span></span>
-        <p>Śabda characters were showing the wrong Max TN (scaling only with Discipline, ignoring the vocation itself), especially on imported sheets. Root cause: the Śabda skill's points weren't being read into the casting math at all. Fixed — Śabda now scales exactly like the other disciplines, however the character was built.</p>
+        <span class="lead">Vibhuti casting now calculates correctly <span class="tag ledger">Ledger</span></span>
+        <p>Vibhuti characters were showing the wrong Max TN (scaling only with Discipline, ignoring the vocation itself), especially on imported sheets. Root cause: the Vibhuti skill's points weren't being read into the casting math at all. Fixed — Vibhuti now scales exactly like the other disciplines, however the character was built.</p>
     </div>
 
     <div class="change-item">
