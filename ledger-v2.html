@@ -1322,7 +1322,7 @@
             <input type="checkbox" id="magic_shaman" class="magic-cb" value="Shaman" onchange="handleWillpowerDiscipline(this)">
             <select id="willpower-discipline-select" onchange="handleWillpowerDisciplineChange(this)" style="font-family:var(--font-heading); font-size:10pt; font-weight:900; text-transform:uppercase; background:transparent; border:none; color:var(--ink); cursor:pointer; padding:0;">
                 <option value="Shaman">Shaman</option>
-                <option value="Sabda">Śabda</option>
+                <option value="Sabda">Vibhuti</option>
             </select>
             <span style="font-size:9pt; color:var(--blood);">(200)</span>
         </label>
@@ -1400,7 +1400,7 @@ const sks = {
 
 // ── Swap slot pools ─────────────────────────────────────────────────────────
 // Each characteristic has 2 swappable slots. Players pick from the pool.
-// Magic disciplines (Devotion, Druidism, Wizardry, Ki, Shaman/Sabda) are
+// Magic disciplines (Devotion, Druidism, Wizardry, Ki, Shaman/Vibhuti) are
 // defaults in their characteristic's swap slots so casters still access them.
 const SKILL_POOLS = {
     "Agility": {
@@ -1662,12 +1662,12 @@ const KI_POWERS=[{name:"Focus Breath",tn:"TN0",desc:"Remove 1 Stun counter from 
 
 const SABDA_SPELLS=[
   {name:"The Absolute Hush",tn:"TN0",ap:"1",desc:"All ambient sound within 10ft deleted for 1 turn. Speaker not silenced. Verbal spells cannot be initiated from within zone by others."},
-  {name:"The Resonance Read",tn:"TN0",ap:"1",desc:"Press lips to surface, sub-audible tone. Sense if touched by Śabda, Runic geometry, or Chaos-marks within 24 hours. Detects Aakzad Spirit-Echo frequency — gives approximate distance to source."},
-  {name:"The Naada Pulse",tn:"TN2",ap:"1",desc:"Speaker synchronises own biological frequency. Purges one physical condition from self: Stunned, Silenced, Shaken, Disease, or Poison. Cannot clear conditions inflicted by the Śabda tradition itself."},
+  {name:"The Resonance Read",tn:"TN0",ap:"1",desc:"Press lips to surface, sub-audible tone. Sense if touched by Vibhuti, Runic geometry, or Chaos-marks within 24 hours. Detects Aakzad Spirit-Echo frequency — gives approximate distance to source."},
+  {name:"The Naada Pulse",tn:"TN2",ap:"1",desc:"Speaker synchronises own biological frequency. Purges one physical condition from self: Stunned, Silenced, Shaken, Disease, or Poison. Cannot clear conditions inflicted by the Vibhuti tradition itself."},
   {name:"The Dissonant Word",tn:"TN3",ap:"1",desc:"Sharp tonal strike. Single target within 30ft. Dis.d10 + casting damage bonus wounds. Raw sonic pressure — no special properties."},
-  {name:"The Severed Chord",tn:"TN4",ap:"1",desc:"Consonant-burst at single creature within 30ft. Silenced condition (1 + bonus turns) — cannot cast Faith, Śabda, or verbal disciplines. Non-vocal disciplines unaffected. Retraction passive."},
+  {name:"The Severed Chord",tn:"TN4",ap:"1",desc:"Consonant-burst at single creature within 30ft. Silenced condition (1 + bonus turns) — cannot cast Faith, Vibhuti, or verbal disciplines. Non-vocal disciplines unaffected. Retraction passive."},
   {name:"The Garuda Note",tn:"TN5",ap:"1",desc:"Snake-destroying Bija. Instantly purges one Disease or Poison condition from target within 30ft. No wounds. Specific to biological corruption only."},
-  {name:"The Autopsy Tone",tn:"TN5",ap:"1",desc:"Diagnostic frequency toward target within 20ft. Learn exact wound total, all active conditions and magical effects, Śabda exposure within last hour. Against Aakzad: reveals Spirit-Echo frequency signature."},
+  {name:"The Autopsy Tone",tn:"TN5",ap:"1",desc:"Diagnostic frequency toward target within 20ft. Learn exact wound total, all active conditions and magical effects, Vibhuti exposure within last hour. Against Aakzad: reveals Spirit-Echo frequency signature."},
   {name:"The Sleeper Syllable",tn:"TN6",ap:"1",desc:"Encode up to 30 words into solid object. Dormant until stated condition — touch, hour, trigger word. Plays once in Speaker's voice. Duration: indefinite. Retraction: counter-syllable into same surface."},
   {name:"The Char-Tongue",tn:"TN7",ap:"2",desc:"Touch one archer's nocked arrow or quiver. Speaks combustion frequency into the wood — fire from within, not without. Duration: 1 + bonus turns. Each arrow fired adds casting damage bonus as fire wounds. Cannot be extinguished by wind, rain, or Thermal Nullification. Retraction: passive."},
   {name:"The Abyssal Deterrent",tn:"TN7",ap:"2",desc:"Subsonic vibration toxic to void entities within 20ft. Disadvantage on all rolls, movement halved. 1 AP/turn to maintain. Speaker movement halved. Retraction: passive on ceasing tone."},
@@ -1678,13 +1678,13 @@ const SABDA_SPELLS=[
   {name:"The Record-Pull",tn:"TN10",ap:"3",desc:"Press hands to surface. Hear significant sound events within 10ft in last 24 hours. Geological surfaces (ancient stone, bedrock, bone): extends to years. Heard by intensity not chronology."},
   {name:"The Terror-Syllable",tn:"TN11",ap:"3",desc:"Consonant-cluster at prey-brain frequency. All creatures within 20ft: Willpower TN11 + Resist or Fear (1 + bonus turns). Passing resist = immune for encounter. Speaker must resist their own invocation."},
   {name:"The Agni-Axiom",tn:"TN12",ap:"3",desc:"AXIOM OF BEARING: Purifying Force. 3d10 + casting damage bonus bypass mundane WM. Chaos boon locked 1 + bonus turns. Undead: maximum on dice. Daemons/void: maximum + Willpower TN12 + Resist or pushed 20ft. Retraction within 1 + bonus turns."},
-  {name:"The Sphoṭa Strike",tn:"TN13",ap:"4",desc:"Names target's resonant frequency. 4d10 + casting damage bonus bypass all WM. Against Aakzad: maximum damage on dice. No Retraction required."},
+  {name:"The Sphoṭa Strike",tn:"TN13",ap:"4",desc:"Names target's resonant frequency. 4d10 + casting damage bonus bypass mundane WM (magical wards hold). Against Aakzad: maximum damage on dice and bypass extends to all WM. No Retraction required."},
   {name:"The Seal-Tongue",tn:"TN14",ap:"4",desc:"Speak opening frequency against magically locked threshold. Counter-frequency becomes audible. Second Willpower test vs original TN+4 to open. Failure leaves sealed, triggers no alarms. No Retraction."},
   {name:"The Preserver's Axiom",tn:"TN14",ap:"4",desc:"AXIOM OF BEARING: The Compact. 40ft AoE reads intent. Hostile: 4d10 + casting damage bonus bypass all WM. Genuinely surrendered: unharmed. Cannot be deceived. Retraction within 1 turn or double-severity + Silenced."},
-  {name:"The Osteo-Resonance",tn:"TN15",ap:"4",desc:"Vocal cords match resonant frequency of bone. Target within 40ft: 2d10 + casting damage bonus unmitigated per turn. Speaker stationary, 2 AP/turn. Target Physique TN9 + Resist or Stunned each turn. Max turns = Śabda pts. Retraction: active."},
+  {name:"The Osteo-Resonance",tn:"TN15",ap:"4",desc:"Vocal cords match resonant frequency of bone. Target within 40ft: 2d10 + casting damage bonus unmitigated per turn. Speaker stationary, 2 AP/turn. Target Physique TN9 + Resist or Stunned each turn. Max turns = Vibhuti pts. Retraction: active."},
   {name:"The Kinetic Lock",tn:"TN16",ap:"5",desc:"Speak resonant frequency of target's physical density. Target within 50ft absolutely immobilised for 1 + bonus turns. Mental actions and non-vocal casting normal. Retraction required each turn. Silenced: lock shatters."},
   {name:"The Agneyastra Volley",tn:"TN16",ap:"5",desc:"Speaks complete combustion frequency outward simultaneously — chars every nocked ranged weapon of all allies within 80ft. On Speaker's signal, all loose at once. Each arrow: normal damage + 2d10 fire bypass mundane WM. Targets hit by 2+ arrows: Physique TN9 + Resist or Stunned. Requires at least one allied archer with loaded weapon in range or invocation fails."},
-  {name:"The Udgitha",tn:"TN17",ap:"5",desc:"Sustained cosmic chant. Speaker's Śabda TNs reduced by 2. Casters within 30ft: Willpower TN12 + Resist or cast fails. 2 AP/turn upkeep. Max duration = Śabda pts in turns. Speaker cannot take other actions. Retraction: active."},
+  {name:"The Udgitha",tn:"TN17",ap:"5",desc:"Sustained cosmic chant. Speaker's Vibhuti TNs reduced by 2. Casters within 30ft: Willpower TN12 + Resist or cast fails. 2 AP/turn upkeep. Max duration = Vibhuti pts in turns. Speaker cannot take other actions. Retraction: active."},
   {name:"The Brahmastra",tn:"TN18",ap:"5",desc:"Named-target absolute. Target within 50ft: 5d10 + casting damage bonus bypass all WM. Willpower TN18 + Resist or permanent −2 to one characteristic. Aakzad Crypt Priest: failed resist destroys Spirit-Echo broadcast permanently. Retraction within 1 turn. Requires prior encounter observation."},
   {name:"The Axiom of the Absolute",tn:"TN22",ap:"6",desc:"AXIOM OF BEARING: The Absolute. 60ft AoE. 8d10 unmitigated wounds — ally, enemy, Speaker. No exceptions. No Retraction exists. Once per day. Permanent −1 Willpower per use. Three uses: permanent sub-harmonic audible to Speakers within 100ft."}
 ];
@@ -1827,7 +1827,7 @@ function processAllSkills(state) {
             if (ptsInput) {
                 // In atrophy mode, enforce minimum 1 point for non-discipline skills
                 const atrophyActive = document.getElementById('atrophy-mode')?.checked;
-                const isDisciplineSkill = ['Devotion','Druidism','Wizardry','Shaman','Ki','Runes','Sabda'].includes(skillName);
+                const isDisciplineSkill = ['Devotion','Druidism','Wizardry','Shaman','Ki','Runes','Vibhuti'].includes(skillName);
                 let effectivePurchased = purchased;
                 if (atrophyActive && !isDisciplineSkill && purchased < 1 && (ptsInput.dataset.purchased || 0) >= 1) {
                     effectivePurchased = 1;
@@ -1839,7 +1839,7 @@ function processAllSkills(state) {
 
             let base = 0;
             if (state.race !== "none") {
-                // Shaman row may be active for either Shaman or Sabda discipline
+                // Shaman row may be active for either Shaman or Vibhuti discipline
                 let costKey = skillName;
                 if (skillName === "Shaman") {
                     const wdSel = g('willpower-discipline-select');
@@ -1961,7 +1961,7 @@ function determineMagicState(state) {
         if (cb.checked) {
             magicState.isMagicActive = true;
             // Runes uses only racial compounding (no flat access cost)
-            // Sabda pays 200 flat access + per-point compounding (same as standard disciplines)
+            // Vibhuti pays 200 flat access + per-point compounding (same as standard disciplines)
             if (cb.value !== "Runes") {
                 state.spentXP += 200;
             }
@@ -1980,8 +1980,8 @@ function determineMagicState(state) {
                 // one the dropdown selects. Without this reset, a checkbox still
                 // carrying its static "Shaman" value (e.g. just after import,
                 // before the value sync) leaves isShamanActive set, and since the
-                // downstream chain tests Shaman before Sabda, the character wrongly
-                // resolves as Shaman — which is exactly why imported Śabda failed.
+                // downstream chain tests Shaman before Vibhuti, the character wrongly
+                // resolves as Shaman — which is exactly why imported Vibhuti failed.
                 cb.value = wdSel.value;
                 magicState.isShamanActive = false;
                 magicState.isSabdaActive = false;
@@ -1991,7 +1991,7 @@ function determineMagicState(state) {
         }
     });
 
-    // Both Shaman and Sabda use the same "Shaman" skill row in the grid
+    // Both Shaman and Vibhuti use the same "Shaman" skill row in the grid
     magicState.activeMagicSkillName = (magicState.isSabdaActive || magicState.isShamanActive) ? "Shaman" :
                                       magicState.isDevotionActive ? "Devotion" :
                                       magicState.isMagActive ? "Wizardry" :
@@ -2185,7 +2185,7 @@ function calculateCastStats(state, stats, armorData, magicState) {
     // the harshest hit. Maps the raw armour TN to a gentler curve so heavy armour
     // is still clearly bad for them without being an absolute wall on a d10:
     //   raw 0->0, 1->1 (studded), 2->1 (chain), 3->2 (banded/splint), 4->3 (plate/field), 5->3 (full).
-    // Devotion, Śabda, and Ki are unaffected — they keep their own forgiving rules.
+    // Devotion, Vibhuti, and Ki are unaffected — they keep their own forgiving rules.
     const arcaneTrioPenalty = (raw => ({0:0,1:1,2:1,3:2,4:3,5:3})[raw] ?? raw)(armorData.tn);
 
     if (magicState.isKiActive) { coreCastStat = Math.floor(stats.physique / 5); castArmorPenalty = 0; }    else if (magicState.isSabdaActive) { coreCastStat = Math.floor(stats.willpower / 5); castArmorPenalty = armorData.tn <= 1 ? 0 : armorData.tn === 5 ? armorData.tn : Math.floor(armorData.tn / 2); }
@@ -2205,11 +2205,11 @@ function calculateCastStats(state, stats, armorData, magicState) {
     // 9 Wizardry + floor(6 Discipline / 3 = 2) = TN 11.
     // Vocation points: prefer the live activeMagicSkillPts, but fall back to the
     // fully-processed state.skillPts total for the active discipline. This guards
-    // against the live read being stale for swap/discipline rows (e.g. Śabda/Shaman,
+    // against the live read being stale for swap/discipline rows (e.g. Vibhuti/Shaman,
     // which share one row) so the cap is always based on real invested points.
     // Vocation points: prefer the live activeMagicSkillPts, but fall back to the
     // fully-processed state.skillPts total for the active discipline. This guards
-    // against the live read being stale, and against Śabda being set up via a
+    // against the live read being stale, and against Vibhuti being set up via a
     // Willpower SWAP SLOT (points in skillPts.sabda) rather than the shared Shaman
     // row (skillPts.shaman) — we take whichever holds the points so the cap is
     // always based on real invested points no matter how the sheet was built.
@@ -2255,10 +2255,10 @@ function calculateCastStats(state, stats, armorData, magicState) {
     if (magicState.isDevotionActive) { castHealBase = stats.charisma; magicHealBonus = Math.floor(state.skillPts.faith / 3) * 2; }
     else if (magicState.isDruidActive) { castHealBase = stats.awareness; magicHealBonus = Math.floor(state.skillPts.druidism / 3) * 2; }
     else if (magicState.isShamanActive) { castHealBase = stats.willpower; magicHealBonus = Math.floor(state.skillPts.shaman / 3) * 2; }
-        else if (magicState.isSabdaActive) { castHealBase = 0; magicHealBonus = 0; } // Sabda carries no healing
+        else if (magicState.isSabdaActive) { castHealBase = 0; magicHealBonus = 0; } // Vibhuti carries no healing
     
     const healBon = gv('bon-healing-cast');
-    // Sabda and Wizardry carry no healing tradition — zero regardless of bonuses
+    // Vibhuti and Wizardry carry no healing tradition — zero regardless of bonuses
     if (magicState.isSabdaActive || magicState.isMagActive) {
         castStats.castHealing = 0;
     } else {
@@ -2556,7 +2556,7 @@ function handleSkillInput(input) {
     const atrophyActive = document.getElementById('atrophy-mode')?.checked;
     const skillItem = input.closest('.sk-item');
     const skillName = skillItem?.querySelector('.sk-b')?.getAttribute('data-skill') || '';
-    const isDiscipline = ['Devotion','Druidism','Wizardry','Shaman','Ki','Runes','Sabda'].includes(skillName);
+    const isDiscipline = ['Devotion','Druidism','Wizardry','Shaman','Ki','Runes','Vibhuti'].includes(skillName);
 
     const newVal = parseInt(input.value) || 0;
     const oldVal = parseInt(input.dataset.purchased) || 0;
@@ -2625,7 +2625,7 @@ function toggleAtrophyMode() {
         const pts = el.querySelector('.sk-p');
         const name = el.querySelector('.sk-b')?.getAttribute('data-skill') || '';
         // Disciplines cannot be atrophied
-        const isDiscipline = ['Devotion','Druidism','Wizardry','Shaman','Ki','Runes','Sabda'].includes(name);
+        const isDiscipline = ['Devotion','Druidism','Wizardry','Shaman','Ki','Runes','Vibhuti'].includes(name);
         if (pts) {
             pts.style.borderColor = active && !isDiscipline ? 'var(--gold)' : '';
             pts.title = active && !isDiscipline
@@ -2694,7 +2694,7 @@ function markAtrophiedSkill(skillItem, atrophied) {
 
 function upd() {
     const state = initializeUpdateVariables();
-    updateWillpowerLabel(); // keep Shaman/Śabda label in sync
+    updateWillpowerLabel(); // keep Shaman/Vibhuti label in sync
     syncKnowledgeSkill();
     processMagicSkills(state);    // lock discipline rows first
     const magicState = determineMagicState(state); // unlock active row + set flags
@@ -2985,12 +2985,12 @@ function updateWillpowerLabel() {
     if (!sel || !lbl) return;
     const val = sel.value;
     // Update the visible label text
-    lbl.textContent = (val === "Sabda") ? "Śabda" : "Shaman";
+    lbl.textContent = (val === "Sabda") ? "Vibhuti" : "Shaman";
     // Update the sk-b cost input title/tooltip
     const skb = lbl.parentNode?.querySelector('.sk-b');
     if (skb) {
         // Cost will be updated by processAllSkills — just flag the discipline
-        skb.title = (val === "Sabda") ? "Śabda-Axiom — Willpower Discipline" : "Shamanism — Willpower Discipline";
+        skb.title = (val === "Sabda") ? "Vibhuti — Willpower Discipline" : "Shamanism — Willpower Discipline";
     }
 }
 
@@ -3271,7 +3271,7 @@ function handleMagicCheck(cb) {
             // Runes uses racial compounding XP via handleRunes() — no flat 200 cost
         }
         else if(cb.value === "Shaman") { if(header) header.innerText = "Shamanic Rites"; SHAMAN_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
-        else if(cb.value === "Sabda") { if(header) header.innerText = "Śabda — The Primordial Lexicon"; SABDA_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
+        else if(cb.value === "Sabda") { if(header) header.innerText = "Vibhuti — The Primordial Lexicon"; SABDA_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
 
         spellSelects.forEach(sel => {
             sel.innerHTML = optionsHTML;
@@ -4152,11 +4152,11 @@ function applyCreatorPackage(pkg) {
     // 3. Magic vocation checkbox
     document.querySelectorAll('.magic-cb').forEach(cb => { cb.checked = false; });
     if (pkg.vocation.magic) {
-        // Śabda has no checkbox of its own — it shares the Willpower row's
+        // Vibhuti has no checkbox of its own — it shares the Willpower row's
         // checkbox (magic_shaman) and is distinguished by the discipline dropdown.
-        // Match it explicitly, otherwise the .find() below misses and Śabda never
+        // Match it explicitly, otherwise the .find() below misses and Vibhuti never
         // activates on import (leaving Max TN/cast scaling with no vocation points).
-        if (pkg.vocation.magic === 'Sabda' || pkg.vocation.magic === 'Shaman') {
+        if (pkg.vocation.magic === 'Vibhuti' || pkg.vocation.magic === 'Shaman') {
             const wdSel = g('willpower-discipline-select');
             const shamCb = g('magic_shaman');
             if (wdSel) wdSel.value = pkg.vocation.magic;
