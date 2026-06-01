@@ -195,8 +195,11 @@
         <strong>The short version:</strong>
         <ul>
             <li><strong>Casters got a real buff</strong> — armour interferes with spellcasting far less than before, and there's now a clear "highest spell you can cast" cap with a risky way to push past it.</li>
+            <li><strong>Blessings were rebalanced</strong> — a few un-counterable or over-stacked divine effects were eased so armour and saves matter again.</li>
+            <li><strong>Spell lists are fully synced</strong> — 47 spells that were missing from the Ledger were added, and the spell picker now sorts by what you can actually cast.</li>
             <li><strong>Armour is less punishing all around</strong> — lighter penalties to hitting, dodging, and awareness, rescaled to a clean curve.</li>
             <li><strong>Stun now actually costs you Actions</strong> on the sheet, automatically.</li>
+            <li><strong>Magic items</strong> — the Reliquary grew to ~89 items, and weapons/armour now have +1/+2/+3 enchant dropdowns that auto-fill bonuses.</li>
             <li><strong>A few sheet fixes</strong> — the Human "Adaptable" discount now survives a reload, the Śabda discipline now calculates correctly, and the casting panel is cleaner.</li>
             <li><strong>The "Cleric / Crusader" advanced skill</strong> is back under that name (it was hiding as "Devout / Runepriest").</li>
         </ul>
@@ -236,6 +239,35 @@
             <tr><td>+3 over</td><td class="new-val">−6</td><td>6d10 wounds (ignore Mitigation) + 3 Stunned</td></tr>
         </table>
         <p class="note">The backlash wounds ignore all Mitigation — armour can't stop the weave turning on the one who forced it — and the Stuns feed straight into the new Action-loss rule. Reaching more than 3 TN above your maximum is simply impossible.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Blessings rebalanced <span class="tag both">Rules + Ledger</span></span>
+        <p>The divine line was carrying a few effects that were either un-counterable or just stacking too much onto one cast. The whole set was eased so armour and saves matter again:</p>
+        <table>
+            <tr><th>Blessing</th><th>Was</th><th>Now</th></tr>
+            <tr><td>Harm (TN 9)</td><td class="old-val">unmitigatable damage</td><td class="new-val">armour mitigates again; still auto-max vs Undead / Daemonic</td></tr>
+            <tr><td>Cleric's Ward (TN 7)</td><td class="old-val">uncapped Mitigation bonus</td><td class="new-val">Mitigation bonus capped at Light Soul points</td></tr>
+            <tr><td>Blessing of the Crusader (TN 9)</td><td class="old-val">+1d10 + To-Hit + dmg</td><td class="new-val">+2 To-Hit + casting dmg bonus (dropped the +1d10)</td></tr>
+            <tr><td>Wrath of the Crusader (TN 7)</td><td class="old-val">auto-Prone on nat 10</td><td class="new-val">save stays, auto-Prone removed</td></tr>
+            <tr><td>Divine Weapon (TN 7 → 8)</td><td class="old-val">single-target strike</td><td class="new-val">ranged 2-target, 1d10 + bonus each, +1d10 vs evil</td></tr>
+        </table>
+        <p class="note">Ledger TNs synced to match — Divine Weapon in particular moved TN 7 → 8.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Chi Strike no longer fully ignores armour <span class="tag both">Rules + Ledger</span></span>
+        <p>The monk's signature strike used to bypass Wound Mitigation entirely. It now <strong>reduces</strong> the target's Mitigation by the monk's Willpower modifier — the energy finds the gaps rather than punching clean through. Ledger description synced to match the rules.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">47 missing spells added to the Ledger <span class="tag ledger">Ledger</span></span>
+        <p>The Ledger's spell lists had drifted out of sync with the Core Rules. A full audit added every spell that was missing: <strong>+8 Devotion</strong>, <strong>+20 Wizardry</strong>, <strong>+21 Shamanism</strong>, and <strong>+6 Druidism</strong>. Naming was aligned across both files (Dictate, Protection from Evil, Serina's Blessing, Light's Grace, Terra Bind, and others). All four lists are now complete against the rules.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Spell dropdown now sorts by what you can actually cast <span class="tag ledger">Ledger</span></span>
+        <p>The spell picker now groups every spell live against your current Max TN: <strong>Castable</strong> (at or under your ceiling), <strong>⚠ Overreach</strong> (+1 to +3 over — castable, but risky), and <strong>✕ Beyond Reach</strong> (+4 or more — impossible). The list re-sorts itself as your numbers change.</p>
     </div>
 
     <!-- ============ SPELL BALANCE ============ -->
@@ -282,6 +314,19 @@
         <p>The biggest winners: <strong>Agility</strong> at the heavy end (chain/banded dropped from −2 to −1; plate from −3 to −2), and the <strong>to-hit penalties</strong> were trimmed across the board. Movement penalties were left alone.</p>
     </div>
 
+    <!-- ============ MAGIC ITEMS ============ -->
+    <h2><span class="tick">✦</span> Magic Items</h2>
+
+    <div class="change-item">
+        <span class="lead">The Reliquary was expanded <span class="tag rules">Rules</span></span>
+        <p>The enchanted-item table was refined and grown to roughly <strong>89 items</strong>, giving the table a much deeper pool of relics, enchantments, and rewards to draw from.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Weapon &amp; armour enchantment dropdowns <span class="tag ledger">Ledger</span></span>
+        <p>The Ledger now has <strong>+1 / +2 / +3 enchant dropdowns</strong> on weapons and armour. Pick a tier and it auto-fills the bonus — weapon damage (.wb / .wdb) or armour Wound Mitigation — so you don't have to hand-edit the math. Enchant fields are labeled <strong>+Hit</strong> and <strong>+Wnd</strong> for clarity.</p>
+    </div>
+
     <!-- ============ CONDITIONS ============ -->
     <h2><span class="tick">✦</span> Conditions &amp; Combat</h2>
 
@@ -301,6 +346,11 @@
     <div class="change-item">
         <span class="lead">"Cleric / Crusader" is back <span class="tag both">Rules + Ledger</span></span>
         <p>The advanced skill some of you were looking for wasn't lost — it existed under the name <strong>"Devout / Runepriest."</strong> It's been renamed to <strong>"Cleric / Crusader"</strong> everywhere. The mechanics are unchanged and already balanced for 100 XP: requires Devotion (3) + Light Soul (2), gives a +1 Wound Mitigation / +1 Healing passive, and the Crusader action (Cause Fear to Evil, add Light Soul to wounds vs Evil).</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Discipline costs more for some races <span class="tag both">Rules + Ledger</span></span>
+        <p>Because Discipline now feeds directly into your Max TN ceiling, it was undervalued at its old price. Base cost rose from <span class="old-val">15</span> to <span class="new-val">20</span> for <strong>Humans and Halflings</strong>. <strong>Dwarves and Elves stay at 15</strong> — their innate affinity is part of their racial identity.</p>
     </div>
 
     <!-- ============ FIXES ============ -->
@@ -327,6 +377,11 @@
     <div class="change-item">
         <span class="lead">Martial to-hit bonuses — reviewed, left as-is</span>
         <p>We looked hard at whether melee/ranged to-hit bonuses are too generous. Verdict for now: <strong>they're in range.</strong> A mid-tier fighter's +5 to-hit only lands ~30% of the time against a peer's Defense, and Defense scales on the same engine, so it's largely self-correcting. The thing that makes hits <em>feel</em> big is the exploding natural-10 crits plus high wound output — not the accuracy itself. If "hits land too often on elites" keeps coming up, the most likely fix is making sure elite enemies carry high enough Defense (16–18), not nerfing every character's to-hit.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Optional rule on the table: Essence (spell points)</span>
+        <p>A proposed optional system for groups who want casting to have a resource cost. Each caster would have an <strong>Essence pool = (vocation points + Discipline ÷ 3) × 2</strong>, spending Essence equal to a spell's TN to cast it. Cantrips would be free, and the pool would refresh each encounter. It's written up in the Core Rules in a dashed "proposed" box. <strong>Not live</strong> — awaiting a group decision before anything goes into the sheet.</p>
     </div>
 
     <footer>
