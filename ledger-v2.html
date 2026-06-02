@@ -3287,7 +3287,7 @@ function handleMagicCheck(cb) {
         // Populate Spells Table
         let optionsHTML = '<option value="" data-tn="">- Select -</option>';
         if(cb.value === "Devotion") { if(header) header.innerText = "Theology"; RELIGION_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
-        else if(cb.value === "Druidic") { if(header) header.innerText = "Druidic Spells"; DRUIDIC_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
+        else if(cb.value === "Druidic") { if(header) header.innerText = "Druidic Rites"; DRUIDIC_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
         else if(cb.value === "Magic") { if(header) header.innerText = "Spells"; MAGIC_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
         else if(cb.value === "Ki") { if(header) header.innerText = "Ki Powers"; KI_POWERS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
         else if(cb.value === "Runes") {
@@ -3299,8 +3299,8 @@ function handleMagicCheck(cb) {
             }
             // Runes uses racial compounding XP via handleRunes() — no flat 200 cost
         }
-        else if(cb.value === "Shaman") { if(header) header.innerText = "Shamanic Rites"; SHAMAN_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
-        else if(cb.value === "Sabda") { if(header) header.innerText = "Vibhuti — The Primordial Lexicon"; SABDA_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
+        else if(cb.value === "Shaman") { if(header) header.innerText = "Shamanic Calling"; SHAMAN_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
+        else if(cb.value === "Sabda") { if(header) header.innerText = "Vibhuti — The Manifest Power"; SABDA_SPELLS.forEach(s => optionsHTML += `<option value="${s.name}" data-tn="${s.tn}" title="${s.desc || ''}">${s.name} [${s.tn}]</option>`); }
 
         spellSelects.forEach(sel => {
             sel.innerHTML = optionsHTML;
