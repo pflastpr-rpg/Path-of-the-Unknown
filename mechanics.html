@@ -236,8 +236,8 @@
     </div>
     <table class="comp-table">
         <tr><th>Characteristic</th><th>Core + Swap Pool</th><th>Armor modifier</th></tr>
-        <tr><td>Agility</td><td><strong>Athletics, Evasion, Quickness</strong> <span style="opacity:0.7">+ swap: Stealth, Thieving, Tumble, Acrobatics, Disguise, Escapology, Sleight of Hand</span></td><td>–Armor Agility penalty (Leather –1, Chain –2, Plate –3)</td></tr>
-        <tr><td>Awareness</td><td><strong>Acute Senses, Focus, Precise Strike</strong> <span style="opacity:0.7">+ swap: Druidism, Riposte, Stamina, Danger Sense, Lip Reading, Swift Read</span></td><td>–Armor Awareness penalty (Splint –1, Field Plate –2, Full Plate –3)</td></tr>
+        <tr><td>Agility</td><td><strong>Athletics, Evasion, Quickness</strong> <span style="opacity:0.7">+ swap: Stealth, Thieving, Tumble, Acrobatics, Disguise, Escapology, Sleight of Hand</span></td><td>–Armor Agility penalty (Leather/Chain –1, Plate –2)</td></tr>
+        <tr><td>Awareness</td><td><strong>Acute Senses, Focus, Precise Strike</strong> <span style="opacity:0.7">+ swap: Druidism, Riposte, Stamina, Danger Sense, Lip Reading, Swift Read</span></td><td>–Armor Awareness penalty (Splint/Banded –1, Field Plate –2, Full Plate –3)</td></tr>
         <tr><td>Charisma</td><td><strong>Authority, Charm, Inspire</strong> <span style="opacity:0.7">+ swap: Mending, Devotion, Light-Soul, Deception, Intimidation, Performance, Seduction</span></td><td>None</td></tr>
         <tr><td>Intellect</td><td><strong>Evaluation, Knowledge, Read/Write</strong> <span style="opacity:0.7">+ swap: Tracker, Perception, Wizardry, Alchemy, Engineering, Medicine, Navigation</span></td><td>None</td></tr>
         <tr><td>Physique</td><td><strong>Fortitude, Hard as Nails, Rugged</strong> <span style="opacity:0.7">+ swap: Shieldsman, Ki, Strength Conditioning, Brawling, Climbing, Endurance, Swimming</span></td><td>None</td></tr>
@@ -260,7 +260,7 @@
         <tr><td>Bonus field</td><td>Manual entry on ledger</td><td>Magic items, spells, runes</td></tr>
     </table>
     <div class="mech-card">
-        <p><strong>Critical interaction — Evasion vs Heavy Armor:</strong> Chain Mail (–2 Agility) cancels 6 pts of Evasion investment. Full Plate (–3 Agility) cancels 9 pts. Mithril has no penalties, making it the ideal pairing with Evasion.</p>
+        <p><strong>Critical interaction — Evasion vs Heavy Armor:</strong> Chain Mail (–1 Agility) cancels 3 pts of Evasion investment. Full Plate (–2 Agility) cancels 6 pts. Mithril has no penalties, making it the ideal pairing with Evasion.</p>
         <p><strong>Evasion WM note:</strong> The WM bonus from Evasion (floor(Evasion÷3)) is NOT affected by armor Agility penalty — only the Defense bonus is. So even in plate armor, Evasion still contributes to physical WM.</p>
         <p><strong>Blinded condition:</strong> Defense drops to armor value only — base 3 and all Evasion bonus disappear.</p>
     </div>
@@ -358,7 +358,7 @@
         <tr><td>floor(Precise Strike ÷ 3)</td><td>+1 per 3 pts</td><td>Finesse only. Also +2 wounds per 3 pts + crit armor shred.</td></tr>
         <tr><td>floor(Athletics ÷ 3)</td><td>+1 per 3 pts</td><td>Both standard and finesse. Also shared with ranged To-Hit.</td></tr>
         <tr><td>Focus action (passive)</td><td>+1 per 3 pts in Focus</td><td>Only when Focus action (1 AP) is taken before the attack</td></tr>
-        <tr><td>– Armor Melee Penalty</td><td>See Armor table</td><td>Subtracted from final To-Hit. Padded –1, Leather –1, Studded –2, Chain –2, Splint –3, Banded –3, Field Plate –3, Full Plate –4, Mithril –1. Furs and shields: no penalty.</td></tr>
+        <tr><td>– Armor Melee Penalty</td><td>See Armor table</td><td>Subtracted from final To-Hit. Padded –0, Leather –0, Studded –1, Chain –1, Splint –1, Banded –1, Field Plate –2, Full Plate –2, Mithril –1. Furs and shields: no penalty.</td></tr>
     </table>
     <div class="mech-card">
         <p><strong>Situational To-Hit modifiers:</strong></p>
@@ -369,7 +369,7 @@
             <li><strong>Phantom Assassin:</strong> Advantage To-Hit when attacking from Stealth or Flanking.</li>
             <li><strong>Shield Rush:</strong> +1 To-Hit per pt of Shieldsman on the charge (requires 25 ft movement).</li>
         </ul>
-        <p style="margin-top: 10px;"><strong>Critical interaction — Finesse &amp; Heavy Armor:</strong> Finesse builds suffer a compounding armor penalty that standard melee does not. Armor reduces Agility first (e.g. Chain –2 Agl), which lowers floor(Agility÷5) directly. Then the Armor Melee Penalty (m_pen) is subtracted on top of that. A Finesse fighter in Chain Mail loses Agility accuracy from the stat reduction AND takes an additional –2 melee penalty — effectively paying the armor cost twice. Mithril is the only heavy armor that avoids this: no Agility reduction means only the flat –1 m_pen applies.</p>
+        <p style="margin-top: 10px;"><strong>Critical interaction — Finesse &amp; Heavy Armor:</strong> Finesse builds suffer a compounding armor penalty that standard melee does not. Armor reduces Agility first (e.g. Chain –1 Agl), which lowers floor(Agility÷5) directly. Then the Armor Melee Penalty (m_pen) is subtracted on top of that. A Finesse fighter in Chain Mail loses Agility accuracy from the stat reduction AND takes an additional –1 melee penalty — paying the armor cost on both fronts. Mithril is the only heavy armor that avoids this: no Agility reduction means only the flat –1 m_pen applies.</p>
     </div>
 
     <!-- ================================================================ -->
@@ -426,14 +426,14 @@
     <table class="comp-table">
         <tr><th>Armor</th><th>Ranged To-Hit Penalty</th><th>Melee To-Hit Penalty</th></tr>
         <tr><td>Furs / None</td><td>–0</td><td>–0</td></tr>
-        <tr><td>Padded / Cloth</td><td>–0</td><td>–1</td></tr>
-        <tr><td>Leather</td><td>–1</td><td>–1</td></tr>
-        <tr><td>Studded Leather</td><td>–1</td><td>–2</td></tr>
-        <tr><td>Chain Mail</td><td>–2</td><td>–2</td></tr>
-        <tr><td>Splint Mail</td><td>–2</td><td>–3</td></tr>
-        <tr><td>Banded Mail</td><td>–2</td><td>–3</td></tr>
-        <tr><td>Field Plate</td><td>–3</td><td>–3</td></tr>
-        <tr><td>Full Plate</td><td>–4</td><td>–4</td></tr>
+        <tr><td>Padded / Cloth</td><td>–0</td><td>–0</td></tr>
+        <tr><td>Leather</td><td>–0</td><td>–0</td></tr>
+        <tr><td>Studded Leather</td><td>–0</td><td>–1</td></tr>
+        <tr><td>Chain Mail</td><td>–1</td><td>–1</td></tr>
+        <tr><td>Splint Mail</td><td>–1</td><td>–1</td></tr>
+        <tr><td>Banded Mail</td><td>–1</td><td>–1</td></tr>
+        <tr><td>Field Plate</td><td>–2</td><td>–2</td></tr>
+        <tr><td>Full Plate</td><td>–3</td><td>–2</td></tr>
         <tr><td>Mithril</td><td>–0</td><td>–1</td></tr>
         <tr><td>Shields</td><td>–0</td><td>–0</td></tr>
     </table>
@@ -494,10 +494,10 @@
 
     <table class="comp-table">
         <tr><th>Magic School</th><th>Core Cast Stat</th><th>Skill Accuracy Bonus</th><th>Armor Penalty</th></tr>
-        <tr><td>Wizardry</td><td>floor(Intellect ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN (Chain +2 → Full Plate +5)</td></tr>
+        <tr><td>Wizardry</td><td>floor(Intellect ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Studded/Chain −1, Banded/Splint −2, Plate/Full −3</td></tr>
         <tr><td>Devotion</td><td>floor(Charisma ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>0 if armor TN ≤3; −2 if armor TN ≥4</td></tr>
-        <tr><td>Druidism</td><td>floor(Awareness ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN</td></tr>
-        <tr><td>Shaman</td><td>floor(Willpower ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Full armor TN</td></tr>
+        <tr><td>Druidism</td><td>floor(Awareness ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Studded/Chain −1, Banded/Splint −2, Plate/Full −3</td></tr>
+        <tr><td>Shaman</td><td>floor(Willpower ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>Studded/Chain −1, Banded/Splint −2, Plate/Full −3</td></tr>
         <tr><td>Ki</td><td>floor(Physique ÷ 5)</td><td>If skill ≥9: floor((skill–6) ÷ 3)</td><td>No armor penalty</td></tr>
     </table>
 
@@ -581,14 +581,14 @@
             <th>–Agl</th><th>–Awa</th><th>+TN (Cast)</th><th>–Move</th><th>Special</th>
         </tr>
         <tr><td>Animal Furs</td><td>0</td><td>1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        <tr><td>Cloth / Padded</td><td>1</td><td>1</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="pen">–1 Melee To-Hit</td></tr>
-        <tr><td>Leather</td><td>2</td><td>2</td><td class="pen">–1</td><td>—</td><td>—</td><td>—</td><td class="pen">–1 Melee, –1 Ranged To-Hit</td></tr>
-        <tr><td>Studded Leather</td><td>2</td><td>3</td><td class="pen">–1</td><td>—</td><td class="pen">+1</td><td>—</td><td class="pen">–2 Melee, –1 Ranged To-Hit</td></tr>
-        <tr><td>Chain Mail</td><td>3</td><td>4</td><td class="pen">–2</td><td>—</td><td class="pen">+2</td><td class="pen">–5 ft</td><td class="pen">–2 Melee, –2 Ranged To-Hit</td></tr>
-        <tr><td>Splint Mail</td><td>3</td><td>5</td><td class="pen">–2</td><td class="pen">–1</td><td class="pen">+3</td><td class="pen">–10 ft</td><td class="pen">–3 Melee, –2 Ranged To-Hit</td></tr>
-        <tr><td>Banded Mail</td><td>3</td><td>5</td><td class="pen">–2</td><td class="pen">–1</td><td class="pen">+3</td><td class="pen">–10 ft</td><td class="pen">–3 Melee, –2 Ranged To-Hit</td></tr>
-        <tr><td>Field Plate</td><td>4</td><td>6</td><td class="pen">–3</td><td class="pen">–2</td><td class="pen">+4</td><td class="pen">–15 ft</td><td class="pen">–3 Melee, –3 Ranged To-Hit</td></tr>
-        <tr><td>Full Plate</td><td>5</td><td>8</td><td class="pen">–3</td><td class="pen">–3</td><td class="pen">+5</td><td class="pen">–15 ft</td><td class="pen">–4 Melee, –4 Ranged To-Hit</td></tr>
+        <tr><td>Cloth / Padded</td><td>1</td><td>1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Leather</td><td>2</td><td>2</td><td class="pen">–1</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Studded Leather</td><td>2</td><td>3</td><td class="pen">–1</td><td>—</td><td class="pen">+1</td><td>—</td><td class="pen">–1 Melee To-Hit</td></tr>
+        <tr><td>Chain Mail</td><td>3</td><td>4</td><td class="pen">–1</td><td>—</td><td class="pen">+1</td><td class="pen">–5 ft</td><td class="pen">–1 Melee, –1 Ranged To-Hit</td></tr>
+        <tr><td>Splint Mail</td><td>3</td><td>5</td><td class="pen">–1</td><td class="pen">–1</td><td class="pen">+2</td><td class="pen">–10 ft</td><td class="pen">–1 Melee, –1 Ranged To-Hit</td></tr>
+        <tr><td>Banded Mail</td><td>3</td><td>5</td><td class="pen">–1</td><td class="pen">–1</td><td class="pen">+2</td><td class="pen">–10 ft</td><td class="pen">–1 Melee, –1 Ranged To-Hit</td></tr>
+        <tr><td>Field Plate</td><td>4</td><td>6</td><td class="pen">–2</td><td class="pen">–2</td><td class="pen">+3</td><td class="pen">–15 ft</td><td class="pen">–2 Melee, –2 Ranged To-Hit</td></tr>
+        <tr><td>Full Plate</td><td>5</td><td>8</td><td class="pen">–2</td><td class="pen">–3</td><td class="pen">+3</td><td class="pen">–15 ft</td><td class="pen">–2 Melee, –3 Ranged To-Hit</td></tr>
         <tr><td>Mithril</td><td>4</td><td>5</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="pen">–1 Melee To-Hit only</td></tr>
         <tr><td>Light Shield/Buckler</td><td>+1</td><td>+1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>1 hand occupied</td></tr>
         <tr><td>Heater/Heavy Shield</td><td>+2</td><td>+2</td><td class="pen">–1</td><td>—</td><td>—</td><td>—</td><td>Req Physique 4. If &lt;4: no Def/WM bonus, –2 Agl.</td></tr>
@@ -658,7 +658,7 @@ Wounds (Bow): Awareness + (Agility × AP) + Physique + passives (+2 Marksman +1 
         <p><strong>Core stats:</strong> Intellect → Spirit → Willpower (magic WM)</p>
         <p><strong>Key skills:</strong> Wizardry (to 15+), Knowledge, Read/Write, Spirit, Discipline</p>
         <p><strong>Advanced Vocations:</strong> Concentrate, Metaphysical, Deviation, Infusion of Arcana</p>
-        <div class="formula-block inline-blood">To-Cast: floor(Intellect÷5) + floor((Wizardry–6)÷3, if ≥9) + Focus bonus – Armor TN
+        <div class="formula-block inline-blood">To-Cast: floor(Intellect÷5) + floor((Wizardry–6)÷3, if ≥9) + Focus bonus – Armor Penalty (Studded/Chain −1, Banded/Splint −2, Plate/Full −3)
 Wounds: Intellect + (Wizardry÷3)×3 + Spirit pts (at Wizardry 15+)</div>
     </div>
 
@@ -680,6 +680,43 @@ Magic WM: Willpower + Spirit÷3 + Resolve÷2 + Cleric +1 + Unwavering +3</div>
         <div class="formula-block inline-blood">Defense: 3 + Armor Def + max(0, Evasion÷3 + Armor Agl penalty)
 Physical WM: Armor + HaN÷2 + Shieldsman + Evasion÷3 + Cleric+1 + Unwavering+3 + SovMind+1
 Total Wounds: Race + Physique + (Fortitude×10) + (IronWill×2) + (Rugged×2) + (HaN×2)</div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- WHAT'S NEW — JUNE 2026 -->
+    <!-- ================================================================ -->
+    <h2 class="section-title" id="whats-new">What&rsquo;s New (June 2026)</h2>
+    <p style="margin: 10px 0 8px;">Recent additions and changes. Full player-facing write-ups live in the <a href="patch-notes-2026-06-01.html">Patch Notes</a>; this is the mechanics-reference summary.</p>
+
+    <h3 class="subsection-title">⚡ Essence — Optional Casting Resource <span style="font-size:11px; opacity:0.7;">(PROPOSED — not yet ratified)</span></h3>
+    <div class="mech-card">
+        <p>An optional spell-economy layer the group is still weighing. If adopted, a caster has an <strong>Essence pool</strong> spent to cast; if not, casting works exactly as the rest of this guide describes. It is built into both character sheets with an auto-calculating tracker, so it can be switched on or ignored without re-statting.</p>
+        <div class="formula-block inline-blood">Essence Pool = (vocation points + floor(Discipline skill ÷ 3)) × 2
+Each spell costs Essence equal to its TN · Cantrips are free · Pool refreshes each encounter</div>
+        <p style="margin-top:8px;"><strong>Status:</strong> proposed only. Until the table ratifies it, treat it as a variant rule. Note that one-use scroll items in the Reliquary cast <em>without</em> spending Essence by design.</p>
+    </div>
+
+    <h3 class="subsection-title">✦ New Workings (Spells)</h3>
+    <div class="mech-card">
+        <p>Several gap-filling spells were added across the disciplines. Mechanically they slot into the existing To-Cast / TN framework with no new rules:</p>
+        <table class="comp-table">
+            <tr><th>Spell</th><th>TN</th><th>Discipline</th><th>Fills</th></tr>
+            <tr><td>Sacred Light</td><td>2</td><td>Devotion</td><td>Combat-grade holy light; the unliving fight at Disadvantage in it.</td></tr>
+            <tr><td>Discern the Unholy</td><td>3</td><td>Devotion</td><td>Detect undead / daemonic / Evil through walls and disguise.</td></tr>
+            <tr><td>Teleport</td><td>13</td><td>Wizardry</td><td>No-line-of-sight jump, carries passengers (distinct from Blink).</td></tr>
+            <tr><td>The Silencing Word</td><td>8</td><td>Vibhuti</td><td>Preemptive spoken silence; complements the contested Arcane Duel counter.</td></tr>
+        </table>
+        <p style="margin-top:8px;">Earlier additions also include Feather Fall, Enlarge/Reduce, Water Breathing, and Scry. All are new player options — clear them with your GM.</p>
+    </div>
+
+    <h3 class="subsection-title">⌖ The Reliquary — Loot Tables</h3>
+    <div class="mech-card">
+        <p>The <a href="reliquary.html">Reliquary</a> now rolls on a fourteen-category master table, and three categories use a two-step <strong>Common / Greater Hoard</strong> system in the old Unearthed Arcana style:</p>
+        <ul>
+            <li><strong>Melee, Ranged, and Armour</strong> each split into two sub-tables. First roll <strong>d100</strong> to route: <strong>1&ndash;75</strong> → the Common Hoard (mostly workaday gear, a couple of Rare, one Legendary), <strong>76&ndash;100</strong> → the Greater Hoard (Rare/Legendary-heavy, the only place an Artifact appears). Then roll <strong>d100</strong> on that table.</li>
+            <li><strong>Monster-crafted gear</strong> — pieces forged from dragons, undead champions, Pyreborn, Weald-beasts, Titan-Blood, the Aakzad, and the Khugron deep — lives in the Greater Hoards.</li>
+            <li>New flat categories: <strong>Enchanted Ammunition</strong>, <strong>Scrolls &amp; One-Use Castings</strong> (cast at their TN with no Essence cost, then crumble), and <strong>Mounts &amp; Companions</strong>.</li>
+        </ul>
     </div>
 
     <a href="index.html" class="back-link">⮜ Return to Main Hub</a>
