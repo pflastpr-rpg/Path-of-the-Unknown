@@ -199,6 +199,7 @@ tr[data-tier="Cursed"] .td-name{border-left:3px solid var(--t-cursed);}
         <option value="ranged">Ranged Weapons</option>
         <option value="armor">Armor &amp; Shields</option>
         <option value="potions">Potions &amp; Consumables</option>
+        <option value="miscellany">Miscellany &mdash; Mixed Plunder</option>
         <option value="wondrous">Wondrous &amp; Utility</option>
         <option value="rings">Rings, Amulets &amp; Charms</option>
         <option value="discipline">Discipline Relics</option>
@@ -262,19 +263,20 @@ const TIER_COLORS = {
    Master routing: d100 -> category (weighted)
 */
 const MASTER = [
-  { lo: 1, hi: 10, cat: "melee", label: "Melee Weapons" },
-  { lo: 11, hi: 19, cat: "ranged", label: "Ranged Weapons" },
-  { lo: 20, hi: 29, cat: "armor", label: "Armor & Shields" },
-  { lo: 30, hi: 39, cat: "enchanted", label: "Enchanted Arms & Armour" },
-  { lo: 40, hi: 50, cat: "potions", label: "Potions & Consumables" },
-  { lo: 51, hi: 55, cat: "ammunition", label: "Enchanted Ammunition" },
-  { lo: 56, hi: 61, cat: "scrolls", label: "Scrolls & One-Use Castings" },
-  { lo: 62, hi: 69, cat: "wondrous", label: "Wondrous & Utility" },
-  { lo: 70, hi: 76, cat: "rings", label: "Rings, Amulets & Charms" },
-  { lo: 77, hi: 82, cat: "discipline", label: "Discipline Relics" },
-  { lo: 83, hi: 87, cat: "tomes", label: "Tomes & Grimoires" },
-  { lo: 88, hi: 92, cat: "mounts", label: "Mounts & Companions" },
-  { lo: 93, hi: 97, cat: "trinkets", label: "Trinkets & Curios" },
+  { lo: 1, hi: 9, cat: "melee", label: "Melee Weapons" },
+  { lo: 10, hi: 17, cat: "ranged", label: "Ranged Weapons" },
+  { lo: 18, hi: 26, cat: "armor", label: "Armor & Shields" },
+  { lo: 27, hi: 35, cat: "enchanted", label: "Enchanted Arms & Armour" },
+  { lo: 36, hi: 45, cat: "potions", label: "Potions & Consumables" },
+  { lo: 46, hi: 51, cat: "miscellany", label: "Miscellany — Mixed Plunder" },
+  { lo: 52, hi: 56, cat: "ammunition", label: "Enchanted Ammunition" },
+  { lo: 57, hi: 62, cat: "scrolls", label: "Scrolls & One-Use Castings" },
+  { lo: 63, hi: 70, cat: "wondrous", label: "Wondrous & Utility" },
+  { lo: 71, hi: 77, cat: "rings", label: "Rings, Amulets & Charms" },
+  { lo: 78, hi: 83, cat: "discipline", label: "Discipline Relics" },
+  { lo: 84, hi: 88, cat: "tomes", label: "Tomes & Grimoires" },
+  { lo: 89, hi: 93, cat: "mounts", label: "Mounts & Companions" },
+  { lo: 94, hi: 97, cat: "trinkets", label: "Trinkets & Curios" },
   { lo: 98, hi: 100, cat: "cursed", label: "Cursed Relic (GM)" }
 ];
 
@@ -474,6 +476,33 @@ const DATA = {
       {lo:96,hi:97,tier:'Legendary',name:'Ambrosia',meta:'Potion (folklore)',desc:'Food of the gods. Permanently raises one characteristic by 1 (max once per character, ever) and fully restores wounds and conditions. A single golden mouthful.',price:'2,400 Crown'},
       {lo:98,hi:99,tier:'Legendary',name:'The Last Antidote',meta:'Potion',desc:'Cures any poison, disease, curse, or Blight-corruption — even ones called incurable — and grants immunity to all of them for a full day. The alchemist who made it is dead; few remain.',price:'2,200 Crown'},
       {lo:100,hi:100,tier:'Artifact',name:'The Final Cup',meta:'Artifact consumable',desc:'Fills once with whatever the drinker most needs, then is inert forever. The GM determines its single perfect effect. <em>Unique.</em>',price:'Priceless'},
+    ]
+  },
+  miscellany: {
+    title:"Miscellany — Mixed Plunder", icon:"\u2756",
+    blurb:"Not every hoard sorts itself by kind. This is the spill of a looted pack, a smuggler&rsquo;s false-bottomed chest, a dead adventurer&rsquo;s kit — a weapon here, a flask there, an odd charm nobody catalogued. Roll d100 for one piece of mixed plunder; you take what the dark happened to leave.",
+    items:[
+      {lo:1,hi:5,tier:'Common',name:'Notched Warblade',meta:'Sword · Edged',desc:'A serviceable enchanted blade, chipped but keen. <strong>+1</strong> To-Hit and wounds.',price:'80 Crown'},
+      {lo:6,hi:10,tier:'Common',name:'Salvaged Crossbow',meta:'Crossbow · Ranged',desc:'Pulled from a battlefield and re-strung with warded cord. <strong>+1</strong> To-Hit and wounds.',price:'80 Crown'},
+      {lo:11,hi:15,tier:'Common',name:'Mismatched Mail Shirt',meta:'Chainmail · Armour',desc:'Rings from three different hauberks, warded together. <strong>+1 Defense</strong>, stacking with its Wound Mitigation.',price:'80 Crown'},
+      {lo:16,hi:20,tier:'Common',name:'Traveler&rsquo;s Healing Flask',meta:'Potion',desc:'A half-flask of mending draught. Restores 2d10 wounds and clears <strong>Bleed</strong>. One dose.',price:'24 Crown'},
+      {lo:21,hi:25,tier:'Common',name:'Loose Bundle of Keen Arrows',meta:'Arrows · ×12',desc:'A dozen warded shafts, fletching mismatched. <strong>+1</strong> wounds; <strong>Bleed</strong> on a natural 10. Then mundane.',price:'18 Crown'},
+      {lo:26,hi:30,tier:'Common',name:'Cracked Focus-Stone',meta:'Focus (any discipline)',desc:'A chipped casting-stone that still hums faintly. <strong>+1</strong> To-Cast for one discipline (GM or roll). Works until it finally splits (GM&rsquo;s call, rarely).',price:'70 Crown'},
+      {lo:31,hi:35,tier:'Common',name:'Dead Scout&rsquo;s Boots',meta:'Boots',desc:'Worn but warded. Never blister, never tire on the march, <strong>+1</strong> to tests to avoid slipping or being tripped.',price:'40 Crown'},
+      {lo:36,hi:40,tier:'Common',name:'Pouch of Odd Coins',meta:'Curio',desc:'A handful of foreign and old coins, one of them lucky. Once per day, re-roll a single failed test; the lucky coin must be spent to do it, and it returns to the pouch at dawn.',price:'30 Crown'},
+      {lo:41,hi:46,tier:'Uncommon',name:'Looter&rsquo;s Quick-Dagger',meta:'Dagger · Finesse',desc:'<strong>+1</strong> To-Hit. Draw and strike in one motion — once per battle, a first strike from stealth or surprise deals <strong>+2d10</strong>.',price:'120 Crown'},
+      {lo:47,hi:52,tier:'Uncommon',name:'Plundered Spell-Scroll',meta:'Scroll · any discipline',desc:'A water-stained scroll holding one random working (GM rolls TN 4–9). Cast once at its TN without Essence, then it crumbles.',price:'110 Crown'},
+      {lo:53,hi:58,tier:'Uncommon',name:'Half-Plate of the Nameless',meta:'Field Plate · Armour',desc:'A salvaged breast-and-back, warded by a hand long dead. <strong>+1 Defense</strong> and immune to <strong>Bleed</strong> from the first hit each battle.',price:'150 Crown'},
+      {lo:59,hi:64,tier:'Uncommon',name:'Flask of Borrowed Vigor',meta:'Potion',desc:'For three turns, <strong>+1 AP</strong> and immunity to <strong>Fatigued</strong>; then <strong>Exhausted</strong> one turn. Two doses left in the bottle.',price:'120 Crown'},
+      {lo:65,hi:70,tier:'Uncommon',name:'Charm of the Magpie',meta:'Charm',desc:'<strong>+2</strong> to Awareness tests to spot hidden valuables, traps, or concealed doors, and you always sense the single most valuable object within 30 Ft.',price:'130 Crown'},
+      {lo:71,hi:76,tier:'Uncommon',name:'Warded Buckler, Battle-Scarred',meta:'Buckler · Shield',desc:'<strong>+1 Defense</strong>. Once per battle, turn a single melee hit into a glancing blow (minimum wounds).',price:'130 Crown'},
+      {lo:77,hi:80,tier:'Rare',name:'The Quartermaster&rsquo;s Ring',meta:'Ring',desc:'<strong>+1</strong> to any one combat skill of your choice on attunement (locked once chosen), and you never fumble a reload or weapon-draw.',price:'520 Crown'},
+      {lo:81,hi:84,tier:'Rare',name:'Twice-Looted Greatsword',meta:'Greatsword · Two-Handed',desc:'A blade that has changed hands in blood many times. <strong>+2</strong> To-Hit and wounds; the first foe it drops each battle grants you <strong>+1</strong> To-Hit until the battle ends.',price:'560 Crown'},
+      {lo:85,hi:88,tier:'Rare',name:'Vial of the Last Stand',meta:'Potion',desc:'Drink at 0 or below: stand at half your Wound Threshold and shed all conditions, once. The glass is etched with the names of those it did not save.',price:'540 Crown'},
+      {lo:89,hi:92,tier:'Rare',name:'Cloak of the Forgotten March',meta:'Cloak',desc:'<strong>+2</strong> to stealth and silent movement; once per battle, vanish from sight for one turn (ends if you attack or cast).',price:'520 Crown'},
+      {lo:93,hi:96,tier:'Rare',name:'Mixed Bandolier of Tricks',meta:'Consumable set',desc:'Holds one each of a smoke globe, a firebomb, and an antitoxin vial (use the Potions table effects). Refills one random charge per dawn.',price:'500 Crown'},
+      {lo:97,hi:99,tier:'Legendary',name:'The Drifter&rsquo;s Inheritance',meta:'Wondrous',desc:'A battered satchel that, once per day, yields a single Common or Uncommon item the bearer genuinely needs right now (GM&rsquo;s call from any table). It has never yet been empty when it mattered.',price:'1,800 Crown'},
+      {lo:100,hi:100,tier:'Artifact',name:'The Hoard-Heart',meta:'Artifact relic',desc:'A fist-sized gem that remembers every treasure it has ever lain beside. Once per session, name a kind of item (weapon, armour, potion, focus, charm) and draw forth a single Rare-grade example of it, conjured for one battle before it fades to motes. <em>Unique.</em>',price:'Priceless'},
     ]
   },
   wondrous: {
