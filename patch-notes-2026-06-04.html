@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thrice-Marked — Patch Notes (4 June 2026)</title>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --iron: #02070e;
+        --blood: #A81818;
+        --parchment: #f3e7c9;
+        --gold: #B8860B;
+        --input-bg: #FCF7EB;
+        --ink: #111111;
+        --font-heading: 'Grenze Gotisch', serif;
+        --font-main: 'IM Fell English', serif;
+        --font-hand: 'MedievalSharp', cursive;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        background: var(--parchment);
+        color: var(--ink);
+        font-family: var(--font-main);
+        line-height: 1.65;
+        padding: 24px 16px 60px;
+    }
+    .wrapper {
+        max-width: 820px;
+        margin: 0 auto;
+        background: var(--input-bg);
+        border: 4px solid var(--iron);
+        box-shadow: 8px 8px 0 rgba(168,24,24,0.8);
+        padding: 38px 42px;
+    }
+
+    .top-nav {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--gold);
+    }
+    .btn-hub {
+        background: var(--iron);
+        color: var(--gold);
+        border: 2px solid var(--gold);
+        padding: 8px 20px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 12pt;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: background 0.2s, color 0.2s;
+        font-family: var(--font-heading);
+    }
+    .btn-hub:hover { background: var(--blood); color: #fff; }
+
+    header { text-align: center; margin-bottom: 8px; }
+    h1 {
+        font-family: var(--font-heading);
+        font-size: 34pt;
+        color: var(--iron);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        line-height: 1.1;
+    }
+    .subtitle {
+        color: var(--blood);
+        font-style: italic;
+        font-size: 13.5pt;
+        margin: 10px auto 4px;
+        max-width: 640px;
+    }
+    .datestamp {
+        font-family: var(--font-heading);
+        font-size: 12pt;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-top: 6px;
+    }
+    .rule { height: 3px; background: var(--blood); margin: 22px 0 28px; }
+
+    h2 {
+        font-family: var(--font-heading);
+        font-size: 20pt;
+        color: var(--iron);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 36px 0 4px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--gold);
+    }
+    h2 .tick { color: var(--blood); }
+
+    .tldr {
+        background: rgba(184,134,11,0.10);
+        border-left: 5px solid var(--gold);
+        padding: 16px 22px;
+        margin: 8px 0 24px;
+    }
+    .tldr ul { margin: 6px 0 0 18px; }
+    .tldr li { margin: 5px 0; }
+
+    .change-item { margin: 18px 0; padding-bottom: 4px; }
+    .change-item .lead {
+        font-family: var(--font-heading);
+        font-size: 14pt;
+        color: var(--blood);
+        display: block;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+    }
+    .tag {
+        display: inline-block;
+        font-family: var(--font-heading);
+        font-size: 8.5pt;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 2px 8px;
+        border-radius: 2px;
+        vertical-align: middle;
+        margin-left: 8px;
+        color: var(--parchment);
+    }
+    .tag.rules { background: var(--blood); }
+    .tag.ledger { background: var(--iron); color: var(--gold); }
+    .tag.both { background: var(--gold); color: var(--iron); }
+    .tag.fix { background: #2f6b34; }
+
+    p { margin: 9px 0; }
+    strong { color: var(--iron); }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0;
+        font-size: 11.5pt;
+    }
+    th {
+        background: var(--iron);
+        color: var(--gold);
+        font-family: var(--font-heading);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 6px 10px;
+        text-align: left;
+        font-size: 11pt;
+    }
+    td { padding: 5px 10px; border-bottom: 1px solid rgba(2,7,14,0.15); }
+    tr:nth-child(even) td { background: rgba(2,7,14,0.03); }
+    .old-val { color: #8a6a2a; }
+    .new-val { color: var(--blood); font-weight: 700; }
+
+    .note {
+        font-style: italic;
+        font-size: 11.5pt;
+        background: rgba(2,7,14,0.04);
+        padding: 10px 14px;
+        border: 1px dashed var(--gold);
+        margin: 12px 0;
+    }
+    footer {
+        margin-top: 40px;
+        padding-top: 18px;
+        border-top: 2px solid var(--gold);
+        text-align: center;
+        font-style: italic;
+        color: #5a4a2a;
+        font-size: 11pt;
+    }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+    <div class="top-nav">
+        <a href="index.html" class="btn-hub">⌂ Compendium</a>
+        <a href="core-rules.html" class="btn-hub">Core Rules</a>
+        <a href="ledger-v4.html" class="btn-hub">The Ledger v4</a>
+        <a href="reliquary.html" class="btn-hub">Reliquary</a>
+    </div>
+
+    <header>
+        <h1>Patch Notes</h1>
+        <p class="subtitle">New Vibhuti battle-magic, a full codex overhaul for the reference books, a richer character sheet, and a stack of fixes — the table rundown.</p>
+        <p class="datestamp">4 June 2026</p>
+    </header>
+
+    <div class="rule"></div>
+
+    <div class="tldr">
+        <strong>The short version:</strong>
+        <ul>
+            <li><strong>Four new Vibhuti spells</strong> fill the discipline&rsquo;s mid-game damage gap (TN 7&ndash;11) &mdash; a clean progression toward its signature mitigation-stripping power. Live in the rules and the Ledger.</li>
+            <li><strong>The Lore and Mechanics books are now codex-style</strong> &mdash; the same side-nav, search, and collapsible layout as the rulebook and skill compendia.</li>
+            <li><strong>Advanced skills now pop out their full entry</strong> in the Ledger &mdash; click a skill name to read its complete codex text, like the racial passives.</li>
+            <li><strong>The Mechanics armour table was corrected</strong> to the current capped, per-discipline casting penalties, and an out-of-date weapon attribute was removed.</li>
+            <li><strong>Fixes:</strong> a Lore entry that rendered outside its pane, the Ledger&rsquo;s clipped &ldquo;Dodge&rdquo; box, and a structural pass over the Bestiary.</li>
+        </ul>
+    </div>
+
+    <!-- ============ NEW VIBHUTI SPELLS ============ -->
+    <h2><span class="tick">&#10022;</span> New Vibhuti Battle-Magic</h2>
+
+    <div class="change-item">
+        <span class="lead">Four new Words bridge the TN 7&ndash;11 damage gap <span class="tag both">Rules + Ledger</span></span>
+        <p>A coverage pass on the Grimoire turned up a real hole: <strong>Vibhuti</strong> &mdash; a damage-focused discipline &mdash; had an offensive spell at TN 3, then nothing until TN 12. A Speaker had no scaling attack for the entire early-to-mid game. Four new spells now fill that span, built on the discipline&rsquo;s own identity: the arc from the &ldquo;blunt edge&rdquo; of the Dissonant Word toward the high Axioms that strip Wound Mitigation entirely.</p>
+        <ul style="margin:6px 0 0 18px;">
+            <li style="margin:5px 0;"><strong>The Rendering Note (TN 7, 2 AP):</strong> the first true offensive frequency &mdash; 2d10 sonic, single target. Ordinary armour still applies, but a To-Cast of 9+ rattles the inner ear for a <strong>Stunned</strong> condition.</li>
+            <li style="margin:5px 0;"><strong>The Unstringing Chord (TN 9, 2 AP):</strong> the turning point &mdash; 2d10 sonic that <strong>ignores the first 3 points of Wound Mitigation</strong>, the Speaker&rsquo;s first step toward the unmitigated Axioms.</li>
+            <li style="margin:5px 0;"><strong>The Shattering Cadence (TN 10, 3 AP):</strong> a 10&times;50 ft line &mdash; 3d10 sonic that shatters brittle and crystalline matter (frozen wards, bone, stone carapace) and strips the mitigation of anything relying on it.</li>
+            <li style="margin:5px 0;"><strong>The Hollowing Verse (TN 11, 3 AP):</strong> 3d10 sonic <strong>bypassing mundane Wound Mitigation</strong>, and a Willpower save or the target&rsquo;s concentration / Maintained effect collapses. Hands off cleanly to the TN 12 Agni-Axiom.</li>
+        </ul>
+        <p class="note">First-draft values, matched to the system&rsquo;s TN/AP/damage scaffold &mdash; worth a table-test for balance against the other disciplines&rsquo; spells at the same tiers. TN 8 was left to Vibhuti&rsquo;s existing utility Words.</p>
+    </div>
+
+    <!-- ============ CODEX LAYOUT ============ -->
+    <h2><span class="tick">&#10022;</span> Lore &amp; Mechanics &mdash; Codex Layout</h2>
+
+    <div class="change-item">
+        <span class="lead">Two more books get the side-nav treatment <span class="tag rules">Books</span></span>
+        <p>The <strong>Tome of Lore</strong> (52 A&ndash;Z entries) and the <strong>Mechanics Reference</strong> (17 sections) were rebuilt into the same codex layout as the core rulebook and the skill compendia: a collapsible iron-and-gold side index, live search/filter, scroll-position highlighting, a collapse toggle, and a clean print stylesheet. Lore is grouped alphabetically with each entry individually linkable; Mechanics is grouped by theme (Core, Combat Bonuses, Casting &amp; Healing, Reference).</p>
+        <p class="note">The interactive tools (Reliquary, Refinery, trackers) and the tab-based Races page were deliberately left as-is &mdash; the codex layout suits long reference reading, not tools.</p>
+    </div>
+
+    <!-- ============ LEDGER ============ -->
+    <h2><span class="tick">&#10022;</span> The Ledger</h2>
+
+    <div class="change-item">
+        <span class="lead">Advanced skills now pop out their full entry <span class="tag ledger">Ledger</span></span>
+        <p>By table request: clicking an <strong>advanced skill&rsquo;s name</strong> (or the new &#9432; icon) in the Ledger now opens an in-page panel with the skill&rsquo;s <strong>complete codex entry</strong> &mdash; flavor, Mechanic, Specialization, and Vulnerability &mdash; exactly like the racial passives popout. Closes with &times; or Escape. This also replaces an old link that pointed at a since-renamed file. Applied to both v4 and v3.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">The &ldquo;Dodge&rdquo; defense box no longer clips <span class="tag ledger">Ledger</span></span>
+        <p>In the <strong>Active Defenses</strong> row, the third input (Dodge) was being cut off by the container edge. The row was resized to fit all three boxes cleanly in both screen and print views. Fixed in v4 and v3.</p>
+    </div>
+
+    <!-- ============ MECHANICS CORRECTIONS ============ -->
+    <h2><span class="tick">&#10022;</span> Mechanics Reference Corrections</h2>
+
+    <div class="change-item">
+        <span class="lead">Armour casting column rebuilt to current rules <span class="tag rules">Rules</span></span>
+        <p>The Mechanics armour table was still showing the <em>old</em> uncapped &ldquo;+TN (Cast)&rdquo; penalty (+1/+2/+3). It now carries the full <strong>per-discipline To-Cast breakdown</strong> &mdash; Wizardry/Druidism/Shamanism, Devotion, Vibhuti, Ki as separate columns &mdash; using the current capped values from the core rules&rsquo; Iron Cage table. No caster is penalized worse than &minus;3 by armour weight; Ki is never penalized.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Outdated weapon attribute removed <span class="tag rules">Rules</span></span>
+        <p>The Piercing 1H row (Dagger / Rapier / Spear) listed an &ldquo;Advantage vs Leather/Cloth&rdquo; property that is no longer part of the rules. Removed; the row now reads simply &ldquo;Finesse eligible.&rdquo;</p>
+    </div>
+
+    <!-- ============ FIXES ============ -->
+    <h2><span class="tick">&#10022;</span> Fixes &amp; Housekeeping</h2>
+
+    <div class="change-item">
+        <span class="lead">Lore entry rendering outside its pane <span class="tag rules">Books</span></span>
+        <p>One Lore entry (&ldquo;Northern Clan: Stoneback of Brackwater&rdquo;) &mdash; and everything after it &mdash; was spilling outside the reading pane and jumping to the bottom of the page. The cause was a handful of stray closing tags in the source that the new codex layout exposed. Removed; all 52 entries now sit correctly in the pane.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Bestiary structural pass <span class="tag rules">Bestiary</span></span>
+        <p>A mechanical audit of all <strong>198 monsters</strong> fixed a small set of data defects: two creatures with a tier name stuck in the group-size field, a caster wrongly flagged as a non-caster, an inconsistent casting-type spelling, and a couple of formatting slips. No balance or stat values were changed.</p>
+    </div>
+
+    <footer>
+        Thrice-Marked — living rules. Questions or disagreements with any of these? Bring them to the table.
+    </footer>
+
+</div>
+</body>
+</html>
