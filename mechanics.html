@@ -96,110 +96,134 @@
             .nav-bar { display: none; }
         }
     </style>
+
+    <style>
+    body.codex-layout { display:block; padding:0; background:#1E1E24; overflow-x:hidden; }
+    .codex-shell { display:grid; grid-template-columns:300px 1fr; min-height:100vh; max-width:1500px; margin:0 auto; transition:grid-template-columns 0.22s ease; }
+    .codex-shell.nav-collapsed { grid-template-columns:0 1fr; }
+    .codex-shell.nav-collapsed .codex-nav { transform:translateX(-100%); border-right-color:transparent; }
+    .codex-reopen { position:fixed; top:16px; left:0; z-index:58; background:var(--iron); color:var(--gold); border:2px solid var(--gold); border-left:none; padding:10px 12px 10px 10px; cursor:pointer; font-family:'Courier New',monospace; font-size:13pt; line-height:1; display:none; align-items:center; gap:7px; }
+    .codex-reopen .lbl { font-size:8pt; letter-spacing:2px; text-transform:uppercase; }
+    .codex-reopen:hover { background:var(--gold); color:var(--iron); }
+    .codex-shell.nav-collapsed ~ .codex-reopen { display:flex; }
+    .codex-collapse { position:absolute; top:16px; right:12px; background:transparent; color:var(--gold); border:1px solid rgba(184,134,11,0.5); width:26px; height:26px; cursor:pointer; font-size:12pt; line-height:1; display:flex; align-items:center; justify-content:center; padding:0; }
+    .codex-collapse:hover { background:var(--blood); color:var(--parchment); border-color:var(--blood); }
+    .codex-nav { background:var(--iron); border-right:3px solid var(--gold); position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto; padding:0 0 40px; font-family:'Courier New',monospace; }
+    .codex-nav::-webkit-scrollbar { width:10px; }
+    .codex-nav::-webkit-scrollbar-track { background:var(--iron); }
+    .codex-nav::-webkit-scrollbar-thumb { background:var(--gold); border:2px solid var(--iron); }
+    .codex-brand { padding:20px 18px 14px; border-bottom:2px solid var(--blood); margin-bottom:6px; position:relative; }
+    .codex-brand a { color:var(--gold); text-decoration:none; font-size:8.5pt; letter-spacing:2px; text-transform:uppercase; display:inline-block; margin-bottom:10px; opacity:0.75; }
+    .codex-brand a:hover { opacity:1; }
+    .codex-brand .title { color:var(--parchment); font-weight:700; font-size:15pt; letter-spacing:2px; text-transform:uppercase; display:block; }
+    .codex-brand .sub { color:var(--blood); font-size:8.5pt; letter-spacing:4px; text-transform:uppercase; display:block; margin-top:2px; }
+    .codex-search { padding:10px 14px 6px; }
+    .codex-search input { width:100%; background:#0a0a0e; border:1px solid var(--gold); color:var(--parchment); padding:7px 10px; font-family:inherit; font-size:9.5pt; letter-spacing:1px; }
+    .codex-search input::placeholder { color:rgba(240,226,192,0.4); }
+    .codex-search input:focus { outline:none; border-color:var(--blood); }
+    .nav-group { border-bottom:1px solid rgba(184,134,11,0.18); }
+    .nav-group-head { display:flex; align-items:center; justify-content:space-between; padding:10px 16px; cursor:pointer; color:var(--gold); font-weight:700; font-size:10pt; letter-spacing:2px; text-transform:uppercase; user-select:none; transition:background 0.15s; }
+    .nav-group-head:hover { background:rgba(184,134,11,0.10); }
+    .nav-group-head .chev { transition:transform 0.2s; font-size:11pt; color:var(--blood); }
+    .nav-group.collapsed .chev { transform:rotate(-90deg); }
+    .nav-group-body { overflow:hidden; transition:max-height 0.25s ease; }
+    .nav-group.collapsed .nav-group-body { max-height:0 !important; }
+    .nav-link { display:block; padding:6px 16px 6px 26px; color:rgba(240,226,192,0.72); text-decoration:none; font-size:9.5pt; letter-spacing:0.5px; border-left:3px solid transparent; transition:all 0.12s; }
+    .nav-link:hover { color:var(--parchment); background:rgba(184,134,11,0.08); }
+    .nav-link.active { color:var(--gold); background:rgba(168,24,24,0.18); border-left-color:var(--blood); font-weight:700; }
+    .view-toggle { display:flex; gap:0; padding:8px 14px 4px; }
+    .view-toggle button { flex:1; background:transparent; color:rgba(240,226,192,0.6); border:1px solid rgba(184,134,11,0.4); padding:5px 4px; font-family:'Courier New',monospace; font-size:7.5pt; letter-spacing:1px; text-transform:uppercase; cursor:pointer; }
+    .view-toggle button + button { border-left:none; }
+    .view-toggle button.active { background:var(--gold); color:var(--iron); font-weight:700; }
+    .view-toggle button:hover:not(.active) { background:rgba(184,134,11,0.12); color:var(--parchment); }
+    .nav-scheme { display:none; }
+    .nav-scheme.active { display:block; }
+    .codex-reader { background:var(--parchment); min-width:0; padding:0; }
+    .codex-reader .reader-inner { max-width:960px; margin:0 auto; padding:34px 46px 120px; }
+    .codex-reader [id] { scroll-margin-top:18px; }
+    .codex-reader h1 { margin-top:0; }
+    .codex-top { position:fixed; right:22px; bottom:22px; background:var(--iron); color:var(--gold); border:2px solid var(--gold); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:16pt; display:none; align-items:center; justify-content:center; z-index:50; }
+    .codex-top:hover { background:var(--gold); color:var(--iron); }
+    .codex-top.show { display:flex; }
+    .codex-burger { display:none; position:fixed; top:14px; left:14px; z-index:60; background:var(--iron); color:var(--gold); border:2px solid var(--gold); width:42px; height:42px; font-size:15pt; cursor:pointer; }
+    @media (max-width:900px) {
+        .codex-shell { grid-template-columns:1fr; }
+        .codex-nav { position:fixed; top:0; left:0; bottom:0; width:290px; z-index:55; transform:translateX(-100%); transition:transform 0.25s ease; }
+        .codex-nav.open { transform:translateX(0); }
+        .codex-burger { display:flex; align-items:center; justify-content:center; }
+        .codex-reader .reader-inner { padding:64px 20px 100px; }
+    }
+    @media print {
+        @page { size:letter portrait; margin:0.75in 0.7in 0.85in; @bottom-center { content:"Thrice-Marked  ·  " counter(page); font-family:'Courier New',monospace; font-size:8pt; color:#6b5a2a; } }
+        @page :first { @bottom-center { content:""; } }
+        html, body { background:#fff !important; }
+        body.codex-layout { display:block; }
+        .codex-nav, .codex-burger, .codex-reopen, .codex-collapse, .codex-top, .codex-search, .nav-bar { display:none !important; }
+        .codex-shell { display:block; max-width:none; }
+        .codex-reader { background:#fff !important; }
+        .codex-reader .reader-inner { max-width:none; padding:0; }
+        .skill-block { break-inside:avoid; }
+        table { break-inside:avoid; }
+        a { color:var(--ink) !important; text-decoration:none; }
+    }
+    </style>
 </head>
-<body>
-<div class="wrapper">
-
-    <div class="nav-bar">
-        <a href="index.html" class="btn-hub">🏠 Return to Hub</a>
-        <a href="Core_Rules.html" class="btn-hub">📖 Core Rulebook</a>
+<body class="codex-layout">
+<button class="codex-burger" aria-label="Open navigation">&#9776;</button>
+<div class="codex-shell" id="codex-shell">
+  <nav class="codex-nav" id="codex-nav">
+    <div class="codex-brand">
+      <button class="codex-collapse" id="codex-collapse" aria-label="Collapse sidebar" title="Collapse sidebar">&#10094;</button>
+      <a href="index.html">&#8962; Return to Hub</a>
+      <span class="title">Thrice-Marked</span>
+      <span class="sub">Mechanics Reference</span>
     </div>
-
-    <h1 class="page-title">Build Guide & Mechanics Reference</h1>
+    <div class="codex-search"><input id="codex-search-input" type="text" placeholder="Filter sections..." autocomplete="off"></div>
+    <div class="nav-group">
+      <div class="nav-group-head"><span>Core</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#core-roll" class="nav-link" data-target="core-roll">The Core Roll</a>
+        <a href="#ap" class="nav-link" data-target="ap">Action Points (AP)</a>
+        <a href="#characteristics" class="nav-link" data-target="characteristics">Characteristics</a>
+        <a href="#defense" class="nav-link" data-target="defense">Defense (To Be Hit)</a>
+        <a href="#wounds" class="nav-link" data-target="wounds">Total Wounds</a>
+        <a href="#wm" class="nav-link" data-target="wm">Wound Mitigation (WM)</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Combat Bonuses</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#melee-hit" class="nav-link" data-target="melee-hit">Melee To-Hit Bonus</a>
+        <a href="#melee-wounds" class="nav-link" data-target="melee-wounds">Melee Wound Bonus</a>
+        <a href="#ranged-hit" class="nav-link" data-target="ranged-hit">Ranged To-Hit Bonus</a>
+        <a href="#ranged-wounds" class="nav-link" data-target="ranged-wounds">Ranged Wound Bonus</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Casting & Healing</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#cast-hit" class="nav-link" data-target="cast-hit">Spell To-Cast Bonus</a>
+        <a href="#cast-wounds" class="nav-link" data-target="cast-wounds">Spell Wound Bonus</a>
+        <a href="#healing" class="nav-link" data-target="healing">Healing Bonus</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Reference</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#armor-table" class="nav-link" data-target="armor-table">Armor Reference</a>
+        <a href="#weapon-table" class="nav-link" data-target="weapon-table">Weapon Reference</a>
+        <a href="#build-archetypes" class="nav-link" data-target="build-archetypes">Build Archetypes</a>
+        <a href="#whats-new" class="nav-link" data-target="whats-new">What’s New (June 2026)</a>
+      </div>
+    </div>
+  </nav>
+  <main class="codex-reader" id="top">
+    <div class="reader-inner">
+<h1 class="page-title">Build Guide & Mechanics Reference</h1>
     <p class="page-subtitle">"Know the numbers. Master the battlefield."</p>
     <p class="page-intro">Every formula in Thrice-Marked, derived directly from the Ledger calculations and Core Rules. Each term is fully broken down — so you know exactly what feeds each number and how to push it higher.</p>
 
-    <div class="toc">
-        <h3>Contents</h3>
-        <ul>
-            <li><a href="#core-roll">The Core Roll</a></li>
-            <li><a href="#ap">Action Points</a></li>
-            <li><a href="#characteristics">Characteristics</a></li>
-            <li><a href="#defense">Defense (To Be Hit)</a></li>
-            <li><a href="#wounds">Total Wounds</a></li>
-            <li><a href="#wm">Wound Mitigation</a></li>
-            <li><a href="#melee-hit">Melee To-Hit</a></li>
-            <li><a href="#melee-wounds">Melee Wounds</a></li>
-            <li><a href="#ranged-hit">Ranged To-Hit</a></li>
-            <li><a href="#ranged-wounds">Ranged Wounds</a></li>
-            <li><a href="#cast-hit">Spell To-Cast</a></li>
-            <li><a href="#cast-wounds">Spell Wounds</a></li>
-            <li><a href="#healing">Healing</a></li>
-            <li><a href="#armor-table">Armor Reference</a></li>
-            <li><a href="#weapon-table">Weapon Reference</a></li>
-            <li><a href="#build-archetypes">Build Archetypes</a></li>
-        </ul>
-    </div>
-
-    <!-- ================================================================ -->
-    <!-- CORE ROLL -->
-    <!-- ================================================================ -->
-    
-    <div class="trait-block" style="margin-top: 16px;">
-        <div class="trait-header">
-            <span class="trait-title">Holding &amp; Carrying Actions — The Power of 3</span>
-            <span style="color: var(--gold); font-weight: bold; font-size: 10pt;">AP Economy &amp; Turn Patience</span>
-        </div>
-        <div class="trait-body">
-
-            <p style="margin-bottom: 10px;"><strong>Holding an Action:</strong> A character may declare a <em>Hold</em> at any point during their turn, forgoing one or more remaining AP. The held action has a declared trigger — a specific event that must occur before the hold expires (e.g. "I hold my attack until an enemy enters my reach" or "I hold my shot until the mage begins casting"). If the trigger occurs, the character acts immediately — interrupting or responding to the triggering action before it resolves. If the trigger never occurs, the held AP is lost.</p>
-
-            <p style="margin-bottom: 10px;"><strong>Carrying AP Over — The Power of 3:</strong> For every 3 points of base AP a character possesses, they may carry <strong>1 unused AP</strong> into their next turn. This represents the physical and mental readiness built by restraint. Carried AP must be declared at the end of the character's turn and is lost if not used during the following turn — AP cannot accumulate across more than two consecutive turns.</p>
-
-            <div style="background: rgba(139,26,26,0.06); border-left: 4px solid var(--blood); border-right: 1px solid var(--blood); padding: 12px 16px; margin: 14px 0; border-radius: 2px;">
-                <div style="font-family: 'Cinzel', serif; font-size: 8.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--blood); margin-bottom: 10px;">AP Carry-Over Scale</div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 11pt;">
-                    <thead>
-                        <tr style="border-bottom: 1px solid rgba(139,26,26,0.3);">
-                            <th style="text-align: left; padding: 4px 8px; font-family: 'Cinzel', serif; font-size: 8pt; letter-spacing: 1px; color: var(--gold);">Base AP</th>
-                            <th style="text-align: center; padding: 4px 8px; font-family: 'Cinzel', serif; font-size: 8pt; letter-spacing: 1px; color: var(--gold);">Max Carry</th>
-                            <th style="text-align: left; padding: 4px 8px; font-family: 'Cinzel', serif; font-size: 8pt; letter-spacing: 1px; color: var(--gold);">Typical Choice</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
-                            <td style="padding: 5px 8px; font-weight: bold;">3 AP</td>
-                            <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">1</td>
-                            <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 2 now, carry 1 — or use all 3</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
-                            <td style="padding: 5px 8px; font-weight: bold;">4 AP</td>
-                            <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">1</td>
-                            <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 3 now, carry 1</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
-                            <td style="padding: 5px 8px; font-weight: bold;">5 AP</td>
-                            <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">1</td>
-                            <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 4 now, carry 1</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
-                            <td style="padding: 5px 8px; font-weight: bold;">6 AP</td>
-                            <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">2</td>
-                            <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Use 4 now, carry 2 — or use 5, carry 1</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(154,123,47,0.15);">
-                            <td style="padding: 5px 8px; font-weight: bold;">9 AP</td>
-                            <td style="padding: 5px 8px; text-align: center; color: var(--blood); font-weight: bold;">3</td>
-                            <td style="padding: 5px 8px; font-style: italic; color: rgba(26,18,8,0.65);">Legendary fighter — real tactical flexibility</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div style="font-size: 9pt; font-style: italic; color: rgba(26,18,8,0.5); margin-top: 8px;">Formula: <strong>floor(Base AP ÷ 3)</strong> = maximum AP that may be carried into the next turn.</div>
-            </div>
-
-            <p style="margin-bottom: 8px;"><strong>Restrictions:</strong></p>
-            <ul style="margin-bottom: 8px;">
-                <li><strong>No type restriction.</strong> Carried AP may be used for any action — melee, ranged, defensive, utility. A fighter who held back last turn is simply more ready, whatever they do with it.</li>
-                <li><strong>No carry into channeling.</strong> Carried AP may not be combined with a Channeling or multi-turn casting action. Magic disciplines have their own multi-turn mechanic and cannot benefit from carry-over.</li>
-                <li><strong>Two-turn limit.</strong> AP cannot accumulate across more than one carry. Use it on the following turn or it is gone.</li>
-            </ul>
-
-            <p style="margin-bottom: 0;"><strong>Example:</strong> Baanon has 4 base AP. He uses 3 AP this turn to strike twice and reposition. He declares he is carrying 1 AP forward. On his next turn he begins with 5 effective AP — his standard 4 plus the 1 carried — and can spend them freely before the carry expires at the end of that turn.</p>
-
-        </div>
-    </div>
-
-<h2 class="section-title" id="core-roll">The Core Roll</h2>
+    <h2 class="section-title" id="core-roll">The Core Roll</h2>
     <div class="mech-card">
         <p>Every action resolves with a <strong>1d10 roll</strong> that must meet or beat a <strong>Difficulty Value (DV)</strong>.</p>
         <div class="formula-block">RESULT = 1d10 + Relevant Characteristic (+ any skill/bonus) ≥ DV</div>
@@ -577,22 +601,28 @@
     <h2 class="section-title" id="armor-table">Armor Reference</h2>
     <table class="ref-table">
         <tr>
-            <th>Armor</th><th>Def</th><th>W.Mit</th>
-            <th>–Agl</th><th>–Awa</th><th>+TN (Cast)</th><th>–Move</th><th>Special</th>
+            <th rowspan="2">Armor</th><th rowspan="2">Def</th><th rowspan="2">W.Mit</th>
+            <th rowspan="2">–Agl</th><th rowspan="2">–Awa</th>
+            <th colspan="4">To-Cast Penalty</th>
+            <th rowspan="2">–Move</th><th rowspan="2">Special</th>
         </tr>
-        <tr><td>Animal Furs</td><td>0</td><td>1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        <tr><td>Cloth / Padded</td><td>1</td><td>1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        <tr><td>Leather</td><td>2</td><td>2</td><td class="pen">–1</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        <tr><td>Studded Leather</td><td>2</td><td>3</td><td class="pen">–1</td><td>—</td><td class="pen">+1</td><td>—</td><td class="pen">–1 Melee To-Hit</td></tr>
-        <tr><td>Chain Mail</td><td>3</td><td>4</td><td class="pen">–1</td><td>—</td><td class="pen">+1</td><td class="pen">–5 ft</td><td class="pen">–1 Melee, –1 Ranged To-Hit</td></tr>
-        <tr><td>Splint Mail</td><td>3</td><td>5</td><td class="pen">–1</td><td class="pen">–1</td><td class="pen">+2</td><td class="pen">–10 ft</td><td class="pen">–1 Melee, –1 Ranged To-Hit</td></tr>
-        <tr><td>Banded Mail</td><td>3</td><td>5</td><td class="pen">–1</td><td class="pen">–1</td><td class="pen">+2</td><td class="pen">–10 ft</td><td class="pen">–1 Melee, –1 Ranged To-Hit</td></tr>
-        <tr><td>Field Plate</td><td>4</td><td>6</td><td class="pen">–2</td><td class="pen">–2</td><td class="pen">+3</td><td class="pen">–15 ft</td><td class="pen">–2 Melee, –2 Ranged To-Hit</td></tr>
-        <tr><td>Full Plate</td><td>5</td><td>8</td><td class="pen">–2</td><td class="pen">–3</td><td class="pen">+3</td><td class="pen">–15 ft</td><td class="pen">–2 Melee, –3 Ranged To-Hit</td></tr>
-        <tr><td>Mithril</td><td>4</td><td>5</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="pen">–1 Melee To-Hit only</td></tr>
-        <tr><td>Light Shield/Buckler</td><td>+1</td><td>+1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>1 hand occupied</td></tr>
-        <tr><td>Heater/Heavy Shield</td><td>+2</td><td>+2</td><td class="pen">–1</td><td>—</td><td>—</td><td>—</td><td>Req Physique 4. If &lt;4: no Def/WM bonus, –2 Agl.</td></tr>
+        <tr>
+            <th>WDS</th><th>Dev</th><th>Vib</th><th>Ki</th>
+        </tr>
+        <tr><td>Animal Furs</td><td>0</td><td>1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Cloth / Padded</td><td>1</td><td>1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Leather</td><td>2</td><td>2</td><td class="pen">–1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Studded Leather</td><td>2</td><td>3</td><td class="pen">–1</td><td>—</td><td class="pen">–1</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="pen">–1 Melee To-Hit</td></tr>
+        <tr><td>Chain Mail</td><td>3</td><td>4</td><td class="pen">–1</td><td>—</td><td class="pen">–1</td><td>—</td><td class="pen">–1</td><td>—</td><td class="pen">–5 ft</td><td class="pen">–1 Melee, –1 Ranged To-Hit</td></tr>
+        <tr><td>Splint Mail</td><td>3</td><td>5</td><td class="pen">–1</td><td class="pen">–1</td><td class="pen">–2</td><td>—</td><td class="pen">–1</td><td>—</td><td class="pen">–10 ft</td><td class="pen">–1 Melee, –1 Ranged To-Hit</td></tr>
+        <tr><td>Banded Mail</td><td>3</td><td>5</td><td class="pen">–1</td><td class="pen">–1</td><td class="pen">–2</td><td>—</td><td class="pen">–1</td><td>—</td><td class="pen">–10 ft</td><td class="pen">–1 Melee, –1 Ranged To-Hit</td></tr>
+        <tr><td>Field Plate</td><td>4</td><td>6</td><td class="pen">–2</td><td class="pen">–2</td><td class="pen">–3</td><td class="pen">–2</td><td class="pen">–2</td><td>—</td><td class="pen">–15 ft</td><td class="pen">–2 Melee, –2 Ranged To-Hit</td></tr>
+        <tr><td>Full Plate</td><td>5</td><td>8</td><td class="pen">–2</td><td class="pen">–3</td><td class="pen">–3</td><td class="pen">–2</td><td class="pen">–3</td><td>—</td><td class="pen">–15 ft</td><td class="pen">–2 Melee, –3 Ranged To-Hit</td></tr>
+        <tr><td>Mithril</td><td>4</td><td>5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="pen">–1 Melee To-Hit only</td></tr>
+        <tr><td>Light Shield/Buckler</td><td>+1</td><td>+1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>1 hand occupied</td></tr>
+        <tr><td>Heater/Heavy Shield</td><td>+2</td><td>+2</td><td class="pen">–1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>Req Physique 4. If &lt;4: no Def/WM bonus, –2 Agl.</td></tr>
     </table>
+    <p style="margin-top:8px; font-size:0.85em; font-style:italic;">To-Cast columns: <strong>WDS</strong> = Wizardry / Druidism / Shamanism · <strong>Dev</strong> = Devotion · <strong>Vib</strong> = Vibhuti · <strong>Ki</strong> = Ki. Penalties are capped — no caster suffers worse than –3 from armour weight. Devotion and Ki ignore lighter armour entirely; Ki is never penalised. (See the Core Rules "Iron Cage — Arcane Interference" for the authoritative table.)</p>
     <p style="margin-top: 8px; font-size: 0.9em; font-style: italic;">Movement penalty is offset by floor(Physique ÷ 3) recovery steps. Physique 3 = 1 recovery step, negating Chain Mail's movement penalty entirely. Each step = 5 ft recovered.</p>
 
     <!-- ================================================================ -->
@@ -604,7 +634,7 @@
         <tr><th>Class</th><th>Examples</th><th>Base Wounds</th><th>To-Hit</th><th>Special</th></tr>
         <tr><td>Blunt 1H</td><td>Mace, Warhammer, Staff</td><td>1d10 + bonuses</td><td>Normal</td><td>Ignores 1 WM</td></tr>
         <tr><td>Edged 1H</td><td>Sword, Axe, Claymore</td><td>1d10 + bonuses</td><td>Normal</td><td>—</td></tr>
-        <tr><td>Piercing 1H</td><td>Dagger, Rapier, Spear</td><td>1d10 + bonuses</td><td>Normal</td><td>Advantage vs Leather/Cloth. Finesse eligible.</td></tr>
+        <tr><td>Piercing 1H</td><td>Dagger, Rapier, Spear</td><td>1d10 + bonuses</td><td>Normal</td><td>Finesse eligible.</td></tr>
         <tr><td>2-Handed</td><td>Greatsword, Greataxe</td><td>1d10 + bonuses</td><td>Normal</td><td>2 AP per strike. Physique ×2 wound bonus. Ignores 2 WM.</td></tr>
         <tr><td>Polearm</td><td>Halberd, Pike</td><td>1d10 + bonuses</td><td>Normal</td><td>2 AP per strike. Attack from 2nd rank at no penalty.</td></tr>
     </table>
@@ -718,9 +748,53 @@ Each spell costs Essence equal to its TN · Cantrips are free · Pool refreshes 
             <li>New flat categories: <strong>Enchanted Ammunition</strong>, <strong>Scrolls &amp; One-Use Castings</strong> (cast at their TN with no Essence cost, then crumble), and <strong>Mounts &amp; Companions</strong>.</li>
         </ul>
     </div>
-
-    <a href="index.html" class="back-link">⮜ Return to Main Hub</a>
-
+    </div>
+  </main>
 </div>
+<button class="codex-reopen" id="codex-reopen" aria-label="Show navigation" title="Show navigation">&#9776; <span class="lbl">Menu</span></button>
+<button class="codex-top" aria-label="Back to top">&#8593;</button>
+
+    <script>
+    (function(){
+      document.querySelectorAll('.nav-group-head').forEach(function(h){
+        h.addEventListener('click', function(){
+          var g=h.parentElement, body=g.querySelector('.nav-group-body');
+          if (g.classList.contains('collapsed')){ g.classList.remove('collapsed'); body.style.maxHeight=body.scrollHeight+'px'; }
+          else { body.style.maxHeight=body.scrollHeight+'px'; requestAnimationFrame(function(){ g.classList.add('collapsed'); body.style.maxHeight='0px'; }); }
+        });
+      });
+      function refreshHeights(){ document.querySelectorAll('.nav-group:not(.collapsed) .nav-group-body').forEach(function(b){ b.style.maxHeight=b.scrollHeight+'px'; }); }
+      refreshHeights();
+      var links=[].slice.call(document.querySelectorAll('.nav-link'));
+      var targets=links.map(function(l){return document.getElementById(l.dataset.target);}).filter(Boolean);
+      links.forEach(function(l){
+        l.addEventListener('click', function(e){ var el=document.getElementById(l.dataset.target); if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); history.replaceState(null,'','#'+l.dataset.target); document.querySelector('.codex-nav').classList.remove('open'); } });
+      });
+      function spy(){
+        var best=null,bt=-Infinity;
+        targets.forEach(function(t){ var r=t.getBoundingClientRect().top; if(r<=120&&r>bt){bt=r;best=t;} });
+        if(!best&&targets.length)best=targets[0];
+        links.forEach(function(l){ l.classList.toggle('active', best&&l.dataset.target===best.id); });
+        var top=document.querySelector('.codex-top'); if(top) top.classList.toggle('show', window.scrollY>600);
+      }
+      window.addEventListener('scroll', spy, {passive:true}); spy();
+      var topBtn=document.querySelector('.codex-top'); if(topBtn) topBtn.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+      document.querySelector('.codex-burger').addEventListener('click', function(){ document.querySelector('.codex-nav').classList.toggle('open'); });
+      var shell=document.getElementById('codex-shell'), search=document.getElementById('codex-search-input');
+      document.getElementById('codex-collapse').addEventListener('click', function(){ shell.classList.add('nav-collapsed'); });
+      document.getElementById('codex-reopen').addEventListener('click', function(){ shell.classList.remove('nav-collapsed'); });
+      document.addEventListener('keydown', function(e){ if(e.key==='['&&document.activeElement!==search){ shell.classList.toggle('nav-collapsed'); } });
+      if(search){ search.addEventListener('input', function(){
+        var q=search.value.trim().toLowerCase();
+        document.querySelectorAll('.nav-group').forEach(function(g){
+          var any=false;
+          g.querySelectorAll('.nav-link').forEach(function(l){ var m=!q||l.textContent.toLowerCase().indexOf(q)!==-1; l.style.display=m?'':'none'; if(m)any=true; });
+          g.style.display=any?'':'none';
+          if(q&&any){ g.classList.remove('collapsed'); var b=g.querySelector('.nav-group-body'); b.style.maxHeight=b.scrollHeight+'px'; }
+        });
+      }); }
+    })();
+    </script>
+
 </body>
 </html>
