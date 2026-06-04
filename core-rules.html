@@ -308,55 +308,325 @@
             letter-spacing: 8px;
         }
     </style>
+
+    <style>
+    /* ===== Option C — Accordion sidebar layout (Thrice-Marked theme) ===== */
+    body.codex-layout {
+        display: block;
+        padding: 0;
+        background: #1E1E24;
+        overflow-x: hidden;
+    }
+    .codex-shell {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        min-height: 100vh;
+        max-width: 1500px;
+        margin: 0 auto;
+        transition: grid-template-columns 0.22s ease;
+    }
+    /* Collapsed: sidebar column drops to zero, reader takes the full width */
+    .codex-shell.nav-collapsed { grid-template-columns: 0 1fr; }
+    .codex-shell.nav-collapsed .codex-nav {
+        transform: translateX(-100%);
+        border-right-color: transparent;
+    }
+    /* Re-open tab — pinned to the left edge, only visible while collapsed */
+    .codex-reopen {
+        position: fixed;
+        top: 16px; left: 0;
+        z-index: 58;
+        background: var(--iron);
+        color: var(--gold);
+        border: 2px solid var(--gold);
+        border-left: none;
+        padding: 10px 12px 10px 10px;
+        cursor: pointer;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 13pt;
+        line-height: 1;
+        display: none;
+        align-items: center;
+        gap: 7px;
+    }
+    .codex-reopen .lbl { font-size: 8pt; letter-spacing: 2px; text-transform: uppercase; }
+    .codex-reopen:hover { background: var(--gold); color: var(--iron); }
+    .codex-shell.nav-collapsed ~ .codex-reopen { display: flex; }
+    /* Collapse button inside the sidebar brand */
+    .codex-collapse {
+        position: absolute;
+        top: 16px; right: 12px;
+        background: transparent;
+        color: var(--gold);
+        border: 1px solid rgba(184,134,11,0.5);
+        width: 26px; height: 26px;
+        cursor: pointer;
+        font-size: 12pt;
+        line-height: 1;
+        display: flex; align-items: center; justify-content: center;
+        padding: 0;
+    }
+    .codex-collapse:hover { background: var(--blood); color: var(--parchment); border-color: var(--blood); }
+    /* ---- Sidebar ---- */
+    .codex-nav {
+        background: var(--iron);
+        border-right: 3px solid var(--gold);
+        position: sticky;
+        top: 0;
+        align-self: start;
+        height: 100vh;
+        overflow-y: auto;
+        padding: 0 0 40px;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    .codex-nav::-webkit-scrollbar { width: 10px; }
+    .codex-nav::-webkit-scrollbar-track { background: var(--iron); }
+    .codex-nav::-webkit-scrollbar-thumb { background: var(--gold); border: 2px solid var(--iron); }
+    .codex-brand {
+        padding: 20px 18px 14px;
+        border-bottom: 2px solid var(--blood);
+        margin-bottom: 6px;
+        position: relative;
+    }
+    .codex-brand a {
+        color: var(--gold);
+        text-decoration: none;
+        font-size: 8.5pt;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 10px;
+        opacity: 0.75;
+    }
+    .codex-brand a:hover { opacity: 1; }
+    .codex-brand .title {
+        color: var(--parchment);
+        font-weight: 700;
+        font-size: 16pt;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        display: block;
+    }
+    .codex-brand .sub {
+        color: var(--blood);
+        font-size: 8.5pt;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        display: block;
+        margin-top: 2px;
+    }
+    .codex-search { padding: 10px 14px 6px; }
+    .codex-search input {
+        width: 100%;
+        background: #0a0a0e;
+        border: 1px solid var(--gold);
+        color: var(--parchment);
+        padding: 7px 10px;
+        font-family: inherit;
+        font-size: 9.5pt;
+        letter-spacing: 1px;
+    }
+    .codex-search input::placeholder { color: rgba(240,226,192,0.4); }
+    .codex-search input:focus { outline: none; border-color: var(--blood); }
+    /* Accordion group */
+    .nav-group { border-bottom: 1px solid rgba(184,134,11,0.18); }
+    .nav-group-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 16px;
+        cursor: pointer;
+        color: var(--gold);
+        font-weight: 700;
+        font-size: 9.5pt;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        user-select: none;
+        transition: background 0.15s;
+    }
+    .nav-group-head:hover { background: rgba(184,134,11,0.10); }
+    .nav-group-head .chev { transition: transform 0.2s; font-size: 11pt; color: var(--blood); }
+    .nav-group.collapsed .chev { transform: rotate(-90deg); }
+    .nav-group-body { overflow: hidden; transition: max-height 0.25s ease; }
+    .nav-group.collapsed .nav-group-body { max-height: 0 !important; }
+    .nav-link {
+        display: block;
+        padding: 7px 16px 7px 26px;
+        color: rgba(240,226,192,0.72);
+        text-decoration: none;
+        font-size: 9.5pt;
+        letter-spacing: 0.5px;
+        border-left: 3px solid transparent;
+        transition: all 0.12s;
+    }
+    .nav-link:hover { color: var(--parchment); background: rgba(184,134,11,0.08); }
+    .nav-link.active {
+        color: var(--gold);
+        background: rgba(168,24,24,0.18);
+        border-left-color: var(--blood);
+        font-weight: 700;
+    }
+    .nav-link.sub { padding-left: 40px; font-size: 9pt; color: rgba(240,226,192,0.55); }
+    .nav-link.sub::before { content: "— "; opacity: 0.5; }
+    /* ---- Reading pane ---- */
+    .codex-reader {
+        background: var(--parchment);
+        min-width: 0;
+        padding: 0;
+    }
+    .codex-reader .reader-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 48px 120px;
+    }
+    /* Scroll offset so anchored headings clear the top */
+    .codex-reader [id] { scroll-margin-top: 20px; }
+    /* Back-to-top */
+    .codex-top {
+        position: fixed;
+        right: 22px;
+        bottom: 22px;
+        background: var(--iron);
+        color: var(--gold);
+        border: 2px solid var(--gold);
+        width: 44px; height: 44px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16pt;
+        display: none;
+        align-items: center; justify-content: center;
+        z-index: 50;
+    }
+    .codex-top:hover { background: var(--gold); color: var(--iron); }
+    .codex-top.show { display: flex; }
+    /* Mobile */
+    .codex-burger {
+        display: none;
+        position: fixed; top: 14px; left: 14px; z-index: 60;
+        background: var(--iron); color: var(--gold);
+        border: 2px solid var(--gold);
+        width: 42px; height: 42px; font-size: 15pt; cursor: pointer;
+    }
+    @media (max-width: 900px) {
+        .codex-shell { grid-template-columns: 1fr; }
+        .codex-nav {
+            position: fixed; top: 0; left: 0; bottom: 0;
+            width: 290px; z-index: 55;
+            transform: translateX(-100%);
+            transition: transform 0.25s ease;
+        }
+        .codex-nav.open { transform: translateX(0); }
+        .codex-burger { display: flex; align-items: center; justify-content: center; }
+        .codex-reader .reader-inner { padding: 64px 20px 100px; }
+    }
+
+    /* ===== Book-feel touches (screen) ===== */
+    /* Drop-cap on the first paragraph after each chapter divider */
+    .codex-reader .magic-break + .rpg-columns .full-width:first-child > p:first-of-type::first-letter,
+    .codex-reader .magic-break + .full-width > p:first-of-type::first-letter {
+        float: left;
+        font-size: 46pt;
+        line-height: 38px;
+        padding: 2px 8px 0 0;
+        color: var(--blood);
+        font-weight: 700;
+    }
+    /* Give chapter dividers more presence, like a book's chapter page */
+    .codex-reader .magic-break {
+        margin-top: 64px;
+        padding: 22px 0;
+    }
+
+    /* ===== Print / Save-as-PDF stylesheet ===== */
+    @media print {
+        @page {
+            size: letter portrait;
+            margin: 0.75in 0.7in 0.85in;
+            /* running footer with page number */
+            @bottom-center {
+                content: "Thrice-Marked  ·  " counter(page);
+                font-family: 'Courier New', monospace;
+                font-size: 8pt;
+                color: #6b5a2a;
+            }
+        }
+        @page :first { @bottom-center { content: ""; } }
+        html, body { background: #fff !important; }
+        body.codex-layout { display: block; }
+        /* Hide all the interactive chrome */
+        .codex-nav, .codex-burger, .codex-reopen, .codex-collapse, .codex-top, .codex-search,
+        .nav-bar, .to-top { display: none !important; }
+        .codex-shell { display: block; max-width: none; }
+        .codex-reader { background: #fff !important; }
+        .codex-reader .reader-inner { max-width: none; padding: 0; }
+        /* Each chapter starts a fresh page */
+        .magic-break { break-before: page; border-top: none; }
+        .magic-break:first-of-type { break-before: avoid; }
+        /* Keep tables and callout boxes from splitting awkwardly */
+        table, .trait-box, .info-box, blockquote { break-inside: avoid; }
+        h2, h3 { break-after: avoid; }
+        a { color: var(--ink) !important; text-decoration: none; }
+    }
+    </style>
 </head>
-<body>
+<body class="codex-layout">
 
-<div class="hub-wrapper">
-    <div class="nav-bar">
-        <a href="index.html" class="btn-hub">⌂ Return to Hub</a>
-        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CORE RULEBOOK</span>
+<button class="codex-burger" aria-label="Open navigation">&#9776;</button>
+
+<div class="codex-shell" id="codex-shell">
+  <nav class="codex-nav" id="codex-nav">
+    <div class="codex-brand">
+      <button class="codex-collapse" id="codex-collapse" aria-label="Collapse sidebar" title="Collapse sidebar">&#10094;</button>
+      <a href="index.html">&#8962; Return to Hub</a>
+      <span class="title">Thrice-Marked</span>
+      <span class="sub">Core Rulebook</span>
     </div>
-
-    <h1>Thrice-Marked</h1>
-    <div class="tagline">You start clean. You don't stay that way.</div>
-    
-    <div class="toc-container" id="top">
-        <h3>Quick Navigation</h3>
-        <div class="toc-grid" style="grid-template-columns: 1fr 1fr 1fr;">
-            <div class="toc-column">
-                <strong>I. Core Mechanics</strong><br>
-                <a href="#chapter-1" class="toc-link">1. The Races & Foundation</a><br>
-                <a href="#chapter-2" class="toc-link">2. Anatomy of a Turn</a><br>
-                <a href="#chapter-3" class="toc-link">3. Core Mechanics</a><br>
-                <a href="#chapter-4" class="toc-link">4. Melee Combat</a><br>
-                <a href="#chapter-5" class="toc-link">5. Ranged Combat</a><br>
-                <a href="#chapter-6" class="toc-link">6. Arcane & Divine</a><br>
-                <a href="#chapter-7" class="toc-link">7. Status & Conditions</a>
-            </div>
-            <div class="toc-column">
-                <strong>II. Progression</strong><br>
-                <a href="#chapter-8" class="toc-link">8. Growth & XP</a><br>
-                <a href="#chapter-9" class="toc-link">9. Master Skill List</a><br>
-                <a href="#chapter-10" class="toc-link">10. Advanced Masteries</a><br>
-                <a href="#chapter-11" class="toc-link">11. The Armory</a><br>
-                <a href="magic-items.html" class="toc-link" style="color: var(--gold);">↗ Relics &amp; Artifacts</a>
-            </div>
-            <div class="toc-column">
-                <strong>III. The Grimoire</strong><br>
-                <a href="#chapter-12" class="toc-link">12. The Grimoire</a><br>
-                <a href="#chapter-13" class="toc-link">13. GM's Reference</a><br>
-                <a href="#appendix-xiv" class="toc-link" style="color: var(--gold);">14. Optional Rules — Flubs &amp; Criticals</a><br>
-                <a href="#discipline-1" class="toc-link">Devotion Blessings</a><br>
-                <a href="#discipline-2" class="toc-link">Druidic Rites</a><br>
-                <a href="#discipline-3" class="toc-link">Shamanic Calling</a><br>
-                <a href="#discipline-4" class="toc-link">Wizardry</a><br>
-                <a href="#discipline-5" class="toc-link">Ki Powers</a><br>
-                <a href="#discipline-6" class="toc-link">Runecraft</a><br>
-                <a href="#discipline-7" class="toc-link">The Vibhuti</a>
-            </div>
-        </div>
+    <div class="codex-search"><input id="codex-search-input" type="text" placeholder="Filter sections..." autocomplete="off"></div>
+    <div class="nav-group">
+      <div class="nav-group-head"><span>I · Core Mechanics</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#chapter-1" class="nav-link" data-target="chapter-1">The Foundation</a>
+        <a href="#chapter-2" class="nav-link" data-target="chapter-2">Anatomy of a Turn</a>
+        <a href="#chapter-3" class="nav-link" data-target="chapter-3">Core Mechanics</a>
+        <a href="#chapter-4" class="nav-link" data-target="chapter-4">Melee Combat</a>
+        <a href="#chapter-5" class="nav-link" data-target="chapter-5">Ranged Combat</a>
+        <a href="#chapter-6" class="nav-link" data-target="chapter-6">The Arcane & Divine</a>
+        <a href="#chapter-7" class="nav-link" data-target="chapter-7">Status & Conditions</a>
+      </div>
     </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>II · Progression</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#chapter-8" class="nav-link" data-target="chapter-8">Growth & Advancement</a>
+        <a href="#chapter-9" class="nav-link" data-target="chapter-9">The Master Skill List</a>
+        <a href="#chapter-10" class="nav-link" data-target="chapter-10">Advanced Masteries</a>
+        <a href="#chapter-11" class="nav-link" data-target="chapter-11">The Armory</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>III · The Grimoire</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#chapter-12" class="nav-link" data-target="chapter-12">The Grimoire</a>
+        <a href="#discipline-1" class="nav-link sub" data-target="discipline-1">Blessings of Devotion</a>
+        <a href="#discipline-2" class="nav-link sub" data-target="discipline-2">Druidic Rites</a>
+        <a href="#discipline-3" class="nav-link sub" data-target="discipline-3">Shamanic Calling</a>
+        <a href="#discipline-4" class="nav-link sub" data-target="discipline-4">Wizardry</a>
+        <a href="#discipline-5" class="nav-link sub" data-target="discipline-5">Ki Powers</a>
+        <a href="#discipline-6" class="nav-link sub" data-target="discipline-6">Runecraft</a>
+        <a href="#discipline-7" class="nav-link sub" data-target="discipline-7">The Vibhuti</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>IV · GM & Appendices</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#chapter-13" class="nav-link" data-target="chapter-13">The Game Master's Ledger</a>
+        <a href="#appendix-xiv" class="nav-link" data-target="appendix-xiv">Flubs & Criticals</a>
+      </div>
+    </div>
+  </nav>
 
+  <main class="codex-reader" id="top">
+    <div class="reader-inner">
     <div class="full-width">
         <p style="text-align: center; font-size: 13pt;"><em>Thrice-Marked is a classless dark fantasy RPG where your character is defined entirely by the choices you make and the marks you carry. No classes. No predetermined path. Every skill sharpened, every rune forged, every desperate bargain struck adds permanent ink to your ledger — and the world will try to mark you three times over before you're done.</em></p>
     </div>
@@ -1192,7 +1462,7 @@
         <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">CHAPTER IX</span>
         <h2 id="chapter-9">The Master Skill List</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"A sword can be shattered and a shield can be sundered. Your skills are the only tools the world cannot pry from your hands. Master them, or die holding them."</p>
-        <p>For an exhaustive breakdown of all primary skills, consult the <a href="Primary_Skills.html" style="color: var(--blood); font-weight: bold;">Primary Skills Compendium</a>.</p>
+        <p>For an exhaustive breakdown of all primary skills, consult the <a href="primary-skills.html" style="color: var(--blood); font-weight: bold;">Primary Skills Compendium</a>.</p>
     </div>
 
     <div class="trait-box" style="margin: 32px auto; max-width: 760px; border-left: 8px solid var(--gold); background: rgba(184, 134, 11, 0.05);">
@@ -1668,7 +1938,7 @@
 
 <div class="rpg-columns"> 
     <a href="#top" class="back-to-top">↑ Return to Index</a>
-    <p class="full-width">Advanced Vocations are the pinnacle of martial, magical, and tactical mastery. This compendium lists all 30 masteries in alphabetical order for quick reference during character advancement. For full skill details, specializations, and build combinations, consult the <a href="Advanced_Skills.html" style="color: var(--blood); font-weight: bold;">Advanced Vocations Compendium</a> or the <a href="mechanics.html" style="color: var(--blood); font-weight: bold;">Build Guide &amp; Mechanics Reference</a>.</p>
+    <p class="full-width">Advanced Vocations are the pinnacle of martial, magical, and tactical mastery. This compendium lists all 30 masteries in alphabetical order for quick reference during character advancement. For full skill details, specializations, and build combinations, consult the <a href="advanced-skills.html" style="color: var(--blood); font-weight: bold;">Advanced Vocations Compendium</a> or the <a href="mechanics.html" style="color: var(--blood); font-weight: bold;">Build Guide &amp; Mechanics Reference</a>.</p>
 
     <div class="trait-box">
         <span class="trait-title">Arcane Duelist / Spell-Eater</span>
@@ -6566,5 +6836,105 @@ APPENDIX: XI-A</span>
 
     </div>
 </div>
+    </div>
+  </main>
 </div>
+
+<button class="codex-reopen" id="codex-reopen" aria-label="Show navigation" title="Show navigation">&#9776; <span class="lbl">Menu</span></button>
+
+<button class="codex-top" aria-label="Back to top">&#8593;</button>
+
+    <script>
+    (function(){
+      // Accordion expand/collapse
+      document.querySelectorAll('.nav-group-head').forEach(function(h){
+        h.addEventListener('click', function(){
+          var g = h.parentElement;
+          var body = g.querySelector('.nav-group-body');
+          if (g.classList.contains('collapsed')) {
+            g.classList.remove('collapsed');
+            body.style.maxHeight = body.scrollHeight + 'px';
+          } else {
+            body.style.maxHeight = body.scrollHeight + 'px';
+            requestAnimationFrame(function(){ g.classList.add('collapsed'); body.style.maxHeight = '0px'; });
+          }
+        });
+      });
+      // Set initial open heights
+      document.querySelectorAll('.nav-group:not(.collapsed) .nav-group-body').forEach(function(b){
+        b.style.maxHeight = b.scrollHeight + 'px';
+      });
+
+      var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+      var targets = links.map(function(l){ return document.getElementById(l.dataset.target); }).filter(Boolean);
+
+      // Smooth scroll + open parent group + close mobile drawer
+      links.forEach(function(l){
+        l.addEventListener('click', function(e){
+          var el = document.getElementById(l.dataset.target);
+          if (el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'});
+            history.replaceState(null,'','#'+l.dataset.target);
+            document.querySelector('.codex-nav').classList.remove('open');
+          }
+        });
+      });
+
+      // Scroll-spy: highlight nearest heading; ensure its group is open
+      var reader = document.querySelector('.codex-reader');
+      function spy(){
+        var top = reader.scrollTop !== undefined ? window.scrollY : window.scrollY;
+        var best=null, bestTop=-Infinity;
+        targets.forEach(function(t){
+          var r = t.getBoundingClientRect().top;
+          if (r <= 120 && r > bestTop){ bestTop=r; best=t; }
+        });
+        if (!best && targets.length) best = targets[0];
+        links.forEach(function(l){ l.classList.toggle('active', best && l.dataset.target===best.id); });
+        // back-to-top visibility
+        document.querySelector('.codex-top').classList.toggle('show', window.scrollY > 600);
+      }
+      window.addEventListener('scroll', spy, {passive:true});
+      spy();
+
+      // Back to top
+      document.querySelector('.codex-top').addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+      // Mobile burger
+      document.querySelector('.codex-burger').addEventListener('click', function(){
+        document.querySelector('.codex-nav').classList.toggle('open');
+      });
+
+      // Live search filter
+      var search = document.getElementById('codex-search-input');
+      if (search){
+        search.addEventListener('input', function(){
+          var q = search.value.trim().toLowerCase();
+          document.querySelectorAll('.nav-group').forEach(function(g){
+            var any=false;
+            g.querySelectorAll('.nav-link').forEach(function(l){
+              var match = !q || l.textContent.toLowerCase().indexOf(q)!==-1;
+              l.style.display = match ? '' : 'none';
+              if (match) any=true;
+            });
+            g.style.display = any ? '' : 'none';
+            if (q && any){ g.classList.remove('collapsed'); var b=g.querySelector('.nav-group-body'); b.style.maxHeight=b.scrollHeight+'px'; }
+          });
+        });
+      }
+
+      // Collapse / re-open the sidebar to widen the reading pane
+      var shell = document.getElementById('codex-shell');
+      var collapseBtn = document.getElementById('codex-collapse');
+      var reopenBtn = document.getElementById('codex-reopen');
+      function setCollapsed(on){ shell.classList.toggle('nav-collapsed', on); }
+      collapseBtn.addEventListener('click', function(){ setCollapsed(true); });
+      reopenBtn.addEventListener('click', function(){ setCollapsed(false); });
+      // Keyboard shortcut: [ toggles the sidebar (ignored while typing in the search box)
+      document.addEventListener('keydown', function(e){
+        if (e.key === '[' && document.activeElement !== search){
+          setCollapsed(!shell.classList.contains('nav-collapsed'));
+        }
+      });
+    })();
+    </script>
+</body>
 </html>
