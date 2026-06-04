@@ -150,8 +150,377 @@
             .compendium-wrapper { box-shadow: none; border: 2px solid var(--iron); max-width: 100%; }
         }
     </style>
+
+    <style>
+    body.codex-layout { display:block; padding:0; background:#1E1E24; overflow-x:hidden; }
+    .codex-shell { display:grid; grid-template-columns:300px 1fr; min-height:100vh; max-width:1500px; margin:0 auto; transition:grid-template-columns 0.22s ease; }
+    .codex-shell.nav-collapsed { grid-template-columns:0 1fr; }
+    .codex-shell.nav-collapsed .codex-nav { transform:translateX(-100%); border-right-color:transparent; }
+    .codex-reopen { position:fixed; top:16px; left:0; z-index:58; background:var(--iron); color:var(--gold); border:2px solid var(--gold); border-left:none; padding:10px 12px 10px 10px; cursor:pointer; font-family:'Courier New',monospace; font-size:13pt; line-height:1; display:none; align-items:center; gap:7px; }
+    .codex-reopen .lbl { font-size:8pt; letter-spacing:2px; text-transform:uppercase; }
+    .codex-reopen:hover { background:var(--gold); color:var(--iron); }
+    .codex-shell.nav-collapsed ~ .codex-reopen { display:flex; }
+    .codex-collapse { position:absolute; top:16px; right:12px; background:transparent; color:var(--gold); border:1px solid rgba(184,134,11,0.5); width:26px; height:26px; cursor:pointer; font-size:12pt; line-height:1; display:flex; align-items:center; justify-content:center; padding:0; }
+    .codex-collapse:hover { background:var(--blood); color:var(--parchment); border-color:var(--blood); }
+    .codex-nav { background:var(--iron); border-right:3px solid var(--gold); position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto; padding:0 0 40px; font-family:'Courier New',monospace; }
+    .codex-nav::-webkit-scrollbar { width:10px; }
+    .codex-nav::-webkit-scrollbar-track { background:var(--iron); }
+    .codex-nav::-webkit-scrollbar-thumb { background:var(--gold); border:2px solid var(--iron); }
+    .codex-brand { padding:20px 18px 14px; border-bottom:2px solid var(--blood); margin-bottom:6px; position:relative; }
+    .codex-brand a { color:var(--gold); text-decoration:none; font-size:8.5pt; letter-spacing:2px; text-transform:uppercase; display:inline-block; margin-bottom:10px; opacity:0.75; }
+    .codex-brand a:hover { opacity:1; }
+    .codex-brand .title { color:var(--parchment); font-weight:700; font-size:15pt; letter-spacing:2px; text-transform:uppercase; display:block; }
+    .codex-brand .sub { color:var(--blood); font-size:8.5pt; letter-spacing:4px; text-transform:uppercase; display:block; margin-top:2px; }
+    .codex-search { padding:10px 14px 6px; }
+    .codex-search input { width:100%; background:#0a0a0e; border:1px solid var(--gold); color:var(--parchment); padding:7px 10px; font-family:inherit; font-size:9.5pt; letter-spacing:1px; }
+    .codex-search input::placeholder { color:rgba(240,226,192,0.4); }
+    .codex-search input:focus { outline:none; border-color:var(--blood); }
+    .nav-group { border-bottom:1px solid rgba(184,134,11,0.18); }
+    .nav-group-head { display:flex; align-items:center; justify-content:space-between; padding:10px 16px; cursor:pointer; color:var(--gold); font-weight:700; font-size:10pt; letter-spacing:2px; text-transform:uppercase; user-select:none; transition:background 0.15s; }
+    .nav-group-head:hover { background:rgba(184,134,11,0.10); }
+    .nav-group-head .chev { transition:transform 0.2s; font-size:11pt; color:var(--blood); }
+    .nav-group.collapsed .chev { transform:rotate(-90deg); }
+    .nav-group-body { overflow:hidden; transition:max-height 0.25s ease; }
+    .nav-group.collapsed .nav-group-body { max-height:0 !important; }
+    .nav-link { display:block; padding:6px 16px 6px 26px; color:rgba(240,226,192,0.72); text-decoration:none; font-size:9.5pt; letter-spacing:0.5px; border-left:3px solid transparent; transition:all 0.12s; }
+    .nav-link:hover { color:var(--parchment); background:rgba(184,134,11,0.08); }
+    .nav-link.active { color:var(--gold); background:rgba(168,24,24,0.18); border-left-color:var(--blood); font-weight:700; }
+    .view-toggle { display:flex; gap:0; padding:8px 14px 4px; }
+    .view-toggle button { flex:1; background:transparent; color:rgba(240,226,192,0.6); border:1px solid rgba(184,134,11,0.4); padding:5px 4px; font-family:'Courier New',monospace; font-size:7.5pt; letter-spacing:1px; text-transform:uppercase; cursor:pointer; }
+    .view-toggle button + button { border-left:none; }
+    .view-toggle button.active { background:var(--gold); color:var(--iron); font-weight:700; }
+    .view-toggle button:hover:not(.active) { background:rgba(184,134,11,0.12); color:var(--parchment); }
+    .nav-scheme { display:none; }
+    .nav-scheme.active { display:block; }
+    .codex-reader { background:var(--parchment); min-width:0; padding:0; }
+    .codex-reader .reader-inner { max-width:960px; margin:0 auto; padding:34px 46px 120px; }
+    .codex-reader [id] { scroll-margin-top:18px; }
+    .codex-reader h1 { margin-top:0; }
+    .codex-top { position:fixed; right:22px; bottom:22px; background:var(--iron); color:var(--gold); border:2px solid var(--gold); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:16pt; display:none; align-items:center; justify-content:center; z-index:50; }
+    .codex-top:hover { background:var(--gold); color:var(--iron); }
+    .codex-top.show { display:flex; }
+    .codex-burger { display:none; position:fixed; top:14px; left:14px; z-index:60; background:var(--iron); color:var(--gold); border:2px solid var(--gold); width:42px; height:42px; font-size:15pt; cursor:pointer; }
+    @media (max-width:900px) {
+        .codex-shell { grid-template-columns:1fr; }
+        .codex-nav { position:fixed; top:0; left:0; bottom:0; width:290px; z-index:55; transform:translateX(-100%); transition:transform 0.25s ease; }
+        .codex-nav.open { transform:translateX(0); }
+        .codex-burger { display:flex; align-items:center; justify-content:center; }
+        .codex-reader .reader-inner { padding:64px 20px 100px; }
+    }
+    @media print {
+        @page { size:letter portrait; margin:0.75in 0.7in 0.85in; @bottom-center { content:"Thrice-Marked  ·  " counter(page); font-family:'Courier New',monospace; font-size:8pt; color:#6b5a2a; } }
+        @page :first { @bottom-center { content:""; } }
+        html, body { background:#fff !important; }
+        body.codex-layout { display:block; }
+        .codex-nav, .codex-burger, .codex-reopen, .codex-collapse, .codex-top, .codex-search, .nav-bar { display:none !important; }
+        .codex-shell { display:block; max-width:none; }
+        .codex-reader { background:#fff !important; }
+        .codex-reader .reader-inner { max-width:none; padding:0; }
+        .skill-block { break-inside:avoid; }
+        table { break-inside:avoid; }
+        a { color:var(--ink) !important; text-decoration:none; }
+    }
+    </style>
 </head>
-<body>
+<body class="codex-layout">
+
+<button class="codex-burger" aria-label="Open navigation">&#9776;</button>
+
+<div class="codex-shell" id="codex-shell">
+  <nav class="codex-nav" id="codex-nav">
+    <div class="codex-brand">
+      <button class="codex-collapse" id="codex-collapse" aria-label="Collapse sidebar" title="Collapse sidebar">&#10094;</button>
+      <a href="index.html">&#8962; Return to Hub</a>
+      <span class="title">Thrice-Marked</span>
+      <span class="sub">Primary Skills</span>
+    </div>
+    <div class="codex-search"><input id="codex-search-input" type="text" placeholder="Filter skills..." autocomplete="off"></div>
+    <div class="view-toggle">
+      <button data-scheme="alpha" class="active">A&ndash;Z</button>
+      <button data-scheme="char">Stat</button>
+      <button data-scheme="role">Role</button>
+    </div>
+    <div class="nav-scheme active" data-scheme="alpha">
+    <div class="nav-group">
+      <div class="nav-group-head"><span>A</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-acute-senses" class="nav-link" data-target="sk-acute-senses">Acute Senses</a>
+        <a href="#sk-athletics" class="nav-link" data-target="sk-athletics">Athletics</a>
+        <a href="#sk-authority" class="nav-link" data-target="sk-authority">Authority</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>C</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-charm" class="nav-link" data-target="sk-charm">Charm</a>
+        <a href="#sk-combat" class="nav-link" data-target="sk-combat">Combat (Melee)</a>
+        <a href="#sk-combat-2" class="nav-link" data-target="sk-combat-2">Combat (Mounted)</a>
+        <a href="#sk-combat-3" class="nav-link" data-target="sk-combat-3">Combat (Ranged)</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>D</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-discipline" class="nav-link" data-target="sk-discipline">Discipline</a>
+        <a href="#sk-druid" class="nav-link" data-target="sk-druid">Druid (Magical Vocation)</a>
+        <a href="#sk-devotion" class="nav-link" data-target="sk-devotion">Devotion</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>E</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-evaluation" class="nav-link" data-target="sk-evaluation">Evaluation (Object)</a>
+        <a href="#sk-evasion" class="nav-link" data-target="sk-evasion">Evasion</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>F</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-focus" class="nav-link" data-target="sk-focus">Focus (Combat Resource)</a>
+        <a href="#sk-fortitude" class="nav-link" data-target="sk-fortitude">Fortitude</a>
+        <a href="#sk-fortune" class="nav-link" data-target="sk-fortune">Fortune</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>H</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-hard-as-nails" class="nav-link" data-target="sk-hard-as-nails">Hard as Nails</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>I</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-inspire" class="nav-link" data-target="sk-inspire">Inspire</a>
+        <a href="#sk-iron-will" class="nav-link" data-target="sk-iron-will">Iron Will</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>K</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-ki" class="nav-link" data-target="sk-ki">Ki (Spiritual Vocation)</a>
+        <a href="#sk-knowledge" class="nav-link" data-target="sk-knowledge">Knowledge</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>L</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-light-soul" class="nav-link" data-target="sk-light-soul">Light-Soul</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>M</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-mending" class="nav-link" data-target="sk-mending">Mending</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>P</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-perception" class="nav-link" data-target="sk-perception">Perception</a>
+        <a href="#sk-precise-strike" class="nav-link" data-target="sk-precise-strike">Precise Strike</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Q</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-quickness" class="nav-link" data-target="sk-quickness">Quickness</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>R</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-riposte" class="nav-link" data-target="sk-riposte">Riposte</a>
+        <a href="#sk-read-write" class="nav-link" data-target="sk-read-write">Read/Write</a>
+        <a href="#sk-resolve" class="nav-link" data-target="sk-resolve">Resolve</a>
+        <a href="#sk-ride" class="nav-link" data-target="sk-ride">Ride (Mount)</a>
+        <a href="#sk-rugged" class="nav-link" data-target="sk-rugged">Rugged</a>
+        <a href="#sk-runecraft" class="nav-link" data-target="sk-runecraft">Runecraft (Ancestral Vocation)</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>S</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-shaman" class="nav-link" data-target="sk-shaman">Shaman (Spiritual Vocation)</a>
+        <a href="#sk-shieldsman" class="nav-link" data-target="sk-shieldsman">Shieldsman</a>
+        <a href="#sk-spirit" class="nav-link" data-target="sk-spirit">Spirit</a>
+        <a href="#sk-stamina" class="nav-link" data-target="sk-stamina">Stamina</a>
+        <a href="#sk-stealth" class="nav-link" data-target="sk-stealth">Stealth</a>
+        <a href="#sk-strength-conditioning-grapple" class="nav-link" data-target="sk-strength-conditioning-grapple">Strength Conditioning & Grapple</a>
+        <a href="#sk-survival" class="nav-link" data-target="sk-survival">Survival</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>T</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-thieving" class="nav-link" data-target="sk-thieving">Thieving</a>
+        <a href="#sk-tumble" class="nav-link" data-target="sk-tumble">Tumble</a>
+        <a href="#sk-tracking" class="nav-link" data-target="sk-tracking">Tracking</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>W</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-wizardry" class="nav-link" data-target="sk-wizardry">Wizardry (The High Arcane)</a>
+      </div>
+    </div>
+    </div>
+    <div class="nav-scheme" data-scheme="char">
+    <div class="nav-group">
+      <div class="nav-group-head"><span>Physique</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-athletics" class="nav-link" data-target="sk-athletics">Athletics</a>
+        <a href="#sk-combat" class="nav-link" data-target="sk-combat">Combat (Melee)</a>
+        <a href="#sk-combat-2" class="nav-link" data-target="sk-combat-2">Combat (Mounted)</a>
+        <a href="#sk-fortitude" class="nav-link" data-target="sk-fortitude">Fortitude</a>
+        <a href="#sk-ki" class="nav-link" data-target="sk-ki">Ki (Spiritual Vocation)</a>
+        <a href="#sk-ride" class="nav-link" data-target="sk-ride">Ride (Mount)</a>
+        <a href="#sk-rugged" class="nav-link" data-target="sk-rugged">Rugged</a>
+        <a href="#sk-shieldsman" class="nav-link" data-target="sk-shieldsman">Shieldsman</a>
+        <a href="#sk-strength-conditioning-grapple" class="nav-link" data-target="sk-strength-conditioning-grapple">Strength Conditioning & Grapple</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Agility</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-evasion" class="nav-link" data-target="sk-evasion">Evasion</a>
+        <a href="#sk-precise-strike" class="nav-link" data-target="sk-precise-strike">Precise Strike</a>
+        <a href="#sk-quickness" class="nav-link" data-target="sk-quickness">Quickness</a>
+        <a href="#sk-stealth" class="nav-link" data-target="sk-stealth">Stealth</a>
+        <a href="#sk-thieving" class="nav-link" data-target="sk-thieving">Thieving</a>
+        <a href="#sk-tumble" class="nav-link" data-target="sk-tumble">Tumble</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Awareness</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-acute-senses" class="nav-link" data-target="sk-acute-senses">Acute Senses</a>
+        <a href="#sk-combat-3" class="nav-link" data-target="sk-combat-3">Combat (Ranged)</a>
+        <a href="#sk-riposte" class="nav-link" data-target="sk-riposte">Riposte</a>
+        <a href="#sk-druid" class="nav-link" data-target="sk-druid">Druid (Magical Vocation)</a>
+        <a href="#sk-focus" class="nav-link" data-target="sk-focus">Focus (Combat Resource)</a>
+        <a href="#sk-stamina" class="nav-link" data-target="sk-stamina">Stamina</a>
+        <a href="#sk-tracking" class="nav-link" data-target="sk-tracking">Tracking</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Intellect</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-evaluation" class="nav-link" data-target="sk-evaluation">Evaluation (Object)</a>
+        <a href="#sk-knowledge" class="nav-link" data-target="sk-knowledge">Knowledge</a>
+        <a href="#sk-perception" class="nav-link" data-target="sk-perception">Perception</a>
+        <a href="#sk-read-write" class="nav-link" data-target="sk-read-write">Read/Write</a>
+        <a href="#sk-runecraft" class="nav-link" data-target="sk-runecraft">Runecraft (Ancestral Vocation)</a>
+        <a href="#sk-wizardry" class="nav-link" data-target="sk-wizardry">Wizardry (The High Arcane)</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Charisma</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-authority" class="nav-link" data-target="sk-authority">Authority</a>
+        <a href="#sk-charm" class="nav-link" data-target="sk-charm">Charm</a>
+        <a href="#sk-devotion" class="nav-link" data-target="sk-devotion">Devotion</a>
+        <a href="#sk-inspire" class="nav-link" data-target="sk-inspire">Inspire</a>
+        <a href="#sk-light-soul" class="nav-link" data-target="sk-light-soul">Light-Soul</a>
+        <a href="#sk-mending" class="nav-link" data-target="sk-mending">Mending</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Willpower</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-discipline" class="nav-link" data-target="sk-discipline">Discipline</a>
+        <a href="#sk-hard-as-nails" class="nav-link" data-target="sk-hard-as-nails">Hard as Nails</a>
+        <a href="#sk-iron-will" class="nav-link" data-target="sk-iron-will">Iron Will</a>
+        <a href="#sk-resolve" class="nav-link" data-target="sk-resolve">Resolve</a>
+        <a href="#sk-shaman" class="nav-link" data-target="sk-shaman">Shaman (Spiritual Vocation)</a>
+        <a href="#sk-spirit" class="nav-link" data-target="sk-spirit">Spirit</a>
+        <a href="#sk-survival" class="nav-link" data-target="sk-survival">Survival</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>—</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-fortune" class="nav-link" data-target="sk-fortune">Fortune</a>
+      </div>
+    </div>
+    </div>
+    <div class="nav-scheme" data-scheme="role">
+    <div class="nav-group">
+      <div class="nav-group-head"><span>Combat</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-combat" class="nav-link" data-target="sk-combat">Combat (Melee)</a>
+        <a href="#sk-combat-2" class="nav-link" data-target="sk-combat-2">Combat (Mounted)</a>
+        <a href="#sk-combat-3" class="nav-link" data-target="sk-combat-3">Combat (Ranged)</a>
+        <a href="#sk-riposte" class="nav-link" data-target="sk-riposte">Riposte</a>
+        <a href="#sk-focus" class="nav-link" data-target="sk-focus">Focus (Combat Resource)</a>
+        <a href="#sk-precise-strike" class="nav-link" data-target="sk-precise-strike">Precise Strike</a>
+        <a href="#sk-quickness" class="nav-link" data-target="sk-quickness">Quickness</a>
+        <a href="#sk-strength-conditioning-grapple" class="nav-link" data-target="sk-strength-conditioning-grapple">Strength Conditioning & Grapple</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Defensive</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-evasion" class="nav-link" data-target="sk-evasion">Evasion</a>
+        <a href="#sk-fortitude" class="nav-link" data-target="sk-fortitude">Fortitude</a>
+        <a href="#sk-hard-as-nails" class="nav-link" data-target="sk-hard-as-nails">Hard as Nails</a>
+        <a href="#sk-iron-will" class="nav-link" data-target="sk-iron-will">Iron Will</a>
+        <a href="#sk-resolve" class="nav-link" data-target="sk-resolve">Resolve</a>
+        <a href="#sk-rugged" class="nav-link" data-target="sk-rugged">Rugged</a>
+        <a href="#sk-shieldsman" class="nav-link" data-target="sk-shieldsman">Shieldsman</a>
+        <a href="#sk-stamina" class="nav-link" data-target="sk-stamina">Stamina</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Magic</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-discipline" class="nav-link" data-target="sk-discipline">Discipline</a>
+        <a href="#sk-druid" class="nav-link" data-target="sk-druid">Druid (Magical Vocation)</a>
+        <a href="#sk-devotion" class="nav-link" data-target="sk-devotion">Devotion</a>
+        <a href="#sk-ki" class="nav-link" data-target="sk-ki">Ki (Spiritual Vocation)</a>
+        <a href="#sk-light-soul" class="nav-link" data-target="sk-light-soul">Light-Soul</a>
+        <a href="#sk-runecraft" class="nav-link" data-target="sk-runecraft">Runecraft (Ancestral Vocation)</a>
+        <a href="#sk-shaman" class="nav-link" data-target="sk-shaman">Shaman (Spiritual Vocation)</a>
+        <a href="#sk-spirit" class="nav-link" data-target="sk-spirit">Spirit</a>
+        <a href="#sk-wizardry" class="nav-link" data-target="sk-wizardry">Wizardry (The High Arcane)</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Social</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-authority" class="nav-link" data-target="sk-authority">Authority</a>
+        <a href="#sk-charm" class="nav-link" data-target="sk-charm">Charm</a>
+        <a href="#sk-inspire" class="nav-link" data-target="sk-inspire">Inspire</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Utility</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-acute-senses" class="nav-link" data-target="sk-acute-senses">Acute Senses</a>
+        <a href="#sk-evaluation" class="nav-link" data-target="sk-evaluation">Evaluation (Object)</a>
+        <a href="#sk-fortune" class="nav-link" data-target="sk-fortune">Fortune</a>
+        <a href="#sk-knowledge" class="nav-link" data-target="sk-knowledge">Knowledge</a>
+        <a href="#sk-mending" class="nav-link" data-target="sk-mending">Mending</a>
+        <a href="#sk-perception" class="nav-link" data-target="sk-perception">Perception</a>
+        <a href="#sk-read-write" class="nav-link" data-target="sk-read-write">Read/Write</a>
+        <a href="#sk-ride" class="nav-link" data-target="sk-ride">Ride (Mount)</a>
+        <a href="#sk-stealth" class="nav-link" data-target="sk-stealth">Stealth</a>
+        <a href="#sk-survival" class="nav-link" data-target="sk-survival">Survival</a>
+        <a href="#sk-thieving" class="nav-link" data-target="sk-thieving">Thieving</a>
+        <a href="#sk-tumble" class="nav-link" data-target="sk-tumble">Tumble</a>
+        <a href="#sk-tracking" class="nav-link" data-target="sk-tracking">Tracking</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>Physical</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#sk-athletics" class="nav-link" data-target="sk-athletics">Athletics</a>
+      </div>
+    </div>
+    </div>
+  </nav>
+
+  <main class="codex-reader" id="top">
+    <div class="reader-inner">
 
     <div class="compendium-wrapper">
         <h1>Primary Skills Compendium</h1>
@@ -165,7 +534,7 @@
 
         <h2 class="category-title">Primary Skills (A-Z)</h2>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-acute-senses">
             <span class="skill-name">Acute Senses</span>
             <span class="skill-mechanic">Power of Three: +1 Awareness per 3 points. | Cost: Halfling (15), Dwarf/Elf (20), Human (25)</span>
             <a class="example-link" href="skills-in-play.html#s-acute" target="_blank">&#9654; In Play</a>
@@ -173,7 +542,7 @@
             <p>Your heightened sensitivity to sight, sound, smell, and taste grants you a crucial edge in survival. When actively searching, or when the GM determines a hidden threat (such as an ambush or backstab) is imminent, you make a sensory test by rolling <strong>1d10 + your points in this skill</strong>.</p>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-athletics">
             <span class="skill-name">Athletics</span>
             <span class="skill-mechanic">Power of Three: +1 Max Wounds per point. | Cost: Elf (20), Human (25), Dwarf/Halfling (30)</span>
             <a class="example-link" href="skills-in-play.html#s-athletics" target="_blank">&#9654; In Play</a>
@@ -186,7 +555,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-authority">
             <span class="skill-name">Authority</span>
             <span class="skill-mechanic">Power of Three: +1 Charisma per 3 points. | Cost: Dwarf/Elf/Human (15), Halfling (20)</span>
             <a class="example-link" href="skills-in-play.html#s-authority" target="_blank">&#9654; In Play</a>
@@ -194,7 +563,7 @@
             <p>You may attempt to force an individual or a group to act against their will, surrender, or comply with a command. <strong>The Clash of Wills:</strong> You roll <strong>1d10 + your points in this skill</strong> to set the Difficulty Value (DV). The target must immediately roll <strong>1d10 + their Will Power characteristic</strong> to resist. If they fail to meet or exceed your DV, they must comply with your demand to the best of their ability.</p>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-charm">
             <span class="skill-name">Charm</span>
             <span class="skill-mechanic">Power of Three: +1 Charisma per 3 points. | Cost: Human/Halfling (15), Elf (20), Dwarf (25)</span>
             <a class="example-link" href="skills-in-play.html#s-charm" target="_blank">&#9654; In Play</a>
@@ -206,7 +575,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-combat">
             <span class="skill-name">Combat (Melee)</span>
             <span class="skill-mechanic">Requirement: Purchased per weapon category. | Cost: Dwarf (25), Elf/Human (30), Halfling (35)</span>
             <a class="example-link" href="skills-in-play.html#s-melee" target="_blank">&#9654; In Play</a>
@@ -219,7 +588,7 @@
             <p><strong>Proficiencies Available:</strong> Axes & Cleavers, Flexible/Chain Weapons, Hammers & Maces, Polearms & Spears, Swords & Daggers, Unarmed Combat.</p>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-combat-2">
             <span class="skill-name">Combat (Mounted)</span>
             <span class="skill-mechanic">Prerequisites: Ride (1), Combat Proficiency | Cost: 100 XP (All Races)</span>
             <a class="example-link" href="skills-in-play.html#s-mounted" target="_blank">&#9654; In Play</a>
@@ -233,7 +602,7 @@
             <p><em>Note: Attempting to fight from a mount without this skill results in severe penalties, or outright failure, at the GM's discretion.</em></p>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-combat-3">
             <span class="skill-name">Combat (Ranged)</span>
             <span class="skill-mechanic">Requirement: Purchased per weapon category. | Cost: Elf (25), Dwarf/Halfling/Human (30)</span>
             <a class="example-link" href="skills-in-play.html#s-ranged" target="_blank">&#9654; In Play</a>
@@ -246,7 +615,7 @@
             <p><strong>Proficiencies Available:</strong> Bows, Crossbows, Firearms, Throwing Weapons.</p>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-riposte">
             <span class="skill-name">Riposte</span>
             <span class="skill-mechanic">Power of Three: +1 Awareness per 3 pts. | Cost: 30 XP (All Races) | Min. Req: Melee Proficiency | Governs: Awareness</span>
             <a class="example-link" href="skills-in-play.html#s-counter" target="_blank">&#9654; In Play</a>
@@ -260,7 +629,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-discipline">
             <span class="skill-name">Discipline</span>
             <span class="skill-mechanic">Power of Three: +1 Willpower per 3 pts. | +1 Max Wounds & +1 Resource per pt. | Cost: Dwarf/Elf/Human (15), Halfling (20)</span>
             <a class="example-link" href="skills-in-play.html#s-discipline" target="_blank">&#9654; In Play</a>
@@ -272,7 +641,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-druid">
             <span class="skill-name">Druid (Magical Vocation)</span>
             <span class="skill-mechanic">Power of Three: +1 Awareness per 3 pts. | Prereqs: Knowledge Druidic (1), Read/Scribe (1) | Cost: Elf/Halfling (30), Dwarf/Human (35)</span>
             <a class="example-link" href="skills-in-play.html#s-druid" target="_blank">&#9654; In Play</a>
@@ -286,7 +655,7 @@
 
         
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-evaluation">
             <span class="skill-name">Evaluation (Object)</span>
             <span class="skill-mechanic">Power of Three: +1 Intellect per 3 pts. | Cost: 15 XP (All Races)</span>
             <a class="example-link" href="skills-in-play.html#s-knowledge" target="_blank">&#9654; In Play</a>
@@ -299,7 +668,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-evasion">
             <span class="skill-name">Evasion</span>
             <span class="skill-mechanic">Power of Three: +1 Defense, +1 WM, +1 Agility per 3 pts. | Cost: Halfling (10), Elf (15), Human (20), Dwarf (25)</span>
             <a class="example-link" href="skills-in-play.html#s-evasion" target="_blank">&#9654; In Play</a>
@@ -311,7 +680,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-devotion">
             <span class="skill-name">Devotion</span>
             <span class="skill-mechanic">Power of Three: +1 Charisma per 3 pts. | Prereqs: Knowledge Theology (1), Read/Scribe (1) | Cost: Dwarf/Human/Halfling (25), Elf (30)</span>
             <a class="example-link" href="skills-in-play.html#s-faith" target="_blank">&#9654; In Play</a>
@@ -324,7 +693,7 @@
             <p><em>Note: Losing favor with your deity or violating their core tenets may result in the temporary or permanent loss of these abilities at the GM’s discretion.</em></p>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-focus">
             <span class="skill-name">Focus (Combat Resource)</span>
             <span class="skill-mechanic">Power of Three: +1 Awareness & +1 To-Hit per 3 pts. | Action Cost: 1 AP | Cost: 35 XP</span>
             <a class="example-link" href="skills-in-play.html#s-focus" target="_blank">&#9654; In Play</a>
@@ -340,7 +709,7 @@
             <p><em>Tactical Example: A character with 6 points in Focus (+2 to Hit threshold) is facing an armored Iron-Minotaur. They spend 1 AP to Focus. They automatically gain a +2 bonus to their To-Hit roll. They choose to allocate 4 points into Penetration to bypass the beast's armor and 2 points into Potency to ensure the strike is lethal.</em></p>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-fortitude">
             <span class="skill-name">Fortitude</span>
             <span class="skill-mechanic">Power of Three: +1 Physique per 3 pts. | +10 Max Wounds per pt. | Cost: Dwarf (45), Human (50), Elf/Halfling (55)</span>
             <a class="example-link" href="skills-in-play.html#s-fortitude" target="_blank">&#9654; In Play</a>
@@ -352,7 +721,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-fortune">
             <span class="skill-name">Fortune</span>
             <span class="skill-mechanic">Benefit: +1 Session Reroll per pt. | Cost: 30 XP (All Races)</span>
             <a class="example-link" href="skills-in-play.html#s-fortune" target="_blank">&#9654; In Play</a>
@@ -366,7 +735,7 @@
             <p><em>Note: Fortune points refresh at the start of every new session. Use them wisely—once the well of luck runs dry, you are at the mercy of the dice once more.</em></p>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-hard-as-nails">
             <span class="skill-name">Hard as Nails</span>
             <span class="skill-mechanic">Power of Three: +1 Willpower per 3 pts. | +2 Max Wounds per pt. | +1 WM (physical) per 2 pts. | +1 WM (spell/blessing) per 2 pts from 3 pts | Bloody Minded (ignore Bleeding 1 turn) at 6 pts. | Cost: Dwarf (25), Human (30), Elf/Halfling (35)</span>
             <a class="example-link" href="skills-in-play.html#s-hardnails" target="_blank">&#9654; In Play</a>
@@ -378,7 +747,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-inspire">
             <span class="skill-name">Inspire</span>
             <span class="skill-mechanic">Power of Three: +1 Charisma per 3 pts. | Action Cost: 1 AP | Cost: Dwarf/Elf/Human (20), Halfling (25)</span>
             <a class="example-link" href="skills-in-play.html#s-inspire" target="_blank">&#9654; In Play</a>
@@ -425,7 +794,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-iron-will">
             <span class="skill-name">Iron Will</span>
             <span class="skill-mechanic">Power of Three: +1 Will Power per 3 pts. | +2 Wounds per pt. | Cost: Dwarf (25), Human/Elf/Halfling (30)</span>
             <a class="example-link" href="skills-in-play.html#s-ironwill" target="_blank">&#9654; In Play</a>
@@ -440,7 +809,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-ki">
             <span class="skill-name">Ki (Spiritual Vocation)</span>
             <span class="skill-mechanic">Power of Three: +1 Physique per 3 pts. | Prereqs: Knowledge Ki (1), Read/Scribe (1) | Cost: Human (30), Dwarf/Elf/Halfling (35)</span>
             <a class="example-link" href="skills-in-play.html#s-ki" target="_blank">&#9654; In Play</a>
@@ -460,7 +829,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-knowledge">
             <span class="skill-name">Knowledge</span>
             <span class="skill-mechanic">Power of Three: +1 Intellect per 3 pts. | Cost: 15 XP (All Races)</span>
             <p><em>A sword can be shattered and gold can be stolen, but a secret once learned is a weapon that never dulls. You have dedicated yourself to the study of the world, cataloging the nuances of history, the patterns of magic, and the behaviors of the beasts that prowl the dark.</em></p>
@@ -480,7 +849,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-light-soul">
             <span class="skill-name">Light-Soul</span>
             <span class="skill-mechanic">Power of Three: +1 Charisma per 3 pts. | +1 Wound (vs Evil) per pt. | Cost: 20 XP | Min. Req: None</span>
             <a class="example-link" href="skills-in-play.html#s-lightsoul" target="_blank">&#9654; In Play</a>
@@ -493,7 +862,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-mending">
             <span class="skill-name">Mending</span>
             <span class="skill-mechanic">Power of Three: +1 Charisma per 3 pts. | Cost: Halfling (20), Dwarf/Elf/Human (25)</span>
             <a class="example-link" href="skills-in-play.html#s-mending" target="_blank">&#9654; In Play</a>
@@ -507,7 +876,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-perception">
             <span class="skill-name">Perception</span>
             <span class="skill-mechanic">Power of Three: +1 Intellect & +1 Ranged To-Hit per 3 pts. | Cost: 30 XP (All Races)</span>
             <a class="example-link" href="skills-in-play.html#s-perception" target="_blank">&#9654; In Play</a>
@@ -520,7 +889,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-precise-strike">
             <span class="skill-name">Precise Strike</span>
             <span class="skill-mechanic">Power of Three: +1 To-Hit & +2 Wounds per 3 pts. | Cost: Elf (40), Dwarf/Human (45), Halfling (50)</span>
             <a class="example-link" href="skills-in-play.html#s-precise" target="_blank">&#9654; In Play</a>
@@ -538,7 +907,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-quickness">
             <span class="skill-name">Quickness</span>
             <span class="skill-mechanic">Power of Three: +1 AP & +1 Agility per 3 pts. | Cost: Elf/Halfling (35), Human/Dwarf (40)</span>
             <a class="example-link" href="skills-in-play.html#s-quickness" target="_blank">&#9654; In Play</a>
@@ -551,7 +920,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-read-write">
             <span class="skill-name">Read/Write</span>
             <span class="skill-mechanic">Power of Three: +1 Intellect per 3 pts. | +1 Language per pt. | Cost: 15 XP (All Races)</span>
             <a class="example-link" href="skills-in-play.html#s-readwrite" target="_blank">&#9654; In Play</a>
@@ -564,7 +933,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-resolve">
             <span class="skill-name">Resolve</span>
             <span class="skill-mechanic">Power of Three: +1 Will Power & +1 Magic WM per 3 pts. | +1 Max Wounds per pt. | Cost: Dwarf/Elf/Human (25), Halfling (30)</span>
             <a class="example-link" href="skills-in-play.html#s-resolve" target="_blank">&#9654; In Play</a>
@@ -578,7 +947,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-ride">
             <span class="skill-name">Ride (Mount)</span>
             <span class="skill-mechanic">Requirement: Prerequisite for Mounted Combat | Cost: 15 XP (All Races) | Max: Physique</span>
             <a class="example-link" href="skills-in-play.html#s-ride" target="_blank">&#9654; In Play</a>
@@ -591,7 +960,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-rugged">
             <span class="skill-name">Rugged</span>
             <span class="skill-mechanic">Power of Three: +1 Physique per 3 pts. | +2 Max Wounds per pt. | Cost: 15 XP (All Races)</span>
             <a class="example-link" href="skills-in-play.html#s-rugged" target="_blank">&#9654; In Play</a>
@@ -604,7 +973,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-runecraft">
             <span class="skill-name">Runecraft (Ancestral Vocation)</span>
             <span class="skill-mechanic">Power of Three: +1 Intellect per 3 pts. | Prereqs: Knowledge Runecraft (1), Read/Write (1) | Cost: Dwarf (10), Human/Halfling (15), Elf (20)</span>
             <a class="example-link" href="skills-in-play.html#s-runes" target="_blank">&#9654; In Play</a>
@@ -636,7 +1005,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-shaman">
             <span class="skill-name">Shaman (Spiritual Vocation)</span>
             <span class="skill-mechanic">Power of Three: +1 Willpower per 3 pts. | Prereqs: Knowledge Shaman (1), Read/Scribe (1) | Cost: Human/Halfling (30), Dwarf/Elf (35)</span>
             <a class="example-link" href="skills-in-play.html#s-shaman" target="_blank">&#9654; In Play</a>
@@ -656,7 +1025,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-shieldsman">
             <span class="skill-name">Shieldsman</span>
             <span class="skill-mechanic">Power of Three: +1 Physique & +1 Shield To-Hit per 3 pts. | Cost: Dwarf/Elf/Human (30), Halfling (35) | Max: Awareness</span>
             <a class="example-link" href="skills-in-play.html#s-shieldsman" target="_blank">&#9654; In Play</a>
@@ -674,7 +1043,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-spirit">
             <span class="skill-name">Spirit</span>
             <span class="skill-mechanic">Power of Three: +1 Will Power & +1 Magic WM per 3 pts. | +1 Blessing Heal per pt. | Cost: 15 XP (All Races)</span>
             <a class="example-link" href="skills-in-play.html#s-spirit" target="_blank">&#9654; In Play</a>
@@ -687,7 +1056,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-stamina">
             <span class="skill-name">Stamina</span>
             <span class="skill-mechanic">Power of Three: +1 Awareness per 3 pts. | +1 Max Wounds per pt. | Cost: Dwarf/Human (10), Elf/Halfling (15)</span>
             <a class="example-link" href="skills-in-play.html#s-stamina" target="_blank">&#9654; In Play</a>
@@ -704,7 +1073,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-stealth">
             <span class="skill-name">Stealth</span>
             <span class="skill-mechanic">Power of Three: +1 Agility per 3 pts. | Action Cost: 1 | Cost: Halfling/Elf (15), Human (20), Dwarf (25)</span>
             <a class="example-link" href="skills-in-play.html#s-stealth" target="_blank">&#9654; In Play</a>
@@ -734,7 +1103,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-strength-conditioning-grapple">
             <span class="skill-name">Strength Conditioning & Grapple</span>
             <span class="skill-mechanic">Power of Three: +1 Physique per 3 pts. | +2 Wounds per pt. | +2 Melee Wounds per 3 pts. | Cost: Dwarf/Human (30), Elf/Halfling (35)</span>
             <a class="example-link" href="skills-in-play.html#s-strength" target="_blank">&#9654; In Play</a>
@@ -759,7 +1128,7 @@
             <p><strong>Breaking Free:</strong> The target spends 1 Action for an opposed test: <strong>Target (Physique + 1d10) vs Grappler (Physique + 1d10)</strong>. Target must equal or exceed the Grappler's total to break free.</p>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-survival">
             <span class="skill-name">Survival</span>
             <span class="skill-mechanic">Power of Three: +1 Will Power & +1 Magic WM per 3 pts. | +1 Max Wounds per pt. | Cost: 15 XP (All Races)</span>
             <a class="example-link" href="skills-in-play.html#s-survival" target="_blank">&#9654; In Play</a>
@@ -776,7 +1145,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-thieving">
             <span class="skill-name">Thieving</span>
             <span class="skill-mechanic">Power of Three: +1 Agility per 3 pts. | Action Cost: 1 | Cost: Halfling (10), Elf/Human (15), Dwarf (20)</span>
             <a class="example-link" href="skills-in-play.html#s-thieving" target="_blank">&#9654; In Play</a>
@@ -806,8 +1175,8 @@
                 <li><strong>Major Failure (Failed by 3+ points):</strong> The mechanism is completely locked. You cannot attempt to pick this specific lock again until your Thieving skill increases or you acquire superior "Masterwork" tools.</li>
             </ul>
         </div>
-    <div class="skill-block">
-        <span class="skill-name">Tumble</span>
+    <div class="skill-block" id="sk-tumble">
+            <span class="skill-name">Tumble</span>
         <span class="skill-mechanic">Power of Three: +1 Agility per 3 pts. | Cost: Halfling (15) | Elf (20) | Human (25) | Dwarf (30) | Min. Req: None | Governs: Agility</span>
         <p><em>The art of controlled falling and dynamic evasion — rolling clear of danger before it arrives, landing without losing your footing, and denying the battlefield the satisfaction of putting you on the ground.</em></p>
         <p>Where Evasion avoids a targeted strike, Tumble handles the chaos: AoE explosions, knockbacks, grapples, and every force that tries to rob you of your position.</p>
@@ -820,7 +1189,7 @@
         <p>Every 3 points invested permanently increases your <strong>Agility</strong> characteristic by 1.</p>
     </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-tracking">
             <span class="skill-name">Tracking</span>
             <span class="skill-mechanic">Power of Three: +1 Awareness per 3 pts. | Cost: Dwarf/Elf/Human (10), Halfling (15)</span>
             <a class="example-link" href="skills-in-play.html#s-tracking" target="_blank">&#9654; In Play</a>
@@ -838,7 +1207,7 @@
             </ul>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" id="sk-wizardry">
             <span class="skill-name">Wizardry (The High Arcane)</span>
             <span class="skill-mechanic">Power of Three: +1 Intellect & +2 Spell Wounds per 3 pts. | Prereqs: Knowledge Magic (1), Read/Write (1) | Cost: Elf (25), Halfling (30), Human (35), Dwarf (40)</span>
             <a class="example-link" href="skills-in-play.html#s-wizardry" target="_blank">&#9654; In Play</a>
@@ -862,5 +1231,86 @@
         <a href="core-rules.html" class="back-link">Return to Core Rulebook</a>
     </div>
 
+
+    </div>
+  </main>
+</div>
+
+<button class="codex-reopen" id="codex-reopen" aria-label="Show navigation" title="Show navigation">&#9776; <span class="lbl">Menu</span></button>
+<button class="codex-top" aria-label="Back to top">&#8593;</button>
+
+    <script>
+    (function(){
+      // Accordion: clicking a group head expands/collapses it (works across all schemes)
+      document.querySelectorAll('.nav-group-head').forEach(function(h){
+        h.addEventListener('click', function(){
+          var g=h.parentElement, body=g.querySelector('.nav-group-body');
+          if (g.classList.contains('collapsed')){ g.classList.remove('collapsed'); body.style.maxHeight=body.scrollHeight+'px'; }
+          else { body.style.maxHeight=body.scrollHeight+'px'; requestAnimationFrame(function(){ g.classList.add('collapsed'); body.style.maxHeight='0px'; }); }
+        });
+      });
+      // Set open heights for groups in the currently-active scheme
+      function refreshHeights(scope){
+        (scope||document).querySelectorAll('.nav-group:not(.collapsed) .nav-group-body').forEach(function(b){ b.style.maxHeight=b.scrollHeight+'px'; });
+      }
+      refreshHeights(document.querySelector('.nav-scheme.active'));
+
+      // Smooth-scroll for every nav-link (all schemes share the same target ids)
+      document.querySelectorAll('.nav-link').forEach(function(l){
+        l.addEventListener('click', function(e){ var el=document.getElementById(l.dataset.target); if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); history.replaceState(null,'','#'+l.dataset.target); document.querySelector('.codex-nav').classList.remove('open'); } });
+      });
+
+      // Scroll-spy: highlight the active skill, but only within the visible scheme
+      var allTargets=[].slice.call(document.querySelectorAll('.codex-reader [id]')).filter(function(e){return e.classList.contains('skill-block');});
+      function spy(){
+        var best=null,bt=-Infinity;
+        allTargets.forEach(function(t){ var r=t.getBoundingClientRect().top; if(r<=120&&r>bt){bt=r;best=t;} });
+        if(!best&&allTargets.length)best=allTargets[0];
+        var activeScheme=document.querySelector('.nav-scheme.active');
+        document.querySelectorAll('.nav-link').forEach(function(l){
+          var on = best && l.dataset.target===best.id && activeScheme && activeScheme.contains(l);
+          l.classList.toggle('active', !!on);
+        });
+        document.querySelector('.codex-top').classList.toggle('show', window.scrollY>600);
+      }
+      window.addEventListener('scroll', spy, {passive:true}); spy();
+
+      // Back-to-top, mobile burger, collapse/reopen
+      document.querySelector('.codex-top').addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+      document.querySelector('.codex-burger').addEventListener('click', function(){ document.querySelector('.codex-nav').classList.toggle('open'); });
+      var shell=document.getElementById('codex-shell'), search=document.getElementById('codex-search-input');
+      document.getElementById('codex-collapse').addEventListener('click', function(){ shell.classList.add('nav-collapsed'); });
+      document.getElementById('codex-reopen').addEventListener('click', function(){ shell.classList.remove('nav-collapsed'); });
+      document.addEventListener('keydown', function(e){ if(e.key==='['&&document.activeElement!==search){ shell.classList.toggle('nav-collapsed'); } });
+
+      // View toggle: switch which scheme is visible
+      var toggle=document.querySelector('.view-toggle');
+      if(toggle){
+        toggle.querySelectorAll('button').forEach(function(btn){
+          btn.addEventListener('click', function(){
+            var want=btn.dataset.scheme;
+            toggle.querySelectorAll('button').forEach(function(b){ b.classList.toggle('active', b===btn); });
+            document.querySelectorAll('.nav-scheme').forEach(function(s){ s.classList.toggle('active', s.dataset.scheme===want); });
+            if(search) search.value='';  // clear any active filter on switch
+            document.querySelectorAll('.nav-group, .nav-link').forEach(function(el){ el.style.display=''; });
+            refreshHeights(document.querySelector('.nav-scheme.active'));
+            spy();
+          });
+        });
+      }
+
+      // Live search: filter within the active scheme only
+      if(search){ search.addEventListener('input', function(){
+        var q=search.value.trim().toLowerCase();
+        var scope=document.querySelector('.nav-scheme.active');
+        scope.querySelectorAll('.nav-group').forEach(function(g){
+          var any=false;
+          g.querySelectorAll('.nav-link').forEach(function(l){ var m=!q||l.textContent.toLowerCase().indexOf(q)!==-1; l.style.display=m?'':'none'; if(m)any=true; });
+          g.style.display=any?'':'none';
+          if(q&&any){ g.classList.remove('collapsed'); var b=g.querySelector('.nav-group-body'); b.style.maxHeight=b.scrollHeight+'px'; }
+        });
+      }); }
+    })();
+    </script>
 </body>
 </html>
