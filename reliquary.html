@@ -164,6 +164,27 @@ tr[data-tier="Cursed"] .td-name{border-left:3px solid var(--t-cursed);}
   .td-name,.td-price{width:auto;}
   tbody td{font-size:11pt; padding:7px 8px;}
 }
+/* category jump links (Master Table + roll result) */
+.cat-jump{
+  color:var(--blood); font-weight:700; text-decoration:none;
+  border-bottom:1px dotted var(--gold); transition:color .15s, border-color .15s;
+}
+.cat-jump:hover{color:var(--gold2); border-bottom-color:var(--blood);}
+.rr-jump{
+  display:inline-block; margin-top:12px; font-family:var(--f-label);
+  font-size:9pt; letter-spacing:1px; text-transform:uppercase;
+  color:var(--gold2); border:1px solid var(--gold); border-radius:4px;
+  padding:6px 12px; background:var(--iron); border-bottom:1px solid var(--gold);
+}
+.rr-jump:hover{background:var(--gold); color:var(--iron);}
+/* brief flash to show where you landed */
+.cat-section.jump-flash{animation:catflash 1.6s ease-out;}
+@keyframes catflash{
+  0%{background:rgba(184,134,11,0.28);}
+  100%{background:transparent;}
+}
+html{scroll-behavior:smooth;}
+@media print{ .cat-jump{color:inherit; border:none;} .rr-jump{display:none;} }
 </style>
 </head>
 <body>
@@ -985,7 +1006,7 @@ function buildTables(){
   let mrows = '';
   MASTER.forEach(m=>{
     const band = (m.lo===m.hi) ? pad(m.lo) : pad(m.lo)+'\u2013'+pad(m.hi);
-    mrows += `<tr><td class="td-roll">${band}</td><td class="td-name">${m.label}</td></tr>`;
+    mrows += `<tr><td class="td-roll">${band}</td><td class="td-name"><a href="#cat-${m.cat}" class="cat-jump" data-cat="${m.cat}">${m.label}</a></td></tr>`;
   });
   mwrap.innerHTML = `
     <div class="cat-title">\u2685 Master Table \u2014 What Did You Find?</div>
@@ -1000,6 +1021,7 @@ function buildTables(){
   Object.entries(DATA).forEach(([key,cat])=>{
     const sec = document.createElement('div');
     sec.className = 'cat-section' + (cat.cursed?' cursed-section':'');
+    sec.id = 'cat-' + key;
 
     const renderRows = (items) => items.map(it=>{
       const band = (it.lo===it.hi) ? pad(it.lo) : pad(it.lo)+'\u2013'+pad(it.hi);
@@ -1072,6 +1094,7 @@ function showResult(cat, roll, stepLine){
       <div class="rr-meta">${hit.meta} \u00b7 ${catTitle}</div>
       <div class="rr-desc">${hit.desc}</div>
       ${hit.price!=='\u2014' ? `<div class="rr-price">Value: ${hit.price}</div>` : `<div class="rr-price">A curse has no honest price.</div>`}
+      <a href="#cat-${cat}" class="cat-jump rr-jump" data-cat="${cat}">\u2192 Jump to the full ${catTitle} table</a>
     </div>`;
   box.classList.remove('show'); void box.offsetWidth; box.classList.add('show');
 }
@@ -1092,6 +1115,19 @@ function rollEverything(){
   const sel = document.getElementById('cat-select');
   if (sel.querySelector(`option[value="${route.cat}"]`)) sel.value = route.cat;
 }
+
+/* ── Category jump links: smooth-scroll to the table and flash it ── */
+document.addEventListener('click', function(e){
+  const link = e.target.closest('.cat-jump');
+  if(!link) return;
+  const cat = link.dataset.cat;
+  const target = document.getElementById('cat-' + cat);
+  if(!target) return;
+  e.preventDefault();
+  target.scrollIntoView({behavior:'smooth', block:'start'});
+  target.classList.remove('jump-flash'); void target.offsetWidth; target.classList.add('jump-flash');
+  history.replaceState(null, '', '#cat-' + cat);
+});
 
 buildTables();
 </script>
