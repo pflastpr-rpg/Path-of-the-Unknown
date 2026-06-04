@@ -52,16 +52,236 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 .rune-div{text-align:center;margin:28px 0 20px;color:var(--gold-line);letter-spacing:10px;font-family:var(--font-sub);font-size:0.7em;}
 .btn-top{position:fixed;bottom:36px;right:36px;background:var(--iron);color:var(--gold);border:2px solid var(--iron);border-bottom:4px solid var(--blood);padding:11px 16px;font-family:var(--font-sub);font-size:0.65em;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:0.18s;box-shadow:0 4px 20px rgba(0,0,0,0.8);z-index:100;}
 .btn-top:hover{background:var(--blood);color:var(--parchment);}
-</style>
+    </style>
+
+    <style>
+    body.codex-layout { display:block; padding:0; background:#1E1E24; overflow-x:hidden; }
+    .codex-shell { display:grid; grid-template-columns:300px 1fr; min-height:100vh; max-width:1500px; margin:0 auto; transition:grid-template-columns 0.22s ease; }
+    .codex-shell.nav-collapsed { grid-template-columns:0 1fr; }
+    .codex-shell.nav-collapsed .codex-nav { transform:translateX(-100%); border-right-color:transparent; }
+    .codex-reopen { position:fixed; top:16px; left:0; z-index:58; background:var(--iron); color:var(--gold); border:2px solid var(--gold); border-left:none; padding:10px 12px 10px 10px; cursor:pointer; font-family:'Courier New',monospace; font-size:13pt; line-height:1; display:none; align-items:center; gap:7px; }
+    .codex-reopen .lbl { font-size:8pt; letter-spacing:2px; text-transform:uppercase; }
+    .codex-reopen:hover { background:var(--gold); color:var(--iron); }
+    .codex-shell.nav-collapsed ~ .codex-reopen { display:flex; }
+    .codex-collapse { position:absolute; top:16px; right:12px; background:transparent; color:var(--gold); border:1px solid rgba(184,134,11,0.5); width:26px; height:26px; cursor:pointer; font-size:12pt; line-height:1; display:flex; align-items:center; justify-content:center; padding:0; }
+    .codex-collapse:hover { background:var(--blood); color:var(--parchment); border-color:var(--blood); }
+    .codex-nav { background:var(--iron); border-right:3px solid var(--gold); position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto; padding:0 0 40px; font-family:'Courier New',monospace; }
+    .codex-nav::-webkit-scrollbar { width:10px; }
+    .codex-nav::-webkit-scrollbar-track { background:var(--iron); }
+    .codex-nav::-webkit-scrollbar-thumb { background:var(--gold); border:2px solid var(--iron); }
+    .codex-brand { padding:20px 18px 14px; border-bottom:2px solid var(--blood); margin-bottom:6px; position:relative; }
+    .codex-brand a { color:var(--gold); text-decoration:none; font-size:8.5pt; letter-spacing:2px; text-transform:uppercase; display:inline-block; margin-bottom:10px; opacity:0.75; }
+    .codex-brand a:hover { opacity:1; }
+    .codex-brand .title { color:var(--parchment); font-weight:700; font-size:15pt; letter-spacing:2px; text-transform:uppercase; display:block; }
+    .codex-brand .sub { color:var(--blood); font-size:8.5pt; letter-spacing:4px; text-transform:uppercase; display:block; margin-top:2px; }
+    .codex-search { padding:10px 14px 6px; }
+    .codex-search input { width:100%; background:#0a0a0e; border:1px solid var(--gold); color:var(--parchment); padding:7px 10px; font-family:inherit; font-size:9.5pt; letter-spacing:1px; }
+    .codex-search input::placeholder { color:rgba(240,226,192,0.4); }
+    .codex-search input:focus { outline:none; border-color:var(--blood); }
+    .nav-group { border-bottom:1px solid rgba(184,134,11,0.18); }
+    .nav-group-head { display:flex; align-items:center; justify-content:space-between; padding:10px 16px; cursor:pointer; color:var(--gold); font-weight:700; font-size:10pt; letter-spacing:2px; text-transform:uppercase; user-select:none; transition:background 0.15s; }
+    .nav-group-head:hover { background:rgba(184,134,11,0.10); }
+    .nav-group-head .chev { transition:transform 0.2s; font-size:11pt; color:var(--blood); }
+    .nav-group.collapsed .chev { transform:rotate(-90deg); }
+    .nav-group-body { overflow:hidden; transition:max-height 0.25s ease; }
+    .nav-group.collapsed .nav-group-body { max-height:0 !important; }
+    .nav-link { display:block; padding:6px 16px 6px 26px; color:rgba(240,226,192,0.72); text-decoration:none; font-size:9.5pt; letter-spacing:0.5px; border-left:3px solid transparent; transition:all 0.12s; }
+    .nav-link:hover { color:var(--parchment); background:rgba(184,134,11,0.08); }
+    .nav-link.active { color:var(--gold); background:rgba(168,24,24,0.18); border-left-color:var(--blood); font-weight:700; }
+    .view-toggle { display:flex; gap:0; padding:8px 14px 4px; }
+    .view-toggle button { flex:1; background:transparent; color:rgba(240,226,192,0.6); border:1px solid rgba(184,134,11,0.4); padding:5px 4px; font-family:'Courier New',monospace; font-size:7.5pt; letter-spacing:1px; text-transform:uppercase; cursor:pointer; }
+    .view-toggle button + button { border-left:none; }
+    .view-toggle button.active { background:var(--gold); color:var(--iron); font-weight:700; }
+    .view-toggle button:hover:not(.active) { background:rgba(184,134,11,0.12); color:var(--parchment); }
+    .nav-scheme { display:none; }
+    .nav-scheme.active { display:block; }
+    .codex-reader { background:var(--parchment); min-width:0; padding:0; }
+    .codex-reader .reader-inner { max-width:960px; margin:0 auto; padding:34px 46px 120px; }
+    .codex-reader [id] { scroll-margin-top:18px; }
+    .codex-reader h1 { margin-top:0; }
+    .codex-top { position:fixed; right:22px; bottom:22px; background:var(--iron); color:var(--gold); border:2px solid var(--gold); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:16pt; display:none; align-items:center; justify-content:center; z-index:50; }
+    .codex-top:hover { background:var(--gold); color:var(--iron); }
+    .codex-top.show { display:flex; }
+    .codex-burger { display:none; position:fixed; top:14px; left:14px; z-index:60; background:var(--iron); color:var(--gold); border:2px solid var(--gold); width:42px; height:42px; font-size:15pt; cursor:pointer; }
+    @media (max-width:900px) {
+        .codex-shell { grid-template-columns:1fr; }
+        .codex-nav { position:fixed; top:0; left:0; bottom:0; width:290px; z-index:55; transform:translateX(-100%); transition:transform 0.25s ease; }
+        .codex-nav.open { transform:translateX(0); }
+        .codex-burger { display:flex; align-items:center; justify-content:center; }
+        .codex-reader .reader-inner { padding:64px 20px 100px; }
+    }
+    @media print {
+        @page { size:letter portrait; margin:0.75in 0.7in 0.85in; @bottom-center { content:"Thrice-Marked  ·  " counter(page); font-family:'Courier New',monospace; font-size:8pt; color:#6b5a2a; } }
+        @page :first { @bottom-center { content:""; } }
+        html, body { background:#fff !important; }
+        body.codex-layout { display:block; }
+        .codex-nav, .codex-burger, .codex-reopen, .codex-collapse, .codex-top, .codex-search, .nav-bar { display:none !important; }
+        .codex-shell { display:block; max-width:none; }
+        .codex-reader { background:#fff !important; }
+        .codex-reader .reader-inner { max-width:none; padding:0; }
+        .skill-block { break-inside:avoid; }
+        table { break-inside:avoid; }
+        a { color:var(--ink) !important; text-decoration:none; }
+    }
+    </style>
 </head>
-<body>
-<div class="top-nav">
-    <a href="index.html" class="btn-nav">&#8592; Return to Gateway</a>
-    <a href="lore-scribe.html" class="btn-scribe">&#10022; Open Lore Scribe</a>
-</div>
-<nav class="jump-nav"><a href="#letter-A" id="jA">A</a><a href="#letter-B" id="jB">B</a><a href="#letter-C" id="jC">C</a><a href="#letter-D" id="jD">D</a><a href="#letter-E" id="jE">E</a><a href="#letter-F" id="jF">F</a><a href="#letter-G" id="jG">G</a><a href="#letter-H" id="jH">H</a><a href="#letter-I" id="jI">I</a><a href="#letter-J" id="jJ">J</a><a href="#letter-K" id="jK">K</a><a href="#letter-L" id="jL">L</a><a href="#letter-M" id="jM">M</a><a href="#letter-N" id="jN">N</a><a href="#letter-O" id="jO">O</a><a href="#letter-P" id="jP">P</a><a href="#letter-Q" id="jQ" class="empty">Q</a><a href="#letter-R" id="jR">R</a><a href="#letter-S" id="jS">S</a><a href="#letter-T" id="jT">T</a><a href="#letter-U" id="jU">U</a><a href="#letter-V" id="jV">V</a><a href="#letter-W" id="jW">W</a><a href="#letter-X" id="jX">X</a><a href="#letter-Y" id="jY">Y</a><a href="#letter-Z" id="jZ">Z</a></nav>
-<main class="tome" id="tomeMain">
-    <div class="tome-masthead">
+<body class="codex-layout">
+<button class="codex-burger" aria-label="Open navigation">&#9776;</button>
+<div class="codex-shell" id="codex-shell">
+  <nav class="codex-nav" id="codex-nav">
+    <div class="codex-brand">
+      <button class="codex-collapse" id="codex-collapse" aria-label="Collapse sidebar" title="Collapse sidebar">&#10094;</button>
+      <a href="index.html">&#8962; Return to Hub</a>
+      <span class="title">Thrice-Marked</span>
+      <span class="sub">Lore Compendium</span>
+    </div>
+    <div class="codex-search"><input id="codex-search-input" type="text" placeholder="Filter entries..." autocomplete="off"></div>
+    <div class="nav-group">
+      <div class="nav-group-head"><span>A</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-the-aakzad-origin-cosmological-position" class="nav-link" data-target="lore-the-aakzad-origin-cosmological-position">The Aakzad: Origin & Cosmological Position</a>
+        <a href="#lore-aakzad-crypt-priest" class="nav-link" data-target="lore-aakzad-crypt-priest">AakZad Crypt Priest</a>
+        <a href="#lore-aakzad-knotted-giant" class="nav-link" data-target="lore-aakzad-knotted-giant">Aakzad Knotted Giant</a>
+        <a href="#lore-aakzad-phalanx-guard" class="nav-link" data-target="lore-aakzad-phalanx-guard">Aakzad Phalanx-Guard</a>
+        <a href="#lore-aakzad-warrior" class="nav-link" data-target="lore-aakzad-warrior">Aakzad Warrior</a>
+        <a href="#lore-aakzad-biomechanical-harvester" class="nav-link" data-target="lore-aakzad-biomechanical-harvester">AakZad: Biomechanical Harvester</a>
+        <a href="#lore-aethon-the-world-breaker" class="nav-link" data-target="lore-aethon-the-world-breaker">Aethon, The World-Breaker</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>B</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-barbarian-hordes-the-steppe-born" class="nav-link" data-target="lore-barbarian-hordes-the-steppe-born">Barbarian Hordes: The Steppe-Born</a>
+        <a href="#lore-birn-uluhm" class="nav-link" data-target="lore-birn-uluhm">Birn Uluhm</a>
+        <a href="#lore-birn-uluhm-engineer-overseer" class="nav-link" data-target="lore-birn-uluhm-engineer-overseer">Birn Uluhm Engineer Overseer</a>
+        <a href="#lore-the-blight" class="nav-link" data-target="lore-the-blight">The Blight</a>
+        <a href="#lore-blight-elves" class="nav-link" data-target="lore-blight-elves">Blight Elves</a>
+        <a href="#lore-blight-spider-the-web-stitcher" class="nav-link" data-target="lore-blight-spider-the-web-stitcher">Blight-Spider: The Web-Stitcher</a>
+        <a href="#lore-the-broken-father" class="nav-link" data-target="lore-the-broken-father">The Broken Father</a>
+        <a href="#lore-the-bishop-houses-the-burned-name" class="nav-link" data-target="lore-the-bishop-houses-the-burned-name">The Bishop Houses & the Burned Name</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>C</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-the-church-of-the-radiant-compact" class="nav-link" data-target="lore-the-church-of-the-radiant-compact">The Church of the Radiant Compact</a>
+        <a href="#lore-chaos-the-three-tenebrous-var-thuun-malgathor" class="nav-link" data-target="lore-chaos-the-three-tenebrous-var-thuun-malgathor">Chaos: The Three — Tenebrous, Var'thuun & Malgathor</a>
+        <a href="#lore-chaos-the-vane-ascension" class="nav-link" data-target="lore-chaos-the-vane-ascension">Chaos: The Vane Ascension</a>
+        <a href="#lore-the-church-hierarchy-the-four-bishops" class="nav-link" data-target="lore-the-church-hierarchy-the-four-bishops">The Church Hierarchy: The Four Bishops</a>
+        <a href="#lore-chaos-dwarf-the-lava-forged" class="nav-link" data-target="lore-chaos-dwarf-the-lava-forged">Chaos Dwarf: The Lava-Forged</a>
+        <a href="#lore-chaos-dwarf-the-slag-drudge" class="nav-link" data-target="lore-chaos-dwarf-the-slag-drudge">Chaos Dwarf: The Slag-Drudge</a>
+        <a href="#lore-chaos-wizard-the-warlock" class="nav-link" data-target="lore-chaos-wizard-the-warlock">Chaos Wizard: The Warlock</a>
+        <a href="#lore-chlorofel-thorn-wolf" class="nav-link" data-target="lore-chlorofel-thorn-wolf">Chlorofel Thorn-Wolf</a>
+        <a href="#lore-the-chromatic-weald" class="nav-link" data-target="lore-the-chromatic-weald">The Chromatic Weald</a>
+        <a href="#lore-clanless-territory-the-lost-souls" class="nav-link" data-target="lore-clanless-territory-the-lost-souls">Clanless Territory: The Lost Souls</a>
+        <a href="#lore-chaos-the-three-below-the-three" class="nav-link" data-target="lore-chaos-the-three-below-the-three">Chaos: The Three Below the Three</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>D</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-dwarf-kel-thurum-defender" class="nav-link" data-target="lore-dwarf-kel-thurum-defender">Dwarf: Kel Thurum Defender</a>
+        <a href="#lore-dwarf-kel-thurum-militiaman" class="nav-link" data-target="lore-dwarf-kel-thurum-militiaman">Dwarf: Kel Thurum Militiaman</a>
+        <a href="#lore-the-deep-rot-what-sleeps-beneath-theldur" class="nav-link" data-target="lore-the-deep-rot-what-sleeps-beneath-theldur">The Deep-Rot & What Sleeps Beneath Theldur</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>E</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-earth-elemental-the-tectonic-heart" class="nav-link" data-target="lore-earth-elemental-the-tectonic-heart">Earth Elemental: The Tectonic-Heart</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>F</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-the-fall-of-the-verdant-south" class="nav-link" data-target="lore-the-fall-of-the-verdant-south">The Fall of the Verdant South</a>
+        <a href="#lore-the-frozen-arc-the-six-clans-the-council-fire" class="nav-link" data-target="lore-the-frozen-arc-the-six-clans-the-council-fire">The Frozen Arc &mdash; The Six Clans & the Council-Fire</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>H</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-human-cultist-the-fractured-soul" class="nav-link" data-target="lore-human-cultist-the-fractured-soul">Human Cultist: The Fractured Soul</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>K</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-kel-thurum" class="nav-link" data-target="lore-kel-thurum">Kel Thurum</a>
+        <a href="#lore-khugron" class="nav-link" data-target="lore-khugron">Khugron</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>L</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-lithomancy" class="nav-link" data-target="lore-lithomancy">Lithomancy</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>M</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-mycelian-veil-stalker" class="nav-link" data-target="lore-mycelian-veil-stalker">Mycelian Veil-Stalker</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>N</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-the-northern-clans-peoples-of-the-frozen-arc" class="nav-link" data-target="lore-the-northern-clans-peoples-of-the-frozen-arc">The Northern Clans: Peoples of the Frozen Arc</a>
+        <a href="#lore-northern-clan-stoneback-of-brackwater" class="nav-link" data-target="lore-northern-clan-stoneback-of-brackwater">Northern Clan: Stoneback of Brackwater</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>P</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-the-pale-divide" class="nav-link" data-target="lore-the-pale-divide">The Pale Divide</a>
+        <a href="#lore-the-pyreborn" class="nav-link" data-target="lore-the-pyreborn">The Pyreborn</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>R</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-rysahm-ashlands" class="nav-link" data-target="lore-rysahm-ashlands">Rysahm Ashlands</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>S</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-the-sunken-archive" class="nav-link" data-target="lore-the-sunken-archive">The Sunken Archive</a>
+        <a href="#lore-sunsreach" class="nav-link" data-target="lore-sunsreach">SunsReach</a>
+        <a href="#lore-syl-kares" class="nav-link" data-target="lore-syl-kares">Syl-Kares</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>T</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-the-terra-titan" class="nav-link" data-target="lore-the-terra-titan">The Terra-Titan</a>
+        <a href="#lore-thaddeus" class="nav-link" data-target="lore-thaddeus">Thaddeus</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>V</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-vulkan-kahn" class="nav-link" data-target="lore-vulkan-kahn">Vulkan-Kahn</a>
+        <a href="#lore-vulkan-kahn-the-first-forge" class="nav-link" data-target="lore-vulkan-kahn-the-first-forge">Vulkan-Kahn: The First Forge</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>W</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-the-warrens-of-oakhaven" class="nav-link" data-target="lore-the-warrens-of-oakhaven">The Warrens of Oakhaven</a>
+        <a href="#lore-wither-walker-the-blighted-sylvan" class="nav-link" data-target="lore-wither-walker-the-blighted-sylvan">Wither-Walker: The Blighted Sylvan</a>
+      </div>
+    </div>
+    <div class="nav-group collapsed">
+      <div class="nav-group-head"><span>X</span><span class="chev">&#9662;</span></div>
+      <div class="nav-group-body">
+        <a href="#lore-xochitonal-the-guardian-of-the-sun-blood" class="nav-link" data-target="lore-xochitonal-the-guardian-of-the-sun-blood">Xochitonal: The Guardian of the Sun-Blood</a>
+      </div>
+    </div>
+  </nav>
+  <main class="codex-reader" id="top">
+    <div class="reader-inner">
+<div class="tome-masthead">
         <p class="tome-eyebrow">Thrice-Marked</p>
         <h1 class="tome-title">Tome of Lore</h1>
         <p class="tome-sub">A Lexicon of the Known &amp; Half-Known World</p>
@@ -70,7 +290,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 
     <div id="letter-A" class="letter-head">A</div>
     <div class="entry">
-        <h2 class="entry-title">The Aakzad: Origin &amp; Cosmological Position <span class="entry-tag">Cosmology &middot; Pre-Age Intelligence</span></h2>
+        <h2 class="entry-title" id="lore-the-aakzad-origin-cosmological-position">The Aakzad: Origin &amp; Cosmological Position <span class="entry-tag">Cosmology &middot; Pre-Age Intelligence</span></h2>
         <p>The Aakzad are not an incursion of Chaos. This structural distinction is absolute, and the fact that the kingdoms of the settled world have failed to recognize it is the precise reason they remain utterly unequipped for the awakening. The three Chaos Gods — Tenebrous, Var'thuun, Malgathor — are parasites of mortal volatility; they require the cracks in a soul, the frailty of ambition, or the rot of institutional stagnation to force an entry. They negotiate; they corrupt from within. The Aakzad do not negotiate, and they cannot corrupt. They harvest. They hold no interest in your theology, your empires, or your personal sins. They seek only the baseline life-frequency of your flesh, and when they have emptied the vessel, the mechanism moves on.</p>
         <p>They predate the boundaries of the current Age. The oldest High Elven records — the ones Thalasien keeps sealed under iron locks at the highest classification, which detail the landscape before the Ancient Alliance was a theoretical concept — refer to them as the <strong>Mor-Tekh</strong>: the Persistent Ones, the Cold Civilization, the entity that was already ancient when the world's geology was young. They were not spawned by the void; they were once organic — a living civilization of staggering technological and cognitive sophistication that solved the problem of mortality and, in doing so, engineered a worse disaster. They achieved biomechanical synthesis not through a pact with dark gods, but through cold, systematic pursuit — treating death as a solvable calculation. They solved it, and they have never left. The vital life-frequency that made their existence meaningful has been depleting for millennia, leaving behind only the pure, grinding mechanism — vast, patient, and running on fumes.</p>
         <p>Their harvest is a matter of slow, thermodynamic preservation. They are not dying toward extinction, but toward absolute mechanization — each generation of processed life buying another cycle of clockwork function, each successive cycle producing slightly less warmth than the one before. They are not evil in the moral register of Chaos; they are the clinical aftermath of a choice made so long ago that the civilization that made it is unrecognizable in the titanium-ribbed husks that walk today. They are tragic in the manner of a moving glacier — massive, slow, indifferent to the biology they crush, and entirely beyond the reach of prayer or negotiation.</p>
@@ -86,49 +306,49 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">AakZad Crypt Priest <span class="entry-tag">Construct &middot; Biomechanical</span></h2>
+        <h2 class="entry-title" id="lore-aakzad-crypt-priest">AakZad Crypt Priest <span class="entry-tag">Construct &middot; Biomechanical</span></h2>
         <p>The Crypt Priest is the cold intelligence behind the Aakzad swarm — not a soldier but a custodian, threaded through with brass filament and humming conduit, capable of broadcasting the Spirit-Echo frequency across distances that should be impossible. Those who have survived proximity to one describe not sound but sensation: a vibration in the jaw and marrow as it calibrates the air itself.</p>
         <p>Scholars of the old Shamanic orders believe the Priests were the original Aakzad — the first minds to achieve biomechanical synthesis — and that the Warriors are copies the Priests encoded. To destroy a Priest is not merely to kill a general; it is to erase a library that the swarm has been reading from.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>A Crypt Priest was reportedly captured by Kel Thurum artificers three centuries ago. Their records speak of seventeen days of study before the stone walls began to crack. The records end there.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Aakzad Knotted Giant <span class="entry-tag">Construct &middot; Biomechanical</span></h2>
+        <h2 class="entry-title" id="lore-aakzad-knotted-giant">Aakzad Knotted Giant <span class="entry-tag">Construct &middot; Biomechanical</span></h2>
         <p>When the Aakzad require a siege engine, they grow one. The Knotted Giant is a monument of necrotized bone and living metal, stitched together with glowing green sinew that contracts, heals, and reknits split seams between heartbeats — which is why armies that have faced these things report axes burying deep and achieving nothing.</p>
         <p>What disturbs the learned more than its size is its patience. Witnesses from the Siege of the Pale Corridor record the Knotted Giant standing motionless at the tree line for eleven days before the assault — not resting, but waiting with a precision no animal possesses.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>The glowing sinew-knots that hold the Giant together have been found in severed pieces still moving for up to six hours after battle. What they are reaching toward is not known.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Aakzad Phalanx-Guard <span class="entry-tag">Alien-Undead &middot; Elite Sentinel</span></h2>
+        <h2 class="entry-title" id="lore-aakzad-phalanx-guard">Aakzad Phalanx-Guard <span class="entry-tag">Alien-Undead &middot; Elite Sentinel</span></h2>
         <p>Ten were released from the Shamanic prison when the seal broke, and ten is precisely the number the oldest containment texts warned against. Cold-eyed and militarily precise, the Phalanx-Guards are not foot soldiers — they are locks, architectural elements of the Aakzad&#39;s distributed mind given bodies capable of holding a line against anything short of concentrated arcane assault.</p>
         <p>The Shamanic traditions that built the original prison recorded one observation above all: the Phalanx-Guards do not fight to win. They fight to hold. Those who survived describe a moment where the Guard&#39;s posture changes almost imperceptibly, and the realization arrives that they have been exactly where the Guard wanted them for some time.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>Only ten were recorded in the prison&#39;s manifest. Investigators who reached the site counted nine intact bodies. The tenth&#39;s alcove was empty and had been for some time, based on the settled dust around it.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Aakzad Warrior <span class="entry-tag">Construct &middot; Biomechanical</span></h2>
+        <h2 class="entry-title" id="lore-aakzad-warrior">Aakzad Warrior <span class="entry-tag">Construct &middot; Biomechanical</span></h2>
         <p>Called the Resonant Legionnaire in the oldest texts, the Aakzad Warrior fights with the quiet efficiency of a mechanism doing what it was built to do — armor extruded directly from its own marrow, joints articulating in directions mammalian anatomy cannot replicate. It does not fight with anger. It fights with calculation.</p>
         <p>A single Warrior is dangerous. What makes the Aakzad terrible is that a Warrior encountered alone is almost never alone. Every frequency it emits is communication, broadcasting the details of its engagement to every Warrior within range. To fight one is to inform all of them.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>There are accounts from three separate conflicts of Aakzad Warriors stopping mid-combat, turning away from living opponents, and walking in the same direction with clear purpose. None of the observers followed to learn why.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">AakZad: Biomechanical Harvester <span class="entry-tag">Construct &middot; Biomechanical</span></h2>
+        <h2 class="entry-title" id="lore-aakzad-biomechanical-harvester">AakZad: Biomechanical Harvester <span class="entry-tag">Construct &middot; Biomechanical</span></h2>
         <p>The Harvester is not a soldier — it is a question the Aakzad are asking about every living thing they encounter. Centauroid in profile, fusing two bodies into one chassis of bone and driven metal, it moves through battlefields collecting rather than simply destroying. What it collects is not discarded. It is processed. The Aakzad build from what they take.</p>
         <p>The Harvester always arrives after Warriors have broken a position, never before — the careful hand after the fist. This suggests a supply chain. The Aakzad are not simply destroying; they are manufacturing, and the Harvester is the factory floor.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>A village in the outer Rysahm approaches was found emptied by what local signs indicated was a Harvester assault. No bodies were recovered. No blood was found. The structures were untouched.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Aethon, The World-Breaker <span class="entry-tag">Terra-Titan &middot; Elemental</span></h2>
+        <h2 class="entry-title" id="lore-aethon-the-world-breaker">Aethon, The World-Breaker <span class="entry-tag">Terra-Titan &middot; Elemental</span></h2>
         <p>Nearly a hundred feet of obsidian and mantle-fire, Aethon is one of the walking mountains — a Terra-Titan that does not pursue, does not scheme, and simply moves. What is in his path ceases to be in a form it previously occupied. Villages have been built on the assumption that his path has not changed in four hundred years. This is the assumption that ends villages.</p>
         <p>The Pyreborn name Aethon in their oldest oral traditions as a cousin of the Terra-Titan beneath Birn Uluhm — the one whose heart still pulses. If correct, Aethon is the waking kind. What woke him, and what he walks toward, the Ashlands nomads answer only in the negative: not us, not yet, not this season.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>Three expeditions have attempted to chart Aethon&#39;s path precisely enough to predict his next passage. The first two returned incomplete. The third did not return at all, though their instruments were found — still recording — forty miles from their last known position.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Church of the Radiant Compact <span class="entry-tag">Human Faction &middot; Religion</span></h2>
+        <h2 class="entry-title" id="lore-the-church-of-the-radiant-compact">The Church of the Radiant Compact <span class="entry-tag">Human Faction &middot; Religion</span></h2>
         <p>The Church of the Radiant Compact is not simply a faith — it is the most effective instrument of institutional control the world has ever produced. Its dogma travels faster than any army, its tithe faster than any trade route, and its authority is maintained not through divine mandate but through a machinery of fabrication so thorough that most who live inside it have never seen the seams.</p>
         <h3 class="sub-header">The Doctrine of the White Page</h3>
         <p>The theological engine of the Church is the Doctrine of the White Page. The Compact teaches that the pre-Empire world was inherently sinful — a chaotic epoch in which mortals consorted with primordial beasts and bargained with rogue magics — and that history is therefore not a record to be studied but a contagion to be excised. The erasure of ancient texts, non-human oral traditions, and contradictory records is held to be a holy act of purification rather than destruction. To the Church, a blank page is not an absence. It is the highest form of spiritual sanctity, and the inquisitor who produces one has performed a sacrament.</p>
@@ -140,7 +360,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Barbarian Hordes: The Steppe-Born <span class="entry-tag">Faction &middot; Northern Nomads</span></h2>
+        <h2 class="entry-title" id="lore-barbarian-hordes-the-steppe-born">Barbarian Hordes: The Steppe-Born <span class="entry-tag">Faction &middot; Northern Nomads</span></h2>
         <p>They are not a unified force and they do not call themselves Barbarians — that name belongs to the settled world, which uses it to mean anyone who has declined to build walls and call the space inside civilized. The steppe people call themselves by their clan names: the Ashwalkers, the Iron Mane, the Three-Bone, the Hollowed, the Stoneback, and the Lost Souls — and a dozen lesser formations whose names translate poorly and whose histories are kept in oral traditions the settled world has never successfully transcribed. It should be noted that the Ashwalkers, Iron Mane, Three-Bone, Hollowed, Stoneback, and Lost Souls are not themselves steppe-born — they are the northern coastal peoples, descended from the clans that fled the steppe coalition four centuries ago. The settled world groups them all under the heading of Barbarian Hordes as a matter of cartographic convenience. The northern peoples find this imprecise. The steppe nomads find it insulting. Both objections have been noted and filed by the same institution that produced the map.</p>
         <p>What those oral traditions do not volunteer, and what outside scholars have only pieced together from Elven records and Dwarven archive fragments, is what those clans' ancestors did four centuries ago.</p>
         <h3 class="sub-header">The Inheritance of the Betrayal</h3>
@@ -157,7 +377,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Northern Clans: Peoples of the Frozen Arc <span class="entry-tag">Faction &middot; Northern Frontier</span></h2>
+        <h2 class="entry-title" id="lore-the-northern-clans-peoples-of-the-frozen-arc">The Northern Clans: Peoples of the Frozen Arc <span class="entry-tag">Faction &middot; Northern Frontier</span></h2>
         <p>The settled world calls them Barbarians because that is easier than understanding them. The northern peoples call themselves by clan names that have survived four centuries of cold, war, and the particular pressure of living on the edge of a world that does not care whether you survive the winter. They are not the steppe nomads — that distinction is important. The steppe clans are the descendants of the coalition that destroyed the Var'kai. The northern coast peoples are the remnants of the clans that refused, that fled, that scattered ahead of what the ritual produced. They are the ones who chose the ice over complicity, and the ice shaped them accordingly.</p>
         <p>Six major clan identities dominate the frozen arc. They share a language family with enough mutual intelligibility to negotiate and enough distinct dialects to insult each other precisely. They share a theology built around the concept that the world is actively testing everyone, all the time, and the measure of a person is how they respond to the test — not whether they pass it. They share a tradition of oral history kept by Skalds — not priests or scholars but trained memory-keepers who can recite seven generations of clan history without pause and who are considered the most dangerous people in any room because they remember everything.</p>
 
@@ -218,7 +438,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Birn Uluhm <span class="entry-tag">The Iron Roots &middot; Dwarven Faction</span></h2>
+        <h2 class="entry-title" id="lore-birn-uluhm">Birn Uluhm <span class="entry-tag">The Iron Roots &middot; Dwarven Faction</span></h2>
         <p>Birn Uluhm did not begin as a city. It began as a wound. The vertical metropolis now occupies the skeletal ribcage of the Terra-Titan itself &mdash; a colossal, petrified entity of a scale that reframes what the word <em>ancient</em> means. It is carved into the parched, blood-red earth of the deep Dwarven mountains, powered by geothermal fury, and ruled by a clan that has not been fully alive for a very long time.</p>
         <h3 class="section-header">The Fall of Kel Thurum &mdash; Overseer&rsquo;s Records</h3>
         <p>Long before the geothermal forges roared, the Birn were the most ambitious mining caste within the grand dwarven empire of Kel Thurum &mdash; celebrated as the fearless Deep-Delvers. They pierced a seam of black slate at a depth no instrument had charted and found a heartbeat. Slow. Thick. Geological. The oily dark marrow that wept from it stained their tools and their hands and, in time, their minds.</p>
@@ -239,21 +459,21 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Birn Uluhm Engineer Overseer <span class="entry-tag">Humanoid &middot; Artificer (Iron Roots)</span></h2>
+        <h2 class="entry-title" id="lore-birn-uluhm-engineer-overseer">Birn Uluhm Engineer Overseer <span class="entry-tag">Humanoid &middot; Artificer (Iron Roots)</span></h2>
         <p>The Engineer Overseers are the infrastructure that makes the Iron Roots function: encased in volcanic exoskeletons that hiss steam at every joint, they translate Varkhas the High Machinist&#39;s quotas into the daily reality of the forge floor with a cruelty that is professional rather than personal. The quota must be met. The schedule does not accommodate sentimentality.</p>
         <p>The exoskeleton is not merely armor — it connects the Overseer directly to the machinery they command, and a Overseer detached from their suit appears diminished, as though part of their cognition resided in the machine. Whether this is designed or an unintended consequence of prolonged wear, Birn Uluhm has not shared.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>Overseer records, partially decoded by outside scholars, appear to be not production logs but breeding records — tracking lineages, capabilities, and what their notation calls &#39;yield potential&#39; for the workers in their charge.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Blight <span class="entry-tag">Phenomenon &middot; The Desiccated</span></h2>
+        <h2 class="entry-title" id="lore-the-blight">The Blight <span class="entry-tag">Phenomenon &middot; The Desiccated</span></h2>
         <p>Those who have read accounts of the undead and believe they know what awaits them in the deep south are wrong in one specific and consequential way. The undead of the northern necromancers rot. They decay. They smell of the process by which life becomes earth, which is a process the living mind can categorize and, with effort, habituate to. The Desiccated do not rot. The Blight has already done to them what decay does over years — it did it in hours, drawing the moisture out at a fundamental level and leaving behind something harder than it should be, lighter than it looks, and utterly without the quality of softness that the living associate with flesh. They are not decomposing. They are preserved. This is worse.</p>
         <p>A Desiccated undead bears no resemblance to the shambling plague of civilized battlefields. It moves with the dry, clicking precision of articulated bone — but bone still wrapped in taut, parchment-grey skin, still wearing whatever it wore when the Ash-Winds found it, those garments now as brittle and preserved as the body within them. They hunger for Spirit — the animating principle of life — and when they inflict wounds that bleed, they feed. Not metaphorically. The moisture of the wound, the vital essence in the blood, visibly drawn toward the Desiccated&#39;s surface, absorbed through the grey skin in the way that sand absorbs water. A fighter who takes a bleeding wound in a Desiccated swarm does not simply lose blood. They lose something harder to name and slower to recover. Healers who have treated survivors from Pale Weald incursions use the word <em>diminished</em> with a consistency that suggests they have all independently arrived at the same inadequate description of the same thing.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>The Blight Elves&#39; Spirit-Binding holds the Desiccated in their patrol patterns, but the binding is a leash, not a creation. The Desiccated existed before Syl-Kares. They will exist after it. What they were before the Blight made them what they are — and whether anything of that original thing remains aware inside the desiccated shell — is a question the Blight Elves do not answer, and do not ask.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Blight Elves <span class="entry-tag">Faction &middot; The Pale Weald</span></h2>
+        <h2 class="entry-title" id="lore-blight-elves">Blight Elves <span class="entry-tag">Faction &middot; The Pale Weald</span></h2>
         <p>The first thing you notice, if you are close enough to notice anything, is the skin. Not grey in the way of illness or the way of the dead — grey in the way of ash that has been pressed into flesh over generations, the Blight&#39;s necrotic register written permanently into the biology of a people who have breathed its air since birth. Against the ash-grey, the crimson is absolute: hair the color of fresh blood, or tattoos in that same color running in precise notational lines along the forearms and throat — the same scar-notation of the Syl-Kethara, but on those who have not yet given enough to carry it in raised tissue. They wear armor of petrified wood and bone, shaped from the same dead forest that makes their city, and they move in it with the ease of people who have never known anything lighter. They look, to northern eyes, like a people carrying their funeral in their clothes. This impression is accurate, and they know it, and they consider it appropriate.</p>
         <p>What they carry in their manner is harder to name than their appearance. Aristocratic is the word that survivors reach for, and it is correct as far as it goes — there is a precision in how they speak, an exactness in what they permit their faces to communicate, a quality of attention that feels like appraisal even when it is simply observation. But the aristocracy of the northern courts is performed over comfort. The Blight Elves&#39; is performed over a ledger. Every interaction is transactional in the specific sense that they have calculated what everything costs and they expect others to have done the same, and their contempt for those who have not is the contempt of the meticulous for the careless, refined by centuries of living in a place where carelessness kills everyone in the vicinity. They are not cruel in the way of things that enjoy cruelty. They are exact in the way of things that cannot afford waste, and the distinction, from the inside of the transaction, is academic.</p>
         <p>To encounter a Blight Elf outside the Pale Weald is to encounter the raiders, and the raiders are not the best of them — they are the ones sent because they are expendable enough to risk on the crossing and capable enough to return with what was asked of them. They move through the north with the particular focus of people who are working, who have a quota, who know the cost of failing to meet it. They do not hate the people they take. Hatred is an expenditure. They regard the north with the patient, methodical attention of a harvester regarding a field, and the field&#39;s opinion of the harvest is not a variable in their calculation. The bitterness is there — it runs through everything they do like the crimson through their hair — but it is not hot. It has had too long to cool into something denser than anger: a permanent conviction that the world owes them a debt it has not yet acknowledged, and that they are simply collecting what was always theirs.</p>
@@ -262,21 +482,21 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Pale Divide <span class="entry-tag">Blight Elves &middot; Thalasien</span></h2>
+        <h2 class="entry-title" id="lore-the-pale-divide">The Pale Divide <span class="entry-tag">Blight Elves &middot; Thalasien</span></h2>
         <p>To speak of the Blight Elves within the silvered arches of Thalasien is to invite a sudden, freezing drop in ambient temperature. They are not considered enemies; they are considered a terminal diagnosis the city refuses to acknowledge. Centuries spent in the shadow of the Pale Weald did not merely change their skin or the shape of their eyes — it fundamentally altered their resonance with the arcane. Where a Thalasien scholar dissects magic with surgical detachment, a Blight Elf bleeds it, breathes it, and allows it to fester.</p>
         <p>When one of the Blight-touched walks through the gates of the capital, no alarm is sounded. Instead, the streets simply empty. The silver doors are barred. They are permitted to walk the flawless corridors entirely alone — a living ghost of a compromised bloodline — until the crushing, engineered isolation drives them back into the rot where they belong.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>A Blight Elf emissary arrived at Thalasien's eastern gate six months ago carrying a sealed letter addressed to the High Archivist. The streets emptied as expected. The silver doors closed. The emissary waited three days in absolute silence, then left the letter propped against the sealed door and walked back into the Pale Weald. The High Archivist has not confirmed whether the letter was retrieved. The eastern gate has not been opened since.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Blight-Spider: The Web-Stitcher <span class="entry-tag">Beast &middot; Monstrosity</span></h2>
+        <h2 class="entry-title" id="lore-blight-spider-the-web-stitcher">Blight-Spider: The Web-Stitcher <span class="entry-tag">Beast &middot; Monstrosity</span></h2>
         <p>Carriage-sized and jagged where a spider&#39;s silhouette should be smooth, the Blight-Spider reinforces its own exoskeleton with silk, bone, rusted metal, and hardened resin — pressing materials into the gaps between natural chitin until what walks is less an animal than a walking construction project. Its webs are similarly composite: traps that function more like architecture.</p>
         <p>The territory a Blight-Spider claims is worked over time the way a craftsman works a material. The web-structures it builds over months and years serve as alarm systems, larders, barriers, and — in the view of naturalists who have studied them most carefully — something approaching a home. They are not mindless.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>In the undercroft of a collapsed tower in the Chromatic Weald region, a Blight-Spider was found to have incorporated three intact books from the tower&#39;s library into its web. The silk around them was looser than the rest of the web, as though they had been placed rather than caught.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Broken Father <span class="entry-tag">Named Entity &middot; Living Legend</span></h2>
+        <h2 class="entry-title" id="lore-the-broken-father">The Broken Father <span class="entry-tag">Named Entity &middot; Living Legend</span></h2>
         <p>No confirmed name. No confirmed location. No confirmed appearance beyond the sparse, contradictory accounts of those who claim to have seen something in the eastern wastes that was not quite an Orc and not quite a man &mdash; something that moved with purpose in a direction it refused to explain.</p>
         <p>He was the eleventh Shaman of the <strong>Var&rsquo;kai</strong>, an unbroken lineage of nomadic spiritual practitioners whose tradition predates anything the Radiant Compact has chosen to preserve. He performed the ritual that unmade his people. He was standing outside the summoning circle when it collapsed, which is the only reason he survived &mdash; and survival, in his case, is a generous word for what happened to him.</p>
         <p>The spirits that tore through the Var&rsquo;kai warband transformed them into the first Orcs &mdash; bodies thickened, consciousness rewired, the spirit channel welded permanently open. The Broken Father received something different. The backlash inverted him. Those who have seen him describe a figure that is withered where the Orcs are massive, deliberate where they are compulsive, and profoundly, unbearably aware of what he caused. He is not disfigured in the Orc&rsquo;s manner. He is disfigured in his own.</p>
@@ -294,7 +514,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">Chaos: The Three — Tenebrous, Var'thuun &amp; Malgathor <span class="entry-tag">Cosmology &middot; The Dark Pantheon</span></h2>
+        <h2 class="entry-title" id="lore-chaos-the-three-tenebrous-var-thuun-malgathor">Chaos: The Three — Tenebrous, Var'thuun &amp; Malgathor <span class="entry-tag">Cosmology &middot; The Dark Pantheon</span></h2>
         <p>The Chaos Gods did not fashion the clay of this world; they predate it the way entropy predates structure. They are the vast, predatory intelligences dwelling in the spaces between stars, in the frozen silence that follows an unanswered prayer, and within the void that tears open when a mortal reaches past the boundary of flesh and finds something reaching back. Every time a soul breaks under sufficient weight, every time a line of faith collapses and leaves a hollow cavity, the Three are what does the filling. They did not arrive from afar; they were always already there, waiting for the structural failures of mortality to provide an opening wide enough to use.</p>
         <p>They are three, and they do not cooperate. They compete with a cold, timeless hunger for souls, for territory in the material plane, and for the right to claim the final consequences of mortal suffering as their own. What they share is an appetite that has no biological limit and a patience that makes geological epochs feel brief. The settled world groups them under the comfortable fiction of the 'Chaos Gods,' as though the title confers some orderly pantheon upon what is fundamentally an ongoing, multi-millennial argument between three vast cosmic entities regarding which method of consuming reality is most efficient. The Church of the Radiant Compact officially maintains they do not exist — a doctrine of enforced ignorance that Tenebrous finds remarkably useful.</p>
         <h3 class="sub-header">Tenebrous, The Monarch of the Living Silk — God of Broken Faith &amp; Institutional Corruption</h3>
@@ -317,7 +537,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Chaos: The Vane Ascension <span class="entry-tag">History &middot; The First Compact</span></h2>
+        <h2 class="entry-title" id="lore-chaos-the-vane-ascension">Chaos: The Vane Ascension <span class="entry-tag">History &middot; The First Compact</span></h2>
         <p>The Church of the Radiant Compact does not speak of Bishop Malakai Vane. His records were expunged from the eastern diocese rolls forty-three years ago in an operation that required the personal seal of the High Prelate and the destruction of seventeen years of correspondence. The parishes he administered still exist. The tithes he collected are still in the treasury. The infrastructure he built for managing the eastern border territories is still in use, operated by the people he trained, running on the systems he designed. The Church uses his work every day while maintaining, officially, that he never existed.</p>
         <p>He existed.</p>
         <h3 class="sub-header">The Man Before</h3>
@@ -345,7 +565,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Church Hierarchy: The Four Bishops <span class="entry-tag">Faction &middot; Church of the Radiant Compact</span></h2>
+        <h2 class="entry-title" id="lore-the-church-hierarchy-the-four-bishops">The Church Hierarchy: The Four Bishops <span class="entry-tag">Faction &middot; Church of the Radiant Compact</span></h2>
         <p>The Church of the Radiant Compact is administered at the district level by a senior bishop, and the current four hold between them the most significant ecclesiastical territories in the known world. They are not a unified body. They are four separate power structures that share a name, an institutional language, and a comprehensive mutual surveillance that each of them conducts while publicly maintaining that collegial trust is the foundation of the Church's authority. None of them trust each other. All of them are correct not to.</p>
         <h3 class="sub-header">Bishop Malakai Vane & Lady Eleanor Vane (née Corvus)</h3>
         <p><em>The eastern border tithes. Clinical, old wealth, severed ties.</em></p>
@@ -373,31 +593,31 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Chaos Dwarf: The Lava-Forged <span class="entry-tag">Humanoid &middot; Corrupted (Birn Uluhm)</span></h2>
+        <h2 class="entry-title" id="lore-chaos-dwarf-the-lava-forged">Chaos Dwarf: The Lava-Forged <span class="entry-tag">Humanoid &middot; Corrupted (Birn Uluhm)</span></h2>
         <p>The Lava-Forged Taskmasters of Birn Uluhm are the exact consequence of a people trading their oaths for power, only to find the power rewrites what an oath can be. Their flesh mimics cooled basalt, their beards are woven with jagged obsidian rings, and their eyes possess the terrible focus of those who have surgically excised their own capacity for mercy. Within the Iron Roots, they are the vital connective tissue between the Overseers&#39; quotas and the Drudges&#39; agony, enforcing the forge&#39;s daily reality. This corruption has not diminished their dwarven competence; it has weaponized their commitment, for they have sacrificed too much of their original souls to permit the work to fail.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>Dwarven scholars from Kel Thurum who study Birn Uluhm records return fundamentally altered, maintaining a specific, unbroken silence on certain matters and acquiring a nervous habit of staring at their own hands.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Chaos Dwarf: The Slag-Drudge <span class="entry-tag">Humanoid &middot; Corrupted (Birn Uluhm)</span></h2>
+        <h2 class="entry-title" id="lore-chaos-dwarf-the-slag-drudge">Chaos Dwarf: The Slag-Drudge <span class="entry-tag">Humanoid &middot; Corrupted (Birn Uluhm)</span></h2>
         <p>The Slag-Drudge is the absolute base of the Birn Uluhm hierarchy: a dwarf so utterly consumed by the heat and the decades of unrelenting labor that the distinction between flesh and tool has been eradicated. They haul, stoke, and process ore with leathery, heat-deadened hands, driven by the absolute certainty of what the Taskmasters will do if they stop. Recovered Drudges describe the Iron Roots&#39; labor system as a psychological cage, calibrated to keep workers perfectly balanced at the threshold of breaking without allowing the release of actual death. High Machinist Varkhas designates this practice as efficiency, while the elders of Kel Thurum use a different word entirely.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>The work songs sung by Slag-Drudges are ancient Dwarven mining melodies, but the lyrics have been corrupted into something scholars universally classify as unfit for the historical record.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Chaos Wizard: The Warlock <span class="entry-tag">Humanoid &middot; Malgathor&#39;s Instrument</span></h2>
+        <h2 class="entry-title" id="lore-chaos-wizard-the-warlock">Chaos Wizard: The Warlock <span class="entry-tag">Humanoid &middot; Malgathor&#39;s Instrument</span></h2>
         <p>The Chaos Wizard is not a tragic victim of temptation; they walked into the void with their eyes wide open, which makes them infinitely more dangerous. They gazed into the abyss with intellectual curiosity, and the abyss engaged in a negotiation where the terms heavily favored the dark. The heavy robes they wear are not ceremonial; they are a necessary mercy to hide the sickening, ongoing biological mutations the bargain demands of their flesh. Their corrupted magic is purely entropic, warring against the fundamental tendency of matter to maintain its physical shape. Survivors report that the environmental degradation — the way the world simply stops behaving according to physical law in their presence — is far more traumatizing than the direct arcane strikes.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>A former Aldenvast Academy student was discovered in a collapsed ruin, utterly unable to explain his survival amidst total destruction. The investigation ceased when the inquiring magistrates suddenly lost the cognitive ability to write.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Chlorofel Thorn-Wolf <span class="entry-tag">Plant-Beast &middot; Chromatic Weald Scout</span></h2>
+        <h2 class="entry-title" id="lore-chlorofel-thorn-wolf">Chlorofel Thorn-Wolf <span class="entry-tag">Plant-Beast &middot; Chromatic Weald Scout</span></h2>
         <p>The Chromatic Weald continuously produces predators that defy inherited taxonomy, and the Thorn-Wolf is its most disorienting triumph. It is a wolf-architected predator that has seamlessly integrated the Weald&#39;s flora into its own biology. Instead of fur, it grows dense, flexible thorn-stems in iridescent hues, rendering it practically invisible within the undergrowth. They serve as the Weald&#39;s patrol mechanism, hunting in cycles that perfectly mirror the forest&#39;s own growth patterns. Whether this synchronization is an instinctive adaptation or a directed command from the forest itself is a secret the Weald has kept strictly to itself.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>A scholar mapping Thorn-Wolf patrols discovered the routes formed a massive symbol matching a pre-Blight Elven manuscript. She published the finding and permanently abandoned her fieldwork without explanation.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Chromatic Weald <span class="entry-tag">Location &middot; Biome</span></h2>
+        <h2 class="entry-title" id="lore-the-chromatic-weald">The Chromatic Weald <span class="entry-tag">Location &middot; Biome</span></h2>
         <p>Born from the Great Prismatic Event, the Chromatic Weald is a biome defined by its violent, volatile beauty. It is a fusion of celestial light, moon crystals, and raw primordial energy. The atmospheric Haze dictates reality itself: Magenta enforces a preternatural, paralyzing peace; Electric Green sows creeping paranoia; Prismatic initiates Mana Storms that fundamentally overwrite local probability.</p>
         <h3 class="section-header">The Mycelian Veil</h3>
         <p>Deep within lies the Mycelian Veil, a fungal consciousness communicating through low-frequency vibrations known as The Hum. Possessing Spore-Memory, they absorb the histories and thoughts of everything they touch, viewing all life as temporary extensions of the soil.</p>
@@ -405,14 +625,14 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Dwarf: Kel Thurum Defender <span class="entry-tag">Humanoid &middot; Dwarf Elite</span></h2>
+        <h2 class="entry-title" id="lore-dwarf-kel-thurum-defender">Dwarf: Kel Thurum Defender <span class="entry-tag">Humanoid &middot; Dwarf Elite</span></h2>
         <p>The Kel Thurum Defender is compact power forged into a person and handed an axe. Shorter than a man but possessing equal mass, they are armored in layered plate optimized by generations of forge-masters to halt almost any kinetic impact. Their lower center of gravity is an advantage, allowing them to hit harder from beneath an enemy&#39;s guard while maintaining an unbreakable shield wall.</p>
         <p>The Rune-Sworn Aegis represents the absolute pinnacle of this tradition. These elite defenders integrate Kel Thurum&#39;s runic magic directly into their physical practice, carrying wards on their plate that elevate them beyond mere metal and muscle. To achieve the rank of Aegis is a slow, brutal process, and every Defender understands that their current suffering is merely the prerequisite.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>A Defender company famously held the Theldur passage against Birn Uluhm for six days without resupply. Their names are carved into the passage wall, updated every decade to reflect the current company, providing motivation that requires no further compensation.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Dwarf: Kel Thurum Militiaman <span class="entry-tag">Humanoid &middot; Dwarf</span></h2>
+        <h2 class="entry-title" id="lore-dwarf-kel-thurum-militiaman">Dwarf: Kel Thurum Militiaman <span class="entry-tag">Humanoid &middot; Dwarf</span></h2>
         <p>&#39;Iron Joe&#39; — an affectionate, self-deprecating moniker — is the absolute backbone of Kel Thurum&#39;s daily survival. They are the miners who swing a pick for twelve hours and will swing a hammer for two more if the deep alarms sound. They are not a standing professional army; they are the citizens who build the walls, brew the morale, and have collectively decided their city is worth dying for.</p>
         <p>The militia&#39;s strength lies in its decentralization. Every citizen maintains their own arms and readiness, lacking the synchronized crispness of a professional force but simultaneously lacking a single point of failure. You cannot decapitate an army that has no singular head, a civic philosophy the militiamen embrace completely.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>The Militiaman&#39;s marching song possesses forty-seven documented verses. Translation efforts revealed that several verses encode highly classified operational information regarding structural weak points and escape tunnels, sparking debate over whether the leak was intentional.</div>
@@ -420,14 +640,14 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">Earth Elemental: The Tectonic-Heart <span class="entry-tag">Elemental &middot; Lithomancy Boss</span></h2>
+        <h2 class="entry-title" id="lore-earth-elemental-the-tectonic-heart">Earth Elemental: The Tectonic-Heart <span class="entry-tag">Elemental &middot; Lithomancy Boss</span></h2>
         <p>A Tectonic-Heart does not merely inhabit the mountain; it is the mountain's own latent, violent intent given mobility. Standing thirty feet of shifting schist and pressurized granite, it possesses the slow, glacial patience of a tectonic plate, and the same capability for catastrophic suddenness. It does not chase prey; it simply exists in the space the prey wishes to occupy, and the prey is then erased by the sheer density of its presence.</p>
         <p>The lithomancy of Birn Uluhm has attempted to graft rune-cages onto these entities to force them into labor. The result is a creature that is perpetually and fundamentally angry, trapped in a shape that the earth itself is constantly trying to collapse back into a natural form.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>A Tectonic-Heart that escaped its Birn Uluhm rune-cage did not immediately attack the city; it spent three days collapsing the primary ventilation shafts, effectively suffocating the lower forge district before it was finally engaged.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Fall of the Verdant South <span class="entry-tag">History &middot; Blight Elven Origin</span></h2>
+        <h2 class="entry-title" id="lore-the-fall-of-the-verdant-south">The Fall of the Verdant South <span class="entry-tag">History &middot; Blight Elven Origin</span></h2>
         <p>There are silences in the old Elven songs that scholars mistake for grief. They are not grief; they are the sound of a people trying to name the space between abandonment and survival. Before the Wall, the Verdant Empire stood for millennia. The ancient Elves did not build their southern cities &mdash; they cultivated them from woven wood and white stone, nurturing a living canopy over centuries. What took ages to coax from the earth was undone in a matter of decades.</p>
         <p>No survivor witnessed the eastern seal&rsquo;s rupture. Border guards reported only a low, grinding exhalation, as if something had finally released a breath held for an eternity. Then came the Ash-Winds &mdash; they brought no fire, only an absolute, unnatural thirst. They desiccated soil and flesh alike, stripping the moisture from the world with a deliberate, starving intent. The horrors that followed the winds were not the constructs of battlefield necromancy. They were mummified husks driven by a hollow hunger for Spirit, the animating principle of life itself. They possessed no malice, only an insatiable, mechanical need to consume what the Blight had already begun to devour. The Druidic orders reached into the mycorrhizal networks beneath the forests and found a void. The Blight operated on its own necrotic register, and it did not negotiate. Shamanic practitioners fared worse; the natural cycle of souls was severed, and any practitioner who reached after the newly-taken dead found the dark reaching back.</p>
         <p>The High Council&rsquo;s response was absolute: total evacuation north to the Human kingdoms. Elven practitioners poured the last of their power into the Wall &mdash; a colossal ward that burned bright enough to be seen from the mountains. What it enclosed on the southern side was never formally discussed, for to speak of it was to acknowledge the atrocity of abandonment. Thousands remained trapped: border guards, stubborn traditionalists, isolated enclaves. They stood between an impenetrable barrier and an ocean of encroaching grey sand. The petrification was agonisingly slow, the Blight drawing life out by degrees, leaving bone-hard, iron-solid monuments reaching for a sky that no longer fed them. This became the Pale Weald.</p>
@@ -437,7 +657,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Warrens of Oakhaven <span class="entry-tag">Location &middot; Halfling Homeland</span></h2>
+        <h2 class="entry-title" id="lore-the-warrens-of-oakhaven">The Warrens of Oakhaven <span class="entry-tag">Location &middot; Halfling Homeland</span></h2>
         <p>On the surface, the Warrens of Oakhaven presents as a region of rolling, unremarkable hills and dense, quiet woods. The kind of place that cartographers mark as "settled pastoral" and move on from quickly. This is by design. Beneath the soil is a different world entirely: an intricate, heavily fortified network of subterranean routes, false dead-ends, collapse traps, and earthen architecture refined over a thousand years specifically to kill anyone moving through it without local knowledge.</p>
         <p>It is a survival bunker wearing the mask of a meadow. The Halfling elders who remember its original construction do not speak of what prompted it. They maintain a profound, unsettling silence regarding the history before the other races arrived in force — a silence that has never broken in recorded memory, not under diplomatic pressure, not under threat, not under the considerable resources the Church of the Radiant Compact once directed at extracting it.</p>
         <p>What is known: the deepest warrens predate every other structure in the region by at least three thousand years. The soil of the deepest chambers carries a resonance that Halfling sensitives describe as grief compressed into geology. The elders call it the Old Record. They do not explain further. They simply suggest that some truths are safer left buried in the dark.</p>
@@ -445,18 +665,17 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Human Cultist: The Fractured Soul <span class="entry-tag">Humanoid &middot; Tenebrous-Touched</span></h2>
+        <h2 class="entry-title" id="lore-human-cultist-the-fractured-soul">Human Cultist: The Fractured Soul <span class="entry-tag">Humanoid &middot; Tenebrous-Touched</span></h2>
         <p>A Cultist does not look like a gibbering monster at first glance. The heavy, layered robes that hide the Chaos-Marks blooming across their skin are intensely practical — the Marks are not decorative, they are the physical evidence of an ongoing, structural bargaining with the void, and the bargaining carries biological costs that the robes conceal from a society that would burn them for the discovery. They are rarely mad at the beginning; they are simply ordinary people who made a specific, desperate decision in a moment of extreme vulnerability and are now living within the clockwork consequences of it.</p>
         <p>The Chaos Gods do not simply strip things away; they give first, generously, with the cold hospitality of patrons who have a perfectly clear understanding of what the gift is meant to manufacture. The Cultist who received the transaction is downstream of that arithmetic, desperately managing the Marks, the hunger, and the increasing cognitive difficulty of moving through ordinary spaces with ordinary people who cannot see the unravelling. The absolute hostility of settled society to Chaos-Touched persons is entirely understandable, yet completely self-defeating, as it violently shears away the last social anchors that might have kept the Cultist tethered to the living world.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>A Cultist network operating in Havenspire&#39;s artisan quarter was discovered when two of its members sought help from a local healer with Marks they could no longer medically conceal. The subsequent watch investigation identified nine distinct members. The chief investigator&#39;s report notes, with what seems like genuine systemic uncertainty, that three of the nine showed no signs of malevolent intent — only the clinical signs of people who had made a catastrophic choice and were spending all their energy trying to manage the results.</div>
     </div>
-</div>
 
     <div id="letter-I" class="letter-head">I
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">Kel Thurum <span class="entry-tag">Dwarven Empire &middot; Upper Mountains</span></h2>
+        <h2 class="entry-title" id="lore-kel-thurum">Kel Thurum <span class="entry-tag">Dwarven Empire &middot; Upper Mountains</span></h2>
         <p>The grand dwarven empire of the upper mountains. Though they severed the Birn Clan and sealed the deep gates centuries ago, the High Kings have never been certain it was enough. The empire has transformed into a highly militarised coalition of specialised mountain cities &mdash; an empire built around a single fear.</p>
         <ul><li><strong>Kol Boldohr:</strong> The economic heart &mdash; unmatched gem-cutting and precious metal mining funding the empire&rsquo;s vast military expenditure.</li><li><strong>Tharum Dorn:</strong> Seat of the RuneMasters. Runic magic woven into armour, weaponry, and architecture &mdash; the pure answer to Birn lithomancy.</li><li><strong>Kherdarum:</strong> The great surface ore mines. Iron and steel for the empire&rsquo;s legions and fortifications.</li></ul>
         <h3 class="sub-header">Theldur &mdash; The Sentinel City</h3>
@@ -469,7 +688,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Khugron <span class="entry-tag">The Mountain Maw &middot; Location</span></h2>
+        <h2 class="entry-title" id="lore-khugron">Khugron <span class="entry-tag">The Mountain Maw &middot; Location</span></h2>
         <p>The entrance to Birn territories, warped by decades of lithomancy into a gargantuan stone maw with jagged, tooth-like protrusions. The heavily fortified gateway to the deep &mdash; the last point of the upper world visible to those who enter.</p>
         <h3 class="section-header">The Corridor of Treachery</h3>
         <p>Two trap floors dump intruders thirty feet into the Oubliette &mdash; lightless jail cells of iron cages suspended by chains over a lower void, reachable only by a hoist controlled from outside. Arrow slits lined with hobgoblin guards cover survivors of the trap.</p>
@@ -478,20 +697,18 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">Lithomancy <span class="entry-tag">Discipline &middot; Birn Arcana</span></h2>
+        <h2 class="entry-title" id="lore-lithomancy">Lithomancy <span class="entry-tag">Discipline &middot; Birn Arcana</span></h2>
         <p>The art of manipulating stone through cursed arcane frequencies &mdash; sound made into will, pressed into rock until the rock remembers a shape it was never born into. Practised in Birn Uluhm&rsquo;s Great Hub: a circular nexus of glowing blue runes used to repair and control the Gorathi serving as guardians and labourers. Every casting leaves a residue &mdash; a faint wrongness that accumulates into something that breathes when no one is looking.</p>
         <h3 class="section-header">Juggernauts of Birn</h3>
         <p>Gorathi whose consciousness has been forcibly imprisoned within physical form &mdash; caged in heavy armour plates bolted into their rocky hides, serving as living battering rams. When the lithomancy maintaining them degrades, they do not return to stone. They simply continue, directionless, until something ends them.</p>
     </div>
-</div>
-</div>
     <!-- BAKED ENTRIES: L -->
 
     <div id="letter-M" class="letter-head">M
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">Mycelian Veil-Stalker <span class="entry-tag">Mushroom-Folk &middot; Chromatic Weald Elite</span></h2>
+        <h2 class="entry-title" id="lore-mycelian-veil-stalker">Mycelian Veil-Stalker <span class="entry-tag">Mushroom-Folk &middot; Chromatic Weald Elite</span></h2>
         <p>Silent caretakers of the Chromatic Weald&#39;s deepest sections — the Mycelian Veil-Stalkers are mushroom-folk at the point where the colony&#39;s intelligence has concentrated into individual entities capable of moving and acting with purpose. They communicate through vibrations too low for most ears to register, and they interact with travelers not through speech but through touch — downloading the memories of anyone they contact directly into the colony&#39;s shared awareness.</p>
         <p>The colony knows, through its Veil-Stalkers, everything that has passed through the sections of the Weald they tend. Every traveler, every transaction, every secret spoken under the Weald&#39;s canopy has been registered and is retained. The Blight Elves of Syl-Kares maintain a careful protocol for passage through Mycelian territory specifically to manage what the colony learns about their movements. Whether the protocol is fully effective is, by the colony&#39;s silence on the subject, unclear.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>A Mycelian Veil-Stalker touched a scholar who had been studying the Fall of the Verdant South. The scholar reported afterward that she had received something in return — not memories exactly, but a pattern she could not stop seeing. She spent the remaining three years of her career attempting to describe the pattern. Her notes are considered significant by colleagues who have read them and disturbing by colleagues who have read them carefully.</div>
@@ -501,7 +718,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">Northern Clan: Stoneback of Brackwater <span class="entry-tag">Faction &middot; Neutral River Port</span></h2>
+        <h2 class="entry-title" id="lore-northern-clan-stoneback-of-brackwater">Northern Clan: Stoneback of Brackwater <span class="entry-tag">Faction &middot; Neutral River Port</span></h2>
         <p>The newest of the six in terms of formal recognition — the Stoneback have been a distinct clan identity for only ninety years, having split from the Ashwalkers after a succession dispute of sufficient violence that both sides agreed separation was preferable to the continuation of the argument. They occupy the rocky central-north coast between Ashwalker and Iron Mane territory, which means they spend considerable energy maintaining neutrality with both. They survive not through strength but through usefulness — a calculation the Stoneback leadership has pursued with the specific dedication of people who understand exactly what happens to clans that become useless.</p>
         <p><strong>Brackwater</strong> is built on stilts at the mouth of a fast-moving river that floods seasonally. The entire lower town is designed to be inundated, with all permanent structures and stored goods elevated above the flood line. It produces the best fresh-water fishing in the northern arc and exports smoked fish as far south as Havenspire through a network of intermediary traders who add considerable markup and prefer the settled world not know the original source. Population approximately sixteen hundred — small enough to be overlooked, large enough to be inconvenient to destroy.</p>
         <p><strong>Jarl Aldric the Younger</strong> — called Younger because his father, Aldric the Elder, is still alive at seventy-eight and still occasionally offers opinions that Aldric the Younger is obligated to politely consider and then not follow — is forty years old and deeply aware that his clan's survival depends entirely on not being absorbed by either of his larger neighbours. He is the most sophisticated diplomatic operator among the six clan leaders and the most likely to be found, in any negotiation, waiting to see which direction the wind is blowing before committing to a position. The Stoneback trade with everyone: settled merchants, Chaos-touched of the northern fringe, rogue elements of the Blight Elves who have business in the northern arc. Aldric does not find this morally interesting. He finds it financially necessary, which is a different kind of conviction and, in practice, a more reliable one. The other Jarls find his neutrality exhausting. It has kept his clan intact for ninety years.</p>
@@ -509,7 +726,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Clanless Territory: The Lost Souls <span class="entry-tag">Geography &middot; The Exiled</span></h2>
+        <h2 class="entry-title" id="lore-clanless-territory-the-lost-souls">Clanless Territory: The Lost Souls <span class="entry-tag">Geography &middot; The Exiled</span></h2>
         <p>Not a clan. The Lost Souls territory is a broad expanse of central-northern tundra that serves as the destination of last resort — for the exiled, the oath-broken, the clanless by choice, and those who ended up here through a sequence of events they have stopped trying to explain. It has no Ran'keth. It has no formal structure. It has approximately four thousand people scattered across an area larger than most settled kingdoms, organised into groups of three to twelve by nothing more than the mutual agreement that these specific people are better company than the alternative. The settled world, when it thinks of the Lost Souls at all, imagines a wasteland of the broken and the dangerous. This is partially accurate. The rest of the picture is more complicated.</p>
         <p>To be clanless in the North is, in the most technical sense, a death sentence. The Three-Day Law does not protect you if you have no clan to return the obligation. You cannot invoke blood-debt. You cannot appeal to a Ran'keth. You are, by the North's own legal architecture, not a person with rights but a variable in someone else's calculation. The Lost Souls territory exists precisely because the North's legal architecture has this gap, and the people who fall through it have to go somewhere. What they find there is not comfort — comfort is a resource the territory does not produce — but a specific absence of judgment that, for people who have been judged by the clan system and found lacking, functions as something close to peace.</p>
         <p>What the Lost Souls produce, with surprising and somewhat unsettling consistency, is Skalds of unusual quality. People who have lost everything tend to remember it with particular clarity. The finest Skald in the northern arc — <strong>Kael Without-Clan</strong>, who can recite the oral histories of four different clans from memory and is consequently invaluable and trusted by none of them — lives in the Lost Souls territory and refuses all formal affiliation. He is forty-six. He has been offered formal clan membership by three different Ran'keth in the past decade. He has declined each time with exactly the same words: <em>"The thing you're offering is smaller than what I already have."</em> No Ran'keth has yet worked out a response to this, because the response would require admitting what it implies about the value of clan membership.</p>
@@ -520,7 +737,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Pyreborn <span class="entry-tag">Elemental Faction &middot; Rysahm Ashlands</span></h2>
+        <h2 class="entry-title" id="lore-the-pyreborn">The Pyreborn <span class="entry-tag">Elemental Faction &middot; Rysahm Ashlands</span></h2>
         <p>They did not begin as flesh. They did not begin as thought. They began as heat &mdash; the roaring intention of flame given purchase in the world &mdash; and somewhere in that burning they became aware of themselves. The Pyreborn are ancient. Some accounts place their origin before the current Age entirely, in the long silence that preceded the first recorded catastrophe.</p>
         <h3 class="section-header">Nature &amp; Presence</h3>
         <p>The Pyreborn exist primarily within the volcanic wastes of the Rysahm Ashlands &mdash; far northwest, sky perpetually choked with smoke. Extreme heat halves Wound Mitigation for outsiders without magical warding. They are highly susceptible to cold, and their melee strikes leave a burning condition. At their apex, they are guarded by the Vulkan-Kahn &mdash; ancient, upright tigers of tremendous magical power whose relationship with the Pyreborn is one of kinship older than language.</p>
@@ -535,14 +752,14 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Rysahm Ashlands <span class="entry-tag">Location &middot; Far Northwest</span></h2>
+        <h2 class="entry-title" id="lore-rysahm-ashlands">Rysahm Ashlands <span class="entry-tag">Location &middot; Far Northwest</span></h2>
         <p>A brutal volcanic wasteland where the sky is perpetually choked with smoke. Extreme heat halves Wound Mitigation without magical warding. Home to the Pyreborn, their Solathi kin, and the Vulkan-Kahn. The Ashlands sit far northwest of the known world &mdash; the Dwarven mountains of Birn Uluhm lie at the center-east, separated by the full breadth of the continent. Birn Uluhm sent hunters across all of it.</p>
     </div>
     <div id="letter-S" class="letter-head">S
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Sunken Archive <span class="entry-tag">Location &middot; Aakzad Gateway Site</span></h2>
+        <h2 class="entry-title" id="lore-the-sunken-archive">The Sunken Archive <span class="entry-tag">Location &middot; Aakzad Gateway Site</span></h2>
         <p>The tunneled complex beneath the coastal waters near the Lizardman territories has no name in any surface-world cartographic record. The Lizardmen who sealed it do not name it either, at least not in any tongue they have shared with outsiders. Among the scholars who have now begun to piece together what it is, it is called the Sunken Archive, though archive implies a passivity the site does not possess. What is stored there has opinions. What is stored there has been broadcasting those opinions, through stone and water and Shamanic lock, for longer than the locks have been in place.</p>
         <p>The architecture is the first indication that whatever built it was not building for the world as it is. Pentagon-shaped chambers, each opening onto two or three branching passages, arranged in a geometry that does not optimize for habitation or defense but for something else &mdash; something closer to circulation, to the movement of a signal through a system. Those who have entered the complex under the influence of the Aakzad&#39;s Spirit-Echo broadcast describe the layout as feeling inevitable, as though each chamber leads to the next not by design but by necessity, the way a sentence leads to its conclusion. Those who entered without that influence describe being lost immediately and thoroughly. The complex is legible only to those it is already speaking to.</p>
         <p>The gateway at its deepest navigable point was sealed by a Lizardman Shamanic lock of considerable sophistication &mdash; a working that required both an anti-magical counter and a recitation in the Aakzad&#39;s own resonant language to undo. The Lizardmen knew precisely what they were containing and constructed the seal accordingly. What they could not construct against was the Aakzad&#39;s reach: the Spirit-Echo frequency that propagates through the collective&#39;s imprisonment, patient and non-degrading, waiting for a mind with sufficient Shamanic sensitivity to receive it and sufficient will &mdash; or insufficient will &mdash; to act on it. Within the current age — four generations deep into the sealed containment, by the Lizardmen&#39;s own reckoning — a Druid named Dresin received that broadcast and, under its compulsion, spoke the counter-lock and the Aakzad tongue in sequence and opened the door. Ten emerged. The others, the gateway&#39;s remaining occupants, moved east and west with a purpose that predated their imprisonment. The Sunken Archive is no longer sealed. What it now is, is a question the Lizardman High Priest has dispatched to SunsReach and the wider world with considerable urgency.</p>
@@ -550,7 +767,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">SunsReach <span class="entry-tag">Location &middot; Subtropical Port</span></h2>
+        <h2 class="entry-title" id="lore-sunsreach">SunsReach <span class="entry-tag">Location &middot; Subtropical Port</span></h2>
         <p>A subtropical port city known as the Gilded Port of Secrets. Currently the epicentre of a looming conflict between the Human Church, the Northern Witchhunters of Wexcross, and the Lizardman Scaled Embassy, whose bone-ships now dominate the coast.</p>
         <ul><li><strong>High Priest Eason Lendall:</strong> Leader of the Sun Temple. His authority is theological in origin and increasingly difficult to enforce.</li><li><strong>Deacon Jamarr Wicks:</strong> Right hand to Lendall. Manages what Lendall cannot be seen managing.</li><li><strong>Thaddeus &amp; Zulrich:</strong> High Clerics managing spiritual defence. Their disagreement about methods is becoming a liability.</li><li><strong>Braslav Karpov:</strong> Witchhunter from Wexcross, hunting for daemonologists.</li></ul>
         <h3 class="section-header">The Scaled Embassy</h3>
@@ -559,7 +776,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Syl-Kares <span class="entry-tag">City · The Pale Weald</span></h2>
+        <h2 class="entry-title" id="lore-syl-kares">Syl-Kares <span class="entry-tag">City · The Pale Weald</span></h2>
 
         <p>There is a moment, when approaching Syl-Kares from below, when the toxic fog of the Pale Weald thins just enough to let you see what is above it. Most who reach that moment do not survive long enough to reflect on it. Those who do — prisoners, mostly, and the occasional scholar who bought their way into a raiding party under the mistaken impression that observation was a safe occupation — report the same thing: that the city does not look built. It looks grown. And then, a moment later, they understand that this is precisely what it is, and that the thing it grew from was not alive when the growing happened, and that this distinction is the first of many that Syl-Kares will force upon you whether you are ready for it or not.</p>
 
@@ -606,25 +823,25 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">The Terra-Titan <span class="entry-tag">Ancient Entity &middot; Petrified</span></h2>
+        <h2 class="entry-title" id="lore-the-terra-titan">The Terra-Titan <span class="entry-tag">Ancient Entity &middot; Petrified</span></h2>
         <p>Something of a scale that reframes what the word <em>ancient</em> means lies beneath the Dwarven mountains. The Birn built their city in its ribcage. Varkhas has plugged himself into its nervous system. The heart still pulses &mdash; geologically slow, thick, deep &mdash; in a rhythm that has no name in any language currently spoken. Whether this constitutes life is a question no one in Birn Uluhm asks aloud, because the answer might change what they believe they are doing.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Seed &mdash; Unexpanded</span>What was the Terra-Titan? How did it die? What does its petrified body mean for everything built above it? And what would it do if Varkhas succeeds in waking it?
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Thaddeus <span class="entry-tag">Character &middot; High Cleric of SunsReach</span></h2>
+        <h2 class="entry-title" id="lore-thaddeus">Thaddeus <span class="entry-tag">Character &middot; High Cleric of SunsReach</span></h2>
         <p>The High Cleric of SunsReach&#39;s temple is not a man who performs surprise well. Those who have worked with Thaddeus across his thirty years in the position describe a specific quality of stillness he maintains when receiving bad news &mdash; a complete absence of visible reaction that is not composure exactly, but something more like the face of a person who has been expecting the news to arrive and is now calculating what it changes about plans already in motion. When the party arrived with the Lizardman High Priest&#39;s sealed scroll and the account of the Sunken Archive&#39;s opening, those who watched Thaddeus receive the news describe that stillness. They also note that he asked no clarifying questions about the archive itself &mdash; only about the ten who emerged, which direction the six split toward, and whether the fragment had been seen.</p>
         <p>Thaddeus operates through his right hand, Zulrich, in matters that require action rather than authority &mdash; which is most matters, in Thaddeus&#39;s theology of governance. He does not leave the temple precinct without cause, and cause has a high threshold in his private reckoning. The cemetery desecration that preceded the party&#39;s arrival had already moved him closer to that threshold than he had been in a decade: three dead, an artifact of the third-order classification removed, and the Lizardman Scaled Embassy in the harbor sending daily inquiries through channels that were not their usual channels, which meant the Embassy had known something was coming before it came. Whether Thaddeus and the Scaled Embassy share information, or merely share conclusions arrived at separately, he has not clarified. Zulrich, when asked, changes the subject with the practiced fluency of someone who has changed that subject before.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>The sealed interment from which the fragment was stolen was made thirty-two years ago, during Thaddeus&#39;s tenure as High Cleric. He signed the third-order classification himself. The original intake record describing what was buried and why has been removed from the temple archive. Thaddeus has not explained this. He has not been asked directly. Yet.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Vulkan-Kahn <span class="entry-tag">Ancient Guardians &middot; Pyreborn Kin</span></h2>
+        <h2 class="entry-title" id="lore-vulkan-kahn">Vulkan-Kahn <span class="entry-tag">Ancient Guardians &middot; Pyreborn Kin</span></h2>
         <p>The ancient protectors of the Pyreborn &mdash; and perhaps something more than protectors, in the way that the oldest relationships defy the categories applied to them later. They walk upright and carry themselves with the deliberate weight of things that have chosen to be present. In their Ancestral Form they revert to four-legged apex predators. How old the Vulkan-Kahn are, and whether they predate the Pyreborn or arose alongside them, is not a question the Pyreborn answer readily.</p>
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">Vulkan-Kahn: The First Forge <span class="entry-tag">Elemental &middot; Pantheon Boss</span></h2>
+        <h2 class="entry-title" id="lore-vulkan-kahn-the-first-forge">Vulkan-Kahn: The First Forge <span class="entry-tag">Elemental &middot; Pantheon Boss</span></h2>
         <p>A god-like entity of the Pyreborn pantheon — nearly thirty feet when bipedal, a fusion of feline elegance and volcanic architecture, with a mane of actual fire and a presence the Pyreborn describe not as overwhelming but as clarifying, the way extreme heat clarifies material into its essential components. The First Forge is what the Vulkan-Kahn are tending toward: the form their relationship with fire has been aspiring to across all the long generations of its expression.</p>
         <p>Its relationship with Sol-Invictus of the elemental fire hierarchy is described differently by the two traditions. The Pyreborn say kin. The elemental fire tradition says distinct. Neither has clarified. The scholars of both traditions find this simultaneously frustrating and diplomatically significant.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>The Pyreborn&#39;s most sacred tradition holds that the First Forge will &#39;walk again when the world&#39;s oldest fire is threatened.&#39; Since the Aakzad awakening appears to be threatening the Terra-Titan&#39;s deep-earth fire, the Vein-Witches have been monitoring for signs the prophecy is activating. What those signs look like, they are not saying publicly.</div>
@@ -637,28 +854,26 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">Wither-Walker: The Blighted Sylvan <span class="entry-tag">Plant &middot; Undead</span></h2>
+        <h2 class="entry-title" id="lore-wither-walker-the-blighted-sylvan">Wither-Walker: The Blighted Sylvan <span class="entry-tag">Plant &middot; Undead</span></h2>
         <p>Eighteen to twenty-two feet of skeletal humanoid tree — charcoal-grey bark weeping thick black sap, branches moving with the deliberate wrongness of a plant that has died and continued to grow in the wrong direction. The Wither-Walker is what happens when a Treant is consumed by a blight specific to plant-life: a corruption that does not simply kill the tree but redirects its growth toward death&#39;s ends rather than life&#39;s.</p>
         <p>The black sap it weeps is a spreading agent, applying the same blight to whatever living plant-matter it contacts. A Wither-Walker moving through a forest is not a monster moving through an ecosystem — it is the beginning of the ecosystem&#39;s conversion into something the Wither-Walker considers home. The Blight Elves of Syl-Kares have noted its activity patterns in the Pale Weald&#39;s border regions with an interest that the Druids find concerning.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>A Wither-Walker was found moving toward the Chromatic Weald&#39;s core territories — a direction never previously documented. Whether this represents new behavior, new instruction, or something drawing it toward the Weald&#39;s ancient plant-life concentration for reasons that do not benefit the Weald, the Druids are trying to determine quickly.
 </div>
 </div>
 <div class="entry">
-        <h2 class="entry-title">Xochitonal: The Guardian of the Sun-Blood <span class="entry-tag">Mythical &middot; Reptilian</span></h2>
+        <h2 class="entry-title" id="lore-xochitonal-the-guardian-of-the-sun-blood">Xochitonal: The Guardian of the Sun-Blood <span class="entry-tag">Mythical &middot; Reptilian</span></h2>
         <p>A titan-class reptile forty feet long with obsidian-textured scales etched with glowing turquoise runes — the Xochitonal is the Lizardman civilization&#39;s most sacred entity, guardian of what the translated fragments call simultaneously a place, a substance, a lineage, and a promise. The Xochitonal guards all four at once, which requires an entity that encompasses all four.</p>
         <p>Its threat-assessment is calibrated to the specific nature of what it protects — things the surface world would not recognize as threats register to it as existential priorities, while things that appear threatening are sometimes simply observed and allowed to pass. The logic belongs entirely to the Sun-Blood tradition.</p>
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook</span>Three researchers who have studied the Xochitonal&#39;s runes report that the runes change between observations — not randomly but responsively, as though providing different information to different audiences. Whether it is communicating, or simply responsive to conditions it is monitoring, the researchers have not reached consensus.</div>
     </div>
 
     <div id="letter-Y" class="letter-head">Y</div>
-</div>
-</div>
 
     <div id="letter-Z" class="letter-head">Z
 
 </div>
 <div class="entry">
-        <h2 class="entry-title">Chaos: The Three Below the Three <span class="entry-tag">Cults &middot; Champions &middot; Relics</span></h2>
+        <h2 class="entry-title" id="lore-chaos-the-three-below-the-three">Chaos: The Three Below the Three <span class="entry-tag">Cults &middot; Champions &middot; Relics</span></h2>
         <p>A god of this kind is not worshipped in the way the Radiant Compact understands the word. There are no congregations, no public rites, no architecture raised in open praise. What the Three have instead are <em>structures</em> &mdash; recruitment funnels, supply lines, processing protocols &mdash; each shaped to the logic of the entity it serves. The settled world, when it acknowledges them at all, imagines hooded figures chanting in cellars. The reality is closer to an unlicensed bureaucracy, a war-band that has stopped pretending it has a homeland, and a maintenance department that has quietly decided the building should be allowed to collapse with everyone still inside. What follows is the inquisitorial summary that does not officially exist: how each cult finds its people, who leads them, what they carry, and where a party is most likely to walk into one without knowing it.</p>
 
         <h3 class="sub-header">The Cult of Tenebrous &mdash; The Quiet Ledger</h3>
@@ -689,7 +904,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 
 <div class="entry">
-        <h2 class="entry-title">The Bishop Houses &amp; the Burned Name <span class="entry-tag">The Church &middot; Court &amp; Succession</span></h2>
+        <h2 class="entry-title" id="lore-the-bishop-houses-the-burned-name">The Bishop Houses &amp; the Burned Name <span class="entry-tag">The Church &middot; Court &amp; Succession</span></h2>
         <p>The Church of the Radiant Compact does not have a nobility, officially. What it has is the Episcopate &mdash; four senior bishops who administer the four great dioceses, each paired by long custom to a Lady of a settled house, each maintaining the fiction that their authority derives from faith rather than from the inheritance, marriage, and quiet accumulation of leverage that actually sustains it. The settled world calls them the Bishop Houses. The Church calls them nothing at all, because to name a thing is to admit it has a shape, and the Episcopate prefers to be understood as a function rather than a family. The four houses are the Vane, the Crane, the Sterling, and the Vance, and the relationships between them are the closest thing the southern kingdoms have to a weather system: vast, slow, and capable of killing anyone who fails to read it.</p>
 
         <h3 class="sub-header">The Architecture of the Episcopate</h3>
@@ -708,7 +923,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 
 <div class="entry">
-        <h2 class="entry-title">The Deep-Rot &amp; What Sleeps Beneath Theldur <span class="entry-tag">Kel Thurum &middot; The Sealed Dark</span></h2>
+        <h2 class="entry-title" id="lore-the-deep-rot-what-sleeps-beneath-theldur">The Deep-Rot &amp; What Sleeps Beneath Theldur <span class="entry-tag">Kel Thurum &middot; The Sealed Dark</span></h2>
         <p>Kel Thurum was the grandest of the dwarven holds, and the Birn were its proudest caste &mdash; the Deep-Delvers, who went lower than any sane engineer would sanction because going lower was the only thing the world had ever praised them for. When they pierced the black slate and found the petrified heart of the Terra-Titan, they did not find treasure. They found a pulse. And a civilization built entirely on the virtue of extraction discovered that it had no protocol for the one situation that mattered: when to stop. It did not stop. The marrow ran hot, the forges roared, and Malgathor &mdash; who requires no summoning, only a society that has decided a problem is more convenient to ignore than to solve &mdash; settled into the water supply and waited.</p>
 
         <h3 class="sub-header">The Severing</h3>
@@ -725,7 +940,7 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
 </div>
 
 <div class="entry">
-        <h2 class="entry-title">The Frozen Arc &mdash; The Six Clans &amp; the Council-Fire <span class="entry-tag">The North &middot; Culture &amp; Power</span></h2>
+        <h2 class="entry-title" id="lore-the-frozen-arc-the-six-clans-the-council-fire">The Frozen Arc &mdash; The Six Clans &amp; the Council-Fire <span class="entry-tag">The North &middot; Culture &amp; Power</span></h2>
         <p>The settled world believes the northern peoples are barbarians, and the northern peoples have found this belief so consistently useful that they have stopped correcting it. The truth is that the Six Clans of the Frozen Arc maintain one of the most sophisticated political instruments on the continent &mdash; the Council-Fire &mdash; and that the raiding the south fears is not the absence of order but its sharpest expression. A clan that cannot project force cannot hold a seat at the fire, and a seat at the fire is the only thing standing between any clan and the long dark of a northern winter faced alone. The raids are diplomacy conducted by other means. The south has never understood this, and the north has never explained it.</p>
 
         <h3 class="sub-header">The Council-Fire</h3>
@@ -739,8 +954,53 @@ ul{margin:6px 0 16px 22px;}li{font-size:0.97em;line-height:1.6;margin-bottom:8px
         <div class="lore-hook"><span class="lore-hook-label">Lore Hook &mdash; The Veto and the Coming War</span>A blood-feud, a southern incursion, or a failing season pushes the Council-Fire toward a war the north cannot afford and cannot easily refuse. The Iron Mane want it. The Ashwalkers&rsquo; Skalds are prepared to veto it. The veto has been used only twice, and a third use &mdash; against a war the Iron Mane have staked their honour on &mdash; may be the thing that finally breaks the fire&rsquo;s consensus and turns six clans into six rivals. A party caught in the middle may find that the most dangerous place in the north is not the battlefield but the circle around the fire, where a single recited history can decide whether thousands live or die.</div>
         <div class="lore-hook"><span class="lore-hook-label">Scenario Hook &mdash; The Ledger of Obligation</span>The party accepts northern hospitality &mdash; shelter from a storm, a meal at a clan-hearth, a guide across the Arc &mdash; without understanding that they have just been entered into the ledger of obligation. The debt comes due at the worst possible moment: a Ran&rsquo;keth calls it in, and what is asked is not coin but action &mdash; a raid joined, a feud witnessed, a settled-world ally betrayed. To refuse is to be marked, before every clan, as a people whose word is worthless &mdash; a reputation that follows a party north of the Arc the way the Umbral Shroud follows the Erased: quietly, completely, and forever.</div>
 </div>
+    </div>
+  </main>
+</div>
+<button class="codex-reopen" id="codex-reopen" aria-label="Show navigation" title="Show navigation">&#9776; <span class="lbl">Menu</span></button>
+<button class="codex-top" aria-label="Back to top">&#8593;</button>
 
-</main>
-<a href="#" class="btn-top">&#8593; Top</a>
+    <script>
+    (function(){
+      document.querySelectorAll('.nav-group-head').forEach(function(h){
+        h.addEventListener('click', function(){
+          var g=h.parentElement, body=g.querySelector('.nav-group-body');
+          if (g.classList.contains('collapsed')){ g.classList.remove('collapsed'); body.style.maxHeight=body.scrollHeight+'px'; }
+          else { body.style.maxHeight=body.scrollHeight+'px'; requestAnimationFrame(function(){ g.classList.add('collapsed'); body.style.maxHeight='0px'; }); }
+        });
+      });
+      function refreshHeights(){ document.querySelectorAll('.nav-group:not(.collapsed) .nav-group-body').forEach(function(b){ b.style.maxHeight=b.scrollHeight+'px'; }); }
+      refreshHeights();
+      var links=[].slice.call(document.querySelectorAll('.nav-link'));
+      var targets=links.map(function(l){return document.getElementById(l.dataset.target);}).filter(Boolean);
+      links.forEach(function(l){
+        l.addEventListener('click', function(e){ var el=document.getElementById(l.dataset.target); if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); history.replaceState(null,'','#'+l.dataset.target); document.querySelector('.codex-nav').classList.remove('open'); } });
+      });
+      function spy(){
+        var best=null,bt=-Infinity;
+        targets.forEach(function(t){ var r=t.getBoundingClientRect().top; if(r<=120&&r>bt){bt=r;best=t;} });
+        if(!best&&targets.length)best=targets[0];
+        links.forEach(function(l){ l.classList.toggle('active', best&&l.dataset.target===best.id); });
+        var top=document.querySelector('.codex-top'); if(top) top.classList.toggle('show', window.scrollY>600);
+      }
+      window.addEventListener('scroll', spy, {passive:true}); spy();
+      var topBtn=document.querySelector('.codex-top'); if(topBtn) topBtn.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+      document.querySelector('.codex-burger').addEventListener('click', function(){ document.querySelector('.codex-nav').classList.toggle('open'); });
+      var shell=document.getElementById('codex-shell'), search=document.getElementById('codex-search-input');
+      document.getElementById('codex-collapse').addEventListener('click', function(){ shell.classList.add('nav-collapsed'); });
+      document.getElementById('codex-reopen').addEventListener('click', function(){ shell.classList.remove('nav-collapsed'); });
+      document.addEventListener('keydown', function(e){ if(e.key==='['&&document.activeElement!==search){ shell.classList.toggle('nav-collapsed'); } });
+      if(search){ search.addEventListener('input', function(){
+        var q=search.value.trim().toLowerCase();
+        document.querySelectorAll('.nav-group').forEach(function(g){
+          var any=false;
+          g.querySelectorAll('.nav-link').forEach(function(l){ var m=!q||l.textContent.toLowerCase().indexOf(q)!==-1; l.style.display=m?'':'none'; if(m)any=true; });
+          g.style.display=any?'':'none';
+          if(q&&any){ g.classList.remove('collapsed'); var b=g.querySelector('.nav-group-body'); b.style.maxHeight=b.scrollHeight+'px'; }
+        });
+      }); }
+    })();
+    </script>
+
 </body>
 </html>
