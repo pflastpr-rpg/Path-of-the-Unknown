@@ -178,10 +178,10 @@
         .def-horiz-container { border: 2px solid var(--iron); background: var(--input-bg); overflow: hidden; }
         /* Matched perfectly to .rt-head so the tables look unified */
         .def-sub-head { background: var(--iron); color: var(--gold); font-size: 11pt; font-weight: 900; text-align: center; padding: 3px 0; text-transform: uppercase; border-bottom: 2px solid var(--blood); white-space: nowrap; }
-        .def-horiz { display: flex; justify-content: space-between; align-items: center; padding: 6px 4px; }
-        .def-item { display: flex; align-items: center; gap: 4px; }
-        .def-item label { font-size: 11pt; font-weight: 900; text-transform: uppercase; color: var(--iron); }
-        .def-item input { width: 32px; height: 32px; text-align: center; font-weight: 900; border: 1.5px solid var(--ink); font-size: 13pt; color: var(--ink); background: var(--input-bg); }
+        .def-horiz { display: flex; justify-content: space-between; align-items: center; gap: 2px; padding: 6px 6px; box-sizing: border-box; }
+        .def-item { display: flex; align-items: center; gap: 3px; flex: 0 1 auto; min-width: 0; }
+        .def-item label { font-size: 9.5pt; font-weight: 900; text-transform: uppercase; color: var(--iron); white-space: nowrap; }
+        .def-item input { width: 30px; height: 32px; flex: 0 0 auto; box-sizing: border-box; text-align: center; font-weight: 900; border: 1.5px solid var(--ink); font-size: 13pt; color: var(--ink); background: var(--input-bg); }
         
         .wm-header-row { display: grid; grid-template-columns: 90px repeat(3, minmax(0, 1fr)); text-align: center; font-weight: 900; font-size: 10pt; color: var(--blood); border-bottom: 1.5px solid var(--ink); text-transform: uppercase; padding: 2px 0; }
         .wm-row { display: grid; grid-template-columns: 90px repeat(3, minmax(0, 1fr)); gap: 2px; border-bottom: 1px solid rgba(0,0,0,0.15); padding: 3px 0; align-items: center; height: 40px; }
