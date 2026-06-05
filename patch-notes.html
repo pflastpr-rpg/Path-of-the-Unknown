@@ -214,11 +214,83 @@
     <div class="tldr">
         <strong>What this is:</strong> a combined archive of all patch notes from 31 May to 4 June, so nothing is buried in older files. Most recent work is at the top. Jump by session:
         <ul>
+            <li><strong><a href="#s-04jun-spells" style="color:var(--blood);">4 June (Spell Overhaul)</a></strong> — full caster restructure: Wizardry rebuilt, fire/ice relocated, Shaman &amp; Druid reworked, Devotion light spells, spell tuning, navy stat-lines, Ledger v4 synced.</li>
             <li><strong><a href="#s-04jun" style="color:var(--blood);">4 June</a></strong> — new Vibhuti battle-magic, Lore &amp; Mechanics codex layout, advanced-skill popout, mechanics corrections, fixes.</li>
             <li><strong><a href="#s-03jun" style="color:var(--blood);">3 June</a></strong> — beast-craft armour, monster-bone weapons, enchanted gear, Ledger v4, casting-penalty cleanup.</li>
             <li><strong><a href="#s-31may" style="color:var(--blood);">31 May – 1 June</a></strong> — the big spell/blessing rebalance across every discipline, the bypass floor, Essence on the sheet, the Ledger split, and more.</li>
         </ul>
     </div>
+
+    <div class="session-divider" id="s-04jun-spells">4 June 2026 &mdash; Spell Discipline Overhaul<span class="sd-sub">Full caster restructure &middot; Wizardry rebuild &middot; fire/ice relocation &middot; Shaman &amp; Druid reworks &middot; Devotion light integration &middot; spell tuning &middot; global readability fix</span></div>
+
+<h2><span class="tick">&#10022;</span> The Great Elemental Division</h2>
+
+    <div class="change-item">
+        <span class="lead">Every caster discipline retuned so the elements no longer overlap <span class="tag both">Rules + Ledger</span></span>
+        <p>A deep pass across all five casting disciplines found heavy redundancy &mdash; the same fire, ice, and lightning spread thin across Wizardry, Druid, and Shaman. The fix was a wholesale restructure giving each discipline a distinct elemental identity: <strong>Wizardry</strong> now owns arcane, force, and kinetic magic; <strong>Shaman</strong> owns frost, curse, spirit, and death; <strong>Druid</strong> owns fire, nature, beast, and earth; <strong>Devotion</strong> owns blinding holy radiance.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Wizardry rebuilt &mdash; 86 &rarr; 77 spells <span class="tag both">Rules + Ledger</span></span>
+        <p>A new combat spine of 36 spells (with renames such as Thirsting Blade &rarr; <strong>Monomolecular Edge</strong>, Death Coil &rarr; <strong>Entropic Coil</strong>, and a new TN 22 capstone, <strong>Obliteration</strong>), all utility kept (Dispel Magic, Teleport, the Daemon suite), Lightning Bolt retained, and 14 fire/ice spells pulled out for relocation. <strong>Fireball</strong> stays as the one wizard fire spell.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Shaman reworked into a fireless frost/spirit caster &mdash; 52 spells <span class="tag both">Rules + Ledger</span></span>
+        <p>The Wizardry ice line was reskinned as spirit-frost and rehoused here (Cold Blast &rarr; <strong>Breath of the Clanless</strong>, Ice Lance &rarr; <strong>Grave-Shard</strong>, Frostbite &rarr; <strong>Necrotic Frost</strong>, Whiteout &rarr; <strong>The White Blind</strong>). All of Shaman&rsquo;s own fire and lightning was stripped, leaving a discipline of cold, curse, spirit, and death.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Druid received the tectonic fire and the ice &mdash; now 56 entries <span class="tag both">Rules + Ledger</span></span>
+        <p>Seven relocated spells placed at their TNs (Consumed in Flame, Lava Spray, Incinerate, Molten Earth, Frozen Shards, Ice Blade, Ice Field); three redundant ones dropped (Fire Sling, Firebomb, Summon Firebrand Weapon). Druid also got a light text polish on five high-tier spells.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Devotion claims the light &mdash; Sun/Light spells integrated <span class="tag both">Rules + Ledger</span></span>
+        <p>Pulled the radiant spells out of Druid and Wizardry and concentrated them in the Church: added <strong>Unconquered Sun</strong> (TN 3), <strong>Sun Beam</strong> (TN 8), and <strong>Sunburst</strong> (TN 11), replacing three redundant divine-damage spells (Divine Weapon, Righteous Wrath, Upheaval).</p>
+    </div>
+
+<h2><span class="tick">&#10022;</span> Spell Tuning &amp; New Mechanics</h2>
+
+    <div class="change-item">
+        <span class="lead">Two large balance passes across Wizardry, Devotion, and Druid <span class="tag rules">Rules</span></span>
+        <p>Dozens of targeted edits: casting-stat corrections (Arcane Shield uses Intellect, Bonded in Blood uses Willpower), duration tightening on strong buffs (Void Carapace, Ablative Matrix, Life Diverted now 1 turn), damage rescaling (Lacerate, Soul Burst, Molten Earth, Fireball burn), and the standard once-per-turn clause added to every healing spell that lacked it.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">New stat blocks &amp; summoning tables <span class="tag rules">Rules</span></span>
+        <p>Conjured Elemental Mote (Summon Elemental), a Corrupted Woodland Spirit stat line, daemon-manifestation tiers for Twisted Words, and the Summon Damned / Call the Unhallowed reanimation tables &mdash; all scaled from the bestiary&rsquo;s tier system and tied to the existing Turn Undead ladder.</p>
+        <p class="note">Stat-block values are first-draft and not yet playtested.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">&ldquo;Evil&rdquo; scoped, &ldquo;maximum damage&rdquo; simplified <span class="tag rules">Rules</span></span>
+        <p>Protection from Evil and Cast Out now define true Evil as Undead, Daemons, and the corrupted/Chaos-tainted (so Orcs and Hobgoblins aren&rsquo;t auto-affected). Anti-undead riders across Devotion changed from &ldquo;maximum on the dice&rdquo; to simply &ldquo;maximum damage.&rdquo;</p>
+    </div>
+
+<h2><span class="tick">&#10022;</span> Readability, Ordering &amp; Sync</h2>
+
+    <div class="change-item">
+        <span class="lead">Spell stat-lines switched from gold to navy across all seven disciplines <span class="tag rules">Rules</span></span>
+        <p>The Actions / Range / Duration line under each spell was low-contrast gold on cream. Every instance &mdash; including the differently-formatted Runecraft and Vibhuti lines &mdash; is now navy (#1A2740) for legibility.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">All disciplines re-sorted into clean TN order <span class="tag rules">Rules</span></span>
+        <p>Pre-existing ordering drift (most notably in Devotion) corrected so every spell list runs in ascending Target Number, cantrips first and Variable-TN spells last.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Ledger v4 fully synced, including cantrips <span class="tag ledger">Ledger</span></span>
+        <p>All four caster spell arrays in the character sheet were brought in line with the rebuilt rosters in one comprehensive sweep, and the Druid and Wizardry TN&nbsp;0 cantrips reconciled to match the rulebook exactly.</p>
+        <p class="note">Ledger v3 sync remains deferred.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Reliquary jump-links &amp; Campaign Chronicle rename <span class="tag fix">Fixes</span></span>
+        <p>The reliquary&rsquo;s d100 roller gained click-to-jump links from the master table and each roll result to the matching loot table. The Campaign Chronicle had all &ldquo;Mortek&rdquo; references renamed to <strong>Aakzad</strong> and standardised (Elder Rock spacing, racial capitalisation) to match house style.</p>
+    </div>
+
 
     <div class="session-divider" id="s-04jun">4 June 2026<span class="sd-sub">New Vibhuti battle-magic · codex layout for Lore &amp; Mechanics · advanced-skill popout · mechanics corrections · fixes</span></div>
 <h2><span class="tick">&#10022;</span> New Vibhuti Battle-Magic</h2>
