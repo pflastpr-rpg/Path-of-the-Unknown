@@ -187,7 +187,7 @@
         <a href="#characteristics" class="nav-link" data-target="characteristics">Characteristics</a>
         <a href="#defense" class="nav-link" data-target="defense">Defense (To Be Hit)</a>
         <a href="#wounds" class="nav-link" data-target="wounds">Total Wounds</a>
-        <a href="#wm" class="nav-link" data-target="wm">Wound Mitigation (WM)</a>
+        <a href="#wm" class="nav-link" data-target="wm">Damage Mitigation (DM)</a>
       </div>
     </div>
     <div class="nav-group collapsed">
@@ -228,7 +228,7 @@
         <p>Every action resolves with a <strong>1d10 roll</strong> that must meet or beat a <strong>Difficulty Value (DV)</strong>.</p>
         <div class="formula-block">RESULT = 1d10 + Relevant Characteristic (+ any skill/bonus) ≥ DV</div>
         <ul>
-            <li><strong>Natural 10 — Exploding Dice (Confirmed Hit/Cast Only):</strong> If your To-Hit or To-Cast roll (1d10 + bonus) meets or beats Defense or TN <em>and</em> the die showed a 10, roll a second 1d10. No To-Hit or casting bonus on this roll. For <strong>melee/ranged</strong> attacks, only <strong>Precise Strike</strong> points apply. For <strong>casting</strong> (all six disciplines), only <strong>Perception</strong> points apply. If that roll (+ applicable skill points) meets or beats Defense/TN, add +1d10 wounds. Chain continues on each subsequent natural 10 by the same rule. Falling short on any explosion roll ends the chain — all wounds already confirmed are kept.</li>
+            <li><strong>Natural 10 — Exploding Dice (Confirmed Hit/Cast Only):</strong> If your To-Hit or To-Cast roll (1d10 + bonus) meets or beats Defense or TN <em>and</em> the die showed a 10, roll a second 1d10. No To-Hit or casting bonus on this roll. For <strong>melee/ranged</strong> attacks, only <strong>Precise Strike</strong> points apply. For <strong>casting</strong> (all six disciplines), only <strong>Perception</strong> points apply. If that roll (+ applicable skill points) meets or beats Defense/TN, add +1d10 damage. Chain continues on each subsequent natural 10 by the same rule. Falling short on any explosion roll ends the chain — all wounds already confirmed are kept.</li>
             <li><strong>Natural 1 (Miss):</strong> An automatic miss. No further penalties.</li>
             <li><strong>Advantage:</strong> Roll 2d10, keep the higher.</li>
             <li><strong>Disadvantage:</strong> Roll 2d10, keep the lower.</li>
@@ -315,14 +315,14 @@
     <!-- ================================================================ -->
     <!-- WOUND MITIGATION -->
     <!-- ================================================================ -->
-    <h2 class="section-title" id="wm">Wound Mitigation (WM)</h2>
+    <h2 class="section-title" id="wm">Damage Mitigation (DM)</h2>
     <p style="margin: 10px 0 6px;">WM reduces damage after a hit lands. Three separate pools exist — one per damage source type.</p>
 
     <h3 class="subsection-title">Physical WM — vs Melee & Standard Ranged</h3>
-    <div class="formula-block">PHYSICAL WM = Armor W.Mit + floor(Hard as Nails ÷ 2) + Shieldsman pts + floor(Evasion ÷ 3) + Adv.Voc bonuses + Bonus field</div>
+    <div class="formula-block">PHYSICAL WM = Armor D.Mit + floor(Hard as Nails ÷ 2) + Shieldsman pts + floor(Evasion ÷ 3) + Adv.Voc bonuses + Bonus field</div>
     <table class="comp-table">
         <tr><th>Source</th><th>Rate</th><th>Notes</th></tr>
-        <tr><td>Armor W.Mit</td><td>1–8 by type, stacks if 2 pieces worn</td><td>See Armor table</td></tr>
+        <tr><td>Armor D.Mit</td><td>1–8 by type, stacks if 2 pieces worn</td><td>See Armor table</td></tr>
         <tr><td>Hard as Nails</td><td>+1 WM per 2 pts (physical from 1pt; spell/bless from 3pts)</td><td>Also +2 wounds per pt</td></tr>
         <tr><td>Shieldsman</td><td>+1 WM per pt (Defensive Stance)</td><td>Offensive Stance converts to +1 wound per pt instead — choose each turn</td></tr>
         <tr><td>Evasion</td><td>+1 WM per 3 pts</td><td>Unlike Evasion's Defense bonus, this is NOT reduced by armor Agility penalty</td></tr>
@@ -601,7 +601,7 @@
     <h2 class="section-title" id="armor-table">Armor Reference</h2>
     <table class="ref-table">
         <tr>
-            <th rowspan="2">Armor</th><th rowspan="2">Def</th><th rowspan="2">W.Mit</th>
+            <th rowspan="2">Armor</th><th rowspan="2">Def</th><th rowspan="2">D.Mit</th>
             <th rowspan="2">–Agl</th><th rowspan="2">–Awa</th>
             <th colspan="4">To-Cast Penalty</th>
             <th rowspan="2">–Move</th><th rowspan="2">Special</th>
