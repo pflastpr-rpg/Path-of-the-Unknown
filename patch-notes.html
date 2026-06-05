@@ -214,6 +214,9 @@
     <div class="tldr">
         <strong>What this is:</strong> a combined archive of all patch notes from 31 May to 4 June, so nothing is buried in older files. Most recent work is at the top. Jump by session:
         <ul>
+            <li><strong><a href="#s-05jun-runeloot" style="color:var(--blood);">5 June (Runecraft Loot)</a></strong> — six new high-tier Runecraft relics (Rare through Artifact) close the gap that left Runemasters with no gear above Uncommon. None bend the Laws of the craft.</li>
+            <li><strong><a href="#s-05jun-terminology" style="color:var(--blood);">5 June (Terminology)</a></strong> — system-wide split of <em>damage</em> (dealt &amp; mitigated) from <em>wounds</em> (the health pool that healing mends): Wound Mitigation &rarr; Damage Mitigation, and offensive effects now deal damage, not wounds.</li>
+            <li><strong><a href="#s-05jun-vibhuti" style="color:var(--blood);">5 June (Vibhuti &amp; Colour)</a></strong> — Vibhuti now scales Willpower and is no longer standalone; per-discipline identity colours extended to every spell block; cantrip layout fixed; ledger Sabda renamed to Vibhuti.</li>
             <li><strong><a href="#s-05jun-runecraft" style="color:var(--blood);">5 June (Runecraft Review)</a></strong> — rune tuning, two new defensive runes, a unified AP/Days inscription scale tied to the casting bands, and the Ledger v4 sync.</li>
             <li><strong><a href="#s-05jun-presentation" style="color:var(--blood);">5 June (Presentation)</a></strong> — each casting discipline now has its own identity colour, and the Runecraft intro was rebuilt for contrast and readability.</li>
             <li><strong><a href="#s-05jun-ki" style="color:var(--blood);">5 June (Ki Review)</a></strong> — discipline-wide Ki tuning, standardized size limits on knockback/Prone, resist tests brought to core-rules form, the section&rsquo;s styling unified, and the Ledger v4 sync.</li>
@@ -223,6 +226,59 @@
             <li><strong><a href="#s-03jun" style="color:var(--blood);">3 June</a></strong> — beast-craft armour, monster-bone weapons, enchanted gear, Ledger v4, casting-penalty cleanup.</li>
             <li><strong><a href="#s-31may" style="color:var(--blood);">31 May – 1 June</a></strong> — the big spell/blessing rebalance across every discipline, the bypass floor, Essence on the sheet, the Ledger split, and more.</li>
         </ul>
+    </div>
+
+    <div class="session-divider" id="s-05jun-runeloot">5 June 2026 &mdash; Runecraft Relics<span class="sd-sub">Six new high-tier discipline relics &middot; Rare through Artifact &middot; no rule-breaking</span></div>
+
+<h2><span class="tick">&#10022;</span> Reliquary &mdash; Runecraft High-Tier Loot</h2>
+
+    <div class="change-item">
+        <span class="lead">Runecraft finally has top-end gear <span class="tag ledger">Reliquary</span></span>
+        <p>Runecraft was the only discipline with no relics above Uncommon &mdash; every other caster could find Rare, Legendary, and Artifact foci, while a Runemaster found nothing past mid-game. Six new <strong>Discipline Relics</strong> close that gap: <strong>The Anvil-Sworn Chisel</strong>, <strong>Plate of the Deepening Vault</strong>, and <strong>The Quenching Basin</strong> (Rare); <strong>Vorn&rsquo;s Hollow Heart</strong> and <strong>The First Forge Ember</strong> (Legendary); and <strong>Thessan&rsquo;s Last Inscription</strong> (Artifact).</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">None of them break the Laws of Runecraft <span class="tag rules">Design</span></span>
+        <p>By deliberate design, the new relics never exceed the per-object rune limit, the Mastery Limit, or the no-duplication law. They reward a Runemaster through bigger To-Cast bonuses, the readiness to keep an extra <em>prepared</em> Temporary rune, faster Permanent inscription, a tactical Defense-stripping rider, and runework that lesser hands cannot erase &mdash; power that honours the craft&rsquo;s rules rather than bending them.</p>
+    </div>
+
+    <div class="session-divider" id="s-05jun-terminology">5 June 2026 &mdash; Damage vs Wounds Terminology<span class="sd-sub">Wound Mitigation &rarr; Damage Mitigation &middot; offensive effects deal damage &middot; wounds reserved for the health pool &amp; healing</span></div>
+
+<h2><span class="tick">&#10022;</span> Terminology &mdash; Damage vs Wounds</h2>
+
+    <div class="change-item">
+        <span class="lead">The system now cleanly separates damage from wounds <span class="tag both">All Books + Ledger</span></span>
+        <p>A long-standing inconsistency is resolved across every book and the character sheet. <strong>Damage</strong> is what an attack, spell, or harmful effect deals, and what armour and wards reduce; <strong>wounds</strong> are the health pool that damage carves into, and what healing restores. Accordingly, <strong>Wound Mitigation is now Damage Mitigation</strong> everywhere (including the Ledger&rsquo;s defence table and the W.Mit / WM abbreviations), offensive effects now state the <strong>damage</strong> they deal rather than &ldquo;wounds,&rdquo; and healing, the health track (0 wounds, maximum wounds), and damage-over-time that drains the pool continue to read as <strong>wounds</strong>. Conditions such as Bleed and Poison deal damage.</p>
+        <p class="note">A sweeping change &mdash; roughly 300 Mitigation references and several hundred damage lines were converted, with healing and health-pool wording deliberately preserved. Bestiary stat blocks, with their many damage types, got the closest scrutiny. Worth a read-through if any individual line looks off.</p>
+    </div>
+
+    <div class="session-divider" id="s-05jun-vibhuti">5 June 2026 &mdash; Vibhuti, Cantrips &amp; Discipline Colour<span class="sd-sub">Vibhuti scales Willpower &middot; per-discipline spell-block colours &middot; cantrip layout fix &middot; ledger Sabda &rarr; Vibhuti</span></div>
+
+<h2><span class="tick">&#10022;</span> Vibhuti, Cantrips &amp; Colour</h2>
+
+    <div class="change-item">
+        <span class="lead">Vibhuti is no longer a standalone discipline <span class="tag both">Rules + Ledger</span></span>
+        <p><strong>Vibhuti</strong> now advances its governing characteristic like the other casters &mdash; <strong>+1 Willpower per 3 points</strong> invested (the Power of Three) &mdash; and its offensive invocations add the Speaker&rsquo;s <strong>casting bonus damage</strong>. It still carries no healing. The old &ldquo;standalone, advances nothing, adds no bonus&rdquo; framing (in three places) has been corrected.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Each discipline&rsquo;s colour now runs through its spells <span class="tag rules">Books</span></span>
+        <p>The per-discipline identity colours now extend to the left spine of every spell, rite, calling, and rune block &mdash; Devotion crimson, Druid green, Shaman teal, Wizardry indigo, Ki bronze, Runecraft iron, Vibhuti violet &mdash; replacing the single red spine they all shared. Vibhuti&rsquo;s remaining gold framing boxes were also recoloured to its violet, matching the contrast treatment the other disciplines received.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Vibhuti cantrip layout fixed <span class="tag fix">Fix</span></span>
+        <p>The two Bija (TN 0) cantrips were nested <em>inside</em> the cantrip intro box, so they rendered cramped and &ldquo;covered up.&rdquo; They now sit as their own cards, consistent with the rest of the discipline.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Description bold text is now legible <span class="tag fix">Fix</span></span>
+        <p>The bold labels inside spell, rune, and power descriptions (<em>Permanent:</em>, <em>Temporary:</em>, damage values, conditions) were rendering in a washed-out crimson that read as muddy gold against the parchment &mdash; worst in the dense Runecraft, Ki, and Wizardry blocks. They are now crisp dark ink across every discipline, with the identity colours kept where they belong (titles, spines, headers).</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Ledger: Sabda renamed to Vibhuti <span class="tag ledger">Ledger</span></span>
+        <p>Both Ledger v4 and v3 still carried the discipline&rsquo;s old name, <strong>Sabda</strong>, in the magic selector and its underlying logic. Renamed to <strong>Vibhuti</strong> throughout the user-facing selector, display, and spell data so the sheet matches the rulebook.</p>
     </div>
 
     <div class="session-divider" id="s-05jun-runecraft">5 June 2026 &mdash; Runecraft Review<span class="sd-sub">Rune tuning &middot; two new defensive runes &middot; unified AP/Days inscription scale &middot; Ledger v4 sync</span></div>
