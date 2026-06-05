@@ -209,10 +209,17 @@
 
 /* Subtle separation for the "Mastery" feel */
 .trait-box strong {
-    color: var(--blood);
+    color: #02070e;
     text-transform: uppercase;
     font-size: 10pt;
 }
+.disc-devotion .trait-box { border-left-color: #8C1C1C; }
+.disc-druid .trait-box { border-left-color: #1E4D2B; }
+.disc-shaman .trait-box { border-left-color: #2B5D6E; }
+.disc-wizardry .trait-box { border-left-color: #1A237E; }
+.disc-ki .trait-box { border-left-color: #6B3A1A; }
+.disc-runecraft .trait-box { border-left-color: #4A4A4A; }
+.disc-vibhuti .trait-box { border-left-color: #3D2459; }
 
 /* Clean up the full-width utility */
 .full-width {
@@ -872,7 +879,7 @@
             <ul>
                 <li><strong>Total Wounds:</strong> Your racial base, bolstered by your Physique modifier, and expanded by survival skills like Fortitude or Hard as Nails. This is the exact volume of ruin you can suffer before the dark takes you.</li>
                 <li><strong>Base Defense:</strong> The threshold an enemy must cross to strike you. Modified by your Agility and the armour you bear. High Agility makes you a ghost; invest in it if you refuse to wear iron.</li>
-                <li><strong>Wound Mitigation:</strong> Distinct from Defense. Defense dictates if the blade lands; Mitigation dictates how much of the butchery your armour absorbs before it reaches meat.</li>
+                <li><strong>Damage Mitigation:</strong> Distinct from Defense. Defense dictates if the blade lands; Mitigation dictates how much of the butchery your armour absorbs before it reaches meat.</li>
                 <li><strong>Action Points (AP):</strong> You begin with a base of 1 AP per exchange, expanded through the Quickness skill. Record your total, and respect the Power of 3 rule for carrying potential into the next heartbeat.</li>
                 <li><strong>Resist Bonus:</strong> Forged from your Willpower. The sheer mental density applied against terror, madness, and malefic magic.</li>
             </ul>
@@ -1044,10 +1051,10 @@
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt;">NATURAL 10 — ON A CONFIRMED HIT</span>
             <p>If your final To-Hit roll (1d10 + To-Hit bonuses) meets or shatters the target's Defense <strong>and</strong> the physical d10 result displayed a natural 10, the strike finds an artery. Roll a second 1d10. <strong>No base To-Hit bonuses apply to this secondary roll</strong> — only dedicated points in the <strong>Precise Strike</strong> skill carry over.</p>
             <ul style="margin-top: 8px;">
-                <li>If this raw second roll (+ any Precise Strike points) meets or beats the target's Defense → you rip an <strong>extra 1d10 wounds</strong> from the enemy on top of your original butchery.</li>
+                <li>If this raw second roll (+ any Precise Strike points) meets or beats the target's Defense → you rip an <strong>extra 1d10 damage</strong> from the enemy on top of your original butchery.</li>
                 <li>If it falls short of Defense → the chain of devastation ends. You still deal the original hit's wounds normally.</li>
             </ul>
-            <p style="margin-top: 8px;"><strong>The Endless Chain:</strong> If the secondary roll is itself a natural 10 and meets or beats Defense, you gain another extra 1d10 wounds and immediately roll again. This chain continues unbroken as long as each successive natural 10 meets Defense. Precise Strike points apply to every roll in this bloody sequence.</p>
+            <p style="margin-top: 8px;"><strong>The Endless Chain:</strong> If the secondary roll is itself a natural 10 and meets or beats Defense, you gain another extra 1d10 damage and immediately roll again. This chain continues unbroken as long as each successive natural 10 meets Defense. Precise Strike points apply to every roll in this bloody sequence.</p>
         </div>
 
         <div class="trait-box">
@@ -1170,9 +1177,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="border-bottom:1px solid rgba(2,7,14,0.15);"><td style="padding:5px 8px;"><strong>+1 TN over</strong></td><td style="text-align:center; color:var(--blood);">−2 To-Cast</td><td style="padding:5px 8px;">4d10 wounds (ignore Mitigation) + 1 <strong>⊛ Stunned</strong></td></tr>
-                        <tr style="border-bottom:1px solid rgba(2,7,14,0.15); background:rgba(2,7,14,0.03);"><td style="padding:5px 8px;"><strong>+2 TN over</strong></td><td style="text-align:center; color:var(--blood);">−4 To-Cast</td><td style="padding:5px 8px;">5d10 wounds (ignore Mitigation) + 2 <strong>⊛ Stunned</strong></td></tr>
-                        <tr><td style="padding:5px 8px;"><strong>+3 TN over</strong></td><td style="text-align:center; color:var(--blood);">−6 To-Cast</td><td style="padding:5px 8px;">6d10 wounds (ignore Mitigation) + 3 <strong>⊛ Stunned</strong></td></tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.15);"><td style="padding:5px 8px;"><strong>+1 TN over</strong></td><td style="text-align:center; color:var(--blood);">−2 To-Cast</td><td style="padding:5px 8px;">4d10 damage (ignore Mitigation) + 1 <strong>⊛ Stunned</strong></td></tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.15); background:rgba(2,7,14,0.03);"><td style="padding:5px 8px;"><strong>+2 TN over</strong></td><td style="text-align:center; color:var(--blood);">−4 To-Cast</td><td style="padding:5px 8px;">5d10 damage (ignore Mitigation) + 2 <strong>⊛ Stunned</strong></td></tr>
+                        <tr><td style="padding:5px 8px;"><strong>+3 TN over</strong></td><td style="text-align:center; color:var(--blood);">−6 To-Cast</td><td style="padding:5px 8px;">6d10 damage (ignore Mitigation) + 3 <strong>⊛ Stunned</strong></td></tr>
                     </tbody>
                 </table>
                 <p style="margin:8px 0 0; font-size:9pt; font-style:italic; color:rgba(2,7,14,0.7);">The backlash wounds ignore all Mitigation — armour cannot stop the weave turning on the one who forced it. The Stunned conditions stack into the normal Action-loss rule, so a failed +3 reach leaves a caster gravely wounded and reeling into their next turn. Attempting more than 3 TN above your Maximum is simply impossible — the power does not answer.</p>
@@ -1209,7 +1216,7 @@
             <ul style="list-style: none; padding: 0; margin-top: 10px;">
                 <li style="margin-bottom: 8px;"><strong>᛭ Empower:</strong> Add 1d10 + your Primary Characteristic to the sheer Wounds caused or flesh healed.</li>
                 <li style="margin-bottom: 8px;"><strong>◎ Precision:</strong> Gain a flat +2 tactical bonus to the To-Cast or Invoke roll.</li>
-                <li style="margin-bottom: 8px;"><strong>⛨ Piercing:</strong> The magic burns through defenses, ignoring 3 points of the target's Wound Mitigation.</li>
+                <li style="margin-bottom: 8px;"><strong>⛨ Piercing:</strong> The magic burns through defenses, ignoring 3 points of the target's Damage Mitigation.</li>
                 <li style="margin-bottom: 8px;"><strong>⊞ Enlarge:</strong> The spell blooms, increasing its Area of Effect (AoE) by 10 Feet.</li>
                 <li style="margin-bottom: 8px;"><strong>◎ Extend:</strong> The anomaly lingers, increasing the duration of the effect by +1 Turn.</li>
                 <li style="margin-bottom: 8px;"><strong>↟ Vantage:</strong> The magic reaches further, increasing maximum range by +50 Feet.</li>
@@ -1229,8 +1236,8 @@
 
         <div class="trait-box">
             <span class="trait-title">Piercing the Armour — The Bypass Floor</span>
-            <p style="margin-top: 8px;">Wound Mitigation is the spine of every armoured build, and the rules guard it. Magic that <strong>bypasses all Wound Mitigation</strong> — ignoring armour, shields, and warded flesh alike — is the privilege of the highest workings alone. As a rule, <strong>only effects of TN 16 or higher may bypass all Mitigation</strong>; this is the tier where a spell is costly and rare enough that turning steel to paper is its earned reward.</p>
-            <p style="margin-top: 8px;">Below that line, a working may still pierce defences, but only so far. A lower-TN spell that "burns through armour" bypasses <strong>mundane Wound Mitigation only</strong> — ordinary leather, mail, and plate yield, but <strong>magical wards, enchanted armour, and arcane Mitigation still hold</strong>. The named exception is when a spell is turned against a foe whose own nature has no defence against it (an Aakzad unit struck by its own pre-world register, for instance) — there, the bypass may run full even at a lower TN, because no ward it carries is tuned against that frequency.</p>
+            <p style="margin-top: 8px;">Damage Mitigation is the spine of every armoured build, and the rules guard it. Magic that <strong>bypasses all Damage Mitigation</strong> — ignoring armour, shields, and warded flesh alike — is the privilege of the highest workings alone. As a rule, <strong>only effects of TN 16 or higher may bypass all Mitigation</strong>; this is the tier where a spell is costly and rare enough that turning steel to paper is its earned reward.</p>
+            <p style="margin-top: 8px;">Below that line, a working may still pierce defences, but only so far. A lower-TN spell that "burns through armour" bypasses <strong>mundane Damage Mitigation only</strong> — ordinary leather, mail, and plate yield, but <strong>magical wards, enchanted armour, and arcane Mitigation still hold</strong>. The named exception is when a spell is turned against a foe whose own nature has no defence against it (an Aakzad unit struck by its own pre-world register, for instance) — there, the bypass may run full even at a lower TN, because no ward it carries is tuned against that frequency.</p>
             <p style="margin-top: 8px; font-style: italic; color: #5a4a2a;">In short: total bypass is a capstone reward. Mid-tier magic makes armour <em>worse</em>, not <em>irrelevant</em>.</p>
         </div>
 
@@ -1266,7 +1273,7 @@
         </ul>
         <div style="background:rgba(184,134,11,0.10); border-left:4px solid var(--gold); padding:14px 18px; margin:18px 0;">
             <p style="margin:0 0 6px; font-family:var(--font-sub,serif); font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--gold); font-size:0.8em;">Enchanted Arms &amp; Armour</p>
-            <p style="margin:0;">Beyond named relics, the working soldier&rsquo;s magic comes in three reliable grades. An <strong>enchanted weapon</strong> grants a flat bonus to <strong>both To-Hit and Wounds</strong> &mdash; +1, +2, or +3. <strong>Enchanted armour and shields</strong> add their bonus to <strong>Defense</strong> &mdash; +1, +2, or +3 &mdash; stacking with the armour&rsquo;s normal Wound Mitigation (the enchantment makes you harder to hit; the steel still absorbs what does land). By the enchanters&rsquo; convention, +1 is Common-grade, +2 Rare, and +3 Legendary. The full rollable tables of enchanted gear are catalogued in the Reliquary.</p>
+            <p style="margin:0;">Beyond named relics, the working soldier&rsquo;s magic comes in three reliable grades. An <strong>enchanted weapon</strong> grants a flat bonus to <strong>both To-Hit and Wounds</strong> &mdash; +1, +2, or +3. <strong>Enchanted armour and shields</strong> add their bonus to <strong>Defense</strong> &mdash; +1, +2, or +3 &mdash; stacking with the armour&rsquo;s normal Damage Mitigation (the enchantment makes you harder to hit; the steel still absorbs what does land). By the enchanters&rsquo; convention, +1 is Common-grade, +2 Rare, and +3 Legendary. The full rollable tables of enchanted gear are catalogued in the Reliquary.</p>
         </div>
         </div>
 
@@ -1307,20 +1314,20 @@
 
         <div class="trait-box">
             <span class="trait-title">🩸 Bleeding (Stacking)</span>
-            <p>The life rushing from an open artery. Lose <strong>1d10 Wounds</strong> per stack at the dawn of your turn. Bleeding compounds infinitely — each distinct application adds another 1d10 to the inevitable per-turn loss.</p>
+            <p>The life rushing from an open artery. Lose <strong>1d10 Damage</strong> per stack at the dawn of your turn. Bleeding compounds infinitely — each distinct application adds another 1d10 to the inevitable per-turn loss.</p>
             <p style="margin-top: 8px;"><strong>The Clot:</strong> Bleeding cannot be ignored; it only ends through deliberate, magical intervention — a Mending skill application, a Devotion blessing, a Druidic weave, or an alchemical draught. Natural recovery is a myth here. <em>(The Hard as Nails skill at 6 points grants 'Bloody Minded' — allowing the survivor to ignore the hemorrhage for a single turn).</em></p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">🧪 Poison (Lesser &amp; Greater)</span>
-            <p><strong>Lesser Poison:</strong> The venom of beasts and cheap alchemy. Lose <strong>1d10 Wounds</strong> per turn. At the end of each turn, your body attempts to burn it out; surpass <strong>Physique TN 7 + Resist bonus</strong> to end the affliction.</p>
-            <p style="margin-top: 8px;"><strong>Greater Poison:</strong> Rare, deliberate, and catastrophic. Lose <strong>2d10 Wounds</strong> per turn. The threshold to purge it is a brutal <strong>Physique TN 10 + Resist bonus</strong>.</p>
+            <p><strong>Lesser Poison:</strong> The venom of beasts and cheap alchemy. Lose <strong>1d10 Damage</strong> per turn. At the end of each turn, your body attempts to burn it out; surpass <strong>Physique TN 7 + Resist bonus</strong> to end the affliction.</p>
+            <p style="margin-top: 8px;"><strong>Greater Poison:</strong> Rare, deliberate, and catastrophic. Lose <strong>2d10 Damage</strong> per turn. The threshold to purge it is a brutal <strong>Physique TN 10 + Resist bonus</strong>.</p>
             <p style="margin-top: 8px; font-size: 10pt; font-style: italic; color: rgba(26,18,8,0.7);">Toxins and hemorrhage do not cancel one another out. Poison and Bleeding are distinct realities and stack independently.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">⊗ Disease</span>
-            <p>A creeping, necrotic rot. Lose <strong>1d10 Wounds</strong> per turn. Furthermore, the infection eats away at your foundation, inflicting a <strong>-1 penalty to a random characteristic</strong> every 24 hours until eradicated. Disease cannot be resisted through sheer grit — only magical healing or dedicated Mending can excise it.</p>
+            <p>A creeping, necrotic rot. Lose <strong>1d10 Damage</strong> per turn. Furthermore, the infection eats away at your foundation, inflicting a <strong>-1 penalty to a random characteristic</strong> every 24 hours until eradicated. Disease cannot be resisted through sheer grit — only magical healing or dedicated Mending can excise it.</p>
         </div>
 
         <div class="full-width">
@@ -1374,7 +1381,7 @@
 
         <div class="trait-box">
             <span class="trait-title">⦿ Blinded</span>
-            <p>The terror of the dark. All attacks suffer <strong>Disadvantage</strong>. Your Defense value is stripped of its Agility and Awareness modifiers, leaving you protected only by the static weight of your physical armor's Wound Mitigation.</p>
+            <p>The terror of the dark. All attacks suffer <strong>Disadvantage</strong>. Your Defense value is stripped of its Agility and Awareness modifiers, leaving you protected only by the static weight of your physical armor's Damage Mitigation.</p>
         </div>
 
         <div class="full-width">
@@ -1612,9 +1619,9 @@
             <span class="trait-title">Evasion</span>
             <strong>XP Cost:</strong> Halfling (10) | Elf (15) | Human (20) | Dwarf (25) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Agility per 3 pts
             <br><span style="color: #1A2740; font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Agility</span>
-            <p>Tactical flexibility in combat — the difference between a blade that bites and one that meets empty air. You read where the strike is going before it arrives, slipping just enough to turn lethal into survivable. Your Evasion bonus applies to both Defense and Wound Mitigation, reduced by your armor's Agility penalty.</p>
+            <p>Tactical flexibility in combat — the difference between a blade that bites and one that meets empty air. You read where the strike is going before it arrives, slipping just enough to turn lethal into survivable. Your Evasion bonus applies to both Defense and Damage Mitigation, reduced by your armor's Agility penalty.</p>
             <ul style="margin-top:8px;">
-                <li><strong>Passive:</strong> Every 3 points adds <strong>+1 Defense</strong> and <strong>+1 Wound Mitigation</strong> against physical attacks. This bonus is reduced by your armor's Agility penalty for the Defense component, but always applies fully to Wound Mitigation.</li>
+                <li><strong>Passive:</strong> Every 3 points adds <strong>+1 Defense</strong> and <strong>+1 Damage Mitigation</strong> against physical attacks. This bonus is reduced by your armor's Agility penalty for the Defense component, but always applies fully to Damage Mitigation.</li>
                 <li><strong>At 3 points — Dodge:</strong> Once per encounter, spend <strong>1 AP as a reaction</strong> to completely negate all wounds from one physical attack that hits you. Declare after the hit is confirmed but before wounds are applied. Does not work against spells.</li>
                 <li><strong>At 6 points — Roll Clear:</strong> Whenever you are caught in an AoE effect, you suffer only <strong>half wounds</strong> — your instinct carries you to the edge of the blast.</li>
                 <li><strong>At 9 points — Impossible to Pin:</strong> Your dodge reaction now applies to spells targeting you directly. When a spell hits, spend <strong>1 AP as a reaction</strong> to suffer only <strong>half wounds</strong> as you twist clear. Does not apply to AoE spells.</li>
@@ -1656,10 +1663,10 @@
             <span class="trait-title">Hard as Nails</span>
             <strong>XP Cost:</strong> Dwarf (25) | Human (30) | Elf/Halfling (35) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Willpower per 3 pts
             <br><span style="color: #1A2740; font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Physique</span>
-            <p>Some men bleed at the first sign of steel. You simply refuse to acknowledge the pain. Every point grants <strong>+2 permanent Wounds</strong> and <strong>+1 Wound Mitigation</strong> against physical attacks for every 2 points invested. Every 3 points increases your Willpower characteristic by 1.</p>
+            <p>Some men bleed at the first sign of steel. You simply refuse to acknowledge the pain. Every point grants <strong>+2 permanent Wounds</strong> and <strong>+1 Damage Mitigation</strong> against physical attacks for every 2 points invested. Every 3 points increases your Willpower characteristic by 1.</p>
             <ul style="margin-top:8px;">
-                <li><strong>Passive:</strong> <strong>+2 wounds</strong> per point. <strong>+1 Wound Mitigation</strong> vs physical attacks per 2 points invested.</li>
-                <li><strong>At 3 points — Iron Constitution:</strong> Your body begins resisting the arcane as stubbornly as steel resists rust. You gain <strong>Wound Mitigation against spell and blessing damage equal to half your Hard as Nails points</strong> (rounded down). Stacks with your physical WM separately.</li>
+                <li><strong>Passive:</strong> <strong>+2 wounds</strong> per point. <strong>+1 Damage Mitigation</strong> vs physical attacks per 2 points invested.</li>
+                <li><strong>At 3 points — Iron Constitution:</strong> Your body begins resisting the arcane as stubbornly as steel resists rust. You gain <strong>Damage Mitigation against spell and blessing damage equal to half your Hard as Nails points</strong> (rounded down). Stacks with your physical WM separately.</li>
                 <li><strong>At 6 points — Bloody Minded:</strong> Once per encounter, ignore all Bleeding damage for <strong>1 turn</strong> — you grit through it and keep moving, dealing with it after the immediate threat is handled.</li>
             </ul>
         </div>
@@ -1705,7 +1712,7 @@
             <ul style="margin-top:8px;">
                 <li><strong>Passive:</strong> Deal <strong>+1 wound per point</strong> to Undead, Daemons, Beastmen, Chaos Beasts, and Cultists by any means of attack.</li>
                 <li><strong>At 3 points — Holy Light:</strong> Once per encounter as a free action, radiate divine light. All Undead within <strong>20 Ft</strong> must surpass <strong>Willpower TN 6 + Resist bonus</strong> or become <strong>Shaken</strong> — the purity of your soul is a physical force to them.</li>
-                <li><strong>At 6 points — Sanctified Bastion:</strong> Gain <strong>+1 Wound Mitigation</strong> per 3 points specifically against attacks from Evil creatures — their blows meet something more than flesh.</li>
+                <li><strong>At 6 points — Sanctified Bastion:</strong> Gain <strong>+1 Damage Mitigation</strong> per 3 points specifically against attacks from Evil creatures — their blows meet something more than flesh.</li>
             </ul>
         </div>
 
@@ -1778,7 +1785,7 @@
             <br><span style="color: #1A2740; font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Willpower</span>
             <p>When the mind screams to surrender and the soul feels the cold pull of the void, it is Resolve that holds the line. Not training — stubbornness. The bedrock refusal to be moved. Every point grants <strong>+1 permanent Wound</strong> and provides bonuses to all tests against Fear, Terror, and mind-altering magic. Every 3 points increases your Willpower characteristic by 1.</p>
             <ul style="margin-top:8px;">
-                <li><strong>Passive:</strong> Roll <strong>1d10 + Resolve points</strong> to resist Fear, Terror, Charm, and magical deceptions. Gain <strong>+1 Wound Mitigation against Blessings and Spells</strong> for every 3 points invested.</li>
+                <li><strong>Passive:</strong> Roll <strong>1d10 + Resolve points</strong> to resist Fear, Terror, Charm, and magical deceptions. Gain <strong>+1 Damage Mitigation against Blessings and Spells</strong> for every 3 points invested.</li>
                 <li><strong>At 3 points — Shake It Off:</strong> Remove the <strong>Shaken</strong> condition from yourself as a <strong>free action</strong> once per turn. Where Discipline prevents it, Resolve recovers from it — the reactive iron rather than the proactive steel.</li>
                 <li><strong>At 6 points — Unbiddable Mind:</strong> Gain a flat <strong>+2 bonus</strong> to all tests made to resist <strong>Charm</strong> and <strong>Dominate</strong> effects. Your will is not easily redirected.</li>
                 <li><strong>At 9 points — Iron Bulwark:</strong> Once per turn as a free action, extend your full <strong>Resist bonus</strong> to one adjacent ally until the start of your next turn — your presence alone steadies those beside you against the arcane.</li>
@@ -1802,8 +1809,8 @@
         <div class="trait-box" style="border-color: var(--blood); background: rgba(168,24,24,0.04);">
             <span class="trait-title" style="color: var(--blood);">Vibhuti <span style="font-size:9pt; font-weight:400; color: var(--gold);">— The Lost Seventh Discipline</span></span>
             <strong>XP Cost:</strong> Halfling (10) | Elf (12) | Human (15) | Dwarf (20) — compounding per point, GM-granted access only
-            <br><span style="color: #1A2740; font-weight: bold; font-size: 10pt;">MIN. REQ: GM-granted access only | GOVERNS: Willpower (standalone — no characteristic advancement) | ARMOUR: Studded leather or lighter — no penalty. Chainmail through field plate — roughly half the armour's TN penalty. Full plate — a flat −3 To-Cast, the same ceiling every arcane caster meets in plate | INDIVIDUAL INVOCATIONS: Vibhuti | SEED SOUNDS: Bija</span>
-            <p>The projection of cosmic force as spoken frequency — a lost pre-Empire discipline the Church of the Radiant Compact systematically burned. A Speaker cannot be trained; they must find surviving Bija, a living transmission, or contact with something ancient enough to remember when the Vibhuti was practiced openly. Each point unlocks one Vibhuti from the Primordial Lexicon. <strong>The Vibhuti does not advance any characteristic</strong> — like Runecraft, it stands outside the Power of Three entirely. Elves, who regard the Vibhuti as a crude and primitive precursor that their Wizardry and Druidism have long since surpassed, find the Bija difficult to integrate — not because they lack capability, but because their contempt for the tradition makes it resist them.</p>
+            <br><span style="color: #1A2740; font-weight: bold; font-size: 10pt;">MIN. REQ: GM-granted access only | GOVERNS: Willpower (+1 per 3 pts) | ARMOUR: Studded leather or lighter — no penalty. Chainmail through field plate — roughly half the armour's TN penalty. Full plate — a flat −3 To-Cast, the same ceiling every arcane caster meets in plate | INDIVIDUAL INVOCATIONS: Vibhuti | SEED SOUNDS: Bija</span>
+            <p>The projection of cosmic force as spoken frequency — a lost pre-Empire discipline the Church of the Radiant Compact systematically burned. A Speaker cannot be trained; they must find surviving Bija, a living transmission, or contact with something ancient enough to remember when the Vibhuti was practiced openly. Each point unlocks one Vibhuti from the Primordial Lexicon. <strong>The Vibhuti advances Willpower</strong> — +1 per 3 points invested, by the Power of Three, like the other casting disciplines. Elves, who regard the Vibhuti as a crude and primitive precursor that their Wizardry and Druidism have long since surpassed, find the Bija difficult to integrate — not because they lack capability, but because their contempt for the tradition makes it resist them.</p>
             <ul style="margin-top:8px;">
                 <li><strong>Governing characteristic:</strong> Willpower. Add your Willpower modifier to all Vibhuti To-Cast rolls. The force does not respond to intellect or faith — it responds to the absolute intent carried in the Speaker's Bija.</li>
                 <li><strong>Iron penalty:</strong> Studded leather or lighter — no penalty. Chainmail through field plate — roughly half the armour's TN penalty. Full plate imposes a flat <strong>−3 To-Cast</strong> — the constriction of metal against chest and throat disrupts the precise breath control invocation demands, but the penalty is capped at the same ceiling every arcane caster meets in plate.</li>
@@ -1815,18 +1822,18 @@
             <span class="trait-title">Shieldsman</span><span style="display:inline-block; background:rgba(184,134,11,0.15); color:var(--ink-soft); font-size:8.5pt; font-weight:700; letter-spacing:0.5px; padding:1px 8px; border:1px solid var(--gold-line); border-radius:2px; margin-left:8px; text-transform:uppercase; vertical-align:middle;" title="This skill is a swap-pool alternate under the 3-core + 3-swap structure. See 'The Architecture of the Self' in Chapter 9.">⚯ Pool Alternate</span>
             <strong>XP Cost:</strong> Dwarf/Elf/Human (30) | Halfling (35) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Physique per 3 pts
             <br><span style="color: #1A2740; font-weight: bold; font-size: 10pt;">MIN. REQ: Physique (2) | GOVERNS: Physique</span>
-            <p>A shield is not merely a wall of wood and iron — it is a weapon that never reloads and a sanctuary that never falters. Each point invested grants <strong>+1 Wound Mitigation</strong> while a shield is equipped. Every 3 points increases your Physique characteristic by 1.</p>
+            <p>A shield is not merely a wall of wood and iron — it is a weapon that never reloads and a sanctuary that never falters. Each point invested grants <strong>+1 Damage Mitigation</strong> while a shield is equipped. Every 3 points increases your Physique characteristic by 1.</p>
             <ul style="margin-top:8px;">
-                <li><strong>Passive:</strong> <strong>+1 Wound Mitigation</strong> against all melee and standard ranged attacks while a shield is equipped. Declare your stance at the start of each turn.</li>
+                <li><strong>Passive:</strong> <strong>+1 Damage Mitigation</strong> against all melee and standard ranged attacks while a shield is equipped. Declare your stance at the start of each turn.</li>
                 <li><strong>At 3 points — Shield Bash:</strong> As a <strong>1 AP action</strong>, drive your shield into an adjacent target dealing <strong>1d10 + Physique modifier</strong> wounds and pushing them back <strong>5 Ft</strong>. The target must surpass Physique TN 8 + Resist bonus or suffer <strong>Prone</strong>.</li>
-                <li><strong>At 6 points — Cover:</strong> While holding position (movement 0 this turn), one adjacent ally benefits from your full Wound Mitigation bonus as you interpose your shield between them and incoming attacks.</li>
+                <li><strong>At 6 points — Cover:</strong> While holding position (movement 0 this turn), one adjacent ally benefits from your full Damage Mitigation bonus as you interpose your shield between them and incoming attacks.</li>
             </ul>
         </div>
         <div class="trait-box">
             <span class="trait-title">Spirit</span>
             <strong>XP Cost:</strong> All Races (15) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Willpower per 3 pts
             <br><span style="color: #1A2740; font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Willpower</span>
-            <p>Your body is not a closed vessel but a cathedral of the soul — open to the restorative currents of the world and resistant to the arcane forces that seek to corrupt it. Every point grants <strong>+1 wound whenever healed by any Blessing</strong>. Every 3 points increases your Willpower characteristic by 1 and grants <strong>+1 Wound Mitigation against Blessings and Spells</strong>.</p>
+            <p>Your body is not a closed vessel but a cathedral of the soul — open to the restorative currents of the world and resistant to the arcane forces that seek to corrupt it. Every point grants <strong>+1 wound whenever healed by any Blessing</strong>. Every 3 points increases your Willpower characteristic by 1 and grants <strong>+1 Damage Mitigation against Blessings and Spells</strong>.</p>
             <ul style="margin-top:8px;">
                 <li><strong>Passive:</strong> Gain <strong>+1 wound</strong> on every Blessing heal. Gain <strong>+1 WM against magical damage</strong> per 3 points invested.</li>
                 <li><strong>At 3 points — Arcane Sensitivity:</strong> You can sense the presence of <strong>active magic</strong> within <strong>30 Ft</strong> — a subtle awareness of the weave, not its details. You know something magical is present, not what it is.</li>
@@ -1875,7 +1882,7 @@
             <span class="trait-title">Survival</span>
             <strong>XP Cost:</strong> Dwarf/Elf/Human (25) | Halfling (30) &nbsp;|&nbsp; <strong>Power of Three:</strong> +1 Willpower per 3 pts
             <br><span style="color: #1A2740; font-weight: bold; font-size: 10pt;">MIN. REQ: None | GOVERNS: Willpower</span>
-            <p>The wilderness does not care for your titles. You have lived where others perished — wringing water from stone and warmth from wind. Every point grants <strong>+1 permanent Wound</strong> and resistance to natural extremes. Every 3 points increases your Willpower characteristic by 1 and grants <strong>+1 Wound Mitigation against magical damage</strong>.</p>
+            <p>The wilderness does not care for your titles. You have lived where others perished — wringing water from stone and warmth from wind. Every point grants <strong>+1 permanent Wound</strong> and resistance to natural extremes. Every 3 points increases your Willpower characteristic by 1 and grants <strong>+1 Damage Mitigation against magical damage</strong>.</p>
             <ul style="margin-top:8px;">
                 <li><strong>Passive:</strong> <strong>+1 wound</strong> per point. Gain Advantage on all tests to resist extreme Cold, Heat, or Hunger. Gain <strong>+1 WM vs magical damage</strong> per 3 points invested.</li>
                 <li><strong>At 3 points — Efficient:</strong> You require only <strong>half the standard rations</strong> to survive and avoid Exhaustion — your body has learned to run lean.</li>
@@ -1956,7 +1963,7 @@
         <p><strong>Passive:</strong> Negate outnumbering/flanking bonuses from up to 3 enemies.</p>
         <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--iron);">
             <span style="color: var(--gold); font-weight: bold;">Specialized: Berserker (1 Action)</span>
-            <p>Lose disadvantage on melee attacks, gain +1d10 wounds, lose 1 Defense.</p>
+            <p>Lose disadvantage on melee attacks, gain +1d10 damage, lose 1 Defense.</p>
         </div>
     
             <p style="margin-top:8px; font-size:9.5pt; color:var(--gold); font-style:italic; border-top:1px dashed var(--gold); padding-top:6px;">⚔ The Berserker Specialized replaces the former <strong>Enraged</strong> primary skill — fury-driven bonus attacks are now accessed through this mastery.</p>
@@ -1968,7 +1975,7 @@
         <p><strong>Mechanic:</strong> When hit, test to completely mitigate wounds from an opponent of equal size or smaller.</p>
         <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--iron);">
             <span style="color: var(--gold); font-weight: bold;">Specialized: Bulwark (2 Actions)</span>
-            <p>Anchor in place (0 Move). You and one adjacent ally gain +3 Wound Mitigation against physical attacks.</p>
+            <p>Anchor in place (0 Move). You and one adjacent ally gain +3 Damage Mitigation against physical attacks.</p>
         </div>
     </div>
 
@@ -2235,7 +2242,7 @@
     <div class="trait-box">
         <span class="trait-title">Unwavering / Unstoppable</span>
         <span style="color: var(--blood); font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">XP: 300 | Actions: 2 | Min. Req: Wil (2), Hard as Nails (2), Iron Will (2)</span>
-        <p><strong>Passive:</strong> +3 Wound Mitigation against all sources.</p>
+        <p><strong>Passive:</strong> +3 Damage Mitigation against all sources.</p>
         <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--iron);">
             <span style="color: var(--gold); font-weight: bold;">Specialized: Unstoppable Force (3 Actions)</span>
             <p>Mitigate wounds by Hard as Nails + Iron Will + Willpower.</p>
@@ -2264,7 +2271,7 @@
         <ul style="margin-top:8px;">
             <li><strong>Passive — Fluid Movement:</strong> You suffer no movement penalty for difficult terrain that can be vaulted, climbed over, or navigated dynamically. You treat unstable surfaces (ship decks, icy slopes, rooftops) as firm ground for the purposes of movement and attack.</li>
             <li><strong>At 3 points — Wall Run:</strong> Once per turn, you may run <strong>along</strong> a vertical surface for up to <strong>15 Ft</strong> as part of your movement — crossing a wall face or scrambling over a sheer obstacle through momentum alone. This is lateral or upward travel across the surface, not inverted movement; you cannot run along ceilings. You must end your movement on a surface that supports weight, or you fall.</li>
-            <li><strong>At 6 points — Aerial Strike:</strong> When you attack an enemy after vaulting or dropping from height, add <strong>+1 To-Hit and +1d10 wounds</strong> to the attack — the momentum translates directly into killing force. Once per turn.</li>
+            <li><strong>At 6 points — Aerial Strike:</strong> When you attack an enemy after vaulting or dropping from height, add <strong>+1 To-Hit and +1d10 damage</strong> to the attack — the momentum translates directly into killing force. Once per turn.</li>
             <li><strong>At 9 points — Perfect Form:</strong> Falling damage is reduced by <strong>half</strong> (you land rolling, never quite right but never broken). Additionally, once per encounter you may use Acrobatics to move through an occupied space — passing through enemy lines or over a target — as a <strong>2 AP action</strong> without triggering opportunity attacks, provided you succeed on an Acrobatics test against the highest enemy Awareness in the path.</li>
         </ul>
         <p style="margin-top:8px;">Every 3 points invested permanently increases your <strong>Agility</strong> characteristic by 1.</p>
@@ -2395,7 +2402,7 @@
             <li><strong>Passive — Command the Room:</strong> In any social situation involving more than five people, you automatically draw attention — you are the focal point of any space you inhabit when you choose to be. All Charisma-based tests made while performing or addressing a crowd gain <strong>Advantage</strong>.</li>
             <li><strong>At 3 points — Cover:</strong> A performance in progress provides active concealment for other party members operating in the area — the audience's attention is locked onto you. Other party members gain <strong>Advantage</strong> on all Stealth and Thieving tests made while your performance is active. The moment the performance ends or you are interrupted, the cover evaporates.</li>
             <li><strong>At 6 points — Crowd Reading:</strong> Over the course of a performance, you can assess the emotional state, hidden concerns, and likely behaviour of your audience with the precision of a political survey. After 10 minutes of performance, the GM provides you with one significant piece of accurate intelligence about the crowd — who the powerbroker is, what the room is afraid of, what they want to hear that would move them.</li>
-            <li><strong>At 9 points — The Rally:</strong> Once per session, you may deliver a performance of sufficient force to alter the morale state of all allies within earshot. All allies who hear you gain <strong>+2 To-Hit, +2 Wound Mitigation, and immunity to Fear effects</strong> for <strong>3 turns</strong>. This requires 1 full turn of uninterrupted performance to activate and ends if you are Silenced, Stunned, or Unconscious.</li>
+            <li><strong>At 9 points — The Rally:</strong> Once per session, you may deliver a performance of sufficient force to alter the morale state of all allies within earshot. All allies who hear you gain <strong>+2 To-Hit, +2 Damage Mitigation, and immunity to Fear effects</strong> for <strong>3 turns</strong>. This requires 1 full turn of uninterrupted performance to activate and ends if you are Silenced, Stunned, or Unconscious.</li>
         </ul>
         <p style="margin-top:8px;">Every 3 points invested permanently increases your <strong>Charisma</strong> characteristic by 1.</p>
     </div>
@@ -2425,7 +2432,7 @@
             <li><strong>Passive — Identification:</strong> You can identify any alchemical compound, poison, or reagent by inspection. You know whether a substance is magical in origin, its general class, and its approximate potency. This requires no test for compounds of DV 8 or below; higher complexity requires a roll.</li>
             <li><strong>At 3 points — Field Synthesis:</strong> Given basic reagents (available in any market or most wilderness environments), you can craft <strong>Alchemist's Fire, basic Antitoxin, Acid Flask, or Healing Draughts</strong> (restoring Alchemy pts × 2 wounds) over 30 minutes. The crafted item functions identically to purchased versions. You can produce up to <strong>3 items per long rest</strong>.</li>
             <li><strong>At 6 points — Advanced Compounds:</strong> You can craft complex formulas: contact poisons (Physique TN 9 or Poisoned + one condition of your choice), sleep agents (inhaled, Willpower TN 8 or Unconscious for 1 hour), and alchemical grenades (2d10 fire or acid in a 10 Ft AoE on impact). Crafting advanced compounds takes 1 hour and requires specific reagents the GM determines are available in the region.</li>
-            <li><strong>At 9 points — Masterwork Formula:</strong> Once per long rest, you may craft a Masterwork compound — a single-use alchemical item of significant power. Examples: a Philosopher's Draught that restores all wounds and clears all conditions; a contact compound that renders a target unconscious on skin contact for 8 hours; a hardening agent that grants +3 Wound Mitigation to armour for one encounter. The GM determines appropriate DV for each Masterwork (typically DV 12–16).</li>
+            <li><strong>At 9 points — Masterwork Formula:</strong> Once per long rest, you may craft a Masterwork compound — a single-use alchemical item of significant power. Examples: a Philosopher's Draught that restores all wounds and clears all conditions; a contact compound that renders a target unconscious on skin contact for 8 hours; a hardening agent that grants +3 Damage Mitigation to armour for one encounter. The GM determines appropriate DV for each Masterwork (typically DV 12–16).</li>
         </ul>
             <p style="margin-top:14px;"><strong>Crafting Table.</strong> A crafting attempt is a single Alchemy test against the listed DV, given appropriate reagents and an hour of work (combat items can be thrown as a 1 AP action once made). You may only craft items whose tier you have reached. On a failed test the reagents are wasted; on a natural 1 a volatile batch affects the crafter instead.</p>
             <table style="width:100%; border-collapse:collapse; font-size:10pt; margin-top:8px;">
@@ -2505,19 +2512,19 @@
                     <td style="padding:5px 10px; font-weight:bold;">Acid Flask</td>
                     <td style="padding:5px 10px; text-align:center;">3</td>
                     <td style="padding:5px 10px; text-align:center;">8</td>
-                    <td style="padding:5px 10px;">Direct hit deals <strong>2d10 wounds</strong> and reduces the target's armour mitigation by 2 for the encounter (eats through plate, leather, hide alike).</td>
+                    <td style="padding:5px 10px;">Direct hit deals <strong>2d10 damage</strong> and reduces the target's armour mitigation by 2 for the encounter (eats through plate, leather, hide alike).</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
                     <td style="padding:5px 10px; font-weight:bold;">Alchemist's Fire</td>
                     <td style="padding:5px 10px; text-align:center;">6</td>
                     <td style="padding:5px 10px; text-align:center;">10</td>
-                    <td style="padding:5px 10px;">Hits for <strong>3d10 wounds</strong> and sets the target alight: 1d10 wounds/turn until they spend an action to douse it. Ignites flammable terrain.</td>
+                    <td style="padding:5px 10px;">Hits for <strong>3d10 damage</strong> and sets the target alight: 1d10 damage/turn until they spend an action to douse it. Ignites flammable terrain.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
                     <td style="padding:5px 10px; font-weight:bold;">Sunburst Charge</td>
                     <td style="padding:5px 10px; text-align:center;">9</td>
                     <td style="padding:5px 10px; text-align:center;">12</td>
-                    <td style="padding:5px 10px;">Masterwork. A 15 Ft detonation: 4d10 wounds (Agility vs DV 12 for half) and all who fail are <strong>Blinded</strong> for 1d3 turns. One per long rest.</td>
+                    <td style="padding:5px 10px;">Masterwork. A 15 Ft detonation: 4d10 damage (Agility vs DV 12 for half) and all who fail are <strong>Blinded</strong> for 1d3 turns. One per long rest.</td>
                 </tr>
             </tbody>
             </table>
@@ -2577,7 +2584,7 @@
             <li><strong>Passive — Always Armed:</strong> Your unarmed strikes deal <strong>1d10 + Physique modifier + Brawling pts</strong> wounds. Against an unprepared or unarmed-untrained opponent, your attacks impose <strong>Disadvantage</strong> on their defence. You suffer no penalty for fighting in confined spaces where weapons cannot be freely swung — tight corridors, grapples, and crowd situations are your natural habitat.</li>
             <li><strong>At 3 points — Opportunist:</strong> Whenever an adjacent enemy fails an attack roll against you, you may spend <strong>1 AP as a reaction</strong> to immediately deliver one unarmed strike against them. The missed attack opened a gap. You fill it.</li>
             <li><strong>At 6 points — Dirty Fighter:</strong> Once per turn, alongside your normal attack, you may attempt one of the following as a <strong>free action</strong>: eye gouge (target suffers −2 To-Hit for 1 turn), kidney shot (target loses 1 AP on their next turn), or leg sweep (target must make a Physique test against DV 8 or be Prone). No roll required on your part — only a test for the target.</li>
-            <li><strong>At 9 points — Brawler's Finish:</strong> Once per encounter, when an enemy is Prone, Stunned, or Grappled by you, you may make a Brawling attack as a <strong>2 AP action</strong> that deals <strong>3d10 + Physique modifier</strong> wounds bypassing all mundane Wound Mitigation. This is not a finisher — it is simply what happens when you have someone where you want them and no reason to stop.</li>
+            <li><strong>At 9 points — Brawler's Finish:</strong> Once per encounter, when an enemy is Prone, Stunned, or Grappled by you, you may make a Brawling attack as a <strong>2 AP action</strong> that deals <strong>3d10 + Physique modifier</strong> wounds bypassing all mundane Damage Mitigation. This is not a finisher — it is simply what happens when you have someone where you want them and no reason to stop.</li>
         </ul>
         <p style="margin-top:8px;">Every 3 points invested permanently increases your <strong>Physique</strong> characteristic by 1.</p>
     </div>
@@ -2694,13 +2701,13 @@
     <div class="rpg-columns"> <a href="#top" class="back-to-top">↑ Return to Index</a>
         <div class="full-width">
             <h3>I. Armor &amp; Protection</h3>
-            <p>Defense (Def) is the static threshold an attacker must meet or exceed to land a blow. Wound Mitigation (W. Mit) is the cold reality of physics — the exact volume of butchery the material absorbs before the remainder reaches your flesh.</p>
+            <p>Defense (Def) is the static threshold an attacker must meet or exceed to land a blow. Damage Mitigation (D. Mit) is the cold reality of physics — the exact volume of butchery the material absorbs before the remainder reaches your flesh.</p>
 
             <table>
                 <tr>
                     <th>Type</th>
                     <th style="text-align:center;">Def</th>
-                    <th style="text-align:center;">W. Mit</th>
+                    <th style="text-align:center;">D. Mit</th>
                     <th>The Toll of Iron (Penalties)</th>
                 </tr>
                 <tr>
@@ -2769,7 +2776,7 @@
                 <tr>
                     <th>Shield Class</th>
                     <th style="text-align:center;">Def</th>
-                    <th style="text-align:center;">W. Mit</th>
+                    <th style="text-align:center;">D. Mit</th>
                     <th>The Toll of Iron (Penalties)</th>
                 </tr>
                 <tr>
@@ -2915,7 +2922,7 @@
                     <td style="text-align:center;">2</td>
                     <td>2d10</td>
                     <td>75 Ft</td>
-                    <td>Piercing — ignores 4 points of Wound Mitigation.</td>
+                    <td>Piercing — ignores 4 points of Damage Mitigation.</td>
                 </tr>
                 <tr>
                     <td><strong>Rifle</strong></td>
@@ -2977,9 +2984,9 @@
             <div class="trait-box">
                 <span class="trait-title">Ballistics &amp; Penetration</span>
                 <ul style="margin-top: 8px;">
-                    <li><strong>Piercing Weapons:</strong> Black powder arms and Crossbows ignore their listed amount of Wound Mitigation. If the target's mitigation is lower than the piercing value, the excess piercing power is wasted; it does not add bonus wounds.</li>
+                    <li><strong>Piercing Weapons:</strong> Black powder arms and Crossbows ignore their listed amount of Damage Mitigation. If the target's mitigation is lower than the piercing value, the excess piercing power is wasted; it does not add bonus wounds.</li>
                     <li><strong>Black Powder:</strong> Rifles are instruments of absolute ruin, ignoring armor mitigation entirely unless the target is beyond long range. The Blunderbuss sprays a horrific 15 Ft AoE; targets caught within must pass a DV10 Physique test or suffer 1 <strong>Stunned</strong> condition.</li>
-                    <li><strong>Crossbows:</strong> Standard and Light Crossbows (dealing 2d10 wounds) negate all armor mitigation at half-range. Heavy Crossbows (dealing 3d10 wounds) negate armor mitigation entirely (except magical wards) and carve a <strong>Bleeding</strong> condition into the target on an unmodified To-Hit roll of 10.</li>
+                    <li><strong>Crossbows:</strong> Standard and Light Crossbows (dealing 2d10 damage) negate all armor mitigation at half-range. Heavy Crossbows (dealing 3d10 damage) negate armor mitigation entirely (except magical wards) and carve a <strong>Bleeding</strong> condition into the target on an unmodified To-Hit roll of 10.</li>
                     <li><strong>Bows:</strong> Recurve bows possess the kinetic snap to reduce armor mitigation by half, up to their half-normal range limit.</li>
                     <li><strong>Entangling:</strong> Lassos and Whips can snare a target on a failed Agility test. The attacker has the luxury of choosing which limb is bound.</li>
                 </ul>
@@ -3003,7 +3010,7 @@
                 <tr>
                     <th>Armor</th>
                     <th style="text-align:center;">Def</th>
-                    <th style="text-align:center;">W. Mit</th>
+                    <th style="text-align:center;">D. Mit</th>
                     <th style="text-align:center;">Cost</th>
                     <th>Notes</th>
                 </tr>
@@ -3084,7 +3091,7 @@
                 <tr>
                     <th>Shield</th>
                     <th style="text-align:center;">Def</th>
-                    <th style="text-align:center;">W. Mit</th>
+                    <th style="text-align:center;">D. Mit</th>
                     <th style="text-align:center;">Cost</th>
                     <th>Notes</th>
                 </tr>
@@ -3311,7 +3318,7 @@
             </table>
         </div>
     </div>
-APPENDIX: XI-A</span>
+<span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);">APPENDIX: XI-A</span>
         <h2 style="color: var(--gold);">Relics &amp; Artifacts</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"Forged in forgotten eras, bought with blood."</p>
         <p style="max-width: 640px; margin: 10px auto; font-size: 11pt;">Powerful enchantments warp the very weave of reality. Magic items, legendary relics, and cursed artifacts are catalogued in the dedicated Armory compendium.</p>
@@ -3442,8 +3449,8 @@ APPENDIX: XI-A</span>
                     <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:5px 10px;">Grappling Hook</td><td style="padding:5px 10px; text-align:center;">4m</td><td style="padding:5px 10px;"></td></tr>
                     <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);"><td style="padding:5px 10px;">Lockpicks (set)</td><td style="padding:5px 10px; text-align:center;">6m</td><td style="padding:5px 10px;">Illegal in Church territories</td></tr>
                     <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:5px 10px;">Healer's Kit (10 uses)</td><td style="padding:5px 10px; text-align:center;">8m</td><td style="padding:5px 10px;">Required to stabilise dying characters</td></tr>
-                    <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);"><td style="padding:5px 10px;">Alchemist's Fire (×3)</td><td style="padding:5px 10px; text-align:center;">5g</td><td style="padding:5px 10px;">1d10 fire wounds on hit; sticks and burns</td></tr>
-                    <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:5px 10px;">Acid Flask (×3)</td><td style="padding:5px 10px; text-align:center;">4g</td><td style="padding:5px 10px;">1d10 wounds; bypasses metal armour WM</td></tr>
+                    <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);"><td style="padding:5px 10px;">Alchemist's Fire (×3)</td><td style="padding:5px 10px; text-align:center;">5g</td><td style="padding:5px 10px;">1d10 fire damage on hit; sticks and burns</td></tr>
+                    <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:5px 10px;">Acid Flask (×3)</td><td style="padding:5px 10px; text-align:center;">4g</td><td style="padding:5px 10px;">1d10 damage; bypasses metal armour WM</td></tr>
                     <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);"><td style="padding:5px 10px;">Poison (basic, 3 doses)</td><td style="padding:5px 10px; text-align:center;">10g</td><td style="padding:5px 10px;">Physique TN 7 or Poisoned condition</td></tr>
                     <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:5px 10px;">Antitoxin</td><td style="padding:5px 10px; text-align:center;">5g</td><td style="padding:5px 10px;">Clears Poison condition immediately</td></tr>
                     <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);"><td style="padding:5px 10px;">Horse (riding)</td><td style="padding:5px 10px; text-align:center;">80g</td><td style="padding:5px 10px;"></td></tr>
@@ -3633,7 +3640,7 @@ APPENDIX: XI-A</span>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The divine does not ask the world to heal or burn; it commands it. A blessing is the sheer weight of a god's authority forced through a mortal vessel."</p>
     </div>
 
-    <div class="rpg-columns">
+    <div class="rpg-columns disc-devotion">
         <a href="#top" class="back-to-top">↑ Return to Index</a>
 
         <div class="full-width">
@@ -3758,7 +3765,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Enchant Weapon (TN 5)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 2 | Range: 40 Ft | Duration: 1 + bonus turns</span>
-            <p>A blessing that sharpens steel with spiritual resonance, leaving a faint holy glow upon the blade. The weapon is treated as <strong>+1 magical</strong> for the duration of the working. It gains the capacity to strike incorporeal or ethereal entities and completely bypasses non-magical Wound Mitigation.</p>
+            <p>A blessing that sharpens steel with spiritual resonance, leaving a faint holy glow upon the blade. The weapon is treated as <strong>+1 magical</strong> for the duration of the working. It gains the capacity to strike incorporeal or ethereal entities and completely bypasses non-magical Damage Mitigation.</p>
         </div>
 
         <div class="trait-box">
@@ -3806,7 +3813,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Cleric's Ward (TN 7)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 2 | Range: Self | Target: 10 Ft AoE | Duration: 1 + bonus turns</span>
-            <p>The Cleric becomes an anchor of steady divine presence, bolstering the resolve and flesh of those standing near. All friendly creatures within the 10 Ft AoE receive a <strong>+1 bonus to their Defense</strong> and add your <strong>casting damage bonus to their Wound Mitigation</strong> for the duration — though this Mitigation bonus can never exceed your <strong>Light Soul skill points</strong>. The purity of the soul, not the force of the blow, is what shelters the faithful.</p>
+            <p>The Cleric becomes an anchor of steady divine presence, bolstering the resolve and flesh of those standing near. All friendly creatures within the 10 Ft AoE receive a <strong>+1 bonus to their Defense</strong> and add your <strong>casting damage bonus to their Damage Mitigation</strong> for the duration — though this Mitigation bonus can never exceed your <strong>Light Soul skill points</strong>. The purity of the soul, not the force of the blow, is what shelters the faithful.</p>
         </div>
 
         <div class="trait-box">
@@ -3836,7 +3843,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Inner Power (TN 8)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 2 | Range: 60 Ft | Duration: 1 turn</span>
-            <p>You pour raw divine strength directly into a target's veins. The ally gains a massive <strong>+2d10</strong> to their next damage roll and may add your casting damage bonus to all Wound Mitigation until the start of their next turn. If you rolled an unmodified 10 To-Cast, this overwhelming bonus persists for an additional turn.</p>
+            <p>You pour raw divine strength directly into a target's veins. The ally gains a massive <strong>+2d10</strong> to their next damage roll and may add your casting damage bonus to all Damage Mitigation until the start of their next turn. If you rolled an unmodified 10 To-Cast, this overwhelming bonus persists for an additional turn.</p>
         </div>
 
         <div class="trait-box">
@@ -3848,7 +3855,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Harm (TN 9)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 2 | Range: 80 Ft | Duration: Instant</span>
-            <p>You channel the destructive aspect of the divine directly into a target. This deals <strong>2d10 + casting damage bonus</strong> divine wounds. Against Undead and Daemonic targets, do not roll; the target simply takes maximum damage. Only a target's magical or blessing-based Wound Mitigation applies against this divine assault — mundane armor offers no protection, though a Grave Warden's warded bones or a Daemon's unholy aegis may still blunt the wrath.</p>
+            <p>You channel the destructive aspect of the divine directly into a target. This deals <strong>2d10 + casting damage bonus</strong> divine wounds. Against Undead and Daemonic targets, do not roll; the target simply takes maximum damage. Only a target's magical or blessing-based Damage Mitigation applies against this divine assault — mundane armor offers no protection, though a Grave Warden's warded bones or a Daemon's unholy aegis may still blunt the wrath.</p>
         </div>
 
         <div class="trait-box">
@@ -3920,7 +3927,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Revive (TN 13)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 3 | Range: Touch | Duration: Instant</span>
-            <p>You drag a soul back from the very edge of the void. The target must have died no longer than 1 hour prior. They return grasping to life with a single wound. The trauma of the return is profound — the target must surpass Willpower TN 13 + Resist bonus to endure the resurrection, or permanently suffer a condition of the GM's choosing, such as a lost sense or a lingering tremor. This working cannot resurrect Undead or Daemonic entities. The miracle demands a price — the caster suffers <strong>Dis.d10 wounds</strong> as the divine current burns through them.</p>
+            <p>You drag a soul back from the very edge of the void. The target must have died no longer than 1 hour prior. They return grasping to life with a single wound. The trauma of the return is profound — the target must surpass Willpower TN 13 + Resist bonus to endure the resurrection, or permanently suffer a condition of the GM's choosing, such as a lost sense or a lingering tremor. This working cannot resurrect Undead or Daemonic entities. The miracle demands a price — the caster suffers <strong>Dis.d10 damage</strong> as the divine current burns through them.</p>
         </div>
 
         <div class="trait-box">
@@ -3962,7 +3969,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Judgement of the Eternal Flame (TN 21)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 6 | Range: 200 Ft | Target: Single | Duration: Instant</span>
-            <p>You channel the absolute verdict of your deity upon a single soul. The target is struck by divine fire that burns not flesh but purpose — deal <strong>6d10 + casting bonus wounds</strong>, the divine nature of the strike reducing the target's Wound Mitigation by the caster's <strong>Charisma bonus</strong>. The target must surpass Willpower TN 21 + Resist bonus or be <strong>permanently Marked</strong> — their Charisma and Willpower are each reduced by 2 until a Remove Curse of TN 22+ is performed. If the target is reduced to 0 wounds, their soul is judged immediately — resurrection is impossible unless performed by a divine entity or a Priest of equal or greater power to the one who cast this blessing. The caster is rendered Exhausted and loses all remaining AP regardless of outcome. May only be cast once per day.</p>
+            <p>You channel the absolute verdict of your deity upon a single soul. The target is struck by divine fire that burns not flesh but purpose — deal <strong>6d10 + casting bonus damage</strong>, the divine nature of the strike reducing the target's Damage Mitigation by the caster's <strong>Charisma bonus</strong>. The target must surpass Willpower TN 21 + Resist bonus or be <strong>permanently Marked</strong> — their Charisma and Willpower are each reduced by 2 until a Remove Curse of TN 22+ is performed. If the target is reduced to 0 wounds, their soul is judged immediately — resurrection is impossible unless performed by a divine entity or a Priest of equal or greater power to the one who cast this blessing. The caster is rendered Exhausted and loses all remaining AP regardless of outcome. May only be cast once per day.</p>
         </div>
 
         <div class="trait-box">
@@ -3980,7 +3987,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Rapture (TN 22)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 6 | Range: Self | Target: 50 Ft AoE | Duration: 1 + bonus turns</span>
-            <p>You open yourself as a vessel for your deity's full presence. Every ally within the AoE is immediately healed for <strong>5d10 + healing bonus wounds</strong>, all conditions removed, and gains <strong>+2 to all rolls</strong> for the duration. Every enemy within the AoE must surpass Willpower TN 22 + Resist bonus or be <strong>Shaken and Prone</strong> — the sheer weight of divine presence crushes their will to act. Undead and Daemonic entities within the AoE take <strong>6d10 wounds ignoring all mitigation</strong> as the holy energy is anathema to their existence. The caster suffers <strong>3d10 wounds</strong> at the start of each maintenance turn — the mortal body was not built to hold this. When Rapture ends, the caster gains 4 Exhausted conditions.</p>
+            <p>You open yourself as a vessel for your deity's full presence. Every ally within the AoE is immediately healed for <strong>5d10 + healing bonus wounds</strong>, all conditions removed, and gains <strong>+2 to all rolls</strong> for the duration. Every enemy within the AoE must surpass Willpower TN 22 + Resist bonus or be <strong>Shaken and Prone</strong> — the sheer weight of divine presence crushes their will to act. Undead and Daemonic entities within the AoE take <strong>6d10 damage ignoring all mitigation</strong> as the holy energy is anathema to their existence. The caster suffers <strong>3d10 damage</strong> at the start of each maintenance turn — the mortal body was not built to hold this. When Rapture ends, the caster gains 4 Exhausted conditions.</p>
         </div>
 
     </div>
@@ -3991,7 +3998,7 @@ APPENDIX: XI-A</span>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The Druid does not command the earth; they merely align themselves with its ancient, unfathomable hostility. To perform a Druidic Rite is to invite the mother's ruthlessness to act through you."</p>
     </div>
 
-    <div class="rpg-columns">
+    <div class="rpg-columns disc-druid">
         <a href="#top" class="back-to-top">↑ Return to Index</a>
 
         <div class="full-width">
@@ -4040,7 +4047,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Husk-Skin (TN 3)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 1 | Range: Self | Duration: 1 + bonus turns</span>
-            <p>Your flesh hardens into rigid, dead bark and fibrous rot. This terrifying transformation grants <strong>2 points of Wound Mitigation</strong> against all physical strikes. The dead wood cannot be stacked upon itself.</p>
+            <p>Your flesh hardens into rigid, dead bark and fibrous rot. This terrifying transformation grants <strong>2 points of Damage Mitigation</strong> against all physical strikes. The dead wood cannot be stacked upon itself.</p>
         </div>
 
         <div class="trait-box">
@@ -4070,7 +4077,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Decay (TN 5)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 1 | Range: 80 Ft | Duration: 1 + bonus turns</span>
-            <p>A sickly green ray of accelerated death. <strong>Unattended</strong> non-magical organic matter (doors, leathers) dissolves into ash instantly. Against <strong>worn or carried</strong> organics, the rot is parasitic, stripping <strong>1 Wound Mitigation</strong> point per turn. The victim must surpass Physique TN 5 + Resist bonus to halt the creeping rot for that turn; at 0 Mitigation, the item crumbles completely. Living creatures are unaffected.</p>
+            <p>A sickly green ray of accelerated death. <strong>Unattended</strong> non-magical organic matter (doors, leathers) dissolves into ash instantly. Against <strong>worn or carried</strong> organics, the rot is parasitic, stripping <strong>1 Damage Mitigation</strong> point per turn. The victim must surpass Physique TN 5 + Resist bonus to halt the creeping rot for that turn; at 0 Mitigation, the item crumbles completely. Living creatures are unaffected.</p>
         </div>
 
         <div class="trait-box">
@@ -4118,7 +4125,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Earth Shield (TN 6)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 1 | Range: Touch | Duration: 1 + bonus turns</span>
-            <p>Jagged shale and heavy soil tear themselves from the ground, orbiting the target in a violent halo. It grants a <strong>+1 bonus to Defense</strong>. On a flawless To-Cast roll of 10, the density of the stones provides an impenetrable <strong>2 points of Wound Mitigation</strong> against normal strikes.</p>
+            <p>Jagged shale and heavy soil tear themselves from the ground, orbiting the target in a violent halo. It grants a <strong>+1 bonus to Defense</strong>. On a flawless To-Cast roll of 10, the density of the stones provides an impenetrable <strong>2 points of Damage Mitigation</strong> against normal strikes.</p>
         </div>
 
         <div class="trait-box">
@@ -4130,7 +4137,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Elements (TN 7)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 2 | Range: Self | Duration: 1 Turn</span>
-            <p>You channel the prime elements to empower your actions for the rest of the turn. Choose one: <strong>Air</strong> (Range of all actions increased by Intellect bonus &times; 10 Ft), <strong>Earth</strong> (Gain Wound Mitigation equal to Physique against all incoming attacks), <strong>Fire</strong> (All offensive spells deal additional wounds equal to your Willpower bonus), or <strong>Water</strong> (All healing you perform is increased by your Awareness bonus). The chosen element applies to every relevant action you take this turn.</p>
+            <p>You channel the prime elements to empower your actions for the rest of the turn. Choose one: <strong>Air</strong> (Range of all actions increased by Intellect bonus &times; 10 Ft), <strong>Earth</strong> (Gain Damage Mitigation equal to Physique against all incoming attacks), <strong>Fire</strong> (All offensive spells deal additional wounds equal to your Willpower bonus), or <strong>Water</strong> (All healing you perform is increased by your Awareness bonus). The chosen element applies to every relevant action you take this turn.</p>
         </div>
 
         <div class="trait-box">
@@ -4172,7 +4179,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Corrupted Spirit (TN 9)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 2 | Range: 25 Ft | Duration: 1 + bonus turns</span>
-            <p>Summon a Corrupted Woodland Spirit from the rot between worlds to fight on your behalf for the duration, then collapse back into mulch when slain or dismissed.<br><br><strong>Corrupted Woodland Spirit</strong> (Minion): Wounds 18 &middot; Defense 5 &middot; Wound Mitigation 2 &middot; AP 2 &middot; Move 30 &middot; Attack: rotting bite, +Intellect to hit, <strong>1d10</strong> wounds; the bitten must surpass Physique TN 8 + Resist bonus or take an additional <strong>1d10</strong> diseased wounds.</p>
+            <p>Summon a Corrupted Woodland Spirit from the rot between worlds to fight on your behalf for the duration, then collapse back into mulch when slain or dismissed.<br><br><strong>Corrupted Woodland Spirit</strong> (Minion): Wounds 18 &middot; Defense 5 &middot; Damage Mitigation 2 &middot; AP 2 &middot; Move 30 &middot; Attack: rotting bite, +Intellect to hit, <strong>1d10</strong> wounds; the bitten must surpass Physique TN 8 + Resist bonus or take an additional <strong>1d10</strong> diseased wounds.</p>
         </div>
 
         <div class="trait-box">
@@ -4244,7 +4251,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Ice Blade (TN 10)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 3 | Range: Self | Duration: 1 + bonus turns</span>
-            <p>Manifest a molecularly perfect blade of absolute zero. The weapon counts as a <strong>+2 Magical Weapon</strong> and its sheer frigid density ignores 2 points of Wound Mitigation. On a To-Hit roll of <strong>9 or higher</strong>, the jagged frost rips a vein, causing 1 Bleeding condition.</p>
+            <p>Manifest a molecularly perfect blade of absolute zero. The weapon counts as a <strong>+2 Magical Weapon</strong> and its sheer frigid density ignores 2 points of Damage Mitigation. On a To-Hit roll of <strong>9 or higher</strong>, the jagged frost rips a vein, causing 1 Bleeding condition.</p>
         </div>
 
         <div class="trait-box">
@@ -4298,7 +4305,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Earthquake (TN 14)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 4 | Range: 200 Ft | Target: 30 Ft AoE | Duration: 3 Turns</span>
-            <p>The earth shudders as great cracks engulf the area. Creatures in the AoE must surpass Agility TN 14 + Resist bonus or fall <strong>d10 x 10 Ft</strong> into the earth, suffering <strong>1d10 wounds per 10 Ft fallen</strong>. Survivors must pass a DV 10 Agility test each turn to climb out before the spell ends — failure means another turn at the bottom, being crushed as the earth seals shut. Large or greater targets halve the Agility test difficulty due to their size.</p>
+            <p>The earth shudders as great cracks engulf the area. Creatures in the AoE must surpass Agility TN 14 + Resist bonus or fall <strong>d10 x 10 Ft</strong> into the earth, suffering <strong>1d10 damage per 10 Ft fallen</strong>. Survivors must pass a DV 10 Agility test each turn to climb out before the spell ends — failure means another turn at the bottom, being crushed as the earth seals shut. Large or greater targets halve the Agility test difficulty due to their size.</p>
         </div>
 
         <div class="trait-box">
@@ -4334,7 +4341,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Voice of the World-Root (TN 20)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 6 | Range: 400 Ft | Target: 60 Ft AoE | Duration: 1 + bonus turns</span>
-            <p>You speak with the full authority of the living world. The earth itself responds — the ground within the AoE erupts with roots, vines, and stone as the Weald reclaims the battlefield. All enemies within the AoE immediately take <strong>5d10 + casting bonus wounds</strong> and must surpass Physique TN 20 + Resist bonus or become <strong>Entangled</strong> — they cannot move and suffer Disadvantage on all actions while entangled. Each subsequent turn all entangled creatures take <strong>2d10 wounds</strong> as the growth tightens. Allies within the AoE are unaffected — the world knows its own. The terrain within the AoE becomes permanent difficult terrain even after the spell ends. The caster cannot move while maintaining Voice of the World-Root.</p>
+            <p>You speak with the full authority of the living world. The earth itself responds — the ground within the AoE erupts with roots, vines, and stone as the Weald reclaims the battlefield. All enemies within the AoE immediately take <strong>5d10 + casting bonus damage</strong> and must surpass Physique TN 20 + Resist bonus or become <strong>Entangled</strong> — they cannot move and suffer Disadvantage on all actions while entangled. Each subsequent turn all entangled creatures take <strong>2d10 damage</strong> as the growth tightens. Allies within the AoE are unaffected — the world knows its own. The terrain within the AoE becomes permanent difficult terrain even after the spell ends. The caster cannot move while maintaining Voice of the World-Root.</p>
         </div>
 
         <div class="trait-box">
@@ -4370,7 +4377,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">The Pale Unmaking (TN 22)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 6 | Range: 300 Ft | Target: Single | Duration: Instant</span>
-            <p>You unmake a living thing. Not killing — unmaking. The target&rsquo;s connection to the natural world is severed entirely. Deal <strong>6d10 + casting damage bonus</strong> wounds, ignoring all Wound Mitigation. If the target is reduced to 0 wounds, their body dissolves into soil and ash over the course of a single breath; nothing remains to resurrect. Even on a successful resist (Physique TN 24 + Resist bonus), the target permanently loses <strong>2 points of Physique</strong>. The caster takes <strong>3d10</strong> wounds per turn while the working is active and suffers 4 <strong>Exhausted</strong> conditions when it concludes. May only be cast once per encounter.</p>
+            <p>You unmake a living thing. Not killing — unmaking. The target&rsquo;s connection to the natural world is severed entirely. Deal <strong>6d10 + casting damage bonus</strong> wounds, ignoring all Damage Mitigation. If the target is reduced to 0 wounds, their body dissolves into soil and ash over the course of a single breath; nothing remains to resurrect. Even on a successful resist (Physique TN 24 + Resist bonus), the target permanently loses <strong>2 points of Physique</strong>. The caster takes <strong>3d10</strong> wounds per turn while the working is active and suffers 4 <strong>Exhausted</strong> conditions when it concludes. May only be cast once per encounter.</p>
         </div>
 
     </div>
@@ -4381,7 +4388,7 @@ APPENDIX: XI-A</span>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The Shaman walks between worlds — spirit and flesh, life and death, the seen and the unseen. To cross them is power. To master them is terror. The spirits are hungry, and the Shaman is their most dangerous creditor."</p>
     </div>
 
-    <div class="rpg-columns">
+    <div class="rpg-columns disc-shaman">
         <a href="#top" class="back-to-top">↑ Return to Index</a>
 
         <div class="full-width">
@@ -4533,7 +4540,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Flesh Ward (TN 8)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 2 | Range: 60 Ft | Duration: 1 + bonus turns</span>
-            <p>The Shaman stitches spiritual armour across a target's skin — a web of invisible ancestral protection. The target gains <strong>+Willpower modifier</strong> to Wound Mitigation for the duration. This effect does not stack with itself but stacks with physical armour normally. On a natural 10 To-Cast, the ward also grants immunity to the first Bleeding condition the target would receive this encounter.</p>
+            <p>The Shaman stitches spiritual armour across a target's skin — a web of invisible ancestral protection. The target gains <strong>+Willpower modifier</strong> to Damage Mitigation for the duration. This effect does not stack with itself but stacks with physical armour normally. On a natural 10 To-Cast, the ward also grants immunity to the first Bleeding condition the target would receive this encounter.</p>
         </div>
 
         <div class="trait-box">
@@ -4551,7 +4558,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Grave-Shard (TN 9)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 2 | Range: 80 Ft | Duration: Instant</span>
-            <p>Thrust a crystallized spike of spiritual frost at a foe for <strong>2d10 + casting damage bonus</strong> wounds. On a natural 10 To-Cast, the jagged ice lodges in the flesh, causing 1 <strong>Bleeding</strong> condition and an additional 1d10 wounds this turn and every turn until healed.</p>
+            <p>Thrust a crystallized spike of spiritual frost at a foe for <strong>2d10 + casting damage bonus</strong> wounds. On a natural 10 To-Cast, the jagged ice lodges in the flesh, causing 1 <strong>Bleeding</strong> condition and an additional 1d10 damage this turn and every turn until healed.</p>
         </div>
 
         <div class="trait-box">
@@ -4569,7 +4576,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Death Rattle (TN 10)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 2 | Range: 120 Ft | Duration: Instant</span>
-            <p>The Shaman shakes a bone rattle toward the target, filling their body with the sound of their own death. The target takes <strong>2d10 + casting bonus</strong> wounds — the spiritual resonance reduces the target's Wound Mitigation by the Shaman's <strong>Intellect bonus</strong> for this strike. The target must then surpass Willpower TN 10 + Resist bonus or become <strong>Shaken</strong> for 1 turn — their own mortality ringing in their ears drowns out the courage to act.</p>
+            <p>The Shaman shakes a bone rattle toward the target, filling their body with the sound of their own death. The target takes <strong>2d10 + casting bonus</strong> wounds — the spiritual resonance reduces the target's Damage Mitigation by the Shaman's <strong>Intellect bonus</strong> for this strike. The target must then surpass Willpower TN 10 + Resist bonus or become <strong>Shaken</strong> for 1 turn — their own mortality ringing in their ears drowns out the courage to act.</p>
         </div>
 
         <div class="trait-box">
@@ -4647,7 +4654,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Idol of Suffering (TN 12)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 3 | Range: 80 Ft | Duration: 1 + bonus turns</span>
-            <p>The Shaman carves a crude effigy and breathes a sliver of the target's essence into it. For the duration, whenever the target takes wounds, they take an additional <strong>1d10</strong> wounds as the idol amplifies their pain — bypassing all Wound Mitigation. The target may attempt Willpower TN 12 + Resist bonus at the end of each turn to sever the link. The effigy can be physically destroyed — it has 3 wounds and no mitigation — which ends the effect immediately. Only one Idol of Suffering may be active at a time.</p>
+            <p>The Shaman carves a crude effigy and breathes a sliver of the target's essence into it. For the duration, whenever the target takes wounds, they take an additional <strong>1d10</strong> wounds as the idol amplifies their pain — bypassing all Damage Mitigation. The target may attempt Willpower TN 12 + Resist bonus at the end of each turn to sever the link. The effigy can be physically destroyed — it has 3 wounds and no mitigation — which ends the effect immediately. Only one Idol of Suffering may be active at a time.</p>
         </div>
 
         <div class="trait-box">
@@ -4683,7 +4690,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Ancestor's Wrath (TN 15)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 4 | Range: 200 Ft | Target: 20 Ft AoE | Duration: Instant</span>
-            <p>The Shaman calls upon the fury of every ancestor who died in battle. A column of spectral fire and bone erupts at the target point. All creatures in the AoE take <strong>4d10 + casting bonus</strong> wounds, ignoring all non-magical Wound Mitigation. Each creature must surpass Willpower TN 15 + Resist bonus or suffer 1 <strong>Stunned</strong> condition and drop all held items. Undead within the AoE take <strong>Dis.d10</strong> additional wounds.</p>
+            <p>The Shaman calls upon the fury of every ancestor who died in battle. A column of spectral fire and bone erupts at the target point. All creatures in the AoE take <strong>4d10 + casting bonus</strong> wounds, ignoring all non-magical Damage Mitigation. Each creature must surpass Willpower TN 15 + Resist bonus or suffer 1 <strong>Stunned</strong> condition and drop all held items. Undead within the AoE take <strong>Dis.d10</strong> additional wounds.</p>
         </div>
 
         <div class="trait-box">
@@ -4695,25 +4702,25 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Death Hex (TN 17)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 5 | Range: 175 Ft | Duration: 1 + bonus turns</span>
-            <p>The Shaman marks a single target with the absolute curse of death. The hexed creature immediately takes <strong>5d10 + casting bonus</strong> wounds, bypassing all Wound Mitigation. Each subsequent turn the target must surpass Willpower TN 17 + Resist bonus or permanently lose <strong>1 point of Willpower</strong> and take <strong>2d10</strong> wounds. If Willpower reaches -1 they die — soul claimed and unresurrectable. Only <em>Remove Curse</em> or <em>Dispel Magic</em> at TN 18+ ends it.</p>
+            <p>The Shaman marks a single target with the absolute curse of death. The hexed creature immediately takes <strong>5d10 + casting bonus</strong> wounds, bypassing all Damage Mitigation. Each subsequent turn the target must surpass Willpower TN 17 + Resist bonus or permanently lose <strong>1 point of Willpower</strong> and take <strong>2d10</strong> wounds. If Willpower reaches -1 they die — soul claimed and unresurrectable. Only <em>Remove Curse</em> or <em>Dispel Magic</em> at TN 18+ ends it.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">Spirit Apocalypse (TN 18)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 5 | Range: 300 Ft | Target: 40 Ft AoE | Duration: 1 + bonus turns</span>
-            <p>The Shaman tears the veil between worlds entirely, flooding the battlefield with hostile spirits. All creatures in the AoE take <strong>5d10 + casting bonus</strong> wounds, bypassing all physical Wound Mitigation. Each subsequent turn all creatures inside must surpass Willpower TN 18 + Resist bonus or suffer <strong>3d10</strong> wounds and gain 1 <strong>Exhausted</strong> condition. Undead within the AoE are instead healed for <strong>2d10</strong> wounds per turn. The Shaman pays the blood price, suffering <strong>1d10</strong> wounds at the start of each maintenance turn.</p>
+            <p>The Shaman tears the veil between worlds entirely, flooding the battlefield with hostile spirits. All creatures in the AoE take <strong>5d10 + casting bonus</strong> wounds, bypassing all physical Damage Mitigation. Each subsequent turn all creatures inside must surpass Willpower TN 18 + Resist bonus or suffer <strong>3d10</strong> wounds and gain 1 <strong>Exhausted</strong> condition. Undead within the AoE are instead healed for <strong>2d10</strong> wounds per turn. The Shaman pays the blood price, suffering <strong>1d10</strong> wounds at the start of each maintenance turn.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">The Grand Unravelling (TN 19)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 6 | Range: 350 Ft | Target: Single | Duration: Instant</span>
-            <p>The Shaman seizes the target's soul directly with both hands. The target must surpass Willpower TN 19 + Resist bonus or suffer <strong>6d10 + casting bonus</strong> wounds bypassing all Wound Mitigation — if reduced to 0 their soul is violently pulled into the spirit realm, making resurrection impossible. On a successful resist the target still takes <strong>3d10 + casting bonus</strong> wounds and permanently loses <strong>2 points of Willpower</strong>. The Shaman is rendered <strong>Exhausted</strong> and loses all remaining AP regardless of outcome.</p>
+            <p>The Shaman seizes the target's soul directly with both hands. The target must surpass Willpower TN 19 + Resist bonus or suffer <strong>6d10 + casting bonus</strong> wounds bypassing all Damage Mitigation — if reduced to 0 their soul is violently pulled into the spirit realm, making resurrection impossible. On a successful resist the target still takes <strong>3d10 + casting bonus</strong> wounds and permanently loses <strong>2 points of Willpower</strong>. The Shaman is rendered <strong>Exhausted</strong> and loses all remaining AP regardless of outcome.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">The Hungry Dead (TN 21)</span>
             <span style="color:#1A2740;font-weight:bold;font-size:10pt;">Actions: 6 | Range: 300 Ft | Target: 50 Ft AoE | Duration: 1 + bonus turns</span>
-            <p>You tear the veil entirely, permitting every restless, starved spirit beneath the battlefield to rise and feed. All enemies within the zone suffer <strong>6d10 + casting bonus wounds, completely bypassing all non-magical Wound Mitigation</strong> as spectral claws bypass iron to tear at the soul. Each subsequent turn, enemies must surpass Willpower TN 21 + Resist bonus or suffer an additional <strong>3d10 wounds and permanently lose 1 point of Willpower</strong>. The Shaman must pay the toll for this slaughter, suffering <strong>2d10 wounds</strong> at the dawn of each maintenance turn. If Willpower of any target reaches -1, their soul is consumed — unresurrectable.</p>
+            <p>You tear the veil entirely, permitting every restless, starved spirit beneath the battlefield to rise and feed. All enemies within the zone suffer <strong>6d10 + casting bonus damage, completely bypassing all non-magical Damage Mitigation</strong> as spectral claws bypass iron to tear at the soul. Each subsequent turn, enemies must surpass Willpower TN 21 + Resist bonus or suffer an additional <strong>3d10 damage and permanently lose 1 point of Willpower</strong>. The Shaman must pay the toll for this slaughter, suffering <strong>2d10 damage</strong> at the dawn of each maintenance turn. If Willpower of any target reaches -1, their soul is consumed — unresurrectable.</p>
         </div>
 
         <div class="trait-box">
@@ -4725,7 +4732,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">The Var'kai Ritual (TN 23)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 7 | Range: Self | Target: Battlefield | Duration: 1 + bonus turns</span>
-            <p>The forbidden summoning &mdash; the rite the <strong>Broken Father</strong> performed to call the protective ancestor-spirit and defend his tribe, preserved and still practiced by the war-shamans of the Broken Tribe. The Shaman tears the veil entirely and calls the great ancestor onto the battlefield. The horror of this working is that the Shaman can never be certain <em>what answers</em> &mdash; what the Broken Father reached for was the ancestor; what came was something that had been wearing it (see <em>The Broken Father</em>, Lore). The ancestral spirit manifests within the battle and, at the start of each turn the spell endures, lashes out at a random enemy for <strong>3d10 wounds</strong>. Every enemy on the field must surpass Willpower TN 23 + Resist bonus each turn or suffer <strong>4d10 wounds</strong>, bypassing all non-magical Wound Mitigation, and <strong>permanently lose 2 points of Willpower</strong>. Any creature whose Willpower reaches <strong>&minus;1</strong> is consumed &mdash; slain outright and rendered unresurrectable, their spirit devoured by what was called. The greater working of which <em>The Hungry Dead</em> (TN 21) is only the lesser echo.</p>
+            <p>The forbidden summoning &mdash; the rite the <strong>Broken Father</strong> performed to call the protective ancestor-spirit and defend his tribe, preserved and still practiced by the war-shamans of the Broken Tribe. The Shaman tears the veil entirely and calls the great ancestor onto the battlefield. The horror of this working is that the Shaman can never be certain <em>what answers</em> &mdash; what the Broken Father reached for was the ancestor; what came was something that had been wearing it (see <em>The Broken Father</em>, Lore). The ancestral spirit manifests within the battle and, at the start of each turn the spell endures, lashes out at a random enemy for <strong>3d10 damage</strong>. Every enemy on the field must surpass Willpower TN 23 + Resist bonus each turn or suffer <strong>4d10 damage</strong>, bypassing all non-magical Damage Mitigation, and <strong>permanently lose 2 points of Willpower</strong>. Any creature whose Willpower reaches <strong>&minus;1</strong> is consumed &mdash; slain outright and rendered unresurrectable, their spirit devoured by what was called. The greater working of which <em>The Hungry Dead</em> (TN 21) is only the lesser echo.</p>
         </div>
 
         <div class="trait-box">
@@ -4733,16 +4740,13 @@ APPENDIX: XI-A</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: Variable* | Range: 100 Ft | Duration: Instant</span>
             <p>You attempt to forcibly cleanse a known curse from the flesh. To succeed, you must achieve a To-Cast roll that is at least <strong>1 greater</strong> than the TN of the active curse.</p>
         </div>
-
-    </div>
 <div class="magic-break" style="margin-top: 60px;">
-        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);"><div class="magic-break" style="margin-top: 60px;">
         <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: #1A237E;">DISCIPLINE IV</span>
         <h2 id="discipline-4" style="color:#1A237E;">Wizardry</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The Weave is not a mystery; it is a mechanism. A Wizard does not pray — they calculate the exact, agonizing geometric cost of breaking reality, and they pay it in full."</p>
     </div>
 
-    <div class="rpg-columns">
+    <div class="rpg-columns disc-wizardry">
         <a href="#top" class="back-to-top">↑ Return to Index</a>
 
         <div class="full-width">
@@ -4827,7 +4831,7 @@ APPENDIX: XI-A</span>
                 <div class="trait-box">
             <span class="trait-title">Corpselike (TN 4)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 1 | Range: 40 Ft | Duration: Instant</span>
-            <p>A pulse of necrotic resonance. Targeted Undead regain <strong>Dis.d10 + Willpower bonus</strong> wounds as the dead weave binds them. Conversely, targets of Good or Holy alignment suffer 1d10 wounds as the anti-life equation violently rejects their flesh. A character may only benefit from this once per turn.</p>
+            <p>A pulse of necrotic resonance. Targeted Undead regain <strong>Dis.d10 + Willpower bonus</strong> wounds as the dead weave binds them. Conversely, targets of Good or Holy alignment suffer 1d10 damage as the anti-life equation violently rejects their flesh. A character may only benefit from this once per turn.</p>
         </div>
 
                 <div class="trait-box">
@@ -4893,7 +4897,7 @@ APPENDIX: XI-A</span>
                 <div class="trait-box">
                     <span class="trait-title">Ablative Matrix (TN 7)</span>
                     <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 2 | Range: Touch | Duration: 1 turn</span>
-                    <p>Encase the target's epidermis in a rigid geometric force field. The target adds your <strong>Intellect modifier</strong> to their Wound Mitigation against all physical attacks. Does not stack with itself.</p>
+                    <p>Encase the target's epidermis in a rigid geometric force field. The target adds your <strong>Intellect modifier</strong> to their Damage Mitigation against all physical attacks. Does not stack with itself.</p>
                 </div>
 
                 <div class="trait-box">
@@ -4961,7 +4965,7 @@ APPENDIX: XI-A</span>
                 <div class="trait-box">
                     <span class="trait-title">Monomolecular Edge (TN 8)</span>
                     <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 2 | Range: Self | Duration: 1 + bonus turns</span>
-                    <p>A shining silver blade of mathematically perfect hard-light springs from your hand. On a hit it deals <strong>2d10 + casting damage bonus</strong> arcane wounds, completely ignoring non-magical Wound Mitigation. On a To-Hit roll of 9 or higher, it surgically severs an artery, causing 1 <strong>Bleeding</strong> condition.</p>
+                    <p>A shining silver blade of mathematically perfect hard-light springs from your hand. On a hit it deals <strong>2d10 + casting damage bonus</strong> arcane wounds, completely ignoring non-magical Damage Mitigation. On a To-Hit roll of 9 or higher, it surgically severs an artery, causing 1 <strong>Bleeding</strong> condition.</p>
                 </div>
 
                 <div class="trait-box">
@@ -5033,13 +5037,13 @@ APPENDIX: XI-A</span>
                 <div class="trait-box">
             <span class="trait-title">Summon Elemental (TN 9)</span>
             <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 2 | Range: 80 Ft | Duration: 1 + Bonus Turns</span>
-            <p>You construct a vessel of temporary matter and bind a minor elemental force to it. It serves for the duration, then collapses to slag or mist when slain or dismissed. Choose its element on casting.<br><br><strong>Conjured Elemental Mote</strong> (sub-Minion): Wounds 15 &middot; Defense 5 &middot; Wound Mitigation 3 &middot; AP 2 &middot; Move 30 &middot; Attack: elemental strike, +Intellect to hit, <strong>2d10</strong> elemental wounds.<br>&nbsp;&nbsp;<strong>Air</strong> — gains Fly 30. &nbsp;<strong>Earth</strong> — +2 Wound Mitigation. &nbsp;<strong>Fire</strong> — +1d10 burn on a hit. &nbsp;<strong>Water</strong> — may shove the target 5 Ft on a hit.</p>
+            <p>You construct a vessel of temporary matter and bind a minor elemental force to it. It serves for the duration, then collapses to slag or mist when slain or dismissed. Choose its element on casting.<br><br><strong>Conjured Elemental Mote</strong> (sub-Minion): Wounds 15 &middot; Defense 5 &middot; Damage Mitigation 3 &middot; AP 2 &middot; Move 30 &middot; Attack: elemental strike, +Intellect to hit, <strong>2d10</strong> elemental wounds.<br>&nbsp;&nbsp;<strong>Air</strong> — gains Fly 30. &nbsp;<strong>Earth</strong> — +2 Damage Mitigation. &nbsp;<strong>Fire</strong> — +1d10 burn on a hit. &nbsp;<strong>Water</strong> — may shove the target 5 Ft on a hit.</p>
         </div>
 
                 <div class="trait-box">
             <span class="trait-title">Decompose (TN 10)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 3 | Range: 120 Ft | Duration: 1 + bonus turns</span>
-            <p>A targeted unravelling of cellular cohesion. The rot eats through flesh and material alike — dealing <strong>2d10 + casting damage bonus</strong> wounds immediately and <strong>1d10</strong> wounds at the start of each subsequent turn. Non-magical organic armor (leather, fur) loses <strong>1 point of Wound Mitigation</strong> per turn of exposure, crumbling completely at 0. The target must surpass Willpower TN 10 + Resist bonus each turn to halt the necrosis.</p>
+            <p>A targeted unravelling of cellular cohesion. The rot eats through flesh and material alike — dealing <strong>2d10 + casting damage bonus</strong> wounds immediately and <strong>1d10</strong> wounds at the start of each subsequent turn. Non-magical organic armor (leather, fur) loses <strong>1 point of Damage Mitigation</strong> per turn of exposure, crumbling completely at 0. The target must surpass Willpower TN 10 + Resist bonus each turn to halt the necrosis.</p>
         </div>
 
                 <div class="trait-box">
@@ -5123,7 +5127,7 @@ APPENDIX: XI-A</span>
                 <div class="trait-box">
             <span class="trait-title">Tainted Ground (TN 11)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 3 | Range: 100 Ft | Target: 30 Ft AoE | Duration: 1 + bonus turns</span>
-            <p>Irradiate the earth with necrotic fallout. Undead within the putrid green cloud gain <strong>+1 To-Hit</strong>, <strong>+1 Defense</strong>, and <strong>+Dis.d10 wounds</strong> for the duration. Holy or Blessed creatures suffer <strong>1d10 + casting damage bonus</strong> wounds at the start of each turn they remain inside.</p>
+            <p>Irradiate the earth with necrotic fallout. Undead within the putrid green cloud gain <strong>+1 To-Hit</strong>, <strong>+1 Defense</strong>, and <strong>+Dis.d10 damage</strong> for the duration. Holy or Blessed creatures suffer <strong>1d10 + casting damage bonus</strong> wounds at the start of each turn they remain inside.</p>
         </div>
 
                 <div class="trait-box">
@@ -5177,7 +5181,7 @@ APPENDIX: XI-A</span>
                 <div class="trait-box">
             <span class="trait-title">Pulverize (TN 14)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 4 | Range: 150 Ft | Duration: Instant</span>
-            <p>Manifest an anvil of sheer gravimetric density. The target takes <strong>4d10 + casting damage bonus</strong> wounds and is violently knocked <strong>Prone</strong>. Any non-magical armor the target wears loses <strong>1 point of Wound Mitigation</strong> permanently. The target must surpass Physique TN 14 + Resist bonus to stand firm or suffer <strong>2 Stunned</strong> conditions. If reduced to 0 wounds, they and their mundane gear are completely crushed.</p>
+            <p>Manifest an anvil of sheer gravimetric density. The target takes <strong>4d10 + casting damage bonus</strong> wounds and is violently knocked <strong>Prone</strong>. Any non-magical armor the target wears loses <strong>1 point of Damage Mitigation</strong> permanently. The target must surpass Physique TN 14 + Resist bonus to stand firm or suffer <strong>2 Stunned</strong> conditions. If reduced to 0 wounds, they and their mundane gear are completely crushed.</p>
         </div>
 
                 <div class="trait-box">
@@ -5195,7 +5199,7 @@ APPENDIX: XI-A</span>
                 <div class="trait-box">
             <span class="trait-title">Arcane Nova (TN 16)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 5 | Range: Self | Target: 30 Ft AoE | Duration: Instant</span>
-            <p>A catastrophic, omnidirectional failure of the local Weave. All creatures within take <strong>5d10 + casting damage bonus</strong> pure arcane wounds — bypassing all Wound Mitigation. The caster is exhausted, losing 2 AP on their next turn. Structures take full damage, and magical items must surpass TN 16 or be permanently deactivated.</p>
+            <p>A catastrophic, omnidirectional failure of the local Weave. All creatures within take <strong>5d10 + casting damage bonus</strong> pure arcane wounds — bypassing all Damage Mitigation. The caster is exhausted, losing 2 AP on their next turn. Structures take full damage, and magical items must surpass TN 16 or be permanently deactivated.</p>
         </div>
 
                 <div class="trait-box">
@@ -5219,19 +5223,19 @@ APPENDIX: XI-A</span>
                 <div class="trait-box">
                     <span class="trait-title">Zero-State Erasure (TN 20)</span>
                     <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 6 | Range: 500 Ft | Target: 60 Ft AoE | Duration: 1 + bonus turns</span>
-                    <p>A localized apocalypse. Call down a column of corrosive, vitrifying magic that immediately deals <strong>6d10 + casting damage bonus</strong> wounds, bypassing all Mitigation. Non-magical objects are annihilated. Each subsequent turn, targets suffer 4d10 wounds and must surpass Physique TN 20 + Resist bonus or permanently lose 1 point from a random characteristic as their physical structure unravels. The caster bleeds 2d10 wounds for every turn they maintain the tether. When the spell ends, the caster is Exhausted and loses all remaining AP. Cast once per encounter.</p>
+                    <p>A localized apocalypse. Call down a column of corrosive, vitrifying magic that immediately deals <strong>6d10 + casting damage bonus</strong> wounds, bypassing all Mitigation. Non-magical objects are annihilated. Each subsequent turn, targets suffer 4d10 damage and must surpass Physique TN 20 + Resist bonus or permanently lose 1 point from a random characteristic as their physical structure unravels. The caster bleeds 2d10 damage for every turn they maintain the tether. When the spell ends, the caster is Exhausted and loses all remaining AP. Cast once per encounter.</p>
                 </div>
 
                 <div class="trait-box">
             <span class="trait-title">Reality Fracture (TN 21)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 6 | Range: 350 Ft | Target: 40 Ft AoE | Duration: 1 + bonus turns</span>
-            <p>Break the local rules of reality. Gravity shifts, matter stutters. All creatures take <strong>6d10 + casting bonus wounds</strong> and must surpass Intellect TN 21 + Resist bonus or be <strong>Disoriented</strong> (losing all AP next turn). Subsequent turns deal <strong>3d10 wounds</strong> regardless of mitigation. Spells cast within the AoE by anyone other than the caster have a 50% chance of misfiring (Roll 1d10; on 1–5, targets a random creature).</p>
+            <p>Break the local rules of reality. Gravity shifts, matter stutters. All creatures take <strong>6d10 + casting bonus damage</strong> and must surpass Intellect TN 21 + Resist bonus or be <strong>Disoriented</strong> (losing all AP next turn). Subsequent turns deal <strong>3d10 damage</strong> regardless of mitigation. Spells cast within the AoE by anyone other than the caster have a 50% chance of misfiring (Roll 1d10; on 1–5, targets a random creature).</p>
         </div>
 
                 <div class="trait-box">
                     <span class="trait-title">Obliteration (TN 22)</span>
                     <span style="font-weight: bold; font-size: 10pt; color: #1A2740; display: block; margin-bottom: 8px;">Actions: 6 | Range: 250 Ft | Target: Single | Duration: Instant</span>
-                    <p>The ultimate equation — no subtlety, no elegance, no defense. The target takes <strong>8d10 + casting bonus</strong> wounds, bypassing all Wound Mitigation. There is no resistance roll. If the target survives, they suffer 3 <strong>Stunned</strong> conditions and permanently lose 2 points of Intellect as the trauma scars their cognition. The caster takes 3d10 wounds from the feedback and is permanently <strong>Exhausted</strong> (4 conditions). Structures within 20 Ft take full damage. Cast once per encounter.</p>
+                    <p>The ultimate equation — no subtlety, no elegance, no defense. The target takes <strong>8d10 + casting bonus</strong> wounds, bypassing all Damage Mitigation. There is no resistance roll. If the target survives, they suffer 3 <strong>Stunned</strong> conditions and permanently lose 2 points of Intellect as the trauma scars their cognition. The caster takes 3d10 damage from the feedback and is permanently <strong>Exhausted</strong> (4 conditions). Structures within 20 Ft take full damage. Cast once per encounter.</p>
                 </div>
 
                 <div class="trait-box">
@@ -5267,16 +5271,13 @@ APPENDIX: XI-A</span>
             They serve as permanent servants until destroyed or dispelled.</p>
         </div>
 
-    </div>
-
 <div class="magic-break">
-        <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: var(--gold);"><div class="magic-break">
         <span style="font-weight: 600; font-size: 11pt; letter-spacing: 3px; color: #6B3A1A;">DISCIPLINE V</span>
         <h2 id="discipline-5" style="color:#6B3A1A;">Ki Powers</h2>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The master of Ki does not command the world; they command the self until the world has no choice but to follow. It is the absolute, uncompromising perfection of blood and bone."</p>
     </div>
 
-    <div class="rpg-columns">  
+    <div class="rpg-columns disc-ki">  
         <a href="#top" class="back-to-top">↑ Return to Index</a>
         <div class="full-width">
             <p>Unlike standard spellcasting, <strong>Ki Powers</strong> represent the mastery of the energy within, fuelled entirely by the Monk's <strong>Physique</strong>. Ki is the body's own power — bone, blood, breath, and the absolute discipline to push all three past their limits. It owes nothing to the mind's geometry or the will's conviction. The casting bonus for all Ki powers is the <strong>Physique modifier</strong>. Because this power is entirely internal, Ki practitioners suffer <strong>zero penalties</strong> from wearing iron or heavy armour.</p>
@@ -5323,7 +5324,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Iron Body (TN 4)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 1 | Range: Self | Duration: 1 turn</span>
-            <p>You lock the iron in your blood. Gain <strong>+2 Wound Mitigation</strong> against all physical attacks for <strong>1 turn</strong>. While active, you physically cannot be knocked <strong>Prone</strong> by any non-magical effect. This does not stack with itself.</p>
+            <p>You lock the iron in your blood. Gain <strong>+2 Damage Mitigation</strong> against all physical attacks for <strong>1 turn</strong>. While active, you physically cannot be knocked <strong>Prone</strong> by any non-magical effect. This does not stack with itself.</p>
         </div>
 
         <div class="trait-box">
@@ -5347,7 +5348,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Inner Flame (TN 6)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 1 | Range: 100 Ft | Duration: Instant</span>
-            <p>Compress internal thermal energy into a superheated orb of friction-born Ki and hurl it. Deals <strong>1d10 + casting bonus</strong> fire wounds. A natural 10 To-Hit burns deep into the meat, dealing an additional 1d10 wounds. This is not arcane fire — it is the body's own heat weaponised. It cannot be suppressed by the Thermal Nullification.</p>
+            <p>Compress internal thermal energy into a superheated orb of friction-born Ki and hurl it. Deals <strong>1d10 + casting bonus</strong> fire wounds. A natural 10 To-Hit burns deep into the meat, dealing an additional 1d10 damage. This is not arcane fire — it is the body's own heat weaponised. It cannot be suppressed by the Thermal Nullification.</p>
         </div>
 
         <div class="trait-box">
@@ -5389,13 +5390,13 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Chi Strike (TN 7)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 2 | Range: Self (Melee) | Duration: Instant</span>
-            <p>Channel raw kinetic energy into a single unarmed strike. Deal <strong>2d10 + casting bonus</strong> wounds. The focused Ki reduces the target's Wound Mitigation by the monk's <strong>Willpower modifier</strong> for this strike — the energy finds the gaps in the armor rather than punching through entirely. On a natural 10 To-Cast, the target is violently pushed back: <strong>10 Ft</strong> if it is your size or smaller, <strong>5 Ft</strong> if it is one size larger than you, and not at all if it is <strong>Giant size or greater</strong>.</p>
+            <p>Channel raw kinetic energy into a single unarmed strike. Deal <strong>2d10 + casting bonus</strong> wounds. The focused Ki reduces the target's Damage Mitigation by the monk's <strong>Willpower modifier</strong> for this strike — the energy finds the gaps in the armor rather than punching through entirely. On a natural 10 To-Cast, the target is violently pushed back: <strong>10 Ft</strong> if it is your size or smaller, <strong>5 Ft</strong> if it is one size larger than you, and not at all if it is <strong>Giant size or greater</strong>.</p>
         </div>
 
         <div class="trait-box">
             <span class="trait-title">Astra-Launch (TN 8)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 2 | Range: 250 Ft (Self) | Duration: Instant</span>
-            <p>A controlled, explosive release of energy at your feet. Propel yourself up to 250 feet in a single parabolic arc. The backblast is lethal — anyone within a 10 Ft AoE of your launch point suffers <strong>2d10 wounds</strong>.</p>
+            <p>A controlled, explosive release of energy at your feet. Propel yourself up to 250 feet in a single parabolic arc. The backblast is lethal — anyone within a 10 Ft AoE of your launch point suffers <strong>2d10 damage</strong>.</p>
         </div>
 
         <div class="trait-box">
@@ -5443,7 +5444,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Shower of Fire (TN 10)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 3 | Range: 150 Ft | Target: 10 Ft AoE | Duration: 1 + bonus turns</span>
-            <p>Ignite the air in a localized area. Deals <strong>3d10 + casting bonus</strong> fire wounds immediately. Anyone foolish enough to remain in the flames takes an additional 1d10 wounds on subsequent turns.</p>
+            <p>Ignite the air in a localized area. Deals <strong>3d10 + casting bonus</strong> fire wounds immediately. Anyone foolish enough to remain in the flames takes an additional 1d10 damage on subsequent turns.</p>
         </div>
 
         <div class="trait-box">
@@ -5461,7 +5462,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Karma (TN 11)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 3 | Range: 10 Ft | Duration: Instant</span>
-            <p>You refuse to be the only one bleeding. Violently redirect up to <strong>3d10</strong> wounds you have taken this turn directly into an enemy within 10 Ft, bypassing their mundane Wound Mitigation — raw suffering shears through ordinary armour, though magical wards still hold. The target must surpass Willpower TN 11 + Resist bonus to resist; failure means they take the full redirected butchery.</p>
+            <p>You refuse to be the only one bleeding. Violently redirect up to <strong>3d10</strong> wounds you have taken this turn directly into an enemy within 10 Ft, bypassing their mundane Damage Mitigation — raw suffering shears through ordinary armour, though magical wards still hold. The target must surpass Willpower TN 11 + Resist bonus to resist; failure means they take the full redirected butchery.</p>
         </div>
 
         <div class="trait-box">
@@ -5509,7 +5510,7 @@ APPENDIX: XI-A</span>
                 <div class="trait-box">
             <span class="trait-title">The Vajra Lance (TN 14)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 4 | Range: 400 Ft | Target: Single | Duration: Instant</span>
-            <p>Compress every ounce of available Ki into a single, needle-thin projectile of pure kinetic force — the body's lightning made physical. Deals <strong>5d10 wounds bypassing mundane Wound Mitigation</strong> — the Lance shears through ordinary armour, though magical wards and enchanted plate still bite against it. The Lance punches through cover, walls up to 2 Ft thick, and any object in a straight line to the target. A natural 10 To-Cast strikes with divine precision — the target must surpass a Physique test (TN 14 + Resist bonus) or lose the use of one limb entirely until magically healed. <strong>The Vajra Lance can only be fired once per encounter.</strong> The body cannot compress that density of force twice in a single confrontation. The Monk is rendered Exhausted until end of their next turn.</p>
+            <p>Compress every ounce of available Ki into a single, needle-thin projectile of pure kinetic force — the body's lightning made physical. Deals <strong>5d10 damage bypassing mundane Damage Mitigation</strong> — the Lance shears through ordinary armour, though magical wards and enchanted plate still bite against it. The Lance punches through cover, walls up to 2 Ft thick, and any object in a straight line to the target. A natural 10 To-Cast strikes with divine precision — the target must surpass a Physique test (TN 14 + Resist bonus) or lose the use of one limb entirely until magically healed. <strong>The Vajra Lance can only be fired once per encounter.</strong> The body cannot compress that density of force twice in a single confrontation. The Monk is rendered Exhausted until end of their next turn.</p>
         </div>
 
         <div class="trait-box">
@@ -5539,7 +5540,7 @@ APPENDIX: XI-A</span>
                 <div class="trait-box">
             <span class="trait-title">The Narayana Strike (TN 17)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 5 | Range: 200 Ft AoE | Duration: Instant</span>
-            <p>The rarest working in the Ki tradition and the most morally demanding. The Monk releases a radial pulse of absolute force that reads the intent of every creature within range simultaneously. Those bearing aggressive intent toward the Monk suffer <strong>6d10 wounds bypassing all Wound Mitigation</strong>. Those who are neutral or flee suffer <strong>3d10 wounds</strong>. <strong>Those who are prostrate, surrendered, or genuinely offer no resistance are entirely unharmed.</strong> The Strike cannot be deceived — it reads the body's Ki frequency, not its posture. A creature that kneels while planning to attack is struck with full force. The Monk cannot use any Ki powers for the remainder of the encounter after this working. The body has nothing left to give.</p>
+            <p>The rarest working in the Ki tradition and the most morally demanding. The Monk releases a radial pulse of absolute force that reads the intent of every creature within range simultaneously. Those bearing aggressive intent toward the Monk suffer <strong>6d10 damage bypassing all Damage Mitigation</strong>. Those who are neutral or flee suffer <strong>3d10 damage</strong>. <strong>Those who are prostrate, surrendered, or genuinely offer no resistance are entirely unharmed.</strong> The Strike cannot be deceived — it reads the body's Ki frequency, not its posture. A creature that kneels while planning to attack is struck with full force. The Monk cannot use any Ki powers for the remainder of the encounter after this working. The body has nothing left to give.</p>
         </div>
 
         <div class="trait-box">
@@ -5557,7 +5558,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Death Touch (TN 21)</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt; display: block; margin-bottom: 8px;">Actions: 5 | Range: Touch | Duration: Instant</span>
-            <p>You map the target's entire nervous system and collapse it in one touch. Deal <strong>7d10 + casting bonus wounds, bypassing all Wound Mitigation</strong>. The target must surpass Physique TN 21 + Resist bonus or their internal energy is permanently severed: Ki users lose all abilities until ritually restored, while mundane targets permanently lose <strong>3 points of Physique</strong>. If reduced to 0 wounds, death is absolute. The caster is Exhausted until the start of their next turn.</p>
+            <p>You map the target's entire nervous system and collapse it in one touch. Deal <strong>7d10 + casting bonus damage, bypassing all Damage Mitigation</strong>. The target must surpass Physique TN 21 + Resist bonus or their internal energy is permanently severed: Ki users lose all abilities until ritually restored, while mundane targets permanently lose <strong>3 points of Physique</strong>. If reduced to 0 wounds, death is absolute. The caster is Exhausted until the start of their next turn.</p>
         </div>
 
         <div class="trait-box">
@@ -5572,7 +5573,7 @@ APPENDIX: XI-A</span>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"To cast a spell is to whisper to the wind. To carve a rune is to command the stone to remember. It is not magic; it is the brutal, physical labor of hammering law into matter."</p>
     </div>
 
-    <div class="rpg-columns">
+    <div class="rpg-columns disc-runecraft">
         <a href="#top" class="back-to-top">↑ Return to Index</a>
         
         <div class="full-width">
@@ -5737,7 +5738,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Rune of Shielding</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt;">TYPE: Armor / Talisman | TEMP: TN 8 — Inscribe 2 AP | PERM: TN 16 — 3 Days</span>
-            <p><strong>Permanent:</strong> The air thickens around the bearer. Non-magical missile strikes are crushed upon impact; their wounds are <strong>halved</strong> (plus the weapon's specific bonuses).</p>
+            <p><strong>Permanent:</strong> The air thickens around the bearer. Non-magical missile strikes are crushed upon impact; their damage is <strong>halved</strong> (plus the weapon's specific bonuses).</p>
             <p><strong>Temporary:</strong> As permanent, but collapses after 1 encounter.</p>
         </div>
 
@@ -5793,7 +5794,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Rune of Fire</span>
             <span style="color: #1A2740; font-weight: bold; font-size: 10pt;">TYPE: Weapon | TEMP: TN 10 — Inscribe 3 AP | PERM: TN 18 — 3 Days</span>
-            <p><strong>Permanent:</strong> Upon command, the steel erupts in physical flame. Deals <strong>1d10 fire wounds</strong> on confirmed hits and functions as a torch.</p>
+            <p><strong>Permanent:</strong> Upon command, the steel erupts in physical flame. Deals <strong>1d10 fire damage</strong> on confirmed hits and functions as a torch.</p>
             <p><strong>Temporary:</strong> As permanent, but the fire starves itself after 1 encounter.</p>
         </div>
 
@@ -5944,7 +5945,7 @@ APPENDIX: XI-A</span>
         <div class="trait-box">
             <span class="trait-title">Master Rune of the Undying Edge</span>
             <span style="color:#1A2740;font-weight:bold;font-size:10pt;">TYPE: Weapon | PERM: TN 33 — 4 Days — Permanent Only</span>
-            <p><strong>Permanent Only:</strong> This steel does not simply kill; it digests the history of its victims. The weapon permanently gains <strong>+1 To-Hit and +1 To-Wound for every 10 kills</strong> it claims, capping at a monstrous <strong>+5/+5</strong>. The blood debt transfers with the blade; however, if the iron breaks, the arithmetic resets. Only one such weapon can logically exist — attempting to forge a second results in catastrophic arcane feedback, dealing <strong>4d10 wounds</strong> to the Runemaster.</p>
+            <p><strong>Permanent Only:</strong> This steel does not simply kill; it digests the history of its victims. The weapon permanently gains <strong>+1 To-Hit and +1 To-Wound for every 10 kills</strong> it claims, capping at a monstrous <strong>+5/+5</strong>. The blood debt transfers with the blade; however, if the iron breaks, the arithmetic resets. Only one such weapon can logically exist — attempting to forge a second results in catastrophic arcane feedback, dealing <strong>4d10 damage</strong> to the Runemaster.</p>
         </div>
 
         <div class="trait-box">
@@ -5964,7 +5965,7 @@ APPENDIX: XI-A</span>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The weave bends to a Wizard's geometry. The stone remembers the Runemaster's chisel. The Vibhuti does not negotiate with the world's material — it speaks directly to what the world was before it had a name for itself. The difference is not academic. It is terminal."</p>
     </div>
 
-    <div class="rpg-columns">
+    <div class="rpg-columns disc-vibhuti">
         <a href="#top" class="back-to-top">↑ Return to Index</a>
 
         <div class="full-width">
@@ -5983,29 +5984,29 @@ APPENDIX: XI-A</span>
                 <p style="margin-top:8px;"><strong>The Vibhuti cannot be atrophied.</strong> Once the Bija are embedded in the mind, they cannot be unlearned. The forces that answer these frequencies permanently know where the Speaker is.</p>
             </div>
 
-            <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.08);">
-                <span class="trait-title" style="color: var(--gold);">The Axiom of Bearing (Adhikara)</span>
+            <div class="trait-box" style="border:0.5px solid rgba(2,7,14,0.15); border-left:5px solid #3D2459; border-radius:0; background: rgba(61,36,89,0.08);">
+                <span class="trait-title" style="color: #02070e; border-bottom:1px solid #3D2459; padding-bottom:3px; display:inline-block;">The Axiom of Bearing (Adhikara)</span>
                 <p>Standard Vibhuti can be invoked by any Speaker with sufficient skill. But the apex invocations — the <em>Axiom of the Absolute</em>, the <em>Preserver's Axiom</em>, the <em>Agni-Axiom</em> — require the Speaker to hold the <strong>Axiom of Bearing</strong> granted directly by the force invoked.</p>
                 <p style="margin-top:8px;">The Axiom is not purchased; it is <em>tested for</em>. The cosmic force assesses the Speaker dynamically. A Speaker who attempts an invocation without authorisation does not simply fail — the frequency misfires, and the force dictates the consequence. The arcane academies term this lethal feedback <em>Refusal</em>.</p>
                 <p style="margin-top:8px;"><strong>Holding an Axiom</strong> is recorded in the Speaker's ledger as a permanent, untransferable mark. Upon the Speaker's death, the Axiom immediately returns to the void.</p>
             </div>
 
-            <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.08);">
-                <span class="trait-title" style="color: var(--gold);">The Retraction (Pratyahara)</span>
+            <div class="trait-box" style="border:0.5px solid rgba(2,7,14,0.15); border-left:5px solid #3D2459; border-radius:0; background: rgba(61,36,89,0.08);">
+                <span class="trait-title" style="color: #02070e; border-bottom:1px solid #3D2459; padding-bottom:3px; display:inline-block;">The Retraction (Pratyahara)</span>
                 <p>Every Vibhuti possesses a counter-frequency — the closing syllable that withdraws the command. This is the <strong>Retraction</strong>. Minor invocations retract automatically at the end of their duration. For major invocations, the Speaker must actively speak the Retraction before the duration expires or suffer devastating biological consequences.</p>
                 <p style="margin-top:8px;">A Speaker incapacitated or killed leaves the frequency running blindly. It will not distinguish friend from foe, executing its intent until the duration expires or an authorised Speaker forces the Retraction.</p>
                 <p style="margin-top:8px;"><strong>Mechanical consequence of a failed Retraction:</strong> The Speaker immediately suffers <strong>2 Exhausted conditions</strong> and must pass a <strong>Willpower test (TN = the invocation's TN)</strong> or permanently lose <strong>1 point of Willpower</strong>. The force literally scars the vocal architecture, widening the gap between the Speaker's intent and the universe's execution. Three accumulated failures marks the Speaker permanently — cosmic forces begin answering before they are called, and the gap between intention and invocation narrows in ways the Speaker cannot control.</p>
             </div>
 
-            <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.08);">
-                <span class="trait-title" style="color: var(--gold);">The Resonance Override (Extended Invocation)</span>
+            <div class="trait-box" style="border:0.5px solid rgba(2,7,14,0.15); border-left:5px solid #3D2459; border-radius:0; background: rgba(61,36,89,0.08);">
+                <span class="trait-title" style="color: #02070e; border-bottom:1px solid #3D2459; padding-bottom:3px; display:inline-block;">The Resonance Override (Extended Invocation)</span>
                 <p>Where lesser disciplines permit Overcasting, the Vibhuti demands <strong>Resonance Override</strong> — forcing the vocal cords to hold the syllables past their safe biological limits. Each additional turn the Speaker maintains the Override adds 1d10 to the effect and extends the duration by 1 encounter, but violently haemorrhages <strong>1d6 wounds per turn</strong> directly from the Speaker's flesh.</p>
                 <p style="margin-top:8px;">An Overridden invocation cannot be Retracted mid-cycle. Releasing it early triggers the failed Retraction consequence at double severity.</p>
                 <p style="margin-top:8px;"><strong>The Toll of Iron:</strong> Speakers suffer no casting penalties from iron itself — the voice passes through metal. What causes penalty is constriction. Studded leather or lighter: no penalty. Chainmail through field plate: the TN penalty is halved — the chest and throat are constricted but the voice still projects. Full plate: a flat <strong>−3 To-Cast</strong> — the precise breath control that Bija invocation demands is compromised, though the penalty is capped at the same ceiling every arcane caster meets in plate. If a Speaker cannot produce clear sound — through the Silenced condition, a sealed helm, or a crushed trachea — they cannot invoke. A mimed or written invocation does not function.</p>
             </div>
 
-            <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.08);">
-                <span class="trait-title" style="color: var(--gold);">The Vibhuti Casting Scale</span>
+            <div class="trait-box" style="border:0.5px solid rgba(2,7,14,0.15); border-left:5px solid #3D2459; border-radius:0; background: rgba(61,36,89,0.08);">
+                <span class="trait-title" style="color: #02070e; border-bottom:1px solid #3D2459; padding-bottom:3px; display:inline-block;">The Vibhuti Casting Scale</span>
                 <table style="width:100%; border-collapse:collapse; margin: 10px 0; font-size:0.9em;">
                     <thead>
                         <tr style="background: var(--iron); color: var(--parchment);">
@@ -6023,20 +6024,21 @@ APPENDIX: XI-A</span>
                         <tr><td style="padding:5px 10px;">TN 19+ — Sundering Marks</td><td style="padding:5px 10px;">5 AP</td><td style="padding:5px 10px;">5d10</td><td style="padding:5px 10px;"><strong>Required</strong></td></tr>
                     </tbody>
                 </table>
-                <p style="margin-top:8px;"><strong>Governing Characteristic:</strong> Willpower. Add your Willpower modifier to all Vibhuti To-Cast rolls only. The Vibhuti is a standalone discipline like Runecraft — it advances no characteristic, adds no bonus wounds, and carries no healing. The invocations themselves are the reward.</p>
-                <p style="margin-top:8px;"><strong>Refusal (Backlash):</strong> A natural 1 on any Vibhuti To-Cast roll triggers Refusal — the force withdraws violently, locking the vocal cords and inflicting the <strong>Silenced</strong> condition for 1d3 turns. Forcing speech through this tears the throat for 1d10 wounds and resets the silence.</p>
+                <p style="margin-top:8px;"><strong>Governing Characteristic:</strong> Willpower. Add your Willpower modifier to all Vibhuti To-Cast rolls. Like the other casting disciplines, the Vibhuti advances its governing characteristic — <strong>+1 Willpower per 3 points invested</strong> (the Power of Three) — and offensive invocations add your <strong>casting bonus damage</strong>. It carries no healing; the Vibhuti neither mends nor restores.</p>
+                <p style="margin-top:8px;"><strong>Refusal (Backlash):</strong> A natural 1 on any Vibhuti To-Cast roll triggers Refusal — the force withdraws violently, locking the vocal cords and inflicting the <strong>Silenced</strong> condition for 1d3 turns. Forcing speech through this tears the throat for 1d10 damage and resets the silence.</p>
             </div>
         </div>
     </div>
 
     <!-- LEXICON SPELL LIST -->
-    <div class="rpg-columns">
+    <div class="rpg-columns disc-vibhuti">
         <a href="#top" class="back-to-top">↑ Return to Index</a>
         <div class="full-width">
 
             <div class="trait-box" style="border-color: #3D1A6E; background: rgba(61,26,110,0.05);">
                 <span class="trait-title" style="color: #3D1A6E;">✦ Bija — Seed Sounds (TN 0)</span>
                 <p style="margin-bottom:8px; font-style:italic; font-size:10pt;">The fragments that survived. Single syllables of pre-world frequency — the smallest complete unit of the Primordial Lexicon. These cost 1 AP, cannot be Deepened, and require no Retraction.</p>
+            </div>
 
                 <div class="trait-box">
                     <span class="trait-title">The Absolute Hush (TN 0)</span>
@@ -6049,7 +6051,6 @@ APPENDIX: XI-A</span>
                     <span style="color:#1A2740; font-weight:bold; font-size:10pt; display:block; margin-bottom:8px;">Actions: 1 | Range: Touch | Duration: Instant</span>
                     <p>Press lips to a surface and vocalise a sub-audible tone. You immediately sense whether the object has been touched by a Vibhuti, Runic geometry, or Chaos-mark within the last 24 hours. No damage. If the object carries an active Aakzad Spirit-Echo frequency, the Speaker knows it immediately and can identify the approximate distance to its source.</p>
                 </div>
-            </div>
 
             <h3 class="sub-header">Minor Marks (TN 1–6)</h3>
 
@@ -6062,7 +6063,7 @@ APPENDIX: XI-A</span>
             <div class="trait-box">
                 <span class="trait-title">The Dissonant Word (TN 3)</span>
                 <span style="color:#1A2740; font-weight:bold; font-size:10pt; display:block; margin-bottom:8px;">Actions: 1 | Range: 30 Ft | Target: Single | Duration: Instant</span>
-                <p>The first weapon. A sharp tonal strike — raw sonic pressure, unrefined but immediate. The target suffers <strong>Dis.d10 + casting damage bonus</strong> wounds. No special properties. The Speaker has not yet mastered the frequencies that strip Wound Mitigation or pierce boons — this is the blunt edge of the Lexicon.</p>
+                <p>The first weapon. A sharp tonal strike — raw sonic pressure, unrefined but immediate. The target suffers <strong>Dis.d10 + casting damage bonus</strong> wounds. No special properties. The Speaker has not yet mastered the frequencies that strip Damage Mitigation or pierce boons — this is the blunt edge of the Lexicon.</p>
             </div>
 
             <div class="trait-box">
@@ -6106,7 +6107,7 @@ APPENDIX: XI-A</span>
             <div class="trait-box">
                 <span class="trait-title">The Rendering Note (TN 7)</span>
                 <span style="color:#1A2740; font-weight:bold; font-size:10pt; display:block; margin-bottom:8px;">Actions: 2 | Range: 40 Ft | Target: Single | Duration: Instant</span>
-                <p>The Speaker has progressed past the blunt pressure of the Dissonant Word into the first true offensive frequency — a focused tonal lance tuned to the target’s own resonance. The target suffers <strong>2d10 + casting damage bonus sonic wounds</strong>. The Lexicon has not yet taught the Speaker to slip past armour, so ordinary Wound Mitigation still applies in full — but on a <strong>To-Cast roll of 9 or higher</strong>, the note finds a harmonic flaw and the target is wracked with a <strong>⊛ Stunned</strong> condition as the frequency rattles the inner ear.</p>
+                <p>The Speaker has progressed past the blunt pressure of the Dissonant Word into the first true offensive frequency — a focused tonal lance tuned to the target’s own resonance. The target suffers <strong>2d10 + casting damage bonus sonic wounds</strong>. The Lexicon has not yet taught the Speaker to slip past armour, so ordinary Damage Mitigation still applies in full — but on a <strong>To-Cast roll of 9 or higher</strong>, the note finds a harmonic flaw and the target is wracked with a <strong>⊛ Stunned</strong> condition as the frequency rattles the inner ear.</p>
             </div>
 
             <div class="trait-box">
@@ -6136,7 +6137,7 @@ APPENDIX: XI-A</span>
             <div class="trait-box">
                 <span class="trait-title">The Unstringing Chord (TN 9)</span>
                 <span style="color:#1A2740; font-weight:bold; font-size:10pt; display:block; margin-bottom:8px;">Actions: 2 | Range: 40 Ft | Target: Single | Duration: Instant</span>
-                <p>The first frequency that does not strike the body but unstrings what protects it. A descending chord that loosens the bonds holding armour and ward together. The target suffers <strong>2d10 + casting damage bonus sonic wounds</strong>, and this damage <strong>ignores the first 3 points of Wound Mitigation</strong> as the resonance shakes plate and boon loose at the seams. This is the Speaker’s first true step toward the unmitigated Axioms — the frequencies that strip protection entirely come later.</p>
+                <p>The first frequency that does not strike the body but unstrings what protects it. A descending chord that loosens the bonds holding armour and ward together. The target suffers <strong>2d10 + casting damage bonus sonic wounds</strong>, and this damage <strong>ignores the first 3 points of Damage Mitigation</strong> as the resonance shakes plate and boon loose at the seams. This is the Speaker’s first true step toward the unmitigated Axioms — the frequencies that strip protection entirely come later.</p>
             </div>
 
             <div class="trait-box">
@@ -6154,7 +6155,7 @@ APPENDIX: XI-A</span>
             <div class="trait-box">
                 <span class="trait-title">The Shattering Cadence (TN 10)</span>
                 <span style="color:#1A2740; font-weight:bold; font-size:10pt; display:block; margin-bottom:8px;">Actions: 3 | Range: Self (10 × 50 Ft line) | Target: All in line | Duration: Instant</span>
-                <p>The Speaker exhales a rising cadence in a single sustained breath, projecting it forward as a narrow corridor of building pressure. All creatures in the line suffer <strong>3d10 + casting damage bonus sonic wounds</strong>. Brittle and crystalline matter — frozen wards, bone constructs, stone carapaces — caught in the path is shattered outright, and any creature relying on such a structure for its Wound Mitigation loses that mitigation for <strong>1 + bonus turns</strong>.</p>
+                <p>The Speaker exhales a rising cadence in a single sustained breath, projecting it forward as a narrow corridor of building pressure. All creatures in the line suffer <strong>3d10 + casting damage bonus sonic wounds</strong>. Brittle and crystalline matter — frozen wards, bone constructs, stone carapaces — caught in the path is shattered outright, and any creature relying on such a structure for its Damage Mitigation loses that mitigation for <strong>1 + bonus turns</strong>.</p>
             </div>
 
             <div class="trait-box">
@@ -6167,13 +6168,13 @@ APPENDIX: XI-A</span>
             <div class="trait-box">
                 <span class="trait-title">The Hollowing Verse (TN 11)</span>
                 <span style="color:#1A2740; font-weight:bold; font-size:10pt; display:block; margin-bottom:8px;">Actions: 3 | Range: 30 Ft | Target: Single | Duration: Instant</span>
-                <p>A sustained verse pitched to the frequency of empty space — it teaches the target’s flesh, briefly, that it is hollow. The target suffers <strong>3d10 + casting damage bonus sonic wounds bypassing mundane Wound Mitigation</strong>. If the target is currently maintaining a concentration effect or a Maintained invocation of their own, they must pass <strong>Willpower TN 11 + Resist bonus</strong> or that effect collapses as the Verse drowns out their focus. This is the threshold of the Axioms — the last Word a Speaker learns before the Bearing invocations open to them.</p>
+                <p>A sustained verse pitched to the frequency of empty space — it teaches the target’s flesh, briefly, that it is hollow. The target suffers <strong>3d10 + casting damage bonus sonic wounds bypassing mundane Damage Mitigation</strong>. If the target is currently maintaining a concentration effect or a Maintained invocation of their own, they must pass <strong>Willpower TN 11 + Resist bonus</strong> or that effect collapses as the Verse drowns out their focus. This is the threshold of the Axioms — the last Word a Speaker learns before the Bearing invocations open to them.</p>
             </div>
 
             <div class="trait-box">
                 <span class="trait-title">The Agni-Axiom (TN 12) — Axiom of Bearing: Purifying Force</span>
                 <span style="color:#1A2740; font-weight:bold; font-size:10pt; display:block; margin-bottom:8px;">Actions: 3 | Range: 30 Ft | Target: Single | Duration: Instant</span>
-                <p>Invoke the clinical fire that processes rather than consumes — the purifying frequency of Agni-class force. The target suffers <strong>3d10 + casting damage bonus wounds bypassing mundane Wound Mitigation</strong>. Any active Chaos boon on the target is forcibly locked for <strong>1 + bonus turns</strong> — the Basalt Carapace reverts, the Umbral Shroud withdraws, the Overclock locks. Against undead, deal maximum damage on the dice. Against Daemons and void entities, deal maximum damage on the dice and the target must pass <strong>Willpower TN 12 + Resist bonus</strong> or be driven back 20 Ft. <strong>Retraction required within 1 + bonus turns</strong> or the vocal haemorrhage consequence triggers.</p>
+                <p>Invoke the clinical fire that processes rather than consumes — the purifying frequency of Agni-class force. The target suffers <strong>3d10 + casting damage bonus damage bypassing mundane Damage Mitigation</strong>. Any active Chaos boon on the target is forcibly locked for <strong>1 + bonus turns</strong> — the Basalt Carapace reverts, the Umbral Shroud withdraws, the Overclock locks. Against undead, deal maximum damage on the dice. Against Daemons and void entities, deal maximum damage on the dice and the target must pass <strong>Willpower TN 12 + Resist bonus</strong> or be driven back 20 Ft. <strong>Retraction required within 1 + bonus turns</strong> or the vocal haemorrhage consequence triggers.</p>
             </div>
 
             <h3 class="sub-header">Major Marks (TN 13–18)</h3>
@@ -6181,13 +6182,13 @@ APPENDIX: XI-A</span>
             <div class="trait-box">
                 <span class="trait-title">The Sphoṭa Strike (TN 13)</span>
                 <span style="color:#1A2740; font-weight:bold; font-size:10pt; display:block; margin-bottom:8px;">Actions: 4 | Range: 40 Ft | Target: Single | Duration: Instant</span>
-                <p>The Speaker names the precise resonant frequency of a single target's physical structure and forces catastrophic sympathetic vibration. The word and its effect are the same moment — this is Sphoṭa, the burst of meaning that precedes understanding. The target suffers <strong>4d10 + casting damage bonus wounds bypassing mundane Wound Mitigation</strong> — the frequency shears through ordinary armour, but magical wards still hold against the named word. Against Aakzad units specifically, deal maximum damage on the dice <strong>and the bypass extends to all Mitigation</strong> — their biomechanical architecture resonates catastrophically with pre-world frequency, and no ward they carry is tuned against their own register. The Vibhuti tradition and the Mor-Tekh share a register. They know it. No Retraction required — the invocation concludes in the instant of its speaking.</p>
+                <p>The Speaker names the precise resonant frequency of a single target's physical structure and forces catastrophic sympathetic vibration. The word and its effect are the same moment — this is Sphoṭa, the burst of meaning that precedes understanding. The target suffers <strong>4d10 + casting damage bonus damage bypassing mundane Damage Mitigation</strong> — the frequency shears through ordinary armour, but magical wards still hold against the named word. Against Aakzad units specifically, deal maximum damage on the dice <strong>and the bypass extends to all Mitigation</strong> — their biomechanical architecture resonates catastrophically with pre-world frequency, and no ward they carry is tuned against their own register. The Vibhuti tradition and the Mor-Tekh share a register. They know it. No Retraction required — the invocation concludes in the instant of its speaking.</p>
             </div>
 
             <div class="trait-box">
                 <span class="trait-title">The Preserver's Axiom (TN 14) — Axiom of Bearing: The Compact</span>
                 <span style="color:#1A2740; font-weight:bold; font-size:10pt; display:block; margin-bottom:8px;">Actions: 4 | Range: 40 Ft radius | Target: All | Duration: Instant</span>
-                <p>Release a frequency that audits intent. All entities within range bearing hostile intent toward the Speaker suffer <strong>4d10 + casting damage bonus wounds bypassing all Wound Mitigation</strong>. Those who genuinely lay down their arms and surrender intent are completely unharmed. The invocation cannot be deceived by feigned surrender — it reads the mind's acoustic frequency, not the posture of the body. A creature that kneels while planning to attack is struck with full force. <strong>Retraction required within 1 turn.</strong> Failed Retraction triggers the failed Retraction consequence at double severity and locks the Speaker in the ⌁ Silenced condition for the remainder of the encounter.</p>
+                <p>Release a frequency that audits intent. All entities within range bearing hostile intent toward the Speaker suffer <strong>4d10 + casting damage bonus damage bypassing all Damage Mitigation</strong>. Those who genuinely lay down their arms and surrender intent are completely unharmed. The invocation cannot be deceived by feigned surrender — it reads the mind's acoustic frequency, not the posture of the body. A creature that kneels while planning to attack is struck with full force. <strong>Retraction required within 1 turn.</strong> Failed Retraction triggers the failed Retraction consequence at double severity and locks the Speaker in the ⌁ Silenced condition for the remainder of the encounter.</p>
             </div>
 
             <div class="trait-box">
@@ -6211,7 +6212,7 @@ APPENDIX: XI-A</span>
             <div class="trait-box">
                 <span class="trait-title">The Agneyastra Volley (TN 16)</span>
                 <span style="color:#1A2740; font-weight:bold; font-size:10pt; display:block; margin-bottom:8px;">Actions: 5 | Range: Self (80 Ft radius) | Target: All allied ranged weapons | Duration: Instant</span>
-                <p>The Speaker opens their throat and speaks the complete combustion frequency outward in all directions simultaneously — not into one shaft but into every nocked arrow, quarrel, and hurled projectile within range. The frequency finds the ranged weapons of all allies instantly and chars them through in the same breath. At the Speaker's signal — or on the count of a spoken syllable — every allied archer in the radius looses simultaneously, releasing a volley of Agneyastra-class fire. Each charred projectile deals the archer's normal ranged damage <strong>plus 2d10 fire wounds bypassing mundane Wound Mitigation</strong>. Targets struck by two or more arrows in the same volley suffer the <strong>⊛ Stunned condition</strong> on a failed Physique TN 9 + Resist bonus — the combined acoustic-thermal impact overwhelms the body's capacity to regulate simultaneously.</p>
+                <p>The Speaker opens their throat and speaks the complete combustion frequency outward in all directions simultaneously — not into one shaft but into every nocked arrow, quarrel, and hurled projectile within range. The frequency finds the ranged weapons of all allies instantly and chars them through in the same breath. At the Speaker's signal — or on the count of a spoken syllable — every allied archer in the radius looses simultaneously, releasing a volley of Agneyastra-class fire. Each charred projectile deals the archer's normal ranged damage <strong>plus 2d10 fire damage bypassing mundane Damage Mitigation</strong>. Targets struck by two or more arrows in the same volley suffer the <strong>⊛ Stunned condition</strong> on a failed Physique TN 9 + Resist bonus — the combined acoustic-thermal impact overwhelms the body's capacity to regulate simultaneously.</p>
                 <p style="margin-top:8px;">The Thermal Nullification specifically notes Agneyastra-class fire as one of the effects it can suppress. A Speaker who understands what the Thermal Nullification counters understands exactly what the Agneyastra Volley is — the same pre-world fire-frequency, now directed outward instead of extinguished. <strong>Requires at least one allied archer with a loaded ranged weapon within range. If no such allies are present, the invocation fails and the AP is spent.</strong> Retraction: passive — the frequency concludes the moment the volley is fired.</p>
             </div>
 
@@ -6224,7 +6225,7 @@ APPENDIX: XI-A</span>
             <div class="trait-box">
                 <span class="trait-title">The Brahmastra (TN 18)</span>
                 <span style="color:#1A2740; font-weight:bold; font-size:10pt; display:block; margin-bottom:8px;">Actions: 5 | Range: 50 Ft | Target: Single | Duration: Instant</span>
-                <p>The named-target absolute. Unlike the Axiom of the Absolute — which does not discriminate — the Brahmastra is surgical. The Speaker has studied a single target long enough to name its complete resonant signature, then invokes its dissolution. The target suffers <strong>5d10 + casting damage bonus wounds bypassing all Wound Mitigation</strong>. The target must pass <strong>Willpower TN 18 + Resist bonus</strong> or suffer a <strong>permanent −2 to one characteristic</strong> of the Speaker's choice — the resonant signature of that characteristic has been partially unmade and does not reassemble correctly. Against Aakzad Crypt Priests, a failed resist also destroys the Priest's Spirit-Echo broadcast capability permanently — the frequency it has used to coordinate the swarm for millennia is collapsed. This cannot be rebuilt. <strong>Retraction required within 1 turn</strong> or the Refusal consequence triggers.</p>
+                <p>The named-target absolute. Unlike the Axiom of the Absolute — which does not discriminate — the Brahmastra is surgical. The Speaker has studied a single target long enough to name its complete resonant signature, then invokes its dissolution. The target suffers <strong>5d10 + casting damage bonus damage bypassing all Damage Mitigation</strong>. The target must pass <strong>Willpower TN 18 + Resist bonus</strong> or suffer a <strong>permanent −2 to one characteristic</strong> of the Speaker's choice — the resonant signature of that characteristic has been partially unmade and does not reassemble correctly. Against Aakzad Crypt Priests, a failed resist also destroys the Priest's Spirit-Echo broadcast capability permanently — the frequency it has used to coordinate the swarm for millennia is collapsed. This cannot be rebuilt. <strong>Retraction required within 1 turn</strong> or the Refusal consequence triggers.</p>
                 <p style="margin-top:8px;"><em>The Brahmastra requires the Speaker to have observed the target for at least one full encounter prior to invocation — the resonant signature must be learned, not guessed. Against the same target across multiple encounters, this limitation is waived.</em></p>
             </div>
 
@@ -6247,7 +6248,7 @@ APPENDIX: XI-A</span>
         <p style="max-width: 600px; margin: 10px auto; font-style: italic;">"The world does not pause for the players. It existed before them, it is profoundly indifferent to their survival, and it will outlast them. Run it accordingly."</p>
     </div>
 
-    <div class="rpg-columns">
+    <div class="rpg-columns disc-vibhuti">
         <a href="#top" class="back-to-top">↑ Return to Index</a>
 
         <div class="full-width">
@@ -6316,7 +6317,7 @@ APPENDIX: XI-A</span>
                 <span class="trait-title">The Law of Resistance</span>
                 <p>The rules of survival dictate a uniform structure for all creature saving throws. The GM does not recalculate math for every minor beast; the baseline handles the scaling.</p>
                 <div style="background:var(--iron); color:var(--parchment); padding:16px 20px; margin:14px 0; border-left:5px solid var(--gold); font-size:12pt; text-align: center;">
-                    <strong style="color:var(--gold);">Target must surpass [Characteristic] TN [number] + Resist bonus</strong>
+                    <strong style="color:#02070e;">Target must surpass [Characteristic] TN [number] + Resist bonus</strong>
                 </div>
                 <p>Unless the Bestiary entry specifically overrides it, the creature's Resist Bonus is directly pulled from its Tier value. This elegantly ensures that a TN 7 Willpower test forces a 7 from a mere Minion, but demands a 10 from a towering Boss, all without rewriting the core ability.</p>
             </div>
@@ -6336,8 +6337,8 @@ APPENDIX: XI-A</span>
                         <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:7px 12px; color: var(--blood); font-weight: bold;">Shaken</td><td style="padding:7px 12px;">A crushing -2 penalty to all rolls. The victim cannot advance toward the source of their dread. Evaporates at the dawn of the next turn unless refreshed.</td></tr>
                         <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(2,7,14,0.02);"><td style="padding:7px 12px; color: var(--blood); font-weight: bold;">Fatigued</td><td style="padding:7px 12px;">Movement is halved, and the body is robbed of 1 AP on the following turn.</td></tr>
                         <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:7px 12px; color: var(--blood); font-weight: bold;">Stunned (Stacking)</td><td style="padding:7px 12px;">Each layer of concussion strips 1 AP that turn. Two stacks equal a 2 AP loss. Any excess debt carries brutally into the next turn.</td></tr>
-                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(2,7,14,0.02);"><td style="padding:7px 12px; color: var(--blood); font-weight: bold;">Bleeding (Stacking)</td><td style="padding:7px 12px;">A hemorrhage dealing 1d10 wounds per stack, per turn. It cannot be ignored — it ends strictly through magical or deliberate Mending intervention.</td></tr>
-                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:7px 12px; color: var(--blood); font-weight: bold;">Poisoned</td><td style="padding:7px 12px;"><strong>Lesser:</strong> 1d10 wounds/turn (Must surpass Physique TN 7 + Resist to purge).<br><strong>Greater:</strong> 2d10 wounds/turn (Must surpass Physique TN 10 + Resist to purge).</td></tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(2,7,14,0.02);"><td style="padding:7px 12px; color: var(--blood); font-weight: bold;">Bleeding (Stacking)</td><td style="padding:7px 12px;">A hemorrhage dealing 1d10 damage per stack, per turn. It cannot be ignored — it ends strictly through magical or deliberate Mending intervention.</td></tr>
+                        <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:7px 12px; color: var(--blood); font-weight: bold;">Poisoned</td><td style="padding:7px 12px;"><strong>Lesser:</strong> 1d10 damage/turn (Must surpass Physique TN 7 + Resist to purge).<br><strong>Greater:</strong> 2d10 damage/turn (Must surpass Physique TN 10 + Resist to purge).</td></tr>
                         <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(2,7,14,0.02);"><td style="padding:7px 12px; color: var(--blood); font-weight: bold;">Prone</td><td style="padding:7px 12px;">A lethal vulnerability. Disadvantage on attacks made, Advantage granted to incoming strikes. Movement halved, no Reactions permitted, and Base Defense drops by -2. Costs 1 AP to reclaim footing.</td></tr>
                         <tr style="border-bottom:1px solid rgba(2,7,14,0.1);"><td style="padding:7px 12px; color: var(--blood); font-weight: bold;">Disarmed</td><td style="padding:7px 12px;">Steel knocked into the dirt. Confined to unarmed brawling until reclaimed (costs 1 AP if within 5ft). Born from explicit abilities, a Natural 10 called shot, or 9 points of Riposte.</td></tr>
                         <tr><td style="padding:7px 12px; color: var(--ink); font-weight: bold; border-left: 4px solid var(--blood);">Overwhelmed</td><td style="padding:7px 12px;">The breaking point. Suffering three or more conditions concurrently — <em>of any kind, including multiples of the same condition</em> — strips the capacity for Reaction actions (Parry, Dodge). Three Bleeds will Overwhelm as surely as three different afflictions.</td></tr>
@@ -6367,12 +6368,12 @@ APPENDIX: XI-A</span>
     <p style="max-width: 680px; margin: 12px auto; font-size: 10.5pt;">These rules are <strong>entirely optional</strong>. They introduce a layer of dramatic variance — spectacular failures and confirmed killing blows — that rewards investment in To-Hit and To-Cast while keeping catastrophic outcomes rare. GMs should discuss with their table before the first session whether these rules are in play.</p>
 </div>
 
-<div class="rpg-columns">
+<div class="rpg-columns disc-vibhuti">
     <a href="#top" class="back-to-top">↑ Return to Index</a>
     <div class="full-width">
 
-    <div class="trait-box" style="border-color: var(--gold); background: rgba(166,124,0,0.05);">
-        <span class="trait-title" style="color: var(--gold);">Core Mechanic — The Confirmation Roll</span>
+    <div class="trait-box" style="border:0.5px solid rgba(2,7,14,0.15); border-left:5px solid #3D2459; border-radius:0; background: rgba(61,36,89,0.06);">
+        <span class="trait-title" style="color: #02070e; border-bottom:1px solid #3D2459; padding-bottom:3px; display:inline-block;">Core Mechanic — The Confirmation Roll</span>
         <p>Both Flubs and Criticals use the same two-roll confirmation structure. The first roll produces the trigger (a natural 1 or natural 10 on the relevant die). The second roll — the <strong>Confirmation Roll</strong> — determines whether the trigger actually resolves. This prevents the system from activating so frequently it disrupts the session's rhythm.</p>
         <p style="margin-top:8px;">A Flub or Critical that requires a Confirmation Roll occurs on roughly a 1-in-100 basis in standard conditions — rare enough to feel significant, common enough to happen several times across a full session.</p>
         <ul style="margin-top:8px;">
@@ -6458,7 +6459,7 @@ APPENDIX: XI-A</span>
                 <tr>
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">10</td>
                     <td style="padding:5px 10px; font-weight:700;">That's Gonna Hurt</td>
-                    <td style="padding:5px 10px;">Your opponent sidesteps, you twist your ankle and fall onto your own weapon. Suffer <strong>1d10 wounds</strong>, fall <strong>Prone</strong>, and lose all remaining attacks and actions this turn.</td>
+                    <td style="padding:5px 10px;">Your opponent sidesteps, you twist your ankle and fall onto your own weapon. Suffer <strong>1d10 damage</strong>, fall <strong>Prone</strong>, and lose all remaining attacks and actions this turn.</td>
                 </tr>
             </tbody>
         </table>
@@ -6526,7 +6527,7 @@ APPENDIX: XI-A</span>
                 <tr>
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">10</td>
                     <td style="padding:5px 10px; font-weight:700;">Self-Strike</td>
-                    <td style="padding:5px 10px;">Your hand cramps mid-release. You manage to strike yourself with your own weapon. Suffer <strong>1d10 wounds</strong> with no Wound Mitigation.</td>
+                    <td style="padding:5px 10px;">Your hand cramps mid-release. You manage to strike yourself with your own weapon. Suffer <strong>1d10 damage</strong> with no Damage Mitigation.</td>
                 </tr>
             </tbody>
         </table>
@@ -6594,7 +6595,7 @@ APPENDIX: XI-A</span>
                 <tr>
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">10</td>
                     <td style="padding:5px 10px; font-weight:700;">Detonation</td>
-                    <td style="padding:5px 10px;">The spell detonates prematurely. You are thrown <strong>2d10 Ft</strong> in a random direction and suffer <strong>1d10 wounds</strong> with no Wound Mitigation. Make a <strong>Physique TN 10</strong> test or fall <strong>Unconscious</strong> for 2 turns.</td>
+                    <td style="padding:5px 10px;">The spell detonates prematurely. You are thrown <strong>2d10 Ft</strong> in a random direction and suffer <strong>1d10 damage</strong> with no Damage Mitigation. Make a <strong>Physique TN 10</strong> test or fall <strong>Unconscious</strong> for 2 turns.</td>
                 </tr>
             </tbody>
         </table>
@@ -6652,17 +6653,17 @@ APPENDIX: XI-A</span>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">8</td>
                     <td style="padding:5px 10px; font-weight:700;">Blasphemy</td>
-                    <td style="padding:5px 10px;">Your failure carries a spiritual shockwave. All allies within <strong>25 Ft</strong> suffer <strong>1d10 wounds</strong> as the covenant's displeasure radiates outward.</td>
+                    <td style="padding:5px 10px;">Your failure carries a spiritual shockwave. All allies within <strong>25 Ft</strong> suffer <strong>1d10 damage</strong> as the covenant's displeasure radiates outward.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">9</td>
                     <td style="padding:5px 10px; font-weight:700;">The God Stirs</td>
-                    <td style="padding:5px 10px;">The covenant registers your failure as evidence of straying. You suffer <strong>1d10 wounds</strong> as divine displeasure makes itself physically felt. Your body knows what your faith will not admit.</td>
+                    <td style="padding:5px 10px;">The covenant registers your failure as evidence of straying. You suffer <strong>1d10 damage</strong> as divine displeasure makes itself physically felt. Your body knows what your faith will not admit.</td>
                 </tr>
                 <tr>
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">10</td>
                     <td style="padding:5px 10px; font-weight:700;">Smite</td>
-                    <td style="padding:5px 10px;">The covenant strikes you directly. You are hit by a bolt of concentrated divine force — suffer <strong>3d10 wounds bypassing all Wound Mitigation</strong> and fall <strong>Prone</strong>. Make a <strong>Physique TN 12</strong> test or fall <strong>Unconscious</strong> for 1d3 turns.</td>
+                    <td style="padding:5px 10px;">The covenant strikes you directly. You are hit by a bolt of concentrated divine force — suffer <strong>3d10 damage bypassing all Damage Mitigation</strong> and fall <strong>Prone</strong>. Make a <strong>Physique TN 12</strong> test or fall <strong>Unconscious</strong> for 1d3 turns.</td>
                 </tr>
             </tbody>
         </table>
@@ -6711,7 +6712,7 @@ APPENDIX: XI-A</span>
                 <tr style="border-bottom:1px solid rgba(61,26,110,0.15); background:rgba(61,26,110,0.04);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">6</td>
                     <td style="padding:5px 10px; font-weight:700;">Bone Song</td>
-                    <td style="padding:5px 10px;">The misfire hits the structural frequency of living bone indiscriminately. All creatures within <strong>15 Ft</strong> — ally, enemy, and Speaker — suffer <strong>1d10 wounds</strong> as their skeletons vibrate at the wrong pitch.</td>
+                    <td style="padding:5px 10px;">The misfire hits the structural frequency of living bone indiscriminately. All creatures within <strong>15 Ft</strong> — ally, enemy, and Speaker — suffer <strong>1d10 damage</strong> as their skeletons vibrate at the wrong pitch.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(61,26,110,0.15);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">7</td>
@@ -6731,7 +6732,7 @@ APPENDIX: XI-A</span>
                 <tr>
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">10</td>
                     <td style="padding:5px 10px; font-weight:700;">Axiom Breach</td>
-                    <td style="padding:5px 10px;">The misfire invokes a fragment of Axiom of the Absolute — uncontrolled and undirected. Every creature within <strong>30 Ft</strong> including the Speaker suffers <strong>2d10 wounds bypassing all Wound Mitigation</strong>. The Speaker is then <strong>⌁ Silenced</strong> for <strong>1d3 turns</strong> as their voice recovers from the uncontrolled output. No Retraction is possible.</td>
+                    <td style="padding:5px 10px;">The misfire invokes a fragment of Axiom of the Absolute — uncontrolled and undirected. Every creature within <strong>30 Ft</strong> including the Speaker suffers <strong>2d10 damage bypassing all Damage Mitigation</strong>. The Speaker is then <strong>⌁ Silenced</strong> for <strong>1d3 turns</strong> as their voice recovers from the uncontrolled output. No Retraction is possible.</td>
                 </tr>
             </tbody>
         </table>
@@ -6757,12 +6758,12 @@ APPENDIX: XI-A</span>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">1</td>
                     <td style="padding:5px 10px; font-weight:700;">Devastating Hit</td>
-                    <td style="padding:5px 10px;">The blow lands with staggering force. Suffer normal wounds plus an additional <strong>1d10 wounds</strong>. Make a <strong>Physique TN equal to total wounds received</strong> or fall <strong>Prone</strong>.</td>
+                    <td style="padding:5px 10px;">The blow lands with staggering force. Suffer normal wounds plus an additional <strong>1d10 damage</strong>. Make a <strong>Physique TN equal to total wounds received</strong> or fall <strong>Prone</strong>.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">2</td>
                     <td style="padding:5px 10px; font-weight:700;">Gash</td>
-                    <td style="padding:5px 10px;">The strike tears through armour, leaving a gaping wound. Suffer normal wounds plus an additional <strong>1d10 wounds</strong>. Gain the <strong>⊕ Bleed condition</strong>.</td>
+                    <td style="padding:5px 10px;">The strike tears through armour, leaving a gaping wound. Suffer normal wounds plus an additional <strong>1d10 damage</strong>. Gain the <strong>⊕ Bleed condition</strong>.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">3</td>
@@ -6772,27 +6773,27 @@ APPENDIX: XI-A</span>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">4</td>
                     <td style="padding:5px 10px; font-weight:700;">Crushed Limb</td>
-                    <td style="padding:5px 10px;">One limb takes a debilitating blow. Roll 1d10: 1–2 Left Arm, 3–4 Right Arm, 5–6 Left Leg, 7–8 Right Leg, 9–10 roll again. The limb is non-functional until treated. Suffer normal wounds plus an additional <strong>2d10 wounds</strong>.</td>
+                    <td style="padding:5px 10px;">One limb takes a debilitating blow. Roll 1d10: 1–2 Left Arm, 3–4 Right Arm, 5–6 Left Leg, 7–8 Right Leg, 9–10 roll again. The limb is non-functional until treated. Suffer normal wounds plus an additional <strong>2d10 damage</strong>.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">5</td>
                     <td style="padding:5px 10px; font-weight:700;">Glass Jaw</td>
-                    <td style="padding:5px 10px;">A direct strike to the jaw. Suffer <strong>3d10 wounds</strong> and fall <strong>Prone</strong>. You may not invoke Devotion blessings, cast spells, or use the Vibhuti until your jaw is set by Medicine or Mending.</td>
+                    <td style="padding:5px 10px;">A direct strike to the jaw. Suffer <strong>3d10 damage</strong> and fall <strong>Prone</strong>. You may not invoke Devotion blessings, cast spells, or use the Vibhuti until your jaw is set by Medicine or Mending.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">6</td>
                     <td style="padding:5px 10px; font-weight:700;">Bleeder</td>
-                    <td style="padding:5px 10px;">A catastrophic wound. Suffer normal wounds plus an additional <strong>2d10 wounds</strong>. Gain <strong>2 stacks of the ⊕ Bleed condition</strong> simultaneously.</td>
+                    <td style="padding:5px 10px;">A catastrophic wound. Suffer normal wounds plus an additional <strong>2d10 damage</strong>. Gain <strong>2 stacks of the ⊕ Bleed condition</strong> simultaneously.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">7</td>
                     <td style="padding:5px 10px; font-weight:700;">Cracked Skull</td>
-                    <td style="padding:5px 10px;">A direct hit to the skull. Suffer an additional <strong>3d10 wounds</strong>. Make a <strong>Physique TN 15</strong> test or fall <strong>Unconscious</strong> for <strong>1d10 turns</strong>.</td>
+                    <td style="padding:5px 10px;">A direct hit to the skull. Suffer an additional <strong>3d10 damage</strong>. Make a <strong>Physique TN 15</strong> test or fall <strong>Unconscious</strong> for <strong>1d10 turns</strong>.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1); background:rgba(0,0,0,0.03);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">8</td>
                     <td style="padding:5px 10px; font-weight:700;">Lost Limb</td>
-                    <td style="padding:5px 10px;">Roll 1d10 as for Crushed Limb to determine which limb is severed. Only magical or immediate surgical intervention saves the appendage. Make a <strong>Physique TN 10</strong> test or fall <strong>Unconscious</strong>. Suffer <strong>3d10 wounds</strong> and gain <strong>3 stacks of the ⊕ Bleed condition</strong>.</td>
+                    <td style="padding:5px 10px;">Roll 1d10 as for Crushed Limb to determine which limb is severed. Only magical or immediate surgical intervention saves the appendage. Make a <strong>Physique TN 10</strong> test or fall <strong>Unconscious</strong>. Suffer <strong>3d10 damage</strong> and gain <strong>3 stacks of the ⊕ Bleed condition</strong>.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(2,7,14,0.1);">
                     <td style="padding:5px 10px; text-align:center; font-weight:900;">9</td>
