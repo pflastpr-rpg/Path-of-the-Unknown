@@ -214,6 +214,7 @@
     <div class="tldr">
         <strong>What this is:</strong> a combined archive of all patch notes from 31 May to 4 June, so nothing is buried in older files. Most recent work is at the top. Jump by session:
         <ul>
+            <li><strong><a href="#s-05jun-fixes" style="color:var(--blood);">5 June (Fixes, Collapse Rules &amp; Ledger Sync)</a></strong> — the 0-Wounds/Unconscious rules fully fleshed out (Iron Will survival window, recovery on being healed); Overreach dropdown bug fixed in all spell slots; Flub &amp; Critical Strike proofread; Law of Resistance display fix; ledger-v3 brought in line with today's spell and rune changes.</li>
             <li><strong><a href="#s-05jun-vibhutireview" style="color:var(--blood);">5 June (Vibhuti Lexicon Review)</a></strong> — full spell-by-spell pass: added resist saves to no-save debuffs, tightened a few durations, clarified the bypass and Retraction rules, and fleshed out Osteo-Resonance. The last discipline review.</li>
             <li><strong><a href="#s-05jun-runeloot" style="color:var(--blood);">5 June (Runecraft Loot)</a></strong> — six new high-tier Runecraft relics (Rare through Artifact) close the gap that left Runemasters with no gear above Uncommon. None bend the Laws of the craft.</li>
             <li><strong><a href="#s-05jun-terminology" style="color:var(--blood);">5 June (Terminology)</a></strong> — system-wide split of <em>damage</em> (dealt &amp; mitigated) from <em>wounds</em> (the health pool that healing mends): Wound Mitigation &rarr; Damage Mitigation, and offensive effects now deal damage, not wounds.</li>
@@ -227,6 +228,49 @@
             <li><strong><a href="#s-03jun" style="color:var(--blood);">3 June</a></strong> — beast-craft armour, monster-bone weapons, enchanted gear, Ledger v4, casting-penalty cleanup.</li>
             <li><strong><a href="#s-31may" style="color:var(--blood);">31 May – 1 June</a></strong> — the big spell/blessing rebalance across every discipline, the bypass floor, Essence on the sheet, the Ledger split, and more.</li>
         </ul>
+    </div>
+
+    <div class="session-divider" id="s-05jun-fixes">5 June 2026 &mdash; Fixes, the Collapse Rules &amp; Ledger Sync<span class="sd-sub">0-Wounds &amp; Unconscious fleshed out &middot; Overreach bug &middot; Flub/Crit proofread &middot; ledger-v3 caught up</span></div>
+
+<h2><span class="tick">&#10022;</span> Rules &mdash; Falling &amp; Recovery</h2>
+
+    <div class="change-item">
+        <span class="lead">Unconscious &amp; The Collapse (0 Wounds) fully defined <span class="tag rules">Rules</span></span>
+        <p>The old one-line Unconscious entry has been expanded into a complete rule. Reaching 0 Wounds drops you Prone and Unconscious &mdash; no actions, attacks against you at Advantage. Whether you survive the drop now depends on <strong>Iron Will</strong> and <strong>Bleeding</strong>: with Iron Will you linger for a number of turns equal to your points before death (each Bleeding stack costs you one of those turns); without Iron Will and Bleeding, you die at the end of the turn you fell, though allies with actions left may still save you.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Healed back from the brink <span class="tag rules">Rules</span></span>
+        <p>Being healed to 1+ Wounds no longer snaps you instantly upright. You rise at the <strong>end of your party's turn</strong> and may take half movement; you may <em>optionally</em> attempt a <strong>Resolve test (DV 10)</strong> for a single 1 AP action, but failing that attempt leaves you <strong>Shaken</strong>. You act normally the following turn. An optional <strong>Dying Clock</strong> is included for tables that want a tenser bleed-out.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Iron Will survival window <span class="tag rules">Rules</span></span>
+        <p>Iron Will now grants a survival window equal to your <strong>points invested</strong> (1 point = 1 turn) while Unconscious at 0 Wounds, rather than a flat single turn &mdash; reduced by 1 per active Bleeding stack. A designer note flags this for possible future scaling.</p>
+    </div>
+
+<h2><span class="tick">&#10022;</span> Fixes</h2>
+
+    <div class="change-item">
+        <span class="lead">Overreach grouping now works in every spell slot <span class="tag fix">Fix</span></span>
+        <p>The Castable / &#9888; Overreach / &#10005; Beyond Reach grouping in the spell dropdowns previously appeared only in the first five (cantrip) slots. Slots 6&ndash;18 now rebuild the grouped, reachability-sorted list the same way. Fixed in both the v4 and v3 ledgers.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Law of Resistance display fix <span class="tag fix">Fix</span></span>
+        <p>The "Target must surpass [Characteristic] TN [number] + Resist bonus" formula line was rendering as dark text on its dark box &mdash; effectively invisible. It now reads in light parchment. The rule and its tier math (Boss Resist +3 turning a TN 7 test into a 10) were already correct.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Flub &amp; Critical Strike proofread <span class="tag fix">Fix</span></span>
+        <p>Four consistency fixes: the Spell Miscast "Enveloped" and Devotion "Reversed" results now stay in second person; the Critical "Devastating Hit" save reads "make a Physique test with a TN equal to the total wounds received"; and the "Death" result is now phrased in second person to match the rest of the table.</p>
+    </div>
+
+<h2><span class="tick">&#10022;</span> Ledger</h2>
+
+    <div class="change-item">
+        <span class="lead">Ledger-v3 brought in line with today's changes <span class="tag ledger">Ledger</span></span>
+        <p>The parallel v3 ledger received today's rune work (two new runes, fifteen TN updates, Blood-Surge and Dread Horn effect changes), the Ghost Wolf &rarr; Ancestral Wolf rename, and the seven new Shaman Calling spells (Breath of the Clanless, Grave Miasma, Grave-Shard, Necrotic Frost, Spirit Walk, The Var'kai Ritual, The White Blind). All of v3's own unique spells were preserved &mdash; nothing was overwritten.</p>
     </div>
 
     <div class="session-divider" id="s-05jun-vibhutireview">5 June 2026 &mdash; Vibhuti Lexicon Review<span class="sd-sub">Spell-by-spell balance pass &middot; resist saves &middot; bypass &amp; Retraction clarity &middot; the final discipline review</span></div>
