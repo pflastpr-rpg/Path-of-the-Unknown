@@ -214,6 +214,7 @@
     <div class="tldr">
         <strong>What this is:</strong> a combined archive of all patch notes from 31 May to 4 June, so nothing is buried in older files. Most recent work is at the top. Jump by session:
         <ul>
+            <li><strong><a href="#s-05jun-skills" style="color:var(--blood);">5 June (Skill System Overhaul)</a></strong> &mdash; new Dark-Soul skill (the shadow-mirror of Light-Soul, with the Sundered Soul rule); four new counter-skills (Insight, Zealotry, Steadfast, Linguistics); Riding folded into the Agility pool; per-characteristic swap pools widened; and a full reconciliation of skill XP costs across the rulebook and both ledgers, with a light racial-balance pass.</li>
             <li><strong><a href="#s-05jun-armor" style="color:var(--blood);">5 June (Armour Expansion &amp; Beast-Craft Pass)</a></strong> &mdash; full review of every armour type in the ledger; khugron chitin given a light casting penalty; four new beast-craft armours added (Broodmother Carapace, Gravebone Harness, Elemental-Forged Plate, Iron Golem Reinforced Plate) and folded into the Reliquary loot tables.</li>
             <li><strong><a href="#s-05jun-fixes" style="color:var(--blood);">5 June (Fixes, Collapse Rules &amp; Ledger Sync)</a></strong> — the 0-Wounds/Unconscious rules fully fleshed out (Iron Will survival window, recovery on being healed); Overreach dropdown bug fixed in all spell slots; Flub &amp; Critical Strike proofread; Law of Resistance display fix; ledger-v3 brought in line with today's spell and rune changes.</li>
             <li><strong><a href="#s-05jun-vibhutireview" style="color:var(--blood);">5 June (Vibhuti Lexicon Review)</a></strong> — full spell-by-spell pass: added resist saves to no-save debuffs, tightened a few durations, clarified the bypass and Retraction rules, and fleshed out Osteo-Resonance. The last discipline review.</li>
@@ -231,7 +232,54 @@
         </ul>
     </div>
 
-        <div class="session-divider" id="s-05jun-armor">5 June 2026 &mdash; Armour Expansion &amp; Beast-Craft Pass<span class="sd-sub">Full armour review &middot; khugron chitin tweak &middot; four new beast-craft armours &middot; Reliquary sync</span></div>
+        <div class="session-divider" id="s-05jun-skills">5 June 2026 &mdash; Skill System Overhaul<span class="sd-sub">Dark-Soul &amp; the Sundered Soul &middot; four new counter-skills &middot; Riding folded in &middot; cost reconciliation &amp; racial balance</span></div>
+
+<h2><span class="tick">&#10022;</span> New Skills</h2>
+
+    <div class="change-item">
+        <span class="lead">Dark-Soul &mdash; the shadow-mirror of Light-Soul <span class="tag rules">Rules</span></span>
+        <p>A new Charisma skill for those who walk the dark path. Every point grants <strong>+1 damage against Good and consecrated creatures</strong>; it gates the fallen abilities (profane blessings, necrotic leeching, command of lesser undead) the way Light-Soul gates the Crusader's powers. At 3 points it radiates <strong>Profane Dread</strong> (a Shaken aura against the pure); at 6 points it grants <strong>Profane Ward</strong> (Damage Mitigation vs holy and radiant). Thematically it is the mark left by the void &mdash; the Aakzad register, the Titan-Blood that unmade Birn Uluhm.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">The Sundered Soul &mdash; Light and Dark cannot coexist <span class="tag rules">Rules</span></span>
+        <p>A soul cannot be both pure and corrupt. Your effective Light-Soul is reduced by your Dark-Soul points and vice versa (minimum 0), for all purposes &mdash; bonus damage, prerequisites, Wards, and encounter powers. A character who splits evenly between the two holds neither. Alignment is now a real choice with mechanical weight.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Four new counter-skills for the opposed-test system <span class="tag rules">Rules</span></span>
+        <p>Defensive answers to the skills that force tests on you:</p>
+        <p style="margin-top:6px;">&bull; <strong>Insight</strong> (Awareness) &mdash; <em>detect</em> Deception, Charm, Intimidation, Seduction, and Disguise used against you.</p>
+        <p style="margin-top:6px;">&bull; <strong>Zealotry</strong> (Willpower) &mdash; <em>resist</em> Fear, Charm, Intimidation, Seduction, and Dominate; auto-pass the first Fear test each encounter at 6 points.</p>
+        <p style="margin-top:6px;">&bull; <strong>Steadfast</strong> (Physique) &mdash; <em>resist</em> shove, push, charge, grapple, and being knocked Prone; forced movement halved at 6 points.</p>
+        <p style="margin-top:6px;">&bull; <strong>Linguistics</strong> (Intellect) &mdash; decipher codes, dead languages, and scripts that predate the current Age.</p>
+    </div>
+
+<h2><span class="tick">&#10022;</span> Skill Structure</h2>
+
+    <div class="change-item">
+        <span class="lead">Riding folded into the Agility pool <span class="tag ledger">Ledger</span></span>
+        <p>The standalone Riding box has been retired; Riding is now a normal selectable skill in the Agility pool with a proper race-varied cost, alongside every other skill.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Wider swap pools, same 6 skills per characteristic <span class="tag ledger">Ledger</span></span>
+        <p>Each characteristic still shows <strong>3 permanent skills + 3 selectable swap slots</strong> (6 total), but the pool each swap slot draws from has been widened &mdash; the new skills and disciplines are now options in their characteristics' dropdowns, giving more meaningful choices without changing the slot count.</p>
+    </div>
+
+<h2><span class="tick">&#10022;</span> Cost Reconciliation &amp; Balance</h2>
+
+    <div class="change-item">
+        <span class="lead">Skill XP costs reconciled across all files <span class="tag both">Rules &amp; Ledger</span></span>
+        <p>Sixteen skills whose costs had drifted out of sync between the rulebook and the ledgers were reconciled to agreed values, and a hidden duplicate-entry quirk in the ledger cost table (which silently overrode some costs) was resolved so the rulebook and both ledgers now agree exactly.</p>
+    </div>
+
+    <div class="change-item">
+        <span class="lead">Light racial-balance pass <span class="tag both">Rules &amp; Ledger</span></span>
+        <p>A handful of outlier-cheap skills were nudged up by 5 for the races that were running cheapest overall &mdash; closing part of the gap toward the Dwarf's higher total without lowering any costs (to avoid min-max incentives) and without touching each race's signature-cheap identity skills. The Dwarf retains a modest premium as a counterweight to its durability.</p>
+    </div>
+
+    <div class="session-divider" id="s-05jun-armor">5 June 2026 &mdash; Armour Expansion &amp; Beast-Craft Pass<span class="sd-sub">Full armour review &middot; khugron chitin tweak &middot; four new beast-craft armours &middot; Reliquary sync</span></div>
 
 <h2><span class="tick">&#10022;</span> Armour Review</h2>
 
