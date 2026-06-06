@@ -130,6 +130,8 @@
     .tag.ledger { background: var(--iron); color: var(--gold); }
     .tag.both { background: var(--gold); color: var(--iron); }
     .tag.fix { background: #2f6b34; }
+.tag.content { background: #1f5f8b; }
+.tag.visual { background: #6a2da0; }
 
     p { margin: 9px 0; }
     strong { color: var(--iron); }
@@ -214,7 +216,8 @@
     <div class="tldr">
         <strong>What this is:</strong> a combined archive of all patch notes from 31 May to 4 June, so nothing is buried in older files. Most recent work is at the top. Jump by session:
         <ul>
-            <li><strong><a href="#s-05jun-skills" style="color:var(--blood);">5 June (Skill System Overhaul)</a></strong> &mdash; new Dark-Soul skill (the shadow-mirror of Light-Soul, with the Sundered Soul rule); four new counter-skills (Insight, Zealotry, Steadfast, Linguistics); Riding folded into the Agility pool; per-characteristic swap pools widened; and a full reconciliation of skill XP costs across the rulebook and both ledgers, with a light racial-balance pass.</li>
+            <li><strong><a href="#s-06jun-bestiary" style="color:var(--blood);">6 June (Bestiary Overhaul &amp; Mounts)</a></strong> &mdash; twelve rideable mounts (Jackass through Drake) added as full stat blocks; every creature tagged Good/Neutral/Evil/Corrupted (the hook for Light/Dark-Soul, Insight, Zealotry); discipline-coloured casting tags; a top-to-bottom readability overhaul of the Bestiary; and the Birn Uluhm spelling fix.</li>
+        <li><strong><a href="#s-05jun-skills" style="color:var(--blood);">5 June (Skill System Overhaul)</a></strong> &mdash; new Dark-Soul skill (the shadow-mirror of Light-Soul, with the Sundered Soul rule); four new counter-skills (Insight, Zealotry, Steadfast, Linguistics); Riding folded into the Agility pool; per-characteristic swap pools widened; and a full reconciliation of skill XP costs across the rulebook and both ledgers, with a light racial-balance pass.</li>
             <li><strong><a href="#s-05jun-armor" style="color:var(--blood);">5 June (Armour Expansion &amp; Beast-Craft Pass)</a></strong> &mdash; full review of every armour type in the ledger; khugron chitin given a light casting penalty; four new beast-craft armours added (Broodmother Carapace, Gravebone Harness, Elemental-Forged Plate, Iron Golem Reinforced Plate) and folded into the Reliquary loot tables.</li>
             <li><strong><a href="#s-05jun-fixes" style="color:var(--blood);">5 June (Fixes, Collapse Rules &amp; Ledger Sync)</a></strong> — the 0-Wounds/Unconscious rules fully fleshed out (Iron Will survival window, recovery on being healed); Overreach dropdown bug fixed in all spell slots; Flub &amp; Critical Strike proofread; Law of Resistance display fix; ledger-v3 brought in line with today's spell and rune changes.</li>
             <li><strong><a href="#s-05jun-vibhutireview" style="color:var(--blood);">5 June (Vibhuti Lexicon Review)</a></strong> — full spell-by-spell pass: added resist saves to no-save debuffs, tightened a few durations, clarified the bypass and Retraction rules, and fleshed out Osteo-Resonance. The last discipline review.</li>
@@ -232,7 +235,48 @@
         </ul>
     </div>
 
-        <div class="session-divider" id="s-05jun-skills">5 June 2026 &mdash; Skill System Overhaul<span class="sd-sub">Dark-Soul &amp; the Sundered Soul &middot; four new counter-skills &middot; Riding folded in &middot; cost reconciliation &amp; racial balance</span></div>
+        <div class="session-divider" id="s-06jun-bestiary">6 June 2026 &mdash; Bestiary Overhaul &amp; Mounts<span class="sd-sub">12 rideable mounts &middot; creature alignment &middot; discipline colours &middot; a top-to-bottom readability pass</span></div>
+
+<h2><span class="tick">&#10022;</span> New Content &mdash; Rideable Mounts</h2>
+
+    <div class="change-item">
+        <span class="lead">Twelve mounts added to the Bestiary <span class="tag content">Content</span></span>
+        <p>Every mount on the ledger&rsquo;s Mount dropdown now has a full stat block in the Bestiary, from the humble <strong>Jackass</strong> (Riding 0) up to the legendary <strong>Drake / Young Dragon</strong> (Riding 9). Each lists Move, Wounds, Size, and a signature trait, and notes its Riding requirement. Flying mounts (Griffon/Hippogriff, Wyvern, Drake) show both ground and flight speeds.</p>
+        <p>The roster, by Riding tier: Jackass (0), Pony/Mule (1), Riding Horse (2), Light Warhorse (3), Heavy Warhorse &amp; Large Ram (4), Dire Wolf &amp; War Boar/Elk (5), Giant Lizard/Raptor (6, Rare), Griffon/Hippogriff (7, Rare), Wyvern (8, Mythical), Drake/Young Dragon (9, Mythical). These are <em>player options</em> &mdash; available to any character who invests in Riding and can find a willing beast.</p>
+    </div>
+    <div class="change-item">
+        <span class="lead">Mount dropdown &amp; the Jackass <span class="tag ledger">Ledger</span></span>
+        <p>The character sheet&rsquo;s Mount field is now a dropdown gated by your Riding skill. Normal mounts warn if you&rsquo;re under-skilled; Rare and Mythical mounts are hard-blocked until you meet the requirement. The <strong>Jackass</strong> sits at the bottom as the tier-0 mount &mdash; the honest start to any riding career.</p>
+    </div>
+
+<h2><span class="tick">&#10022;</span> Bestiary &mdash; Creature Alignment</h2>
+
+    <div class="change-item">
+        <span class="lead">Every creature now carries an alignment <span class="tag content">Content</span></span>
+        <p>All 198 creatures (and the new mounts) are tagged <strong>Good</strong>, <strong>Neutral</strong>, <strong>Evil</strong>, or <strong>Corrupted</strong>, shown as a colour-coded tag in the stat block. <em>Corrupted</em> is reserved for the living twisted &mdash; the Chaos Dwarves of Birn Uluhm, the Blight Elves, cultists, and the cursed &mdash; distinct from things that are innately Evil (undead, fiends, the Aakzad).</p>
+        <p>This isn&rsquo;t just flavour: it&rsquo;s the hook the soul and willpower skills key off. <strong>Light-Soul</strong> and <strong>Dark-Soul</strong> deal their bonus damage against Good and Evil respectively, and <strong>Insight</strong> / <strong>Zealotry</strong> reference it too. A GM can now read a creature&rsquo;s alignment at a glance to know what triggers.</p>
+    </div>
+
+<h2><span class="tick">&#10022;</span> Bestiary &mdash; Readability Overhaul</h2>
+
+    <div class="change-item">
+        <span class="lead">Discipline-coloured casting tags <span class="tag visual">Visual</span></span>
+        <p>A spellcasting creature&rsquo;s discipline tag now uses its proper colour from the rulebook &mdash; Faith/Devotion red, Druidism green, Wizardry indigo, Shaman teal, Ki sienna, Runes grey, Vibhuti purple, Necromantic deep purple &mdash; so you can spot a creature&rsquo;s tradition instantly.</p>
+    </div>
+    <div class="change-item">
+        <span class="lead">A top-to-bottom contrast pass <span class="tag visual">Visual</span></span>
+        <p>The Bestiary moved off its old warm-brown base to a cool charcoal, and the creature card&rsquo;s header is now a parchment block with a red border and black text. Stat labels and to-hit values are deep blue; characteristic boxes are white; meta and alignment tags are outlined tiles; the toolbar, filters, search box, and creature count were all brightened. Fonts across the card were enlarged for legibility. Purely a styling pass &mdash; no stats changed.</p>
+    </div>
+
+<h2><span class="tick">&#10022;</span> Fixes</h2>
+
+    <div class="change-item">
+        <span class="lead">&ldquo;Bin Uluhm&rdquo; &rarr; &ldquo;Birn Uluhm&rdquo; <span class="tag fix">Fix</span></span>
+        <p>Corrected the spelling of the Chaos-Dwarf faction name to the canon-correct <strong>Birn Uluhm</strong> across the affected Bestiary entries.</p>
+    </div>
+
+
+<div class="session-divider" id="s-05jun-skills">5 June 2026 &mdash; Skill System Overhaul<span class="sd-sub">Dark-Soul &amp; the Sundered Soul &middot; four new counter-skills &middot; Riding folded in &middot; cost reconciliation &amp; racial balance</span></div>
 
 <h2><span class="tick">&#10022;</span> New Skills</h2>
 
