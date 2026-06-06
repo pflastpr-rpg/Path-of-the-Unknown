@@ -663,6 +663,11 @@ const ART_DIR     = 'bestiary-art/';
 const ART_EXTS    = ['jpg','jpeg','png','webp'];
 
 // ══════════════════════════════════════════════ TIER
+function tierColorFor(tier) {
+  const map={Minion:'--minion',Skirmisher:'--skirmisher',Elite:'--elite',Boss:'--boss',Legendary:'--legendary'};
+  const v=map[tier];
+  return v?getComputedStyle(document.documentElement).getPropertyValue(v).trim():null;
+}
 function tierFromWounds(w) {
   const n = parseInt(String(w).split(/[-\/]/)[0]) || 0;
   if (n <= 30)  return {tier:'Minion',    color:getComputedStyle(document.documentElement).getPropertyValue('--minion').trim()};
@@ -1226,8 +1231,8 @@ function updateMonster(existing) {
 function exportData() {
   const blob=new Blob([JSON.stringify(MONSTERS.map(m=>{
     const vals=[];
-    const fields=['name','size','type','','desc','agl','awa','cha','int','phy','wil','move','ap','def','wmArmor','wmBS','wmDP','wounds','focus','reroll','luck','meleeHit','meleeDmg','meleeHeal','rangeHit','rangeDmg','rangeHeal','castHit','castDmg','castHeal','castType','fear','mob','gear','meleeDetail','rangeDetail','abilities'];
-    fields.forEach(f=>vals.push(f?m[f]||'':''));
+    const fields=['name','size','type','align','desc','agl','awa','cha','int','phy','wil','move','ap','def','wmArmor','wmBS','wmDP','wounds','focus','reroll','luck','meleeHit','meleeDmg','meleeHeal','rangeHit','rangeDmg','rangeHeal','castHit','castDmg','castHeal','castType','fear','mob','gear','meleeDetail','rangeDetail','abilities','tier'];
+    fields.forEach(f=>vals.push(f?(m[f]!==undefined&&m[f]!==null?m[f]:''):''));
     return {values:vals};
   }),null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
@@ -1252,8 +1257,14 @@ function importData(event) {
             const v=entry.values||[];
             const g=(i,d='—')=>(v[i]&&v[i]!==''&&v[i]!=='0')?v[i]:d;
             const wounds=g(17,'50');
+            // Tier: use stored tier (pos 37) if present, else derive from wounds
+            const storedTier=(v[37]&&v[37]!=='')?v[37]:null;
             const t=tierFromWounds(wounds);
-            MONSTERS.push({name:g(0),size:g(1),type:g(2),tier:t.tier,tierColor:t.color,
+            const tier=storedTier||t.tier;
+            const tierColor=storedTier?(tierColorFor(storedTier)||t.color):t.color;
+            // Alignment: stored at pos 3 (blank in older exports -> default Neutral)
+            const align=(v[3]&&v[3]!=='')?v[3]:'Neutral';
+            MONSTERS.push({name:g(0),size:g(1),type:g(2),tier,align,tierColor,
               desc:g(4),agl:g(5),awa:g(6),cha:g(7),int:g(8),phy:g(9),wil:g(10),
               move:g(11),ap:g(12),def:g(13),wmArmor:g(14),wmBS:g(15),wmDP:g(16),
               wounds,focus:g(18),reroll:g(19),luck:g(20),
