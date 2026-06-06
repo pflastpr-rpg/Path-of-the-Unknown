@@ -1332,6 +1332,10 @@
                             <option value="carapace_deep">Carapace of the Deep (Full Plate)</option>
                             <option value="behemoth_bone">Behemoth-Bone Bulwark (Full Plate)</option>
                             <option value="wyrmking">Wyrm-King's Mantle (Full Plate)</option>
+                        <option value="elemental">Elemental-Forged Plate (Field Plate)</option>
+                        <option value="gravebone">Gravebone Harness (Chain)</option>
+                        <option value="spidercarapace">Broodmother Carapace (Studded)</option>
+                        <option value="irongolem">Iron Golem Reinforced Plate (Full Plate)</option>
                         </optgroup>
                     </select>
                 </div>
@@ -1376,6 +1380,10 @@
                             <option value="carapace_deep">Carapace of the Deep (Full Plate)</option>
                             <option value="behemoth_bone">Behemoth-Bone Bulwark (Full Plate)</option>
                             <option value="wyrmking">Wyrm-King's Mantle (Full Plate)</option>
+                        <option value="elemental">Elemental-Forged Plate (Field Plate)</option>
+                        <option value="gravebone">Gravebone Harness (Chain)</option>
+                        <option value="spidercarapace">Broodmother Carapace (Studded)</option>
+                        <option value="irongolem">Iron Golem Reinforced Plate (Full Plate)</option>
                         </optgroup>
                     </select>
                 </div>
@@ -1619,7 +1627,7 @@ const ARMOR_DATA = {
     "scalehide":    {def:2,mit:3,agl:-1,awa:0,mov:0,tn:1,range:0,m_pen:1,r_pen:0},   // Studded
     "drakescale":   {def:3,mit:4,agl:-1,awa:0,mov:-5,tn:2,range:0,m_pen:1,r_pen:1},  // Chainmail
     "dragonscale":  {def:3,mit:4,agl:0,awa:0,mov:0,tn:0,range:0,m_pen:0,r_pen:0},    // Chainmail, no penalty
-    "khugron_chit": {def:3,mit:4,agl:-1,awa:0,mov:-5,tn:0,range:0,m_pen:0,r_pen:1},  // Chainmail, cast waived
+    "khugron_chit": {def:3,mit:4,agl:-1,awa:0,mov:-5,tn:1,range:0,m_pen:0,r_pen:1},  // Chainmail, light cast pen.
     "wyvernscale":  {def:3,mit:5,agl:-1,awa:-1,mov:-10,tn:3,range:0,m_pen:1,r_pen:1},// Banded/Splint
     "ironchitin":   {def:3,mit:5,agl:-1,awa:-1,mov:-10,tn:3,range:0,m_pen:1,r_pen:1},// Banded/Splint
     "manticore":    {def:3,mit:5,agl:-1,awa:-1,mov:-10,tn:3,range:0,m_pen:1,r_pen:1},// Banded/Splint
@@ -1628,7 +1636,11 @@ const ARMOR_DATA = {
     "wyrmbone":     {def:5,mit:8,agl:-2,awa:-3,mov:-15,tn:5,range:-2,m_pen:2,r_pen:3},// Full Plate
     "carapace_deep":{def:5,mit:8,agl:-2,awa:-3,mov:-15,tn:5,range:-2,m_pen:2,r_pen:3},// Full Plate
     "behemoth_bone":{def:5,mit:8,agl:-2,awa:-3,mov:-15,tn:5,range:-2,m_pen:2,r_pen:3},// Full Plate
-    "wyrmking":     {def:5,mit:8,agl:-2,awa:-3,mov:-15,tn:5,range:-2,m_pen:2,r_pen:3} // Full Plate (elder)
+    "wyrmking":     {def:5,mit:8,agl:-2,awa:-3,mov:-15,tn:5,range:-2,m_pen:2,r_pen:3}, // Full Plate (elder)
+    "elemental":    {def:4,mit:7,agl:-2,awa:-2,mov:-15,tn:4,range:0,m_pen:2,r_pen:2}, // Field Plate
+    "gravebone":    {def:3,mit:4,agl:-1,awa:0,mov:-5,tn:2,range:0,m_pen:1,r_pen:1},   // Chainmail
+    "spidercarapace":{def:2,mit:3,agl:-1,awa:0,mov:0,tn:1,range:0,m_pen:1,r_pen:0},   // Studded
+    "irongolem":    {def:5,mit:10,agl:-2,awa:-3,mov:-20,tn:6,range:-2,m_pen:2,r_pen:4} // Full Plate (reinforced)
 };
 
 const MELEE_WEAPON_STATS = {
@@ -3606,7 +3618,7 @@ const BEAST_PROPS = {
     scalehide:    "+1 Resist vs heat & natural poison",
     drakescale:   "Halve wounds of one element (GM-set); −1 To-Cast",
     dragonscale:  "No move/cast penalty; halve all wounds of dragon's element (GM-set)",
-    khugron_chit: "Cast penalty waived; immune to Bleed; 1st crit/battle → normal hit",
+    khugron_chit: "Immune to Bleed; 1st crit/battle → normal hit",
     wyvernscale:  "Immune to beast Poison; +1 Def if you don't move",
     ironchitin:   "Cast penalty waived; non-magical Bleed & acid cannot pass",
     manticore:    "First melee attacker each turn takes 2d10 piercing (spine)",
@@ -3615,7 +3627,11 @@ const BEAST_PROPS = {
     wyrmbone:     "Smaller-than-hunted foes attack you at Disadvantage",
     carapace_deep:"1st time at 0 wounds/battle → stay at 1, condition-immune to next turn",
     behemoth_bone:"Immovable by equal/smaller Size; −1d10 from impact/crush/fall",
-    wyrmking:     "Immune to dragon's element; 1/battle exhale 20ft cone 4d10 (Phys TN13 half)"
+    wyrmking:     "Immune to dragon's element; 1/battle exhale 20ft cone 4d10 (Phys TN13 half)",
+  elemental:    "Attune 1 element (fire/frost/storm/stone) — immune to it; 1/battle melee attackers take 2d10 of it",
+  gravebone:    "+1 wound vs the living; 1/battle ignore a Critical's extra effect",
+  spidercarapace: "+2 Climbing; ignore web & difficult terrain; immune to natural Poison",
+  irongolem:    "Reduce all physical wounds taken by 1 (after Mitigation); immovable by forced movement of equal/smaller Size"
 };
 
 function onArmorType(sel, num){
