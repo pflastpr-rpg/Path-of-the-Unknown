@@ -1123,7 +1123,7 @@
                         <div style="display:flex; flex-direction:column; align-items:center; gap:1px;">
                             <span class="cm-label" style="font-size:7.5pt; color:var(--gold);">Pool</span>
                             <div style="display:flex; gap:2px; align-items:center;">
-                                <input type="number" id="cm-essence" readonly title="Maximum Essence pool = (vocation points + Discipline ÷ 3) × 2, plus item bonus." style="width:42px; height:32px; text-align:center; font-size:16pt; font-weight:900; border:1.5px solid var(--gold); background:rgba(184,134,11,0.12); color:var(--gold);">
+                                <input type="number" id="cm-essence" readonly title="Maximum Essence pool = (vocation points + Discipline ÷ 6) × 2, plus item bonus, plus 1 if Meditation 6+." style="width:42px; height:32px; text-align:center; font-size:16pt; font-weight:900; border:1.5px solid var(--gold); background:rgba(184,134,11,0.12); color:var(--gold);">
                                 <input type="number" id="bon-essence" oninput="upd()" placeholder="+itm" title="Bonus Essence from a relic (e.g. Wellspring Pearl +4)." style="width:34px; height:32px; text-align:center; font-size:12pt; font-weight:900; border:1px solid var(--ink); background:var(--input-bg);">
                             </div>
                         </div>
@@ -2388,7 +2388,7 @@ function calculateCastStats(state, stats, armorData, magicState) {
     castStats.castHit = magicState.isMagicActive ? castTotVal : 0;    sv('cm-cast-hit', castStats.castHit);
     // ── Max castable TN ─────────────────────────────────────────────────
     // Highest spell/blessing TN you can attempt = your active vocation's skill
-    // points + floor(Discipline ÷ 3), plus any magic-item bonus. Example:
+    // points + floor(Discipline ÷ 6), plus any magic-item bonus. Example:
     // 9 Wizardry + floor(6 Discipline / 6 = 1) = TN 10.
     // Vocation points: prefer the live activeMagicSkillPts, but fall back to the
     // fully-processed state.skillPts total for the active discipline. This guards
@@ -2417,15 +2417,17 @@ function calculateCastStats(state, stats, armorData, magicState) {
     sv('cm-max-tn', maxTN);
 
     // ── Essence pool (optional rule) ────────────────────────────────────
-    // Pool = (vocation points + floor(Discipline ÷ 3)) × 2 — twice the base
+    // Pool = (vocation points + floor(Discipline ÷ 6)) × 2 — twice the base
     // casting capacity that sets Max TN (the pre-item figure, per the rule's
-    // own example: 9 Devotion + 2 = 11, ×2 = 22). A relic may add flat Essence
-    // (e.g. Wellspring Pearl +4) via the #bon-essence box. Each spell costs its
-    // TN to cast; cantrips are free; the pool refreshes each encounter.
+    // own example: 9 Devotion + 1 = 10, ×2 = 20). A relic may add flat Essence
+    // (e.g. Wellspring Pearl +4) via the #bon-essence box. Meditation 6+ adds a
+    // flat +1 (Unbroken Focus). Each spell costs its TN; cantrips are free; the
+    // pool refreshes each encounter.
     const essenceItemBon = gv('bon-essence');
+    const meditationEssence = (state.skillPts.meditation || 0) >= 6 ? 1 : 0;
     const essenceBase = vocationPtsForTN + Math.floor(disciplinePtsForTN / 6);
     const essencePool = magicState.isMagicActive
-        ? (essenceBase * 2 + essenceItemBon)
+        ? (essenceBase * 2 + essenceItemBon + meditationEssence)
         : 0;
     castStats.essence = essencePool;
     sv('cm-essence', essencePool);
