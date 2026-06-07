@@ -4239,6 +4239,20 @@ function applyLegacySkillKeys(data) {
         }
     });
 
+    // ── Layer 4: Sabda → Vibhuti rename ───────────────────────────────
+    // The Willpower magic discipline "Sabda" was renamed to "Vibhuti".
+    // Files saved under the old name carry "Sabda" in a swap slot value
+    // and/or the willpower-discipline-select. Translate so v4 (which only
+    // knows "Vibhuti") matches the slot to its pool entry instead of
+    // falling through to a default and displacing other rows.
+    ['wil_swap_0','wil_swap_1','wil_swap_2','willpower-discipline-select'].forEach(k => {
+        if (data[k] === 'Sabda') data[k] = 'Vibhuti';
+    });
+    if (data['pts-sabda'] !== undefined && data['pts-vibhuti'] === undefined) {
+        data['pts-vibhuti'] = data['pts-sabda'];
+        delete data['pts-sabda'];
+    }
+
     return data;
 }
 
@@ -4252,8 +4266,17 @@ function applyCharacterData(data) {
     Object.keys(SKILL_POOLS).forEach(char => {
         SKILL_POOLS[char].swap.forEach((slot, idx) => {
             const store = document.getElementById(slot.id);
-            const savedSkill = data[slot.id];
-            if (store && savedSkill && savedSkill !== store.value) {
+            if (!store) return;
+            const savedRaw = data[slot.id];
+            // An empty/blank saved slot (legacy files, or a slot that lost its
+            // name at save time) must resolve to the slot's OWN default — not
+            // be left showing whatever default happened to load — otherwise
+            // sortSkillRows() reorders a stale row and visibly displaces a
+            // neighbour (the Discipline-jumps-rows symptom).
+            const savedSkill = (savedRaw === undefined || savedRaw === null || savedRaw === '')
+                ? slot.default
+                : savedRaw;
+            if (savedSkill !== store.value) {
                 store.value = savedSkill;
                 handleSwapChange(store, char, idx); // renames pts input id to pts-{savedSkill}
             }
