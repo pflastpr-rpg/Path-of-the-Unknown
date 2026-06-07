@@ -216,7 +216,7 @@
     <div class="tldr">
         <strong>What this is:</strong> a combined archive of all patch notes from 31 May to 4 June, so nothing is buried in older files. Most recent work is at the top. Jump by session:
         <ul>
-            <li><strong><a href="#s-07jun-skillcosts" style="color:var(--blood);">7 June (Skill-Cost Balance Pass)</a></strong> &mdash; the Dwarf&rsquo;s steepest spikes trimmed; a 24-skill cross-race pass compressing cost gaps toward parity; Iron Will nudged up one step; two rulebook/ledger mismatches fixed; and the Primary Skills table re-synced (with some sizable pre-existing corrections noted). Includes a per-race average cost table.</li>
+            <li><strong><a href="#s-07jun-skillcosts" style="color:var(--blood);">7 June (Skill-Cost Pass, Meditation Rework &amp; Essence)</a></strong> &mdash; the Dwarf&rsquo;s steepest spikes trimmed; a 24-skill cross-race pass compressing cost gaps toward parity; Iron Will nudged up; two rulebook/ledger mismatches fixed; the Primary Skills table re-synced; Meditation re-pointed from a redundant fear-save to a caster discipline (multi-turn Channeling); the Essence pool adopted and fully wired into the v4 Ledger; and two v4 import fixes. Includes a per-race average cost table.</li>
             <li><strong><a href="#s-06jun-bestiary" style="color:var(--blood);">6 June (Bestiary Overhaul &amp; Mounts)</a></strong> &mdash; twelve rideable mounts (Jackass through Drake) added as full stat blocks; every creature tagged Good/Neutral/Evil/Corrupted (the hook for Light/Dark-Soul, Insight, Zealotry); discipline-coloured casting tags; a top-to-bottom readability overhaul of the Bestiary; and the Birn Uluhm spelling fix.</li>
         <li><strong><a href="#s-05jun-skills" style="color:var(--blood);">5 June (Skill System Overhaul)</a></strong> &mdash; new Dark-Soul skill (the shadow-mirror of Light-Soul, with the Sundered Soul rule); four new counter-skills (Insight, Zealotry, Steadfast, Linguistics); Riding folded into the Agility pool; per-characteristic swap pools widened; and a full reconciliation of skill XP costs across the rulebook and both ledgers, with a light racial-balance pass.</li>
             <li><strong><a href="#s-05jun-armor" style="color:var(--blood);">5 June (Armour Expansion &amp; Beast-Craft Pass)</a></strong> &mdash; full review of every armour type in the ledger; khugron chitin given a light casting penalty; four new beast-craft armours added (Broodmother Carapace, Gravebone Harness, Elemental-Forged Plate, Iron Golem Reinforced Plate) and folded into the Reliquary loot tables.</li>
@@ -236,7 +236,7 @@
         </ul>
     </div>
 
-        <div class="session-divider" id="s-07jun-skillcosts">7 June 2026 &mdash; Skill-Cost Balance Pass<span class="sd-sub">Dwarf premium trimmed &middot; a broad cross-race cost pass toward parity &middot; Iron Will nudge &middot; rulebook / ledger / skills-table sync</span></div>
+        <div class="session-divider" id="s-07jun-skillcosts">7 June 2026 &mdash; Skill-Cost Pass, Meditation Rework &amp; Essence<span class="sd-sub">Dwarf premium trimmed &middot; cross-race parity pass &middot; Iron Will nudge &middot; Meditation re-pointed at casting &middot; Essence pool live in the Ledger &middot; v4 import fixes</span></div>
 
 <h2><span class="tick">&#10022;</span> Dwarf Premium &mdash; Spike Trim</h2>
 
@@ -293,6 +293,35 @@
         <p>The Primary Skills reference table had drifted from the rulebook over earlier passes and was re-synced to the canonical costs. A few of these were sizable pre-existing corrections rather than today&rsquo;s tuning &mdash; most notably <strong>Resolve</strong> (the table had it at 25&ndash;30; canonical is a flat 15), <strong>Tracking/Tracker</strong> (table 10 &rarr; canonical 20), and <strong>Ki</strong> (table 30&ndash;35 &rarr; canonical 25&ndash;30). These move character power in both directions and are called out here so they aren&rsquo;t mistaken for silent changes.</p>
         <p class="note">A handful of entries on the table (Runecraft, Shaman, and a few others) have no per-race cost in the core rulebook to sync against, so they were left untouched &mdash; a gap worth a dedicated reconciliation later.</p>
     </div>
+
+<h2><span class="tick">&#10022;</span> Meditation &mdash; Caster Rework</h2>
+
+    <div class="change-item">
+        <span class="lead">Meditation pivots from a redundant fear-save to a caster discipline <span class="tag both">Rules + Ledger</span></span>
+        <p>Meditation&rsquo;s old passive granted a flat bonus to resist Fear, Shaken, Dominated, and Confused &mdash; which simply <strong>tripled up</strong> with Zealotry and Resolve, both of which already cover that ground. That redundant save (and the mundane-fear immunity) has been removed, and Meditation re-pointed at a niche nothing else fills: <strong>holding a working together</strong>.</p>
+        <ul style="margin:6px 0 0 18px;">
+            <li style="margin:5px 0;"><strong>At 3 &mdash; Channeling:</strong> the disciplined exception to the <em>No Channeling</em> Iron Constraint. You may carry AP into a multi-turn cast &mdash; beginning a working whose AP cost exceeds one turn&rsquo;s actions and finishing it next turn (e.g. a 4-AP cast with only 3 AP). The Two-Turn limit still applies.</li>
+            <li style="margin:5px 0;"><strong>At 6 &mdash; Unbroken Focus:</strong> a cast you are channeling resists being knocked loose &mdash; add Meditation pts to hold it when damaged or disrupted. <em>Distinct from Willpower Reserve, which guards already-active sustained effects.</em> Also grants <strong>+1 Essence</strong> if the Essence rule is in play.</li>
+            <li style="margin:5px 0;"><strong>Unchanged:</strong> +1 wound/pt, Meditative Recovery (short-rest healing), and The Eye (9 pts).</li>
+        </ul>
+        <p class="note">This shifts <em>who</em> Meditation suits &mdash; away from generic mental-defense, toward casters. A player option for table review.</p>
+    </div>
+
+<h2><span class="tick">&#10022;</span> The Essence Pool &mdash; Now Live in the Ledger</h2>
+
+    <div class="change-item">
+        <span class="lead">Essence adopted; fully wired into the v4 sheet <span class="tag ledger">Ledger</span></span>
+        <p>The optional <strong>Essence</strong> resource is being adopted at the table. It remains marked optional in the core rules, but the v4 Ledger now computes and tracks it automatically: <strong>Pool = (vocation points + Discipline &divide; 6) &times; 2</strong>, plus any relic bonus, plus <strong>1 if you have Meditation 6+</strong>. Each spell costs its TN to cast; cantrips are free; the pool refreshes each encounter. The sheet shows max pool, used, and remaining.</p>
+        <p class="note">Housekeeping: three stale &ldquo;&divide; 3&rdquo; notes in the Ledger (left over from the casting-capacity change to &divide; 6) were corrected. The underlying math was already right; only the labels were wrong.</p>
+    </div>
+
+<h2><span class="tick">&#10022;</span> Ledger v4 &mdash; Import Fixes</h2>
+
+    <div class="change-item">
+        <span class="lead">Legacy character files load cleanly again <span class="tag fix">Fix</span></span>
+        <p>Two loader defects in the v4 sheet were fixed. An <strong>empty swap-slot</strong> in a saved file no longer defaults to the wrong skill and shuffles the column (the &ldquo;Discipline jumps rows&rdquo; symptom). And the old <strong>&ldquo;Sabda&rdquo; discipline name now migrates to &ldquo;Vibhuti&rdquo;</strong> on load, so characters saved before that rename restore correctly. Characters saved before this fix may need their Willpower discipline re-selected once and re-saved.</p>
+    </div>
+
 
 
         <div class="session-divider" id="s-06jun-bestiary">6 June 2026 &mdash; Bestiary Overhaul &amp; Mounts<span class="sd-sub">12 rideable mounts &middot; creature alignment &middot; discipline colours &middot; a top-to-bottom readability pass</span></div>
