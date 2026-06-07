@@ -1117,7 +1117,7 @@
                 </div>
 
                 <!-- Essence block (grouped) -->
-                <div id="blessings-essence" style="margin-top:4px; border:1.5px solid var(--gold); background:rgba(184,134,11,0.07); border-radius:2px; padding:4px 6px;" title="Optional Essence rule. Pool = (vocation points + Discipline ÷ 3) × 2, plus item bonus. Each spell costs its TN; cantrips (TN 0) are free. Refreshes fully each encounter. Track spend with Used; Left = Pool − Used.">
+                <div id="blessings-essence" style="margin-top:4px; border:1.5px solid var(--gold); background:rgba(184,134,11,0.07); border-radius:2px; padding:4px 6px;" title="Optional Essence rule. Pool = (vocation points + Discipline ÷ 6) × 2, plus item bonus. Each spell costs its TN; cantrips (TN 0) are free. Refreshes fully each encounter. Track spend with Used; Left = Pool − Used.">
                     <div style="text-align:center; font-size:8.5pt; color:var(--gold); font-weight:900; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:3px; border-bottom:1px solid rgba(184,134,11,0.3); padding-bottom:2px;">⚖ Essence</div>
                     <div style="display:flex; align-items:flex-end; justify-content:space-around; gap:4px;">
                         <div style="display:flex; flex-direction:column; align-items:center; gap:1px;">
@@ -2389,7 +2389,7 @@ function calculateCastStats(state, stats, armorData, magicState) {
     // ── Max castable TN ─────────────────────────────────────────────────
     // Highest spell/blessing TN you can attempt = your active vocation's skill
     // points + floor(Discipline ÷ 3), plus any magic-item bonus. Example:
-    // 9 Wizardry + floor(6 Discipline / 3 = 2) = TN 11.
+    // 9 Wizardry + floor(6 Discipline / 6 = 1) = TN 10.
     // Vocation points: prefer the live activeMagicSkillPts, but fall back to the
     // fully-processed state.skillPts total for the active discipline. This guards
     // against the live read being stale for swap/discipline rows (e.g. Vibhuti/Shaman,
@@ -2411,7 +2411,7 @@ function calculateCastStats(state, stats, armorData, magicState) {
     const disciplinePtsForTN = parseInt(g('label-Discipline')?.parentNode.querySelector('.sk-p')?.value) || 0;
     const maxTNItemBon = gv('bon-max-tn');
     const maxTN = magicState.isMagicActive
-        ? (vocationPtsForTN + Math.floor(disciplinePtsForTN / 3) + maxTNItemBon)
+        ? (vocationPtsForTN + Math.floor(disciplinePtsForTN / 6) + maxTNItemBon)
         : 0;
     castStats.maxTN = maxTN;
     sv('cm-max-tn', maxTN);
@@ -2423,7 +2423,7 @@ function calculateCastStats(state, stats, armorData, magicState) {
     // (e.g. Wellspring Pearl +4) via the #bon-essence box. Each spell costs its
     // TN to cast; cantrips are free; the pool refreshes each encounter.
     const essenceItemBon = gv('bon-essence');
-    const essenceBase = vocationPtsForTN + Math.floor(disciplinePtsForTN / 3);
+    const essenceBase = vocationPtsForTN + Math.floor(disciplinePtsForTN / 6);
     const essencePool = magicState.isMagicActive
         ? (essenceBase * 2 + essenceItemBon)
         : 0;
