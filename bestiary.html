@@ -830,14 +830,14 @@ function renderCard(m, compareWith) {
         <div class="mc-tier-banner" style="color:#1a1208;">
           <div class="mc-tier-dot" style="background:${m.tierColor}"></div>
           ${m.tier.toUpperCase()}
-          ${(m.xp&&m.xp!=='—'&&m.xp!=='')?`<span class="mc-xp-badge">\u2756 XP / Loot: ${m.xp}</span>`:''}
+         
         </div>
         <div class="mc-name">${shortName(m.name)}</div>
         ${nameSub}
         <div class="mc-meta">
           <span class="mc-tag size">${m.size}</span>
           <span class="mc-tag">${m.type}</span>
-          ${alignTag}${castTag}${fearTag}${(m.mob&&m.mob!=='—'&&m.mob!=='')?`<span class="mc-tag mob-tag">No. ${m.mob}</span>`:''}
+          ${alignTag}${castTag}${fearTag}${(m.xp&&m.xp!=='—'&&m.xp!=='')?`<span class="mc-tag mob-tag">XP Value: ${m.xp}</span>`:''}
         </div>
       </div>
       <div class="mc-header-right">
