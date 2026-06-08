@@ -1117,13 +1117,13 @@
                 </div>
 
                 <!-- Essence block (grouped) -->
-                <div id="blessings-essence" style="margin-top:4px; border:1.5px solid var(--gold); background:rgba(184,134,11,0.07); border-radius:2px; padding:4px 6px;" title="Optional Essence rule. Pool = (vocation points + Discipline ÷ 6) × 2, plus item bonus. Each spell costs its TN; cantrips (TN 0) are free. Refreshes fully each encounter. Track spend with Used; Left = Pool − Used.">
+                <div id="blessings-essence" style="margin-top:4px; border:1.5px solid var(--gold); background:rgba(184,134,11,0.07); border-radius:2px; padding:4px 6px;" title="Essence pool = (vocation÷3 + Discipline÷3 + Characteristic÷3) × 3, plus item bonus and Meditation. Characteristic is the discipline's primary stat (Wiz=Int, Shaman=Wil, Devotion=Cha, Druid=Awa, Ki=Phy, Vibhuti=Wil). Each spell costs its TN; cantrips (TN 0) are free. Refreshes fully each encounter. Track spend with Used; Left = Pool − Used.">
                     <div style="text-align:center; font-size:8.5pt; color:var(--gold); font-weight:900; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:3px; border-bottom:1px solid rgba(184,134,11,0.3); padding-bottom:2px;">⚖ Essence</div>
                     <div style="display:flex; align-items:flex-end; justify-content:space-around; gap:4px;">
                         <div style="display:flex; flex-direction:column; align-items:center; gap:1px;">
                             <span class="cm-label" style="font-size:7.5pt; color:var(--gold);">Pool</span>
                             <div style="display:flex; gap:2px; align-items:center;">
-                                <input type="number" id="cm-essence" readonly title="Maximum Essence pool = (vocation points + Discipline ÷ 6) × 2, plus item bonus, plus 1 if Meditation 6+." style="width:42px; height:32px; text-align:center; font-size:16pt; font-weight:900; border:1.5px solid var(--gold); background:rgba(184,134,11,0.12); color:var(--gold);">
+                                <input type="number" id="cm-essence" readonly title="Maximum Essence pool = (vocation÷3 + Discipline÷3 + Characteristic÷3) × 3, plus item bonus, plus 1 if Meditation 6+." style="width:42px; height:32px; text-align:center; font-size:16pt; font-weight:900; border:1.5px solid var(--gold); background:rgba(184,134,11,0.12); color:var(--gold);">
                                 <input type="number" id="bon-essence" oninput="upd()" placeholder="+itm" title="Bonus Essence from a relic (e.g. Wellspring Pearl +4)." style="width:34px; height:32px; text-align:center; font-size:12pt; font-weight:900; border:1px solid var(--ink); background:var(--input-bg);">
                             </div>
                         </div>
@@ -2416,18 +2416,27 @@ function calculateCastStats(state, stats, armorData, magicState) {
     castStats.maxTN = maxTN;
     sv('cm-max-tn', maxTN);
 
-    // ── Essence pool (optional rule) ────────────────────────────────────
-    // Pool = (vocation points + floor(Discipline ÷ 6)) × 2 — twice the base
-    // casting capacity that sets Max TN (the pre-item figure, per the rule's
-    // own example: 9 Devotion + 1 = 10, ×2 = 20). A relic may add flat Essence
-    // (e.g. Wellspring Pearl +4) via the #bon-essence box. Meditation 6+ adds a
-    // flat +1 (Unbroken Focus). Each spell costs its TN; cantrips are free; the
-    // pool refreshes each encounter.
+    // ── Essence pool ────────────────────────────────────────────────────
+    // Pool = (floor(vocation ÷ 3) + floor(Discipline ÷ 3) + floor(Characteristic ÷ 3)) × 3
+    // The characteristic is the discipline's primary ("by blood") stat:
+    //   Wizardry→Intellect, Shamanism→Willpower, Devotion→Charisma,
+    //   Druidism→Awareness, Ki→Physique, Vibhuti→Willpower (its GOVERNS stat).
+    // Runecraft is not a To-Cast discipline and uses no Essence. A relic may add
+    // flat Essence via #bon-essence; Meditation 6+ adds +1. Each spell costs its
+    // TN; cantrips are free; the pool refreshes each encounter. (The Power of
+    // Three: every term is a third, the whole multiplied by three.)
     const essenceItemBon = gv('bon-essence');
     const meditationEssence = (state.skillPts.meditation || 0) >= 6 ? 1 : 0;
-    const essenceBase = vocationPtsForTN + Math.floor(disciplinePtsForTN / 6);
+    let essenceChar = 0;
+    if (magicState.isMagActive)            essenceChar = stats.intellect;   // Wizardry
+    else if (magicState.isShamanActive)    essenceChar = stats.willpower;   // Shamanism
+    else if (magicState.isDevotionActive)  essenceChar = stats.charisma;    // Devotion (primary stat; To-Cast uses Willpower)
+    else if (magicState.isDruidActive)     essenceChar = stats.awareness;   // Druidism
+    else if (magicState.isKiActive)        essenceChar = stats.physique;    // Ki
+    else if (magicState.isVibhutiActive)   essenceChar = stats.willpower;   // Vibhuti (GOVERNS stat)
     const essencePool = magicState.isMagicActive
-        ? (essenceBase * 2 + essenceItemBon + meditationEssence)
+        ? ((Math.floor(vocationPtsForTN / 3) + Math.floor(disciplinePtsForTN / 3) + Math.floor(essenceChar / 3)) * 3
+           + essenceItemBon + meditationEssence)
         : 0;
     castStats.essence = essencePool;
     sv('cm-essence', essencePool);
