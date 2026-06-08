@@ -227,6 +227,7 @@
     <div class="mech-card">
         <p>Every action resolves with a <strong>1d10 roll</strong> that must meet or beat a <strong>Difficulty Value (DV)</strong>.</p>
         <div class="formula-block">RESULT = 1d10 + Relevant Characteristic (+ any skill/bonus) ≥ DV</div>
+        <p style="margin-top:10px;"><strong>The Mark of Three &mdash; opposed contests.</strong> When you act against a static task or environment, you roll against a DV the GM sets. When you act against <em>someone who resists</em>, both sides roll the same shape &mdash; <strong>1d10 + skill + that skill&rsquo;s characteristic</strong> &mdash; and the higher total wins. Each side uses its own skill and that skill&rsquo;s governing characteristic, which usually differ: a commander pressing Authority rolls 1d10 + Authority + Charisma; the target resisting rolls 1d10 + their resist skill + Willpower. With no points in the skill you still roll, leaning on the bare characteristic (1d10 + 0 + characteristic). Against <strong>Bestiary creatures</strong> nothing slows down &mdash; the Law of Resistance bar (Characteristic TN + Resist bonus, scaled by Tier) <em>is</em> the creature&rsquo;s pre-rolled side of that contest, so monsters never roll to resist. <span style="opacity:0.7;">(This unified resolution is a current player-option under group review; see the patch notes.)</span></p>
         <ul>
             <li><strong>Natural 10 — Exploding Dice (Confirmed Hit/Cast Only):</strong> If your To-Hit or To-Cast roll (1d10 + bonus) meets or beats Defense or TN <em>and</em> the die showed a 10, roll a second 1d10. No To-Hit or casting bonus on this roll. For <strong>melee/ranged</strong> attacks, only <strong>Precise Strike</strong> points apply. For <strong>casting</strong> (all six disciplines), only <strong>Perception</strong> points apply. If that roll (+ applicable skill points) meets or beats Defense/TN, add +1d10 damage. Chain continues on each subsequent natural 10 by the same rule. Falling short on any explosion roll ends the chain — all wounds already confirmed are kept.</li>
             <li><strong>Natural 1 (Miss):</strong> An automatic miss. No further penalties.</li>
@@ -265,7 +266,7 @@
         <tr><td>Charisma</td><td><strong>Authority, Charm, Inspire</strong> <span style="opacity:0.7">+ swap: Mending, Devotion, Light-Soul, Deception, Intimidation, Performance, Seduction</span></td><td>None</td></tr>
         <tr><td>Intellect</td><td><strong>Evaluation, Knowledge, Read/Write</strong> <span style="opacity:0.7">+ swap: Tracker, Perception, Wizardry, Alchemy, Engineering, Medicine, Navigation</span></td><td>None</td></tr>
         <tr><td>Physique</td><td><strong>Fortitude, Hard as Nails, Rugged</strong> <span style="opacity:0.7">+ swap: Shieldsman, Ki, Strength Conditioning, Brawling, Climbing, Endurance, Swimming</span></td><td>None</td></tr>
-        <tr><td>Willpower</td><td><strong>Iron Will, Resolve, Spirit</strong> <span style="opacity:0.7">+ swap: Discipline, Shaman, Śabda, Survival, Meditation, Oathkeeper, Pain Tolerance, Willpower Reserve</span></td><td>None</td></tr>
+        <tr><td>Willpower</td><td><strong>Iron Will, Resolve, Spirit</strong> <span style="opacity:0.7">+ swap: Discipline, Shaman, Vibhuti, Survival, Meditation, Oathkeeper, Pain Tolerance, Willpower Reserve</span></td><td>None</td></tr>
     </table>
     <div class="example-box"><strong>Example:</strong> 6 pts Athletics + 3 pts Stealth + 3 pts Evasion = 12 total Agility-group pts. floor(12÷3) = +4 Agility. Wearing Studded Leather (–1 Agility) gives net Agility of <strong>3</strong>.</div>
 
@@ -285,10 +286,10 @@
     </table>
     <div class="mech-card">
         <p><strong>Critical interaction — Evasion vs Heavy Armor:</strong> Chain Mail (–1 Agility) cancels 3 pts of Evasion investment. Full Plate (–2 Agility) cancels 6 pts. Mithril has no penalties, making it the ideal pairing with Evasion.</p>
-        <p><strong>Evasion WM note:</strong> The WM bonus from Evasion (floor(Evasion÷3)) is NOT affected by armor Agility penalty — only the Defense bonus is. So even in plate armor, Evasion still contributes to physical WM.</p>
+        <p><strong>Evasion DM note:</strong> The DM bonus from Evasion (floor(Evasion÷3)) is NOT affected by armor Agility penalty — only the Defense bonus is. So even in plate armor, Evasion still contributes to physical DM.</p>
         <p><strong>Blinded condition:</strong> Defense drops to armor value only — base 3 and all Evasion bonus disappear.</p>
     </div>
-    <div class="example-box"><strong>Example:</strong> Leather (Def 2, –1 Agl) + 6 pts Evasion (floor(6÷3)=2, –1 armor = 1 net). Defense = 3 + 2 + 1 = <strong>6</strong>. Same build in Chain Mail: Evasion net = 2 – 2 = 0. Defense = 3 + 3 + 0 = <strong>6</strong>. The better armor gives the same Defense but the Evasion is wasted on the Defense calculation (it still helps WM).</div>
+    <div class="example-box"><strong>Example:</strong> Leather (Def 2, –1 Agl) + 6 pts Evasion (floor(6÷3)=2, –1 armor = 1 net). Defense = 3 + 2 + 1 = <strong>6</strong>. Same build in Chain Mail: Evasion net = 2 – 2 = 0. Defense = 3 + 3 + 0 = <strong>6</strong>. The better armor gives the same Defense but the Evasion is wasted on the Defense calculation (it still helps DM).</div>
 
     <!-- ================================================================ -->
     <!-- TOTAL WOUNDS -->
@@ -299,16 +300,16 @@
         <tr><th>Source</th><th>Amount</th><th>Notes</th></tr>
         <tr><td>Race Base</td><td>Dwarf 12 | Human 9 | Elf 6 | Halfling 3</td><td>Fixed starting pool</td></tr>
         <tr><td>Physique characteristic</td><td>floor(Physique skill group pts ÷ 3)</td><td>Auto-calculated — grows from Fortitude, Rugged, Hard as Nails, etc.</td></tr>
-        <tr><td>Fortitude</td><td>+10 wounds per pt invested</td><td>Most wound-efficient skill. Also +1 Physique per 3 pts + DoT WM.</td></tr>
+        <tr><td>Fortitude</td><td>+10 wounds per pt invested</td><td>Most wound-efficient skill. Also +1 Physique per 3 pts + DoT DM.</td></tr>
         <tr><td>Iron Will</td><td>+2 wounds per pt invested</td><td>Also: survive at 0 wounds for 1 extra turn per pt. DoTs reduce this.</td></tr>
         <tr><td>Rugged</td><td>+2 wounds per pt invested</td><td>15 XP all races. Also +1 Physique per 3 pts.</td></tr>
-        <tr><td>Hard as Nails</td><td>+2 wounds per pt invested</td><td>Also +1 WM per 2 pts (physical from 1pt; spell/bless from 3pts). Bloody Minded (ignore Bleeding) at 6 pts.</td></tr>
+        <tr><td>Hard as Nails</td><td>+2 wounds per pt invested</td><td>Also +1 DM per 2 pts (physical from 1pt; spell/bless from 3pts). Bloody Minded (ignore Bleeding) at 6 pts.</td></tr>
         <tr><td>Discipline</td><td>+1 wound per pt invested</td><td>Also expands magic/ki resource slots. Also +1 Awareness per 3 pts.</td></tr>
-        <tr><td>Resolve</td><td>+1 wound per pt invested</td><td>Also +1 magic WM per 2 pts + Fear resistance.</td></tr>
-        <tr><td>Stamina</td><td>+1 wound per pt invested</td><td>Also +1 DoT WM per 2 pts + exhaustion delay.</td></tr>
+        <tr><td>Resolve</td><td>+1 wound per pt invested</td><td>Also +1 Willpower per 3 pts. Endures the supernatural — Fear, Terror, magical compulsion (rolls 1d10 + Resolve + Willpower).</td></tr>
+        <tr><td>Stamina</td><td>+1 wound per pt invested</td><td>Also +1 DoT DM per 2 pts + exhaustion delay.</td></tr>
         <tr><td>Size Multiplier</td><td>Small ×0.5 | Normal ×1 | Large ×2 | Giant ×3 | Enormous ×6 | Titanic ×8</td><td>Applied last — multiplies the entire wound total</td></tr>
     </table>
-    <div class="example-box"><strong>Example — Dwarf Fighter:</strong> Race 12 + Physique 3 (9 skill pts) + Fortitude 3 pts (×10 = 30) + Rugged 3 pts (×2 = 6) + Hard as Nails 4 pts (×2 = 8) = 12+3+30+6+8 = 59 × 1 (Normal) = <strong>59 Total Wounds</strong>. This same build gives Physical WM of: Armor + floor(4÷2)=2 from HaN + any Shieldsman.</div>
+    <div class="example-box"><strong>Example — Dwarf Fighter:</strong> Race 12 + Physique 3 (9 skill pts) + Fortitude 3 pts (×10 = 30) + Rugged 3 pts (×2 = 6) + Hard as Nails 4 pts (×2 = 8) = 12+3+30+6+8 = 59 × 1 (Normal) = <strong>59 Total Wounds</strong>. This same build gives Physical DM of: Armor + floor(4÷2)=2 from HaN + any Shieldsman.</div>
 
     <hr class="divider">
 
@@ -316,44 +317,43 @@
     <!-- WOUND MITIGATION -->
     <!-- ================================================================ -->
     <h2 class="section-title" id="wm">Damage Mitigation (DM)</h2>
-    <p style="margin: 10px 0 6px;">WM reduces damage after a hit lands. Three separate pools exist — one per damage source type.</p>
+    <p style="margin: 10px 0 6px;">DM reduces damage after a hit lands. Three separate pools exist — one per damage source type.</p>
 
-    <h3 class="subsection-title">Physical WM — vs Melee & Standard Ranged</h3>
-    <div class="formula-block">PHYSICAL WM = Armor D.Mit + floor(Hard as Nails ÷ 2) + Shieldsman pts + floor(Evasion ÷ 3) + Adv.Voc bonuses + Bonus field</div>
+    <h3 class="subsection-title">Physical DM — vs Melee & Standard Ranged</h3>
+    <div class="formula-block">PHYSICAL DM = Armor D.Mit + floor(Hard as Nails ÷ 2) + Shieldsman pts + floor(Evasion ÷ 3) + Adv.Voc bonuses + Bonus field</div>
     <table class="comp-table">
         <tr><th>Source</th><th>Rate</th><th>Notes</th></tr>
         <tr><td>Armor D.Mit</td><td>1–8 by type, stacks if 2 pieces worn</td><td>See Armor table</td></tr>
-        <tr><td>Hard as Nails</td><td>+1 WM per 2 pts (physical from 1pt; spell/bless from 3pts)</td><td>Also +2 wounds per pt</td></tr>
-        <tr><td>Shieldsman</td><td>+1 WM per pt (Defensive Stance)</td><td>Offensive Stance converts to +1 wound per pt instead — choose each turn</td></tr>
-        <tr><td>Evasion</td><td>+1 WM per 3 pts</td><td>Unlike Evasion's Defense bonus, this is NOT reduced by armor Agility penalty</td></tr>
-        <tr><td>Cleric Adv.Voc</td><td>+1 WM (all sources)</td><td>Stacks with others</td></tr>
-        <tr><td>Unwavering Adv.Voc</td><td>+3 WM (all sources)</td><td>Passive — always active once purchased</td></tr>
-        <tr><td>Sovereign Mind Adv.Voc</td><td>+1 WM (all sources)</td><td>Active spike: (Willpower×2)+Physique for 1 turn</td></tr>
+        <tr><td>Hard as Nails</td><td>+1 DM per 2 pts (physical from 1pt; spell/bless from 3pts)</td><td>Also +2 wounds per pt</td></tr>
+        <tr><td>Shieldsman</td><td>+1 DM per pt (Defensive Stance)</td><td>Offensive Stance converts to +1 wound per pt instead — choose each turn</td></tr>
+        <tr><td>Evasion</td><td>+1 DM per 3 pts</td><td>Unlike Evasion's Defense bonus, this is NOT reduced by armor Agility penalty</td></tr>
+        <tr><td>Cleric Adv.Voc</td><td>+1 DM (all sources)</td><td>Stacks with others</td></tr>
+        <tr><td>Unwavering Adv.Voc</td><td>+3 DM (all sources)</td><td>Passive — always active once purchased</td></tr>
+        <tr><td>Sovereign Mind Adv.Voc</td><td>+1 DM (all sources)</td><td>Active spike: (Willpower×2)+Physique for 1 turn</td></tr>
     </table>
 
-    <h3 class="subsection-title">Magical WM — vs Spells & Blessings</h3>
-    <div class="formula-block">MAGICAL WM = Willpower + floor(Spirit ÷ 3) + floor(Survival ÷ 2) + floor(Resolve ÷ 2) + Adv.Voc bonuses + Bonus field</div>
+    <h3 class="subsection-title">Magical DM — vs Spells & Blessings</h3>
+    <div class="formula-block">MAGICAL DM = Willpower + floor(Spirit ÷ 3) + floor(Survival ÷ 2) + Adv.Voc bonuses + Bonus field</div>
     <table class="comp-table">
         <tr><th>Source</th><th>Rate</th><th>Notes</th></tr>
         <tr><td>Willpower characteristic</td><td>floor(Willpower skill group ÷ 3)</td><td>Grows from Iron Will, Resolve, Shaman, Spirit, Survival</td></tr>
-        <tr><td>Spirit</td><td>+1 magic WM per 3 pts</td><td>Also +1 healing received per pt invested</td></tr>
-        <tr><td>Survival</td><td>+1 magic WM per 2 pts</td><td>Also +1 max wound per pt + env. resistance</td></tr>
-        <tr><td>Resolve</td><td>+1 magic WM per 2 pts</td><td>Also +1 max wound per pt + Fear resistance primary</td></tr>
-        <tr><td>Adv.Voc bonuses</td><td>Same as Physical (+1, +3, +1)</td><td>Cleric, Unwavering, Sovereign Mind apply to all WM pools</td></tr>
+        <tr><td>Spirit</td><td>+1 magic DM per 3 pts</td><td>Also +1 healing received per pt invested</td></tr>
+        <tr><td>Survival</td><td>+1 magic DM per 2 pts</td><td>Also +1 max wound per pt + env. resistance</td></tr>
+        <tr><td>Adv.Voc bonuses</td><td>Same as Physical (+1, +3, +1)</td><td>Cleric, Unwavering, Sovereign Mind apply to all DM pools</td></tr>
     </table>
 
-    <h3 class="subsection-title">DoT WM — vs Disease, Poison & Bleeding</h3>
-    <div class="formula-block">DOT WM = Physique + floor(Stamina ÷ 2) + floor(Fortitude ÷ 3) + floor(Discipline ÷ 3) + Adv.Voc bonuses + Bonus field</div>
+    <h3 class="subsection-title">DoT DM — vs Disease, Poison & Bleeding</h3>
+    <div class="formula-block">DOT DM = Physique + floor(Stamina ÷ 2) + floor(Fortitude ÷ 3) + floor(Discipline ÷ 3) + Adv.Voc bonuses + Bonus field</div>
     <table class="comp-table">
         <tr><th>Source</th><th>Rate</th><th>Notes</th></tr>
         <tr><td>Physique characteristic</td><td>floor(Physique group ÷ 3)</td><td>Same stat that boosts melee wounds — high Physique helps both</td></tr>
-        <tr><td>Stamina</td><td>+1 DoT WM per 2 pts</td><td>Also +1 wound per pt + exhaustion delay</td></tr>
-        <tr><td>Fortitude</td><td>+1 DoT WM per 3 pts</td><td>Primary use is +10 wounds per pt — DoT WM is the secondary gain</td></tr>
-        <tr><td>Discipline</td><td>+1 DoT WM per 3 pts</td><td>Also +1 wound per pt + resource slots</td></tr>
+        <tr><td>Stamina</td><td>+1 DoT DM per 2 pts</td><td>Also +1 wound per pt + exhaustion delay</td></tr>
+        <tr><td>Fortitude</td><td>+1 DoT DM per 3 pts</td><td>Primary use is +10 wounds per pt — DoT DM is the secondary gain</td></tr>
+        <tr><td>Discipline</td><td>+1 DoT DM per 3 pts</td><td>Also +1 wound per pt + resource slots</td></tr>
     </table>
     <div class="mech-card">
-        <p><strong>Bonus WM vs Evil:</strong> floor(Light-Soul pts ÷ 3) added to all three WM pools when Cleric Advanced Vocation is active. Light-Soul also adds +1 wound to all attacks against Evil per pt.</p>
-        <p><strong>Minimum hit:</strong> Every successful hit always deals at least 1 wound, regardless of how high your WM is.</p>
+        <p><strong>Bonus DM vs Evil:</strong> floor(Light-Soul pts ÷ 3) added to all three DM pools when Cleric Advanced Vocation is active. Light-Soul also adds +1 wound to all attacks against Evil per pt.</p>
+        <p><strong>Minimum hit:</strong> Every successful hit always deals at least 1 wound, regardless of how high your DM is.</p>
     </div>
 
     <hr class="divider">
@@ -416,10 +416,10 @@
     <table class="comp-table">
         <tr><th>Passive Wound Bonus</th><th>Amount</th><th>Advanced Vocation Active Effect</th></tr>
         <tr><td>Str. Conditioning (÷3)×2</td><td>+2 per 3 pts</td><td>2H Full-Weight: Normal+(Physique×4)+2d10+Stunned</td></tr>
-        <tr><td>Precise Strike (÷3)×2</td><td>+2 per 3 pts</td><td>On crit: shred target WM by your Precise Strike pts</td></tr>
+        <tr><td>Precise Strike (÷3)×2</td><td>+2 per 3 pts</td><td>On crit: shred target DM by your Precise Strike pts</td></tr>
         <tr><td>Athletics (÷3)</td><td>+1 per 3 pts</td><td>Shared with ranged</td></tr>
         <tr><td>Nimble Strike</td><td>+1 flat</td><td>Active: Normal+Agility+Awareness</td></tr>
-        <tr><td>Expose Armor</td><td>+1 flat</td><td>Active: reduce target WM by Awareness+1d10</td></tr>
+        <tr><td>Expose Armor</td><td>+1 flat</td><td>Active: reduce target DM by Awareness+1d10</td></tr>
         <tr><td>Phantom Assassin</td><td>+2 from Stealth/Flank only</td><td>Active: Normal+1d10+(Agility×2)+Mute</td></tr>
         <tr><td>Throat Slice</td><td>+1 flat</td><td>Active: Normal+1d10+(Agility×2)+2 Bleeding</td></tr>
         <tr><td>Impale</td><td>+1 flat</td><td>Active (1H): Normal+1d10+1 Bleed; (2H): Normal+1d10+2 Bleed</td></tr>
@@ -498,8 +498,8 @@
         <tr><td>Precise Strike (÷3)×2</td><td>+2 per 3 pts</td><td>Same as melee wound contribution</td></tr>
         <tr><td>Athletics (÷3)</td><td>+1 per 3 pts</td><td>Shared with melee</td></tr>
         <tr><td>Marksman</td><td>+2 flat ranged wound bonus</td><td>Active: Normal+Awareness+1d10. Sniper spec: Normal+Agl+(Awa×2)+1d10+Bleed</td></tr>
-        <tr><td>Opportunist</td><td>+1 flat ranged wound bonus</td><td>Active: reduces target WM by Awareness. Seeker: Normal+1d10+(Awa×3)+Agl</td></tr>
-        <tr><td>Heavy Arbalest</td><td>+1 flat + ignores 2 WM always</td><td>Linebreaker: ignores ALL worn armor WM + pass-through</td></tr>
+        <tr><td>Opportunist</td><td>+1 flat ranged wound bonus</td><td>Active: reduces target DM by Awareness. Seeker: Normal+1d10+(Awa×3)+Agl</td></tr>
+        <tr><td>Heavy Arbalest</td><td>+1 flat + ignores 2 DM always</td><td>Linebreaker: ignores ALL worn armor DM + pass-through</td></tr>
         <tr><td>Thunderstrike</td><td>+2 flat (Blackpowder only)</td><td>Every hit adds 1 Stunned. Point-Blank: unblockable, 1d10+(Awa×2)+bonuses+2 Bleed</td></tr>
     </table>
 
@@ -527,7 +527,7 @@
 
     <div class="mech-card">
         <p><strong>Skill Accuracy Bonus detail:</strong> Zero effect until 9 pts. At 9 pts = +1. At 12 pts = +2. At 15 pts = +3. This is the linear late-game bonus from deep skill investment.</p>
-        <p><strong>Focus action:</strong> Spend 1 AP before casting. floor(Focus pts ÷ 3) passive bonus to To-Cast applies. Also distribute Focus pts between +1 flat wound/heal per pt and –1 target WM per pt.</p>
+        <p><strong>Focus action:</strong> Spend 1 AP before casting. floor(Focus pts ÷ 3) passive bonus to To-Cast applies. Also distribute Focus pts between +1 flat wound/heal per pt and –1 target DM per pt.</p>
         <p><strong>Counter-Cast:</strong> Attacker: 1d10 + To-Cast + Magic Skill pts. Defender: 1d10 + To-Cast + Skill pts OR Resist Bonus. Winner's spell prevails. Tie = both take half wounds unmitigated.</p>
         <p><strong>Resist Bonus (defender's passive):</strong> If magic skill ≥6: floor((skill–3)÷3). Kicks in at 6 pts (+1) and grows from there.</p>
         <p><strong>Arcane Mastery (15+ pts in any magic skill):</strong> Add your Spirit skill pts as a flat bonus to ALL spell wounds and healing. One of the most powerful late-game multipliers.</p>
@@ -554,7 +554,7 @@
         <ul>
             <li><strong>Empower:</strong> +1d10 + Primary Characteristic to wounds or healing.</li>
             <li><strong>Precision:</strong> +2 flat To-Cast bonus for this cast.</li>
-            <li><strong>Piercing:</strong> Ignore 3 pts of target's WM.</li>
+            <li><strong>Piercing:</strong> Ignore 3 pts of target's DM.</li>
             <li><strong>Enlarge:</strong> AoE radius +10 ft.</li>
             <li><strong>Extend:</strong> Duration +1 turn.</li>
             <li><strong>Vantage:</strong> Range +50 ft.</li>
@@ -620,7 +620,7 @@
         <tr><td>Full Plate</td><td>5</td><td>8</td><td class="pen">–2</td><td class="pen">–3</td><td class="pen">–3</td><td class="pen">–2</td><td class="pen">–3</td><td>—</td><td class="pen">–15 ft</td><td class="pen">–2 Melee, –3 Ranged To-Hit</td></tr>
         <tr><td>Mithril</td><td>4</td><td>5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="pen">–1 Melee To-Hit only</td></tr>
         <tr><td>Light Shield/Buckler</td><td>+1</td><td>+1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>1 hand occupied</td></tr>
-        <tr><td>Heater/Heavy Shield</td><td>+2</td><td>+2</td><td class="pen">–1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>Req Physique 4. If &lt;4: no Def/WM bonus, –2 Agl.</td></tr>
+        <tr><td>Heater/Heavy Shield</td><td>+2</td><td>+2</td><td class="pen">–1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>Req Physique 4. If &lt;4: no Def/DM bonus, –2 Agl.</td></tr>
     </table>
     <p style="margin-top:8px; font-size:0.85em; font-style:italic;">To-Cast columns: <strong>WDS</strong> = Wizardry / Druidism / Shamanism · <strong>Dev</strong> = Devotion · <strong>Vib</strong> = Vibhuti · <strong>Ki</strong> = Ki. Penalties are capped — no caster suffers worse than –3 from armour weight. Devotion and Ki ignore lighter armour entirely; Ki is never penalised. (See the Core Rules "Iron Cage — Arcane Interference" for the authoritative table.)</p>
     <p style="margin-top: 8px; font-size: 0.9em; font-style: italic;">Movement penalty is offset by floor(Physique ÷ 3) recovery steps. Physique 3 = 1 recovery step, negating Chain Mail's movement penalty entirely. Each step = 5 ft recovered.</p>
@@ -632,10 +632,10 @@
     <h3 class="subsection-title">Melee</h3>
     <table class="ref-table">
         <tr><th>Class</th><th>Examples</th><th>Base Wounds</th><th>To-Hit</th><th>Special</th></tr>
-        <tr><td>Blunt 1H</td><td>Mace, Warhammer, Staff</td><td>1d10 + bonuses</td><td>Normal</td><td>Ignores 1 WM</td></tr>
+        <tr><td>Blunt 1H</td><td>Mace, Warhammer, Staff</td><td>1d10 + bonuses</td><td>Normal</td><td>Ignores 1 DM</td></tr>
         <tr><td>Edged 1H</td><td>Sword, Axe, Claymore</td><td>1d10 + bonuses</td><td>Normal</td><td>—</td></tr>
         <tr><td>Piercing 1H</td><td>Dagger, Rapier, Spear</td><td>1d10 + bonuses</td><td>Normal</td><td>Finesse eligible.</td></tr>
-        <tr><td>2-Handed</td><td>Greatsword, Greataxe</td><td>1d10 + bonuses</td><td>Normal</td><td>2 AP per strike. Physique ×2 wound bonus. Ignores 2 WM.</td></tr>
+        <tr><td>2-Handed</td><td>Greatsword, Greataxe</td><td>1d10 + bonuses</td><td>Normal</td><td>2 AP per strike. Physique ×2 wound bonus. Ignores 2 DM.</td></tr>
         <tr><td>Polearm</td><td>Halberd, Pike</td><td>1d10 + bonuses</td><td>Normal</td><td>2 AP per strike. Attack from 2nd rank at no penalty.</td></tr>
     </table>
 
@@ -643,8 +643,8 @@
     <table class="ref-table">
         <tr><th>Class</th><th>Examples</th><th>Base Wounds</th><th>Range</th><th>Special</th></tr>
         <tr><td>Bows</td><td>Short, Long, Elven</td><td>1d10 + bonuses</td><td>80–400 ft</td><td>Quickload (1 AP). Longbow: Physique×3 wound bonus.</td></tr>
-        <tr><td>Crossbows</td><td>Light, Heavy</td><td>1d10 + bonuses</td><td>60–300 ft</td><td>Ignores 3 WM. Heavy: ignores all WM + Bleed on nat 10.</td></tr>
-        <tr><td>Blackpowder</td><td>Pistol, Rifle</td><td>1d10 + bonuses</td><td>75–400 ft</td><td>Ignores 4 WM. Rifles: ignore all WM at normal range.</td></tr>
+        <tr><td>Crossbows</td><td>Light, Heavy</td><td>1d10 + bonuses</td><td>60–300 ft</td><td>Ignores 3 DM. Heavy: ignores all DM + Bleed on nat 10.</td></tr>
+        <tr><td>Blackpowder</td><td>Pistol, Rifle</td><td>1d10 + bonuses</td><td>75–400 ft</td><td>Ignores 4 DM. Rifles: ignore all DM at normal range.</td></tr>
         <tr><td>Throwing</td><td>Knife, Javelin, Axe</td><td>1d10 + bonuses</td><td>15–80 ft</td><td>+ Physique bonus to wounds. Scales with Size Multiplier.</td></tr>
     </table>
 
@@ -671,7 +671,7 @@ Wounds: Agility + floor(Physique÷3) + (Precise Strike÷3)×2 + Athletics bonus 
         <p><strong>Advanced Vocations:</strong> Impact, Cleave, Sunder, Block/Bulwark, Unwavering</p>
         <div class="formula-block inline-blood">To-Hit: floor(Physique÷5) + floor(StrCon÷3) + floor(Athletics÷3)
 Wounds (2H): (Physique×2) + (StrCon÷3)×2 + (Precise Strike÷3)×2 + Impact +2 passive
-Physical WM: Armor + floor(HaN÷2) + Shieldsman + Evasion÷3 + Cleric+1 + Unwavering+3</div>
+Physical DM: Armor + floor(HaN÷2) + Shieldsman + Evasion÷3 + Cleric+1 + Unwavering+3</div>
     </div>
 
     <h3 class="subsection-title">🏹 Deadeye — Ranged Precision</h3>
@@ -685,7 +685,7 @@ Wounds (Bow): Awareness + (Agility × AP) + Physique + passives (+2 Marksman +1 
 
     <h3 class="subsection-title">✦ Arcanist — Offensive Caster</h3>
     <div class="build-card">
-        <p><strong>Core stats:</strong> Intellect → Spirit → Willpower (magic WM)</p>
+        <p><strong>Core stats:</strong> Intellect → Spirit → Willpower (magic DM)</p>
         <p><strong>Key skills:</strong> Wizardry (to 15+), Knowledge, Read/Write, Spirit, Discipline</p>
         <p><strong>Advanced Vocations:</strong> Concentrate, Metaphysical, Deviation, Infusion of Arcana</p>
         <div class="formula-block inline-blood">To-Cast: floor(Intellect÷5) + floor((Wizardry–6)÷3, if ≥9) + Focus bonus – Armor Penalty (Studded/Chain −1, Banded/Splint −2, Plate/Full −3)
@@ -699,16 +699,16 @@ Wounds: Intellect + (Wizardry÷3)×3 + Spirit pts (at Wizardry 15+)</div>
         <p><strong>Advanced Vocations:</strong> Divinity, Cleric, Metaphysical, Rebirth</p>
         <div class="formula-block inline-blood">To-Cast: floor(Charisma÷5) + floor((Devotion–6)÷3, if ≥9) – Armor Penalty (0 if TN≤3, −2 if TN≥4)
 Healing: Charisma + (Devotion÷3)×2 + Spirit pts (at Devotion 15+)
-Magic WM: Willpower + Spirit÷3 + Resolve÷2 + Cleric +1 + Unwavering +3</div>
+Magic DM: Willpower + Spirit÷3 + Cleric +1 + Unwavering +3</div>
     </div>
 
     <h3 class="subsection-title">🛡 Iron Wall — Tank / Defender</h3>
     <div class="build-card">
-        <p><strong>Core stats:</strong> Physique → Willpower → Agility (Evasion for WM)</p>
+        <p><strong>Core stats:</strong> Physique → Willpower → Agility (Evasion for DM)</p>
         <p><strong>Key skills:</strong> Fortitude, Hard as Nails, Rugged, Iron Will, Shieldsman, Evasion</p>
         <p><strong>Advanced Vocations:</strong> Block, Unwavering, Sovereign Mind, Cleric, Bulwark spec</p>
         <div class="formula-block inline-blood">Defense: 3 + Armor Def + max(0, Evasion÷3 + Armor Agl penalty)
-Physical WM: Armor + HaN÷2 + Shieldsman + Evasion÷3 + Cleric+1 + Unwavering+3 + SovMind+1
+Physical DM: Armor + HaN÷2 + Shieldsman + Evasion÷3 + Cleric+1 + Unwavering+3 + SovMind+1
 Total Wounds: Race + Physique + (Fortitude×10) + (IronWill×2) + (Rugged×2) + (HaN×2)</div>
     </div>
 
@@ -716,7 +716,19 @@ Total Wounds: Race + Physique + (Fortitude×10) + (IronWill×2) + (Rugged×2) + 
     <!-- WHAT'S NEW — JUNE 2026 -->
     <!-- ================================================================ -->
     <h2 class="section-title" id="whats-new">What&rsquo;s New (June 2026)</h2>
-    <p style="margin: 10px 0 8px;">Recent additions and changes. Full player-facing write-ups live in the <a href="patch-notes-2026-06-01.html">Patch Notes</a>; this is the mechanics-reference summary.</p>
+    <p style="margin: 10px 0 8px;">Recent additions and changes. Full player-facing write-ups live in the <a href="patch-notes.html">Patch Notes</a>; this is the mechanics-reference summary.</p>
+
+    <h3 class="subsection-title">&#10038; The Mark of Three — Unified Opposed Tests <span style="font-size:11px; opacity:0.7;">(PROPOSED — not yet ratified)</span></h3>
+    <div class="mech-card">
+        <p>A single resolution rule for opposed contests: both sides roll <strong>1d10 + skill + that skill&rsquo;s characteristic</strong>, higher total wins, each side using its own skill&rsquo;s governing characteristic. See <strong>The Core Roll</strong> above for the full statement. It is currently live on the social and larceny skills (Charm, Deception, Intimidation, Seduction, Authority, Thieving, Stealth, Sleight of Hand, Disguise, Escapology) and on the rebuilt Resolve / Zealotry; the remaining migration follows group ratification. Bestiary creatures are unaffected &mdash; their Law of Resistance bar already <em>is</em> their side of the roll.</p>
+        <p style="margin-top:8px;"><strong>Resist-skill re-carve:</strong> Resolve now endures the <em>supernatural</em> (Fear, Terror, magical compulsion); Zealotry endures <em>mundane coercion</em> (Charm, Intimidation, Seduction by people). Resolve&rsquo;s old magical-mitigation contribution was retired from the Magical DM formula this pass &mdash; that mitigation is slated to move to Spirit.</p>
+        <p style="margin-top:8px;"><strong>Status:</strong> proposed only, under table review alongside Essence.</p>
+    </div>
+
+    <h3 class="subsection-title">&#9874; Terminology — DM, not WM</h3>
+    <div class="mech-card">
+        <p>This guide now uses <strong>Damage Mitigation (DM)</strong> throughout, matching the system-wide rename from the old &ldquo;Wound Mitigation (WM).&rdquo; The mechanic is unchanged &mdash; only the label. (Likewise, the Willpower swap-pool entry now reads <strong>Vibhuti</strong>, not the retired &ldquo;&Sacute;abda.&rdquo;)</p>
+    </div>
 
     <h3 class="subsection-title">⚡ Essence — Optional Casting Resource <span style="font-size:11px; opacity:0.7;">(PROPOSED — not yet ratified)</span></h3>
     <div class="mech-card">
