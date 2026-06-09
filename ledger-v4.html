@@ -2621,8 +2621,8 @@ function calculateWoundMitigation(state, stats, armorData, advMitigationBonus, c
     sv('wm-armor-evil', armorTot + clericEvilMitigation);
 
     let hanSpellWM = (state.skillPts.hardAsNails >= 3) ? Math.floor(state.skillPts.hardAsNails / 2) : 0;
-    let blessTot = stats.willpower + Math.floor(state.skillPts.spirit / 3) +
-                   Math.floor(state.skillPts.survival / 2) + Math.floor(state.skillPts.resolve / 2) +
+    let blessTot = stats.willpower + Math.floor(state.skillPts.spirit / 2) + Math.floor(state.skillPts.spirit / 3) +
+                   Math.floor(state.skillPts.survival / 2) +
                    hanSpellWM +
                    gv('wm-bless-bon') + advMitigationBonus;
     if (state.charSize === "Giant") blessTot = Math.floor(blessTot * 1.5);
