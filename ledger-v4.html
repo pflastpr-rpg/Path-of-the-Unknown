@@ -2103,6 +2103,10 @@ function extractSkillPoints(skillName, pts, state) {
 
     if (woundBonuses[skillName]) state.woundSkillBonuses += pts * woundBonuses[skillName];
 
+    // Resolve's "stubborn toughness" rider: +1 additional wound per 3 points,
+    // on top of its +1/point base above. (Distinguishes it from Spirit in the Willpower cluster.)
+    if (skillName === "Resolve") state.woundSkillBonuses += Math.floor(pts / 3);
+
     if (skillName === "Focus") {
         sv('focus_hit_bonus', Math.floor(pts / 3));
         sv('focus_pts_mirror', pts);
