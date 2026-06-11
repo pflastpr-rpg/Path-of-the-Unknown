@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thrice-Marked — Quickstart Rules</title>
+<title>IronTithe — Quickstart Rules</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -536,7 +536,7 @@ tr:hover td { background: rgba(184,134,11,0.06); }
 
 <!-- NAV -->
 <nav class="qs-nav">
-    <span class="qs-nav-title">Thrice-Marked — Quickstart</span>
+    <span class="qs-nav-title">IronTithe — Quickstart</span>
     <ul class="qs-nav-links">
         <li><a href="#mechanics">Mechanics</a></li>
         <li><a href="#character">Character</a></li>
@@ -550,7 +550,7 @@ tr:hover td { background: rgba(184,134,11,0.06); }
 <!-- HEADER -->
 <header class="qs-header">
     <div class="qs-eyebrow">Quickstart Rules</div>
-    <h1 class="qs-title">Thrice-Marked</h1>
+    <h1 class="qs-title">IronTithe</h1>
     <div class="qs-subtitle">Everything you need to play in one hour</div>
     <p class="qs-tagline">You start clean. You don't stay that way.</p>
 </header>
@@ -558,9 +558,9 @@ tr:hover td { background: rgba(184,134,11,0.06); }
 <!-- CHAPTER 1: WHAT IS THIS GAME -->
 <div class="chapter" id="what">
     <div class="chapter-label">Introduction</div>
-    <h2 class="chapter-title">What Is Thrice-Marked?</h2>
+    <h2 class="chapter-title">What Is IronTithe?</h2>
     <div class="chapter-body">
-        <p>You begin this game as a blank sheet of parchment — a hollow vessel of bone and muscle. There are no classes to guide you; your choices are the only ink available. Every time you sharpen a skill, forge a weapon, or make a desperate bargain to survive an encounter, you are adding permanent marks to your ledger. You can endure the first mark. You can manage the second. But the moment you are Thrice-Marked, you have hit the absolute ceiling of physics, magic, and biology. The game is an accounting of how close you are to that third mark — and what you are willing to look like before you break.</p>
+        <p>You begin this game as a blank sheet of parchment — a hollow vessel of bone and muscle. There are no classes to guide you; your choices are the only ink available. Every time you sharpen a skill, forge a weapon, or make a desperate bargain to survive an encounter, you are adding permanent marks to your ledger. You can endure the first mark. You can manage the second. But the moment you are IronTithe, you have hit the absolute ceiling of physics, magic, and biology. The game is an accounting of how close you are to that third mark — and what you are willing to look like before you break.</p>
         <p>You need: this document, one ten-sided die (1d10) per player, and people willing to find out what their character is made of.</p>
 
         <div class="gold-box">
@@ -607,7 +607,7 @@ tr:hover td { background: rgba(184,134,11,0.06); }
     <div class="chapter-label">Chapter I</div>
     <h2 class="chapter-title">The Core Mechanic</h2>
     <div class="chapter-body">
-        <p>Thrice-Marked uses a single die: the <strong>1d10</strong>. Almost every action that matters is resolved the same way — roll 1d10, add relevant bonuses, meet or beat a Target Number (TN). If you do, you succeed. If you don't, consequences follow.</p>
+        <p>IronTithe uses a single die: the <strong>1d10</strong>. Almost every action that matters is resolved the same way — roll 1d10, add relevant bonuses, meet or beat a Target Number (TN). If you do, you succeed. If you don't, consequences follow.</p>
 
         <div class="rule-box">
             <div class="rule-box-title">The Core Roll</div>
@@ -632,15 +632,16 @@ tr:hover td { background: rgba(184,134,11,0.06); }
 
         <table>
             <tr><th>Action</th><th>Roll</th><th>TN</th></tr>
-            <tr><td>Attack (melee)</td><td>1d10 + Combat skill + Agility mod</td><td>Target's Defence</td></tr>
-            <tr><td>Attack (ranged)</td><td>1d10 + Combat skill + Awareness mod</td><td>Target's Defence</td></tr>
-            <tr><td>Cast a spell</td><td>1d10 + Discipline skill + Governing char mod</td><td>Spell's TN</td></tr>
-            <tr><td>Resist magic</td><td>1d10 + Willpower mod + Resist bonus</td><td>Spell's TN</td></tr>
-            <tr><td>Skill test</td><td>1d10 + Relevant skill + Characteristic mod</td><td>GM-set TN</td></tr>
+            <tr><td>Attack (melee)</td><td>1d10 + To-Hit bonus</td><td>Target's Defence</td></tr>
+            <tr><td>Attack (ranged)</td><td>1d10 + To-Hit bonus</td><td>Target's Defence</td></tr>
+            <tr><td>Cast a spell</td><td>1d10 + To-Cast bonus</td><td>Spell's TN</td></tr>
+            <tr><td>Resist magic (mind)</td><td>1d10 + Resolve</td><td>Effect's TN + Resist</td></tr>
+            <tr><td>Skill test (trained)</td><td>1d10 + skill points</td><td>GM-set DV</td></tr>
+            <tr><td>Skill test (untrained)</td><td>Dis.d10 + characteristic</td><td>GM-set DV</td></tr>
         </table>
 
-        <p><strong>Characteristic Modifier:</strong> Each characteristic has a score (typically 2–6 at start). Divide the score by 6, round down. A score of 4 gives a modifier of 0. A score of 6 gives +1. A score of 12 gives +2.</p>
-        <p><strong>Resist Bonus:</strong> Derived from Willpower. Added to tests made to resist magical effects, fear, and conditions targeting the mind.</p>
+        <p><strong>The contest rule.</strong> When two wills clash, both roll <strong>1d10 + skill</strong> and the higher total wins (ties favour the defender). If you have no training in the skill, you fall back on raw nature — <strong>Disadvantage on the d10 + the governing characteristic</strong>. Two skills, Inspire and Performance, add their characteristic even when trained, as uncontested projection.</p>
+        <p><strong>Resist Bonus:</strong> creatures defend by a standing bar — Characteristic TN + a Resist bonus that scales with their Tier — so a tougher foe is genuinely harder to sway, frighten, or dominate.</p>
     </div>
 </div>
 
@@ -753,7 +754,7 @@ tr:hover td { background: rgba(184,134,11,0.06); }
     <div class="chapter-label">Chapter IV</div>
     <h2 class="chapter-title">The Theology Discipline</h2>
     <div class="chapter-body">
-        <p>Mira carries 3 points in Devotion — enough to cast blessings up to TN 6 without penalty. To cast, roll <strong>1d10 + Devotion skill + Charisma modifier</strong> against the spell's TN. Mira's maximum casting roll is 13 (10 + 3 Devotion skill + 0 Charisma mod).</p>
+        <p>Mira carries 3 points in Devotion — enough to call down blessings up to TN 6 without penalty. To cast, she rolls <strong>1d10 + her To-Cast bonus</strong> against the blessing's TN. With steady faith the holy light answers readily; only the most demanding miracles risk slipping from her grasp.</p>
         <p>Mira can hold <strong>3 blessings</strong> in memory — equal to her Devotion skill points. She must choose which to prepare before play begins. She must choose which to prepare before play begins. Below are her available blessings for this quickstart.</p>
 
         <div class="spell-list">
@@ -867,7 +868,7 @@ tr:hover td { background: rgba(184,134,11,0.06); }
     <a href="pitch.html" class="btn btn-gold">Back to the Pitch</a>
     <a href="preview.html" class="btn btn-gold">Back to Preview</a>
     <div style="margin-top:32px; font-family:'Cinzel',serif; font-size:7.5pt; letter-spacing:3px; color:rgba(184,134,11,0.2); text-transform:uppercase;">
-        Thrice-Marked &nbsp;·&nbsp; You start clean. You don't stay that way.
+        IronTithe &nbsp;·&nbsp; You start clean. You don't stay that way.
     </div>
 </div>
 
