@@ -4,7 +4,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPG Ledger v14 - Thrice-Marked [build 2026-05-29 · weapon-fix]</title>
+    <title>RPG Ledger v14 - IronTithe [build 2026-05-29 · weapon-fix]</title>
     <style>
         :root {
             --iron: #02070e;
@@ -865,7 +865,7 @@
 <div class="sheet">
 
 <div class="no-print top-bar">
-    <div class="top-bar-title">Thrice-Marked</div>
+    <div class="top-bar-title">IronTithe</div>
     <div class="vault-controls">
         <select id="cloud-char-select" class="btn-vault" style="background:var(--white); color:var(--ink); height:26px; font-size:9pt; width:140px; cursor:pointer;">
             <option value="Baanon Kervarsha">Baanon Kervarsha</option>
@@ -4241,7 +4241,7 @@ function importFromCreator(input) {
         try {
             const pkg = JSON.parse(e.target.result);
             if (pkg._schema !== 'pou-character-v1') {
-                alert('This file was not exported from the Thrice-Marked Character Creator.');
+                alert('This file was not exported from the IronTithe Character Creator.');
                 return;
             }
             applyCreatorPackage(pkg);
