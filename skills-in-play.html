@@ -383,16 +383,17 @@ body {
 
 <div id="s-discipline" class="skill-entry">
     <h2 class="skill-title">Discipline</h2>
-    <div class="skill-mechanic-bar">+1 Max Wounds per pt | +1 Magical/Spiritual Resource per pt | +1 Awareness per 3 pts</div>
+    <div class="skill-mechanic-bar">+1 Wound per pt | +1 Blessing/Spell/Ki resource slot per pt | +1 Willpower per 3 pts | Holding Actions cost 0 AP</div>
     <div class="example-block">
         <div class="example-label">In-Play Example</div>
-        <p class="scenario">A Devotion character wants to hold three active Blessings simultaneously — a Healing Blessing, a Ward, and a Battle Blessing for an ally. Their base Devotion pool allows 2. They need 1 more resource slot.</p>
+        <p class="scenario">A Devotion character wants to hold three active Blessings simultaneously — a Healing Blessing, a Ward, and a Battle Blessing for an ally. Their Discipline of 2 grants 2 resource slots. They need a third.</p>
         <div class="rolls">
-            <div class="roll-line"><span class="roll-label">Base Devotion pool:</span><span class="roll-formula">Wizardry Points + Discipline Points</span></div>
-            <div class="roll-line"><span class="roll-label">Current Discipline:</span><span class="roll-formula">1 pt = +1 Resource slot = pool now holds 3</span></div>
-            <div class="roll-line"><span class="roll-outcome">— All three Blessings can now be memorised simultaneously</span></div>
+            <div class="roll-line"><span class="roll-label">Blessings known:</span><span class="roll-formula">Devotion points — 1 blessing learned per point</span></div>
+            <div class="roll-line"><span class="roll-label">Resource slots (held workings):</span><span class="roll-formula">Discipline points — +1 slot per point; at 2, they hold 2</span></div>
+            <div class="roll-line"><span class="roll-label">Investing a 3rd Discipline point:</span><span class="roll-formula">3 slots — and the Power of Three pays out +1 Willpower</span></div>
+            <div class="roll-line"><span class="roll-outcome">— All three Blessings can now be held simultaneously</span></div>
         </div>
-        <p class="resolution"><strong>Discipline is the quiet multiplier for every caster and Ki practitioner.</strong> The Wounds bonus (1 per point) makes it viable for frontline builds too — a Warrior Priest investing here gets both survivability and expanded divine capability in one skill. At 3 points the Awareness bump also begins to improve detection and passive defences, making Discipline one of the most efficient cross-archetype skills in the compendium.</p>
+        <p class="resolution"><strong>Discipline is the quiet multiplier for every caster and Ki practitioner.</strong> The Wounds bonus (1 per point) makes it viable for frontline builds too — a Warrior Priest investing here gets both survivability and expanded divine capability in one skill. At 3 points the Willpower bump begins to harden resists and composure — and Unshaken renders the character immune to the Shaken condition — making Discipline one of the most efficient cross-archetype skills in the compendium.</p>
     </div>
 </div>
 
@@ -905,16 +906,16 @@ body {
 
 <div id="s-wizardry" class="skill-entry">
     <h2 class="skill-title">Wizardry (The High Arcane)</h2>
-    <div class="skill-mechanic-bar">Spell pool = Wizardry pts + Discipline pts | +1 Spell per pt | +2 Spell Wounds per 3 pts | +1 To-Hit at 9 pts | Mutually exclusive with Runes</div>
+    <div class="skill-mechanic-bar">+1 Spell known per pt | +1 Intellect per 3 pts | Prereqs: Knowledge Magic (1), Read/Scribe (1) | Trained-only | Mutually exclusive with Runes</div>
     <div class="example-block">
         <div class="example-label">In-Play Example — Tom reaching Level 3</div>
-        <p class="scenario">Tom (Human Wizard, 3 pts Wizardry, 2 pts Discipline) now has a spell pool of 5 (3+2). He invests his new point into Wizardry — gaining a 4th spell slot and triggering the Power of Three +2 Spell Wounds bonus at 3 pts. He selects a new offensive spell from the Wizardry list.</p>
+        <p class="scenario">Tom (Human Wizard, 3 pts Wizardry, 2 pts Discipline) invests his new point into Wizardry — learning a 4th spell and raising his casting ceiling by 1. The Power of Three already paid out +1 Intellect at 3 pts. He selects a new offensive spell from the Wizardry list.</p>
         <div class="rolls">
-            <div class="roll-line"><span class="roll-label">Spell pool after new pt:</span><span class="roll-formula">4 Wizardry + 2 Discipline = 6 memorised spells</span></div>
-            <div class="roll-line"><span class="roll-label">Spell Wounds bonus (3 pts reached):</span><span class="roll-formula">+2 wounds to all spells permanently</span></div>
-            <div class="roll-line"><span class="roll-outcome">New spell added. Cast test example: 1d10 + Wizardry pts vs target DV or Defense (Wizardry is trained-only — no untrained attempt)</span></div>
+            <div class="roll-line"><span class="roll-label">Spells known after new pt:</span><span class="roll-formula">4 — one learned per Wizardry point</span></div>
+            <div class="roll-line"><span class="roll-label">Maximum TN (the casting ceiling):</span><span class="roll-formula">Wizardry 4 + (Discipline 2 &divide; 6) = TN 4 — Discipline adds +1 at 6 pts</span></div>
+            <div class="roll-line"><span class="roll-outcome">New spell added. To-Cast: 1d10 + casting bonuses vs the spell&rsquo;s TN (trained-only — untrained is no roll at all). His Discipline 2 also holds 2 sustained workings.</span></div>
         </div>
-        <p class="resolution">Tom's spells now strike harder by default — the +2 Wounds on every cast is passive, requiring nothing beyond having 3 pts. <strong>At 9 pts the +1 To-Hit bonus on all spells activates</strong>, making high-level Wizardry the most reliable arcane accuracy in the system. The Duverger Penalty (40 XP for Dwarves vs 35 XP for Humans) reflects the lore: Dwarves who pursue Wizardry are fighting their own nature to do it. The Runes lockout is permanent — choosing Wizardry at point 1 closes the Runesmith path forever. Choose deliberately.</p>
+        <p class="resolution">Tom's reach grows with every point — each Wizardry point is both a new spell learned and +1 to his Maximum TN, the ceiling of what he may attempt. <strong>Casting above the ceiling is Overreach</strong> — possible, never free; the weave bites back. The Duverger Penalty (40 XP for Dwarves vs 35 XP for Humans) reflects the lore: Dwarves who pursue Wizardry are fighting their own nature to do it. The Runes lockout is permanent — choosing Wizardry at point 1 closes the Runesmith path forever. Choose deliberately.</p>
     </div>
 </div>
 
