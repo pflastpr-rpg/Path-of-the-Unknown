@@ -1401,17 +1401,17 @@
 <div class="magic-section">
     <!-- All 7 disciplines on one row -->
     <div class="magic-cb-row" style="flex-wrap:nowrap; justify-content:center; gap:12px;">
-        <label><input type="checkbox" id="magic_druidic" class="magic-cb" value="Druidic" onchange="handleMagicCheck(this)"> Druidic <span style="font-size:9pt; color:var(--blood);">(200)</span></label>
-        <label><input type="checkbox" id="magic_ki" class="magic-cb" value="Ki" onchange="handleMagicCheck(this)"> Ki <span style="font-size:9pt; color:var(--blood);">(200)</span></label>
-        <label><input type="checkbox" id="magic_magic" class="magic-cb" value="Magic" onchange="handleMagicCheck(this)"> Wizardry <span style="font-size:9pt; color:var(--blood);">(200)</span></label>
-        <label><input type="checkbox" id="magic_devotion" class="magic-cb" value="Devotion" onchange="handleMagicCheck(this)"> Theology <span style="font-size:9pt; color:var(--blood);">(200)</span></label>
+        <label><input type="checkbox" id="magic_druidic" class="magic-cb" value="Druidic" onchange="handleMagicCheck(this)"> Druidic <span style="font-size:9pt; color:var(--blood);">(100)</span></label>
+        <label><input type="checkbox" id="magic_ki" class="magic-cb" value="Ki" onchange="handleMagicCheck(this)"> Ki <span style="font-size:9pt; color:var(--blood);">(100)</span></label>
+        <label><input type="checkbox" id="magic_magic" class="magic-cb" value="Magic" onchange="handleMagicCheck(this)"> Wizardry <span style="font-size:9pt; color:var(--blood);">(100)</span></label>
+        <label><input type="checkbox" id="magic_devotion" class="magic-cb" value="Devotion" onchange="handleMagicCheck(this)"> Theology <span style="font-size:9pt; color:var(--blood);">(100)</span></label>
         <label style="display:flex; align-items:center; gap:4px;">
             <input type="checkbox" id="magic_shaman" class="magic-cb" value="Shaman" onchange="handleWillpowerDiscipline(this)">
             <select id="willpower-discipline-select" onchange="handleWillpowerDisciplineChange(this)" style="font-family:var(--font-heading); font-size:10pt; font-weight:900; text-transform:uppercase; background:transparent; border:none; color:var(--ink); cursor:pointer; padding:0;">
                 <option value="Shaman">Shaman</option>
                 <option value="Vibhuti">Vibhuti</option>
             </select>
-            <span style="font-size:9pt; color:var(--blood);">(200)</span>
+            <span style="font-size:9pt; color:var(--blood);">(100)</span>
         </label>
         <label><input type="checkbox" id="magic_runes" class="magic-cb" value="Runes" onchange="handleMagicCheck(this)"> Runecraft <span style="font-size:9pt; color:var(--blood);">⊕</span></label>
     </div>
@@ -1819,7 +1819,7 @@ const advancedSkills = [
     {name:"Divinity / Sanctity",cost:100,type:"heal",bonus:2,desc:"Empower healing; remove bleeding conditions."},
     {name:"Dodge / Jailbreak",cost:200,type:"none",bonus:0,desc:"True evasion; disengage without attacks of opportunity."},
     {name:"Expose Armor / Undress",cost:100,type:"melee",bonus:1,desc:"Reduce or ignore target's Damage Mitigation."},
-    {name:"Heavy Arbalest / Linebreaker",cost:100,type:"range",bonus:1,desc:"Armor-piercing bolts; punch through multiple targets."},
+    {name:"Heavy Arbalest / Linebreaker",cost:200,type:"range",bonus:1,desc:"Armor-piercing bolts; punch through multiple targets."},
     {name:"Impact / Full-Weight",cost:200,type:"melee",bonus:2,desc:"Apply Stunned conditions; massive trauma strikes."},
     {name:"Impale / Skewer",cost:200,type:"melee",bonus:1,desc:"Drive weapons through core; heavy bleeding stacks."},
     {name:"Infusion / True Fusion",cost:200,type:"none",bonus:0,desc:"Transmute damage into healing or cast dual-intent spells."},
@@ -2117,11 +2117,11 @@ function extractSkillPoints(skillName, pts, state) {
 function processMagicSkills(state) {
     const magicSkills = ["Devotion", "Wizardry", "Shaman", "Ki", "Druidism"];
     const magicPrereqs = {
-        "Devotion": "Req: Knowledge (Religion) + Theology checkbox (200 XP)",
-        "Wizardry":  "Req: Knowledge (Magic) + Wizardry checkbox (200 XP)",
-        "Shaman":    "Req: Shamanism checkbox (200 XP)",
-        "Ki":        "Req: Ki checkbox (200 XP)",
-        "Druidism":  "Req: Druidism checkbox (200 XP)"
+        "Devotion": "Req: Knowledge (Religion) + Theology checkbox (100 XP)",
+        "Wizardry":  "Req: Knowledge (Magic) + Wizardry checkbox (100 XP)",
+        "Shaman":    "Req: Shamanism checkbox (100 XP)",
+        "Ki":        "Req: Ki checkbox (100 XP)",
+        "Druidism":  "Req: Druidism checkbox (100 XP)"
     };
     magicSkills.forEach(sk => {
         const lbl = g(`label-${sk}`);
@@ -2155,9 +2155,9 @@ function determineMagicState(state) {
         if (cb.checked) {
             magicState.isMagicActive = true;
             // Runes uses only racial compounding (no flat access cost)
-            // Vibhuti pays 200 flat access + per-point compounding (same as standard disciplines)
+            // Vibhuti pays 100 flat access + per-point compounding (same as standard disciplines)
             if (cb.value !== "Runes") {
-                state.spentXP += 200;
+                state.spentXP += 100;
             }
             if (cb.value === "Druidic") magicState.isDruidActive = true;
             if (cb.value === "Ki") magicState.isKiActive = true;
