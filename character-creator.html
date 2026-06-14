@@ -98,7 +98,7 @@
 .arch-tag.combat{background:#A8181815;color:#791F1F}
 </style>
 
-<h2 class="sr-only">Blood and Purpose character creation</h2>
+<h2 class="sr-only">IronTithe character creation</h2>
 
 <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px">
 <div class="phone">
@@ -152,7 +152,7 @@
   </div>
 
   <div class="screen" id="sc2">
-    <div class="sh"><h2>Vocation &amp; Magic</h2><p>200 XP unlock. Prereqs auto-applied. One path only.</p></div>
+    <div class="sh"><h2>Vocation &amp; Magic</h2><p>100 XP unlock. Prereqs auto-applied. One path only.</p></div>
     <div class="sb" id="voc-list"></div>
     <div class="foot"><button class="bb" onclick="go(1)">Back</button><button class="bn" onclick="go(3)">Next — Weapons</button></div>
   </div>
@@ -184,7 +184,7 @@
   <div class="screen" id="sc7">
     <div class="sh"><h2>Character ready</h2><p>Every XP sink accounted for</p></div>
     <div class="sb" id="sum-body"></div>
-    <div class="foot"><button class="bb" onclick="go(6)">Edit</button><button class="bn" onclick="exportCharacter()" style="background:#3B6D11; color:#f3e7c9;">⬇ Export to Ledger</button><button class="bfin" onclick="sendPrompt('Prereqs are wired, wounds are correct, Light-Soul is gated. What should we refine or build next for the Blood and Purpose companion app?')">Save to Roster ↗</button></div>
+    <div class="foot"><button class="bb" onclick="go(6)">Edit</button><button class="bn" onclick="exportCharacter()" style="background:#3B6D11; color:#f3e7c9;">⬇ Export to Ledger</button><button class="bfin" onclick="sendPrompt('Prereqs are wired, wounds are correct, Light-Soul is gated. What should we refine or build next for the IronTithe companion app?')">Save to Roster ↗</button></div>
   </div>
 </div>
 </div>
@@ -204,27 +204,27 @@ const SIZES=[
   {id:'Giant',label:'Giant',mult:3,note:'×3W'},
   {id:'Enormous',label:'Enorm.',mult:6,note:'×6W'},
 ];
-const ALL_MAGIC=['Devotion','Wizardry','Ki','Shaman','Druidism','Sabda'];
+const ALL_MAGIC=['Devotion','Wizardry','Ki','Shaman','Druidism','Vibhuti'];
 
 // Vocation prereqs: Knowledge type auto-granted at 1 pt, Read/Write floor set to 1
 // knowledgeType is what gets written into the Knowledge skill name for tracking
 const VOCATIONS=[
   {id:'none',   label:'No Vocation',       icon:'ti-shield',  color:'#888',    desc:'Pure skill build. No magic.',       magic:null,     knowledgeType:null,    locks:ALL_MAGIC},
-  {id:'Religion',label:'Theology — Devout',   icon:'ti-cross',   color:'#B8860B', desc:'Divine healing & anti-Evil.',       magic:'Devotion',  knowledgeType:'Religion', locks:['Wizardry','Ki','Shaman','Druidism','Sabda']},
-  {id:'Magic',  label:'Wizardry — Arcane', icon:'ti-wand',    color:'#185FA5', desc:'Intellect damage & counter-cast.',  magic:'Wizardry',knowledgeType:'Magic',  locks:['Devotion','Ki','Shaman','Druidism','Sabda']},
-  {id:'Ki',     label:'Ki — Monk',         icon:'ti-yin-yang',color:'#2d6a2d', desc:'Internal energy, Physique cast.',   magic:'Ki',     knowledgeType:'Ki',      locks:['Devotion','Wizardry','Shaman','Druidism','Sabda']},
-  {id:'Shaman', label:'Shaman — Spirit',   icon:'ti-flame',   color:'#854F0B', desc:'Willpower spirit magic.',           magic:'Shaman', knowledgeType:'Shaman',  locks:['Devotion','Wizardry','Ki','Druidism','Sabda']},
-  {id:'Druidic',label:'Druidism — Primal', icon:'ti-leaf',    color:'#3B6D11', desc:'Nature magic & shapeshifting.',     magic:'Druidism',knowledgeType:'Druidic', locks:['Devotion','Wizardry','Ki','Shaman','Sabda']},
-  {id:'Sabda',  label:'Śabda-Axiom — Speaker',icon:'ti-volume',color:'#3D1A6E', desc:'Spoken cosmic frequency. Willpower-cast.', magic:'Sabda', knowledgeType:'Sabda', locks:['Devotion','Wizardry','Ki','Shaman','Druidism']},
+  {id:'Religion',label:'Theology — Devout',   icon:'ti-cross',   color:'#B8860B', desc:'Divine healing & anti-Evil.',       magic:'Devotion',  knowledgeType:'Religion', locks:['Wizardry','Ki','Shaman','Druidism','Vibhuti']},
+  {id:'Magic',  label:'Wizardry — Arcane', icon:'ti-wand',    color:'#185FA5', desc:'Intellect damage & counter-cast.',  magic:'Wizardry',knowledgeType:'Magic',  locks:['Devotion','Ki','Shaman','Druidism','Vibhuti']},
+  {id:'Ki',     label:'Ki — Monk',         icon:'ti-yin-yang',color:'#2d6a2d', desc:'Internal energy, Physique cast.',   magic:'Ki',     knowledgeType:'Ki',      locks:['Devotion','Wizardry','Shaman','Druidism','Vibhuti']},
+  {id:'Shaman', label:'Shaman — Spirit',   icon:'ti-flame',   color:'#854F0B', desc:'Willpower spirit magic.',           magic:'Shaman', knowledgeType:'Shaman',  locks:['Devotion','Wizardry','Ki','Druidism','Vibhuti']},
+  {id:'Druidic',label:'Druidism — Primal', icon:'ti-leaf',    color:'#3B6D11', desc:'Nature magic & shapeshifting.',     magic:'Druidism',knowledgeType:'Druidic', locks:['Devotion','Wizardry','Ki','Shaman','Vibhuti']},
+  {id:'Vibhuti',  label:'Vibhuti — Speaker',icon:'ti-volume',color:'#3D1A6E', desc:'Spoken cosmic frequency. Willpower-cast.', magic:'Vibhuti', knowledgeType:'Vibhuti', locks:['Devotion','Wizardry','Ki','Shaman','Druidism']},
   {id:'Runes',  label:'Runemaster — Runes',icon:'ti-hexagon', color:'#534AB7', desc:'Runic wards & Agility utility.',    magic:'Runes',  knowledgeType:'Runes',   locks:ALL_MAGIC},
 ];
 
 const PHYSIQUE_CAT=['Fortitude','Hard as Nails','Ki','Rugged','Shieldsman','Strength Con.'];
 const SKILL_COSTS={
-  human:{'Athletics':25,'Evasion':20,'Quickness':40,'Acute Senses':25,'Focus':35,'Precise Strike':45,'Authority':15,'Charm':15,'Inspire':20,'Evaluate':15,'Knowledge':15,'Read/Write':15,'Fortitude':45,'Hard as Nails':30,'Rugged':15,'Iron Will':30,'Resolve':15,'Spirit':15,'Stealth':20,'Thieving':15,'Tumble':25,'Acrobatics':20,'Disguise':15,'Escapology':20,'Sleight of Hand':20,'Druidism':35,'Riposte':30,'Stamina':10,'Danger Sense':25,'Lip Reading':15,'Swift Read':20,'Mending':25,'Devotion':25,'Light-Soul':20,'Deception':20,'Intimidation':20,'Performance':20,'Seduction':20,'Tracker':20,'Perception':35,'Wizardry':35,'Alchemy':20,'Engineering':20,'Medicine':20,'Navigation':20,'Shieldsman':30,'Ki':30,'Strength Con.':30,'Brawling':20,'Climbing':20,'Endurance':20,'Swimming':15,'Discipline':15,'Shaman':30,'Sabda':15,'Survival':25,'Meditation':20,'Oathkeeper':20,'Pain Tolerance':20,'Willpower Reserve':20},
-  elf:{'Athletics':20,'Evasion':15,'Quickness':35,'Acute Senses':20,'Focus':35,'Precise Strike':45,'Authority':15,'Charm':20,'Inspire':20,'Evaluate':15,'Knowledge':15,'Read/Write':15,'Fortitude':50,'Hard as Nails':35,'Rugged':15,'Iron Will':30,'Resolve':15,'Spirit':15,'Stealth':15,'Thieving':15,'Tumble':20,'Acrobatics':20,'Disguise':20,'Escapology':20,'Sleight of Hand':20,'Druidism':30,'Riposte':30,'Stamina':15,'Danger Sense':20,'Lip Reading':20,'Swift Read':15,'Mending':25,'Devotion':30,'Light-Soul':20,'Deception':25,'Intimidation':25,'Performance':20,'Seduction':20,'Tracker':20,'Perception':35,'Wizardry':25,'Alchemy':20,'Engineering':25,'Medicine':25,'Navigation':20,'Shieldsman':30,'Ki':35,'Strength Con.':35,'Brawling':30,'Climbing':15,'Endurance':25,'Swimming':15,'Discipline':15,'Shaman':35,'Sabda':12,'Survival':25,'Meditation':15,'Oathkeeper':20,'Pain Tolerance':30,'Willpower Reserve':20},
-  dwarf:{'Athletics':30,'Evasion':25,'Quickness':40,'Acute Senses':20,'Focus':35,'Precise Strike':45,'Authority':15,'Charm':25,'Inspire':20,'Evaluate':15,'Knowledge':15,'Read/Write':15,'Fortitude':40,'Hard as Nails':25,'Rugged':15,'Iron Will':25,'Resolve':15,'Spirit':15,'Stealth':25,'Thieving':20,'Tumble':30,'Acrobatics':25,'Disguise':25,'Escapology':25,'Sleight of Hand':25,'Druidism':35,'Riposte':30,'Stamina':10,'Danger Sense':25,'Lip Reading':25,'Swift Read':20,'Mending':25,'Devotion':25,'Light-Soul':20,'Deception':30,'Intimidation':15,'Performance':30,'Seduction':35,'Tracker':20,'Perception':35,'Wizardry':40,'Alchemy':20,'Engineering':15,'Medicine':25,'Navigation':30,'Shieldsman':30,'Ki':35,'Strength Con.':30,'Brawling':20,'Climbing':25,'Endurance':15,'Swimming':30,'Discipline':15,'Shaman':35,'Sabda':20,'Survival':25,'Meditation':25,'Oathkeeper':15,'Pain Tolerance':15,'Willpower Reserve':20},
-  halfling:{'Athletics':30,'Evasion':10,'Quickness':35,'Acute Senses':15,'Focus':35,'Precise Strike':50,'Authority':20,'Charm':15,'Inspire':20,'Evaluate':15,'Knowledge':15,'Read/Write':15,'Fortitude':45,'Hard as Nails':35,'Rugged':15,'Iron Will':30,'Resolve':15,'Spirit':15,'Stealth':15,'Thieving':10,'Tumble':15,'Acrobatics':15,'Disguise':15,'Escapology':10,'Sleight of Hand':10,'Druidism':30,'Riposte':30,'Stamina':15,'Danger Sense':20,'Lip Reading':15,'Swift Read':15,'Mending':20,'Devotion':25,'Light-Soul':20,'Deception':20,'Intimidation':20,'Performance':25,'Seduction':25,'Tracker':15,'Perception':35,'Wizardry':30,'Alchemy':20,'Engineering':25,'Medicine':25,'Navigation':25,'Shieldsman':35,'Ki':35,'Strength Con.':35,'Brawling':25,'Climbing':15,'Endurance':20,'Swimming':20,'Discipline':20,'Shaman':30,'Sabda':10,'Survival':30,'Meditation':20,'Oathkeeper':20,'Pain Tolerance':25,'Willpower Reserve':20}
+  human:{'Athletics':25,'Evasion':20,'Quickness':35,'Acute Senses':25,'Focus':35,'Precise Strike':45,'Authority':15,'Charm':20,'Inspire':20,'Evaluate':15,'Knowledge':15,'Read/Write':20,'Fortitude':50,'Hard as Nails':30,'Rugged':15,'Iron Will':35,'Resolve':15,'Spirit':15,'Stealth':20,'Thieving':20,'Tumble':25,'Acrobatics':20,'Disguise':20,'Escapology':20,'Sleight of Hand':20,'Druidism':35,'Riposte':30,'Stamina':15,'Danger Sense':30,'Lip Reading':15,'Swift Read':20,'Mending':20,'Devotion':30,'Light-Soul':20,'Deception':20,'Intimidation':25,'Performance':20,'Seduction':20,'Tracker':20,'Perception':35,'Wizardry':35,'Alchemy':25,'Engineering':25,'Medicine':20,'Navigation':20,'Shieldsman':30,'Ki':25,'Strength Con.':30,'Brawling':25,'Climbing':20,'Endurance':30,'Swimming':20,'Discipline':25,'Shaman':30,'Vibhuti':30,'Survival':25,'Meditation':25,'Oathkeeper':25,'Pain Tolerance':30,'Willpower Reserve':25},
+  elf:{'Athletics':20,'Evasion':15,'Quickness':35,'Acute Senses':20,'Focus':35,'Precise Strike':45,'Authority':15,'Charm':25,'Inspire':20,'Evaluate':15,'Knowledge':15,'Read/Write':20,'Fortitude':50,'Hard as Nails':35,'Rugged':15,'Iron Will':35,'Resolve':15,'Spirit':15,'Stealth':15,'Thieving':20,'Tumble':25,'Acrobatics':20,'Disguise':20,'Escapology':20,'Sleight of Hand':20,'Druidism':30,'Riposte':30,'Stamina':15,'Danger Sense':25,'Lip Reading':20,'Swift Read':15,'Mending':20,'Devotion':35,'Light-Soul':20,'Deception':25,'Intimidation':25,'Performance':25,'Seduction':20,'Tracker':20,'Perception':35,'Wizardry':30,'Alchemy':25,'Engineering':30,'Medicine':20,'Navigation':25,'Shieldsman':30,'Ki':30,'Strength Con.':35,'Brawling':30,'Climbing':15,'Endurance':30,'Swimming':20,'Discipline':20,'Shaman':35,'Vibhuti':40,'Survival':25,'Meditation':25,'Oathkeeper':25,'Pain Tolerance':40,'Willpower Reserve':25},
+  dwarf:{'Athletics':30,'Evasion':25,'Quickness':35,'Acute Senses':20,'Focus':35,'Precise Strike':45,'Authority':15,'Charm':25,'Inspire':20,'Evaluate':15,'Knowledge':15,'Read/Write':20,'Fortitude':40,'Hard as Nails':25,'Rugged':15,'Iron Will':30,'Resolve':15,'Spirit':15,'Stealth':25,'Thieving':20,'Tumble':30,'Acrobatics':25,'Disguise':25,'Escapology':25,'Sleight of Hand':25,'Druidism':35,'Riposte':30,'Stamina':10,'Danger Sense':30,'Lip Reading':25,'Swift Read':15,'Mending':20,'Devotion':30,'Light-Soul':20,'Deception':30,'Intimidation':15,'Performance':30,'Seduction':30,'Tracker':20,'Perception':35,'Wizardry':40,'Alchemy':20,'Engineering':20,'Medicine':20,'Navigation':25,'Shieldsman':25,'Ki':25,'Strength Con.':30,'Brawling':20,'Climbing':25,'Endurance':25,'Swimming':25,'Discipline':20,'Shaman':35,'Vibhuti':35,'Survival':20,'Meditation':25,'Oathkeeper':20,'Pain Tolerance':25,'Willpower Reserve':25},
+  halfling:{'Athletics':30,'Evasion':10,'Quickness':35,'Acute Senses':20,'Focus':35,'Precise Strike':50,'Authority':20,'Charm':15,'Inspire':25,'Evaluate':15,'Knowledge':15,'Read/Write':20,'Fortitude':45,'Hard as Nails':35,'Rugged':15,'Iron Will':35,'Resolve':15,'Spirit':15,'Stealth':15,'Thieving':15,'Tumble':20,'Acrobatics':15,'Disguise':15,'Escapology':10,'Sleight of Hand':15,'Druidism':30,'Riposte':25,'Stamina':15,'Danger Sense':25,'Lip Reading':15,'Swift Read':15,'Mending':20,'Devotion':30,'Light-Soul':20,'Deception':20,'Intimidation':20,'Performance':15,'Seduction':25,'Tracker':15,'Perception':35,'Wizardry':35,'Alchemy':25,'Engineering':30,'Medicine':20,'Navigation':25,'Shieldsman':35,'Ki':30,'Strength Con.':35,'Brawling':25,'Climbing':15,'Endurance':35,'Swimming':20,'Discipline':25,'Shaman':35,'Vibhuti':30,'Survival':30,'Meditation':25,'Oathkeeper':25,'Pain Tolerance':35,'Willpower Reserve':25}
 };
 const COMBAT_CHECK_COSTS={melee:{dwarf:25,elf:30,human:30,halfling:35},range:{elf:25,dwarf:30,halfling:30,human:30}};
 const CORE_SKS={
@@ -241,9 +241,9 @@ const SWAP_POOLS={
   'Charisma':["Mending", "Devotion", "Light-Soul", "Deception", "Intimidation", "Performance", "Seduction"],
   'Intellect':["Tracker", "Perception", "Wizardry", "Alchemy", "Engineering", "Medicine", "Navigation"],
   'Physique':["Shieldsman", "Ki", "Strength Con.", "Brawling", "Climbing", "Endurance", "Swimming"],
-  'Willpower':["Discipline", "Shaman", "Sabda", "Survival", "Meditation", "Oathkeeper", "Pain Tolerance", "Willpower Reserve"]
+  'Willpower':["Discipline", "Shaman", "Vibhuti", "Survival", "Meditation", "Oathkeeper", "Pain Tolerance", "Willpower Reserve"]
 };
-const DISCIPLINES={'Devotion':'Devotion','Wizardry':'Wizardry','Ki':'Ki','Shaman':'Shaman','Druidism':'Druidism','Sabda':'Sabda'};
+const DISCIPLINES={'Devotion':'Devotion','Wizardry':'Wizardry','Ki':'Ki','Shaman':'Shaman','Druidism':'Druidism','Vibhuti':'Vibhuti'};
 const ADV_SKILLS=[
   {name:'Deflect / Revert-Back',cost:50},{name:'Shield Rush / Blitz',cost:50},
   {name:'Block / Bulwark',cost:100},{name:'Cleave / Whirlwind',cost:100},
