@@ -308,7 +308,7 @@
       <div class="nav-group-body">
         <a href="#adv-marksman" class="nav-link" data-target="adv-marksman">Marksman</a>
         <a href="#adv-masterthievery" class="nav-link" data-target="adv-masterthievery">Master Thievery</a>
-        <a href="#adv-metaphysical" class="nav-link" data-target="adv-metaphysical">Metaphysical</a>
+        <a href="#adv-arcaneduelist" class="nav-link" data-target="adv-arcaneduelist">Arcane Duelist</a>
       </div>
     </div>
     <div class="nav-group collapsed">
@@ -400,7 +400,7 @@
         <a href="#adv-concentrate" class="nav-link" data-target="adv-concentrate">Concentrate</a>
         <a href="#adv-deviation" class="nav-link" data-target="adv-deviation">Deviation</a>
         <a href="#adv-infusionofarcana" class="nav-link" data-target="adv-infusionofarcana">Infusion of Arcana</a>
-        <a href="#adv-metaphysical" class="nav-link" data-target="adv-metaphysical">Metaphysical</a>
+        <a href="#adv-arcaneduelist" class="nav-link" data-target="adv-arcaneduelist">Arcane Duelist</a>
         <a href="#adv-tuneup" class="nav-link" data-target="adv-tuneup">Tune-up</a>
       </div>
     </div>
@@ -458,7 +458,7 @@
         <a href="#adv-deviation" class="nav-link" data-target="adv-deviation">Deviation</a>
         <a href="#adv-divinity" class="nav-link" data-target="adv-divinity">Divinity</a>
         <a href="#adv-infusionofarcana" class="nav-link" data-target="adv-infusionofarcana">Infusion of Arcana</a>
-        <a href="#adv-metaphysical" class="nav-link" data-target="adv-metaphysical">Metaphysical</a>
+        <a href="#adv-arcaneduelist" class="nav-link" data-target="adv-arcaneduelist">Arcane Duelist</a>
         <a href="#adv-primalaspect" class="nav-link" data-target="adv-primalaspect">Primal Aspect</a>
         <a href="#adv-rebirthepicvocation" class="nav-link" data-target="adv-rebirthepicvocation">Rebirth (Epic Vocation)</a>
       </div>
@@ -687,7 +687,7 @@
 
         <div class="skill-block" id="adv-divinity">
             <span class="skill-name">Divinity</span>
-            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Devotion (7)</span>
+            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Devotion (6)</span>
             <p><em>The gods do not simply listen to your prayers; they answer them with a physical weight that can mend bone and seal flesh.</em></p>
             <p><strong>Mechanic: The Divine Boon</strong></p>
             <ul>
@@ -755,7 +755,7 @@
 
         <div class="skill-block" id="adv-heavyarbalestcrossbows">
             <span class="skill-name">Heavy Arbalest (Crossbows)</span>
-            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Awareness (1)</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Awareness (1)</span>
             <p><em>The bow is a song; the arbalest is a statement. You have mastered the mechanical tension of the heavy crank, turning a simple bolt into a projectile that treats plate armor like wet parchment.</em></p>
             <p><strong>Passive:</strong> Permanent <strong>+1 Ranged Wound Bonus</strong>. All bolts fired ignore up to 2 points of Armor Mitigation.</p>
             <p><strong>Mechanic: The Heavy Impact (Crit)</strong></p>
@@ -825,7 +825,7 @@
 
         <div class="skill-block" id="adv-infusionofarcana">
             <span class="skill-name">Infusion of Arcana</span>
-            <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Wizardry (7)</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Wizardry (6)</span>
             <p><em>Energy is indifferent; it is the mind of the caster that gives it intent. You have learned that the same spark that sears the flesh can, if harmonized correctly, knit it back together.</em></p>
             <p><strong>Mechanic: Arcane Conversion</strong></p>
             <ul>
@@ -891,28 +891,19 @@
             </div>
         </div>
 
-        <div class="skill-block" id="adv-metaphysical">
-            <span class="skill-name">Metaphysical</span>
-            <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Magic Skill (7)</span>
-            <p><em>There is no wall between the soul and the sky. The power you wield is the burning core of your own existence projected into the world. When you cast, the air hums with the resonance of your spirit.</em></p>
-            <p><strong>Passive: Transcendent Grace</strong></p>
+        <div class="skill-block" id="adv-arcaneduelist">
+            <span class="skill-name">Arcane Duelist (Spell-Eater)</span>
+            <span class="skill-mechanic">XP: 200 | Actions: 1 React | Min. Req: Magic Skill (8), Discipline (3)</span>
+            <p><em>Most casters fear the duel of mages&mdash;the desperate gamble of matching word against word. You have made that fear your home. You read the shape of a spell as it forms and answer before it can land, and when you tear an incantation apart, you drink what spills out.</em></p>
+            <p><strong>Passive: Reactive Mastery</strong></p>
             <ul>
-                <li><strong>Spiritual Resonance:</strong> Your magic is naturally more potent. You gain a permanent <strong>+1 Wound Bonus</strong> to offensive spells and <strong>+1 Healing Bonus</strong> to restorative blessings.</li>
+                <li>You no longer need to spend 1 AP on your turn to enter a <strong>Reactive Stance</strong> for Counter-Casting. You may attempt a <strong>Counter-Cast at any time</strong>, so long as you have the AP required to match the incoming spell.</li>
             </ul>
-            <p><strong>Mechanic: Spiritual Infusion (TN 7 or less)</strong></p>
-            <ul>
-                <li><strong>Infused Potency:</strong> You increase the wounds caused or healed by a value equal to your <strong>Spirit Skill Points</strong>.</li>
-                <li><strong>Metaphysical Zenith (Crit):</strong> On an unmodified 10: <strong>Total Result = Normal + Intellect + (2 x Spirit) + Willpower</strong>.</li>
-            </ul>
-
             <div class="specialization-block">
-                <span class="specialization-title">Specialization: Supernatural</span>
-                <span class="skill-mechanic">Actions: 2 (Exhausting) | Min. Req: Magic Skill (11)</span>
-                <p><em>You unleash every ounce of your energy in a blinding surge of power, leaving you physically drained but spiritually transcendent.</em></p>
+                <span class="specialization-title">Specialization: Spell-Eater (Reaction)</span>
+                <p><em>The unraveled spell does not simply vanish&mdash;you take it into yourself, turning your enemy&rsquo;s effort into your own fuel.</em></p>
                 <ul>
-                    <li><strong>Lifeforce Surge:</strong> <strong>Total Result = Normal + (3 x Spirit) + (2 x Willpower)</strong>.</li>
-                    <li><strong>Cosmic Echo:</strong> Friendly targets gain +1 to their next roll; enemies suffer a -1 penalty.</li>
-                    <li><strong>Supernatural Awakening (Crit):</strong> On an unmodified 10: <strong>Total Result = Normal + Charisma + (2 x Intellect) + (4 x Spirit) + (2 x Willpower)</strong>. Friendly targets gain Advantage; enemies suffer Disadvantage.</li>
+                    <li><strong>Devour:</strong> On a successful Counter-Cast, you immediately regain <strong>1 Spirit Point</strong>, <em>or</em> you may add the neutralized spell&rsquo;s <strong>TN value</strong> to the wounds of your next offensive cast.</li>
                 </ul>
             </div>
         </div>
@@ -970,7 +961,7 @@
             <span class="skill-name">Phantom Assassin (Stealth)</span>
             <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Agility (2), Stealth (3)</span>
             <p><em>You are the ghost in the machine of war. To you, a fortress is just a series of blind spots, and a king is just a neck waiting for a cold edge.</em></p>
-            <p><strong>Passive:</strong> You gain <strong>+2 Melee Wound Bonus</strong> (applies only when attacking from Stealth or Flanking).</p>
+            <p><strong>Passive:</strong> You gain a permanent <strong>+2 Melee Wound Bonus</strong>. Years spent making every strike count leave you lethal even in the open.</p>
             <p><strong>Mechanic: The Unseen Blade</strong></p>
             <ul>
                 <li><strong>Unaware Advantage:</strong> Attacking an unaware target grants <strong>Advantage</strong> To-Hit.</li>
