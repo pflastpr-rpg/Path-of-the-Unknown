@@ -4,20 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IronTithe - Core Rules</title>
+    <link rel="stylesheet" href="theme.css">
     <style>
-        :root { 
-            /* Slate & Crimson Theme (Imported from Character Sheet) */
-            --iron: #02070e;      /* Slate Grey / Gunmetal */
-            --blood: #A81818;     /* Crimson Red */
-            --parchment: #f3e7c9; /* Parchment Cream */
-            --gold: #B8860B;      /* Burnished Gold */
-            --ink: #111111;       /* Deep Ink */
-        }
+        /* Tokens now come from theme.css (shared). Page-specific overrides only below. */
 
-        body { 
-            background: #1E1E24; /* Dark neutral charcoal background */
-            color: var(--ink); 
-            font-family: 'Courier New', Courier, monospace; 
+        body {
+            background: var(--charcoal); /* Dark neutral charcoal background */
+            color: var(--ink);
+            font-family: var(--font-body); /* prose in IM Fell English; stat-blocks stay mono inline */
             display: flex; 
             justify-content: center; 
             padding: 40px 20px; overflow-x: hidden; 

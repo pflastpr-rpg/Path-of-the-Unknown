@@ -1,0 +1,61 @@
+/* ============================================================
+   IRONTITHE — SHARED THEME TOKENS
+   ------------------------------------------------------------
+   Single source of truth for colors and fonts across all pages.
+
+   USAGE (per page):
+     1. In <head>, add:  <link rel="stylesheet" href="theme.css">
+        (place it BEFORE the page's own <style> block)
+     2. Delete that page's local ":root { ... }" token block.
+        Every var(--whatever) reference keeps working because the
+        legacy names are aliased to the canonical tokens below.
+
+   This file self-loads its web fonts via @import, so a page only
+   needs the <link> above — no Google Fonts <link> required
+   (an existing one is harmless if left in place).
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Grenze+Gotisch:wght@400;700;900&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap');
+
+:root {
+    /* ---- CANONICAL COLORS ---- */
+    --iron:            #02070e;   /* slate / gunmetal — darkest structural */
+    --blood:           #A81818;   /* crimson — primary accent */
+    --blood-dim:       #6B1010;   /* darker crimson — borders, hovers */
+    --blood-deep:      #5a0808;   /* deepest crimson */
+    --gold:            #B8860B;   /* burnished gold — secondary accent */
+    --gold-dim:        #7a5808;   /* muted gold — lines, idle borders */
+    --gold-line:       rgba(184,134,11,0.35); /* hairline gold dividers */
+    --parchment:       #f3e7c9;   /* cream — light surfaces / body text on dark */
+    --parchment-deep:  #e8d6a0;   /* aged cream — panels on parchment */
+    --parchment-dim:   rgba(240,226,192,0.65); /* dimmed cream text */
+    --ink:             #111111;   /* near-black body ink on parchment */
+    --ink-soft:        #362a18;   /* softened ink — secondary text */
+    --muted:           #6b5c40;   /* muted brown — captions */
+    --bg:              #0a0a0e;   /* dark page background (portal pages) */
+    --charcoal:        #1E1E24;   /* neutral charcoal stage (document pages) */
+    --input-bg:        #FCF7EB;   /* form field background */
+    --success:         #2E7D32;   /* positive / confirm green */
+
+    /* ---- CANONICAL FONTS ---- */
+    --font-display:    'Grenze Gotisch', serif;          /* big headings */
+    --font-body:       'IM Fell English', Georgia, serif; /* prose / body */
+    --font-label:      'Cinzel', serif;                   /* eyebrows, labels, buttons */
+    --font-deco:       'Cinzel Decorative', serif;        /* the IRONTITHE wordmark */
+    --font-hand:       'MedievalSharp', cursive;          /* handwritten accents */
+    --font-mono:       'Courier New', Courier, monospace; /* dice / stat notation only */
+
+    /* ---- LEGACY ALIASES (map old names → canonical) ----
+       Lets existing pages drop their :root block without rewriting
+       every var() reference. Safe to keep indefinitely. */
+    --font-main:       var(--font-body);
+    --font-heading:    var(--font-display);
+    --font-head:       var(--font-display);
+    --f-head:          var(--font-display);
+    --f-body:          var(--font-body);
+    --f-deco:          var(--font-deco);
+    --f-label:         var(--font-label);
+    --font-sub:        var(--font-label);
+    --font-sans:       var(--font-body);
+    --font-label-alt:  var(--font-label);
+}

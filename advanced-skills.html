@@ -6,17 +6,7 @@
     <title>IronTithe - Advanced Vocations</title>
     <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --iron: #02070e;      
-            --blood: #A81818;     
-            --parchment: #f3e7c9; 
-            --gold: #B8860B;      
-            --input-bg: #FCF7EB;  
-            --ink: #111111;       
-            
-            --font-heading: 'Grenze Gotisch', serif;
-            --font-main: 'IM Fell English', serif;
-        }
+        /* tokens from theme.css */
 
         body { 
             background: #1E1E24; 
@@ -506,7 +496,6 @@
         <div class="skill-block" id="adv-battleready">
             <span class="skill-name">Battle-Ready</span>
             <span class="skill-mechanic">XP: 200 | Action: 1 Minor | Min. Req: Agility 3+ OR Awareness 3+</span>
-            <a class="example-link" href="skills-in-play.html#s-battle-ready" target="_blank">&#9654; In Play</a>
             <p><em>The veteran warrior does not see a chaotic melee, but a predictable rhythm of striking blades and shifting weight. By controlling the space around them, they turn a swarm of enemies into a series of manageable, isolated duels.</em></p>
             <p><strong>Mechanic:</strong> While this stance is active, you automatically negate the numerical advantage (flanking, swarming, or outnumbering bonuses) of up to three opponents engaging you in melee from your front or sides.</p>
             <p><strong>Vulnerability:</strong> The stance breaks down if you are completely surrounded. Attacks originating directly from behind, or any attacks made by a fourth simultaneous combatant, bypass this skill.</p>
@@ -552,7 +541,6 @@
         <div class="skill-block" id="adv-cleave">
             <span class="skill-name">Cleave</span>
             <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Heavy/2H Weapon, Physique (3)</span>
-            <a class="example-link" href="skills-in-play.html#s-cleave" target="_blank">&#9654; In Play</a>
             <p><em>Focus is usually a warrior’s greatest strength, but against a horde, it is a death sentence. You have learned to stop treating enemies like individuals and start treating them like a harvest.</em></p>
             <p><strong>Passive:</strong> You gain a <strong>+1 Wound Bonus</strong> when fighting 2 or more enemies.</p>
             <p><strong>Mechanic: The Sweeping Arc</strong></p>
@@ -576,7 +564,6 @@
         <div class="skill-block" id="adv-cleric">
             <span class="skill-name">Cleric</span>
             <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Devotion (3), Light Soul (2)</span>
-            <a class="example-link" href="skills-in-play.html#s-cleric" target="_blank">&#9654; In Play</a>
             <p><em>You are the beacon in the encroaching dark. Where others see only the terrifying power of the unholy, you see a shadow that must be banished.</em></p>
             <p><strong>Passive: Divine Grace</strong></p>
             <ul>
@@ -605,7 +592,6 @@
         <div class="skill-block" id="adv-command">
             <span class="skill-name">Command</span>
             <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Charisma (3), Leadership (2)</span>
-            <a class="example-link" href="skills-in-play.html#s-command" target="_blank">&#9654; In Play</a>
             <p><em>A battle is a machine, and you are the one pulling the levers. With a single shouted order, you can push an exhausted ally to strike one last time.</em></p>
             <p><strong>Passive:</strong> +1 to all Fear and Morale tests for allies within 30 feet.</p>
             <p><strong>Mechanic: The Tactician's Voice</strong></p>
@@ -629,7 +615,6 @@
         <div class="skill-block" id="adv-concentrate">
             <span class="skill-name">Concentrate</span>
             <span class="skill-mechanic">XP: 200 | Actions: 2 (Channeling) | Min. Req: Magic Skill (6)</span>
-            <a class="example-link" href="skills-in-play.html#s-concentrate" target="_blank">&#9654; In Play</a>
             <p><em>You speak with the precision of a master architect, placing every syllable and every drop of intent with surgical care. When you release the energy, it doesn't just strike; it annihilates.</em></p>
             <p><strong>Passive Mastery:</strong> Your mental discipline grants a permanent <strong>+3 bonus</strong> to all Spell Wounds.</p>
             <p><strong>Mechanic: Controlled Incantation</strong></p>
@@ -698,7 +683,6 @@
         <div class="skill-block" id="adv-divinity">
             <span class="skill-name">Divinity</span>
             <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Devotion (6)</span>
-            <a class="example-link" href="skills-in-play.html#s-divinity" target="_blank">&#9654; In Play</a>
             <p><em>The gods do not simply listen to your prayers; they answer them with a physical weight that can mend bone and seal flesh.</em></p>
             <p><strong>Mechanic: The Divine Boon</strong></p>
             <ul>
@@ -745,7 +729,6 @@
         <div class="skill-block" id="adv-exposearmor">
             <span class="skill-name">Expose Armor</span>
             <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Weapon Proficiency</span>
-            <a class="example-link" href="skills-in-play.html#s-expose-armor" target="_blank">&#9654; In Play</a>
             <p><em>No armor is perfect. A master smith leaves gaps for movement, and a veteran soldier knows exactly where those gaps are. You don't aim for the chest plate; you aim for the leather strap holding it up.</em></p>
             <p><strong>Passive:</strong> Your study of anatomy grants a permanent <strong>+1 Melee Wound Bonus</strong>.</p>
             <p><strong>Mechanic: The Weak Point</strong></p>
@@ -769,7 +752,6 @@
         <div class="skill-block" id="adv-heavyarbalestcrossbows">
             <span class="skill-name">Heavy Arbalest (Crossbows)</span>
             <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Awareness (1)</span>
-            <a class="example-link" href="skills-in-play.html#s-heavy-arbalest" target="_blank">&#9654; In Play</a>
             <p><em>The bow is a song; the arbalest is a statement. You have mastered the mechanical tension of the heavy crank, turning a simple bolt into a projectile that treats plate armor like wet parchment.</em></p>
             <p><strong>Passive:</strong> Permanent <strong>+1 Ranged Wound Bonus</strong>. All bolts fired ignore up to 2 points of Armor Mitigation.</p>
             <p><strong>Mechanic: The Heavy Impact (Crit)</strong></p>
@@ -791,7 +773,6 @@
         <div class="skill-block" id="adv-impact">
             <span class="skill-name">Impact</span>
             <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Melee & Throwing Proficiency</span>
-            <a class="example-link" href="skills-in-play.html#s-impact" target="_blank">&#9654; In Play</a>
             <p><em>There is a difference between a cut and a crush. A cut bleeds, but a crush ends the conversation. You have learned to put your entire center of gravity behind your steel, turning a simple swing into a localized earthquake — a blow that staggers through plate and bone alike, where finesse would simply glance away.</em></p>
             <p><strong>Passive:</strong> Your strikes carry immense weight. Permanent <strong>+2 Melee Wound Bonus</strong>.</p>
             <p><strong>Mechanic: The Concussive Blow</strong></p>
@@ -817,7 +798,6 @@
         <div class="skill-block" id="adv-impale">
             <span class="skill-name">Impale</span>
             <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Edged, Piercing, or Polearm Proficiency</span>
-            <a class="example-link" href="skills-in-play.html#s-impale" target="_blank">&#9654; In Play</a>
             <p><em>Steel is cold, but the blood it releases is warm. You have moved past clumsy hacking; you know the architecture of the body. You don't just wound the target—you open them, driving the point deep and leaving them to bleed.</em></p>
             <p><strong>Passive:</strong> Your strikes bite deep and don't let go. Permanent <strong>+1 Melee Wound Bonus</strong>.</p>
             <p><strong>Mechanic: The Deep Pierce</strong></p>
@@ -842,7 +822,6 @@
         <div class="skill-block" id="adv-infusionofarcana">
             <span class="skill-name">Infusion of Arcana</span>
             <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Wizardry (6)</span>
-            <a class="example-link" href="skills-in-play.html#s-infusion-of-arcana" target="_blank">&#9654; In Play</a>
             <p><em>Energy is indifferent; it is the mind of the caster that gives it intent. You have learned that the same spark that sears the flesh can, if harmonized correctly, knit it back together.</em></p>
             <p><strong>Mechanic: Arcane Conversion</strong></p>
             <ul>
@@ -866,7 +845,6 @@
         <div class="skill-block" id="adv-marksman">
             <span class="skill-name">Marksman</span>
             <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Ranged Weapon Proficiency</span>
-            <a class="example-link" href="skills-in-play.html#s-marksman" target="_blank">&#9654; In Play</a>
             <p><em>The wind is a variable; the distance is a suggestion; the target is a certainty. You don’t pull the trigger until the world falls silent and the heartbeat of your prey is the only sound remaining.</em></p>
             <p><strong>Passive:</strong> Your practice with windage and elevation grants a permanent <strong>+2 Ranged Wound Bonus</strong>.</p>
             <p><strong>Mechanic: The Lethal Shot</strong></p>
@@ -889,7 +867,6 @@
         <div class="skill-block" id="adv-masterthievery">
             <span class="skill-name">Master Thievery</span>
             <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Agility (5), Awareness (5), Thievery (10)</span>
-            <a class="example-link" href="skills-in-play.html#s-master-thievery" target="_blank">&#9654; In Play</a>
             <p><em>A lock is just a puzzle someone else finished first. A pocket is just a temporary storage space you haven't accessed yet. You treat the world like it’s held together by loose strings.</em></p>
             <p><strong>Passive:</strong> You gain <strong>Advantage</strong> on all non-combat Thievery tests (Lockpicking, Pickpocketing).</p>
             <p><strong>Mechanic: Phantom Hands</strong></p>
@@ -913,7 +890,6 @@
         <div class="skill-block" id="adv-arcaneduelist">
             <span class="skill-name">Arcane Duelist (Spell-Eater)</span>
             <span class="skill-mechanic">XP: 200 | Actions: 1 React | Min. Req: Magic Skill (8), Discipline (3)</span>
-            <a class="example-link" href="skills-in-play.html#s-arcane-duelist" target="_blank">&#9654; In Play</a>
             <p><em>Most casters fear the duel of mages&mdash;the desperate gamble of matching word against word. You have made that fear your home. You read the shape of a spell as it forms and answer before it can land, and when you tear an incantation apart, you drink what spills out.</em></p>
             <p><strong>Passive: Reactive Mastery</strong></p>
             <ul>
@@ -931,7 +907,6 @@
         <div class="skill-block" id="adv-nimblestrike">
             <span class="skill-name">Nimble Strike</span>
             <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Agility (1), Awareness (1), Stealth (2)</span>
-            <a class="example-link" href="skills-in-play.html#s-nimble-strike" target="_blank">&#9654; In Play</a>
             <p><em>Brutes rely on the weight of their steel; you rely on the speed of your moment. You don’t overpower the opponent—you simply move faster than they can defend, landing clean before the guard arrives.</em></p>
             <p><strong>Passive: Fluidity</strong></p>
             <ul>
@@ -958,7 +933,6 @@
         <div class="skill-block" id="adv-opportunist">
             <span class="skill-name">Opportunist</span>
             <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Ranged Weapon Proficiency</span>
-            <a class="example-link" href="skills-in-play.html#s-opportunist" target="_blank">&#9654; In Play</a>
             <p><em>The battlefield is a storm of steel and flesh, but you see the calm at the center. While others hesitate, fearing to strike their own kin, you see the gap between the shield and the shoulder.</em></p>
             <p><strong>Passive:</strong> Steady hands grant a permanent <strong>+1 Ranged Wound Bonus</strong>.</p>
             <p><strong>Mechanic: The Chaos Eye</strong></p>
@@ -982,7 +956,6 @@
         <div class="skill-block" id="adv-phantomassassinstealth">
             <span class="skill-name">Phantom Assassin (Stealth)</span>
             <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Agility (2), Stealth (3)</span>
-            <a class="example-link" href="skills-in-play.html#s-phantom-assassin" target="_blank">&#9654; In Play</a>
             <p><em>You are the ghost in the machine of war. To you, a fortress is just a series of blind spots, and a king is just a neck waiting for a cold edge.</em></p>
             <p><strong>Passive:</strong> You gain a permanent <strong>+2 Melee Wound Bonus</strong>. Years spent making every strike count leave you lethal even in the open.</p>
             <p><strong>Mechanic: The Unseen Blade</strong></p>
@@ -1006,7 +979,6 @@
         <div class="skill-block" id="adv-primalaspect">
             <span class="skill-name">Primal Aspect</span>
             <span class="skill-mechanic">XP: 200 | Actions: 2 | Min. Req: Druidism (9), Physique or Agility (4)</span>
-            <a class="example-link" href="skills-in-play.html#s-primal-aspect" target="_blank">&#9654; In Play</a>
             <p><em>The skin is a cage. The bone is a limit. You don't just "turn into" a wolf; you become the very concept of the Hunt.</em></p>
             <p><strong>Mechanic: The Shifting Form</strong> (Sustained: Costs 1 Spirit point per turn)</p>
             <p>When you shift, your gear merges into your form. You lose the ability to cast non-nature spells but gain Primal Strikes: <strong>Wounds = 1d10 + Aspect Characteristic + Druidism Rank</strong>.</p>
@@ -1031,7 +1003,6 @@
         <div class="skill-block" id="adv-rebirthepicvocation">
             <span class="skill-name">Rebirth (Epic Vocation)</span>
             <span class="skill-mechanic">XP: 400 | Actions: 5 (Sequential) | Min. Req: Willpower (3), Druidism (12)</span>
-            <a class="example-link" href="skills-in-play.html#s-rebirth" target="_blank">&#9654; In Play</a>
             <p><em>Death is not an end; it is simply a change in season. When your blood returns to the soil, the Earth Mother does not see a corpse—she sees a seed.</em></p>
             <p><strong>Passive: Nature's Grace</strong></p>
             <ul>
@@ -1058,7 +1029,6 @@
         <div class="skill-block" id="adv-shieldrush">
             <span class="skill-name">Shield Rush</span>
             <span class="skill-mechanic">XP: 50 | Actions: 1 | Min. Req: 1H & Shield, Shieldsman (1)</span>
-            <a class="example-link" href="skills-in-play.html#s-shield-rush" target="_blank">&#9654; In Play</a>
             <p><em>A shield is not just a wall; it is a weapon with a very large surface area. By leading with your shoulder, you turn your sprint into a kinetic hammer.</em></p>
             <p><strong>Mechanic: The Brute Force Entry</strong> (Requires 25ft of momentum)</p>
             <ul>
@@ -1080,7 +1050,6 @@
         <div class="skill-block" id="adv-sovereignmind">
             <span class="skill-name">Sovereign Mind</span>
             <span class="skill-mechanic">XP: 100 | Actions: 1 (Reactionary or Active) | Min. Req: Willpower (4)</span>
-            <a class="example-link" href="skills-in-play.html#s-sovereign-mind" target="_blank">&#9654; In Play</a>
             <p><em>The mind is the only fortress that cannot be taken by siege unless the commander surrenders. You have spent years learning to cord off your thoughts from fear, pain, and manipulation.</em></p>
             <p><strong>Passive: The Unshakable</strong></p>
             <ul>
@@ -1107,7 +1076,6 @@
         <div class="skill-block" id="adv-sunder">
             <span class="skill-name">Sunder</span>
             <span class="skill-mechanic">XP: 100 | Actions: 1 | Min. Req: Heavy/2H Weapon</span>
-            <a class="example-link" href="skills-in-play.html#s-sunder" target="_blank">&#9654; In Play</a>
             <p><em>The finest steel is still subject to the laws of physics. If you cannot bypass the armor, you simply break it. A broken shield provides no cover, and a notched blade cannot kill.</em></p>
             <p><strong>Mechanic: The Ruinous Strike</strong></p>
             <ul>
@@ -1129,7 +1097,6 @@
         <div class="skill-block" id="adv-throatslice">
             <span class="skill-name">Throat Slice</span>
             <span class="skill-mechanic">XP: 200 | Actions: 2 | Min. Req: Edged or Piercing Melee Weapon</span>
-            <a class="example-link" href="skills-in-play.html#s-throat-slice" target="_blank">&#9654; In Play</a>
             <p><em>Speech is a luxury of the living. For those who rely on incantations and battle cries, the neck is the most vulnerable point of failure. A single cold line turns a powerful sorcerer into a panicked animal.</em></p>
             <p><strong>Passive:</strong> Your blades find the softest paths. Permanent <strong>+1 Melee Wound Bonus</strong>.</p>
             <p><strong>Mechanic: The Silent Kill</strong></p>
@@ -1152,7 +1119,6 @@
         <div class="skill-block" id="adv-thunderstrikeblackpowder">
             <span class="skill-name">Thunderstrike (Blackpowder)</span>
             <span class="skill-mechanic">XP: 200 | Actions: 1 | Min. Req: Awareness (2), Blackpowder Proficiency</span>
-            <a class="example-link" href="skills-in-play.html#s-thunderstrike" target="_blank">&#9654; In Play</a>
             <p><em>Magic is a whisper; blackpowder is a scream. You have embraced the volatile alchemy of the forge, wielding weapons that shatter the silence of the battlefield and the morale of the enemy.</em></p>
             <p><strong>Passive:</strong> Permanent <strong>+2 Ranged Wound Bonus</strong>.</p>
             <p><strong>Mechanic: The Deafening Roar</strong></p>
@@ -1175,7 +1141,6 @@
         <div class="skill-block" id="adv-tuneup">
             <span class="skill-name">Tune-up</span>
             <span class="skill-mechanic">XP: 200 | Actions: 2 | Min. Req: Melee Weapon Proficiency</span>
-            <a class="example-link" href="skills-in-play.html#s-tune-up" target="_blank">&#9654; In Play</a>
             <p><em>Where the brute relies on raw mass, you rely on placement. There is a specific resonance when a weapon meets a jawbone just right — it’s not the force of the blow but the precision of it, the sudden disconnect between the brain and the body. You don’t overpower them; you find the switch and turn the lights off in their head for a few precious seconds.</em></p>
             <p><strong>Mechanic: The Glass Chin</strong></p>
             <ul>
@@ -1197,7 +1162,6 @@
         <div class="skill-block" id="adv-unwaveringepicvocation">
             <span class="skill-name">Unwavering (Epic Vocation)</span>
             <span class="skill-mechanic">XP: 300 | Actions: 2 | Min. Req: Hard as Nails (2), Iron Will (2), Willpower (2)</span>
-            <a class="example-link" href="skills-in-play.html#s-unwavering" target="_blank">&#9654; In Play</a>
             <p><em>Pain is an opinion; death is an inconvenience. You have hardened your spirit to the point where your body no longer has permission to fail. You are the rock upon which the waves of the enemy break.</em></p>
             <p><strong>Passive: Absolute Resilience</strong></p>
             <ul>
